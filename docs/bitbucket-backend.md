@@ -16,6 +16,7 @@ So a GitLab-shaped URL under `bitbucket.org` (e.g. `.../-/merge_requests/1`) can
 ## Authentication
 
 A Workspace or Repository Access Token is sent as `Authorization: Bearer <token>`.
+The header is written to a `chmod 600` curl config file (`curl -K -`-style, one per call) rather than passed as a literal `-H` argument, so the token never appears on the process's argv where other same-uid processes could read it (`ps`, `/proc/<pid>/cmdline`); the config file is removed immediately after the call in every one of the three call sites (`fm_pr_bitbucket_api_get`, `fm_pr_bitbucket_api_post`, and `bin/fm-pr-poll.sh`'s inlined Bitbucket branch).
 Bitbucket Cloud's deprecated app passwords are deliberately not supported.
 `bin/fm-pr-lib.sh`'s `fm_pr_bitbucket_token` resolves the token in the same "ambient environment wins, the calling home's gitignored `.env` is the opt-in fallback" shape as the Relay pairing token and the mail-plane credentials (`docs/configuration.md` "Mail plane").
 `FM_BITBUCKET_TOKEN` in the environment wins; otherwise a `FM_BITBUCKET_TOKEN=` line (optionally `export`-prefixed, optionally quoted) in the home's `.env` is read.
