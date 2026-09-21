@@ -168,11 +168,14 @@ case "$provider" in
     token=$(bitbucket_token) || exit 0
     [ -n "$token" ] || exit 0
     tmp=$(mktemp "${TMPDIR:-/tmp}/fm-pr-poll-bitbucket.XXXXXX") || exit 0
-    http_status=$(curl -sS -o "$tmp" -w '%{http_code}' \
-      -H "Authorization: Bearer $token" \
+    cfg=$(mktemp "${TMPDIR:-/tmp}/fm-pr-poll-bitbucket-cfg.XXXXXX") || { rm -f "$tmp"; exit 0; }
+    chmod 600 "$cfg" 2>/dev/null
+    printf 'header = "Authorization: Bearer %s"\n' "$token" > "$cfg"
+    http_status=$(curl -sS -K "$cfg" -o "$tmp" -w '%{http_code}' \
       -H 'Accept: application/json' \
       "https://api.bitbucket.org/2.0/repositories/$workspace/$repo/pullrequests/$number" 2>/dev/null) \
-      || { rm -f "$tmp"; exit 0; }
+      || { rm -f "$tmp" "$cfg"; exit 0; }
+    rm -f "$cfg"
     case "$http_status" in
       2??) ;;
       *) rm -f "$tmp"; exit 0 ;;
