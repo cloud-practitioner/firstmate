@@ -1074,15 +1074,18 @@ fm_pr_bitbucket_token() {  # <fm_home>
 # returns nonzero on any curl failure, missing token, or non-2xx status, so a
 # caller never mistakes an error page or empty body for a valid payload.
 fm_pr_bitbucket_api_get() {  # <fm_home> <api-path>
-  local home=$1 api_path=$2 token http_status body tmp
+  local home=$1 api_path=$2 token http_status body tmp cfg
   command -v curl >/dev/null 2>&1 || return 1
   token=$(fm_pr_bitbucket_token "$home") || return 1
   [ -n "$token" ] || return 1
   tmp=$(mktemp "${TMPDIR:-/tmp}/fm-pr-bitbucket.XXXXXX") || return 1
-  http_status=$(curl -sS -o "$tmp" -w '%{http_code}' \
-    -H "Authorization: Bearer $token" \
+  cfg=$(mktemp "${TMPDIR:-/tmp}/fm-pr-bitbucket-cfg.XXXXXX") || { rm -f "$tmp"; return 1; }
+  chmod 600 "$cfg" 2>/dev/null
+  printf 'header = "Authorization: Bearer %s"\n' "$token" > "$cfg"
+  http_status=$(curl -sS -K "$cfg" -o "$tmp" -w '%{http_code}' \
     -H 'Accept: application/json' \
-    "https://api.bitbucket.org/2.0$api_path" 2>/dev/null) || { rm -f "$tmp"; return 1; }
+    "https://api.bitbucket.org/2.0$api_path" 2>/dev/null) || { rm -f "$tmp" "$cfg"; return 1; }
+  rm -f "$cfg"
   body=$(cat "$tmp" 2>/dev/null)
   rm -f "$tmp"
   case "$http_status" in
@@ -1098,17 +1101,20 @@ fm_pr_bitbucket_api_get() {  # <fm_home> <api-path>
 # (accepted, asynchronous) is a distinct outcome from its 200 (merged
 # synchronously) that the caller must tell apart, and neither is an error.
 fm_pr_bitbucket_api_post() {  # <fm_home> <api-path> <json-body>
-  local home=$1 api_path=$2 json_body=$3 token http_status body tmp
+  local home=$1 api_path=$2 json_body=$3 token http_status body tmp cfg
   command -v curl >/dev/null 2>&1 || return 1
   token=$(fm_pr_bitbucket_token "$home") || return 1
   [ -n "$token" ] || return 1
   tmp=$(mktemp "${TMPDIR:-/tmp}/fm-pr-bitbucket.XXXXXX") || return 1
-  http_status=$(curl -sS -o "$tmp" -w '%{http_code}' -X POST \
-    -H "Authorization: Bearer $token" \
+  cfg=$(mktemp "${TMPDIR:-/tmp}/fm-pr-bitbucket-cfg.XXXXXX") || { rm -f "$tmp"; return 1; }
+  chmod 600 "$cfg" 2>/dev/null
+  printf 'header = "Authorization: Bearer %s"\n' "$token" > "$cfg"
+  http_status=$(curl -sS -K "$cfg" -o "$tmp" -w '%{http_code}' -X POST \
     -H 'Accept: application/json' \
     -H 'Content-Type: application/json' \
     --data-binary "$json_body" \
-    "https://api.bitbucket.org/2.0$api_path" 2>/dev/null) || { rm -f "$tmp"; return 1; }
+    "https://api.bitbucket.org/2.0$api_path" 2>/dev/null) || { rm -f "$tmp" "$cfg"; return 1; }
+  rm -f "$cfg"
   body=$(cat "$tmp" 2>/dev/null)
   rm -f "$tmp"
   case "$http_status" in
