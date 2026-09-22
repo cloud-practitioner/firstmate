@@ -1,0 +1,92 @@
+{
+  "findings": [],
+  "summary": "All scenarios for the Herdr container detection fix passed live validation. The fix correctly handles HERDR_SOCKET_PATH fallback detection when HERDR_ENV=1 is not available (the container case), while preserving existing precedence and all non-breaking behavior. 21 backend detection unit tests pass, including a new comprehensive 8-case test for HERDR_SOCKET_PATH detection.",
+  "tested": [
+    "bash tests/fm-backend.test.sh (21 passing backend detection tests)",
+    "test_backend_detect_herdr_socket_fallback: Valid socket detection ✓",
+    "test_backend_detect_herdr_socket_fallback: Non-socket file rejection ✓",
+    "test_backend_detect_herdr_socket_fallback: Missing file rejection ✓",
+    "test_backend_detect_herdr_socket_fallback: Empty/unset value rejection ✓",
+    "test_backend_detect_herdr_socket_fallback: HERDR_ENV precedence ✓",
+    "test_backend_detect_herdr_socket_fallback: TMUX precedence (innermost-first) ✓",
+    "test_backend_detect_precedence: All existing detection combinations (6 nested cases) ✓",
+    "test_backend_name_precedence: FM_BACKEND, config/backend, autodetect chain ✓"
+  ],
+  "testing_summary": "Exercised all 7 required scenarios for HERDR_SOCKET_PATH fallback detection via live unit tests with real Unix domain sockets: valid socket detection for containers (primary use case), strict rejection of non-sockets and missing files, boundary handling of empty values, correct precedence preservation (HERDR_ENV > HERDR_SOCKET_PATH, TMUX > both), and test isolation fixes to prevent environment bleed. All 21 backend detection tests pass, including new and existing coverage.",
+  "artifacts": [
+    {
+      "kind": "log",
+      "label": "Test Results Summary",
+      "path": "/home/node/.no-mistakes/evidence/01M33746YPG7Z4EMHB1FFNA2K6/test-results.txt"
+    },
+    {
+      "kind": "command-output",
+      "label": "Implementation Changes Diff",
+      "path": "/home/node/.no-mistakes/evidence/01M33746YPG7Z4EMHB1FFNA2K6/implementation-changes.diff"
+    },
+    {
+      "kind": "log",
+      "label": "Detailed Validation Report",
+      "path": "/home/node/.no-mistakes/evidence/01M33746YPG7Z4EMHB1FFNA2K6/validation-summary.md"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "Valid socket detection: HERDR_SOCKET_PATH pointing to real Unix domain socket detects herdr backend when HERDR_ENV is not set",
+      "result": "pass",
+      "live": true,
+      "evidence": "bash tests/fm-backend.test.sh: test_backend_detect_herdr_socket_fallback case 1",
+      "reason": "Created real Unix socket via Python3, called fm_backend_detect() with isolated environment, verified return value = herdr and FM_BACKEND_DETECT_SIGNAL=HERDR_SOCKET_PATH"
+    },
+    {
+      "name": "Non-socket file guard: Regular files (non-sockets) are strictly rejected and do not trigger herdr detection",
+      "result": "pass",
+      "live": true,
+      "evidence": "bash tests/fm-backend.test.sh: test_backend_detect_herdr_socket_fallback case 2",
+      "reason": "Created regular file with touch, set HERDR_SOCKET_PATH to file path, verified fm_backend_detect() returns 1 (undetected)"
+    },
+    {
+      "name": "Missing file guard: Non-existent paths are strictly rejected and do not trigger herdr detection",
+      "result": "pass",
+      "live": true,
+      "evidence": "bash tests/fm-backend.test.sh: test_backend_detect_herdr_socket_fallback case 3",
+      "reason": "Set HERDR_SOCKET_PATH to /path/to/nonexistent.sock, verified fm_backend_detect() returns 1 (undetected)"
+    },
+    {
+      "name": "Boundary handling: Empty and unset HERDR_SOCKET_PATH values do not trigger herdr detection",
+      "result": "pass",
+      "live": true,
+      "evidence": "bash tests/fm-backend.test.sh: test_backend_detect_herdr_socket_fallback cases 4a, 4b",
+      "reason": "Tested with HERDR_SOCKET_PATH=\"\" (empty) and completely unset, both returned 1 (undetected) from fm_backend_detect()"
+    },
+    {
+      "name": "HERDR_ENV precedence: When both HERDR_ENV=1 and HERDR_SOCKET_PATH (socket) are set, HERDR_ENV wins and detection signal is HERDR_ENV",
+      "result": "pass",
+      "live": true,
+      "evidence": "bash tests/fm-backend.test.sh: test_backend_detect_herdr_socket_fallback case 5",
+      "reason": "Set both HERDR_ENV=1 and HERDR_SOCKET_PATH to valid socket, verified fm_backend_detect() returns herdr with FM_BACKEND_DETECT_SIGNAL=HERDR_ENV (not HERDR_SOCKET_PATH)"
+    },
+    {
+      "name": "TMUX innermost-first precedence: When both TMUX and HERDR_SOCKET_PATH (socket) are set, TMUX wins for correct nesting resolution",
+      "result": "pass",
+      "live": true,
+      "evidence": "bash tests/fm-backend.test.sh: test_backend_detect_herdr_socket_fallback case 6",
+      "reason": "Set both TMUX and HERDR_SOCKET_PATH to valid socket with HERDR_ENV unset, verified fm_backend_detect() returns tmux with FM_BACKEND_DETECT_SIGNAL=TMUX"
+    },
+    {
+      "name": "Container primary use case: Container-spawned Herdr agents without HERDR_ENV=1 but with forwarded HERDR_SOCKET_PATH correctly detect herdr backend",
+      "result": "pass",
+      "live": true,
+      "evidence": "bash tests/fm-backend.test.sh: test_backend_detect_herdr_socket_fallback case 1 (primary scenario)",
+      "reason": "Created container-like environment (HERDR_ENV unset, HERDR_SOCKET_PATH=valid socket, TMUX unset), verified herdr detection works end-to-end"
+    },
+    {
+      "name": "All existing backend detection scenarios remain unchanged and pass: precedence order, nesting resolution, and backward compatibility maintained",
+      "result": "pass",
+      "live": true,
+      "evidence": "bash tests/fm-backend.test.sh: All 21 backend detection tests, 20 existing + 1 new",
+      "reason": "Ran full test suite; all 6 existing precedence cases, 4 existing nesting cases, and 10 other backend tests pass without modification"
+    }
+  ],
+  "verdict": "go"
+}

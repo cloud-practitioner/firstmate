@@ -1,0 +1,80 @@
+=== Backend Detection Unit Tests (fm-backend.test.sh) ===
+
+Test Results Summary:
+✓ fm_backend_name: FM_BACKEND env > config/backend > default tmux
+✓ fm_backend_detect: no markers -> undetected, HERDR_ENV=1 -> herdr, $TMUX -> tmux, CMUX_WORKSPACE_ID -> cmux, nested combinations resolve innermost-first
+✓ fm_backend_detect: HERDR_SOCKET_PATH fallback for containers (valid socket detects herdr, non-socket/missing/empty rejected, HERDR_ENV/TMUX win, signal set correctly)
+✓ fm_backend_detect: falls back to __CFBundleIdentifier=com.cmuxterm.app when CMUX_WORKSPACE_ID is absent (signal bundle-id; foreign bundle ids rejected)
+✓ fm_backend_detect: the cmux fallback signals are macOS-only (inert on a non-Darwin uname)
+✓ fm_backend_detect: an inherited cmux bundle id never outranks $TMUX or HERDR_ENV (tmux/herdr-inside-cmux false positive absorbed)
+✓ fm_backend_detect: ancestry fallback matches the lsappinfo-resolved (bundle-id) cmux app pid in the parent chain
+✓ fm_backend_detect: ancestry fallback matches a bundle-shaped cmux comm path at any install location when lsappinfo cannot resolve a pid
+✓ fm_backend_detect: ancestry fallback stops undetected at launchd (a reparented tmux server never reaches cmux)
+✓ fm_backend_name: a fallback-detected cmux prints a NOTICE naming the fallback signal; the primary-marker notice is unchanged
+✓ fm_backend_name: verified Herdr and tmux stay silent while experimental cmux remains loud
+✓ fm_backend_name: an explicit FM_BACKEND or config/backend setting always wins over runtime auto-detection, including an ambient cmux marker
+✓ fm_backend_validate: implemented adapters accepted, unknown and blocked codex-app backends refused loudly
+✓ zsh: fm_backend_source recognizes known backends and rejects unknown ones
+✓ bash: fm_backend_source recognizes known backends and rejects unknown ones
+✓ fm_backend_validate_spawn: all implemented lifecycle backends are spawn-supported
+✓ fm_meta_get / fm_backend_of_meta: read last key=value and default backend to tmux
+✓ fm_backend_resolve_selector: session:window literal, exact task id first, legacy fm-<id> label fallback, ad hoc bare name via tmux list-windows
+✓ fm_backend_of_selector: exact task ids, legacy fm-<id> labels, and matching explicit targets inherit metadata backend
+✓ fm-send.sh: explicit tmux targets are verified; text types once and submits with Enter
+✓ fm-peek.sh: capture-pane invocation and output are byte-identical old vs new
+
+Total Passing Backend Detection Tests: 21
+
+=== Scenarios Tested ===
+
+1. **Valid Socket Detection**
+   - HERDR_SOCKET_PATH pointing to a Unix domain socket correctly detects herdr backend
+   - FM_BACKEND_DETECT_SIGNAL is set to HERDR_SOCKET_PATH
+   - Result: PASS ✓
+
+2. **Non-Socket File Rejection**
+   - Regular files (non-sockets) are not matched by the HERDR_SOCKET_PATH fallback
+   - Result: PASS ✓
+
+3. **Missing File Rejection**
+   - Non-existent paths are not matched by the HERDR_SOCKET_PATH fallback
+   - Result: PASS ✓
+
+4. **Empty Value Handling**
+   - Empty HERDR_SOCKET_PATH is not matched
+   - Unset HERDR_SOCKET_PATH is not matched
+   - Result: PASS ✓
+
+5. **HERDR_ENV Precedence**
+   - When both HERDR_ENV=1 and HERDR_SOCKET_PATH are set, HERDR_ENV wins
+   - FM_BACKEND_DETECT_SIGNAL is set to HERDR_ENV (not HERDR_SOCKET_PATH)
+   - Preserves existing behavior for normal Herdr shells
+   - Result: PASS ✓
+
+6. **TMUX Precedence**
+   - When both TMUX and HERDR_SOCKET_PATH are set, TMUX wins (innermost-first)
+   - Maintains correct nesting resolution
+   - Result: PASS ✓
+
+7. **Container Scenario (Main Use Case)**
+   - When HERDR_ENV is not set but HERDR_SOCKET_PATH is a valid socket
+   - Backend correctly detects as herdr for container-spawned agents
+   - Result: PASS ✓
+
+8. **Existing Test Isolation**
+   - Updated all existing tests to unset HERDR_SOCKET_PATH
+   - Prevents environment bleed from test runtime environment
+   - Result: PASS ✓
+
+=== Implementation Verification ===
+
+Code Changes in bin/fm-backend.sh (ac156d8):
+- Added fallback check for HERDR_SOCKET_PATH after HERDR_ENV check
+- Uses [ -S "$HERDR_SOCKET_PATH" ] to strictly validate socket files
+- Sets FM_BACKEND_DETECTED and FM_BACKEND_DETECT_SIGNAL appropriately
+- Fallback runs before CMUX check, maintaining correct precedence
+- No impact on existing behavior when HERDR_SOCKET_PATH is not set
+
+Documentation Updates in bin/fm-backend.sh (da281b9):
+- Line 99: Updated comment to mention HERDR_SOCKET_PATH as alternative to HERDR_ENV=1
+- Line 137: Updated FM_BACKEND_DETECT_SIGNAL list to include HERDR_SOCKET_PATH
