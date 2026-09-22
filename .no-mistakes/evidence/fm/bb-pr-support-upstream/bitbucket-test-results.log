@@ -1,0 +1,16 @@
+ok - parser tags a canonical Bitbucket pull request URL correctly
+ok - parser rejects malformed Bitbucket URL shapes
+ok - the ambient environment token wins over .env
+ok - the .env fallback resolves an exported, quoted token
+ok - no token configured is a clean refusal, never an unauthenticated request
+ok - fm_pr_bitbucket_read_record reads an open pull request without error
+ok - fm_pr_bitbucket_read_record reports merged=true only for state=MERGED
+ok - a non-2xx HTTP status is a clean refusal, never a false read
+ok - a non-open pull request refuses the merge before calling the forge
+ok - a FAILED commit status refuses the merge
+ok - an INPROGRESS commit status is not green and refuses the merge
+ok - total silence from commit statuses is refused rather than read as green
+ok - a green Bitbucket pull request merges synchronously and is confirmed landed
+ok - --squash selects Bitbucket's squash merge_strategy
+ok - an accepted asynchronous merge is never reported landed until confirmed; the poll stays armed
+ok - a head that moves between verification and merge refuses rather than merging unverified commits
