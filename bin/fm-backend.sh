@@ -147,9 +147,6 @@ fm_backend_detect() {
     printf 'tmux'
     return 0
   fi
-  # Accept any truthy variant of HERDR_ENV, not just "1", to handle
-  # environment managers (devcontainer, etc.) that may stringify booleans as
-  # "true", "yes", or other truthy values. Explicitly reject falsy variants.
   if [ "${HERDR_ENV:-}" = "1" ]; then
     FM_BACKEND_DETECTED=herdr
     FM_BACKEND_DETECT_SIGNAL=HERDR_ENV
