@@ -157,6 +157,12 @@ fm_backend_detect() {
   # HERDR_SOCKET_PATH is available (volume-mounted or env-forwarded into the
   # container). This handles the case where Herdr spawns a crewmate or Pi
   # process inside a devcontainer and the socket is accessible from within.
+  # bin/backends/herdr.sh's fm_backend_herdr_session() derives the session
+  # name straight from this same HERDR_SOCKET_PATH when HERDR_SESSION is not
+  # separately forwarded, so every downstream operational call agrees with
+  # this detection about which session and socket it is talking to instead of
+  # independently guessing "default" (AGENTS.md task
+  # herdr-container-session-fix).
   if [ -n "${HERDR_SOCKET_PATH:-}" ] && [ -S "$HERDR_SOCKET_PATH" ]; then
     FM_BACKEND_DETECTED=herdr
     FM_BACKEND_DETECT_SIGNAL=HERDR_SOCKET_PATH
