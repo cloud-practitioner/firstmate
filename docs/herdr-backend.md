@@ -22,7 +22,7 @@ Firstmate invokes its CLI as a separate process.
 
 Select Herdr with local `config/backend` containing `herdr`, `FM_BACKEND=herdr` for one launch, or an explicit request to Firstmate.
 A remote second-mate agent is the one case with no choice: it always runs on Herdr, and [`remote-secondmates.md`](remote-secondmates.md) owns that requirement and the readiness its host must meet.
-It is also auto-detected when the primary runs natively under `HERDR_ENV=1` and is not inside tmux.
+It is also auto-detected when the primary runs natively under `HERDR_ENV=1` and is not inside tmux, or when running in a container where `HERDR_SOCKET_PATH` is available but `HERDR_ENV=1` is not injected.
 A tmux pane nested inside Herdr resolves to tmux because the innermost multiplexer wins.
 An auto-detected Herdr spawn stays silent, matching the verified tmux default path.
 
