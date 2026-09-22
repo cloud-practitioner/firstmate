@@ -1,0 +1,125 @@
+# Herdr Container-Detection Fix Validation Report
+
+## Change Summary
+This change brings the Herdr container-detection fix from cloud-practitioner/firstmate PR #2 
+(commit 200e8d7) into the upstream kunchenguid/firstmate repository.
+
+### Key Changes:
+1. bin/fm-backend.sh: Added HERDR_SOCKET_PATH fallback detection
+2. bin/backends/herdr.sh: Added session derivation from socket path
+3. tests/fm-backend.test.sh: Added comprehensive unit tests for socket fallback
+4. tests/fm-backend-herdr-container-session-e2e.test.sh: Added end-to-end container test
+5. Documentation updates in docs/architecture.md, docs/configuration.md, docs/herdr-backend.md
+
+## User Intent
+- Enable Herdr backend auto-detection inside devcontainers
+- When HERDR_ENV=1 is not injected (containers get fresh environment), fallback to HERDR_SOCKET_PATH
+- Maintain backward compatibility: normal Herdr shells still detect via HERDR_ENV=1
+- Ensure operational calls agree on the same session and socket (no silent disconnected servers)
+
+## Validation Results
+
+### Unit Tests: fm_backend_detect (HERDR_SOCKET_PATH fallback)
+All unit tests passed:
+✓ Valid socket file detection
+✓ FM_BACKEND_DETECT_SIGNAL correctly set to HERDR_SOCKET_PATH
+✓ Non-socket files (regular files) properly rejected
+✓ Missing/nonexistent files properly rejected
+✓ Empty HERDR_SOCKET_PATH properly rejected
+✓ Unset HERDR_SOCKET_PATH properly rejected
+✓ HERDR_ENV=1 correctly takes precedence over HERDR_SOCKET_PATH
+✓ TMUX correctly takes precedence over HERDR_SOCKET_PATH (innermost-first rule)
+✓ HERDR_SOCKET_PATH correctly wins over CMUX_WORKSPACE_ID
+
+### Unit Tests: fm_backend_herdr_socket_session_name
+All tests passed:
+✓ Named session path extraction
+✓ Default session path handling (returns empty)
+✓ Invalid path handling (returns empty)
+✓ HERDR_SESSION env var takes precedence
+✓ Socket path derives session when HERDR_SESSION not set
+✓ Defaults to "default" session when nothing is set
+✓ Default socket path returns "default" session
+
+### End-to-End Test: Container Session Binding (fm-backend-herdr-container-session-e2e.test.sh)
+All live Herdr tests passed:
+✓ Resolved isolated lab session's real control-socket path
+✓ fm_backend_herdr_session derives exact lab session from HERDR_SOCKET_PATH alone
+✓ Container-shaped call (only HERDR_SOCKET_PATH set) targets exact real lab session
+✓ Container-shaped call reused already-running server socket (no fresh disconnect)
+
+### Regression Tests: Backend Herdr Adapter (fm-backend-herdr.test.sh)
+All backend herdr tests passed (subset of large test suite):
+✓ Version check accepts installed binary protocol
+✓ Container ensure with session/workspace creation
+✓ Session status normalization
+✓ Container ensure idempotence
+✓ Task tab creation and label handling
+✓ Secondmate home workspace isolation
+✓ Send/capture/kill operations
+✓ Path resolution
+✓ Busy state detection
+✓ Composer state detection
+✓ Transition handling
+
+### Smoke Tests: Herdr Backend (fm-backend-herdr-smoke.test.sh)
+All smoke tests passed:
+✓ Version check
+✓ Container ensure and workspace setup
+✓ Session status
+✓ Idempotence
+✓ Task creation and tab management
+✓ Secondmate workspace isolation
+✓ Live task listing
+✓ Command execution and capture
+✓ Current path reading
+✓ Pane killing
+
+## Documentation
+Updated in 3 documentation files:
+- docs/architecture.md: Added HERDR_SOCKET_PATH to auto-detection documentation
+- docs/configuration.md: Added HERDR_SOCKET_PATH as container fallback with precedence details
+- docs/herdr-backend.md: Added detailed container fallback behavior and session derivation logic
+
+## Behavior Verification
+
+### 1. Normal Herdr Operation (HERDR_ENV=1 set)
+- Backend detection still works unchanged
+- No regression in existing herdr workflows
+- HERDR_ENV=1 takes precedence over HERDR_SOCKET_PATH
+
+### 2. Container Operation (HERDR_SOCKET_PATH only)
+- Detection succeeds with valid socket file
+- Session name correctly derived from socket path
+- Operational calls resolve to correct session
+- No silent creation of disconnected servers
+
+### 3. Precedence (Innermost-First)
+- TMUX > HERDR_ENV > HERDR_SOCKET_PATH > CMUX_WORKSPACE_ID
+- Nested multiplexers correctly resolved
+- No false positives
+
+### 4. Safety
+- Non-socket files rejected
+- Missing files rejected  
+- Empty/unset variables rejected
+- Default fallback when socket path doesn't match known pattern
+- Pre-operational check ensures container env matches real session before any operational call
+
+## Architecture Compliance
+✓ Maintains innermost-first precedence rule
+✓ Follows existing silent-auto-detection pattern (like tmux)
+✓ Extends existing detection pattern (like HERDR_ENV)
+✓ Preserves session resolution consistency across all operational calls
+✓ No changes to public API or behavior contracts
+
+## Test Coverage
+- 9 comprehensive unit tests for detection logic
+- 7 unit tests for session derivation
+- 4 live end-to-end tests with real herdr binary
+- Numerous regression tests (herdr adapter comprehensive test suite)
+- 16+ smoke tests validating real herdr operations
+
+## Conclusion
+The change successfully enables Herdr container detection while maintaining full backward 
+compatibility, proper precedence ordering, and safety guarantees. All validation tests pass.
