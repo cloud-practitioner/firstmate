@@ -333,11 +333,24 @@ PYSOCK
     || fail "fm_backend_detect should succeed when both TMUX and HERDR_SOCKET_PATH are set"
   [ "$out" = tmux ] || fail "TMUX should win over HERDR_SOCKET_PATH (innermost-first), got '$out'"
 
+  # Test 9: HERDR_SOCKET_PATH fallback still wins over cmux's primary marker
+  # CMUX_WORKSPACE_ID (review gap noted for PR #2: precedence was exercised
+  # against TMUX and HERDR_ENV above, but never against cmux's own primary
+  # signal).
+  out=$(unset TMUX HERDR_ENV; CMUX_WORKSPACE_ID='fake-uuid' HERDR_SOCKET_PATH="$socket_file" fm_backend_detect) \
+    || fail "fm_backend_detect should succeed when both CMUX_WORKSPACE_ID and HERDR_SOCKET_PATH are set"
+  [ "$out" = herdr ] || fail "HERDR_SOCKET_PATH should win over CMUX_WORKSPACE_ID (checked first), got '$out'"
+  (
+    unset TMUX HERDR_ENV
+    CMUX_WORKSPACE_ID='fake-uuid' HERDR_SOCKET_PATH="$socket_file" fm_backend_detect >/dev/null || exit 1
+    [ "$FM_BACKEND_DETECT_SIGNAL" = HERDR_SOCKET_PATH ] || exit 2
+  ) || fail "HERDR_SOCKET_PATH should win over CMUX_WORKSPACE_ID (signal check, subshell exit $?)"
+
   # Cleanup
   rm -f "$socket_file" "$regular_file"
   rmdir "$dir"
 
-  pass "fm_backend_detect: HERDR_SOCKET_PATH fallback for containers (valid socket detects herdr, non-socket/missing/empty rejected, HERDR_ENV/TMUX win, signal set correctly)"
+  pass "fm_backend_detect: HERDR_SOCKET_PATH fallback for containers (valid socket detects herdr, non-socket/missing/empty rejected, HERDR_ENV/TMUX win, HERDR_SOCKET_PATH wins over CMUX_WORKSPACE_ID, signal set correctly)"
 }
 
 # fm_backend_detect's cmux FALLBACK signals (docs/cmux-backend.md "Runtime
