@@ -153,6 +153,16 @@ fm_backend_detect() {
     printf 'herdr'
     return 0
   fi
+  # Fallback for containers where Herdr doesn't inject HERDR_ENV=1 but
+  # HERDR_SOCKET_PATH is available (volume-mounted or env-forwarded into the
+  # container). This handles the case where Herdr spawns a crewmate or Pi
+  # process inside a devcontainer and the socket is accessible from within.
+  if [ -n "${HERDR_SOCKET_PATH:-}" ] && [ -S "$HERDR_SOCKET_PATH" ]; then
+    FM_BACKEND_DETECTED=herdr
+    FM_BACKEND_DETECT_SIGNAL=HERDR_SOCKET_PATH
+    printf 'herdr'
+    return 0
+  fi
   if [ -n "${CMUX_WORKSPACE_ID:-}" ]; then
     FM_BACKEND_DETECTED=cmux
     FM_BACKEND_DETECT_SIGNAL=CMUX_WORKSPACE_ID
