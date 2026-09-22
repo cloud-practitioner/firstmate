@@ -161,8 +161,8 @@ fm_backend_detect() {
   # name straight from this same HERDR_SOCKET_PATH when HERDR_SESSION is not
   # separately forwarded, so every downstream operational call agrees with
   # this detection about which session and socket it is talking to instead of
-  # independently guessing "default" (AGENTS.md task
-  # herdr-container-session-fix).
+  # independently guessing "default". See tests/fm-backend-herdr-container-session-e2e.test.sh
+  # for the regression test proof.
   if [ -n "${HERDR_SOCKET_PATH:-}" ] && [ -S "$HERDR_SOCKET_PATH" ]; then
     FM_BACKEND_DETECTED=herdr
     FM_BACKEND_DETECT_SIGNAL=HERDR_SOCKET_PATH

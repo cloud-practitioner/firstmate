@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # tests/fm-backend-herdr-container-session-e2e.test.sh - real-herdr end-to-end
-# proof for the container session-binding fix (AGENTS.md task
-# herdr-container-session-fix, follow-up to PR #2's HERDR_SOCKET_PATH
-# detection fallback).
+# proof for the container session-binding fix (PR #2's HERDR_SOCKET_PATH
+# detection fallback + the session-resolution completeness gap).
 #
 # PR #2 taught bin/fm-backend.sh's fm_backend_detect() to report "herdr" for a
 # container that only has HERDR_SOCKET_PATH forwarded (no HERDR_ENV/HERDR_SESSION),

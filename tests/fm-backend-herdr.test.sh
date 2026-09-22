@@ -236,10 +236,10 @@ herdr_env() {  # <name>
 }
 
 # --- fm_backend_herdr_session: container socket-derived session binding -----
-# (AGENTS.md task herdr-container-session-fix / PR #2 completeness gap) An
-# explicit HERDR_SESSION still wins outright. Otherwise, when only
-# HERDR_SOCKET_PATH was forwarded (the container detection fallback in
-# bin/fm-backend.sh's fm_backend_detect), the session name is derived
+# (PR #2 completeness gap / see tests/fm-backend-herdr-container-session-e2e.test.sh
+# for live herdr proof) An explicit HERDR_SESSION still wins outright.
+# Otherwise, when only HERDR_SOCKET_PATH was forwarded (the container detection
+# fallback in bin/fm-backend.sh's fm_backend_detect), the session name is derived
 # directly from the verified "<config_root>/sessions/<name>/herdr.sock"
 # socket-path shape (docs/verification/runtime-backends.md) so every
 # downstream herdr call agrees with detection about which session and socket
