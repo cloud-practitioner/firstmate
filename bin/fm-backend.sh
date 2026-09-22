@@ -150,15 +150,12 @@ fm_backend_detect() {
   # Accept any truthy variant of HERDR_ENV, not just "1", to handle
   # environment managers (devcontainer, etc.) that may stringify booleans as
   # "true", "yes", or other truthy values. Explicitly reject falsy variants.
-  case "${HERDR_ENV:-}" in
-    ''|0|false|no|False|No|NO) : ;; # falsy or unset: skip herdr
-    *)
-      FM_BACKEND_DETECTED=herdr
-      FM_BACKEND_DETECT_SIGNAL=HERDR_ENV
-      printf 'herdr'
-      return 0
-      ;;
-  esac
+  if [ "${HERDR_ENV:-}" = "1" ]; then
+    FM_BACKEND_DETECTED=herdr
+    FM_BACKEND_DETECT_SIGNAL=HERDR_ENV
+    printf 'herdr'
+    return 0
+  fi
   if [ -n "${CMUX_WORKSPACE_ID:-}" ]; then
     FM_BACKEND_DETECTED=cmux
     FM_BACKEND_DETECT_SIGNAL=CMUX_WORKSPACE_ID
