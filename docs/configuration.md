@@ -424,7 +424,7 @@ New spawns choose the backend in this order:
    A later task cannot inherit that authority by analogy.
 2. `FM_BACKEND`.
 3. The first non-empty line of local, gitignored `config/backend`.
-4. Runtime auto-detection from `$TMUX`, `HERDR_ENV=1`, or cmux runtime signals.
+4. Runtime auto-detection from `$TMUX`, `HERDR_ENV=1` (with `HERDR_SOCKET_PATH` as a fallback for containers where `HERDR_ENV=1` is not injected), or cmux runtime signals.
 5. Default `tmux`.
 
 If more than one runtime marker is present, detection resolves innermost-first: `$TMUX` is checked before `HERDR_ENV=1`, which is checked before cmux's primary `CMUX_WORKSPACE_ID` marker and its documented fallback signals - tmux or herdr started from inside a cmux terminal is the innermost, currently-executing layer, while cmux itself (a terminal application, not a nestable multiplexer) is always checked last.
@@ -521,7 +521,7 @@ The `/afk` sub-supervisor injects escalation digests into firstmate's own pane i
 It currently supports only `tmux` and `herdr` supervisor panes.
 
 Set `FM_SUPERVISOR_BACKEND=tmux|herdr` and `FM_SUPERVISOR_TARGET=<target>` to override both axes explicitly; for herdr the target is `"<session>:<pane-id>"`.
-Without overrides, backend detection uses `$TMUX_PANE` first, then `HERDR_ENV=1` with `HERDR_PANE_ID`, then falls back to `tmux`.
+Without overrides, backend detection uses `$TMUX_PANE` first, then `HERDR_ENV=1` with `HERDR_PANE_ID` (or `HERDR_SOCKET_PATH` as a fallback for containers), , then falls back to `tmux`.
 
 That keeps a tmux pane nested inside herdr on the tmux transport, matching the runtime backend's innermost-first rule.
 Target detection uses `FM_SUPERVISOR_TARGET`, then `$TMUX_PANE`, then `"${HERDR_SESSION:-default}:${HERDR_PANE_ID}"` under herdr, then the legacy `firstmate:0` tmux fallback with a warning.
