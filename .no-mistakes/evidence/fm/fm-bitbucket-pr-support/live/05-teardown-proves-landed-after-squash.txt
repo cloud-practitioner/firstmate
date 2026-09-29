@@ -1,0 +1,58 @@
+# after the squash merge, the source branch fm/task-bb1 is deleted on origin and pruned locally;
+# the task commits exist on no remote - only the squash commit on origin/main carries the content
+$ git -C wt-bb1 branch -r --contains HEAD   # (empty = work on no remote)
+$ git -C wt-bb1 log --oneline origin/main..HEAD
+7082131 polish feature
+1734950 add feature
+
+$ fm-teardown.sh task-bb1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-lab.fka9Bl
+WARNING: watcher still down (same stale episode; last beat: 89s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+WARNING: watcher still down (same stale episode; last beat: 91s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+demo: synced d92541e..e65b17d
+teardown task-bb1 complete (window firstmate:fm-task-bb1, worktree /tmp/fm-lab.fka9Bl/ext/wt-bb1)
+Backlog: task-bb1 is closed in /tmp/fm-lab.fka9Bl/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+exit=0
+
+--- emulator request log ---
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+
+$ ls ext/  (worktree gone?)
+bb-requests.log
+bb-state.json
+curl-argv.log
+emulator.out
+emulator.pid
+fmexec
+fmrun
+origin.git
+stub-calls.log
+wt-bb1
+/tmp/fm-lab.fka9Bl/projects/demo e65b17d [main]
+/tmp/fm-lab.fka9Bl/ext/wt-bb1    7082131 (detached HEAD)
+
+$ cat data/backlog.md
+# Backlog
+
+## In flight
+## Queued
+## Done
+- [x] task-bb1 - Bitbucket lab task (kind: ship) (done 2026-09-29)
+  PR https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7
+
+$ ls state/
+.guard-watcher-stale-banner
+.last-watcher-beat
+.wake-queue
+.wake-queue.seq
+.watcher-down
+contributions.check-trust
+contributions.check.sh
+home-summary.json
+terminal-outcomes
+
+--- external stub calls ---
+lab stub: no-mistakes axi status
+lab stub: treehouse return --force /tmp/fm-lab.fka9Bl/ext/wt-bb1

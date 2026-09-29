@@ -1,0 +1,45 @@
+$ fm-pr-check.sh task-bb2 <pr 8 url>
+armed: state/task-bb2.check.sh
+exit=0
+recorded: project=/tmp/fm-lab.fka9Bl/projects/demo pr=https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/8 pr_head=3cebbbbf38cb2d4902a3169589ca4578f70bd4d9 
+pipeline pushed 1a0e52e00d4425ea45ec0cab09ced82507a66aa4 to origin fm/task-bb2; local copy has it? no
+
+$ fm-review-diff.sh task-bb2   (stderr shown separately)
+exit=0
+diff base: origin/main
+ two.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/two.txt b/two.txt
+new file mode 100644
+index 0000000..8f74bac
+--- /dev/null
++++ b/two.txt
+@@ -0,0 +1,2 @@
++feature two
++pipeline-fixed line
+--- stderr lines mentioning head/warning (excluding watcher banner) ---
+(none)
+
+# adversarial: live head unreadable (credential email unset) -> recorded pr_head with a warning
+$ NO_MISTAKES_BITBUCKET_EMAIL= fm-review-diff.sh task-bb2
+exit=0
+diff base: origin/main
+ two.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/two.txt b/two.txt
+new file mode 100644
+index 0000000..cdbe4fd
+--- /dev/null
++++ b/two.txt
+@@ -0,0 +1 @@
++feature two
+--- stderr (excluding watcher banner) ---
+warning: could not read the live head of https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/8; falling back to its recorded pr_head
+
+--- emulator request log ---
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/3cebbbbf38cb?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d44?fields=hash auth=ok

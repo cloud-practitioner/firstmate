@@ -1,0 +1,24 @@
+$ fm-pr-merge.sh task-bb2 <pr 8 url> --attended-override -- --squash --delete-branch
+armed: state/task-bb2.check.sh
+verified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/8 is open, with every unwaived build green and every merge check met at head 1a0e52e00d4425ea45ec0cab09ced82507a66aa4
+verified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/8 is merged at the verified head 1a0e52e00d4425ea45ec0cab09ced82507a66aa4
+exit=0
+
+--- emulator request log ---
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d44?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d44?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d4425ea45ec0cab09ced82507a66aa4/statuses?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/branch-restrictions?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d44?fields=hash auth=ok
+POST /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8/merge auth=ok body={"type":"pullrequest","close_source_branch":true,"merge_strategy":"squash"}
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+
+$ git -C origin.git log --oneline -2 release
+06cadca Merged in fm/task-bb2 (pull request #8)
+e65b17d Merged in fm/task-bb1 (pull request #7)
+$ git -C origin.git branch   # fm/task-bb2 deleted by close_source_branch
+* main
+  release

@@ -1,0 +1,51 @@
+# PR now: ready, 3/3 builds SUCCESSFUL, reviewer1 approved; restrictions unchanged (3 builds, no changes requested)
+$ fm-pr-merge.sh task-bb1 <url> -- --squash
+WARNING: watcher still down (same stale episode; last beat: 71s ago, grace 300s) - full banner already printed this episode.
+armed: state/task-bb1.check.sh
+verified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head 7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612
+verified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head 7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612
+exit=0
+
+--- emulator request log ---
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3c?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3c?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100&page=2 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100&page=3 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/branch-restrictions?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3c?fields=hash auth=ok
+POST /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7/merge auth=ok body={"type":"pullrequest","close_source_branch":false,"merge_strategy":"squash"}
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+
+$ git -C origin.git log --oneline main
+e65b17d Merged in fm/task-bb1 (pull request #7)
+d92541e readme
+876aa22 baseline
+$ git -C origin.git branch   # source branch kept (close_source_branch=false)
+  fm/task-bb1
+* main
+
+$ ls state/
+.guard-watcher-stale-banner
+.last-watcher-beat
+.wake-queue
+.wake-queue.seq
+.watcher-down
+contributions.check-trust
+contributions.check.sh
+task-bb1.check.sh
+task-bb1.merge-authority
+task-bb1.meta
+task-bb1.pr-poll
+task-bb1.pr-poll-merge-notified
+task-bb1.pr-poll-registration
+
+$ bash state/task-bb1.check.sh   # merge poll after the merge
+merged
+exit=0
+
+$ fm-pr-state.sh <url>
+STATE: merged

@@ -1,0 +1,47 @@
+# adversarial A: merge without the credential
+$ NO_MISTAKES_BITBUCKET_API_TOKEN= fm-pr-merge.sh task-bb2 <pr 8 url>
+error: merging a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit=1
+API requests made: 0
+
+# adversarial B: base branch release requires 1 passing build, none reported at the live head
+$ fm-pr-merge.sh task-bb2 <pr 8 url>
+armed: state/task-bb2.check.sh
+notice: recorded head 3cebbbbf38cb2d4902a3169589ca4578f70bd4d9 disagrees with the live head 1a0e52e00d4425ea45ec0cab09ced82507a66aa4; verifying the live head
+error: refusing to merge https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/8
+  - base branch release requires 1 successful builds, and 0 reported at head 1a0e52e00d4425ea45ec0cab09ced82507a66aa4
+exit=1
+
+# adversarial C: checks green, but Bitbucket itself refuses the merge request
+$ fm-pr-merge.sh task-bb2 <pr 8 url>
+armed: state/task-bb2.check.sh
+verified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/8 is open, with every unwaived build green and every merge check met at head 1a0e52e00d4425ea45ec0cab09ced82507a66aa4
+error: Bitbucket refused the merge request for https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/8 (HTTP 400)
+error: Bitbucket's own message follows, quoted: > There are merge conflicts.
+exit=1
+
+# adversarial D: an argument with no Bitbucket meaning
+$ fm-pr-merge.sh task-bb2 <pr 8 url> -- --admin
+error: extra merge arguments must not request auto-merge, a protection bypass, or branch deletion; pass --attended-override only for an explicit captain instruction
+exit=1
+
+PR 8 state in emulator: OPEN
+origin release: e65b17d Merged in fm/task-bb1 (pull request #7)
+
+--- emulator request log ---
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d44?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d44?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d4425ea45ec0cab09ced82507a66aa4/statuses?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/branch-restrictions?pagelen=100 auth=ok
+POST /_control auth=BAD body={"statuses":{"1a0e52e00d4425ea45ec0cab09ced82507a66aa4":[{"key":"pipeline","state":"SUCCESSFUL"}]},"forge_refuses_merge":"There are merge conflicts."}
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d44?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d44?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d4425ea45ec0cab09ced82507a66aa4/statuses?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/branch-restrictions?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/1a0e52e00d44?fields=hash auth=ok
+POST /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8/merge auth=ok body={"type":"pullrequest","close_source_branch":false}

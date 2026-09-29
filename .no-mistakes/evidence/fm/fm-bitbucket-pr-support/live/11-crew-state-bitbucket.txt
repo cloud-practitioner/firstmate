@@ -1,0 +1,11 @@
+# task-bb4: a terminal passed no-mistakes run (external CLI stubbed) whose PR is Bitbucket PR 8
+$ fm-crew-state.sh task-bb4   # PR 8 is MERGED in Bitbucket
+state: done · source: run-step · run passed: PR merged
+$ fm-crew-state.sh task-bb4   # PR 8 flipped to DECLINED
+state: done · source: run-step · run passed: PR closed
+$ NO_MISTAKES_BITBUCKET_API_TOKEN= fm-crew-state.sh task-bb4   # no credential
+state: done · source: run-step · run passed: PR state unknown (unreadable)
+
+--- emulator request log ---
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8?fields=id,state auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/8?fields=id,state auth=ok

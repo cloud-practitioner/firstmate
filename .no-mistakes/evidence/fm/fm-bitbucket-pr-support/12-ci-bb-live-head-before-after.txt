@@ -1,0 +1,26 @@
+# CI failure reproduction: 'Behavior portable parallel 1' / bb-live-head
+# This host's harness (pi) is not one fm-harness.sh recognises, so, as on the GitHub runner, fm-guard prints the full
+# WATCHER DOWN banner (it contains 'This is a supervision warning only'), live from the lab above:
+●  This is a supervision warning only; the guarded operation WILL still run.
+
+## tests/fm-review-diff.test.sh as of 53485c1 (bare 'warning' assertion) run on this host:
+ok - fm-review-diff falls back to recorded pr_head when pull head cannot be fetched
+ok - fm-review-diff fetches refs/pull/<n>/head when pr_head= is absent
+ok - fm-review-diff prefers freshly fetched PR head over a stale recorded pr_head=
+ok - fm-review-diff without pr= keeps the worktree-branch diff
+ok - fm-review-diff falls back to local branch with a warning when PR head is unreachable
+ok - fm-review-diff reviews the meta-recorded ship branch even when the worktree HEAD moved off it
+ok - fm-review-diff refuses a corrupt recorded ship branch instead of reviewing the wrong content
+not ok - bb-live-head: a readable live head must not warn (unexpected: 'warning')
+
+## tests/fm-review-diff.test.sh at HEAD e4cb022 (assertion narrowed to the two fallback warnings) run on this host:
+ok - fm-review-diff falls back to recorded pr_head when pull head cannot be fetched
+ok - fm-review-diff fetches refs/pull/<n>/head when pr_head= is absent
+ok - fm-review-diff prefers freshly fetched PR head over a stale recorded pr_head=
+ok - fm-review-diff without pr= keeps the worktree-branch diff
+ok - fm-review-diff falls back to local branch with a warning when PR head is unreachable
+ok - fm-review-diff reviews the meta-recorded ship branch even when the worktree HEAD moved off it
+ok - fm-review-diff refuses a corrupt recorded ship branch instead of reviewing the wrong content
+ok - fm-review-diff reviews a Bitbucket pull request's live head over a stale recorded pr_head=
+ok - fm-review-diff falls back to a Bitbucket task's recorded pr_head= only with a warning
+ok - fm-review-diff claims a Bitbucket recorded-head fallback only when it uses that head

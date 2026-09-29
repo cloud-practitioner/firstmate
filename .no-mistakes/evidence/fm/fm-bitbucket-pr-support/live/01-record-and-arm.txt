@@ -1,0 +1,41 @@
+$ fm-pr-check.sh task-bb1 https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 9s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3PAJ0WABS3J3HKA55KCZKXE/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3PAJ0WABS3J3HKA55KCZKXE/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+armed: state/task-bb1.check.sh
+exit=0
+
+$ cat state/task-bb1.meta
+window=firstmate:fm-task-bb1
+endpoint_task_id=task-bb1
+worktree=/tmp/fm-lab.fka9Bl/ext/wt-bb1
+project=/tmp/fm-lab.fka9Bl/projects/demo
+kind=ship
+mode=no-mistakes
+spawn_gen=lab-task-bb1
+pr=https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7
+pr_head=7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612
+
+$ ls state/
+.guard-watcher-stale-banner
+.last-watcher-beat
+contributions.check-trust
+contributions.check.sh
+task-bb1.check.sh
+task-bb1.meta
+task-bb1.pr-poll
+task-bb1.pr-poll-registration
+
+$ head -1 state/task-bb1.pr-poll
+bitbucket
+
+local HEAD of worktree: 7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612
+
+--- emulator request log ---
+GET /2.0/repositories/x/y/pullrequests/7 auth=BAD
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3c?fields=hash auth=ok

@@ -1,0 +1,25 @@
+$ bash state/task-bb1.check.sh   # the armed merge poll, while the PR is OPEN
+exit=0 (no output = no wake)
+
+$ fm-pr-state.sh <url>   # clean open PR, 2 green builds (paginated 1 per page)
+exit=0 (no output = no blockers)
+
+$ fm-pr-state.sh <url>   # after: draft, pipeline FAILED, deploy INPROGRESS, reviewer1 requested changes
+DRAFT: pull request is not ready for review
+CHECK: pipeline (FAILED)
+CHECK: deploy (INPROGRESS)
+REVIEW: reviewer1 CHANGES_REQUESTED
+exit=0
+
+--- emulator request log ---
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7?fields=id,state auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3c?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100&page=2 auth=ok
+POST /_control auth=BAD body={"statuses":{"7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612":[{"key":"pipeline","name":"Pipeline #12","state":"FAILED"},{"key":"lint","state":"SUCCESSFUL"},{"key":"deploy","state":"INPROGRESS"}]},"pr":{"draft":true,"participants":[{"user":{"nickname":"reviewer1","uuid":"{r1}"},"role":"REVIEWER","approved":false,"state":"changes_requested"}]}}
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3c?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100&page=2 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100&page=3 auth=ok

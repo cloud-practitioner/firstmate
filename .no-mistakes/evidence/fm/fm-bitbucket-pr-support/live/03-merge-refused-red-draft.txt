@@ -1,0 +1,25 @@
+# restrictions on main: require 3 passing builds (glob ma*), require no changes requested
+# PR: draft, pipeline FAILED, deploy INPROGRESS, lint SUCCESSFUL, reviewer1 changes_requested
+$ fm-pr-merge.sh task-bb1 <url>
+WARNING: watcher still down (same stale episode; last beat: 58s ago, grace 300s) - full banner already printed this episode.
+armed: state/task-bb1.check.sh
+error: refusing to merge https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7
+  - the pull request is a draft, or its draft state could not be read
+  - build 'pipeline' is FAILED, not SUCCESSFUL
+  - build 'deploy' is INPROGRESS, not SUCCESSFUL
+  - base branch main requires 3 successful builds, and 1 reported at head 7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612
+  - base branch main requires no requested changes, and changes are requested by reviewer1
+error: these builds are not green: pipeline, deploy
+exit=1
+
+--- emulator request log (no POST .../merge expected) ---
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3c?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/pullrequests/7 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3c?fields=hash auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100&page=2 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/commit/7082131e3e3ce5bbd495d1e31d3db3e7b2c7a612/statuses?pagelen=100&page=3 auth=ok
+GET /2.0/repositories/iqxbusiness/supplier_online_orchestration_api/branch-restrictions?pagelen=100 auth=ok
+
+origin main: d92541e readme
