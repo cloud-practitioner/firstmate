@@ -297,7 +297,63 @@ test_spawn_home_layout() {
   pass "spawn-home layout writes harness pin, beat, and brief"
 }
 
+# The real strip-hook installer leaves its directory read-only, which a plain
+# `rm -rf` cannot remove; fm_test_remove_tree must remove the whole tree while
+# leaving a read-only directory reached only through a symlink untouched.
+test_remove_tree_clears_read_only_strip_hooks() {
+  local tree="$TMP_ROOT/remove-tree" outside="$TMP_ROOT/remove-tree-outside" mode
+  mkdir -p "$tree/home/state" "$outside/locked"
+  fm_git_init_commit "$tree/wt"
+  "$ROOT/bin/fm-git-strip-ai-trailers.sh" install "$tree/home/state/anchor.git-hooks" "$tree/wt" \
+    || fail "strip-hook installer failed"
+  [ -w "$tree/home/state/anchor.git-hooks" ] \
+    && fail "strip-hook directory should be read-only, so this case would be vacuous"
+  chmod 500 "$outside/locked"
+  ln -s "$outside/locked" "$tree/home/state/outside-link"
+  fm_test_remove_tree "$tree" || fail "fm_test_remove_tree reported failure"
+  [ ! -e "$tree" ] && [ ! -L "$tree" ] || fail "fm_test_remove_tree left $tree behind"
+  mode=$(stat -c %a "$outside/locked" 2>/dev/null || stat -f %Lp "$outside/locked")
+  [ "$mode" = 500 ] || fail "fm_test_remove_tree changed a directory outside the tree to $mode"
+  chmod 700 "$outside/locked"
+  pass "fm_test_remove_tree removes a tree holding read-only strip hooks and leaves outside targets alone"
+}
+
+# A real spawn that is never torn down leaves its read-only strip hooks inside
+# the fixture and its staged launch directory outside it; the fixture helpers
+# must remove both even after the task record is gone.
+test_remove_tree_clears_untorn_spawn() {
+  local root home proj wt fakebin id=fixtreespawn out launch_dirs dir
+  root=$(fm_test_tmproot fm-test-fixture-spawn)
+  home="$root/home"
+  proj="$root/project"
+  wt="$root/wt"
+  fakebin=$(make_spawn_fakebin "$root/fake" claude)
+  fm_test_spawn_home "$home" claude
+  fm_git_worktree "$proj" "$wt" "wt-$id"
+  fm_test_spawn_brief "$home" "$id"
+  out=$(fm_test_run_spawn "$home" "$wt" "$fakebin" "$id" "$proj" --mode no-mistakes --yolo off) \
+    || fail "fixture spawn failed: $out"
+  [ -w "$home/state/$id.git-hooks" ] \
+    && fail "spawn should leave its strip-hook directory read-only, so this case would be vacuous"
+  launch_dirs=$(find /tmp -maxdepth 1 -type d -name "fm-$id+*" -newer "$root/.fm-test-fixture")
+  [ -n "$launch_dirs" ] || fail "spawn staged no launch directory, so this case would be vacuous"
+  # The suite may delete the task record, as the Herdr presentation suite does.
+  rm -f "$home/state/$id.meta"
+  fm_test_remove_spawn_launch_dirs "$root"
+  fm_test_remove_tree "$root" || fail "fm_test_remove_tree reported failure"
+  [ ! -e "$root" ] || fail "fm_test_remove_tree left $root behind"
+  while IFS= read -r dir; do
+    [ ! -e "$dir" ] || fail "fm_test_remove_spawn_launch_dirs left $dir behind"
+  done <<EOF
+$launch_dirs
+EOF
+  rmdir "/tmp/fm-$id/gotmp" "/tmp/fm-$id" 2>/dev/null || true
+  pass "fixture helpers remove an untorn spawn's read-only strip hooks and staged launch directory"
+}
+
 test_git_config_isolation || fail "Git fixture config isolation"
+test_remove_tree_clears_untorn_spawn
+test_remove_tree_clears_read_only_strip_hooks
 test_touch_epoch_preserves_repeated_dst_hour
 test_fixture_commit_starts_no_background_maintenance
 test_no_mistakes_version_constant

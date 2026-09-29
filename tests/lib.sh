@@ -38,6 +38,11 @@ umask 022
 # shellcheck source=tests/git-config-helpers.sh
 . "$(dirname "${BASH_SOURCE[0]}")/git-config-helpers.sh"
 
+# fm_test_remove_tree, which removes a fixture tree even when it holds a
+# spawn-owned read-only directory.
+# shellcheck source=tests/fixture-tree-helpers.sh
+. "$(dirname "${BASH_SOURCE[0]}")/fixture-tree-helpers.sh"
+
 # Exempt firstmate's own test suite from the gate-lifecycle refusal
 # (bin/fm-gate-refuse-lib.sh). The no-mistakes gate runs this suite FROM a gate
 # worktree - the exact environment that guard refuses - so without this every
@@ -206,16 +211,6 @@ fm_test_reap_watchers() {
 # its owner's guard reaps it.
 FM_TEST_STUB_MAX_BLOCK_SECONDS=${FM_TEST_STUB_MAX_BLOCK_SECONDS:-120}
 export FM_TEST_STUB_MAX_BLOCK_SECONDS
-
-# Remove a fixture tree even when it holds a read-only directory, such as the
-# spawn-owned state/<id>.git-hooks strip directory.
-fm_test_remove_tree() {
-  local dir=$1
-  if [ -d "$dir" ] && [ ! -L "$dir" ]; then
-    find "$dir" -type d -exec chmod u+rwx {} + 2>/dev/null || true
-  fi
-  rm -rf "$dir"
-}
 
 fm_test_cleanup() {
   local d
