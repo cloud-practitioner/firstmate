@@ -38,8 +38,9 @@ umask 022
 # shellcheck source=tests/git-config-helpers.sh
 . "$(dirname "${BASH_SOURCE[0]}")/git-config-helpers.sh"
 
-# fm_test_remove_tree, which removes a fixture tree even when it holds a
-# spawn-owned read-only directory.
+# fm_test_remove_tree and fm_test_remove_spawn_launch_dirs, which remove a
+# fixture tree even when it holds a spawn-owned read-only directory, along with
+# the launch directories its real spawns staged outside it.
 # shellcheck source=tests/fixture-tree-helpers.sh
 . "$(dirname "${BASH_SOURCE[0]}")/fixture-tree-helpers.sh"
 
@@ -217,11 +218,15 @@ fm_test_cleanup() {
   fm_test_reap_watchers
   fm_test_reap_procevent_homes
   for d in "${FM_TEST_CLEANUP_DIRS[@]:-}"; do
-    [ -n "$d" ] && fm_test_remove_tree "$d"
+    [ -n "$d" ] || continue
+    fm_test_remove_spawn_launch_dirs "$d"
+    fm_test_remove_tree "$d"
   done
   if [ -f "$FM_TEST_CLEANUP_REGISTRY" ]; then
     while IFS= read -r d; do
-      [ -n "$d" ] && fm_test_remove_tree "$d"
+      [ -n "$d" ] || continue
+      fm_test_remove_spawn_launch_dirs "$d"
+      fm_test_remove_tree "$d"
     done < "$FM_TEST_CLEANUP_REGISTRY"
     rm -f "$FM_TEST_CLEANUP_REGISTRY"
   fi
@@ -275,6 +280,7 @@ fm_test_reap_orphans() {
     mtime=$(stat -c %Y "$marker" 2>/dev/null || stat -f %m "$marker" 2>/dev/null) || continue
     [ $((now - mtime)) -ge "$FM_TEST_ORPHAN_MAX_AGE_SECONDS" ] || continue
     dir=$(dirname "$marker")
+    fm_test_remove_spawn_launch_dirs "$dir"
     fm_test_remove_tree "$dir"
   done
 }

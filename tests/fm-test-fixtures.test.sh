@@ -323,37 +323,41 @@ test_remove_tree_clears_read_only_strip_hooks() {
 }
 
 # A real spawn that is never torn down leaves its read-only strip hooks inside
-# the fixture and its staged launch directory outside it; the fixture helpers
-# must remove both even after the task record is gone.
+# the fixture and its staged launch directory outside it; a suite's own exit
+# cleanup must remove both even after the task record is gone.
 test_remove_tree_clears_untorn_spawn() {
-  local root home proj wt fakebin id="fixtreespawn$$" out launch_dir hash
+  local id="fixtreespawn$$" out root launch_dir
   if [ "$(id -u)" = 0 ]; then
-    pass "fixture helpers remove an untorn spawn's read-only strip hooks and staged launch directory (skipped as root)"
+    pass "suite exit cleanup removes an untorn spawn's read-only strip hooks and staged launch directory (skipped as root)"
     return 0
   fi
-  root=$(fm_test_tmproot fm-test-fixture-spawn)
-  home="$root/home"
-  proj="$root/project"
-  wt="$root/wt"
-  fakebin=$(make_spawn_fakebin "$root/fake" claude)
-  fm_test_spawn_home "$home" claude
-  fm_git_worktree "$proj" "$wt" "wt-$id"
-  fm_test_spawn_brief "$home" "$id"
-  out=$(fm_test_run_spawn "$home" "$wt" "$fakebin" "$id" "$proj" --mode no-mistakes --yolo off) \
-    || fail "fixture spawn failed: $out"
-  [ -w "$home/state/$id.git-hooks" ] \
-    && fail "spawn should leave its strip-hook directory read-only, so this case would be vacuous"
-  hash=$(fm_test_home_hash "$home") || fail "could not hash the fixture home path"
-  launch_dir="/tmp/fm-$id+$hash"
-  [ -d "$launch_dir" ] || fail "spawn staged no launch directory $launch_dir, so this case would be vacuous"
-  # The suite may delete the task record, as the Herdr presentation suite does.
-  rm -f "$home/state/$id.meta"
-  fm_test_remove_spawn_launch_dirs "$root"
-  fm_test_remove_tree "$root" || fail "fm_test_remove_tree reported failure"
-  [ ! -e "$root" ] || fail "fm_test_remove_tree left $root behind"
-  [ ! -e "$launch_dir" ] || fail "fm_test_remove_spawn_launch_dirs left $launch_dir behind"
+  # shellcheck disable=SC2016
+  out=$(FM_TEST_SKIP_ORPHAN_REAP=1 bash -c '
+    . "$1/tests/fixtures.sh"
+    id=$2
+    root=$(fm_test_tmproot fm-test-fixture-spawn) || fail "could not create the child fixture root"
+    home="$root/home"
+    fakebin=$(make_spawn_fakebin "$root/fake" claude)
+    fm_test_spawn_home "$home" claude
+    fm_git_worktree "$root/project" "$root/wt" "wt-$id"
+    fm_test_spawn_brief "$home" "$id"
+    spawn_out=$(fm_test_run_spawn "$home" "$root/wt" "$fakebin" "$id" "$root/project" --mode no-mistakes --yolo off) \
+      || fail "fixture spawn failed: $spawn_out"
+    [ -w "$home/state/$id.git-hooks" ] \
+      && fail "spawn should leave its strip-hook directory read-only, so this case would be vacuous"
+    hash=$(fm_test_home_hash "$home") || fail "could not hash the fixture home path"
+    launch_dir="/tmp/fm-$id+$hash"
+    [ -d "$launch_dir" ] || fail "spawn staged no launch directory $launch_dir, so this case would be vacuous"
+    rm -f "$home/state/$id.meta"
+    printf "%s\n%s\n" "$root" "$launch_dir"
+  ' child "$ROOT" "$id") || fail "child suite failed: $out"
+  root=$(printf '%s\n' "$out" | tail -n 2 | sed -n 1p)
+  launch_dir=$(printf '%s\n' "$out" | tail -n 1)
+  [ -n "$root" ] && [ -n "$launch_dir" ] || fail "child suite reported no fixture paths: $out"
+  [ ! -e "$root" ] || fail "suite exit cleanup left $root behind"
+  [ ! -e "$launch_dir" ] || fail "suite exit cleanup left $launch_dir behind"
   rmdir "/tmp/fm-$id/gotmp" "/tmp/fm-$id" 2>/dev/null || true
-  pass "fixture helpers remove an untorn spawn's read-only strip hooks and staged launch directory"
+  pass "suite exit cleanup removes an untorn spawn's read-only strip hooks and staged launch directory"
 }
 
 test_git_config_isolation || fail "Git fixture config isolation"
