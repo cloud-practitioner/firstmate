@@ -1,0 +1,28 @@
+== target commit 12fd083: simulate Claude Code writing per-user settings ==
+$ git check-ignore -v .claude/settings.local.json .claude/settings.json
+.gitignore:16:.claude/settings.local.json	.claude/settings.local.json
+$ git status --porcelain --untracked-files=all
+ M .claude/settings.json
+$ git add -A && git diff --cached --name-only
+.claude/settings.json
+$ git add .claude/settings.local.json (explicit)
+The following paths are ignored by one of your .gitignore files:
+.claude/settings.local.json
+hint: Use -f if you really want to add them.
+hint: Disable this message with "git config set advice.addIgnoredFile false"
+exit=1
+
+== base commit ebff4ca (before fix) ==
+$ git check-ignore -v .claude/settings.local.json
+(not ignored, exit=1)
+$ git status --porcelain --untracked-files=all
+ M .claude/settings.json
+?? .claude/settings.local.json
+
+== diff base..target ==
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+12fd083 fix: add .claude/settings.local.json to .gitignore
+$ git ls-files .claude | git check-ignore --no-index --stdin -v  (tracked .claude files newly matched by an ignore rule)
+(none matched, exit=1)
+tracked .claude files: 15
