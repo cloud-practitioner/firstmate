@@ -1515,8 +1515,8 @@ pass "real Herdr lab validation completed on Herdr $HERDR_VERSION with the defau
 
 # Launch directories staged during this run for this suite's primary home;
 # the home hash in each name scopes them to this run.
-HOME_HASH=$(printf '%s' "$(cd -P -- "$HOME_DIR" && pwd -P)" | { shasum -a 256 2>/dev/null || sha256sum; } | awk '{print $1}')
-RUN_LAUNCH_DIRS=$(find /tmp -maxdepth 1 -type d -name "fm-*+$HOME_HASH" 2>/dev/null)
+HOME_HASH=$(fm_test_home_hash "$HOME_DIR") || fail "could not hash the primary home path"
+RUN_LAUNCH_DIRS=$(find /tmp/ -maxdepth 1 -type d -name "fm-*+$HOME_HASH" 2>/dev/null)
 [ -n "$RUN_LAUNCH_DIRS" ] \
   || fail "no staged launch directory was found for this run, so the cleanup check below would be vacuous"
 cleanup_all

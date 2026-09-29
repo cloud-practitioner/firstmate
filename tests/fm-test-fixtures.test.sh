@@ -302,6 +302,10 @@ test_spawn_home_layout() {
 # leaving a read-only directory reached only through a symlink untouched.
 test_remove_tree_clears_read_only_strip_hooks() {
   local tree="$TMP_ROOT/remove-tree" outside="$TMP_ROOT/remove-tree-outside" mode
+  if [ "$(id -u)" = 0 ]; then
+    pass "fm_test_remove_tree removes a tree holding read-only strip hooks (skipped as root)"
+    return 0
+  fi
   mkdir -p "$tree/home/state" "$outside/locked"
   fm_git_init_commit "$tree/wt"
   "$ROOT/bin/fm-git-strip-ai-trailers.sh" install "$tree/home/state/anchor.git-hooks" "$tree/wt" \
@@ -322,7 +326,11 @@ test_remove_tree_clears_read_only_strip_hooks() {
 # the fixture and its staged launch directory outside it; the fixture helpers
 # must remove both even after the task record is gone.
 test_remove_tree_clears_untorn_spawn() {
-  local root home proj wt fakebin id=fixtreespawn out launch_dirs dir
+  local root home proj wt fakebin id="fixtreespawn$$" out launch_dir hash
+  if [ "$(id -u)" = 0 ]; then
+    pass "fixture helpers remove an untorn spawn's read-only strip hooks and staged launch directory (skipped as root)"
+    return 0
+  fi
   root=$(fm_test_tmproot fm-test-fixture-spawn)
   home="$root/home"
   proj="$root/project"
@@ -335,18 +343,15 @@ test_remove_tree_clears_untorn_spawn() {
     || fail "fixture spawn failed: $out"
   [ -w "$home/state/$id.git-hooks" ] \
     && fail "spawn should leave its strip-hook directory read-only, so this case would be vacuous"
-  launch_dirs=$(find /tmp -maxdepth 1 -type d -name "fm-$id+*" -newer "$root/.fm-test-fixture")
-  [ -n "$launch_dirs" ] || fail "spawn staged no launch directory, so this case would be vacuous"
+  hash=$(fm_test_home_hash "$home") || fail "could not hash the fixture home path"
+  launch_dir="/tmp/fm-$id+$hash"
+  [ -d "$launch_dir" ] || fail "spawn staged no launch directory $launch_dir, so this case would be vacuous"
   # The suite may delete the task record, as the Herdr presentation suite does.
   rm -f "$home/state/$id.meta"
   fm_test_remove_spawn_launch_dirs "$root"
   fm_test_remove_tree "$root" || fail "fm_test_remove_tree reported failure"
   [ ! -e "$root" ] || fail "fm_test_remove_tree left $root behind"
-  while IFS= read -r dir; do
-    [ ! -e "$dir" ] || fail "fm_test_remove_spawn_launch_dirs left $dir behind"
-  done <<EOF
-$launch_dirs
-EOF
+  [ ! -e "$launch_dir" ] || fail "fm_test_remove_spawn_launch_dirs left $launch_dir behind"
   rmdir "/tmp/fm-$id/gotmp" "/tmp/fm-$id" 2>/dev/null || true
   pass "fixture helpers remove an untorn spawn's read-only strip hooks and staged launch directory"
 }

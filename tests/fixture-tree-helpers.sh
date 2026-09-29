@@ -25,6 +25,22 @@ fm_test_remove_tree() {
   rm -rf "$dir"
 }
 
+# fm_test_home_hash <home>: print the sha256 of the physical <home> path, the
+# home token fm-spawn.sh puts in each launch directory name /tmp/fm-<id>+<hash>.
+fm_test_home_hash() {
+  local home hash
+  home=$(cd -P -- "$1" 2>/dev/null && pwd -P) || return 1
+  if command -v shasum >/dev/null 2>&1; then
+    hash=$(printf '%s' "$home" | shasum -a 256 | awk '{print $1}')
+  else
+    hash=$(printf '%s' "$home" | sha256sum | awk '{print $1}')
+  fi
+  case "$hash" in
+    *[!0-9a-fA-F]*|'') return 1 ;;
+  esac
+  printf '%s\n' "$hash"
+}
+
 # fm_test_remove_spawn_launch_dirs <fixture-root>: remove every launch
 # directory /tmp/fm-<id>+<sha256 of the physical home path> that the real
 # fm-spawn.sh staged outside the fixture for a Firstmate home under
@@ -40,19 +56,11 @@ fm_test_remove_spawn_launch_dirs() {
   [ -d "$root" ] && [ ! -L "$root" ] || return 0
   while IFS= read -r home; do
     [ -n "$home" ] || continue
-    home=$(cd -P -- "$home" 2>/dev/null && pwd -P) || continue
-    if command -v shasum >/dev/null 2>&1; then
-      hash=$(printf '%s' "$home" | shasum -a 256 | awk '{print $1}')
-    else
-      hash=$(printf '%s' "$home" | sha256sum | awk '{print $1}')
-    fi
-    case "$hash" in
-      *[!0-9a-fA-F]*|'') continue ;;
-    esac
+    hash=$(fm_test_home_hash "$home") || continue
     while IFS= read -r dir; do
       [ -n "$dir" ] && fm_test_remove_tree "$dir"
     done <<EOF_DIRS
-$(find /tmp -maxdepth 1 -type d -name "fm-*+$hash" 2>/dev/null)
+$(find /tmp/ -maxdepth 1 -type d -name "fm-*+$hash" 2>/dev/null)
 EOF_DIRS
   done <<EOF_HOMES
 $(find "$root" -type d -name state -prune -exec dirname {} \; 2>/dev/null)
