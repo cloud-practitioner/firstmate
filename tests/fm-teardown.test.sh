@@ -2415,9 +2415,7 @@ SH
   [ -e "$ready" ] || fail "herdr-orphan-refusal: the contending lock holder never started"
 
   rc=0
-  # The holder never releases while teardown waits, so a short holder wait
-  # keeps this deliberate stuck-holder case from spending the default budget.
-  FM_HERDR_PRESENTATION_LOCK_HOLDER_WAIT=1 FM_FAKE_HERDR_LOG="$log" FM_FAKE_HERDR_CLOSED="$closed" \
+  FM_FAKE_HERDR_LOG="$log" FM_FAKE_HERDR_CLOSED="$closed" \
     run_teardown "$case_dir" --force > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
   if [ "$rc" -eq 0 ]; then
     : > "$release"; wait "$holder_pid" 2>/dev/null || true

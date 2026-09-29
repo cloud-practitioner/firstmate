@@ -363,8 +363,8 @@ Once the exact pane is confirmed gone, teardown retires the task's own journal w
 Recovery is deliberately conservative and presentation-only.
 An existing journal suppresses another projected create.
 Before any recovery mutation, Firstmate holds both the task spawn lock and the named-session presentation lock.
-Every blocking wait for that session lock, in spawn, recovery, and cleanup alike, waits for a live holder and restarts its bounded wait whenever the lock changes hands, so concurrent work across homes takes turns.
-Only one holder that keeps the lock past that per-holder bound counts as contention; `fm_backend_herdr_presentation_session_lock_acquire` in `bin/backends/herdr.sh` owns the bound.
+A concurrent recovery on the same session holds that lock through its whole relaunch, so recovery waits up to 120 seconds for it instead of the ordinary five-second spawn wait.
+A holder that keeps the lock past that bound counts as stuck, and recovery refuses the resume before any Herdr mutation.
 
 A same-identity version 2 binding may replace one exact agent-free restart husk in place.
 A husk is a restored same-labeled tab with a missing pane or no registered agent, as [Restart and liveness behavior](#restart-and-liveness-behavior) describes.
