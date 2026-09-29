@@ -1,0 +1,66 @@
+# bin/fm-pr-merge.sh against REAL Bitbucket PRs in the lab home. curl on PATH is a guard that forwards every GET to the real
+# curl and turns any mutating request (POST/PUT/DELETE or a body) into a transport failure (exit 28) and logs it, so no real PR
+# can be merged. Everything else - the verification reads, branch-restrictions read, refusals, read-back - is the real script and API.
+
+## merged PR #2 - must refuse, nothing sent
+$ bin/fm-pr-merge.sh task-mg-merged https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/2 
+WARNING: watcher still down (same stale episode; last beat: 655s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+armed: state/task-mg-merged.check.sh
+error: refusing to merge https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/2
+  - state is "MERGED", not OPEN
+[exit 1]
+guard: 0 mutating requests attempted
+
+## declined PR - must refuse, nothing sent
+$ bin/fm-pr-merge.sh task-mg-declined https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/4 
+WARNING: watcher still down (same stale episode; last beat: 660s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+armed: state/task-mg-declined.check.sh
+error: refusing to merge https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/4
+  - state is "DECLINED", not OPEN
+  - the branch restrictions for base branch master could not be read (HTTP 403; reading them needs repository admin access), so an unmet merge check cannot be ruled out
+[exit 1]
+guard: 0 mutating requests attempted
+
+## flag handling on the open PR
+$ bin/fm-pr-merge.sh task-mg-flags https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3 -- --admin
+error: extra merge arguments must not request auto-merge, a protection bypass, or branch deletion; pass --attended-override only for an explicit captain instruction
+[exit 1]
+guard: 0 mutating requests attempted
+
+$ bin/fm-pr-merge.sh task-mg-flags https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3 -- --auto
+error: extra merge arguments must not request auto-merge, a protection bypass, or branch deletion; pass --attended-override only for an explicit captain instruction
+[exit 1]
+guard: 0 mutating requests attempted
+
+$ bin/fm-pr-merge.sh task-mg-flags https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3 -- --fast-forward
+error: extra merge argument '--fast-forward' does not apply to a Bitbucket pull request
+[exit 1]
+guard: 0 mutating requests attempted
+
+$ bin/fm-pr-merge.sh task-mg-flags https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3 --allow-missing pipeline
+error: --allow-missing does not apply to Bitbucket, where a required build is a minimum count of successful builds rather than a named check that could be waived
+[exit 2]
+guard: 0 mutating requests attempted
+
+## open PR #3 with the shared --rebase spelling - full live verification; any merge POST is blocked by the guard
+$ bin/fm-pr-merge.sh task-mg-open https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3 -- --rebase
+WARNING: watcher still down (same stale episode; last beat: 665s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+armed: state/task-mg-open.check.sh
+error: refusing to merge https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+  - base branch main requires 1 approvals, and the pull request has 0
+[exit 1]
+guard: 0 mutating requests attempted
+
+## guard log
+(no mutating request was attempted)
+
+$ grep -E "^pr" $LAB/state/task-mg-open.meta
+project=$LAB/projects/ziqx_so_outbound
+pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+pr_head=fcf495662c87c6b5a6dbb0f47f9b98fb8d089ed5
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3   # the real PR is untouched
+CHECKS: none reported yet
+[exit 0]

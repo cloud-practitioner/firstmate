@@ -1,0 +1,137 @@
+# NOTE (added after the run): this first run does NOT isolate the Bitbucket proof - the replayed b1cddc0 content is already in main, so
+# bin/fm-teardown.sh's content-in-default fallback legitimately proves landing even without the credential or for an open PR.
+# It is kept because it shows the backlog close failing for a Bitbucket pr= link (tasks-axi 0.2.6 refuses non-GitHub/Forgejo URLs).
+# The isolated landed-proof run follows below the ==== line.
+
+# Each task worktree (real clone of iqxbusiness/ziqx_so_outbound) holds one local commit 83e5a18: a replay of b1cddc0 ('CAPEX-578 and CAPEX-560') onto its parent, so it is on NO remote-tracking branch and its tree is not main's - the squash/rebase-then-merge shape. Its patch id equals b1cddc0's, which is inside real merged PR #2 (head f50e84d). No pr_head= is recorded, so the head must be resolved live from Bitbucket's abbreviated hash.
+# PATH stubs: treehouse (return) and tmux (endpoint close) only. Bitbucket API, git, tasks-axi, backlog are real.
+
+# task-td-nocred: pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/2
+$ env NO_MISTAKES_BITBUCKET_API_TOKEN= bin/fm-teardown.sh task-td-nocred
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+teardown: reaping leaked worktree process(es) for task-td-nocred: 1541955
+error: task-td-nocred's endpoint and local copy are cleaned up, but its backlog item could not be closed atomically (error: "Task pr link must be a canonical pull request URL: https://github.com/<owner>/<repo>/pull/<n> (GitHub) or https://<host>/<owner>/<repo>/pulls/<n> (Forgejo)"); the pending close is recorded and the next session start retries it
+[exit 1]
+$ test -d $LAB/wt-task-td-nocred && echo worktree-still-present || echo worktree-gone
+worktree-still-present
+$ test -f $LAB/state/task-td-nocred.meta && echo meta-present || echo meta-removed
+meta-removed
+
+# task-td-open: pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+$ bin/fm-teardown.sh task-td-open
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: 313s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+teardown: reaping leaked worktree process(es) for task-td-open: 1543048
+error: task-td-open's endpoint and local copy are cleaned up, but its backlog item could not be closed atomically (error: "Task pr link must be a canonical pull request URL: https://github.com/<owner>/<repo>/pull/<n> (GitHub) or https://<host>/<owner>/<repo>/pulls/<n> (Forgejo)"); the pending close is recorded and the next session start retries it
+[exit 1]
+$ test -d $LAB/wt-task-td-open && echo worktree-still-present || echo worktree-gone
+worktree-still-present
+$ test -f $LAB/state/task-td-open.meta && echo meta-present || echo meta-removed
+meta-removed
+
+# task-td-merged: pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/2
+$ bin/fm-teardown.sh task-td-merged
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: 318s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+teardown: reaping leaked worktree process(es) for task-td-merged: 1544668
+error: task-td-merged's endpoint and local copy are cleaned up, but its backlog item could not be closed atomically (error: "Task pr link must be a canonical pull request URL: https://github.com/<owner>/<repo>/pull/<n> (GitHub) or https://<host>/<owner>/<repo>/pulls/<n> (Forgejo)"); the pending close is recorded and the next session start retries it
+[exit 1]
+$ test -d $LAB/wt-task-td-merged && echo worktree-still-present || echo worktree-gone
+worktree-still-present
+$ test -f $LAB/state/task-td-merged.meta && echo meta-present || echo meta-removed
+meta-removed
+
+$ cat $LAB/data/backlog.md
+# Backlog
+
+## In flight
+- [ ] task-td-merged - lab teardown td-merged (kind: ship) (since 2026-09-29)
+- [ ] task-td-open - lab teardown td-open (kind: ship) (since 2026-09-29)
+- [ ] task-td-nocred - lab teardown td-nocred (kind: ship) (since 2026-09-29)
+
+## Queued
+## Done
+================================================================================
+# Isolated landed-proof run: real merged PR https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4
+# (merged; its source branch feature/SAP-BO-Integration is deleted on the remote; API reports head 2e26665786a7 abbreviated)
+# Each worktree HEAD = a replay of PR commit 9ee6123 onto its parent: on NO remote-tracking branch, and NOT in main by the
+# content-in-default check (git merge-tree main HEAD != main tree), so only the Bitbucket merged-PR proof can show it landed.
+# No pr_head= is recorded, so the full head must be resolved live. config/backlog-backend=manual so the backlog close is skipped.
+# PATH: curl GET-only guard (-> real curl), treehouse + tmux stubs. Bitbucket API, git, clone are real.
+$ git -C $P branch -r --contains 2e26665786a7   # PR head reachable from
+  origin/HEAD -> origin/main
+  origin/main
+  origin/release/deployment
+$ git -C $P branch -r | grep SAP-BO || echo "source branch gone"
+source branch gone
+
+# task-td2-nocred: pr=https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4; unpushed=1
+$ env NO_MISTAKES_BITBUCKET_API_TOKEN= NO_MISTAKES_BITBUCKET_EMAIL= bin/fm-teardown.sh task-td2-nocred
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: 600s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+REFUSED: worktree $LAB/wt-task-td2-nocred has work not on any remote and not landed.
+the merged state of https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4 could not be read to prove landing: reading it requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+unpushed commits:
+07edb7c validate in S/4HANA 2025
+Push the branch, land its PR, or get the captain's explicit OK to discard, then --force.
+[exit 1]
+-> meta still present (record kept)
+
+# task-td2-declined: pr=https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/4; unpushed=1
+$ bin/fm-teardown.sh task-td2-declined
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: 602s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+REFUSED: worktree $LAB/wt-task-td2-declined has work not on any remote and not landed.
+unpushed commits:
+07edb7c validate in S/4HANA 2025
+Push the branch, land its PR, or get the captain's explicit OK to discard, then --force.
+[exit 1]
+-> meta still present (record kept)
+
+# task-td2-later: pr=https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4; unpushed=2
+$ bin/fm-teardown.sh task-td2-later
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: 604s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+REFUSED: worktree $LAB/wt-task-td2-later has work not on any remote and not landed.
+unpushed commits:
+6197341 local follow-up never pushed
+07edb7c validate in S/4HANA 2025
+Push the branch, land its PR, or get the captain's explicit OK to discard, then --force.
+[exit 1]
+-> meta still present (record kept)
+
+# task-td2-base: pr=https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4; unpushed=1
+$ <base-4b93ac9>/bin/fm-teardown.sh task-td2-base
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: 606s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+REFUSED: worktree $LAB/wt-task-td2-base has work not on any remote and not landed.
+unpushed commits:
+07edb7c validate in S/4HANA 2025
+Push the branch, land its PR, or get the captain's explicit OK to discard, then --force.
+[exit 1]
+-> meta still present (record kept)
+
+# ^ that was the BASE commit 4b93ac9's fm-teardown.sh (before this change) on the identical merged-PR task
+
+# task-td2-merged: pr=https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4; unpushed=1
+$ bin/fm-teardown.sh task-td2-merged
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: 608s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+teardown: reaping leaked worktree process(es) for task-td2-merged: 1569691
+WARNING: watcher still down (same stale episode; last beat: 610s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+ziqx_so_common_objects: already current
+teardown task-td2-merged complete (window firstmate:fm-task-td2-merged, worktree $LAB/wt-task-td2-merged)
+Backlog: task-td2-merged just finished (config/backlog-backend selects manual editing). Update $LAB/data/backlog.md - move task-td2-merged to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+[exit 0]
+-> meta removed (teardown proceeded)
+
+# guard log (mutating requests blocked): none

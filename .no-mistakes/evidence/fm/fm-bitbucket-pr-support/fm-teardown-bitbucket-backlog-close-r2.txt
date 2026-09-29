@@ -1,0 +1,72 @@
+# Round 2 re-drive of the failed round-1 scenario, at target commit 8550b81.
+# Lab FM_HOME=$LAB (bin/fm-lab-home.sh create). Real clone of iqxbusiness/ziqx_so_common_objects; real merged PR #4 (head 2e26665786a7, source branch deleted).
+# Each worktree HEAD = 187afc8, a replay of PR commit 9ee6123 onto its parent: on NO remote-tracking branch and NOT content-in-main, so only the Bitbucket merged-PR proof can show it landed. No pr_head= recorded.
+# DEFAULT backlog backend (markdown through the real tasks-axi 0.2.6). PATH stubs: treehouse, tmux; curl is a GET-only guard forwarding reads to the real curl.
+
+## backlog before
+# Backlog
+
+## In flight
+- [ ] task-td3-retry - lab teardown td3-retry (kind: ship) (since 2026-09-29)
+- [ ] task-td3-later - lab teardown td3-later (kind: ship) (since 2026-09-29)
+- [ ] task-td3-merged - lab teardown td3-merged (kind: ship) (since 2026-09-29)
+
+## Queued
+## Done
+
+## td3-merged: bin/fm-teardown.sh at the target commit
+$ bin/fm-teardown.sh task-td3-merged
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for task-td3-merged: 2005703
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+ziqx_so_common_objects: already current
+teardown task-td3-merged complete (window firstmate:fm-task-td3-merged, worktree $LAB/wt-td3-merged)
+Backlog: task-td3-merged is closed in $LAB/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+[exit 0]
+-> meta: removed; pending-close record: none
+$ tasks-axi show task-td3-merged --file $LAB/data/backlog.md
+task:
+  id: task-td3-merged
+  title: lab teardown td3-merged
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: "-"
+  priority: "-"
+  created: "-"
+  closed: 2026-09-29
+  deps: none
+  links: none
+  body: "PR https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4"
+
+## td3-later (adversarial: a local commit past the merged PR) - must refuse and leave the backlog row in flight
+$ bin/fm-teardown.sh task-td3-later
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+REFUSED: worktree $LAB/wt-td3-later has work not on any remote and not landed.
+unpushed commits:
+2b92096 local follow-up never pushed
+187afc8 validate in S/4HANA 2025
+Push the branch, land its PR, or get the captain's explicit OK to discard, then --force.
+[exit 1]
+-> meta: present; row state: in_flight
+
+## backlog after
+# Backlog
+
+## In flight
+- [ ] task-td3-retry - lab teardown td3-retry (kind: ship) (since 2026-09-29)
+- [ ] task-td3-later - lab teardown td3-later (kind: ship) (since 2026-09-29)
+## Queued
+## Done
+- [x] task-td3-merged - lab teardown td3-merged (kind: ship) (done 2026-09-29)
+  PR https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4
+
+## curl guard log (mutating requests blocked)
+none

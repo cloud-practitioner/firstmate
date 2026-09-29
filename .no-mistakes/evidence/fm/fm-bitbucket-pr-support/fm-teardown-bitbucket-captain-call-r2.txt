@@ -1,0 +1,31 @@
+# A Bitbucket task whose backlog row is an open captain call (tasks-axi hold --kind captain). Teardown must keep the call open and record the PR as its deliverable (retain path), not fail.
+# Same lab, real merged PR iqxbusiness/ziqx_so_common_objects#4, worktree HEAD a replay of 9ee6123 (not on any remote), default markdown backlog via real tasks-axi.
+## row before
+  state: in_flight
+  held: yes
+  hold_reason: captain decision pending on rollout
+  hold_kind: captain
+  links: none
+  body: ""
+$ bin/fm-teardown.sh task-td3-call
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for task-td3-call: 2015909
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+ziqx_so_common_objects: already current
+teardown task-td3-call complete (window firstmate:fm-task-td3-call, worktree $LAB/wt-td3-call)
+Backlog: task-td3-call stays open in $LAB/data/backlog.md, still held for the captain with its deliverable recorded. Relay the question and close it only with bin/fm-captain-hold.sh answer.
+[exit 0]
+-> meta: removed; pending-close record: none
+## row after
+  state: queued
+  held: yes
+  hold_reason: captain decision pending on rollout
+  hold_kind: captain
+  links: none
+  body: "Deliverable of the finished work: PR https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4"
+## rendered
+- [ ] task-td3-call - lab teardown td3-call (kind: ship) (since 2026-09-29) (hold: captain decision pending on rollout) (hold-kind: captain)
+  Deliverable of the finished work: PR https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4
+## Done
+- [x] task-link-bb - link shape bb (kind: ship) (done 2026-09-29)

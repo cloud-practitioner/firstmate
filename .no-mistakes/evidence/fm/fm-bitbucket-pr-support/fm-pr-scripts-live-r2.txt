@@ -1,0 +1,56 @@
+# Live re-check at target commit 8550b81 against real Bitbucket Cloud PRs, lab FM_HOME=$LAB. curl = GET-only guard (any mutating request becomes a transport failure and is logged).
+## read state
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+CHECKS: none reported yet
+[exit 0]
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/2
+STATE: merged
+[exit 0]
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/4
+STATE: declined
+[exit 0]
+## record on a task and arm the merge poll
+$ bin/fm-pr-check.sh task-r2-open https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+armed: state/task-r2-open.check.sh
+[exit 0]
+project=$LAB/projects/ziqx_so_outbound
+pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+pr_head=fcf495662c87c6b5a6dbb0f47f9b98fb8d089ed5
+$ bash $LAB/state/task-r2-open.check.sh   # empty = not merged
+[exit 0]
+## merge through fm-pr-merge.sh (open PR #3, main requires 1 approval)
+$ bin/fm-pr-merge.sh task-r2-open https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3 -- --rebase
+armed: state/task-r2-open.check.sh
+error: refusing to merge https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+  - base branch main requires 1 approvals, and the pull request has 0
+[exit 1]
+$ bin/fm-pr-merge.sh task-r2-open https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3 -- --fast-forward
+error: extra merge argument '--fast-forward' does not apply to a Bitbucket pull request
+[exit 1]
+$ bin/fm-pr-merge.sh task-r2-open https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3 -- --auto
+error: extra merge arguments must not request auto-merge, a protection bypass, or branch deletion; pass --attended-override only for an explicit captain instruction
+[exit 1]
+## review diff resolves the live head
+$ bin/fm-review-diff.sh task-r2-open --stat
+diff base: origin/main
+ src/zcl_iqx_so_internal_order.clas.abap     |  412 ++-
+ src/zcl_iqx_so_measure.clas.abap            | 3968 +++++++++++++++++----------
+ src/zcl_iqx_so_measure.clas.xml             |  280 +-
+ src/zcl_iqx_so_measure_response.clas.abap   |  243 +-
+ src/zcl_iqx_so_measure_response.clas.xml    |   14 +
+ src/zcl_iqx_so_outbound.clas.abap           |   50 +-
+ src/zcl_iqx_so_project.clas.abap            |  470 ++--
+ src/zcl_iqx_so_v_outbound.clas.abap         |   44 +
+ src/zcl_iqx_so_v_outbound.clas.xml          |   16 +
+ src/zcl_iqx_so_wbs.clas.abap                |  499 ++--
+ src/ziqx_so_inc_cost_value_scr.prog.abap    |  308 ++-
+ src/ziqx_so_inc_sync_cost_log_obj.prog.abap | 1077 ++++----
+ src/ziqx_so_inc_sync_cost_log_scr.prog.abap |   82 +-
+ src/ziqx_so_send_cost_values.prog.abap      |  954 ++++++-
+ src/ziqx_so_send_cost_values.prog.xml       |  352 ++-
+ src/ziqx_so_sync_cost_log.prog.abap         |   11 +-
+ src/ziqx_so_sync_cost_log.prog.xml          |  256 +-
+ 17 files changed, 5852 insertions(+), 3184 deletions(-)
+[exit 0]
+## curl guard log
+none (no mutating request attempted)

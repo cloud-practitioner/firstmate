@@ -1,0 +1,40 @@
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+CHECKS: none reported yet
+[exit 0]
+
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/7
+CHECKS: none reported yet
+[exit 0]
+
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/2
+STATE: merged
+[exit 0]
+
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/4
+STATE: declined
+[exit 0]
+
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/999
+fm-pr-state: could not read https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/999
+[exit 2]
+
+$ env NO_MISTAKES_BITBUCKET_API_TOKEN= bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+fm-pr-state: reading a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+[exit 2]
+
+$ env NO_MISTAKES_BITBUCKET_API_TOKEN=wrong-token bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+fm-pr-state: could not read https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+[exit 2]
+
+$ bin/fm-pr-state.sh https://bitbucket.example.com/projects/P/repos/r/pull-requests/7
+fm-pr-state: expected a GitHub or Bitbucket pull-request URL
+[exit 2]
+
+$ bin/fm-pr-state.sh https://bitbucket.org/IQXBusiness/ziqx_so_outbound/pull-requests/3
+fm-pr-state: expected a GitHub or Bitbucket pull-request URL
+[exit 2]
+
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3/overview
+fm-pr-state: expected a GitHub or Bitbucket pull-request URL
+[exit 2]
+

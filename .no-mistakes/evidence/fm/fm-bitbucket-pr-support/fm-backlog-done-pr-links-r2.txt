@@ -1,0 +1,43 @@
+# The real backlog-close library at 8550b81 (the same fm_backlog_done teardown and bootstrap call) against the lab backlog, with the real tasks-axi 0.2.6.
+# Each PR shape must close the row: GitHub/Forgejo as a row PR link (tasks-axi --pr), Bitbucket/GitLab/Gerrit as a note.
+
+## fm_backlog_done $LAB/data task-link-gh --pr https://github.com/kunchenguid/firstmate/pull/12
+[exit 0]
+  state: done
+  links: "pr:https://github.com/kunchenguid/firstmate/pull/12"
+  body: ""
+
+## fm_backlog_done $LAB/data task-link-fj --pr https://codeberg.org/owner/repo/pulls/34
+[exit 0]
+  state: done
+  links: "pr:https://codeberg.org/owner/repo/pulls/34"
+  body: ""
+
+## fm_backlog_done $LAB/data task-link-gl --pr https://gitlab.com/group/sub/proj/-/merge_requests/5
+[exit 0]
+  state: done
+  links: none
+  body: "PR https://gitlab.com/group/sub/proj/-/merge_requests/5"
+
+## fm_backlog_done $LAB/data task-link-gerrit --pr https://review.example.org/c/proj/+/678
+[exit 0]
+  state: done
+  links: none
+  body: "PR https://review.example.org/c/proj/+/678"
+
+## fm_backlog_done $LAB/data task-link-bb --pr https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+[exit 0]
+  state: done
+  links: none
+  body: "PR https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3"
+
+## rendered Done section
+- [x] task-link-bb - link shape bb (kind: ship) (done 2026-09-29)
+  PR https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+- [x] task-link-gerrit - link shape gerrit (kind: ship) (done 2026-09-29)
+  PR https://review.example.org/c/proj/+/678
+- [x] task-link-gl - link shape gl (kind: ship) (done 2026-09-29)
+  PR https://gitlab.com/group/sub/proj/-/merge_requests/5
+- [x] task-link-fj - link shape fj https://codeberg.org/owner/repo/pulls/34 (kind: ship) (merged 2026-09-29)
+- [x] task-link-gh - link shape gh https://github.com/kunchenguid/firstmate/pull/12 (kind: ship) (merged 2026-09-29)
+- [x] task-td3-retry - lab teardown td3-retry (kind: ship) (done 2026-09-29)

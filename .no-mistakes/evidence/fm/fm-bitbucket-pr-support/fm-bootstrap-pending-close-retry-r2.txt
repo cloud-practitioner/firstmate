@@ -1,0 +1,36 @@
+# A backlog close left pending by the previous branch state (ce1381b, before this fix) is finished by the next session start at the target commit.
+# Same lab and task shape as fm-teardown-bitbucket-backlog-close-r2.txt (task-td3-retry, real merged PR iqxbusiness/ziqx_so_common_objects#4, default markdown backlog via real tasks-axi).
+
+## 1. teardown with ce1381b code (git archive ce1381b into $LAB/old-ce1381b)
+$ $LAB/old-ce1381b/bin/fm-teardown.sh task-td3-retry
+fm-gate-refuse: gate agent lifecycle permitted only against lab home $LAB
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for task-td3-retry: 2009330
+error: task-td3-retry's endpoint and local copy are cleaned up, but its backlog item could not be closed atomically (error: "Task pr link must be a canonical pull request URL: https://github.com/<owner>/<repo>/pull/<n> (GitHub) or https://<host>/<owner>/<repo>/pulls/<n> (Forgejo)"); the pending close is recorded and the next session start retries it
+[exit 1]
+$ ls $LAB/state/*.backlog-close
+$LAB/state/task-td3-retry.backlog-close
+row state: in_flight
+
+## 2. session-start bootstrap at the target commit (local phase only)
+$ env FM_BOOTSTRAP_NETWORK=skip bin/fm-bootstrap.sh
+BOOTSTRAP_INFO: closed the backlog item for task-td3-retry that an interrupted cleanup left open
+MISSING: treehouse (install: curl -fsSL https://kunchenguid.github.io/treehouse/install.sh | sh)
+[exit 0]
+$ ls $LAB/state/*.backlog-close
+ls: cannot access '$LAB/state/*.backlog-close': No such file or directory
+$ tasks-axi show task-td3-retry --file $LAB/data/backlog.md | grep -E "state|body"
+  state: done
+  body: "PR https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4"
+
+## backlog after
+# Backlog
+
+## In flight
+- [ ] task-td3-later - lab teardown td3-later (kind: ship) (since 2026-09-29)
+## Queued
+## Done
+- [x] task-td3-retry - lab teardown td3-retry (kind: ship) (done 2026-09-29)
+  PR https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4
+- [x] task-td3-merged - lab teardown td3-merged (kind: ship) (done 2026-09-29)
+  PR https://bitbucket.org/iqxbusiness/ziqx_so_common_objects/pull-requests/4

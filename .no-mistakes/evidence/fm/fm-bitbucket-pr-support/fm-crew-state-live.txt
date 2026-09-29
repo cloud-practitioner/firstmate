@@ -1,0 +1,26 @@
+# fakebin holds only a no-mistakes status stub (a passed run at the worktree HEAD carrying the pr URL) and a tmux endpoint stub (tmux is not installed); each task (harness=claude) has an idle busy-event record from bin/fm-busy-event.sh; curl and the Bitbucket API are real
+# task-bb1 pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+$ bin/fm-crew-state.sh task-bb1
+state: done · source: run-step · run passed: PR open
+[exit 0]
+
+# task-bb2 pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/2
+$ bin/fm-crew-state.sh task-bb2
+state: done · source: run-step · run passed: PR merged
+[exit 0]
+
+# task-bb3 pr=https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/4
+$ bin/fm-crew-state.sh task-bb3
+state: done · source: run-step · run passed: PR closed
+[exit 0]
+
+# same merged PR #2, NO_MISTAKES_BITBUCKET_API_TOKEN= -> must be honest unknown, never merged
+$ env NO_MISTAKES_BITBUCKET_API_TOKEN= bin/fm-crew-state.sh task-bb2
+state: done · source: run-step · run passed: PR state unknown (unreadable)
+[exit 0]
+
+# same merged PR #2, NO_MISTAKES_BITBUCKET_API_TOKEN=wrong-token -> must be honest unknown, never merged
+$ env NO_MISTAKES_BITBUCKET_API_TOKEN=wrong-token bin/fm-crew-state.sh task-bb2
+state: done · source: run-step · run passed: PR state unknown (unreadable)
+[exit 0]
+

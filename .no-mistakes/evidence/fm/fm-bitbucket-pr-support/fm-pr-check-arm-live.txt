@@ -1,0 +1,57 @@
+# lab FM_HOME=$LAB (bin/fm-lab-home.sh create); task-bb1 worktree on real clone of iqxbusiness/ziqx_so_outbound, branch at origin/feature/S4HANA
+$ cat $LAB/state/task-bb1.meta   # before
+window=fm-task-bb1
+worktree=$LAB/wt-bb1
+project=$LAB/projects/ziqx_so_outbound
+kind=ship
+mode=no-mistakes
+
+$ bin/fm-pr-check.sh task-bb1 https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  watcher supervision needs Stop-owned automatic recovery; inspect the hook registration and startup status before ending the turn.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+armed: state/task-bb1.check.sh
+[exit 0]
+
+$ cat $LAB/state/task-bb1.meta   # after
+window=fm-task-bb1
+worktree=$LAB/wt-bb1
+project=$LAB/projects/ziqx_so_outbound
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+pr_head=fcf495662c87c6b5a6dbb0f47f9b98fb8d089ed5
+
+$ ls $LAB/state
+.
+..
+.guard-watcher-stale-banner
+contributions.check-trust
+contributions.check.sh
+task-bb1.check.sh
+task-bb1.meta
+task-bb1.pr-poll
+task-bb1.pr-poll-registration
+
+# task-bb2: worktree at the real merged PR #2 head
+$ bin/fm-pr-check.sh task-bb2 https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/2
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+armed: state/task-bb2.check.sh
+[exit 0]
+$ grep ^pr $LAB/state/task-bb2.meta
+project=$LAB/projects/ziqx_so_outbound
+pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/2
+pr_head=f50e84d4425d66a14e0afdf04a7575861242eb7d
+
+# the armed static poll (bin/fm-pr-poll.sh bytes), run on each sidecar:
+$ bash $LAB/state/task-bb1.check.sh
+[exit 0 - empty output = not merged]
+$ bash $LAB/state/task-bb2.check.sh
+merged
+[exit 0 - empty output = not merged]
+$ env NO_MISTAKES_BITBUCKET_API_TOKEN=wrong bash $LAB/state/task-bb2.check.sh   # a failed (401) read must stay silent
+[exit 0]

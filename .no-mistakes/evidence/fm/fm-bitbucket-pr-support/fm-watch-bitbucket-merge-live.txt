@@ -1,0 +1,24 @@
+# real bin/fm-watch.sh, one run in the lab home (FM_CHECK_INTERVAL=1), with task-bb1 armed on OPEN PR #3 and task-bb2 armed on MERGED PR #2
+$ FM_HOME=$LAB FM_CHECK_INTERVAL=1 timeout 90 bin/fm-watch.sh
+check: $LAB/state/task-bb2.check.sh: merged
+[exit 0 - the watcher woke on the Bitbucket merge]
+
+$ ls $LAB/state | grep task-
+task-bb1.check.sh
+task-bb1.meta
+task-bb1.pr-poll
+task-bb1.pr-poll-registration
+task-bb2.meta
+task-bb2.pr-poll-merge-notified
+
+$ cat $LAB/state/task-bb2.pr-poll-merge-notified
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+iqxbusiness/ziqx_so_outbound
+2
+
+$ ls -R $LAB/state/terminal-outcomes
+$LAB/state/terminal-outcomes:
+$ tail $LAB/state/.watch-triage.log
+[2026-09-29T06:04:11+0000] no matching persisted merge authority for task-bb2; recording an external merge outcome

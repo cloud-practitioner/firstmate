@@ -1,0 +1,51 @@
+# Real Bitbucket PR https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3, live head fcf4956 (source branch feature/S4HANA).
+# Reference stats vs origin/main for each candidate head, computed with plain git in the real clone:
+## fcf4956:  17 files changed, 5852 insertions(+), 3184 deletions(-)
+## 0df7fa9:  17 files changed, 5839 insertions(+), 3184 deletions(-)
+## 73f2e7c:  17 files changed, 5839 insertions(+), 3184 deletions(-)
+
+# task-rd1: local branch at 73f2e7c (behind), recorded pr_head=0df7fa9 (stale, present locally), live head fcf4956
+$ grep -E "^(pr|pr_head)=" $LAB/state/task-rd1.meta
+pr=https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+pr_head=0df7fa9d257c7e10ec7c4d242caaf6e810ef108d
+$ bin/fm-review-diff.sh task-rd1 --stat | tail -1
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+ 17 files changed, 5852 insertions(+), 3184 deletions(-)
+[exit 0]
+
+# task-rd2: a --single-branch clone of main that lacks the live head fcf4956 entirely; no pr_head recorded
+$ git -C $LAB/projects/outbound-main-only cat-file -e fcf495662c87c6b5a6dbb0f47f9b98fb8d089ed5  # before
+[exit 1]
+$ bin/fm-review-diff.sh task-rd2 --stat | tail -1
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+ 17 files changed, 5852 insertions(+), 3184 deletions(-)
+[exit 0]
+$ git -C $LAB/projects/outbound-main-only cat-file -t fcf495662c87c6b5a6dbb0f47f9b98fb8d089ed5  # after
+commit
+
+# (git's own https auth for 'git fetch origin <default>' comes from a separate askpass variable, so blanking the firstmate Bitbucket API credential below does not break the unrelated base fetch)
+# task-rd3: live read fails (API token blanked), NO recorded pr_head -> must warn it is using the local branch, and must NOT claim a recorded-head fallback
+$ env NO_MISTAKES_BITBUCKET_API_TOKEN= bin/fm-review-diff.sh task-rd3 --stat
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+warning: PR head unavailable; diff may lag the open PR (using local branch fm/task-rd1)
+diff base: origin/main
+ 17 files changed, 5839 insertions(+), 3184 deletions(-)
+[exit 0]
+
+# task-rd4: live read fails (wrong API token -> 401), recorded pr_head=0df7fa9 present -> warn and fall back to the recorded head
+$ env NO_MISTAKES_BITBUCKET_API_TOKEN=wrong-token bin/fm-review-diff.sh task-rd4 --stat
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+warning: could not read the live head of https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3; falling back to its recorded pr_head
+diff base: origin/main
+ 17 files changed, 5839 insertions(+), 3184 deletions(-)
+[exit 0]
+
+# Which head each run actually diffed: sha1 of the full patch body printed by fm-review-diff.sh vs git diff origin/main...<head>
+## git diff origin/main...fcf4956 -> dc1916c307b0
+## git diff origin/main...0df7fa9 -> 90ec53694cc1
+## git diff origin/main...73f2e7c -> 49aba46f2551
+task-rd1 (expect live fcf4956):             dc1916c307b0
+task-rd2 (expect live fcf4956, fetched):    dc1916c307b0
+task-rd3 (expect local 73f2e7c):            49aba46f2551
+task-rd4 (expect recorded 0df7fa9):         90ec53694cc1
+base commit 4b93ac9 fm-review-diff.sh task-rd1 (before this change): 90ec53694cc1  <- the stale recorded 0df7fa9, silently
