@@ -16,13 +16,12 @@
 # the Bitbucket API and fetched by its source branch or hash when this copy
 # lacks it; a recorded pr_head= is the fallback only when that live read fails,
 # with a warning. docs/architecture.md owns that fallback. Without pr=, compare
-# the task's
-# immutable ship branch recorded in state/<id>.meta ("fm/<id>" for records
-# created before that field existed), or the worktree's checked-out branch when
-# that branch does not exist in the worktree. A recorded branch that is not a
-# valid git branch name is refused instead of taking that fallback, the same
-# refusal fm-merge-local.sh applies, so a corrupt meta record can never turn a
-# review into a diff of the wrong content.
+# the task's immutable ship branch recorded in state/<id>.meta ("fm/<id>" for
+# records created before that field existed), or the worktree's checked-out
+# branch when that branch does not exist in the worktree. A recorded branch that
+# is not a valid git branch name is refused instead of taking that fallback, the
+# same refusal fm-merge-local.sh applies, so a corrupt meta record can never turn
+# a review into a diff of the wrong content.
 # Usage: fm-review-diff.sh <task-id> [--stat]
 #   --stat prints only the stat summary; default prints stat summary plus full diff.
 set -eu
