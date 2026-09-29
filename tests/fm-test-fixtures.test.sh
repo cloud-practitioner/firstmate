@@ -322,6 +322,28 @@ test_remove_tree_clears_read_only_strip_hooks() {
   pass "fm_test_remove_tree removes a tree holding read-only strip hooks and leaves outside targets alone"
 }
 
+# Most fixture homes stage no launch directory; a suite that exits under
+# `set -e` must still finish its exit cleanup and keep its own exit status.
+test_exit_cleanup_under_errexit_without_launch_dirs() {
+  local out rc root
+  # shellcheck disable=SC2016
+  out=$(FM_TEST_SKIP_ORPHAN_REAP=1 bash -c '
+    . "$1/tests/fixtures.sh"
+    root=$(fm_test_tmproot fm-test-fixture-errexit) || fail "could not create the child fixture root"
+    mkdir -p "$root/home/state"
+    printf "%s\n" "$root"
+    set -e
+    fm_test_remove_spawn_launch_dirs "$root"
+    exit 0
+  ' child "$ROOT")
+  rc=$?
+  root=$(printf '%s\n' "$out" | tail -n 1)
+  [ "$rc" = 0 ] || fail "a set -e suite with no launch directories exited $rc from cleanup"
+  [ -n "$root" ] || fail "child suite reported no fixture root: $out"
+  [ ! -e "$root" ] || fail "a set -e suite's exit cleanup left $root behind"
+  pass "a set -e suite with no staged launch directories finishes exit cleanup and exits 0"
+}
+
 # A real spawn that is never torn down leaves its read-only strip hooks inside
 # the fixture and its staged launch directory outside it; a suite's own exit
 # cleanup must remove both even after the task record is gone.
@@ -362,6 +384,7 @@ test_remove_tree_clears_untorn_spawn() {
 
 test_git_config_isolation || fail "Git fixture config isolation"
 test_remove_tree_clears_untorn_spawn
+test_exit_cleanup_under_errexit_without_launch_dirs
 test_remove_tree_clears_read_only_strip_hooks
 test_touch_epoch_preserves_repeated_dst_hour
 test_fixture_commit_starts_no_background_maintenance

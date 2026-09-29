@@ -58,11 +58,14 @@ fm_test_remove_spawn_launch_dirs() {
     [ -n "$home" ] || continue
     hash=$(fm_test_home_hash "$home") || continue
     while IFS= read -r dir; do
-      [ -n "$dir" ] && fm_test_remove_tree "$dir"
+      if [ -n "$dir" ]; then
+        fm_test_remove_tree "$dir"
+      fi
     done <<EOF_DIRS
 $(find /tmp/ -maxdepth 1 -type d -name "fm-*+$hash" 2>/dev/null)
 EOF_DIRS
   done <<EOF_HOMES
 $(find "$root" -type d -name state -prune -exec dirname {} \; 2>/dev/null)
 EOF_HOMES
+  return 0
 }
