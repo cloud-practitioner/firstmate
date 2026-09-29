@@ -168,6 +168,24 @@ test_touch_epoch_preserves_repeated_dst_hour() {
   pass "fm_touch_epoch preserves both epochs in the repeated DST hour"
 }
 
+# A commit that leaves many loose objects must not start background maintenance
+# in a fixture repository: its detached repack deletes loose files that an
+# immediate local `git clone` of the fixture is still copying.
+test_fixture_commit_starts_no_background_maintenance() {
+  local repo="$TMP_ROOT/maintenance" trace="$TMP_ROOT/maintenance.trace" i
+  fm_git_init_commit "$repo"
+  for i in $(seq 1 300); do printf '%s\n' "$i" > "$repo/file-$i"; done
+  git -C "$repo" add .
+  GIT_TRACE="$trace" git -C "$repo" -c user.name=test -c user.email=test@example.invalid \
+    commit -qm many || fail "fixture commit with many objects failed"
+  if grep -E 'run_command: git (maintenance run|gc) --auto' "$trace" >/dev/null; then
+    fail "fixture commit started background maintenance: $(grep -E 'maintenance|gc' "$trace")"
+  fi
+  git clone --quiet -- "$repo" "$TMP_ROOT/maintenance-clone" \
+    || fail "local clone of a fresh fixture commit failed"
+  pass "a fixture commit starts no background maintenance that a local clone could race"
+}
+
 test_no_mistakes_version_constant() {
   local fakebin out
   fakebin=$(fm_fakebin "$TMP_ROOT/nm")
@@ -281,6 +299,7 @@ test_spawn_home_layout() {
 
 test_git_config_isolation || fail "Git fixture config isolation"
 test_touch_epoch_preserves_repeated_dst_hour
+test_fixture_commit_starts_no_background_maintenance
 test_no_mistakes_version_constant
 test_no_mistakes_init_doctor_markers
 test_fake_gh_and_gh_axi

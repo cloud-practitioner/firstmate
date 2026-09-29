@@ -1382,21 +1382,19 @@ trap spawn_abort_cleanup EXIT
 # One bounded lock per live Herdr session/socket, shared across all homes.
 # <session> is required so secondmate and primary spawns serialize against the
 # same session without writing any other home's state directory.
-spawn_herdr_presentation_order_lock_acquire() {
-  local session=${1:-} attempt lock_path
+# [wait-seconds] (default 5) bounds the whole wait, and the waiter always waits
+# at least that long before refusing.
+spawn_herdr_presentation_order_lock_acquire() {  # <session> [wait-seconds]
+  local session=${1:-} limit=$(( ${2:-5} * 10 )) attempt=0 lock_path
   [ -n "$session" ] || session=$(fm_backend_herdr_session)
   lock_path=$(fm_backend_herdr_presentation_session_lock_path "$session") || return 1
   HERDR_PRESENTATION_ORDER_LOCK="$lock_path"
-  attempt=0
-  while [ "$attempt" -lt 50 ]; do
-    if fm_lock_try_acquire "$HERDR_PRESENTATION_ORDER_LOCK"; then
-      HERDR_PRESENTATION_ORDER_LOCK_HELD=1
-      return 0
-    fi
+  while ! fm_lock_try_acquire "$HERDR_PRESENTATION_ORDER_LOCK"; do
+    [ "$attempt" -lt "$limit" ] || return 1
     sleep 0.1
     attempt=$((attempt + 1))
   done
-  return 1
+  HERDR_PRESENTATION_ORDER_LOCK_HELD=1
 }
 
 clear_relaunch_harness_wiring() {
@@ -3623,8 +3621,15 @@ else
           echo "error: herdr presentation recovery could not ensure its exact named session" >&2
           exit 1
         }
-        spawn_herdr_presentation_order_lock_acquire "$HERDR_SES" || {
-          echo "error: herdr presentation recovery could not acquire its session lock; refusing a concurrent resume" >&2
+        # A concurrent recovery on the same session holds this lock through its
+        # whole relaunch, so recovery waits far longer than an ordinary spawn.
+        HERDR_RECOVERY_LOCK_WAIT=120
+        case "${FM_TEST_HERDR_RECOVERY_LOCK_WAIT:-}" in
+          ''|*[!0-9]*|0) ;;
+          *) HERDR_RECOVERY_LOCK_WAIT=$FM_TEST_HERDR_RECOVERY_LOCK_WAIT ;;
+        esac
+        spawn_herdr_presentation_order_lock_acquire "$HERDR_SES" "$HERDR_RECOVERY_LOCK_WAIT" || {
+          echo "error: herdr presentation recovery could not acquire its session lock within ${HERDR_RECOVERY_LOCK_WAIT}s; refusing a concurrent resume" >&2
           exit 1
         }
         if [ -e "$STATE/$ID.meta" ] || [ -L "$STATE/$ID.meta" ]; then
