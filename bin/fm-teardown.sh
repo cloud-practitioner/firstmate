@@ -1526,11 +1526,6 @@ $unpushed
 EOF
 }
 
-# Is the worktree's PR merged for local work contained in that PR? Resolves the
-# PR from the recorded pr= URL first, then from the branch name, and asks GitHub
-# for both the PR state and head. Returns non-zero when the PR is not merged, the
-# current work is not contained in the PR head, no PR is found, or any gh error
-# occurs - the caller then falls back to the content check.
 # The head of a merged Bitbucket pull request, printed as a full hash that is
 # present in this copy. The recorded pr_head= wins when it extends the head the
 # API reports, because the source branch a live resolution needs may already be
@@ -1546,20 +1541,19 @@ bitbucket_merged_head() {
   else
     head=$(fm_pr_bitbucket_resolve_commit "$FM_PR_PATH" "$FM_PR_BITBUCKET_HEAD_REPORTED") || return 1
   fi
-  if ! git -C "$WT" cat-file -e "$head^{commit}" 2>/dev/null; then
-    git -C "$WT" remote get-url origin >/dev/null 2>&1 || return 1
-    if [ -n "$FM_PR_BITBUCKET_SOURCE_BRANCH" ] \
-      && git check-ref-format --branch "$FM_PR_BITBUCKET_SOURCE_BRANCH" >/dev/null 2>&1; then
-      git -C "$WT" fetch --quiet origin "refs/heads/$FM_PR_BITBUCKET_SOURCE_BRANCH" >/dev/null 2>&1 || true
-    fi
-    git -C "$WT" cat-file -e "$head^{commit}" 2>/dev/null \
-      || git -C "$WT" fetch --quiet origin "$head" >/dev/null 2>&1 || return 1
-    git -C "$WT" cat-file -e "$head^{commit}" 2>/dev/null || return 1
-  fi
+  fm_pr_bitbucket_fetch_commit "$WT" "$head" "$FM_PR_BITBUCKET_SOURCE_BRANCH" || return 1
   printf '%s' "$head"
 }
 
 LANDED_PROOF_NOTE=
+# Is the worktree's PR merged for local work contained in that PR? Resolves the
+# PR from the recorded pr= URL first, then from the branch name, and asks GitHub
+# for both the PR state and head. A recorded Bitbucket pr= is asked of Bitbucket
+# instead, through bitbucket_merged_head, and never falls back to a branch-name
+# lookup. Returns non-zero when the PR is not merged, the current work is not
+# contained in the PR head, no PR is found, or any forge error occurs - the
+# caller then falls back to the content check, after a Bitbucket read that
+# lacks its requirements has named them in LANDED_PROOF_NOTE.
 pr_is_merged() {
   local branch=$1 target view state remainder head resolved_url current landed=0 missing
   if [ -n "$PR_URL" ] && fm_pr_url_parse "$PR_URL" && [ "$FM_PR_PROVIDER" = bitbucket ]; then

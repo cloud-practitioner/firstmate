@@ -96,16 +96,26 @@
 # A Bitbucket merge is refused unless every pre-merge condition holds, each read
 # live at merge time: the pull request is open and not a draft, every commit
 # status at the exact current head is SUCCESSFUL unless waived by an attended
-# --allow-red naming its key, and the head carries at least as many successful
-# builds as the largest require_passing_builds_to_merge branch restriction that
-# applies to the destination branch. Bitbucket states that requirement as a
-# count rather than as named checks, so there is no named unreported check to
-# waive and --allow-missing is refused. The restrictions are read through the
+# --allow-red naming its key, and the pull request meets every merge check the
+# destination branch's restrictions require. Those checks are the largest
+# require_passing_builds_to_merge count of successful builds at the head, the
+# largest require_approvals_to_merge count of approvals, the largest
+# require_default_reviewer_approvals_to_merge count of approvals from the
+# repository's effective default reviewers, no participant requesting changes
+# under require_no_changes_requested, and no unresolved task under
+# require_tasks_to_be_completed, each counted only when a restriction of that
+# kind applies to the destination branch. Bitbucket enforces merge checks itself
+# only where the workspace turns enforcement on, so this script verifies them
+# rather than relying on the merge request to refuse. --allow-red waives a
+# named failed build and nothing else. Bitbucket states the build requirement
+# as a count rather than as named checks, so there is no named unreported check
+# to waive and --allow-missing is refused. The restrictions are read through the
 # branch-restrictions API, which needs repository admin access; an unreadable
-# restriction set, or a branching-model restriction whose model cannot be read,
-# refuses the merge, because a required build that has not reported could not
-# be ruled out. Reading that state needs curl, jq, and the credential, and any
-# one absent stops the merge before any state is recorded.
+# restriction set, a branching-model restriction whose model cannot be read, or
+# an applicable check whose default reviewers or tasks cannot be read refuses
+# the merge, because an unmet merge check could not be ruled out. Reading that
+# state needs curl, jq, and the credential, and any one absent stops the merge
+# before any state is recorded.
 # Bitbucket's merge API takes no expected-head parameter, so the verified head
 # cannot be bound to the merge the way --match-head-commit and --sha bind it.
 # Instead the head is read again inside the away-record lock immediately before
@@ -114,8 +124,9 @@
 # back, and a merged head that is not the verified one is reported loudly and
 # exits non-zero after the landed outcome is recorded.
 # The merge strategy is the destination branch's own default unless the extra
-# args name one: --squash, --merge (merge_commit), --fast-forward, or
-# --method <strategy> with any strategy the API accepts. The source branch is
+# args name one: --squash, --merge (merge_commit), or --method <strategy> with
+# any strategy the API accepts; --rebase names no single Bitbucket strategy and
+# is refused in favour of --method rebase_fast_forward or rebase_merge. The source branch is
 # kept (close_source_branch=false) unless --delete-branch is passed with
 # --attended-override, so the pull request's creation-time setting never
 # deletes a branch on its own. No other extra argument applies, and --auto and
@@ -123,7 +134,9 @@
 # Bitbucket may accept a merge and finish it asynchronously (202, or its 555
 # timeout); either way the landed state is read back a bounded number of times,
 # and a merge that has not landed yet is reported as unconfirmed without failing
-# the run, leaving the poll armed, as on GitLab.
+# the run, leaving the poll armed, as on GitLab. A merge request that got no
+# HTTP response at all may still have landed, so the pull request is read back
+# once and its observed state reported, and the run fails with the poll armed.
 #
 # Before any forge merge, the task's existing per-task control lock
 # serializes the captain-hold check through the forge command. A still-held or
@@ -391,12 +404,15 @@ bitbucket_parse_merge_args() {
     case "$arg" in
       --squash) BITBUCKET_MERGE_STRATEGY=squash ;;
       --merge) BITBUCKET_MERGE_STRATEGY=merge_commit ;;
-      --fast-forward) BITBUCKET_MERGE_STRATEGY=fast_forward ;;
       --method) pending=true ;;
       --method=*) BITBUCKET_MERGE_STRATEGY=${arg#--method=} ;;
       --delete-branch|-d) BITBUCKET_CLOSE_SOURCE_BRANCH=true ;;
+      --rebase)
+        echo "error: --rebase names no single Bitbucket merge strategy; pass --method rebase_fast_forward or --method rebase_merge" >&2
+        return 1
+        ;;
       --auto|--auto=*|--admin|--admin=*)
-        echo "error: $arg has no Bitbucket equivalent; a Bitbucket merge is always immediate and never bypasses a merge check" >&2
+        echo "error: $arg has no Bitbucket equivalent; a Bitbucket merge is always immediate, and its merge checks are verified here rather than bypassed" >&2
         return 1
         ;;
       *)
@@ -1404,43 +1420,62 @@ gitlab_confirm_merged() {
   [ "$state" = merged ]
 }
 
-# The largest require_passing_builds_to_merge restriction that applies to the
-# destination branch, in FM_PR_BITBUCKET_REQUIRED_BUILDS (0 when none applies).
+# The merge checks the destination branch's restrictions require: the largest
+# require_passing_builds_to_merge, require_approvals_to_merge, and
+# require_default_reviewer_approvals_to_merge values that apply, in
+# FM_PR_BITBUCKET_REQUIRED_BUILDS, FM_PR_BITBUCKET_REQUIRED_APPROVALS, and
+# FM_PR_BITBUCKET_REQUIRED_DEFAULT_APPROVALS (0 when none applies), and whether
+# a require_no_changes_requested or require_tasks_to_be_completed restriction
+# applies, in FM_PR_BITBUCKET_REQUIRE_NO_CHANGES and FM_PR_BITBUCKET_REQUIRE_TASKS.
 # A glob restriction applies when its pattern matches the whole branch name,
 # with "*" matching any run of characters; a branching-model restriction applies
 # when the branch is the model's development or production branch, or carries
 # the prefix of the named branch type, so the effective branching model is read
-# only when such a restriction exists. Fails with FM_PR_BITBUCKET_REQUIRED_ERROR
-# set when either read, or any restriction in it, cannot be interpreted.
+# only when such a restriction exists. Restrictions of any other kind are not
+# merge checks and are ignored. Fails with FM_PR_BITBUCKET_REQUIRED_ERROR set
+# when either read, or any merge-check restriction in it, cannot be interpreted.
 FM_PR_BITBUCKET_REQUIRED_BUILDS=0
+FM_PR_BITBUCKET_REQUIRED_APPROVALS=0
+FM_PR_BITBUCKET_REQUIRED_DEFAULT_APPROVALS=0
+FM_PR_BITBUCKET_REQUIRE_NO_CHANGES=false
+FM_PR_BITBUCKET_REQUIRE_TASKS=false
 FM_PR_BITBUCKET_REQUIRED_ERROR=
-bitbucket_read_required_builds() {
-  local dest=$1 restrictions model='null' required
+BITBUCKET_MERGE_CHECK_KINDS='["require_passing_builds_to_merge","require_approvals_to_merge","require_default_reviewer_approvals_to_merge","require_no_changes_requested","require_tasks_to_be_completed"]'
+BITBUCKET_COUNTED_CHECK_KINDS='["require_passing_builds_to_merge","require_approvals_to_merge","require_default_reviewer_approvals_to_merge"]'
+bitbucket_read_merge_checks() {
+  local dest=$1 restrictions model='null' required builds approvals default_approvals no_changes tasks
   FM_PR_BITBUCKET_REQUIRED_BUILDS=0
+  FM_PR_BITBUCKET_REQUIRED_APPROVALS=0
+  FM_PR_BITBUCKET_REQUIRED_DEFAULT_APPROVALS=0
+  FM_PR_BITBUCKET_REQUIRE_NO_CHANGES=false
+  FM_PR_BITBUCKET_REQUIRE_TASKS=false
   FM_PR_BITBUCKET_REQUIRED_ERROR=
-  if ! fm_pr_bitbucket_get_all "repositories/$PR_PATH/branch-restrictions?kind=require_passing_builds_to_merge&pagelen=100"; then
+  if ! fm_pr_bitbucket_get_all "repositories/$PR_PATH/branch-restrictions?pagelen=100"; then
     FM_PR_BITBUCKET_REQUIRED_ERROR="the branch restrictions for base branch $dest could not be read (HTTP ${FM_PR_BITBUCKET_STATUS:-unreachable}; reading them needs repository admin access)"
     return 1
   fi
   restrictions=$FM_PR_BITBUCKET_VALUES
-  if ! printf '%s' "$restrictions" | jq -e '
+  if ! printf '%s' "$restrictions" | jq -e \
+      --argjson checks "$BITBUCKET_MERGE_CHECK_KINDS" --argjson counted "$BITBUCKET_COUNTED_CHECK_KINDS" '
       all(.[]; type == "object" and (.kind | type) == "string"
-        and (.kind != "require_passing_builds_to_merge"
-          or ((.value | type) == "number" and .value >= 0
+        and ((.kind | IN($checks[]) | not)
+          or (((.kind | IN($counted[]) | not) or ((.value | type) == "number" and .value >= 0))
             and ((.branch_match_kind == "glob" and (.pattern | type) == "string")
               or (.branch_match_kind == "branching_model" and (.branch_type | type) == "string")))))' \
       >/dev/null 2>&1; then
     FM_PR_BITBUCKET_REQUIRED_ERROR="the branch restrictions for base branch $dest could not be interpreted"
     return 1
   fi
-  if printf '%s' "$restrictions" | jq -e 'any(.[]; .kind == "require_passing_builds_to_merge" and .branch_match_kind == "branching_model")' >/dev/null; then
+  if printf '%s' "$restrictions" | jq -e --argjson checks "$BITBUCKET_MERGE_CHECK_KINDS" '
+      any(.[]; (.kind | IN($checks[])) and .branch_match_kind == "branching_model")' >/dev/null; then
     if ! fm_pr_bitbucket_request GET "repositories/$PR_PATH/effective-branching-model" \
       || ! model=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -c 'if type == "object" then . else error("no model") end' 2>/dev/null); then
       FM_PR_BITBUCKET_REQUIRED_ERROR="the branching model for base branch $dest could not be read"
       return 1
     fi
   fi
-  if ! required=$(printf '%s' "$restrictions" | jq -r --arg dest "$dest" --argjson model "$model" '
+  if ! required=$(printf '%s' "$restrictions" | jq -r --arg dest "$dest" --argjson model "$model" \
+      --argjson checks "$BITBUCKET_MERGE_CHECK_KINDS" '
       def glob_matches($name):
         ("^" + (gsub("(?<c>[.+?^$()\\[\\]{}|\\\\])"; "\\\(.c)") | gsub("\\*"; ".*")) + "$") as $re
         | $name | test($re);
@@ -1453,24 +1488,100 @@ bitbucket_read_required_builds() {
           and .prefix != "" and ($dest | startswith(.prefix)))
         end;
       [ .[]
-        | select(.kind == "require_passing_builds_to_merge")
+        | select(.kind | IN($checks[]))
         | select(if .branch_match_kind == "glob" then (.pattern | glob_matches($dest))
-                 else model_matches(.branch_type) end)
-        | .value ]
-      | max // 0' 2>/dev/null) \
-    || ! [[ "$required" =~ ^[0-9]+$ ]]; then
+                 else model_matches(.branch_type) end) ] as $applicable
+      | def need($kind): [ $applicable[] | select(.kind == $kind) | .value ] | max // 0;
+        def flag($kind): any($applicable[]; .kind == $kind);
+        "\(need("require_passing_builds_to_merge")) \(need("require_approvals_to_merge")) \(need("require_default_reviewer_approvals_to_merge")) \(flag("require_no_changes_requested")) \(flag("require_tasks_to_be_completed"))"' 2>/dev/null); then
     FM_PR_BITBUCKET_REQUIRED_ERROR="the branch restrictions for base branch $dest could not be interpreted"
     return 1
   fi
-  FM_PR_BITBUCKET_REQUIRED_BUILDS=$required
+  read -r builds approvals default_approvals no_changes tasks <<REQUIRED
+$required
+REQUIRED
+  if ! [[ "$builds" =~ ^[0-9]+$ && "$approvals" =~ ^[0-9]+$ && "$default_approvals" =~ ^[0-9]+$ ]] \
+    || ! [[ "$no_changes" =~ ^(true|false)$ && "$tasks" =~ ^(true|false)$ ]]; then
+    FM_PR_BITBUCKET_REQUIRED_ERROR="the branch restrictions for base branch $dest could not be interpreted"
+    return 1
+  fi
+  FM_PR_BITBUCKET_REQUIRED_BUILDS=$builds
+  FM_PR_BITBUCKET_REQUIRED_APPROVALS=$approvals
+  FM_PR_BITBUCKET_REQUIRED_DEFAULT_APPROVALS=$default_approvals
+  FM_PR_BITBUCKET_REQUIRE_NO_CHANGES=$no_changes
+  FM_PR_BITBUCKET_REQUIRE_TASKS=$tasks
+}
+
+# The review merge checks bitbucket_read_merge_checks found, verified against
+# the pull request read in FM_PR_BITBUCKET_JSON and, only when a check needs
+# them, the repository's effective default reviewers and the pull request's
+# tasks. Prints one refusal line for each check the pull request does not meet,
+# or whose evidence could not be read, and nothing when every one is met.
+bitbucket_review_refusals() {
+  local participants='' approvals reviewers changes unresolved
+  local dest=$FM_PR_BITBUCKET_DEST_BRANCH
+  if [ "$FM_PR_BITBUCKET_REQUIRED_APPROVALS" -gt 0 ] \
+    || [ "$FM_PR_BITBUCKET_REQUIRED_DEFAULT_APPROVALS" -gt 0 ] \
+    || [ "$FM_PR_BITBUCKET_REQUIRE_NO_CHANGES" = true ]; then
+    if ! participants=$(printf '%s' "$FM_PR_BITBUCKET_JSON" | jq -c '
+        (.participants // []) | if type == "array" and all(.[]; type == "object") then .
+        else error("invalid participants") end' 2>/dev/null); then
+      participants=
+      printf '  - the participants of the pull request could not be read, so its reviews cannot be verified\n'
+    fi
+  fi
+  if [ -n "$participants" ] && [ "$FM_PR_BITBUCKET_REQUIRED_APPROVALS" -gt 0 ]; then
+    approvals=$(printf '%s' "$participants" | jq '[.[] | select(.approved == true)] | length')
+    [ "$approvals" -ge "$FM_PR_BITBUCKET_REQUIRED_APPROVALS" ] \
+      || printf '  - base branch %s requires %s approvals, and the pull request has %s\n' \
+        "$dest" "$FM_PR_BITBUCKET_REQUIRED_APPROVALS" "$approvals"
+  fi
+  if [ -n "$participants" ] && [ "$FM_PR_BITBUCKET_REQUIRED_DEFAULT_APPROVALS" -gt 0 ]; then
+    if fm_pr_bitbucket_get_all "repositories/$PR_PATH/effective-default-reviewers?pagelen=100" \
+      && reviewers=$(printf '%s' "$FM_PR_BITBUCKET_VALUES" | jq -c '
+        map(if type == "object" and (.user.uuid? | type) == "string" then .user.uuid
+            else error("invalid default reviewer") end)' 2>/dev/null); then
+      approvals=$(printf '%s' "$participants" | jq --argjson reviewers "$reviewers" '
+        [.[] | select(.approved == true and ((.user.uuid? // null) | IN($reviewers[])))] | length')
+      [ "$approvals" -ge "$FM_PR_BITBUCKET_REQUIRED_DEFAULT_APPROVALS" ] \
+        || printf '  - base branch %s requires %s approvals from default reviewers, and the pull request has %s\n' \
+          "$dest" "$FM_PR_BITBUCKET_REQUIRED_DEFAULT_APPROVALS" "$approvals"
+    else
+      printf '  - the default reviewers for base branch %s could not be read (HTTP %s), so their approvals cannot be counted\n' \
+        "$dest" "${FM_PR_BITBUCKET_STATUS:-unreachable}"
+    fi
+  fi
+  if [ -n "$participants" ] && [ "$FM_PR_BITBUCKET_REQUIRE_NO_CHANGES" = true ]; then
+    changes=$(printf '%s' "$participants" | jq -r '
+      [.[] | select(.state == "changes_requested")
+        | (.user.nickname? // .user.display_name? // "unknown" | tostring | gsub("\n"; " "))]
+      | join(", ")')
+    [ -z "$changes" ] \
+      || printf '  - base branch %s requires no requested changes, and changes are requested by %s\n' \
+        "$dest" "$changes"
+  fi
+  if [ "$FM_PR_BITBUCKET_REQUIRE_TASKS" = true ]; then
+    if fm_pr_bitbucket_get_all "repositories/$PR_PATH/pullrequests/$PR_NUMBER/tasks?pagelen=100" \
+      && unresolved=$(printf '%s' "$FM_PR_BITBUCKET_VALUES" | jq '
+        if all(.[]; type == "object" and (.state | type) == "string")
+        then [.[] | select(.state != "RESOLVED")] | length
+        else error("invalid task") end' 2>/dev/null); then
+      [ "$unresolved" -eq 0 ] \
+        || printf '  - base branch %s requires every task resolved, and %s are unresolved\n' \
+          "$dest" "$unresolved"
+    else
+      printf '  - the tasks of the pull request could not be read (HTTP %s), so an unresolved task cannot be ruled out\n' \
+        "${FM_PR_BITBUCKET_STATUS:-unreachable}"
+    fi
+  fi
 }
 
 # Pre-merge conditions for a Bitbucket pull request, from one live read of the
 # pull request, the commit statuses at its head, and the destination branch's
-# required builds. Sets FM_PR_MERGE_HEAD to the verified head on success and
+# merge checks. Sets FM_PR_MERGE_HEAD to the verified head on success and
 # returns non-zero after reporting every condition that failed.
 bitbucket_verify_mergeable() {
-  local statuses red line key covered check successful
+  local statuses red line key covered check successful review
   local refusals='' uncovered=''
   if ! fm_pr_bitbucket_read_pull_request "$PR_PATH" "$PR_NUMBER"; then
     echo "error: could not read the Bitbucket pull request state before merging" >&2
@@ -1512,11 +1623,16 @@ bitbucket_verify_mergeable() {
 $red
 RED
   successful=$(printf '%s' "$statuses" | jq '[.[] | select(.state == "SUCCESSFUL")] | length')
-  if ! bitbucket_read_required_builds "$FM_PR_BITBUCKET_DEST_BRANCH"; then
-    refusals="$refusals  - $FM_PR_BITBUCKET_REQUIRED_ERROR, so a required build that has not reported cannot be ruled out
+  if ! bitbucket_read_merge_checks "$FM_PR_BITBUCKET_DEST_BRANCH"; then
+    refusals="$refusals  - $FM_PR_BITBUCKET_REQUIRED_ERROR, so an unmet merge check cannot be ruled out
 "
-  elif [ "$successful" -lt "$FM_PR_BITBUCKET_REQUIRED_BUILDS" ]; then
-    refusals="$refusals  - base branch $FM_PR_BITBUCKET_DEST_BRANCH requires $FM_PR_BITBUCKET_REQUIRED_BUILDS successful builds, and $successful reported at head $FM_PR_BITBUCKET_HEAD
+  else
+    if [ "$successful" -lt "$FM_PR_BITBUCKET_REQUIRED_BUILDS" ]; then
+      refusals="$refusals  - base branch $FM_PR_BITBUCKET_DEST_BRANCH requires $FM_PR_BITBUCKET_REQUIRED_BUILDS successful builds, and $successful reported at head $FM_PR_BITBUCKET_HEAD
+"
+    fi
+    review=$(bitbucket_review_refusals)
+    [ -z "$review" ] || refusals="$refusals$review
 "
   fi
 
@@ -1526,7 +1642,7 @@ RED
     [ -z "$uncovered" ] || printf 'error: these builds are not green: %s\n' "$uncovered" >&2
     return 1
   fi
-  printf 'verified: %s is open, with every unwaived build green and every required build reported at head %s\n' \
+  printf 'verified: %s is open, with every unwaived build green and every merge check met at head %s\n' \
     "$URL" "$FM_PR_BITBUCKET_HEAD" >&2
   FM_PR_MERGE_HEAD=$FM_PR_BITBUCKET_HEAD
 }
@@ -1720,12 +1836,25 @@ case "$PROVIDER" in
     # success rather than report a failure that may not be one.
     case "$FM_PR_BITBUCKET_STATUS" in
       2??|555) ;;
+      '')
+        fm_afk_contract_lock_release || true
+        fm_lock_release "$MERGE_CONTROL_LOCK" || true
+        MERGE_CONTROL_LOCK=
+        if fm_pr_bitbucket_read_pull_request "$PR_PATH" "$PR_NUMBER" reported; then
+          printf 'actionable: the merge request for %s got no HTTP response, and the pull request reads back as %s at head %s; the merge poll remains armed\n' \
+            "$URL" "$FM_PR_BITBUCKET_STATE" "$FM_PR_BITBUCKET_HEAD_REPORTED" >&2
+        else
+          printf 'error: the merge request for %s got no HTTP response, and the pull request could not be read back; it may have merged, and the merge poll remains armed\n' \
+            "$URL" >&2
+        fi
+        exit 1
+        ;;
       *)
         fm_afk_contract_lock_release || true
         fm_lock_release "$MERGE_CONTROL_LOCK" || true
         MERGE_CONTROL_LOCK=
         printf 'error: Bitbucket refused the merge request for %s (HTTP %s)\n' \
-          "$URL" "${FM_PR_BITBUCKET_STATUS:-unreachable}" >&2
+          "$URL" "$FM_PR_BITBUCKET_STATUS" >&2
         bitbucket_report_forge_error
         exit 1
         ;;

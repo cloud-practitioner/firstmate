@@ -307,10 +307,19 @@ test_merge_passes_a_requested_strategy() {
   assert_equals '{"type":"pullrequest","close_source_branch":true}' "$(cat "$case_dir/bb/merge-body.json")" \
     "merge-delete-branch: the attended deletion was not sent"
   case_dir=$(make_case merge-bad-arg)
+  local arg
+  for arg in --subject --fast-forward; do
+    rc=0
+    run_merge "$case_dir" "$BB_URL" -- "$arg" || rc=$?
+    expect_code 1 "$rc" "merge-bad-arg: $arg has no Bitbucket meaning and must refuse"
+    assert_grep "extra merge argument '$arg' does not apply to a Bitbucket pull request" "$case_dir/stderr" \
+      "merge-bad-arg: the $arg refusal did not explain"
+  done
   rc=0
   run_merge "$case_dir" "$BB_URL" -- --rebase || rc=$?
-  expect_code 1 "$rc" "merge-bad-arg: an argument with no Bitbucket meaning must refuse"
-  assert_grep "does not apply to a Bitbucket pull request" "$case_dir/stderr" "merge-bad-arg: the refusal did not explain"
+  expect_code 1 "$rc" "merge-bad-arg: --rebase names no single Bitbucket strategy and must refuse"
+  assert_grep "pass --method rebase_fast_forward or --method rebase_merge" "$case_dir/stderr" \
+    "merge-bad-arg: the --rebase refusal did not name the strategies to choose from"
   assert_absent "$case_dir/bb/merge-called" "merge-bad-arg: a merge was requested anyway"
   pass "fm-pr-merge sends a requested Bitbucket strategy and refuses arguments it cannot translate"
 }
@@ -353,7 +362,7 @@ test_merge_refuses_red_and_unreported_required_builds() {
   rc=0
   run_merge "$case_dir" "$BB_URL" || rc=$?
   expect_code 1 "$rc" "merge-restrictions-unreadable: an unreadable restriction set must refuse"
-  assert_grep "branch restrictions for base branch main could not be read (HTTP 403; reading them needs repository admin access), so a required build that has not reported cannot be ruled out" \
+  assert_grep "branch restrictions for base branch main could not be read (HTTP 403; reading them needs repository admin access), so an unmet merge check cannot be ruled out" \
     "$case_dir/stderr" "merge-restrictions-unreadable: the refusal did not name the missing read"
   assert_absent "$case_dir/bb/merge-called" "merge-restrictions-unreadable: a merge was requested anyway"
   pass "fm-pr-merge refuses red builds, an unmet required build count, and an unreadable restriction set"
@@ -494,6 +503,97 @@ test_merge_reports_forge_refusal_unconfirmed_and_wrong_head() {
   pass "fm-pr-merge quotes Bitbucket's refusal, leaves an unconfirmed merge armed, and flags a landed head it did not verify"
 }
 
+test_merge_refuses_unmet_review_merge_checks() {
+  local case_dir rc=0 approved changes
+  approved='[{"user":{"uuid":"{alice}","nickname":"alice"},"role":"REVIEWER","approved":true,"state":"approved"}]'
+  changes='[{"user":{"uuid":"{bob}","nickname":"bob"},"role":"REVIEWER","approved":false,"state":"changes_requested"}]'
+
+  case_dir=$(make_case merge-approvals)
+  printf '%s\n' '{"values":[{"kind":"require_approvals_to_merge","branch_match_kind":"glob","pattern":"main","value":1},{"kind":"require_approvals_to_merge","branch_match_kind":"glob","pattern":"release/*","value":4},{"kind":"push","branch_match_kind":"glob","pattern":"main","users":[]}]}' \
+    > "$case_dir/bb/restrictions.json"
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "merge-approvals: a pull request short of the required approvals must not merge"
+  assert_grep "base branch main requires 1 approvals, and the pull request has 0" "$case_dir/stderr" \
+    "merge-approvals: the unmet approval count was not named"
+  assert_absent "$case_dir/bb/merge-called" "merge-approvals: a merge was requested anyway"
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main "$approved" > "$case_dir/bb/pr.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 0 "$rc" "merge-approvals: an approved pull request should merge"$'\n'"$(cat "$case_dir/stderr")"
+
+  case_dir=$(make_case merge-default-reviewers)
+  printf '%s\n' '{"values":[{"kind":"require_default_reviewer_approvals_to_merge","branch_match_kind":"glob","pattern":"*","value":1}]}' \
+    > "$case_dir/bb/restrictions.json"
+  printf '%s\n' '{"values":[{"type":"default_reviewer","reviewer_type":"repository","user":{"uuid":"{carol}"}}]}' \
+    > "$case_dir/bb/default-reviewers.json"
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main "$approved" > "$case_dir/bb/pr.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "merge-default-reviewers: an approval from someone other than a default reviewer must not count"
+  assert_grep "base branch main requires 1 approvals from default reviewers, and the pull request has 0" "$case_dir/stderr" \
+    "merge-default-reviewers: the unmet default-reviewer approval count was not named"
+  assert_absent "$case_dir/bb/merge-called" "merge-default-reviewers: a merge was requested anyway"
+  printf '%s\n' '{"values":[{"type":"default_reviewer","reviewer_type":"repository","user":{"uuid":"{alice}"}}]}' \
+    > "$case_dir/bb/default-reviewers.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 0 "$rc" "merge-default-reviewers: a default reviewer's approval should merge"$'\n'"$(cat "$case_dir/stderr")"
+
+  case_dir=$(make_case merge-default-reviewers-unreadable)
+  printf '%s\n' '{"values":[{"kind":"require_default_reviewer_approvals_to_merge","branch_match_kind":"glob","pattern":"main","value":1}]}' \
+    > "$case_dir/bb/restrictions.json"
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main "$approved" > "$case_dir/bb/pr.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "merge-default-reviewers-unreadable: unreadable default reviewers must refuse"
+  assert_grep "the default reviewers for base branch main could not be read (HTTP 404)" "$case_dir/stderr" \
+    "merge-default-reviewers-unreadable: the missing read was not named"
+
+  case_dir=$(make_case merge-changes-requested)
+  printf '%s\n' '{"values":[{"kind":"require_no_changes_requested","branch_match_kind":"branching_model","branch_type":"development","value":null}]}' \
+    > "$case_dir/bb/restrictions.json"
+  printf '%s\n' '{"development":{"name":"main","use_mainbranch":true,"branch":{"name":"main"}},"branch_types":[]}' \
+    > "$case_dir/bb/model.json"
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main "$changes" > "$case_dir/bb/pr.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" --allow-red pipeline || rc=$?
+  expect_code 1 "$rc" "merge-changes-requested: requested changes must not merge, and --allow-red must not waive them"
+  assert_grep "base branch main requires no requested changes, and changes are requested by bob" "$case_dir/stderr" \
+    "merge-changes-requested: the reviewer requesting changes was not named"
+  assert_absent "$case_dir/bb/merge-called" "merge-changes-requested: a merge was requested anyway"
+
+  case_dir=$(make_case merge-tasks)
+  printf '%s\n' '{"values":[{"kind":"require_tasks_to_be_completed","branch_match_kind":"glob","pattern":"main"}]}' \
+    > "$case_dir/bb/restrictions.json"
+  printf '%s\n' '{"values":[{"id":1,"state":"RESOLVED"},{"id":2,"state":"UNRESOLVED"}]}' > "$case_dir/bb/tasks.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "merge-tasks: an unresolved task must not merge"
+  assert_grep "base branch main requires every task resolved, and 1 are unresolved" "$case_dir/stderr" \
+    "merge-tasks: the unresolved task was not named"
+  assert_absent "$case_dir/bb/merge-called" "merge-tasks: a merge was requested anyway"
+  printf '%s\n' '{"values":[{"id":1,"state":"RESOLVED"}]}' > "$case_dir/bb/tasks.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 0 "$rc" "merge-tasks: every task resolved should merge"$'\n'"$(cat "$case_dir/stderr")"
+  pass "fm-pr-merge refuses a Bitbucket pull request that misses an approval, default-reviewer, changes-requested, or task merge check"
+}
+
+test_merge_reads_back_after_a_transport_failure() {
+  local case_dir rc=0
+  case_dir=$(make_case merge-transport)
+  : > "$case_dir/bb/merge.transport-failure"
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "merge-transport: a merge request with no HTTP response must fail"
+  assert_grep "the merge request for $BB_URL got no HTTP response, and the pull request reads back as MERGED at head $BB_ABBREV; the merge poll remains armed" \
+    "$case_dir/stderr" "merge-transport: the observed state was not read back and reported"
+  assert_no_grep 'Bitbucket refused the merge request' "$case_dir/stderr" \
+    "merge-transport: a transport failure was reported as a refusal"
+  assert_absent "$case_dir/state/task-x1.pr-poll-merge-notified" "merge-transport: an unconfirmed merge was recorded as landed"
+  assert_present "$case_dir/state/task-x1.check.sh" "merge-transport: the merge poll was not left armed"
+  pass "fm-pr-merge reads a Bitbucket pull request back after its merge request got no response"
+}
+
 test_url_parse_accepts_canonical_bitbucket_urls
 test_url_parse_refuses_malformed_bitbucket_urls
 test_record_read_reports_state_and_merged
@@ -511,3 +611,5 @@ test_merge_waivers_follow_the_attended_rules
 test_merge_under_away_authority_is_synchronous_and_gated
 test_merge_refuses_a_head_that_moved_before_the_request
 test_merge_reports_forge_refusal_unconfirmed_and_wrong_head
+test_merge_refuses_unmet_review_merge_checks
+test_merge_reads_back_after_a_transport_failure

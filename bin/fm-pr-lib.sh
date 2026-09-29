@@ -1281,6 +1281,22 @@ fm_pr_bitbucket_resolve_commit() {  # <path> <hash>
   printf '%s' "$full"
 }
 
+# Make one Bitbucket pull request commit present in a local copy. Bitbucket
+# has no pull ref, so a missing commit is fetched from origin by the pull
+# request's source branch while that branch exists, then by hash.
+fm_pr_bitbucket_fetch_commit() {  # <worktree> <full-hash> <source-branch>
+  local wt=$1 hash=$2 source=${3-}
+  fm_pr_head_valid "$hash" || return 1
+  git -C "$wt" cat-file -e "$hash^{commit}" 2>/dev/null && return 0
+  git -C "$wt" remote get-url origin >/dev/null 2>&1 || return 1
+  if [ -n "$source" ] && git check-ref-format --branch "$source" >/dev/null 2>&1; then
+    git -C "$wt" fetch --quiet origin "refs/heads/$source" >/dev/null 2>&1 || true
+  fi
+  git -C "$wt" cat-file -e "$hash^{commit}" 2>/dev/null \
+    || git -C "$wt" fetch --quiet origin "$hash" >/dev/null 2>&1 || return 1
+  git -C "$wt" cat-file -e "$hash^{commit}" 2>/dev/null
+}
+
 # One live read of a Bitbucket pull request. Sets FM_PR_BITBUCKET_STATE (OPEN,
 # MERGED, DECLINED, or SUPERSEDED), FM_PR_BITBUCKET_DRAFT ("true", "false", or
 # empty when the payload carries no boolean draft), FM_PR_BITBUCKET_HEAD_REPORTED

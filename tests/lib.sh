@@ -509,7 +509,9 @@ SH
 # pr-moved.json from the full read numbered in pr-moved.at, the second by
 # default, when that file exists, and pr-post.json once a merge was requested), commit (an abbreviated-hash
 # resolution, answered by commit-<abbreviation>.json when that exists), statuses and statuses-2 (the second page), restrictions, model,
-# and merge (whose request body is kept in merge-body.json). The credential is
+# default-reviewers, tasks, and merge (whose request body is kept in
+# merge-body.json, and which gets no HTTP response at all, the way curl fails
+# in transport, when merge.transport-failure exists). The credential is
 # checked against FM_TEST_BB_EXPECT_USER, the escaped "email:token" curl's
 # config should carry on stdin, and a mismatch answers 401. Every argument
 # vector is appended to curl-argv.log and every config to curl-config.log, so a
@@ -557,8 +559,10 @@ case "$method $path" in
   "POST "*/pullrequests/*/merge)
     printf '%s' "$data" > "$dir/merge-body.json"
     : > "$dir/merge-called"
+    [ ! -e "$dir/merge.transport-failure" ] || exit 28
     respond merge
     ;;
+  "GET "*/pullrequests/*/tasks*) respond tasks ;;
   "GET "*/pullrequests/*"?fields=id,state")
     if [ -e "$dir/merge-called" ] && [ -f "$dir/pr-post.json" ]; then respond pr-post; fi
     respond pr
@@ -582,6 +586,7 @@ case "$method $path" in
     ;;
   "GET "*/branch-restrictions*) respond restrictions ;;
   "GET "*/effective-branching-model) respond model ;;
+  "GET "*/effective-default-reviewers*) respond default-reviewers ;;
 esac
 respond unrouted
 SH
