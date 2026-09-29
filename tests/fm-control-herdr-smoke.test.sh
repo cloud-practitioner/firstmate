@@ -92,7 +92,7 @@ EOF
 # test alone. `exec` keeps the pane's shell pid.
 BASH_BIN=$(command -v bash) || fail "bash not found"
 printf -v BASH_Q '%q' "$BASH_BIN"
-fm_backend_herdr_send_text_line "$SESSION:$PANE_ID" "exec env PS1='hsmoke\$ ' $BASH_Q --noprofile --norc" \
+fm_backend_herdr_send_text_line "$SESSION:$PANE_ID" "exec env PS1='hsmoke\$ ' HISTFILE=/dev/null $BASH_Q --noprofile --norc" \
   || fail "could not pin a neutral shell prompt in the task pane"
 fm_backend_herdr_send_text_line "$SESSION:$PANE_ID" "clear" \
   || fail "could not clear the login shell's output from the task pane"
