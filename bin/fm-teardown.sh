@@ -46,8 +46,9 @@
 # reachable from any remote-tracking branch (a fork counts as a remote, so
 # upstream-contribution PRs pushed to a fork satisfy this in any mode), OR - for a
 # normal ship task whose commits are not so reachable - when its PR is merged and
-# GitHub reports a PR head that contains the current local work, or its content is
-# already present in the up-to-date default branch. This recognizes the common
+# the forge (GitHub, or Bitbucket Cloud for a recorded Bitbucket pr=) reports a PR
+# head that contains the current local work, or its content is already present in
+# the up-to-date default branch. This recognizes the common
 # squash-merge-then-delete-branch flow, where the branch's own commits live nowhere
 # on a remote yet the change is fully in main.
 # Squash merges collapse the branch's commits, so per-commit patch ids against main
@@ -62,7 +63,10 @@
 # where the usual "checks green" fm-pr-check.sh trigger never fires) - by looking
 # up a merged PR whose head branch matches the worktree's branch, fetching its head
 # via refs/pull/<n>/head when the branch itself was deleted. So a missing pr= never
-# by itself causes a false refusal of landed work.
+# by itself causes a false refusal of landed work. Bitbucket has no pull ref, so
+# its reported head, which the API abbreviates, is taken as the recorded pr_head=
+# it abbreviates or else resolved live, and when this copy lacks that commit it is
+# fetched by the source branch while one exists, then by hash.
 # A gh lookup error falls back to the content check; if that is also inconclusive,
 # teardown refuses rather than risk discarding unlanded work.
 # Uncommitted changes are never landed.
@@ -1527,8 +1531,49 @@ EOF
 # for both the PR state and head. Returns non-zero when the PR is not merged, the
 # current work is not contained in the PR head, no PR is found, or any gh error
 # occurs - the caller then falls back to the content check.
+# The head of a merged Bitbucket pull request, printed as a full hash that is
+# present in this copy. The recorded pr_head= wins when it extends the head the
+# API reports, because the source branch a live resolution needs may already be
+# deleted after the merge.
+bitbucket_merged_head() {
+  local recorded head
+  fm_pr_bitbucket_read_pull_request "$FM_PR_PATH" "$FM_PR_NUMBER" reported || return 1
+  [ "$FM_PR_BITBUCKET_STATE" = MERGED ] || return 1
+  recorded=$(grep '^pr_head=' "$META" | tail -1 | cut -d= -f2- || true)
+  if fm_pr_head_valid "$recorded" \
+    && [ "${recorded#"$FM_PR_BITBUCKET_HEAD_REPORTED"}" != "$recorded" ]; then
+    head=$recorded
+  else
+    head=$(fm_pr_bitbucket_resolve_commit "$FM_PR_PATH" "$FM_PR_BITBUCKET_HEAD_REPORTED") || return 1
+  fi
+  if ! git -C "$WT" cat-file -e "$head^{commit}" 2>/dev/null; then
+    git -C "$WT" remote get-url origin >/dev/null 2>&1 || return 1
+    if [ -n "$FM_PR_BITBUCKET_SOURCE_BRANCH" ] \
+      && git check-ref-format --branch "$FM_PR_BITBUCKET_SOURCE_BRANCH" >/dev/null 2>&1; then
+      git -C "$WT" fetch --quiet origin "refs/heads/$FM_PR_BITBUCKET_SOURCE_BRANCH" >/dev/null 2>&1 || true
+    fi
+    git -C "$WT" cat-file -e "$head^{commit}" 2>/dev/null \
+      || git -C "$WT" fetch --quiet origin "$head" >/dev/null 2>&1 || return 1
+    git -C "$WT" cat-file -e "$head^{commit}" 2>/dev/null || return 1
+  fi
+  printf '%s' "$head"
+}
+
+LANDED_PROOF_NOTE=
 pr_is_merged() {
-  local branch=$1 target view state remainder head resolved_url current landed=0
+  local branch=$1 target view state remainder head resolved_url current landed=0 missing
+  if [ -n "$PR_URL" ] && fm_pr_url_parse "$PR_URL" && [ "$FM_PR_PROVIDER" = bitbucket ]; then
+    missing=$(fm_pr_bitbucket_missing_requirements)
+    if [ -n "$missing" ]; then
+      LANDED_PROOF_NOTE="the merged state of $PR_URL could not be read to prove landing: reading it requires $missing"
+      return 1
+    fi
+    head=$(bitbucket_merged_head) || return 1
+    current=$(git -C "$WT" rev-parse --verify HEAD 2>/dev/null) || return 1
+    git -C "$WT" merge-base --is-ancestor "$current" "$head" 2>/dev/null && return 0
+    unpushed_patches_are_in_pr_head "$head"
+    return
+  fi
   if [ -n "$PR_URL" ]; then
     target=$PR_URL
   else
@@ -1920,6 +1965,7 @@ validate_worktree_teardown_safety() {
     fi
     if ! work_is_landed "$branch"; then
       echo "REFUSED: worktree $WT has work not on any remote and not landed." >&2
+      [ -z "$LANDED_PROOF_NOTE" ] || printf '%s\n' "$LANDED_PROOF_NOTE" >&2
       printf 'unpushed commits:\n%s\n' "$unpushed" >&2
       echo "Push the branch, land its PR, or get the captain's explicit OK to discard, then --force." >&2
       return 1

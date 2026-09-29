@@ -11,8 +11,10 @@
 # (stale recorded SHAs must never win over a reachable remote PR head). If
 # neither PR head can be resolved, fall back to the local branch with a warning.
 # A GitLab merge request and a Gerrit change expose no comparable ref and record
-# no pr_head, so a task recording one always takes that warning path;
-# docs/architecture.md owns that fallback. Without pr=, compare the task's
+# no pr_head, so a task recording one always takes that warning path; a
+# Bitbucket pull request exposes no ref either but records pr_head, which is its
+# fallback while this copy holds that commit. docs/architecture.md owns that
+# fallback. Without pr=, compare the task's
 # immutable ship branch recorded in state/<id>.meta ("fm/<id>" for records
 # created before that field existed), or the worktree's checked-out branch when
 # that branch does not exist in the worktree. A recorded branch that is not a
