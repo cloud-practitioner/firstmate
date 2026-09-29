@@ -3032,12 +3032,114 @@ test_kill_refuses_when_presentation_lock_is_unavailable() {
       "$mode presentation lock refusal did not report the deferred close"
     attempts=$(wc -l < "$dir/attempts" | tr -d ' ')
     if [ "$mode" = contended ]; then
-      [ "$attempts" = 50 ] || fail "contended presentation lock did not use the bounded wait: $attempts attempts"
+      [ "$attempts" = 1200 ] || fail "contended presentation lock did not use the default 120s holder wait: $attempts attempts"
     else
       [ "$attempts" = 0 ] || fail "unresolved presentation lock path attempted acquisition: $attempts"
     fi
   done
   pass "fm_backend_herdr_kill: unavailable session locks defer every pane close"
+}
+
+# Drive the shared session-lock wait with a scripted sequence of lock holders.
+# Each HOLDERS entry is "<pid>x<attempts>": that many consecutive failed
+# acquires report <pid> as the live holder; once the sequence is spent the
+# lock is free. Prints the status, the attempt count, and the reported holder.
+presentation_lock_wait_run() {  # <budget-seconds> <holders...>
+  local budget=$1
+  shift
+  ROOT="$ROOT" BUDGET="$budget" HOLDERS="$*" bash -c '
+    . "$ROOT/bin/backends/herdr.sh"
+    . "$ROOT/bin/fm-wake-lib.sh"
+    attempts=0
+    fm_lock_try_acquire() {
+      attempts=$((attempts + 1))
+      local spent=0 entry pid count
+      for entry in $HOLDERS; do
+        pid=${entry%x*}
+        count=${entry#*x}
+        spent=$((spent + count))
+        if [ "$attempts" -le "$spent" ]; then
+          FM_LOCK_HELD_PID=$pid
+          return 1
+        fi
+      done
+      return 0
+    }
+    sleep() { :; }
+    if FM_HERDR_PRESENTATION_LOCK_HOLDER_WAIT=$BUDGET \
+      fm_backend_herdr_presentation_session_lock_acquire /tmp/fm-herdr-wait-test-lock; then
+      status=0
+    else
+      status=$?
+    fi
+    printf "%s %s %s\n" "$status" "$attempts" "${FM_BACKEND_HERDR_PRESENTATION_LOCK_HOLDER:-none}"
+  ' 2>&1
+}
+
+test_presentation_session_lock_wait_is_per_holder() {
+  local out
+  # Three successive live holders each keep the lock for most of a 2s budget:
+  # the waiter outlasts the budget in total and still acquires, because the
+  # wait restarts every time the lock changes hands.
+  out=$(presentation_lock_wait_run 2 101x19 102x19 103x19)
+  [ "$out" = "0 58 none" ] || fail "a draining queue of holders must not exhaust the per-holder wait: $out"
+  # One holder that keeps the lock past the budget is stuck: the wait refuses
+  # at the budget and names that holder.
+  out=$(presentation_lock_wait_run 2 101x5 202x100)
+  [ "$out" = "1 25 202" ] || fail "a holder past the per-holder wait must refuse and name the holder: $out"
+  # A free lock is acquired on the first attempt.
+  out=$(presentation_lock_wait_run 2)
+  [ "$out" = "0 1 none" ] || fail "a free presentation lock must be acquired immediately: $out"
+  pass "herdr presentation lock: the wait restarts per holder and refuses only a holder that outlasts it"
+}
+
+test_presentation_session_lock_wait_refuses_malformed_budget() {
+  local out budget
+  for budget in 0 -1 abc 1.5; do
+    out=$(presentation_lock_wait_run "$budget")
+    case "$out" in
+      *"FM_HERDR_PRESENTATION_LOCK_HOLDER_WAIT must be a positive whole number of seconds"*"1 0 none") ;;
+      *) fail "a malformed holder wait '$budget' must refuse before any acquire: $out" ;;
+    esac
+  done
+  pass "herdr presentation lock: a malformed holder wait refuses before acquiring"
+}
+
+test_presentation_session_lock_wait_refuses_a_real_stuck_holder() {
+  local dir lock ready release holder_pid out status start elapsed held
+  dir="$TMP_ROOT/presentation-stuck-holder"; mkdir -p "$dir"
+  lock="$dir/order.lock"; ready="$dir/ready"; release="$dir/release"
+  ROOT="$ROOT" LOCK="$lock" READY="$ready" RELEASE="$release" bash -c '
+    . "$ROOT/bin/fm-wake-lib.sh"
+    fm_lock_try_acquire "$LOCK" || exit 1
+    : > "$READY"
+    while [ ! -e "$RELEASE" ]; do sleep 0.05; done
+    fm_lock_release "$LOCK"
+  ' &
+  holder_pid=$!
+  while [ ! -e "$ready" ] && kill -0 "$holder_pid" 2>/dev/null; do sleep 0.01; done
+  [ -e "$ready" ] || fail "the stuck presentation lock holder never acquired"
+  start=$(date +%s)
+  out=$(ROOT="$ROOT" LOCK="$lock" FM_HERDR_PRESENTATION_LOCK_HOLDER_WAIT=1 bash -c '
+    . "$ROOT/bin/backends/herdr.sh"
+    if fm_backend_herdr_presentation_session_lock_acquire "$LOCK"; then
+      echo acquired
+      exit 0
+    fi
+    printf "refused %s\n" "$FM_BACKEND_HERDR_PRESENTATION_LOCK_HOLDER"
+    exit 1
+  ' 2>&1)
+  status=$?
+  elapsed=$(( $(date +%s) - start ))
+  held=0
+  kill -0 "$holder_pid" 2>/dev/null && held=1
+  : > "$release"
+  wait "$holder_pid" 2>/dev/null || true
+  [ "$status" -eq 1 ] || fail "a live stuck holder must refuse the waiter: status $status, $out"
+  [ "$out" = "refused $holder_pid" ] || fail "the refusal must name the live holder $holder_pid: $out"
+  [ "$held" = 1 ] || fail "the stuck holder exited before the refusal, so the refusal proved nothing"
+  [ "$elapsed" -ge 1 ] || fail "the waiter refused before its 1s holder wait elapsed: ${elapsed}s"
+  pass "herdr presentation lock: a real live holder past the wait gets a clear refusal naming it"
 }
 
 test_endpoint_confirmed_gone_gates_on_structured_presence() {
@@ -5922,6 +6024,9 @@ test_projection_order_foreign_new_child_before_parent_is_read_only
 test_projection_order_missing_parent_is_read_only
 test_presentation_session_lock_path_is_shared_across_homes
 test_presentation_session_lock_path_rejects_malformed_socket
+test_presentation_session_lock_wait_is_per_holder
+test_presentation_session_lock_wait_refuses_malformed_budget
+test_presentation_session_lock_wait_refuses_a_real_stuck_holder
 test_projection_order_rejects_malformed_socket
 test_projection_reclaim_refusal_matrix_is_non_mutating
 test_projection_reclaim_replaces_only_exact_husk_and_advances_binding

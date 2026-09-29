@@ -1381,22 +1381,16 @@ trap spawn_abort_cleanup EXIT
 
 # One bounded lock per live Herdr session/socket, shared across all homes.
 # <session> is required so secondmate and primary spawns serialize against the
-# same session without writing any other home's state directory.
+# same session without writing any other home's state directory. The wait for
+# a live holder is fm_backend_herdr_presentation_session_lock_acquire's policy.
 spawn_herdr_presentation_order_lock_acquire() {
-  local session=${1:-} attempt lock_path
+  local session=${1:-} lock_path
+  FM_BACKEND_HERDR_PRESENTATION_LOCK_HOLDER=
   [ -n "$session" ] || session=$(fm_backend_herdr_session)
   lock_path=$(fm_backend_herdr_presentation_session_lock_path "$session") || return 1
   HERDR_PRESENTATION_ORDER_LOCK="$lock_path"
-  attempt=0
-  while [ "$attempt" -lt 50 ]; do
-    if fm_lock_try_acquire "$HERDR_PRESENTATION_ORDER_LOCK"; then
-      HERDR_PRESENTATION_ORDER_LOCK_HELD=1
-      return 0
-    fi
-    sleep 0.1
-    attempt=$((attempt + 1))
-  done
-  return 1
+  fm_backend_herdr_presentation_session_lock_acquire "$HERDR_PRESENTATION_ORDER_LOCK" || return 1
+  HERDR_PRESENTATION_ORDER_LOCK_HELD=1
 }
 
 clear_relaunch_harness_wiring() {
@@ -3624,7 +3618,7 @@ else
           exit 1
         }
         spawn_herdr_presentation_order_lock_acquire "$HERDR_SES" || {
-          echo "error: herdr presentation recovery could not acquire its session lock; refusing a concurrent resume" >&2
+          echo "error: herdr presentation recovery could not acquire its session lock${FM_BACKEND_HERDR_PRESENTATION_LOCK_HOLDER:+ (holder pid $FM_BACKEND_HERDR_PRESENTATION_LOCK_HOLDER kept it past the holder wait)}; refusing a concurrent resume" >&2
           exit 1
         }
         if [ -e "$STATE/$ID.meta" ] || [ -L "$STATE/$ID.meta" ]; then

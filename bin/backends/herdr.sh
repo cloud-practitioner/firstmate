@@ -912,6 +912,54 @@ fm_backend_herdr_presentation_session_lock_path() {  # <session>
   printf '%s/order-%s.lock' "$dir" "$key"
 }
 
+# fm_backend_herdr_presentation_session_lock_acquire: the one wait policy for
+# every blocking acquire of the shared session presentation lock (spawn,
+# teardown, and the serialized pane close).
+# A holder legitimately keeps the lock through a whole placement - a restart
+# recovery holds it across its worktree allocation and launch - so a waiter
+# waits for a live holder instead of refusing after a fixed short budget.
+# The budget is per holder: FM_HERDR_PRESENTATION_LOCK_HOLDER_WAIT seconds
+# (default 120) that one holder may keep the lock, restarting whenever the
+# lock changes hands, so a queue of concurrent spawns across homes drains in
+# turn. Only one holder that outlasts that budget is treated as stuck: the
+# acquire returns 1 with FM_BACKEND_HERDR_PRESENTATION_LOCK_HOLDER naming its
+# recorded pid, and each caller refuses or degrades as its own contract says.
+# A dead holder never stalls the wait, because fm_lock_try_acquire's ordinary
+# stale-owner recovery reclaims it. The budget is counted in 0.1-second
+# attempts, so wall time only ever exceeds it. A budget that is not a positive
+# whole number of seconds refuses the acquire rather than guessing one.
+fm_backend_herdr_presentation_session_lock_acquire() {  # <lock-path>
+  local lock=$1 budget limit attempt=0 holder='' seen=0
+  FM_BACKEND_HERDR_PRESENTATION_LOCK_HOLDER=
+  [ -n "$lock" ] || return 1
+  budget=${FM_HERDR_PRESENTATION_LOCK_HOLDER_WAIT:-120}
+  case "$budget" in
+    ''|*[!0-9]*|0)
+      echo "error: FM_HERDR_PRESENTATION_LOCK_HOLDER_WAIT must be a positive whole number of seconds, not '$budget'" >&2
+      return 1
+      ;;
+  esac
+  limit=$((budget * 10))
+  if ! declare -F fm_lock_try_acquire >/dev/null 2>&1; then
+    # shellcheck source=bin/fm-wake-lib.sh
+    . "$FM_BACKEND_HERDR_ROOT/bin/fm-wake-lib.sh"
+  fi
+  while ! fm_lock_try_acquire "$lock"; do
+    if [ "$seen" = 0 ] || [ "${FM_LOCK_HELD_PID:-}" != "$holder" ]; then
+      seen=1
+      holder=${FM_LOCK_HELD_PID:-}
+      attempt=0
+    fi
+    attempt=$((attempt + 1))
+    if [ "$attempt" -ge "$limit" ]; then
+      # shellcheck disable=SC2034 # Read by callers after a refused acquire.
+      FM_BACKEND_HERDR_PRESENTATION_LOCK_HOLDER=$holder
+      return 1
+    fi
+    sleep 0.1
+  done
+}
+
 # fm_backend_herdr_projection_focus_snapshot: print the exact active
 # workspace and tab ids as one tab-separated record.
 # Presentation mutations use this read-only snapshot as their sole focus
@@ -3614,20 +3662,14 @@ fm_backend_herdr_kill_serialized() {  # <session> <pane>
 fm_backend_herdr_kill() {  # <target>
   fm_backend_herdr_target_ready "$1" || return 0
   local session=$FM_BACKEND_HERDR_SESSION pane=$FM_BACKEND_HERDR_PANE
-  local lock_path attempt=0 lock_held=0
+  local lock_path lock_held=0
   if ! declare -F fm_lock_try_acquire >/dev/null 2>&1; then
     # shellcheck source=bin/fm-wake-lib.sh
     . "$FM_BACKEND_HERDR_ROOT/bin/fm-wake-lib.sh"
   fi
-  if lock_path=$(fm_backend_herdr_presentation_session_lock_path "$session"); then
-    while [ "$attempt" -lt 50 ]; do
-      if fm_lock_try_acquire "$lock_path"; then
-        lock_held=1
-        break
-      fi
-      sleep 0.1
-      attempt=$((attempt + 1))
-    done
+  if lock_path=$(fm_backend_herdr_presentation_session_lock_path "$session") \
+    && fm_backend_herdr_presentation_session_lock_acquire "$lock_path"; then
+    lock_held=1
   fi
   if [ "$lock_held" = 1 ]; then
     fm_backend_herdr_kill_serialized "$session" "$pane"
