@@ -48,8 +48,8 @@ fm_test_home_hash() {
 # task the suite never tore down, or whose record it deleted, still leaves
 # nothing behind. It is the same name fm-teardown.sh retires, and the home hash
 # keeps every other home's launch directories out of reach. The per-task
-# /tmp/fm-<id> root is deliberately left alone: it is not home-scoped, so a live
-# task with the same id elsewhere may share it.
+# /tmp/fm-<id> root is not home-scoped, so it is not this helper's to remove;
+# fm-spawn.sh's own cleanup owns it.
 # Call this before removing <fixture-root>, because the home paths must resolve.
 fm_test_remove_spawn_launch_dirs() {
   local root=$1 home hash dir
