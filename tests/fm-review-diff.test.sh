@@ -243,7 +243,7 @@ run_bitbucket_review_diff() {
 }
 
 test_bitbucket_live_head_beats_stale_recorded_pr_head() {
-  local case_dir out stale_sha
+  local case_dir out err stale_sha
   case_dir=$(make_case bb-live-head)
   stale_and_pr_commits "$case_dir"
   stale_sha=$(git -C "$case_dir/wt" rev-parse fm/task-x1)
@@ -256,7 +256,11 @@ test_bitbucket_live_head_beats_stale_recorded_pr_head() {
   assert_contains "$out" '+pr-fixed' \
     "bb-live-head: diff must show the live Bitbucket head, not the recorded stale SHA"
   assert_not_contains "$out" 'stale-local' "bb-live-head: diff must not use the stale recorded content"
-  assert_not_contains "$(cat "$case_dir/stderr")" 'warning' "bb-live-head: a readable live head must not warn"
+  err=$(cat "$case_dir/stderr")
+  assert_not_contains "$err" 'could not read the live head' \
+    "bb-live-head: a readable live head must not warn of a recorded-head fallback"
+  assert_not_contains "$err" 'warning: PR head unavailable' \
+    "bb-live-head: a readable live head must not warn of a local-branch fallback"
   pass "fm-review-diff reviews a Bitbucket pull request's live head over a stale recorded pr_head="
 }
 

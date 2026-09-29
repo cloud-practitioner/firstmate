@@ -13,4 +13,3 @@ __pycache__/
 config/
 
 .tools/
-.claude/settings.local.json
