@@ -509,16 +509,30 @@ fm_backlog_start() {  # <data-dir> <id>
   fm_backlog_mutate "$1" start "$2"
 }
 
+# A pull request tasks-axi cannot link on a row (a Bitbucket, GitLab, or Gerrit
+# URL) is still recorded on the closed item, as a note.
 fm_backlog_done() {  # <data-dir> <id> [flag...]
-  local data=$1 id=$2
+  local data=$1 id=$2 arg previous_arg=''
+  local -a args=()
   shift 2
-  fm_backlog_mutate "$data" "done" "$id" "$@"
+  for arg in "$@"; do
+    if [ "$previous_arg" = --pr ] && ! fm_backlog_row_artifact_supported "$id" --pr "$arg"; then
+      args[${#args[@]}-1]=--note
+      args+=("PR $arg")
+    else
+      args+=("$arg")
+    fi
+    previous_arg=$arg
+  done
+  fm_backlog_mutate "$data" "done" "$id" "${args[@]+"${args[@]}"}"
 }
 
+# tasks-axi links a row only to a GitHub (/pull/<n>) or Forgejo (/pulls/<n>)
+# pull request and refuses any other URL as a row PR link.
 fm_backlog_row_artifact_supported() {
   local id=$1 flag=${2:-} value=${3:-}
   case "$flag" in
-    --pr) return 0 ;;
+    --pr) [[ "$value" =~ ^https://[^/]+/[^/]+/[^/]+/pulls?/[1-9][0-9]*$ ]] ;;
     --report) [ "$value" = "data/$id/report.md" ] ;;
     *) return 1 ;;
   esac
@@ -551,7 +565,9 @@ fm_backlog_retain() {  # <data-dir> <id> [flag...]
         ;;
       --pr)
         deliverable="${deliverable:+$deliverable; }PR $arg"
-        row_args=(--pr "$arg")
+        if fm_backlog_row_artifact_supported "$id" --pr "$arg"; then
+          row_args=(--pr "$arg")
+        fi
         ;;
       --note) deliverable="${deliverable:+$deliverable; }$arg" ;;
     esac

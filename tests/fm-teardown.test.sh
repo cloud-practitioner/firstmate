@@ -987,6 +987,32 @@ test_bitbucket_squash_merged_branch_deleted_allows() {
   pass "squash-merged + deleted-branch worktree with a merged Bitbucket PR is torn down"
 }
 
+# tasks-axi links only a GitHub or Forgejo pull request on a row, so a closed
+# Bitbucket task records its PR as a note rather than failing the close.
+test_bitbucket_teardown_closes_the_backlog_item() {
+  local case_dir rc pr_head
+  case_dir=$(make_case bitbucket-backlog-close)
+  write_meta "$case_dir" no-mistakes ship
+  wt_commit_file "$case_dir" feature.txt hello "add feature"
+  pr_head=$(git -C "$case_dir/wt" rev-parse HEAD)
+  add_bitbucket_pr_merged_for_head "$case_dir" "$pr_head" record
+  seed_backlog_in_flight "$case_dir"
+
+  set +e
+  run_teardown_with_bitbucket_credential "$case_dir" > "$case_dir/stdout" 2> "$case_dir/stderr"
+  rc=$?
+  set -e
+
+  expect_code 0 "$rc" "bitbucket-backlog-close: teardown should close the backlog item"$'\n'"$(cat "$case_dir/stderr")"
+  [ "$(backlog_row_state "$case_dir")" = "done" ] \
+    || fail "bitbucket-backlog-close: backlog item still open: $(backlog_row_state "$case_dir")"
+  assert_grep 'https://bitbucket.org/example/repo/pull-requests/7' "$case_dir/data/backlog.md" \
+    "bitbucket-backlog-close: closed backlog item did not record the task's PR"
+  assert_absent "$case_dir/state/task-x1.backlog-close" \
+    "bitbucket-backlog-close: a landed close left its pending-close record behind"
+  pass "teardown of a merged Bitbucket task closes its backlog item with the PR recorded"
+}
+
 test_bitbucket_merged_pr_without_recorded_head_resolves_it() {
   local case_dir rc local_head pr_head
   case_dir=$(make_case bitbucket-resolved-head)
@@ -4405,6 +4431,7 @@ test_no_pr_recorded_discovers_merged_pr_by_branch_allows
 test_squash_merged_pr_allows_replayed_unpushed_patch
 test_merged_pr_with_later_local_commit_refuses
 test_bitbucket_squash_merged_branch_deleted_allows
+test_bitbucket_teardown_closes_the_backlog_item
 test_bitbucket_merged_pr_without_recorded_head_resolves_it
 test_bitbucket_merged_pr_with_later_local_commit_refuses
 test_bitbucket_open_pr_refuses
