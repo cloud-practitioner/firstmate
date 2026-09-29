@@ -1,0 +1,13 @@
+== HEAD
+ok - zsh: fm_backend_source recognizes known backends and rejects unknown ones
+ok - bash: fm_backend_source recognizes known backends and rejects unknown ones
+exit=0
+ok - fm_backend_source: missing adapter fails before lifecycle continuation
+ok - fm_backend_source: unreadable adapter fails before lifecycle continuation
+exit=0
+== BASE test+code (reproduce original failure)
+not ok - zsh: fm_backend_source herdr should load the adapter when sourced
+exit=1
+== BASE code + HEAD test (new PATH assertion)
+not ok - zsh: fm_backend_source herdr should load the adapter when sourced
+exit=1

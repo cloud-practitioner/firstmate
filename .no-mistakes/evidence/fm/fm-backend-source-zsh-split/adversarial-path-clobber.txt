@@ -1,0 +1,10 @@
+== intermediate 0967b1f code (local 'path') + HEAD test
+not ok - zsh: fm_backend_source zellij lost PATH while sourcing: /tmp/tmp.a76lQThdY0/bin/backends/zellij.sh:115: command not found: dirname
+/tmp/tmp.a76lQThdY0/bin/backends/zellij.sh:.:120: no such file or directory: //bin/fm-backend-hometag-lib.sh
+/tmp/tmp.a76lQThdY0/bin/backends/zellij.sh:.:125: no such file or directory: //bin/fm-composer-lib.sh
+exit=1
+== interactive-style zsh PATH check at 0967b1f vs HEAD
+1
+PATH_after=/workspaces/wp/.pi/bin:/nix/st
+0
+PATH_after=/workspaces/wp/.pi/bin:/nix/st

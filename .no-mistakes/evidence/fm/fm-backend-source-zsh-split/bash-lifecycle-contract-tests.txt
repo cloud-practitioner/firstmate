@@ -1,0 +1,6 @@
+ok - fm-send.sh: explicit tmux targets are verified; text types once and submits with Enter
+test_send_tmux_contract exit=0
+ok - fm-peek.sh: capture-pane invocation and output are byte-identical old vs new
+test_peek_conformance_old_vs_new exit=0
+ok - fm-teardown.sh: treehouse return remains compatible while tmux cleanup uses exact selectors
+test_teardown_conformance_old_vs_new exit=0

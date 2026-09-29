@@ -1,0 +1,25 @@
+--- bash fm_backend_source tmux
+rc=0
+PATH_OK
+capture_defined
+--- bash fm_backend_source herdr
+rc=0
+PATH_OK
+capture_defined
+--- bash fm_backend_source zellij
+rc=0
+PATH_OK
+capture_defined
+--- bash fm_backend_source orca
+rc=0
+PATH_OK
+capture_defined
+--- bash fm_backend_source cmux
+rc=0
+PATH_OK
+capture_defined
+--- bash fm_backend_source bogus
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+rc=1
+PATH_OK
+capture_missing

@@ -1,0 +1,68 @@
+### zsh zsh 5.9.1 (x86_64-pc-linux-gnu)
+=============== BASE (/tmp/tmp.a76lQThdY0)
+--- zsh fm_backend_source tmux
+rc=1
+PATH_OK
+capture_missing
+--- zsh fm_backend_source herdr
+rc=1
+PATH_OK
+capture_missing
+--- zsh fm_backend_source zellij
+rc=1
+PATH_OK
+capture_missing
+--- zsh fm_backend_source orca
+/tmp/tmp.a76lQThdY0/bin/backends/orca.sh:13: command not found: dirname
+/tmp/tmp.a76lQThdY0/bin/backends/orca.sh:.:13: no such file or directory: /../fm-composer-lib.sh
+rc=0
+PATH_OK
+capture_defined
+--- zsh fm_backend_source cmux
+rc=1
+PATH_OK
+capture_missing
+--- zsh fm_backend_source bogus
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+rc=1
+PATH_OK
+capture_missing
+=============== HEAD (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF)
+--- zsh fm_backend_source tmux
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/fm-tmux-lib.sh:.:49: no such file or directory: ./fm-composer-lib.sh
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/fm-tmux-lib.sh:.:51: no such file or directory: ./fm-cursor-lib.sh
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/fm-session-lock-lib.sh:.:24: no such file or directory: ./fm-cursor-lib.sh
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/fm-agent-process-lib.sh:.:19: no such file or directory: ./fm-session-lock-lib.sh
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/fm-agent-process-lib.sh:.:21: no such file or directory: ./fm-gemini-lib.sh
+rc=0
+PATH_OK
+capture_defined
+--- zsh fm_backend_source herdr
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/backends/herdr.sh:.:79: no such file or directory: /home/node/.no-mistakes/worktrees/bin/fm-composer-lib.sh
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/backends/herdr.sh:.:87: no such file or directory: /home/node/.no-mistakes/worktrees/bin/fm-transition-lib.sh
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/backends/herdr.sh:.:94: no such file or directory: /home/node/.no-mistakes/worktrees/bin/fm-agent-process-lib.sh
+rc=0
+PATH_OK
+capture_defined
+--- zsh fm_backend_source zellij
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/backends/zellij.sh:.:120: no such file or directory: /home/node/.no-mistakes/worktrees/bin/fm-backend-hometag-lib.sh
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/backends/zellij.sh:.:125: no such file or directory: /home/node/.no-mistakes/worktrees/bin/fm-composer-lib.sh
+rc=0
+PATH_OK
+capture_defined
+--- zsh fm_backend_source orca
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/backends/orca.sh:.:13: no such file or directory: ./../fm-composer-lib.sh
+rc=0
+PATH_OK
+capture_defined
+--- zsh fm_backend_source cmux
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/backends/cmux.sh:.:115: no such file or directory: /home/node/.no-mistakes/worktrees/bin/fm-backend-hometag-lib.sh
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3QS85QR3G86B473P7RKQ2VF/bin/backends/cmux.sh:.:121: no such file or directory: /home/node/.no-mistakes/worktrees/bin/fm-composer-lib.sh
+rc=0
+PATH_OK
+capture_defined
+--- zsh fm_backend_source bogus
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+rc=1
+PATH_OK
+capture_missing
