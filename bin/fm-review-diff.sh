@@ -125,7 +125,7 @@ fetch_pull_head() {
 }
 
 resolve_pr_head() {
-  local pr_url=$1 recorded_head=$2 n resolved
+  local pr_url=$1 recorded_head=$2 n resolved fallback_note=''
   if fm_pr_url_parse "$pr_url" && [ "$FM_PR_PROVIDER" = bitbucket ]; then
     if [ -z "$(fm_pr_bitbucket_missing_requirements)" ] \
       && fm_pr_bitbucket_read_pull_request "$FM_PR_PATH" "$FM_PR_NUMBER"; then
@@ -133,7 +133,7 @@ resolve_pr_head() {
       printf '%s' "$FM_PR_BITBUCKET_HEAD"
       return 0
     fi
-    echo "warning: could not read the live head of $pr_url; falling back to its recorded pr_head" >&2
+    fallback_note="warning: could not read the live head of $pr_url; falling back to its recorded pr_head"
   else
     n=$(pr_number_from_target "$pr_url") || true
     if [ -n "$n" ]; then
@@ -147,6 +147,7 @@ resolve_pr_head() {
   # branch, but never preferred over a successful pull-head fetch above.
   if [ -n "$recorded_head" ] \
     && git -C "$WT" cat-file -e "$recorded_head^{commit}" 2>/dev/null; then
+    [ -z "$fallback_note" ] || echo "$fallback_note" >&2
     printf '%s' "$recorded_head"
     return 0
   fi

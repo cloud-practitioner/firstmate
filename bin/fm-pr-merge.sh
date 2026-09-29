@@ -124,9 +124,9 @@
 # back, and a merged head that is not the verified one is reported loudly and
 # exits non-zero after the landed outcome is recorded.
 # The merge strategy is the destination branch's own default unless the extra
-# args name one: --squash, --merge (merge_commit), or --method <strategy> with
-# any strategy the API accepts; --rebase names no single Bitbucket strategy and
-# is refused in favour of --method rebase_fast_forward or rebase_merge. The source branch is
+# args name one: --squash, --merge (merge_commit), --rebase (rebase_fast_forward,
+# the closest match to a rebase-and-merge: linear history and no merge commit),
+# or --method <strategy> with any strategy the API accepts. The source branch is
 # kept (close_source_branch=false) unless --delete-branch is passed with
 # --attended-override, so the pull request's creation-time setting never
 # deletes a branch on its own. No other extra argument applies, and --auto and
@@ -404,13 +404,10 @@ bitbucket_parse_merge_args() {
     case "$arg" in
       --squash) BITBUCKET_MERGE_STRATEGY=squash ;;
       --merge) BITBUCKET_MERGE_STRATEGY=merge_commit ;;
+      --rebase) BITBUCKET_MERGE_STRATEGY=rebase_fast_forward ;;
       --method) pending=true ;;
       --method=*) BITBUCKET_MERGE_STRATEGY=${arg#--method=} ;;
       --delete-branch|-d) BITBUCKET_CLOSE_SOURCE_BRANCH=true ;;
-      --rebase)
-        echo "error: --rebase names no single Bitbucket merge strategy; pass --method rebase_fast_forward or --method rebase_merge" >&2
-        return 1
-        ;;
       --auto|--auto=*|--admin|--admin=*)
         echo "error: $arg has no Bitbucket equivalent; a Bitbucket merge is always immediate, and its merge checks are verified here rather than bypassed" >&2
         return 1

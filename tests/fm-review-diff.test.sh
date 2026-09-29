@@ -18,7 +18,8 @@
 #   (h) Bitbucket pr= + STALE recorded pr_head= + newer live head -> must use
 #       the live head read from the Bitbucket API
 #   (i) Bitbucket pr= whose live head cannot be read -> recorded pr_head= with
-#       a warning
+#       a warning, or the local branch with only its own warning when no
+#       recorded head is usable
 set -u
 
 # shellcheck source=tests/lib.sh
@@ -274,6 +275,24 @@ test_bitbucket_unreadable_live_head_falls_back_to_recorded_with_warning() {
   pass "fm-review-diff falls back to a Bitbucket task's recorded pr_head= only with a warning"
 }
 
+test_bitbucket_unreadable_live_head_without_recorded_head_warns_only_of_local_branch() {
+  local case_dir out err
+  case_dir=$(make_case bb-unreadable-unrecorded)
+  stale_and_pr_commits "$case_dir"
+  bitbucket_fixture "$case_dir"
+  write_task_meta "$case_dir" "pr=$BB_URL"
+
+  out=$(FM_TEST_BB_EMAIL='' run_bitbucket_review_diff "$case_dir" task-x1 2> "$case_dir/stderr")
+  err=$(cat "$case_dir/stderr")
+
+  assert_not_contains "$err" 'falling back to its recorded pr_head' \
+    "bb-unreadable-unrecorded: a recorded-head fallback was claimed with no recorded head"
+  assert_contains "$err" 'warning: PR head unavailable; diff may lag the open PR' \
+    "bb-unreadable-unrecorded: the local-branch fallback was not warned about"
+  assert_contains "$out" '+stale-local' "bb-unreadable-unrecorded: diff should use the local branch"
+  pass "fm-review-diff claims a Bitbucket recorded-head fallback only when it uses that head"
+}
+
 test_pr_meta_uses_pr_head_not_stale_local
 test_pr_meta_fetches_pull_head_without_recorded_sha
 test_stale_recorded_pr_head_loses_to_fetched_pull_head
@@ -283,3 +302,4 @@ test_recorded_branch_beats_moved_worktree_head
 test_corrupt_recorded_branch_is_refused
 test_bitbucket_live_head_beats_stale_recorded_pr_head
 test_bitbucket_unreadable_live_head_falls_back_to_recorded_with_warning
+test_bitbucket_unreadable_live_head_without_recorded_head_warns_only_of_local_branch

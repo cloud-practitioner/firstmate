@@ -296,6 +296,12 @@ test_merge_passes_a_requested_strategy() {
   expect_code 0 "$rc" "merge-squash: a squash merge should merge"$'\n'"$(cat "$case_dir/stderr")"
   assert_equals '{"type":"pullrequest","close_source_branch":false,"merge_strategy":"squash"}' \
     "$(cat "$case_dir/bb/merge-body.json")" "merge-squash: the requested strategy was not sent"
+  case_dir=$(make_case merge-rebase)
+  rc=0
+  run_merge "$case_dir" "$BB_URL" -- --rebase || rc=$?
+  expect_code 0 "$rc" "merge-rebase: the shared --rebase spelling should merge"$'\n'"$(cat "$case_dir/stderr")"
+  assert_equals '{"type":"pullrequest","close_source_branch":false,"merge_strategy":"rebase_fast_forward"}' \
+    "$(cat "$case_dir/bb/merge-body.json")" "merge-rebase: --rebase was not sent as rebase_fast_forward"
   case_dir=$(make_case merge-delete-branch)
   rc=0
   run_merge "$case_dir" "$BB_URL" -- --delete-branch || rc=$?
@@ -315,11 +321,6 @@ test_merge_passes_a_requested_strategy() {
     assert_grep "extra merge argument '$arg' does not apply to a Bitbucket pull request" "$case_dir/stderr" \
       "merge-bad-arg: the $arg refusal did not explain"
   done
-  rc=0
-  run_merge "$case_dir" "$BB_URL" -- --rebase || rc=$?
-  expect_code 1 "$rc" "merge-bad-arg: --rebase names no single Bitbucket strategy and must refuse"
-  assert_grep "pass --method rebase_fast_forward or --method rebase_merge" "$case_dir/stderr" \
-    "merge-bad-arg: the --rebase refusal did not name the strategies to choose from"
   assert_absent "$case_dir/bb/merge-called" "merge-bad-arg: a merge was requested anyway"
   pass "fm-pr-merge sends a requested Bitbucket strategy and refuses arguments it cannot translate"
 }
