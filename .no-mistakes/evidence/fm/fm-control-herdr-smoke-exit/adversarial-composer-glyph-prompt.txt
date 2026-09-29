@@ -1,0 +1,4 @@
+=== MUTANT: task pane prompt forced to claude-like '❯ ' ===
+not ok - the task pane did not settle on a cleared neutral shell prompt
+fm-herdr-lab: missing fleet-state tripwire for 'fm-lab-control-smoke-2186164'; refusing destructive calls
+exit=1

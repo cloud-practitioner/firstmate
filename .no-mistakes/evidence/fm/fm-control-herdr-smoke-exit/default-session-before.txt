@@ -1,0 +1,2 @@
+name                 status   directory                                        socket
+default              running  /home/node/.config/herdr                         /home/node/.config/herdr/herdr.sock
