@@ -432,7 +432,7 @@ New spawns choose the backend in this order:
 2. `FM_BACKEND`.
 3. The first non-empty line of local, gitignored `config/backend`.
 4. Runtime auto-detection from `$TMUX`, `HERDR_ENV=1`, `HERDR_SOCKET_PATH` (when a socket is available), or cmux runtime signals
-6. Default `tmux`.
+5. Default `tmux`.
 
 If more than one runtime marker is present, detection resolves innermost-first: `$TMUX` is checked before `HERDR_ENV=1`, which is checked before cmux's primary `CMUX_WORKSPACE_ID` marker and its documented fallback signals - tmux or herdr started from inside a cmux terminal is the innermost, currently-executing layer, while cmux itself (a terminal application, not a nestable multiplexer) is always checked last.
 See [`docs/cmux-backend.md`](cmux-backend.md#runtime-detection) for why cmux can be selected when `CMUX_WORKSPACE_ID` is absent.
