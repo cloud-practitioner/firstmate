@@ -1,32 +1,17 @@
-session=fm-lab-raprobe-2576439-3765 herdr=herdr 0.9.3
-pane=w1:p1
---- A: pane idle at its own top shell
-  idle-top-shell               t+    0ms {"agent":"probe-agent","agent_status":"idle"}
-  idle-top-shell               t+  250ms "agent_not_found"
-  idle-top-shell               t+  500ms "agent_not_found"
-  idle-top-shell               t+ 1000ms "agent_not_found"
-  idle-top-shell               t+ 1500ms "agent_not_found"
-  idle-top-shell               t+ 2000ms "agent_not_found"
-  idle-top-shell               t+ 3000ms "agent_not_found"
-  idle-top-shell               t+ 5000ms "agent_not_found"
---- B: foreground = agent-named sleep (claude -> sleep symlink)
-{"foreground":{"foreground_process_group_id":2578361,"foreground_processes":[{"cwd":"/tmp","name":"claude","pid":2578361}],"pane_id":"w1:p1","shell_pid":2576502}}
-  agent-named-foreground       t+    0ms {"agent":"probe-agent","agent_status":"idle"}
-  agent-named-foreground       t+  250ms {"agent":"probe-agent","agent_status":"idle"}
-  agent-named-foreground       t+  500ms {"agent":"probe-agent","agent_status":"idle"}
-  agent-named-foreground       t+ 1000ms {"agent":"probe-agent","agent_status":"idle"}
-  agent-named-foreground       t+ 1500ms {"agent":"probe-agent","agent_status":"idle"}
-  agent-named-foreground       t+ 2000ms {"agent":"probe-agent","agent_status":"idle"}
-  agent-named-foreground       t+ 3000ms {"agent":"probe-agent","agent_status":"idle"}
-  agent-named-foreground       t+ 5000ms {"agent":"probe-agent","agent_status":"idle"}
---- C: back at top shell after the foreground process exits
-"agent_not_found"
-  idle-top-shell-again         t+    0ms {"agent":"probe-agent","agent_status":"idle"}
-  idle-top-shell-again         t+  250ms {"agent":"probe-agent","agent_status":"idle"}
-  idle-top-shell-again         t+  500ms "agent_not_found"
-  idle-top-shell-again         t+ 1000ms "agent_not_found"
-  idle-top-shell-again         t+ 1500ms "agent_not_found"
-  idle-top-shell-again         t+ 2000ms "agent_not_found"
-  idle-top-shell-again         t+ 3000ms "agent_not_found"
-  idle-top-shell-again         t+ 5000ms "agent_not_found"
-teardown exit=0
+herdr 0.9.3
+== A: report-agent on a pane idling at its own top shell
+ t=0s:
+  agent_state=stale-agent process_state=shell agent_get={"agent":"probe-agent","agent_status":"idle"}
+ t=2s:
+  agent_state=no-agent process_state=shell agent_get={"agent":null,"agent_status":null}
+  create_task same label: REPLACED (new ids: w1:t3 w1:p3)
+== B: report-agent on a pane running an agent-named foreground process (claude -> sleep)
+ t=0s:
+  agent_state=live process_state=agent agent_get={"agent":"probe-agent","agent_status":"idle"}
+ t=3s (past the ~1s release window):
+  agent_state=live process_state=agent agent_get={"agent":"probe-agent","agent_status":"idle"}
+  create_task same label: REFUSED (error: herdr tab 'fm-probe-b' already exists in workspace w1 (session fm-lab-radprobe-2872079))
+== C: same pane after the agent-named foreground process exits (Ctrl-C)
+ t=3s after exit:
+  agent_state=no-agent process_state=shell agent_get={"agent":null,"agent_status":null}
+  create_task same label: REPLACED (new ids: w1:t5 w1:p5)

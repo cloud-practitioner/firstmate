@@ -1,0 +1,8 @@
+ok - real herdr: version_check accepts the installed binary's protocol
+ok - real herdr: container_ensure starts the isolated session's server, creates the firstmate workspace (fm-lab-backend-smoke-2884120:w1), and reports its seeded default tab id (w1:t1)
+ok - real herdr: session status normalizes running and compatible
+ok - real herdr: container_ensure is idempotent (reuses/adopts the existing firstmate workspace, reports no seeded default tab on adoption)
+ok - real herdr: create_task prunes the freshly-created workspace's seeded default tab, leaving exactly one clean fm-<id> task tab
+not ok - live-duplicate scenario setup is wrong: the pane should classify live, got 'stale-agent'
+fm-herdr-lab: missing fleet-state tripwire for 'fm-lab-backend-smoke-2884120'; refusing destructive calls
+exit=1

@@ -1,0 +1,6 @@
+run 1 exit=0 ok - real herdr: create_task refuses a same-labeled tab whose pane hosts a genuinely live registered agent (unchanged behavior) 
+run 2 exit=0 ok - real herdr: create_task refuses a same-labeled tab whose pane hosts a genuinely live registered agent (unchanged behavior) 
+run 3 exit=1 not ok - REGRESSION: create_task should refuse a duplicate label whose pane hosts a genuinely live registered agent (idle counts as live) 
+run 4 exit=0 ok - real herdr: create_task refuses a same-labeled tab whose pane hosts a genuinely live registered agent (unchanged behavior) 
+run 5 exit=0 ok - real herdr: create_task refuses a same-labeled tab whose pane hosts a genuinely live registered agent (unchanged behavior) 
+run 6 exit=0 ok - real herdr: create_task refuses a same-labeled tab whose pane hosts a genuinely live registered agent (unchanged behavior) 
