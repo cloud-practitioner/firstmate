@@ -1,0 +1,7 @@
+## S5 devcontainer-configured env drives a real adapter op (fm_backend_herdr_container_ensure)
+before: socket inode=664106 workspaces=["fm-lab-probe"]
+container_ensure rc=0 output: backend=herdr
+fm-lab-detect-2347999-13979:w1	
+after:  socket inode=664106 workspaces=["fm-lab-probe"]
+default session socket untouched: {"name":"default","running":true}
+DONE2

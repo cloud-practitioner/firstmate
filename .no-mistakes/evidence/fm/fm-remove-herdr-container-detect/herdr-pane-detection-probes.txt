@@ -1,0 +1,37 @@
+### Probes run INSIDE a real Herdr pane of lab session fm-lab-detect-2347999-13979 (herdr herdr 0.9.3)
+### Raw pane env injected by herdr: HERDR_ENV=1 HERDR_SESSION=fm-lab-detect-2347999-13979 HERDR_SOCKET_PATH=/home/node/.config/herdr/sessions/fm-lab-detect-2347999-13979/herdr.sock socket-is-live=yes
+
+## S1 native Herdr pane (HERDR_ENV=1 injected by herdr), change under test
+[change] root=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3VRW07TW96RM3MR0RDP8X13
+  env: HERDR_ENV=1 HERDR_SESSION=fm-lab-detect-2347999-13979 HERDR_SOCKET_PATH=/home/node/.config/herdr/sessions/fm-lab-detect-2347999-13979/herdr.sock TMUX=<unset>
+  fm_backend_detect rc=0 detected=herdr signal=HERDR_ENV
+  fm_backend_name=herdr
+  fm_backend_herdr_session=fm-lab-detect-2347999-13979
+
+## S2 container-shaped env: only HERDR_SOCKET_PATH forwarded (HERDR_ENV/HERDR_SESSION absent), live socket
+[change] root=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3VRW07TW96RM3MR0RDP8X13
+  env: HERDR_ENV=<unset> HERDR_SESSION=<unset> HERDR_SOCKET_PATH=/home/node/.config/herdr/sessions/fm-lab-detect-2347999-13979/herdr.sock TMUX=<unset>
+  fm_backend_detect rc=1 detected=<none> signal=<none>
+  fm_backend_name=tmux
+  fm_backend_herdr_session=default
+   -- same env against BASE commit 76a9f28 (fork fallback present) for contrast:
+[base-76a9f28] root=/tmp/fm-hdtest.JxaWcL/base
+  env: HERDR_ENV=<unset> HERDR_SESSION=<unset> HERDR_SOCKET_PATH=/home/node/.config/herdr/sessions/fm-lab-detect-2347999-13979/herdr.sock TMUX=<unset>
+  fm_backend_detect rc=0 detected=herdr signal=HERDR_SOCKET_PATH
+  fm_backend_name=herdr
+  fm_backend_herdr_session=fm-lab-detect-2347999-13979
+
+## S3 devcontainer configured per upstream docs: HERDR_ENV=1 + HERDR_SESSION + HERDR_SOCKET_PATH forwarded
+[change] root=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3VRW07TW96RM3MR0RDP8X13
+  env: HERDR_ENV=1 HERDR_SESSION=fm-lab-detect-2347999-13979 HERDR_SOCKET_PATH=/home/node/.config/herdr/sessions/fm-lab-detect-2347999-13979/herdr.sock TMUX=<unset>
+  fm_backend_detect rc=0 detected=herdr signal=HERDR_ENV
+  fm_backend_name=herdr
+  fm_backend_herdr_session=fm-lab-detect-2347999-13979
+
+## S4 nested tmux inside Herdr still wins (innermost-first), change
+[change] root=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3VRW07TW96RM3MR0RDP8X13
+  env: HERDR_ENV=1 HERDR_SESSION=fm-lab-detect-2347999-13979 HERDR_SOCKET_PATH=/home/node/.config/herdr/sessions/fm-lab-detect-2347999-13979/herdr.sock TMUX=fake,1,0
+  fm_backend_detect rc=0 detected=tmux signal=TMUX
+  fm_backend_name=tmux
+  fm_backend_herdr_session=fm-lab-detect-2347999-13979
+DONE

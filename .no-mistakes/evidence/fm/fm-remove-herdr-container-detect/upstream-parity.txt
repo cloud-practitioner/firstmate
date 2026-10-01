@@ -1,0 +1,25 @@
+Upstream kunchenguid/firstmate main @ f593060312a48dab651138e6e705147358eba5ce
+== fm_backend_detect: change 27 lines, upstream 27 lines
+   IDENTICAL to upstream
+== fm_backend_herdr_session: change 2 lines, upstream 2 lines
+   IDENTICAL to upstream
+== fm_backend_name: change 31 lines, upstream 31 lines
+   IDENTICAL to upstream
+== grep fm_backend_herdr_socket_session_name in change bin/: none
+== full-file diff bin/fm-backend.sh vs upstream:
+625c625
+<   local name=$1 adapter rel lib_path
+---
+>   local name=$1 adapter rel sibling
+627a628,629
+>   # The sibling list rides in the positional parameters: zsh does not
+>   # word-split an unquoted expansion, so a space-separated string is one path.
+649,650d650
+<   # The sibling list lives in the positional parameters because zsh does not
+<   # word-split an unquoted variable the way bash does.
+652,653c652,653
+<     lib_path="$FM_BACKEND_LIB_DIR/$rel"
+<     fm_backend_source_readable "$lib_path" || return 1
+---
+>     sibling="$FM_BACKEND_LIB_DIR/$rel"
+>     fm_backend_source_readable "$sibling" || return 1
