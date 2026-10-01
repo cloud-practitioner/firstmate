@@ -322,6 +322,7 @@ family_for_basename() {
     fm-afk-inject-herdr-e2e.test.sh|fm-afk-launch.test.sh|fm-backend-autodetect-smoke.test.sh|\
     fm-backend-herdr-eventwait-smoke.test.sh|fm-backend-herdr-presentation-e2e.test.sh|\
     fm-backend-herdr-launcher-workspace-e2e.test.sh|\
+    fm-backend-herdr-container-session-e2e.test.sh|\
     fm-backend-herdr-prune-safety-e2e.test.sh|fm-backend-herdr-respawn-idem-e2e.test.sh|\
     fm-backend-herdr-focus-flash-e2e.test.sh|\
     fm-backend-herdr-stale-active-tab-e2e.test.sh|\
@@ -394,7 +395,7 @@ family_for_basename() {
     fm-teardown-endpoint-safety.test.sh)
       printf '%s\n' backend-dispatch
       ;;
-    fm-check-unregister.test.sh|fm-pr-check-security.test.sh|fm-pr-merge.test.sh|\
+    fm-check-unregister.test.sh|fm-pr-bitbucket.test.sh|fm-pr-check-security.test.sh|fm-pr-merge.test.sh|\
     fm-pr-reviewers.test.sh|fm-pr-state.test.sh|\
     fm-review-diff.test.sh|fm-teardown.test.sh|fm-x-mode.test.sh)
       printf '%s\n' pr-forge
@@ -1679,10 +1680,15 @@ families_for_changed_path() {
     docs/configuration.md|docs/supervision-protocols/*)
       printf '%s\n' pure-contract-unit
       ;;
-    tests/git-config-helpers.sh)
+    tests/git-config-helpers.sh|tests/git-fixture.gitconfig)
       # The reference scan is not transitive, so match the two helpers that
       # source this one as well: most suites inherit it only through them.
       families_for_test_reference git-config-helpers.sh lib.sh herdr-test-safety.sh \
+        || printf '%s\n' "__unmapped__:$path"
+      ;;
+    tests/fixture-tree-helpers.sh)
+      # Sourced the same way as git-config-helpers.sh, through the two helpers.
+      families_for_test_reference fixture-tree-helpers.sh lib.sh herdr-test-safety.sh \
         || printf '%s\n' "__unmapped__:$path"
       ;;
     tests/fixtures/*/*)

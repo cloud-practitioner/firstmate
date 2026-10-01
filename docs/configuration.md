@@ -14,6 +14,7 @@ Start with the directory layout, then use the setting reference for the behavior
 | Supervision and presentation | [Pi supervision branch](#pi-supervision-branch), [supervision host](#supervision-host-configsupervision-host), and [Calm preference](#calm-preference-configcalm) |
 | Persistent secondmates | [Secondmate routes](#secondmate-routes-datasecondmatesmd) |
 | Per-run overrides and tuning | [Environment variables](#environment-variables) |
+| Forge credentials for Bitbucket Cloud pull requests | [Bitbucket Cloud pull requests](#bitbucket-cloud-pull-requests-no_mistakes_bitbucket_email--no_mistakes_bitbucket_api_token) |
 
 ## FM_HOME
 
@@ -90,6 +91,7 @@ Each effective `FM_HOME` contains private operational directories.
 - One-shot Bearings reconcile requests under `state/reconcile-notify/`.
 - Private secondmate config-reread generations with their retry and quarantine state.
 - Per-task steering-inbox records under `state/<id>.inbox/` (`bin/fm-task-inbox-lib.sh`).
+- Per-task private temp roots under `state/<id>.tasktmp/` (`bin/fm-spawn.sh`).
 - Parent-owned secondmate pending-reply records under `state/pending-replies/` (`bin/fm-pending-reply-lib.sh`).
 
 `config/` holds local gitignored operating choices, including explicit extension bindings under `config/extensions.d/`.
@@ -432,7 +434,7 @@ New spawns choose the backend in this order:
    A later task cannot inherit that authority by analogy.
 2. `FM_BACKEND`.
 3. The first non-empty line of local, gitignored `config/backend`.
-4. Runtime auto-detection from `$TMUX`, `HERDR_ENV=1`, or cmux runtime signals.
+4. Runtime auto-detection from `$TMUX`, `HERDR_ENV=1` (with `HERDR_SOCKET_PATH` as a fallback for containers where `HERDR_ENV=1` is not injected), or cmux runtime signals.
 5. Default `tmux`.
 
 If more than one runtime marker is present, detection resolves innermost-first: `$TMUX` is checked before `HERDR_ENV=1`, which is checked before cmux's primary `CMUX_WORKSPACE_ID` marker and its documented fallback signals - tmux or herdr started from inside a cmux terminal is the innermost, currently-executing layer, while cmux itself (a terminal application, not a nestable multiplexer) is always checked last.
@@ -1217,6 +1219,22 @@ Firstmate passes its profile line unless it states a reason to override, such as
 - The resolver fixes the endpoint at `https://api.typesafe.ai`, model at `jev-latest`, default confidence floor at 0.6, and request timeout at 5 seconds; `TYPESAFE_API_KEY` is its only resolver-specific environment setting.
 
 The live rule-match evidence is recorded in [`verification/dispatch-resolve.md`](verification/dispatch-resolve.md).
+
+## Bitbucket Cloud pull requests (NO_MISTAKES_BITBUCKET_EMAIL / NO_MISTAKES_BITBUCKET_API_TOKEN)
+
+Firstmate records, watches, reads, and merges a Bitbucket Cloud pull request (`https://bitbucket.org/<workspace>/<repository>/pull-requests/<number>`) through the Bitbucket REST API 2.0, with the same credential the no-mistakes pipeline uses to open it, so the fleet has one Bitbucket credential.
+Bitbucket Data Center and Server URLs are not Bitbucket Cloud URLs and are refused.
+
+Set both variables in the environment firstmate runs in, which its watcher inherits:
+
+- `NO_MISTAKES_BITBUCKET_EMAIL` is the Atlassian account email.
+- `NO_MISTAKES_BITBUCKET_API_TOKEN` is an Atlassian API token for that account, used as HTTP Basic auth.
+
+The token needs read access to pull requests, commit statuses, and the repository, and write access to pull requests for a merge.
+A merge also reads the destination branch's restrictions, which Bitbucket exposes only to a repository administrator, so without admin access every Bitbucket merge refuses and names that missing read; when those restrictions require default-reviewer approvals or resolved tasks, it also reads the repository's effective default reviewers or the pull request's tasks; see [`bin/fm-pr-merge.sh`](../bin/fm-pr-merge.sh)'s header for the full merge contract.
+Firstmate reads the credential from the environment only, never from `.env`, and hands it to `curl` on standard input rather than as an argument, so it never appears in a process listing and is never printed, logged, or recorded.
+`curl` and `jq` are required alongside it.
+Registering a Bitbucket watch, merging a Bitbucket pull request, or reading one with `bin/fm-pr-state.sh` refuses and names whichever of the four is missing, rather than skipping the read.
 
 ## Toolchain
 
@@ -2296,6 +2314,8 @@ FM_CHECK_INTERVAL=300   # seconds between slow checks (authenticated merge polls
 FM_TASK_INBOX_GRACE_SECS=90   # seconds an unhandled steering-inbox message may sit before the watcher attempts doorbell delivery on an idle pane; also the minimum spacing between attempts
 FM_TASK_INBOX_RING_MAX=3      # watcher delivery attempts without an acknowledgement before the task surfaces as a stale wake for recovery
 FM_CHECK_TIMEOUT=30     # seconds allowed per slow check script
+NO_MISTAKES_BITBUCKET_EMAIL=       # Bitbucket Cloud credential shared with no-mistakes; see "Bitbucket Cloud pull requests"
+NO_MISTAKES_BITBUCKET_API_TOKEN=   # its Atlassian API token; never printed, logged, or recorded
 FM_MAIL_CHECK_BUDGET=15   # seconds allowed for one standing mail poll; valid 5..25, cut to fit FM_CHECK_TIMEOUT
 FM_MAIL_POLL_MAX_WAKES=20   # per-poll wake cap for a mail poll; valid 1..200, keeps a flood from flooding firstmate
 FM_MAIL_TIMEOUT=20   # mail-plane IMAP/SMTP socket timeout in seconds; invalid or non-positive values become 20

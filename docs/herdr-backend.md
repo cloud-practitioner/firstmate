@@ -51,8 +51,8 @@ Select Herdr in any of these ways:
 - An explicit request to Firstmate.
 
 A remote second-mate agent is the one case with no choice: it always runs on Herdr, and [`remote-secondmates.md`](remote-secondmates.md) owns that requirement and the readiness its host must meet.
-
-Herdr is also auto-detected when the primary runs natively under `HERDR_ENV=1` and is not inside tmux.
+It is also auto-detected when the primary runs natively under `HERDR_ENV=1` and is not inside tmux, or when running in a container where `HERDR_SOCKET_PATH` is available but `HERDR_ENV=1` is not injected.
+In that container fallback, every downstream herdr call resolves its target session through `fm_backend_herdr_session()` (`bin/backends/herdr.sh`): an explicit `HERDR_SESSION` still wins outright, and otherwise, when only `HERDR_SOCKET_PATH` was forwarded, the session name is derived directly from that socket path's verified `.../sessions/<name>/herdr.sock` shape so detection and every operational call agree on the same session and socket instead of guessing `"default"` and risking a silent, disconnected in-container server.
 A tmux pane nested inside Herdr resolves to tmux because the innermost multiplexer wins.
 An auto-detected Herdr spawn stays silent, matching the verified tmux default path.
 
@@ -363,6 +363,8 @@ Once the exact pane is confirmed gone, teardown retires the task's own journal w
 Recovery is deliberately conservative and presentation-only.
 An existing journal suppresses another projected create.
 Before any recovery mutation, Firstmate holds both the task spawn lock and the named-session presentation lock.
+A concurrent recovery on the same session holds that lock through its whole relaunch, so recovery waits up to 120 seconds for it instead of the ordinary five-second spawn wait.
+A holder that keeps the lock past that bound counts as stuck, and recovery refuses the resume before any Herdr mutation.
 
 A same-identity version 2 binding may replace one exact agent-free restart husk in place.
 A husk is a restored same-labeled tab with a missing pane or no registered agent, as [Restart and liveness behavior](#restart-and-liveness-behavior) describes.
@@ -457,7 +459,7 @@ Any of these preserves the candidate and lets session startup continue with at m
 - A failed journal publication or projected workspace create stops that spawn instead of falling back flat.
   So a Herdr create failure surfaces as a spawn failure in every Herdr home, rather than only in homes that opted in.
   Every earlier degradation on the fresh projected-create path (no session server, contended presentation lock, absent or ambiguous parent) still warns and continues flat.
-- Recovery of an existing presentation journal deliberately refuses the spawn when the shared presentation lock is contended, rather than falling back flat.
+- Recovery of an existing presentation journal deliberately refuses the spawn when the shared presentation lock stays held past its [recovery wait](#restart-recovery), rather than falling back flat.
   Default-on makes that refusal reachable in any Herdr home.
 - Existing layouts are not force-renamed or rearranged.
 - Missing or ambiguous restart bindings fall back to the ordinary home workspace while the old projection remains untouched.

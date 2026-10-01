@@ -278,6 +278,20 @@
 #   prevents equal task ids in different Firstmate homes from sharing a file.
 #   Spawn refuses an unsafe pre-existing task temp root or launch namespace, and
 #   task teardown removes only the current home's launch namespace.
+# Task temp root:
+#   Each task gets a private 0700 temp root at state/<id>.tasktmp/ in the
+#   spawning home, recorded as tasktmp= in its meta, with Go's build temp at
+#   gotmp/ exported to the pane as GOTMPDIR (GOTMPDIR, not the far broader
+#   TMPDIR). Scoping it to the home keeps equal task ids in different Firstmate
+#   homes from sharing a root, and a disposable home that is never torn down
+#   takes its roots with it instead of stranding them in /tmp.
+#   fm-teardown removes exactly the recorded tasktmp= root; a forced secondmate
+#   teardown's children lose theirs with the retired home. Tasks spawned before
+#   this contract recorded the legacy shared root /tmp/fm-<id>; a relaunch keeps
+#   that recorded root so the live task's record stays valid and teardown still
+#   removes the root the task used. Spawn reuses a pre-existing root only as a
+#   real directory owned by this user and writable by nobody else, then
+#   tightens it.
 # Launch environment (config/launch-env-allowlist):
 #   Absent means unchanged ambient inheritance. A present readable regular file
 #   opts every launch (ship, scout, secondmate, raw command, and relaunch) into
@@ -655,6 +669,7 @@ YOLO_SET=0
 BRANCH_PREFIX_SET=0
 TRACEPARENT_SET=0
 RELAUNCH=0
+RELAUNCH_TASK_TMP=
 POS=()
 want_value=
 for a in "$@"; do
@@ -1384,21 +1399,19 @@ trap spawn_abort_cleanup EXIT
 # One bounded lock per live Herdr session/socket, shared across all homes.
 # <session> is required so secondmate and primary spawns serialize against the
 # same session without writing any other home's state directory.
-spawn_herdr_presentation_order_lock_acquire() {
-  local session=${1:-} attempt lock_path
+# [wait-seconds] (default 5) bounds the whole wait, and the waiter always waits
+# at least that long before refusing.
+spawn_herdr_presentation_order_lock_acquire() {  # <session> [wait-seconds]
+  local session=${1:-} limit=$(( ${2:-5} * 10 )) attempt=0 lock_path
   [ -n "$session" ] || session=$(fm_backend_herdr_session)
   lock_path=$(fm_backend_herdr_presentation_session_lock_path "$session") || return 1
   HERDR_PRESENTATION_ORDER_LOCK="$lock_path"
-  attempt=0
-  while [ "$attempt" -lt 50 ]; do
-    if fm_lock_try_acquire "$HERDR_PRESENTATION_ORDER_LOCK"; then
-      HERDR_PRESENTATION_ORDER_LOCK_HELD=1
-      return 0
-    fi
+  while ! fm_lock_try_acquire "$HERDR_PRESENTATION_ORDER_LOCK"; do
+    [ "$attempt" -lt "$limit" ] || return 1
     sleep 0.1
     attempt=$((attempt + 1))
   done
-  return 1
+  HERDR_PRESENTATION_ORDER_LOCK_HELD=1
 }
 
 clear_relaunch_harness_wiring() {
@@ -1788,6 +1801,7 @@ if [ "$RELAUNCH" -eq 1 ]; then
       exit 1
     fi
   fi
+  RELAUNCH_TASK_TMP=$(fm_meta_get "$RELAUNCH_META" tasktmp)
   RELAUNCH_WT=$(fm_meta_get "$RELAUNCH_META" worktree)
   [ -n "$RELAUNCH_WT" ] && [ -d "$RELAUNCH_WT" ] || {
     echo "error: task $ID's recorded worktree '${RELAUNCH_WT:-none}' is missing; refusing to relaunch without the local copy its work lives in" >&2
@@ -3625,8 +3639,15 @@ else
           echo "error: herdr presentation recovery could not ensure its exact named session" >&2
           exit 1
         }
-        spawn_herdr_presentation_order_lock_acquire "$HERDR_SES" || {
-          echo "error: herdr presentation recovery could not acquire its session lock; refusing a concurrent resume" >&2
+        # A concurrent recovery on the same session holds this lock through its
+        # whole relaunch, so recovery waits far longer than an ordinary spawn.
+        HERDR_RECOVERY_LOCK_WAIT=120
+        case "${FM_TEST_HERDR_RECOVERY_LOCK_WAIT:-}" in
+          ''|*[!0-9]*|0) ;;
+          *) HERDR_RECOVERY_LOCK_WAIT=$FM_TEST_HERDR_RECOVERY_LOCK_WAIT ;;
+        esac
+        spawn_herdr_presentation_order_lock_acquire "$HERDR_SES" "$HERDR_RECOVERY_LOCK_WAIT" || {
+          echo "error: herdr presentation recovery could not acquire its session lock within ${HERDR_RECOVERY_LOCK_WAIT}s; refusing a concurrent resume" >&2
           exit 1
         }
         if [ -e "$STATE/$ID.meta" ] || [ -L "$STATE/$ID.meta" ]; then
@@ -4360,22 +4381,19 @@ agy)
   ;;
 esac
 
-# Per-task temp root: /tmp/fm-<id>/ with Go's build temp nested at gotmp/. Go won't
-# create GOTMPDIR, so mkdir before it is used; fm-teardown removes the whole root.
-# Nested (not a bare /tmp/fm-<id>/gotmp) so other per-task temp can live alongside
-# later, and teardown cleans one deterministic path. GOTMPDIR (not TMPDIR) is the
-# targeted knob: TMPDIR is too broad (affects every program's temp, not just Go's).
-# The root is private (0700) because its path is predictable under a shared
-# /tmp: a root that already exists is reused only as a real directory owned by
-# this user and writable by nobody else, then tightened, so no other local user
-# can plant or swap a file in it. The staged launch command lives in a sibling
-# directory namespaced by home identity, not in this shared per-id root.
-TASK_TMP="/tmp/fm-$ID"
+mkdir -p "$STATE"
+STATE_REAL=$(cd "$STATE" && pwd -P)
+
+# Implement the task temp root contract in this script's header.
+TASK_TMP="$STATE_REAL/$ID.tasktmp"
+if [ "$RELAUNCH" -eq 1 ] && [ "$RELAUNCH_TASK_TMP" = "/tmp/fm-$ID" ]; then
+  TASK_TMP=$RELAUNCH_TASK_TMP
+fi
 if ! (umask 077 && mkdir "$TASK_TMP") 2>/dev/null; then
   if [ -L "$TASK_TMP" ] || [ ! -d "$TASK_TMP" ] || [ ! -O "$TASK_TMP" ] ||
     [ -n "$(find "$TASK_TMP" -prune \( -perm -g=w -o -perm -o=w \) -print 2>/dev/null)" ] ||
     ! chmod 700 "$TASK_TMP"; then
-    echo "error: task temp root $TASK_TMP already exists and is not a private directory owned by this user; refusing to stage the launch command there; inspect and remove it, then retry" >&2
+    echo "error: task temp root $TASK_TMP already exists and is not a private directory owned by this user; refusing to use it; inspect and remove it, then retry" >&2
     exit 1
   fi
 fi
@@ -4385,8 +4403,6 @@ mkdir -p "$TASK_TMP/gotmp"
 # state/<id>.turn-ended when the agent finishes a turn. Worktree-resident hooks
 # and token pointers stay out of git's view so they never block teardown's dirty
 # check or leak into a commit.
-mkdir -p "$STATE"
-STATE_REAL=$(cd "$STATE" && pwd -P)
 TURNEND="$STATE_REAL/$ID.turn-ended"
 exclude_path() {
   local rel=$1 EXCL
@@ -5218,7 +5234,7 @@ spawn_record_traceparent() {
 # Export GOTMPDIR into the crewmate's pane shell so the agent and every child
 # process (go build, go test, ...) inherit it. Sent before the launch command so
 # the env is set when the agent starts; the brief sleep lets the export land.
-spawn_send_text_line "$T" "export GOTMPDIR=$TASK_TMP/gotmp"
+spawn_send_text_line "$T" "export GOTMPDIR=$(shell_quote "$TASK_TMP/gotmp")"
 # Export the compact-adviser kill switch into the pane shell through the same
 # pre-launch channel, so later commands in that shell inherit it too. The launch
 # command independently establishes the value for the agent process itself.

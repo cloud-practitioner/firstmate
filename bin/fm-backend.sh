@@ -96,7 +96,7 @@ fm_backend_is_known() {  # <name>
 # tmux started inside a herdr pane, so $TMUX is checked first and wins over
 # HERDR_ENV=1 in that nested case. herdr injects HERDR_ENV=1 (plus
 # HERDR_SOCKET_PATH/HERDR_PANE_ID) into every process it manages a pane for;
-# HERDR_ENV=1 alone (no $TMUX) selects herdr. cmux injects CMUX_WORKSPACE_ID
+# HERDR_ENV=1 or HERDR_SOCKET_PATH (when a socket is available) alone (no $TMUX) selects herdr. cmux injects CMUX_WORKSPACE_ID
 # (plus CMUX_SURFACE_ID/CMUX_SOCKET_PATH and the legacy CMUX_TAB_ID/
 # CMUX_PANEL_ID aliases) into every terminal surface it spawns - verified from
 # the shipped source (`TerminalSurface+StartupEnvironment.swift`'s
@@ -134,7 +134,7 @@ fm_backend_is_known() {  # <name>
 #      tmux, where the tmux server reparents to launchd and the chain never
 #      reaches cmux - which is fine, because $TMUX already won there.
 # Callers needing the winning signal read FM_BACKEND_DETECT_SIGNAL (set to
-# TMUX, HERDR_ENV, CMUX_WORKSPACE_ID, bundle-id, or ancestry) and
+# TMUX, HERDR_ENV, HERDR_SOCKET_PATH, CMUX_WORKSPACE_ID, bundle-id, or ancestry) and
 # FM_BACKEND_DETECTED after a direct (non-command-substitution) call.
 FM_BACKEND_CMUX_BUNDLE_ID="com.cmuxterm.app"
 
@@ -150,6 +150,22 @@ fm_backend_detect() {
   if [ "${HERDR_ENV:-}" = "1" ]; then
     FM_BACKEND_DETECTED=herdr
     FM_BACKEND_DETECT_SIGNAL=HERDR_ENV
+    printf 'herdr'
+    return 0
+  fi
+  # Fallback for containers where Herdr doesn't inject HERDR_ENV=1 but
+  # HERDR_SOCKET_PATH is available (volume-mounted or env-forwarded into the
+  # container). This handles the case where Herdr spawns a crewmate or Pi
+  # process inside a devcontainer and the socket is accessible from within.
+  # bin/backends/herdr.sh's fm_backend_herdr_session() derives the session
+  # name straight from this same HERDR_SOCKET_PATH when HERDR_SESSION is not
+  # separately forwarded, so every downstream operational call agrees with
+  # this detection about which session and socket it is talking to instead of
+  # independently guessing "default" (AGENTS.md task
+  # herdr-container-session-fix).
+  if [ -n "${HERDR_SOCKET_PATH:-}" ] && [ -S "$HERDR_SOCKET_PATH" ]; then
+    FM_BACKEND_DETECTED=herdr
+    FM_BACKEND_DETECT_SIGNAL=HERDR_SOCKET_PATH
     printf 'herdr'
     return 0
   fi
@@ -622,34 +638,35 @@ fm_backend_source_readable() {  # <path>
 }
 
 fm_backend_source() {  # <name>
-  local name=$1 adapter rel path siblings
+  local name=$1 adapter rel lib_path
   fm_backend_validate "$name" || return 1
   adapter="$FM_BACKEND_LIB_DIR/backends/$name.sh"
   case "$name" in
     tmux)
-      siblings="fm-tmux-lib.sh fm-composer-lib.sh fm-cursor-lib.sh fm-session-lock-lib.sh fm-agent-process-lib.sh fm-gemini-lib.sh"
+      set -- fm-tmux-lib.sh fm-composer-lib.sh fm-cursor-lib.sh fm-session-lock-lib.sh fm-agent-process-lib.sh fm-gemini-lib.sh
       ;;
     herdr)
-      siblings="fm-composer-lib.sh fm-transition-lib.sh fm-agent-process-lib.sh fm-session-lock-lib.sh fm-gemini-lib.sh"
+      set -- fm-composer-lib.sh fm-transition-lib.sh fm-agent-process-lib.sh fm-session-lock-lib.sh fm-gemini-lib.sh
       ;;
     zellij)
-      siblings="fm-backend-hometag-lib.sh fm-composer-lib.sh"
+      set -- fm-backend-hometag-lib.sh fm-composer-lib.sh
       ;;
     orca)
-      siblings="fm-composer-lib.sh"
+      set -- fm-composer-lib.sh
       ;;
     cmux)
-      siblings="fm-backend-hometag-lib.sh fm-composer-lib.sh"
+      set -- fm-backend-hometag-lib.sh fm-composer-lib.sh
       ;;
     *)
       return 1
       ;;
   esac
   fm_backend_source_readable "$adapter" || return 1
-  # shellcheck disable=SC2086 # sibling names are a fixed space-separated list
-  for rel in $siblings; do
-    path="$FM_BACKEND_LIB_DIR/$rel"
-    fm_backend_source_readable "$path" || return 1
+  # The sibling list lives in the positional parameters because zsh does not
+  # word-split an unquoted variable the way bash does.
+  for rel in "$@"; do
+    lib_path="$FM_BACKEND_LIB_DIR/$rel"
+    fm_backend_source_readable "$lib_path" || return 1
   done
   case "$name" in
     tmux)
