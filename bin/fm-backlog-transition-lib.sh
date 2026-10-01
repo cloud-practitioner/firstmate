@@ -516,12 +516,21 @@ fm_backlog_start() {  # <data-dir> <id>
   fm_backlog_mutate "$1" start "$2"
 }
 
-# tasks-axi takes a --pr link only as a canonical GitHub or Forgejo pull request
-# and refuses anything else, so a Gerrit change URL is recorded on the row as a
-# note instead. The subshell keeps the parse from overwriting a caller's
-# FM_PR_* identity.
+# tasks-axi takes a --pr link only as a canonical GitHub (/pull/<n>) or Forgejo
+# (/pulls/<n>) pull request and refuses anything else, so any other pull request
+# (a Bitbucket, GitLab, or Gerrit URL) is still recorded on the closed item, as a
+# note. The subshell keeps the parse from overwriting a caller's FM_PR_* identity.
 fm_backlog_pr_is_gerrit_change() {  # <url>
   ( fm_pr_url_parse "$1" && [ "$FM_PR_PROVIDER" = gerrit ] )
+}
+
+# The note label for a pull request URL that cannot be a row link.
+fm_backlog_pr_note_label() {  # <url>
+  if fm_backlog_pr_is_gerrit_change "$1"; then
+    printf 'Gerrit change'
+  else
+    printf 'PR'
+  fi
 }
 
 fm_backlog_done() {  # <data-dir> <id> [flag...]
@@ -529,9 +538,9 @@ fm_backlog_done() {  # <data-dir> <id> [flag...]
   local -a done_args=()
   shift 2
   for arg in "$@"; do
-    if [ "$previous_arg" = --pr ] && fm_backlog_pr_is_gerrit_change "$arg"; then
+    if [ "$previous_arg" = --pr ] && ! fm_backlog_row_artifact_supported "$id" --pr "$arg"; then
       done_args[${#done_args[@]}-1]=--note
-      done_args+=("Gerrit change $arg")
+      done_args+=("$(fm_backlog_pr_note_label "$arg") $arg")
     else
       done_args+=("$arg")
     fi
@@ -543,7 +552,7 @@ fm_backlog_done() {  # <data-dir> <id> [flag...]
 fm_backlog_row_artifact_supported() {
   local id=$1 flag=${2:-} value=${3:-}
   case "$flag" in
-    --pr) ! fm_backlog_pr_is_gerrit_change "$value" ;;
+    --pr) [[ "$value" =~ ^https://[^/]+/[^/]+/[^/]+/pulls?/[1-9][0-9]*$ ]] ;;
     --report) [ "$value" = "data/$id/report.md" ] ;;
     *) return 1 ;;
   esac
@@ -579,7 +588,7 @@ fm_backlog_retain() {  # <data-dir> <id> [flag...]
           deliverable="${deliverable:+$deliverable; }PR $arg"
           row_args=(--pr "$arg")
         else
-          deliverable="${deliverable:+$deliverable; }Gerrit change $arg"
+          deliverable="${deliverable:+$deliverable; }$(fm_backlog_pr_note_label "$arg") $arg"
         fi
         ;;
       --note) deliverable="${deliverable:+$deliverable; }$arg" ;;
