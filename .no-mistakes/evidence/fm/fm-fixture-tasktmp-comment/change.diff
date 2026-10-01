@@ -1,0 +1,16 @@
+diff --git a/tests/fixture-tree-helpers.sh b/tests/fixture-tree-helpers.sh
+index 6441258..275bbad 100644
+--- a/tests/fixture-tree-helpers.sh
++++ b/tests/fixture-tree-helpers.sh
+@@ -48,8 +48,9 @@ fm_test_home_hash() {
+ # task the suite never tore down, or whose record it deleted, still leaves
+ # nothing behind. It is the same name fm-teardown.sh retires, and the home hash
+ # keeps every other home's launch directories out of reach. The per-task
+-# /tmp/fm-<id> root is not home-scoped, so it is not this helper's to remove;
+-# fm-spawn.sh's own cleanup owns it.
++# temp root lives at state/<id>.tasktmp/ inside the home (fm-spawn.sh's header
++# owns that path), so it goes away with the fixture home; this helper only
++# removes the launch directories staged in /tmp.
+ # Call this before removing <fixture-root>, because the home paths must resolve.
+ fm_test_remove_spawn_launch_dirs() {
+   local root=$1 home hash dir
