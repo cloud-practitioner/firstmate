@@ -606,16 +606,27 @@ test_backend_validate_refuses_unknown() {
 }
 
 test_backend_source_shell_portable() {
-  local out status
-  # zsh does not word-split unquoted expansions; sourcing fm-backend.sh from
-  # an interactive zsh session must still recognize known backend names.
+  local out status backend fns
+  # zsh does not word-split unquoted expansions and leaves BASH_SOURCE unset;
+  # sourcing fm-backend.sh from an interactive zsh session must still load
+  # every backend adapter together with its sibling libraries.
   if command -v zsh >/dev/null 2>&1; then
-    zsh -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source herdr && whence -w fm_backend_herdr_capture >/dev/null" 2>/dev/null \
-      || fail "zsh: fm_backend_source herdr should load the adapter when sourced"
     out=$(zsh -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source bogus" 2>&1) \
       && fail "zsh: fm_backend_source bogus should fail"
     assert_contains "$out" "unknown backend 'bogus'" \
       "zsh: fm_backend_source did not reject bogus with the expected error"
+    for backend in tmux herdr zellij orca cmux; do
+      case "$backend" in
+        tmux) fns="fm_backend_tmux_capture fm_tmux_strip_ghost fm_composer_classify_content fm_cursor_path_is_cursor fm_harness_path_name fm_agent_process_classify_name fm_gemini_path_is_gemini" ;;
+        herdr) fns="fm_backend_herdr_capture fm_composer_classify_content fm_transition_record fm_agent_process_classify_name fm_harness_path_name fm_cursor_path_is_cursor fm_gemini_path_is_gemini" ;;
+        zellij) fns="fm_backend_zellij_capture fm_backend_hometag fm_composer_classify_content" ;;
+        orca) fns="fm_backend_orca_capture fm_composer_classify_content" ;;
+        cmux) fns="fm_backend_cmux_capture fm_backend_hometag fm_composer_classify_content" ;;
+      esac
+      out=$(zsh -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source $backend && whence -w $fns" 2>&1 >/dev/null) \
+        || fail "zsh: fm_backend_source $backend did not load the adapter and its sibling libraries ($fns): $out"
+      [ -z "$out" ] || fail "zsh: fm_backend_source $backend wrote to stderr while sourcing: $out"
+    done
     pass "zsh: fm_backend_source recognizes known backends and rejects unknown ones"
   else
     pass "zsh: shell-portable backend matching skipped (zsh not found)"
