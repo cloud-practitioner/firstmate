@@ -308,7 +308,11 @@ EOF
       "$HERDR_LAB_HELPER" teardown "$HERDR_LAB_SESSION" >/dev/null 2>&1 || true
     LAB_READY=0
   fi
-  rm -rf "$TMP_ROOT"
+  # Tasks this suite never tears down, such as the anchor, keep their
+  # read-only state/<id>.git-hooks strip directories and their staged launch
+  # directories outside the tree (tests/fixture-tree-helpers.sh).
+  fm_test_remove_spawn_launch_dirs "$TMP_ROOT"
+  fm_test_remove_tree "$TMP_ROOT"
 }
 trap cleanup_all EXIT
 
@@ -1490,6 +1494,19 @@ assert_no_projection_mutation_since "$START" "agent-free duplicate-token recover
 lab workspace get "$DUP1_WSID" >/dev/null 2>&1 || fail "duplicate-token recovery removed the first quarantined workspace"
 lab workspace get "$DUP2_WSID" >/dev/null 2>&1 || fail "duplicate-token recovery removed the second quarantined workspace"
 
+# Herdr 0.9.3 drops a reported registration from a pane that runs only its
+# shell within about half a second, so the refusal below would race that
+# expiry. A real foreground process keeps the registration, as an agent would.
+lab pane run "$DUP1_PANE" "sleep 600" >/dev/null \
+  || fail "could not start the duplicate-live-agent foreground process"
+DUP1_PROCESS=
+for _ in $(seq 1 100); do
+  DUP1_PROCESS=$(fm_backend_herdr_pane_process_state_sample "$HERDR_LAB_SESSION" "$DUP1_PANE")
+  [ "$DUP1_PROCESS" = other ] && break
+  sleep 0.1
+done
+[ "$DUP1_PROCESS" = other ] \
+  || fail "the duplicate-live-agent foreground process never started (last process state: $DUP1_PROCESS)"
 lab pane report-agent "$DUP1_PANE" --source fm-projection-e2e --agent test-agent --state idle >/dev/null \
   || fail "could not register the duplicate-live-agent risk fixture"
 START=$(log_line_count)
@@ -1509,5 +1526,24 @@ PATH="$HERDR_ORIGINAL_PATH" \
 LAB_READY=0
 pass "real Herdr lab validation completed on Herdr $HERDR_VERSION with the default-session tripwire intact"
 
+# Launch directories staged during this run for this suite's primary home;
+# the home hash in each name scopes them to this run.
+HOME_HASH=$(fm_test_home_hash "$HOME_DIR") || fail "could not hash the primary home path"
+RUN_LAUNCH_DIRS=$(find /tmp/ -maxdepth 1 -type d -name "fm-*+$HOME_HASH" 2>/dev/null)
+[ -n "$RUN_LAUNCH_DIRS" ] \
+  || fail "no staged launch directory was found for this run, so the cleanup check below would be vacuous"
 cleanup_all
 trap - EXIT
+if [ -e "$TMP_ROOT" ]; then
+  printf 'not ok - cleanup left the fixture tree %s behind\n' "$TMP_ROOT" >&2
+  exit 1
+fi
+while IFS= read -r dir; do
+  if [ -n "$dir" ] && [ -e "$dir" ]; then
+    printf 'not ok - cleanup left the staged launch directory %s behind\n' "$dir" >&2
+    exit 1
+  fi
+done <<EOF
+$RUN_LAUNCH_DIRS
+EOF
+pass "cleanup removed the whole fixture tree, including read-only strip-hook directories, and its staged launch directories"
