@@ -1,0 +1,35 @@
+[+5s] ok - a blocking non-destructive remote delta reaches durable process-event capture
+[+5s] ok - a captured delta is applied, acknowledged, and re-armed without a handler
+[+6s] ok - ingest appends one validated line, fetches its document, and advances the cursor
+[+7s] ok - replayed capture has one deduplicated append and one durable handling identity
+[+14s] ok - later generations cannot invalidate an unacknowledged ingested result
+[+17s] ok - the remote status and decision model mirrors and the cursor advances
+[+17s] ok - a remote mate's new decision folds open exactly as a local mate's does
+[+17s] ok - a replayed mirrored delta is idempotent in both the stream and the cursor
+[+19s] ok - transported control bytes are normalized in place and never stop the stream
+[+22s] ok - payload protocol-field names cannot collide with transport metadata
+[+25s] ok - NUL bytes are normalized in place before shell line processing
+[+31s] ok - local document storage failures remain retryable until delivery succeeds
+[+34s] ok - a structured pointer must end at its token boundary
+[+39s] ok - adjacent pointers are fetched while malformed tokens remain unchanged
+[+43s] ok - a rejected candidate never gives the following text a false leading boundary
+[+48s] ok - nested remote reports relay while an undeliverable foreign pointer fails open
+[+59s] ok - the reported incident raises no standing decision and still delivers the report
+[+70s] ok - an undeliverable structured offer fails open with one note and never a decision
+[+75s] ok - a remote refusal surfaces its own reason without opening a decision
+[+81s] ok - a failed pointer extraction never commits a partial delta
+[+88s] ok - a failed mirror write never drops status content or advances the cursor
+[+111s] ok - source-line identity survives commit failure and cursor-loss recapture
+[+115s] ok - a mirrored reserved-key line cannot squat or clear the parent's own decision
+[+118s] ok - a reply that arrives after escalation resolves it and clears the open decision
+[+124s] ok - a remote reply listener stays owned across empty waits and a delta
+[+126s] ok - a failed remote read exits instead of relistening
+[+132s] ok - persistent ingestion failure leaves exactly one durable capture
+[+136s] ok - a preempted reply poll reports a closed window without publishing channel freshness
+[+141s] ok - a preempted reply poll keeps its listener and reconcile launches nothing
+[+143s] ok - a quiet reply window publishes the caught-up watermark the reply guard reads
+[+161s] ok - a cursor-loss whole-log recapture is acknowledged quietly with no duplicate wake
+[+165s] ok - truncation is detected, escalated once, and not silently rebased
+[+166s] ok - remote reply retirement quiesces and refuses unhandled captured results
+[+166s] ALL TESTS PASSED
+rc=0 elapsed=166s

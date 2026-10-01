@@ -1,0 +1,6 @@
+== fm-supervision-host-live-e2e
+skip: live: opt-in; set FM_SUPERVISION_HOST_LIVE_E2E=1 to run
+rc=0
+== fm-supervision-host-attended-live-e2e
+skip: live: opt-in; set FM_SUPERVISION_HOST_ATTENDED_LIVE_E2E=1 to run
+rc=0
