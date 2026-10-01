@@ -78,6 +78,13 @@ FM_BACKLOG_CLOSE_REPLAY_RESULT=
 # library does not source fm-tasks-axi-lib.sh does not apply.
 # shellcheck source=bin/fm-timeout-lib.sh disable=SC1091
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/fm-timeout-lib.sh"
+# fm-pr-lib.sh owns which URL is a Gerrit change. It is functions and empty
+# globals only, so it is sourced once rather than re-initialising a caller's
+# parsed identity.
+if ! declare -F fm_pr_url_parse >/dev/null 2>&1; then
+  # shellcheck source=bin/fm-pr-lib.sh disable=SC1091
+  . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/fm-pr-lib.sh"
+fi
 
 # Latched when a row read hits its bound. fm_backlog_row_show runs inside a
 # command substitution, so the subshell can READ this latch but cannot set it;
@@ -509,26 +516,39 @@ fm_backlog_start() {  # <data-dir> <id>
   fm_backlog_mutate "$1" start "$2"
 }
 
-# A pull request tasks-axi cannot link on a row (a Bitbucket, GitLab, or Gerrit
-# URL) is still recorded on the closed item, as a note.
+# tasks-axi takes a --pr link only as a canonical GitHub (/pull/<n>) or Forgejo
+# (/pulls/<n>) pull request and refuses anything else, so any other pull request
+# (a Bitbucket, GitLab, or Gerrit URL) is still recorded on the closed item, as a
+# note. The subshell keeps the parse from overwriting a caller's FM_PR_* identity.
+fm_backlog_pr_is_gerrit_change() {  # <url>
+  ( fm_pr_url_parse "$1" && [ "$FM_PR_PROVIDER" = gerrit ] )
+}
+
+# The note label for a pull request URL that cannot be a row link.
+fm_backlog_pr_note_label() {  # <url>
+  if fm_backlog_pr_is_gerrit_change "$1"; then
+    printf 'Gerrit change'
+  else
+    printf 'PR'
+  fi
+}
+
 fm_backlog_done() {  # <data-dir> <id> [flag...]
   local data=$1 id=$2 arg previous_arg=''
-  local -a args=()
+  local -a done_args=()
   shift 2
   for arg in "$@"; do
     if [ "$previous_arg" = --pr ] && ! fm_backlog_row_artifact_supported "$id" --pr "$arg"; then
-      args[${#args[@]}-1]=--note
-      args+=("PR $arg")
+      done_args[${#done_args[@]}-1]=--note
+      done_args+=("$(fm_backlog_pr_note_label "$arg") $arg")
     else
-      args+=("$arg")
+      done_args+=("$arg")
     fi
     previous_arg=$arg
   done
-  fm_backlog_mutate "$data" "done" "$id" "${args[@]+"${args[@]}"}"
+  fm_backlog_mutate "$data" "done" "$id" "${done_args[@]+"${done_args[@]}"}"
 }
 
-# tasks-axi links a row only to a GitHub (/pull/<n>) or Forgejo (/pulls/<n>)
-# pull request and refuses any other URL as a row PR link.
 fm_backlog_row_artifact_supported() {
   local id=$1 flag=${2:-} value=${3:-}
   case "$flag" in
@@ -564,9 +584,11 @@ fm_backlog_retain() {  # <data-dir> <id> [flag...]
         fi
         ;;
       --pr)
-        deliverable="${deliverable:+$deliverable; }PR $arg"
         if fm_backlog_row_artifact_supported "$id" --pr "$arg"; then
+          deliverable="${deliverable:+$deliverable; }PR $arg"
           row_args=(--pr "$arg")
+        else
+          deliverable="${deliverable:+$deliverable; }$(fm_backlog_pr_note_label "$arg") $arg"
         fi
         ;;
       --note) deliverable="${deliverable:+$deliverable; }$arg" ;;
