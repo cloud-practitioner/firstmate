@@ -137,7 +137,7 @@ pass "real herdr: create_task prunes the freshly-created workspace's seeded defa
 #    `pane report-agent`) must still refuse exactly as before.
 #    The registration is backed by a running agent-named foreground process
 #    (a `claude` symlink to `sleep`, as tests/fm-control-herdr-smoke.test.sh
-#    does): Herdr 0.9.x releases a report-agent registration within about a
+#    does): Herdr 0.9.3 releases a report-agent registration within about a
 #    second once the pane's foreground is its own top shell, so a report on an
 #    idle shell pane is not a live agent and would race that release
 #    (docs/verification/runtime-backends.md "Stale agent registration").
