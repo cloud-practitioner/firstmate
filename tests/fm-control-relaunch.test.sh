@@ -219,14 +219,13 @@ EOF
     echo "kind=ship"
     echo "mode=no-mistakes"
     echo "yolo=off"
-    echo "tasktmp=/tmp/fm-$id"
+    echo "tasktmp=$(cd "$home/state" && pwd -P)/$id.tasktmp"
     echo "model=default"
     echo "effort=default"
   } > "$home/state/$id.meta"
   printf '%s\n' "fm-$id" > "$dir/fake/windows"
   printf '%s' "$ses" > "$dir/fake/session-name"
   printf '%s' "$wt" > "$dir/fake/cwd"
-  TASK_TMPS+=("/tmp/fm-$id")
 }
 
 run_control() {  # <case-dir> <args...>
@@ -498,6 +497,8 @@ test_relaunch_keeps_a_legacy_task_temp_root_and_scopes_a_missing_one() {
   local dir out rc state_real
   dir=$(new_case legacy-tasktmp rl91)
   add_ship_task "$dir" rl91 claude
+  sed -i.bak 's|^tasktmp=.*|tasktmp=/tmp/fm-rl91|' "$dir/home/state/rl91.meta" && rm -f "$dir/home/state/rl91.meta.bak"
+  TASK_TMPS+=(/tmp/fm-rl91)
   out=$(run_control "$dir" rl91 relaunch --note "continuing after relaunch"); rc=$?
   expect_code 0 "$rc" "relaunch of a legacy temp root record should succeed"$'\n'"$out"
   [ "$(meta_field "$dir" rl91 tasktmp)" = /tmp/fm-rl91 ] \
@@ -1148,7 +1149,7 @@ test_promoted_scout_relaunch_receives_the_current_delivery_contract() {
       echo "project=$dir/proj"
       echo "harness=claude"
       echo "kind=scout"
-      echo "tasktmp=/tmp/fm-$id"
+      echo "tasktmp=$(cd "$home/state" && pwd -P)/$id.tasktmp"
       echo "model=default"
       echo "effort=default"
     } > "$home/state/$id.meta"
@@ -2114,7 +2115,7 @@ EOF
     echo "kind=ship"
     echo "mode=no-mistakes"
     echo "yolo=off"
-    echo "tasktmp=/tmp/fm-$id"
+    echo "tasktmp=$(cd "$home/state" && pwd -P)/$id.tasktmp"
     echo "model=default"
     echo "effort=default"
     echo "backend=herdr"
@@ -2127,14 +2128,10 @@ EOF
   printf '%s' "$survivor" > "$dir/fake/herdr-pane"
   : > "$dir/fake/herdr-log"
   : > "$dir/fake/herdr-stopped"
-  TASK_TMPS+=("/tmp/fm-$id")
 }
 
 # Sets HERDR_CASE_DIR rather than echoing it, so callers invoke it as a plain
-# statement. A `dir=$(herdr_case_or_skip ...)` would run add_herdr_ship_task in
-# a command-substitution subshell, where its TASK_TMPS registration would
-# mutate a discarded copy and the EXIT trap would never remove the
-# out-of-tmproot /tmp/fm-<id> root the spawn creates.
+# statement.
 HERDR_CASE_DIR=
 herdr_case_or_skip() {  # <name> <id> [session] [surviving-pane]
   HERDR_CASE_DIR=
