@@ -548,10 +548,10 @@ fm_backend_herdr_version_check() {
 # path that does not match (callers fall back to "default", which is already
 # correct for both of those cases).
 fm_backend_herdr_socket_session_name() {  # <socket_path>
-  local path=$1 name
-  case "$path" in
+  local socket_path=$1 name
+  case "$socket_path" in
     */sessions/*/herdr.sock)
-      name=$(basename "$(dirname "$path")")
+      name=$(basename "$(dirname "$socket_path")")
       [ -n "$name" ] && printf '%s' "$name"
       ;;
   esac

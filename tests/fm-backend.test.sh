@@ -628,6 +628,13 @@ test_backend_source_shell_portable() {
       [ -z "$out" ] || fail "zsh: fm_backend_source $backend wrote to stderr while sourcing: $out"
     done
     pass "zsh: fm_backend_source recognizes known backends and rejects unknown ones"
+    # zsh ties the lowercase `path` array to PATH, so a container caller with
+    # only HERDR_SOCKET_PATH must still resolve the socket's named session.
+    out=$(zsh -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source herdr && unset HERDR_SESSION && HERDR_SOCKET_PATH=/fm-test/herdr/sessions/fm-lab-zsh/herdr.sock fm_backend_herdr_session" 2>&1) \
+      || fail "zsh: fm_backend_herdr_session failed for a named-session socket path: $out"
+    [ "$out" = fm-lab-zsh ] \
+      || fail "zsh: fm_backend_herdr_session should resolve the socket's session fm-lab-zsh, got: $out"
+    pass "zsh: fm_backend_herdr_session derives the named session from HERDR_SOCKET_PATH"
   else
     pass "zsh: shell-portable backend matching skipped (zsh not found)"
   fi
