@@ -1,0 +1,40 @@
+# herdr 0.9.3; lab session fm-lab-probe-3913023-4000; 2026-10-01T02:18:36Z
+## A. report-agent on w2:p1, foreground = its own top shell: [{"name":"zsh","argv0":"/bin/zsh"}]
+  t+   14ms {"agent":"probe-agent","agent_status":"idle"}
+  t+  282ms "agent_not_found"
+  t+  544ms "agent_not_found"
+  t+  809ms "agent_not_found"
+  t+ 1072ms "agent_not_found"
+  t+ 1337ms "agent_not_found"
+  t+ 1601ms "agent_not_found"
+  t+ 1868ms "agent_not_found"
+  t+ 2141ms "agent_not_found"
+  t+ 2409ms "agent_not_found"
+  t+ 2678ms "agent_not_found"
+  t+ 2946ms "agent_not_found"
+## B. report-agent on w3:p1, foreground = nested bash: [{"name":"bash","argv0":"bash"}]
+  t+   14ms {"agent":"probe-agent","agent_status":"idle"}
+  t+  279ms {"agent":"probe-agent","agent_status":"idle"}
+  t+  542ms {"agent":"probe-agent","agent_status":"idle"}
+  t+  806ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 1069ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 1336ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 1599ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 1864ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 2126ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 2388ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 2649ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 2911ms {"agent":"probe-agent","agent_status":"idle"}
+## C. report-agent on w4:p1, foreground = claude->sleep symlink (the fixture's backing process): [{"name":"claude","argv0":null}]
+  t+   12ms {"agent":"probe-agent","agent_status":"idle"}
+  t+  275ms {"agent":"probe-agent","agent_status":"idle"}
+  t+  538ms {"agent":"probe-agent","agent_status":"idle"}
+  t+  801ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 1063ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 1327ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 1588ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 1850ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 2112ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 2374ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 2636ms {"agent":"probe-agent","agent_status":"idle"}
+  t+ 2898ms {"agent":"probe-agent","agent_status":"idle"}

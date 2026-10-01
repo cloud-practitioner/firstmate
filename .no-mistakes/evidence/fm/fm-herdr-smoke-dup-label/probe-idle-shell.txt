@@ -1,0 +1,34 @@
+# herdr herdr 0.9.3; lab session fm-lab-probe-3913023-4000; 2026-10-01T02:18:20Z
+## A. report-agent on pane w1:p1 idling at its own top shell
+{"foreground":[{"argv":["/bin/zsh"],"cmdline":"/bin/zsh","cwd":"/home/node","name":"zsh","pid":3913153}]}
+
+(eval):8: command not found: bc
+t+0.00s {"agent":"probe-agent","agent_status":"idle"}
+(eval):8: command not found: bc
+t+0.00s {"agent":"probe-agent","agent_status":"idle"}
+(eval):8: command not found: bc
+t+0.00s {"agent":"probe-agent","agent_status":"idle"}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}
+(eval):8: command not found: bc
+t+0.00s {"agent":null,"agent_status":null}

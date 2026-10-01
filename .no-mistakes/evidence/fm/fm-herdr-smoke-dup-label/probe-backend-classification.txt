@@ -1,0 +1,3 @@
+w2:p1 process_state=shell agent_state=no-agent
+w3:p1 process_state=shell agent_state=stale-agent
+w4:p1 process_state=agent agent_state=live
