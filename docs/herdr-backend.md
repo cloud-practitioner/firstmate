@@ -51,8 +51,8 @@ Select Herdr in any of these ways:
 - An explicit request to Firstmate.
 
 A remote second-mate agent is the one case with no choice: it always runs on Herdr, and [`remote-secondmates.md`](remote-secondmates.md) owns that requirement and the readiness its host must meet.
-It is also auto-detected when the primary runs natively under `HERDR_ENV=1` and is not inside tmux, or when running in a container where `HERDR_SOCKET_PATH` is available but `HERDR_ENV=1` is not injected.
-In that container fallback, every downstream herdr call resolves its target session through `fm_backend_herdr_session()` (`bin/backends/herdr.sh`): an explicit `HERDR_SESSION` still wins outright, and otherwise, when only `HERDR_SOCKET_PATH` was forwarded, the session name is derived directly from that socket path's verified `.../sessions/<name>/herdr.sock` shape so detection and every operational call agree on the same session and socket instead of guessing `"default"` and risking a silent, disconnected in-container server.
+
+Herdr is also auto-detected when the primary runs natively under `HERDR_ENV=1` and is not inside tmux.
 A tmux pane nested inside Herdr resolves to tmux because the innermost multiplexer wins.
 An auto-detected Herdr spawn stays silent, matching the verified tmux default path.
 
