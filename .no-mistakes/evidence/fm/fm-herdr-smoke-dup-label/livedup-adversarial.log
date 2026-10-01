@@ -1,0 +1,15 @@
+herdr: herdr 0.9.3  session: fm-lab-livedup-adv-2647091
+=== 1. live agent: agent-named foreground process + report-agent
+after 2s: process_state=agent agent_state=live
+create_task(dup) -> REFUSED: error: herdr tab 'fm-adv-live' already exists in workspace w1 (session fm-lab-livedup-adv-2647091)
+  old pane w1:p3 still exists
+=== 2. same pane after the agent process exits (Ctrl-C)
+after exit+3s: process_state=shell agent_state=no-agent
+create_task(dup) -> REPLACED, new ids: w1:t4 w1:p4
+  old pane w1:p3 closed
+=== 3. report-agent on an idle top shell (the base test's stale setup), then wait 1s
+immediately: agent_state=stale-agent
+after 1s: process_state=shell agent_state=no-agent
+create_task(dup) -> REPLACED, new ids: w1:t6 w1:p6
+  old pane w1:p5 closed
+teardown done
