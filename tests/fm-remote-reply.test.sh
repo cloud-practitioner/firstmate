@@ -102,12 +102,14 @@ stop_reply_listener() {
 
 # Block until this generation's capture has been applied. A live listener keeps
 # its claim across polls, so start is only launched when nothing owns the source.
+# The bound covers the slowest caller, the cursor-loss whole-log recapture, which
+# re-fetches every document the whole log offers, one remote job at a time.
 await_reply_result() { # <result-path>
   local result=$1 handled=${1%.result}.handled _
   if [ "$(reply_owner)" != live ]; then
     remote_env "$ROOT/bin/fm-procevent.sh" start "$SID" >/dev/null 2>&1 &
   fi
-  for _ in $(seq 1 800); do
+  for _ in $(seq 1 2400); do
     [ -s "$result" ] && [ -f "$handled" ] && return 0
     sleep 0.05
   done
