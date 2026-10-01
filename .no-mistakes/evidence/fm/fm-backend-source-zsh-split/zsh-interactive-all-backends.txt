@@ -1,0 +1,25 @@
+[1m[7m%[27m[1m[0m                                                                                                                                                                [0m[27m[24m[J12b492481022% [K[?2004heecho "zsh $ZSH_VERSION cwd=$PWD"[?2004l
+zsh 5.9.1 cwd=/tmp
+[1m[7m%[27m[1m[0m                                                                                                                                                                [0m[27m[24m[J12b492481022% [K[?2004hssource /home/node/.no-mistakes/worktrees/450411b3e67c/01M3TDNJ7VYPBSYHBBV05W8Q8S/bin/fm-backend.sh; echo "source rc=$?"[?2004l
+source rc=0
+[1m[7m%[27m[1m[0m                                                                                                                                                                [0m[27m[24m[J12b492481022% [K[?2004hffor b in tmux herdr zellij orca cmux; do ( fm_backend_source $b 2>/tmp/fm-zsh-live/err.$b; echo "[$b] fm_backend_source rc=$? stderr_bytes=$(wc -c [K  </tmp/fm-zsh-live/err.$b)"; whence -w fm_backend_${b}_capture fm_composer_classify_content fm_backend_hometag fm_transition_record fm_harness_path_name fm_curs [Koor_path_is_cursor fm_agent_process_classify_name fm_gemini_path_is_gemini | tr '\n' ' '; echo ); done[?2004l
+[tmux] fm_backend_source rc=0 stderr_bytes=0
+fm_backend_tmux_capture: function fm_composer_classify_content: function fm_backend_hometag: none fm_transition_record: none fm_harness_path_name: function fm_cursor_path_is_cursor: function fm_agent_process_classify_name: function fm_gemini_path_is_gemini: function 
+[herdr] fm_backend_source rc=0 stderr_bytes=0
+fm_backend_herdr_capture: function fm_composer_classify_content: function fm_backend_hometag: none fm_transition_record: function fm_harness_path_name: function fm_cursor_path_is_cursor: function fm_agent_process_classify_name: function fm_gemini_path_is_gemini: function 
+[zellij] fm_backend_source rc=0 stderr_bytes=0
+fm_backend_zellij_capture: function fm_composer_classify_content: function fm_backend_hometag: function fm_transition_record: none fm_harness_path_name: none fm_cursor_path_is_cursor: none fm_agent_process_classify_name: none fm_gemini_path_is_gemini: none 
+[orca] fm_backend_source rc=0 stderr_bytes=0
+fm_backend_orca_capture: function fm_composer_classify_content: function fm_backend_hometag: none fm_transition_record: none fm_harness_path_name: none fm_cursor_path_is_cursor: none fm_agent_process_classify_name: none fm_gemini_path_is_gemini: none 
+[cmux] fm_backend_source rc=0 stderr_bytes=0
+fm_backend_cmux_capture: function fm_composer_classify_content: function fm_backend_hometag: function fm_transition_record: none fm_harness_path_name: none fm_cursor_path_is_cursor: none fm_agent_process_classify_name: none fm_gemini_path_is_gemini: none 
+[1m[7m%[27m[1m[0m                                                                                                                                                                [0m[27m[24m[J12b492481022% [K[?2004h(( fm_backend_source tmux && echo "tmux: classify(/usr/bin/claude)=$(fm_agent_process_classify_name /usr/bin/claude) classify(/bin/zsh)=$(fm_agent_ [Kpprocess_classify_name /bin/zsh) harness_name(/x/codex)=$(fm_harness_path_name /x/codex)"; fm_gemini_path_is_gemini /opt/gemini && echo "tmux: gemini lib live";  [Kffm_backend_source tmux; echo "tmux: second call rc=$?" )[?2004l
+tmux: classify(/usr/bin/claude)=agent classify(/bin/zsh)=shell harness_name(/x/codex)=codex
+tmux: gemini lib live
+tmux: second call rc=0
+[1m[7m%[27m[1m[0m                                                                                                                                                                [0m[27m[24m[J12b492481022% [K[?2004h(( fm_backend_source herdr && FM_STATE_DIR=/tmp/fm-zsh-live type fm_transition_record | head -1 )[?2004l
+fm_transition_record is a shell function from /home/node/.no-mistakes/worktrees/450411b3e67c/01M3TDNJ7VYPBSYHBBV05W8Q8S/bin/fm-transition-lib.sh
+[1m[7m%[27m[1m[0m                                                                                                                                                                [0m[27m[24m[J12b492481022% [K[?2004h(( fm_backend_source bogus; echo "bogus rc=$?" )[?2004l
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+bogus rc=1
+[1m[7m%[27m[1m[0m                                                                                                                                                                [0m[27m[24m[J12b492481022% [K[?2004heexit[?2004l

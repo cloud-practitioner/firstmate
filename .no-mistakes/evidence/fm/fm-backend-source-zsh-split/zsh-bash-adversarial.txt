@@ -1,0 +1,30 @@
+===== zsh (5.9.1) =====
+-- A. repo copy under a path with spaces, sourced by absolute path from /:
+  tmux rc=0 stderr_bytes=0 composer_fn=yes
+  herdr rc=0 stderr_bytes=0 composer_fn=yes
+  zellij rc=0 stderr_bytes=0 composer_fn=yes
+  orca rc=0 stderr_bytes=0 composer_fn=yes
+  cmux rc=0 stderr_bytes=0 composer_fn=yes
+-- B. a missing sibling (fm-gemini-lib.sh removed) must fail closed (silent readable pre-check, by design):
+  tmux rc=1 gemini_fn=no
+  tmux retry rc=1
+-- C. relative source from repo root, then standalone sourcing of a sibling lib / adapter directly:
+  standalone agent-process rc=0 gemini=yes harness=claude cursor_fn=yes
+  standalone herdr.sh rc=0 FM_BACKEND_HERDR_ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3TDNJ7VYPBSYHBBV05W8Q8S composer_fn=yes
+-- D. caller positional parameters survive fm_backend_source (set -- is function-local):
+  after: $#=3 args=one two three
+===== bash (5.2.37(1)-release) =====
+-- A. repo copy under a path with spaces, sourced by absolute path from /:
+  tmux rc=0 stderr_bytes=0 composer_fn=yes
+  herdr rc=0 stderr_bytes=0 composer_fn=yes
+  zellij rc=0 stderr_bytes=0 composer_fn=yes
+  orca rc=0 stderr_bytes=0 composer_fn=yes
+  cmux rc=0 stderr_bytes=0 composer_fn=yes
+-- B. a missing sibling (fm-gemini-lib.sh removed) must fail closed (silent readable pre-check, by design):
+  tmux rc=1 gemini_fn=no
+  tmux retry rc=1
+-- C. relative source from repo root, then standalone sourcing of a sibling lib / adapter directly:
+  standalone agent-process rc=0 gemini=yes harness=claude cursor_fn=yes
+  standalone herdr.sh rc=0 FM_BACKEND_HERDR_ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3TDNJ7VYPBSYHBBV05W8Q8S composer_fn=yes
+-- D. caller positional parameters survive fm_backend_source (set -- is function-local):
+  after: $#=3 args=one two three
