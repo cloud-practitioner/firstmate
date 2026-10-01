@@ -128,10 +128,13 @@
 # Bitbucket's merge API takes no expected-head parameter, so the verified head
 # cannot be bound to the merge the way --match-head-commit and --sha bind it.
 # Instead the head is read again inside the away-record lock immediately before
-# the merge request, and a moved head refuses with nothing merged; the remaining
-# window is that final read's round trip. The landed pull request is then read
+# the merge request, and a moved head refuses with nothing merged. That leaves
+# a race window: a push to the source branch after that final head read and
+# before Bitbucket processes the merge request can land a head whose statuses
+# and merge checks were never verified. The landed pull request is then read
 # back, and a merged head that is not the verified one is reported loudly and
-# exits non-zero after the landed outcome is recorded.
+# exits non-zero after the landed outcome is recorded, so the read-back reports
+# that race after the fact rather than prevents it.
 # The merge strategy is the destination branch's own default unless the extra
 # args name one: --squash, --merge (merge_commit), --rebase (rebase_fast_forward,
 # the closest match to a rebase-and-merge: linear history and no merge commit),
@@ -1501,10 +1504,10 @@ bitbucket_read_merge_checks() {
       def model_branch($kind):
         ($model[$kind] // null) as $m
         | if $m == null then null else ($m.branch.name // $m.name // null) end;
-      def model_matches($type):
-        if $type == "development" or $type == "production" then model_branch($type) == $dest
-        else any(($model.branch_types // [])[]; .kind == $type and (.prefix | type) == "string"
-          and .prefix != "" and ($dest | startswith(.prefix)))
+      def model_matches($branch_type):
+        if $branch_type == "development" or $branch_type == "production" then model_branch($branch_type) == $dest
+        else any(($model.branch_types // [])[]; .kind == $branch_type and (.prefix | type) == "string"
+          and .prefix != "" and (.prefix as $prefix | $dest | startswith($prefix)))
         end;
       [ .[]
         | select(.kind | IN($checks[]))

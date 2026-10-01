@@ -357,6 +357,40 @@ test_merge_refuses_red_and_unreported_required_builds() {
   assert_grep "base branch main requires 3 successful builds" "$case_dir/stderr" \
     "merge-required-model: the branching-model requirement was not applied"
 
+  # A named branch type matches by the branching model's own prefix for that
+  # type: it applies to a destination under the prefix and to no other.
+  local feature_model='{"development":{"name":"main","use_mainbranch":true,"branch":{"name":"main"}},"branch_types":[{"kind":"release","prefix":"release/"},{"kind":"feature","prefix":"feature/"}]}'
+  case_dir=$(make_case merge-type-unmet)
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false feature/login > "$case_dir/bb/pr.json"
+  printf '%s\n' '{"values":[{"kind":"require_passing_builds_to_merge","branch_match_kind":"branching_model","branch_type":"feature","value":2}]}' \
+    > "$case_dir/bb/restrictions.json"
+  printf '%s\n' "$feature_model" > "$case_dir/bb/model.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "merge-type-unmet: a named branch type requirement must apply under its prefix"
+  assert_grep "base branch feature/login requires 2 successful builds, and 1 reported at head $BB_HEAD" "$case_dir/stderr" \
+    "merge-type-unmet: the named branch type requirement was not applied"
+  assert_absent "$case_dir/bb/merge-called" "merge-type-unmet: a merge was requested anyway"
+
+  case_dir=$(make_case merge-type-met)
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false feature/login > "$case_dir/bb/pr.json"
+  printf '%s\n' '{"values":[{"kind":"require_passing_builds_to_merge","branch_match_kind":"branching_model","branch_type":"feature","value":1}]}' \
+    > "$case_dir/bb/restrictions.json"
+  printf '%s\n' "$feature_model" > "$case_dir/bb/model.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 0 "$rc" "merge-type-met: a met named branch type requirement must not refuse"$'\n'"$(cat "$case_dir/stderr")"
+  assert_present "$case_dir/bb/merge-called" "merge-type-met: the eligible merge was not requested"
+
+  case_dir=$(make_case merge-type-other-branch)
+  printf '%s\n' '{"values":[{"kind":"require_passing_builds_to_merge","branch_match_kind":"branching_model","branch_type":"feature","value":3}]}' \
+    > "$case_dir/bb/restrictions.json"
+  printf '%s\n' "$feature_model" > "$case_dir/bb/model.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 0 "$rc" "merge-type-other-branch: a named branch type requirement must not apply outside its prefix"$'\n'"$(cat "$case_dir/stderr")"
+  assert_present "$case_dir/bb/merge-called" "merge-type-other-branch: the eligible merge was not requested"
+
   case_dir=$(make_case merge-restrictions-unreadable)
   printf '%s\n' '{"type":"error","error":{"message":"Access denied"}}' > "$case_dir/bb/restrictions.json"
   printf '403\n' > "$case_dir/bb/restrictions.code"
@@ -366,7 +400,7 @@ test_merge_refuses_red_and_unreported_required_builds() {
   assert_grep "branch restrictions for base branch main could not be read (HTTP 403; reading them needs repository admin access), so an unmet merge check cannot be ruled out" \
     "$case_dir/stderr" "merge-restrictions-unreadable: the refusal did not name the missing read"
   assert_absent "$case_dir/bb/merge-called" "merge-restrictions-unreadable: a merge was requested anyway"
-  pass "fm-pr-merge refuses red builds, an unmet required build count, and an unreadable restriction set"
+  pass "fm-pr-merge refuses red builds and an unmet required build count, applies a named branch type only under its prefix, and refuses an unreadable restriction set"
 }
 
 test_merge_refuses_draft_closed_and_missing_credentials() {
