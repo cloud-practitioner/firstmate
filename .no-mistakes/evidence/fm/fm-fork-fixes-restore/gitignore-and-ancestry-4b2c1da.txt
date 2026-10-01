@@ -1,0 +1,15 @@
+$ git check-ignore -v .claude/settings.local.json
+.gitignore:16:.claude/settings.local.json	.claude/settings.local.json
+aedb7bb is an ancestor of HEAD 4b2c1da
+2c375b2 is an ancestor of HEAD 4b2c1da
+merge cad187e parents: 2c375b2c1444e3f85487abe12fde276b8e97422c aedb7bbf3b038672cef8b700df2b65ff4491dbfd 
+# excluded unmerged PRs (#3 #4 #5 #6 #23) present on HEAD? (subjects with (#N) from fork range)
+none
+no-mistakes(test): Fix zsh Herdr socket session lookup shadowing PATH
+no-mistakes(review): Note unlinkable retained PR URLs on captain answer
+merge upstream
+fix(bin): close Gerrit-landed backlog items with the change URL as a note (#6140)
+feat(bin): add opt-in config/wait-no-turns so a waiting worker spends no turns (#4859)
+fix(bin): keep the steering doorbell short under deep homes (#6240)
+fix(bin): let a stale record on a reassigned slot retire records-only (#6213)
+fix(bin): run no repository hook when core.hooksPath is empty (#6216)

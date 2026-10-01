@@ -1,0 +1,40 @@
+# target 4b2c1da; herdr lab session: fm-lab-tasktmp2-2505937-6124
+# before: legacy shared root /tmp/fm-tt9 exists? no
+
+## homeA: $ FM_HOME=<W>/homeA bin/fm-spawn.sh tt9 <project> "sh -c 'echo GOTMPDIR=$GOTMPDIR; sleep 60'" --mode no-mistakes --yolo off --backend herdr
+warning: <W>/homeA/data/tt9/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+warning: herdr presentation parent is absent or ambiguous; using the ordinary flat layout without projection
+spawned tt9 harness=sh kind=ship mode=no-mistakes yolo=off window=fm-lab-tasktmp2-2505937-6124:w1:p2 worktree=/home/node/.treehouse/proj-84a894/1/proj
+spawn rc=0
+meta tasktmp=<W>/homeA/state/tt9.tasktmp
+drwx------ node <W>/homeA/state/tt9.tasktmp
+drwxr-xr-x node <W>/homeA/state/tt9.tasktmp/gotmp
+
+## homeB: $ FM_HOME=<W>/homeB bin/fm-spawn.sh tt9 <project> "sh -c 'echo GOTMPDIR=$GOTMPDIR; sleep 60'" --mode no-mistakes --yolo off --backend herdr
+warning: <W>/homeB/data/tt9/launch-brief.md records no ship branch; defaulting to legacy branch fm/tt9
+warning: <W>/homeB/data/tt9/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+spawned tt9 harness=sh kind=ship mode=no-mistakes yolo=off window=fm-lab-tasktmp2-2505937-6124:w2:p2 worktree=/home/node/.treehouse/proj-84a894/2/proj
+spawn rc=0
+meta tasktmp=<W>/homeB/state/tt9.tasktmp
+drwx------ node <W>/homeB/state/tt9.tasktmp
+drwxr-xr-x node <W>/homeB/state/tt9.tasktmp/gotmp
+homeA pane output:
+homeB pane output:
+
+# after both spawns: shared /tmp/fm-tt9 exists? no
+
+## homeA teardown
+<W>/proj: skipped: no origin remote
+teardown tt9 complete (window fm-lab-tasktmp2-2505937-6124:w1:p2, worktree /home/node/.treehouse/proj-84a894/1/proj)
+Backlog: tt9 just finished (this home keeps no markdown backlog at <W>/homeA/data/backlog.md). Update <W>/homeA/data/backlog.md - move tt9 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+teardown rc=0
+homeA root exists? no
+homeB root exists (must be yes)? yes
+
+## homeB teardown
+<W>/proj: skipped: no origin remote
+teardown tt9 complete (window fm-lab-tasktmp2-2505937-6124:w2:p2, worktree /home/node/.treehouse/proj-84a894/2/proj)
+Backlog: tt9 just finished (this home keeps no markdown backlog at <W>/homeB/data/backlog.md). Update <W>/homeB/data/backlog.md - move tt9 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+teardown rc=0
+homeB root exists? no
+# herdr lab teardown rc=0

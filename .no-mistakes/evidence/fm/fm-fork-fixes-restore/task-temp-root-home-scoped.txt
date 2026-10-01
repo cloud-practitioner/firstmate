@@ -1,0 +1,33 @@
+# herdr lab session: fm-lab-tasktmp-1789101-5489
+# before spawn: no legacy shared root /tmp/fm-tt1
+
+## homeA: $ FM_HOME=/tmp/fm-tasktmp-proof.Zbg6eT/homeA bin/fm-spawn.sh tt1 <project> "sh -c 'echo GOTMPDIR=$GOTMPDIR'" --mode no-mistakes --yolo off --backend herdr
+spawn rc=0
+meta tasktmp=/tmp/fm-tasktmp-proof.Zbg6eT/homeA/state/tt1.tasktmp
+drwx------ node /tmp/fm-tasktmp-proof.Zbg6eT/homeA/state/tt1.tasktmp
+drwxr-xr-x node /tmp/fm-tasktmp-proof.Zbg6eT/homeA/state/tt1.tasktmp/gotmp
+pane output:
+❯ export GOTMPDIR='/tmp/fm-tasktmp-proof.Zbg6eT/homeA/state/tt1.tasktmp/gotmp'
+GOTMPDIR=/tmp/fm-tasktmp-proof.Zbg6eT/homeA/state/tt1.tasktmp/gotmp
+
+## homeB: $ FM_HOME=/tmp/fm-tasktmp-proof.Zbg6eT/homeB bin/fm-spawn.sh tt1 <project> "sh -c 'echo GOTMPDIR=$GOTMPDIR'" --mode no-mistakes --yolo off --backend herdr
+spawn rc=0
+meta tasktmp=/tmp/fm-tasktmp-proof.Zbg6eT/homeB/state/tt1.tasktmp
+drwx------ node /tmp/fm-tasktmp-proof.Zbg6eT/homeB/state/tt1.tasktmp
+drwxr-xr-x node /tmp/fm-tasktmp-proof.Zbg6eT/homeB/state/tt1.tasktmp/gotmp
+pane output:
+❯ export GOTMPDIR='/tmp/fm-tasktmp-proof.Zbg6eT/homeB/state/tt1.tasktmp/gotmp'
+GOTMPDIR=/tmp/fm-tasktmp-proof.Zbg6eT/homeB/state/tt1.tasktmp/gotmp
+
+# after both spawns: no shared /tmp/fm-tt1 root was created
+
+## homeA: $ FM_HOME=/tmp/fm-tasktmp-proof.Zbg6eT/homeA bin/fm-teardown.sh tt1
+teardown rc=0
+task temp root removed: /tmp/fm-tasktmp-proof.Zbg6eT/homeA/state/tt1.tasktmp
+homeB's equal-id root untouched by homeA teardown: /tmp/fm-tasktmp-proof.Zbg6eT/homeB/state/tt1.tasktmp
+
+## homeB: $ FM_HOME=/tmp/fm-tasktmp-proof.Zbg6eT/homeB bin/fm-teardown.sh tt1
+teardown rc=0
+task temp root removed: /tmp/fm-tasktmp-proof.Zbg6eT/homeB/state/tt1.tasktmp
+# herdr lab teardown rc=0
+# removed lab homes and scratch project

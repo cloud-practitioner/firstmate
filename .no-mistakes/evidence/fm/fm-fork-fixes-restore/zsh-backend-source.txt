@@ -1,0 +1,10 @@
+## target 6201ec1 (zsh)
+fm_backend_source tmux rc=0; sibling fm_composer_strip_ansi: function; adapter fm_backend_tmux_capture: function
+fm_backend_source herdr rc=0; sibling fm_composer_strip_ansi: function; adapter fm_backend_herdr_capture: function
+fm_backend_source zellij rc=0; sibling fm_composer_strip_ansi: function; adapter fm_backend_zellij_capture: function
+fm_backend_source orca rc=0; sibling fm_composer_strip_ansi: function; adapter fm_backend_orca_capture: function
+fm_backend_source cmux rc=0; sibling fm_composer_strip_ansi: function; adapter fm_backend_cmux_capture: function
+
+## base aedb7bb (zsh), for contrast
+fm_backend_source tmux rc=1; sibling fm_composer_strip_ansi: none; adapter fm_backend_tmux_capture: none
+fm_backend_source herdr rc=1; sibling fm_composer_strip_ansi: none; adapter fm_backend_herdr_capture: none

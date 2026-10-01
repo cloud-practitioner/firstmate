@@ -1,0 +1,29 @@
+$ FM_HOME=$LAB bin/fm-pr-check.sh bbtask https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/7
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  watcher supervision needs Stop-owned automatic recovery; inspect the hook registration and startup status before ending the turn.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+armed: state/bbtask.check.sh
+exit=0
+--- state/bbtask.meta
+window=fm-bbtask
+worktree=/tmp/fm-lab.BPouZF/wt
+project=/tmp/fm-lab.BPouZF/wt
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/7
+pr_head=b2a0d8bf5497bc3be9d55c4de83f1803041e483e
+--- state/ listing
+total 44
+drwxr-xr-x 2 node node 4096 Oct  1 05:30 .
+drwx------ 7 node node 4096 Oct  1 05:30 ..
+-rw-r--r-- 1 node node   13 Oct  1 05:30 .guard-watcher-stale-banner
+-rw------- 1 node node 8977 Oct  1 05:30 bbtask.check.sh
+-rw------- 1 node node  224 Oct  1 05:30 bbtask.meta
+-rw------- 1 node node  122 Oct  1 05:30 bbtask.pr-poll
+-rw------- 1 node node  308 Oct  1 05:30 bbtask.pr-poll-registration
+-rw------- 1 node node   84 Oct  1 05:30 contributions.check-trust
+-rwx------ 1 node node  260 Oct  1 05:30 contributions.check.sh

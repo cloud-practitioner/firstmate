@@ -1,0 +1,29 @@
+# target commit: 4b2c1da
+# lab session: fm-lab-detect2-2193055-32614
+# lab socket: /home/node/.config/herdr/sessions/fm-lab-detect2-2193055-32614/herdr.sock  (is socket: yes)
+
+## 1. container shape (bash): only HERDR_SOCKET_PATH forwarded, HERDR_ENV/HERDR_SESSION absent
+detected=herdr signal=HERDR_SOCKET_PATH
+herdr adapter loaded; session=fm-lab-detect2-2193055-32614
+
+## 2. container shape (zsh sources fm-backend.sh)  [round-1 failure]
+detected=herdr signal=HERDR_SOCKET_PATH
+herdr adapter loaded; session=fm-lab-detect2-2193055-32614
+
+## 3. adversarial: HERDR_SOCKET_PATH names a path that is not a socket
+detected=none signal=none
+
+## 4. adversarial (zsh): explicit HERDR_SESSION wins over the socket-derived name
+session=fm-lab-explicit
+
+## 5. zsh: default-session socket shape and PATH still intact after lookup
+session=default
+/usr/bin/dirname
+/usr/bin/basename
+
+## 6. real operational call from zsh container-shaped env reaches the lab server (workspace list)
+resolved=fm-lab-detect2-2193055-32614
+{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[]}}
+## lab sessions now:
+[{"name":"default","running":true},{"name":"fm-lab-detect2-2193055-32614","running":true}]
+# teardown rc=0

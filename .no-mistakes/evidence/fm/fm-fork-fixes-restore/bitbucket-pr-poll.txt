@@ -1,0 +1,16 @@
+$ bin/fm-pr-check.sh bbmerged https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/1
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+armed: state/bbmerged.check.sh
+exit=0
+project=/tmp/fm-lab.BPouZF/wt
+pr=https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/1
+pr_head=b012ef3875bc1c8b04f496a23c952912e96c53a0
+
+# armed watcher check on the OPEN PR (expect silence)
+$ (cd $LAB && bash state/bbtask.check.sh)
+exit=0 output=[]
+
+# armed watcher check on the MERGED PR (expect one merged line)
+$ (cd $LAB && bash state/bbmerged.check.sh)
+merged
+exit=0

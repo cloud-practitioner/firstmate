@@ -1,0 +1,21 @@
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/1
+STATE: merged
+exit=0
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/7
+CHECKS: none reported yet
+exit=0
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/4
+STATE: declined
+exit=0
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ziqx_so_outbound/pull-requests/3
+CHECKS: none reported yet
+exit=0
+
+# adversarial: missing credential
+$ env -u NO_MISTAKES_BITBUCKET_API_TOKEN bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/7
+fm-pr-state: reading a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit=2
+# adversarial: non-canonical URL
+$ bin/fm-pr-state.sh https://bitbucket.org/iqxbusiness/ixia-marketplace/pull-requests/7/diff
+fm-pr-state: expected a GitHub or Bitbucket pull-request URL
+exit=2

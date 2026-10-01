@@ -1,0 +1,52 @@
+===== target commit 6201ec1: Bitbucket =====
+$ fm-captain-hold.sh hold held-bb --reason 'captain must choose the follow-up'
+rc=0
+$ fm-teardown.sh held-bb --force   # treehouse return fails -> cleanup interrupted
+rc=1 (non-zero expected)
+pending close record:
+  id=held-bb
+  data=/tmp/fm-lab.1qFSgj/data
+  spawn_gen=lab-held-bb
+  cleanup_incomplete=0
+  mode=retain
+  arg=--pr
+  arg=https://bitbucket.org/ws/repo/pull-requests/7
+$ fm-captain-hold.sh answer held-bb --decision-file answer.txt
+rc=0
+$ tasks-axi show held-bb --full
+  task:
+    id: held-bb
+    title: Ship the held Bitbucket pull request
+    state: done
+    blocked: no
+    blocked_by: none
+    held: no
+    hold_reason: captain must choose the follow-up
+    hold_kind: captain
+    hold_until: "-"
+    kind: ship
+    repo: sample
+    priority: "-"
+    created: "-"
+    closed: 2026-10-01
+    deps: none
+    links: none
+    body: "Resolution recorded by fm-captain-hold.\nDecision digest: 12cda84be0ab441e46e2f8244114418abe6c4fa480b4ba798f8ab598673ac0fa\nResolution mode: answered\n\nCaptain decision:\nProceed with the landed change.\nPR https://bitbucket.org/ws/repo/pull-requests/7"
+RESULT: closed item records 'PR https://bitbucket.org/ws/repo/pull-requests/7'
+
+===== pre-fix merge commit cad187e (same scenario, for contrast) =====
+$ fm-captain-hold.sh hold held-bb --reason 'captain must choose the follow-up'
+$ fm-teardown.sh held-bb --force   # treehouse return fails -> cleanup interrupted
+$ fm-captain-hold.sh answer held-bb --decision-file answer.txt
+$ tasks-axi show held-bb --full
+    body: "Resolution recorded by fm-captain-hold.\nDecision digest: 12cda84be0ab441e46e2f8244114418abe6c4fa480b4ba798f8ab598673ac0fa\nResolution mode: answered\n\nCaptain decision:\nProceed with the landed change."
+RESULT: URL https://bitbucket.org/ws/repo/pull-requests/7 NOT recorded on the closed item
+
+===== target commit 6201ec1: Gerrit regression check =====
+    body: "Resolution recorded by fm-captain-hold.\nDecision digest: 12cda84be0ab441e46e2f8244114418abe6c4fa480b4ba798f8ab598673ac0fa\nResolution mode: answered\n\nCaptain decision:\nProceed with the landed change.\nGerrit change https://gerrit.example.com/c/project/+/12345"
+RESULT: closed item records 'Gerrit change https://gerrit.example.com/c/project/+/12345'
+
+===== target commit 6201ec1: GitHub PR stays a row link =====
+    links: "pr:https://github.com/o/r/pull/5"
+    body: "Resolution recorded by fm-captain-hold.\nDecision digest: 12cda84be0ab441e46e2f8244114418abe6c4fa480b4ba798f8ab598673ac0fa\nResolution mode: answered\n\nCaptain decision:\nProceed with the landed change."
+RESULT: URL https://github.com/o/r/pull/5 NOT recorded on the closed item

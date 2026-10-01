@@ -1,0 +1,27 @@
+# lab session: fm-lab-detect-1770162-8455
+# lab socket: /home/node/.config/herdr/sessions/fm-lab-detect-1770162-8455/herdr.sock  (is socket: yes)
+
+## 1. container shape (bash): only HERDR_SOCKET_PATH forwarded, HERDR_ENV/HERDR_SESSION absent
+detected=herdr signal=HERDR_SOCKET_PATH
+herdr adapter loaded; session=fm-lab-detect-1770162-8455
+
+## 2. container shape (zsh sources fm-backend.sh)
+detected=herdr signal=HERDR_SOCKET_PATH
+fm_backend_herdr_socket_session_name:4: command not found: dirname
+fm_backend_herdr_socket_session_name:4: command not found: basename
+herdr adapter loaded; session=default
+
+## 3. adversarial: HERDR_SOCKET_PATH names a path that is not a socket
+detected=none signal=none
+
+## 4. adversarial: explicit HERDR_SESSION wins over the socket-derived name
+session=fm-lab-explicit
+
+## 5. default-session socket shape resolves to default
+session=default
+
+## 6. real operational call through the container-shaped env reaches the lab server
+[]
+## lab sessions now:
+[{"name":"default","running":true},{"name":"fm-lab-detect-1770162-8455","running":true}]
+# teardown rc=0

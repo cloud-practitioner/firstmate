@@ -1,0 +1,5 @@
+ok - real herdr: resolved the isolated lab session's real control-socket path
+ok - real herdr: fm_backend_herdr_session derives the exact lab session name from a real HERDR_SOCKET_PATH alone
+ok - real herdr: container_ensure resolved purely from HERDR_SOCKET_PATH targets the exact real lab session
+ok - real herdr: the container-shaped call reused the already-running server's exact socket, never starting a fresh disconnected one
+timeout 300 bash tests/fm-backend-herdr-container-session-e2e.test.sh  0.19s user 0.15s system 25% cpu 1.352 total

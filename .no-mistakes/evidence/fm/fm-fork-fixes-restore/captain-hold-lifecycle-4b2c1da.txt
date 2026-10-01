@@ -1,0 +1,4 @@
+# target 4b2c1da: bash tests/fm-captain-hold-lifecycle.test.sh (full file, 15m03s, exit 0, 56 ok, 0 not ok)
+ok - an answer before cleanup replay notes the retained Gerrit pull request
+ok - an answer before cleanup replay notes the retained Bitbucket pull request
+ok - cleanup keeps a captain-held Gerrit task open and records its change URL
