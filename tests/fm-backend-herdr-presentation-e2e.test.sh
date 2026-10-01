@@ -1494,6 +1494,19 @@ assert_no_projection_mutation_since "$START" "agent-free duplicate-token recover
 lab workspace get "$DUP1_WSID" >/dev/null 2>&1 || fail "duplicate-token recovery removed the first quarantined workspace"
 lab workspace get "$DUP2_WSID" >/dev/null 2>&1 || fail "duplicate-token recovery removed the second quarantined workspace"
 
+# Herdr 0.9.3 drops a reported registration from a pane that runs only its
+# shell within about half a second, so the refusal below would race that
+# expiry. A real foreground process keeps the registration, as an agent would.
+lab pane run "$DUP1_PANE" "sleep 600" >/dev/null \
+  || fail "could not start the duplicate-live-agent foreground process"
+DUP1_PROCESS=
+for _ in $(seq 1 100); do
+  DUP1_PROCESS=$(fm_backend_herdr_pane_process_state_sample "$HERDR_LAB_SESSION" "$DUP1_PANE")
+  [ "$DUP1_PROCESS" = other ] && break
+  sleep 0.1
+done
+[ "$DUP1_PROCESS" = other ] \
+  || fail "the duplicate-live-agent foreground process never started (last process state: $DUP1_PROCESS)"
 lab pane report-agent "$DUP1_PANE" --source fm-projection-e2e --agent test-agent --state idle >/dev/null \
   || fail "could not register the duplicate-live-agent risk fixture"
 START=$(log_line_count)
