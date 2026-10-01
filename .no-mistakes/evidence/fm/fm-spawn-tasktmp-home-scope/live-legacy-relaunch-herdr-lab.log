@@ -1,45 +1,52 @@
 
-=== provision isolated herdr lab fm-lab-legacyrl-2209657-32514 ===
-/tmp/fm-legacy-live.a9wUP2/home
+=== provision isolated Herdr lab session fm-lab-relaunch-3864853-29160
 
-=== spawn tmplegacy2209656 (real claude) in the lab home ===
-spawned tmplegacy2209656 harness=claude kind=ship mode=no-mistakes yolo=off window=fm-lab-legacyrl-2209657-32514:w1:p2 worktree=/home/node/.treehouse/project-706f8b/1/project
+=== spawn real Claude ship task lr3864852x
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-relaunch-live.mp0aAC/home
+warning: /tmp/fm-relaunch-live.mp0aAC/home/data/lr3864852x/launch-brief.md records no ship branch; defaulting to legacy branch fm/lr3864852x
+warning: /tmp/fm-relaunch-live.mp0aAC/home/data/lr3864852x/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: lr3864852x ships mode=local-only while the standing posture for proj is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned lr3864852x harness=claude kind=ship mode=local-only yolo=off window=fm-lab-relaunch-3864853-29160:w1:p2 worktree=/home/node/.treehouse/proj-2a28f6/1/proj
 spawn rc=0
+harness=claude
+tasktmp=/tmp/fm-relaunch-live.mp0aAC/home/state/lr3864852x.tasktmp
+backend=herdr
+agent idle after 6x2s
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Haiku 4.5 | ctx: 14% used
+  ⏵⏵ bypass permissions on (shift+tab to cycle) · ← for agents
+initial Claude agent process environment:
+pid 3867303 comm=claude GOTMPDIR=/tmp/fm-relaunch-live.mp0aAC/home/state/lr3864852x.tasktmp/gotmp
 
-=== rewrite the record into the pre-change shape: tasktmp=/tmp/fm-tmplegacy2209656 ===
-tasktmp=/tmp/fm-tmplegacy2209656
+=== simulate a pre-change task: rewrite its record to the legacy shared root /tmp/fm-lr3864852x
+tasktmp=/tmp/fm-lr3864852x
 
-=== destroy the task's pane (endpoint churn) so relaunch reclaims it ===
-closed pane w1:p2
-
-=== relaunch onto a real Claude replacement ===
-●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
-●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
-●  This is a supervision warning only; the guarded operation WILL still run.
-●  watcher supervision needs Stop-owned automatic recovery; inspect the hook registration and startup status before ending the turn.
-●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-warning: /tmp/fm-legacy-live.a9wUP2/home/data/tmplegacy2209656/launch-brief.md records no ship branch; defaulting to legacy branch fm/tmplegacy2209656
-warning: /tmp/fm-legacy-live.a9wUP2/home/data/tmplegacy2209656/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
-relaunched tmplegacy2209656 harness=claude from=claude model=default effort=default backend=herdr endpoint=fm-lab-legacyrl-2209657-32514:w2:p2 worktree=/home/node/.treehouse/project-706f8b/1/project
+=== relaunch through fm-control
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-relaunch-live.mp0aAC/home
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-relaunch-live.mp0aAC/home
+warning: /tmp/fm-relaunch-live.mp0aAC/home/data/lr3864852x/launch-brief.md records no ship branch; defaulting to legacy branch fm/lr3864852x
+warning: /tmp/fm-relaunch-live.mp0aAC/home/data/lr3864852x/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: lr3864852x ships mode=local-only while the standing posture for proj is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched lr3864852x harness=claude from=claude model=haiku effort=default backend=herdr endpoint=fm-lab-relaunch-3864853-29160:w1:p2 worktree=/home/node/.treehouse/proj-2a28f6/1/proj
 relaunch rc=0
-meta tasktmp after relaunch: /tmp/fm-tmplegacy2209656
-meta harness after relaunch: claude
-drwx------ 2 node node 4096 Oct  1 01:13 /tmp/fm-tmplegacy2209656/gotmp
-ls: cannot access '/tmp/fm-legacy-live.a9wUP2/home/state/tmplegacy2209656.tasktmp': No such file or directory
+tasktmp=/tmp/fm-lr3864852x
+legacy root kept with sentinel? yes
+home-scoped root recreated by relaunch? no (/tmp/fm-relaunch-live.mp0aAC/home/state/lr3864852x.tasktmp)
+relaunched Claude agent process environment:
+pid 3870298 comm=claude GOTMPDIR=/tmp/fm-lr3864852x/gotmp
 
-=== replacement pane w2:p2 capture ===
-
-=== environment of the replacement agent processes for tmplegacy2209656 ===
-./live-legacy-relaunch-herdr-lab.sh: line 76: /proc/2216657/environ: No such file or directory
-./live-legacy-relaunch-herdr-lab.sh: line 76: /proc/2216666/environ: No such file or directory
-./live-legacy-relaunch-herdr-lab.sh: line 76: /proc/2216668/environ: No such file or directory
-pid 2215665 claude --dangerously-skip-permissions --: GOTMPDIR=/tmp/fm-tmplegacy2209656/gotmp
-
-=== teardown removes the recorded legacy root ===
+=== teardown removes the recorded legacy root
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-relaunch-live.mp0aAC/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for lr3864852x: 3865870 3870298 3871134
+teardown: force-killing leaked worktree process(es) for lr3864852x: 3865870
+🌳 Worktree returned to pool.
+teardown lr3864852x complete (window fm-lab-relaunch-3864853-29160:w1:p2, worktree /home/node/.treehouse/proj-2a28f6/1/proj)
+Backlog: lr3864852x just finished (this home keeps no markdown backlog at /tmp/fm-relaunch-live.mp0aAC/home/data/backlog.md). Update /tmp/fm-relaunch-live.mp0aAC/home/data/backlog.md - move lr3864852x to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
 teardown rc=0
-teardown tmplegacy2209656 complete (window fm-lab-legacyrl-2209657-32514:w2:p2, worktree /home/node/.treehouse/project-706f8b/1/project)
-ls: cannot access '/tmp/fm-tmplegacy2209656': No such file or directory
+legacy root exists after teardown? no
 
-=== cleanup ===
-herdr lab fm-lab-legacyrl-2209657-32514 torn down
-no /tmp/fm-tmplegacy2209656* remain
+=== cleanup
+lab session fm-lab-relaunch-3864853-29160 torn down

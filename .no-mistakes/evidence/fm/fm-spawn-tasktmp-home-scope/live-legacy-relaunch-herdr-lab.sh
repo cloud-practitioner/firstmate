@@ -1,85 +1,103 @@
 #!/usr/bin/env bash
-# Live driver: a task whose record names the legacy shared root /tmp/fm-<id>
-# is relaunched (real bin/fm-control.sh relaunch -> bin/fm-spawn.sh --relaunch,
-# real Claude replacement) on an isolated fm-lab-* Herdr session; the record
-# keeps that root, the pane gets it as GOTMPDIR, and teardown removes it.
-# Usage: live-legacy-relaunch-herdr-lab.sh <worktree>
+# Live validation driver: a real Claude ship task in a disposable marked lab
+# home on an isolated fm-lab-* Herdr session. Its record is rewritten to the
+# legacy shared root /tmp/fm-<id> (what a task spawned before this change
+# recorded), then a real bin/fm-control.sh relaunch must keep that root, and
+# bin/fm-teardown.sh must remove it.
 set -u
-WT=$1
-cd "$WT" || exit 1
-HL="$WT/bin/fm-herdr-lab.sh"
-ID=tmplegacy$$
-SESSION=$("$HL" name legacyrl)
-unset FM_HOME HERDR_ENV HERDR_PANE_ID HERDR_TAB_ID HERDR_WORKSPACE_ID HERDR_SOCKET_PATH HERDR_SESSION
-unset FM_ROOT_OVERRIDE FM_STATE_OVERRIDE FM_DATA_OVERRIDE FM_CONFIG_OVERRIDE FM_PROJECTS_OVERRIDE FM_GATE_REFUSE_BYPASS
-SCRATCH=$(mktemp -d "$(cd "${TMPDIR:-/tmp}" && pwd -P)/fm-legacy-live.XXXXXX")
-LAB="$SCRATCH/home"
-HASH=
-step() { printf '\n=== %s ===\n' "$*"; }
+REPO=${REPO:?}
+cd "$REPO"
+unset HERDR_ENV HERDR_PANE_ID HERDR_TAB_ID HERDR_WORKSPACE_ID HERDR_SOCKET_PATH HERDR_SESSION
+unset FM_GATE_REFUSE_BYPASS FM_ROOT_OVERRIDE FM_STATE_OVERRIDE FM_DATA_OVERRIDE FM_CONFIG_OVERRIDE FM_PROJECTS_OVERRIDE
+export DISABLE_AUTOUPDATER=1
+LAB_HELPER="$REPO/bin/fm-herdr-lab.sh"
+SESSION=$("$LAB_HELPER" name relaunch)
+export HERDR_SESSION="$SESSION"
+SCRATCH=$(mktemp -d "$(cd "${TMPDIR:-/tmp}" && pwd -P)/fm-relaunch-live.XXXXXX")
+H="$SCRATCH/home"
+ID="lr$$x"
+LEGACY="/tmp/fm-$ID"
+step() { printf '\n=== %s\n' "$*"; }
 cleanup() {
   step "cleanup"
-  [ -f "$SCRATCH/wt" ] && treehouse return --force "$(cat "$SCRATCH/wt")" >/dev/null 2>&1
-  "$HL" teardown "$SESSION" && echo "herdr lab $SESSION torn down"
+  if [ -f "$H/state/$ID.meta" ]; then
+    FM_HOME="$H" "$REPO/bin/fm-teardown.sh" "$ID" --force >/dev/null 2>&1
+    wt=$(grep '^worktree=' "$H/state/$ID.meta" 2>/dev/null | cut -d= -f2-)
+    [ -n "$wt" ] && treehouse return --force "$wt" >/dev/null 2>&1
+  fi
+  "$LAB_HELPER" teardown "$SESSION" && echo "lab session $SESSION torn down"
   find "$SCRATCH" -type d -exec chmod u+rwx {} + 2>/dev/null
-  rm -rf "$SCRATCH"
-  [ -n "$HASH" ] && rm -rf "/tmp/fm-$ID+$HASH"
-  [ -d "/tmp/fm-$ID" ] && [ -O "/tmp/fm-$ID" ] && rm -rf "/tmp/fm-$ID"
-  ls -d /tmp/fm-$ID* 2>/dev/null || echo "no /tmp/fm-$ID* remain"
+  rm -rf "$SCRATCH" "$LEGACY" "/tmp/fm-$ID+"*
 }
 trap cleanup EXIT
+pane_text() {
+  local pane
+  pane=$(grep '^herdr_pane_id=' "$H/state/$ID.meta" | cut -d= -f2-)
+  ( . "$REPO/bin/fm-backend.sh"; fm_backend_source herdr; fm_backend_herdr_capture "$SESSION:$pane" "${1:-60}" )
+}
+wait_idle() {  # wait until the agent reports idle via the herdr pane agent state
+  local i st pane
+  for i in $(seq 1 90); do
+    pane=$(grep '^herdr_pane_id=' "$H/state/$ID.meta" | cut -d= -f2-)
+    st=$("$LAB_HELPER" run "$SESSION" pane get "$pane" 2>/dev/null | jq -r '.result.pane.agent_status // .result.pane.agent_state // empty')
+    [ "$st" = idle ] && { echo "agent idle after ${i}x2s"; return 0; }
+    sleep 2
+  done
+  echo "agent never reached idle (last status: ${st:-?})"; return 1
+}
 
-step "provision isolated herdr lab $SESSION"
-"$HL" provision "$SESSION" || exit 1
-export HERDR_SESSION="$SESSION"
-"$WT/bin/fm-lab-home.sh" create "$LAB" || exit 1
-HASH=$(printf '%s' "$LAB" | shasum -a 256 | awk '{print $1}')
-printf 'off\n' > "$LAB/config/herdr-presentation-spaces"
-mkdir -p "$LAB/data/$ID"
-printf '# Task\n## Captain'"'"'s intent\nLive legacy relaunch check. Do nothing; just wait.\n\n## Firstmate spec\nDo nothing.\n' > "$LAB/data/$ID/brief.md"
-PROJ="$SCRATCH/project"
-mkdir -p "$PROJ" && git -C "$PROJ" init -q && echo scratch > "$PROJ/README.md"
-git -C "$PROJ" add README.md && git -C "$PROJ" -c user.name=t -c user.email=t@example.invalid commit -qm init
-git clone -q --bare "$PROJ" "$PROJ.origin.git" && git -C "$PROJ" remote add origin "file://$PROJ.origin.git"
+step "provision isolated Herdr lab session $SESSION"
+"$LAB_HELPER" provision "$SESSION" || exit 1
+"$REPO/bin/fm-lab-home.sh" create "$H" >/dev/null || exit 1
+printf 'off\n' > "$H/config/herdr-presentation-spaces"
+mkdir -p "$H/data/$ID"
+cat > "$H/data/$ID/brief.md" <<'EOF'
+# Task
+## Captain's intent
+Reply with the single word READY and then stop; do not run any tools or edit any files.
 
-step "spawn $ID (real claude) in the lab home"
-FM_SPAWN_NO_GUARD=1 FM_HOME="$LAB" "$WT/bin/fm-spawn.sh" "$ID" "$PROJ" claude \
-  --mode no-mistakes --yolo off --backend herdr > "$SCRATCH/spawn.out" 2>&1; rc=$?
-grep -E '^spawned|^error' "$SCRATCH/spawn.out"; echo "spawn rc=$rc"; [ "$rc" -eq 0 ] || exit 1
-META="$LAB/state/$ID.meta"
-grep '^worktree=' "$META" | cut -d= -f2- > "$SCRATCH/wt"
-PANE=$(grep '^herdr_pane_id=' "$META" | cut -d= -f2-)
+## Firstmate spec
+Reply READY and wait. Make no changes.
+EOF
+PROJ="$SCRATCH/proj"
+mkdir -p "$PROJ"; git -C "$PROJ" init -q; echo '# p' > "$PROJ/README.md"
+git -C "$PROJ" add README.md; git -C "$PROJ" -c user.name=t -c user.email=t@e.invalid commit -qm init
+git clone -q --bare "$PROJ" "$PROJ.origin.git"; git -C "$PROJ" remote add origin "file://$PROJ.origin.git"
+[ -e "$LEGACY" ] && { echo "precondition: $LEGACY already exists"; exit 1; }
 
-step "rewrite the record into the pre-change shape: tasktmp=/tmp/fm-$ID"
-(umask 077 && mkdir -p "/tmp/fm-$ID/gotmp")
-rm -rf "$LAB/state/$ID.tasktmp"
-sed -i "s|^tasktmp=.*|tasktmp=/tmp/fm-$ID|" "$META"
-grep '^tasktmp=' "$META"
+step "spawn real Claude ship task $ID"
+FM_SPAWN_NO_GUARD=1 FM_HOME="$H" "$REPO/bin/fm-spawn.sh" "$ID" "$PROJ" --mode local-only --yolo off \
+  --harness claude --model haiku --backend herdr; echo "spawn rc=$?"
+grep -E '^(tasktmp|harness|backend)=' "$H/state/$ID.meta"
+wait_idle
+pane_text 25 | grep -v '^\s*$' | tail -6
+echo "initial Claude agent process environment:"
+wt0=$(grep '^worktree=' "$H/state/$ID.meta" | cut -d= -f2-)
+for pid in $(pgrep -u "$(id -u)" -f claude); do [ "$(readlink "/proc/$pid/cwd" 2>/dev/null)" = "$wt0" ] && { printf 'pid %s comm=%s ' "$pid" "$(cat /proc/$pid/comm)"; tr '\0' '\n' < "/proc/$pid/environ" | grep '^GOTMPDIR='; }; done
 
-step "destroy the task's pane (endpoint churn) so relaunch reclaims it"
-"$HL" run "$SESSION" pane close "$PANE" >/dev/null 2>&1; echo "closed pane $PANE"
+step "simulate a pre-change task: rewrite its record to the legacy shared root $LEGACY"
+SCOPED=$(grep '^tasktmp=' "$H/state/$ID.meta" | cut -d= -f2-)
+sed -i "s|^tasktmp=.*|tasktmp=$LEGACY|" "$H/state/$ID.meta"
+rm -rf "$SCOPED"
+(umask 077; mkdir "$LEGACY"); mkdir "$LEGACY/gotmp"; echo legacy-sentinel > "$LEGACY/gotmp/sentinel"
+grep '^tasktmp=' "$H/state/$ID.meta"
 
-step "relaunch onto a real Claude replacement"
-FM_HOME="$LAB" "$WT/bin/fm-control.sh" "$ID" relaunch --note "live legacy-root relaunch check" \
-  > "$SCRATCH/relaunch.out" 2>&1; rc=$?
-tail -n 8 "$SCRATCH/relaunch.out"; echo "relaunch rc=$rc"
-echo "meta tasktmp after relaunch: $(grep '^tasktmp=' "$META" | cut -d= -f2-)"
-echo "meta harness after relaunch: $(grep '^harness=' "$META" | cut -d= -f2-)"
-ls -ld "/tmp/fm-$ID/gotmp" 2>&1
-ls -ld "$LAB/state/$ID.tasktmp" 2>&1
-NEWPANE=$(grep '^herdr_pane_id=' "$META" | cut -d= -f2-)
-sleep 4
-step "replacement pane $NEWPANE capture"
-"$HL" run "$SESSION" pane read "$NEWPANE" --source recent --lines 80 2>&1 | grep -E 'GOTMPDIR|launch\.' | head -n 4
-
-step "environment of the replacement agent processes for $ID"
-for f in /proc/[0-9]*/environ; do
-  tr '\0' '\n' < "$f" 2>/dev/null | grep -qx "FM_TASK_ID=$ID" || continue
-  pid=${f#/proc/}; pid=${pid%/environ}
-  printf 'pid %s %s: %s\n' "$pid" "$(tr '\0' ' ' < /proc/$pid/cmdline | cut -c1-40)" "$(tr '\0' '\n' < "$f" | grep '^GOTMPDIR=')"
-done | head -n 6
+step "relaunch through fm-control"
+FM_HOME="$H" "$REPO/bin/fm-control.sh" "$ID" relaunch --note "continuing after relaunch; reply READY and stop"; echo "relaunch rc=$?"
+grep '^tasktmp=' "$H/state/$ID.meta"
+echo "legacy root kept with sentinel? $([ -f "$LEGACY/gotmp/sentinel" ] && echo yes || echo no)"
+echo "home-scoped root recreated by relaunch? $([ -e "$SCOPED" ] && echo yes || echo no) ($SCOPED)"
+sleep 3
+agent_env() {
+  local wt pid
+  wt=$(grep '^worktree=' "$H/state/$ID.meta" | cut -d= -f2-)
+  for pid in $(pgrep -u "$(id -u)" -f claude); do
+    [ "$(readlink "/proc/$pid/cwd" 2>/dev/null)" = "$wt" ] || continue
+    printf 'pid %s comm=%s ' "$pid" "$(cat /proc/$pid/comm)"; tr '\0' '\n' < "/proc/$pid/environ" | grep '^GOTMPDIR='
+  done
+}
+echo "relaunched Claude agent process environment:"; agent_env
 
 step "teardown removes the recorded legacy root"
-FM_HOME="$LAB" "$WT/bin/fm-teardown.sh" "$ID" --force > "$SCRATCH/td.out" 2>&1; echo "teardown rc=$?"
-grep -E 'complete|error' "$SCRATCH/td.out" | head -n 3
-ls -ld "/tmp/fm-$ID" 2>&1
-rm -f "$SCRATCH/wt"
+FM_HOME="$H" "$REPO/bin/fm-teardown.sh" "$ID"; echo "teardown rc=$?"
+echo "legacy root exists after teardown? $([ -e "$LEGACY" ] && echo yes || echo no)"
