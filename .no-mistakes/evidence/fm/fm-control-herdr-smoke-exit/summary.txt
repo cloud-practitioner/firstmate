@@ -1,0 +1,4 @@
+Real-Herdr smoke test tests/fm-control-herdr-smoke.test.sh, herdr 0.9.3, private fm-lab-control-smoke-<pid> sessions.
+Base 44833b2:                               3/3 FAIL - exit case reads the login shell's prompt as composer text ("composer visibly holds pending text").
+7fd133e (neutral prompt only, no nested):    2/3 pass, 1/3 FAIL - stale-registration race ("reads 'no-agent' rather than 'stale-agent'").
+Target 6cc685d (neutral prompt + nested sh): 5/5 PASS, all 10 assertions each run.
