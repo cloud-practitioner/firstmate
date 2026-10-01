@@ -1,0 +1,33 @@
+
+=== provision isolated herdr lab fm-lab-legacyrl-2182894-5908 ===
+/tmp/fm-legacy-live.D8wT07/home
+
+=== spawn tmplegacy2182883 (raw shell) in the lab home ===
+spawned tmplegacy2182883 harness=sh kind=ship mode=no-mistakes yolo=off window=fm-lab-legacyrl-2182894-5908:w1:p2 worktree=/home/node/.treehouse/project-db80c6/1/project
+spawn rc=0
+
+=== rewrite the record into the pre-change shape: tasktmp=/tmp/fm-tmplegacy2182883 ===
+tasktmp=/tmp/fm-tmplegacy2182883
+
+=== destroy the task's pane (endpoint churn) so relaunch reclaims it ===
+closed pane w1:p2
+
+=== relaunch onto a real Claude replacement ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-legacy-live.D8wT07/home
+error: task tmplegacy2182883 records harness 'sh', which has no verified control mechanics; fm-control refuses to guess an interrupt key or exit command
+relaunch rc=1
+meta tasktmp after relaunch: /tmp/fm-tmplegacy2182883
+meta harness after relaunch: sh
+drwx------ 2 node node 4096 Oct  1 01:12 /tmp/fm-tmplegacy2182883/gotmp
+ls: cannot access '/tmp/fm-legacy-live.D8wT07/home/state/tmplegacy2182883.tasktmp': No such file or directory
+
+=== replacement pane w1:p2 capture ===
+
+=== teardown removes the recorded legacy root ===
+teardown rc=0
+teardown tmplegacy2182883 complete (window fm-lab-legacyrl-2182894-5908:w1:p2, worktree /home/node/.treehouse/project-db80c6/1/project)
+ls: cannot access '/tmp/fm-tmplegacy2182883': No such file or directory
+
+=== cleanup ===
+herdr lab fm-lab-legacyrl-2182894-5908 torn down
+no /tmp/fm-tmplegacy2182883* remain

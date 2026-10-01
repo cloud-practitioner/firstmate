@@ -1,0 +1,39 @@
+
+=== provision isolated herdr lab fm-lab-legacyrl-2191655-5672 ===
+/tmp/fm-legacy-live.ZytVGD/home
+
+=== spawn tmplegacy2191654 (real claude) in the lab home ===
+spawned tmplegacy2191654 harness=claude kind=ship mode=no-mistakes yolo=off window=fm-lab-legacyrl-2191655-5672:w1:p2 worktree=/home/node/.treehouse/project-d4567f/1/project
+spawn rc=0
+
+=== rewrite the record into the pre-change shape: tasktmp=/tmp/fm-tmplegacy2191654 ===
+tasktmp=/tmp/fm-tmplegacy2191654
+
+=== destroy the task's pane (endpoint churn) so relaunch reclaims it ===
+closed pane w1:p2
+
+=== relaunch onto a real Claude replacement ===
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  watcher supervision needs Stop-owned automatic recovery; inspect the hook registration and startup status before ending the turn.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+warning: /tmp/fm-legacy-live.ZytVGD/home/data/tmplegacy2191654/launch-brief.md records no ship branch; defaulting to legacy branch fm/tmplegacy2191654
+warning: /tmp/fm-legacy-live.ZytVGD/home/data/tmplegacy2191654/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+relaunched tmplegacy2191654 harness=claude from=claude model=default effort=default backend=herdr endpoint=fm-lab-legacyrl-2191655-5672:w2:p2 worktree=/home/node/.treehouse/project-d4567f/1/project
+relaunch rc=0
+meta tasktmp after relaunch: /tmp/fm-tmplegacy2191654
+meta harness after relaunch: claude
+drwx------ 2 node node 4096 Oct  1 01:12 /tmp/fm-tmplegacy2191654/gotmp
+ls: cannot access '/tmp/fm-legacy-live.ZytVGD/home/state/tmplegacy2191654.tasktmp': No such file or directory
+
+=== replacement pane w2:p2 capture ===
+
+=== teardown removes the recorded legacy root ===
+teardown rc=0
+teardown tmplegacy2191654 complete (window fm-lab-legacyrl-2191655-5672:w2:p2, worktree /home/node/.treehouse/project-d4567f/1/project)
+ls: cannot access '/tmp/fm-tmplegacy2191654': No such file or directory
+
+=== cleanup ===
+herdr lab fm-lab-legacyrl-2191655-5672 torn down
+no /tmp/fm-tmplegacy2191654* remain

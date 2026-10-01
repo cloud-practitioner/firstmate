@@ -1,0 +1,67 @@
+
+=== provision isolated herdr lab fm-lab-tasktmp-2109690-28868 ===
+/tmp/fm-tasktmp-live.FbdHxd/home a
+/tmp/fm-tasktmp-live.FbdHxd/home-b
+
+=== before: no shared legacy root ===
+ls: cannot access '/tmp/fm-tmpscope2109687': No such file or directory
+
+=== spawn task tmpscope2109687 in home A (/tmp/fm-tasktmp-live.FbdHxd/home a) ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-tasktmp-live.FbdHxd/home a
+warning: /tmp/fm-tasktmp-live.FbdHxd/home a/data/tmpscope2109687/launch-brief.md records no ship branch; defaulting to legacy branch fm/tmpscope2109687
+warning: /tmp/fm-tasktmp-live.FbdHxd/home a/data/tmpscope2109687/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+spawned tmpscope2109687 harness=sh kind=ship mode=no-mistakes yolo=off window=fm-lab-tasktmp-2109690-28868:w1:p2 worktree=/home/node/.treehouse/project-e999a8/1/project
+spawn rc=0
+meta tasktmp=/tmp/fm-tasktmp-live.FbdHxd/home a/state/tmpscope2109687.tasktmp
+700 node /tmp/fm-tasktmp-live.FbdHxd/home a/state/tmpscope2109687.tasktmp
+755 node /tmp/fm-tasktmp-live.FbdHxd/home a/state/tmpscope2109687.tasktmp/gotmp
+
+=== spawn task tmpscope2109687 in home B (/tmp/fm-tasktmp-live.FbdHxd/home-b) ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-tasktmp-live.FbdHxd/home-b
+warning: /tmp/fm-tasktmp-live.FbdHxd/home-b/data/tmpscope2109687/launch-brief.md records no ship branch; defaulting to legacy branch fm/tmpscope2109687
+warning: /tmp/fm-tasktmp-live.FbdHxd/home-b/data/tmpscope2109687/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+spawned tmpscope2109687 harness=sh kind=ship mode=no-mistakes yolo=off window=fm-lab-tasktmp-2109690-28868:w1:p3 worktree=/home/node/.treehouse/project-e999a8/1/project
+spawn rc=0
+meta tasktmp=/tmp/fm-tasktmp-live.FbdHxd/home-b/state/tmpscope2109687.tasktmp
+700 node /tmp/fm-tasktmp-live.FbdHxd/home-b/state/tmpscope2109687.tasktmp
+755 node /tmp/fm-tasktmp-live.FbdHxd/home-b/state/tmpscope2109687.tasktmp/gotmp
+
+=== shared legacy root after both spawns ===
+ls: cannot access '/tmp/fm-tmpscope2109687': No such file or directory
+
+=== home A pane w1:p2 capture (crewmate shell sees GOTMPDIR) ===
+
+=== home B pane w1:p3 capture (crewmate shell sees GOTMPDIR) ===
+❯ export GOTMPDIR='/tmp/fm-tasktmp-live.FbdHxd/home-b/state/tmpscope2109687.tasktmp/gotmp'
+GOTMPDIR_IS=/tmp/fm-tasktmp-live.FbdHxd/home-b/state/tmpscope2109687.tasktmp/gotmp
+drwxr-xr-x 2 node node 4096 Oct  1 01:08 /tmp/fm-tasktmp-live.FbdHxd/home-b/state/tmpscope2109687.tasktmp/gotmp
+
+=== teardown tmpscope2109687 in home A only ===
+teardown rc=0
+🌳 Worktree returned to pool.
+/tmp/fm-tasktmp-live.FbdHxd/project: already current
+teardown tmpscope2109687 complete (window fm-lab-tasktmp-2109690-28868:w1:p2, worktree /home/node/.treehouse/project-e999a8/1/project)
+Backlog: tmpscope2109687 just finished (this home keeps no markdown backlog at /tmp/fm-tasktmp-live.FbdHxd/home a/data/backlog.md). Update /tmp/fm-tasktmp-live.FbdHxd/home a/data/backlog.md - move tmpscope2109687 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+ls: cannot access '/tmp/fm-tasktmp-live.FbdHxd/home a/state/tmpscope2109687.tasktmp': No such file or directory
+home B root still present:
+755 /tmp/fm-tasktmp-live.FbdHxd/home-b/state/tmpscope2109687.tasktmp/gotmp
+
+=== adversarial: pre-planted symlink at home B's root for tmpadv2109687 is refused ===
+spawn rc=1
+error: task temp root /tmp/fm-tasktmp-live.FbdHxd/home-b/state/tmpadv2109687.tasktmp already exists and is not a private directory owned by this user; refusing to use it; inspect and remove it, then retry
+attacker dir contents: []
+adv meta exists? no
+
+=== adversarial: group-writable pre-existing root is refused ===
+spawn rc=1
+error: task temp root /tmp/fm-tasktmp-live.FbdHxd/home-b/state/tmpadv2109687.tasktmp already exists and is not a private directory owned by this user; refusing to use it; inspect and remove it, then retry
+
+=== leak check: home B is never torn down, just deleted (a disposable test home) ===
+task temp roots left in /tmp for tmpscope2109687:
+ls: cannot access '/tmp/fm-tmpscope2109687': No such file or directory
+launch dirs (separate pre-existing namespace) left in /tmp for tmpscope2109687:
+/tmp/fm-tmpscope2109687+691f4cfd7b23da7146d7fb7ec7dad6c87991dc4ec682b79a41c64f875d220e4c
+
+=== cleanup ===
+herdr lab fm-lab-tasktmp-2109690-28868 torn down
+no /tmp/fm-tmpscope2109687* or /tmp/fm-tmpadv2109687* remain
