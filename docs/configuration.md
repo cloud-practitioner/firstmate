@@ -531,7 +531,7 @@ The `/afk` sub-supervisor injects escalation digests into firstmate's own pane i
 It currently supports only `tmux` and `herdr` supervisor panes.
 
 Set `FM_SUPERVISOR_BACKEND=tmux|herdr` and `FM_SUPERVISOR_TARGET=<target>` to override both axes explicitly; for herdr the target is `"<session>:<pane-id>"`.
-Without overrides, backend detection uses `$TMUX_PANE` first, then `HERDR_ENV=1` with `HERDR_PANE_ID` (or `HERDR_SOCKET_PATH` as a fallback for containers), , then falls back to `tmux`.
+Without overrides, backend detection uses `$TMUX_PANE` first, then `HERDR_ENV=1` with `HERDR_PANE_ID`, then falls back to `tmux`.
 
 That keeps a tmux pane nested inside herdr on the tmux transport, matching the runtime backend's innermost-first rule.
 Target detection uses `FM_SUPERVISOR_TARGET`, then `$TMUX_PANE`, then `"${HERDR_SESSION:-default}:${HERDR_PANE_ID}"` under herdr, then the legacy `firstmate:0` tmux fallback with a warning.
