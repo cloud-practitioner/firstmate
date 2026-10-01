@@ -1,0 +1,7 @@
+probe1 report_rc=0 pane=w1:p1 agent-get: idle idle agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found
+probe2 report_rc=0 pane=w2:p1 agent-get: idle idle agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found
+probe3 report_rc=0 pane=w3:p1 agent-get: idle idle agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found
+probe4 report_rc=0 pane=w4:p1 agent-get: idle idle agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found
+probe5 report_rc=0 pane=w5:p1 agent-get: idle agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found
+probe6 report_rc=0 pane=w6:p1 agent-get: idle idle agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found agent_not_found
+foreground-sleep pane agent-get over 5s: idle idle idle idle idle idle idle idle idle idle

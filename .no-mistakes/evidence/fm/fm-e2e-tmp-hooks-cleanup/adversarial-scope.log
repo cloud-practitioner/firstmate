@@ -1,0 +1,6 @@
+PASS symlinked root is refused (own launch dir still present)
+helper rc=0
+PASS own-home launch dir (with read-only child) removed
+PASS nested secondmate-home launch dir removed
+PASS foreign-home launch dir untouched: /tmp/fm-advtask2247296+a6565c214583e941b36afe0344535af4fa09571564742a96038b108de76d7520
+PASS fixture tree removed

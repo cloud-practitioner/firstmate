@@ -1,0 +1,3 @@
+shell-only: recovery ALLOWED flat fallback (the test's 'should refuse' assertion fails)
+foreground-process: recovery REFUSED duplicate launch (the test's assertion holds)
+lab fm-lab-duprepro-2899954-22421 torn down
