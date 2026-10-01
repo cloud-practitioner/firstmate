@@ -1231,6 +1231,8 @@ Set both variables in the environment firstmate runs in, which its watcher inher
 
 The token needs read access to pull requests, commit statuses, and the repository, and write access to pull requests for a merge.
 A merge also reads the destination branch's restrictions, which Bitbucket exposes only to a repository administrator, so without admin access every Bitbucket merge refuses and names that missing read; when those restrictions require default-reviewer approvals or resolved tasks, it also reads the repository's effective default reviewers or the pull request's tasks; see [`bin/fm-pr-merge.sh`](../bin/fm-pr-merge.sh)'s header for the full merge contract.
+A merge verifies five merge-check kinds from those restrictions: `require_passing_builds_to_merge`, `require_approvals_to_merge`, `require_default_reviewer_approvals_to_merge`, `require_no_changes_requested`, and `require_tasks_to_be_completed`.
+Other Bitbucket merge-check kinds, for example `require_commits_behind`, `require_all_dependencies_merged`, and `require_review_group_approvals_to_merge`, are not verified by the script and are enforced only where the workspace turns Bitbucket's merge-check enforcement on.
 Firstmate reads the credential from the environment only, never from `.env`, and hands it to `curl` on standard input rather than as an argument, so it never appears in a process listing and is never printed, logged, or recorded.
 `curl` and `jq` are required alongside it.
 Registering a Bitbucket watch, merging a Bitbucket pull request, or reading one with `bin/fm-pr-state.sh` refuses and names whichever of the four is missing, rather than skipping the read.

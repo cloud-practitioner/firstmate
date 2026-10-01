@@ -18,9 +18,9 @@ command -v jq >/dev/null 2>&1 \
 
 BB_PATH=example-team/sample_repo
 BB_URL="https://bitbucket.org/$BB_PATH/pull-requests/7"
-BB_HEAD=c2eac54c17a1ddc2633ad51b83e21e5fe888142e
+BB_HEAD=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 BB_ABBREV=${BB_HEAD:0:12}
-BB_OTHER_HEAD=4dc2291e6969de1bf204fbdb53c9e57a8353d4e2
+BB_OTHER_HEAD=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 # A synthetic credential whose token carries both characters curl's config
 # syntax must escape, so the escaping itself is under test.
 BB_EMAIL=captain@example.invalid

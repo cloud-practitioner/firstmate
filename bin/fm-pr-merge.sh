@@ -101,20 +101,24 @@
 # A Bitbucket merge is refused unless every pre-merge condition holds, each read
 # live at merge time: the pull request is open and not a draft, every commit
 # status at the exact current head is SUCCESSFUL unless waived by an attended
-# --allow-red naming its key, and the pull request meets every merge check the
-# destination branch's restrictions require. Those checks are the largest
-# require_passing_builds_to_merge count of successful builds at the head, the
-# largest require_approvals_to_merge count of approvals, the largest
-# require_default_reviewer_approvals_to_merge count of approvals from the
-# repository's effective default reviewers, no participant requesting changes
-# under require_no_changes_requested, and no unresolved task under
+# --allow-red naming its key, and the pull request meets the five merge-check
+# kinds this script verifies wherever the destination branch's restrictions
+# require them: the largest require_passing_builds_to_merge count of successful
+# builds at the head, the largest require_approvals_to_merge count of approvals,
+# the largest require_default_reviewer_approvals_to_merge count of approvals
+# from the repository's effective default reviewers, no participant requesting
+# changes under require_no_changes_requested, and no unresolved task under
 # require_tasks_to_be_completed, each counted only when a restriction of that
 # kind applies to the destination branch. Bitbucket enforces merge checks itself
-# only where the workspace turns enforcement on, so this script verifies them
-# rather than relying on the merge request to refuse. --allow-red waives a
-# named failed build and nothing else. Bitbucket states the build requirement
-# as a count rather than as named checks, so there is no named unreported check
-# to waive and --allow-missing is refused. The restrictions are read through the
+# only where the workspace turns enforcement on, so this script verifies those
+# five rather than relying on the merge request to refuse. Other Bitbucket
+# merge-check kinds, for example require_commits_behind,
+# require_all_dependencies_merged, and require_review_group_approvals_to_merge,
+# are not verified here and are enforced only where the workspace turns
+# Bitbucket's merge-check enforcement on. --allow-red waives a named failed
+# build and nothing else. Bitbucket states the build requirement as a count
+# rather than as named checks, so there is no named unreported check to waive
+# and --allow-missing is refused. The restrictions are read through the
 # branch-restrictions API, which needs repository admin access; an unreadable
 # restriction set, a branching-model restriction whose model cannot be read, or
 # an applicable check whose default reviewers or tasks cannot be read refuses
@@ -414,7 +418,7 @@ bitbucket_parse_merge_args() {
       --method=*) BITBUCKET_MERGE_STRATEGY=${arg#--method=} ;;
       --delete-branch|-d) BITBUCKET_CLOSE_SOURCE_BRANCH=true ;;
       --auto|--auto=*|--admin|--admin=*)
-        echo "error: $arg has no Bitbucket equivalent; a Bitbucket merge is always immediate, and its merge checks are verified here rather than bypassed" >&2
+        echo "error: $arg has no Bitbucket equivalent; a Bitbucket merge is always immediate, and the merge checks this script verifies are not bypassed" >&2
         return 1
         ;;
       *)
@@ -1431,7 +1435,8 @@ gitlab_confirm_merged() {
   [ "$state" = merged ]
 }
 
-# The merge checks the destination branch's restrictions require: the largest
+# The five merge-check kinds this script verifies, as the destination branch's
+# restrictions require them: the largest
 # require_passing_builds_to_merge, require_approvals_to_merge, and
 # require_default_reviewer_approvals_to_merge values that apply, in
 # FM_PR_BITBUCKET_REQUIRED_BUILDS, FM_PR_BITBUCKET_REQUIRED_APPROVALS, and
@@ -1442,9 +1447,12 @@ gitlab_confirm_merged() {
 # with "*" matching any run of characters; a branching-model restriction applies
 # when the branch is the model's development or production branch, or carries
 # the prefix of the named branch type, so the effective branching model is read
-# only when such a restriction exists. Restrictions of any other kind are not
-# merge checks and are ignored. Fails with FM_PR_BITBUCKET_REQUIRED_ERROR set
-# when either read, or any merge-check restriction in it, cannot be interpreted.
+# only when such a restriction exists. Restrictions of any other kind are
+# ignored, including other merge-check kinds such as require_commits_behind,
+# require_all_dependencies_merged, and require_review_group_approvals_to_merge,
+# which only Bitbucket's own merge-check enforcement applies. Fails with
+# FM_PR_BITBUCKET_REQUIRED_ERROR set when either read, or any restriction of a
+# verified kind in it, cannot be interpreted.
 FM_PR_BITBUCKET_REQUIRED_BUILDS=0
 FM_PR_BITBUCKET_REQUIRED_APPROVALS=0
 FM_PR_BITBUCKET_REQUIRED_DEFAULT_APPROVALS=0
@@ -1589,7 +1597,7 @@ bitbucket_review_refusals() {
 
 # Pre-merge conditions for a Bitbucket pull request, from one live read of the
 # pull request, the commit statuses at its head, and the destination branch's
-# merge checks. Sets FM_PR_MERGE_HEAD to the verified head on success and
+# merge checks of the five verified kinds. Sets FM_PR_MERGE_HEAD to the verified head on success and
 # returns non-zero after reporting every condition that failed.
 bitbucket_verify_mergeable() {
   local statuses red line key covered check successful review
@@ -1653,7 +1661,7 @@ RED
     [ -z "$uncovered" ] || printf 'error: these builds are not green: %s\n' "$uncovered" >&2
     return 1
   fi
-  printf 'verified: %s is open, with every unwaived build green and every merge check met at head %s\n' \
+  printf 'verified: %s is open, with every unwaived build green and every verified merge check met at head %s\n' \
     "$URL" "$FM_PR_BITBUCKET_HEAD" >&2
   FM_PR_MERGE_HEAD=$FM_PR_BITBUCKET_HEAD
 }
