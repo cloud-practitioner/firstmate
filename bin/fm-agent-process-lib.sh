@@ -13,13 +13,14 @@
 # names below, and tests/fm-tmux-agent-liveness.test.sh plus
 # tests/fm-harness-liveness-drift-live-e2e.test.sh keep them honest.
 
-_FM_AGENT_PROCESS_LIB_DIR=${BASH_SOURCE[0]%/*}
-[ "$_FM_AGENT_PROCESS_LIB_DIR" != "${BASH_SOURCE[0]}" ] || _FM_AGENT_PROCESS_LIB_DIR=.
+_FM_AGENT_PROCESS_LIB_SRC=${BASH_SOURCE[0]:-$0}
+_FM_AGENT_PROCESS_LIB_DIR=${_FM_AGENT_PROCESS_LIB_SRC%/*}
+[ "$_FM_AGENT_PROCESS_LIB_DIR" != "$_FM_AGENT_PROCESS_LIB_SRC" ] || _FM_AGENT_PROCESS_LIB_DIR=.
 # shellcheck source=bin/fm-session-lock-lib.sh
 . "${_FM_AGENT_PROCESS_LIB_DIR:-/}/fm-session-lock-lib.sh"
 # shellcheck source=bin/fm-gemini-lib.sh
 . "${_FM_AGENT_PROCESS_LIB_DIR:-/}/fm-gemini-lib.sh"
-unset _FM_AGENT_PROCESS_LIB_DIR
+unset _FM_AGENT_PROCESS_LIB_DIR _FM_AGENT_PROCESS_LIB_SRC
 
 # fm_agent_process_classify_name: the single owner of the process-name
 # vocabulary shared by every liveness signal - `agent` for a verified harness,
