@@ -1707,6 +1707,22 @@ herdr pane process-info --pane w1:p1 --session "$LAB" | jq -c '.result.process_i
 Before the fix `fm_backend_agent_state herdr` read that second state as `alive`, so `bin/fm-control.sh <id> relaunch` and `bin/fm-spawn.sh --relaunch` were refused for as long as the registration lived, which is hours.
 The registration is still present after the wait, and a `pane report-agent` registration whose agent process exits under a nested shell leaves the same shape behind on any pane, which is what the lifecycle-control guard uses; with no nested shell, Herdr releases that registration within about a second.
 
+Measured 2026-10-01 on Linux x86_64 against Herdr 0.9.3 in an isolated `fm-lab-` session: a registration on a pane idling at its own top shell is released within about a second, while a nested shell in the foreground keeps it.
+A fixture that needs a lasting registration therefore backs it with a running foreground process, as the live-duplicate case in `tests/fm-backend-herdr-smoke.test.sh` does.
+
+```sh
+herdr pane report-agent w1:p1 --source fm-probe --agent probe-agent --state idle --session "$LAB"; sleep 2
+herdr agent get w1:p1 --session "$LAB" 2>&1
+herdr pane run w1:p1 bash --session "$LAB"; sleep 1
+herdr pane report-agent w1:p1 --source fm-probe --agent probe-agent --state idle --session "$LAB"; sleep 2
+herdr agent get w1:p1 --session "$LAB" | jq -c '.result.agent | {agent, agent_status}'
+```
+
+```text
+{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}
+{"agent":"probe-agent","agent_status":"idle"}
+```
+
 Two vendor facts the fix rests on, both read from the outputs above and from `fm_backend_herdr_pane_process_state`'s `pane process-info` parse:
 
 - Pi's process presents with kernel name `node` and argv0 `pi` (its foreground group also carries Pi's child `node` helpers with argv0 such as `npm view ... version`), so a running Pi is attributed by argv[0] exactly as the tmux probe attributes it; a symlink named `claude` to `sleep` presents as name `sleep`, argv0 `claude`.
