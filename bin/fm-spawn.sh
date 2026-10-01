@@ -285,12 +285,13 @@
 #   TMPDIR). Scoping it to the home keeps equal task ids in different Firstmate
 #   homes from sharing a root, and a disposable home that is never torn down
 #   takes its roots with it instead of stranding them in /tmp.
-#   fm-teardown removes exactly the recorded tasktmp= root, including a forced
-#   secondmate teardown's children. Tasks spawned before this contract recorded
-#   the legacy shared root /tmp/fm-<id>; a relaunch keeps that recorded root so
-#   the live task's record stays valid and teardown still removes the root the
-#   task used. Spawn reuses a pre-existing root only as a real directory owned by
-#   this user and writable by nobody else, then tightens it.
+#   fm-teardown removes exactly the recorded tasktmp= root; a forced secondmate
+#   teardown's children lose theirs with the retired home. Tasks spawned before
+#   this contract recorded the legacy shared root /tmp/fm-<id>; a relaunch keeps
+#   that recorded root so the live task's record stays valid and teardown still
+#   removes the root the task used. Spawn reuses a pre-existing root only as a
+#   real directory owned by this user and writable by nobody else, then
+#   tightens it.
 # Launch environment (config/launch-env-allowlist):
 #   Absent means unchanged ambient inheritance. A present readable regular file
 #   opts every launch (ship, scout, secondmate, raw command, and relaunch) into

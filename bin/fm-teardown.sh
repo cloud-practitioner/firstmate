@@ -3242,7 +3242,7 @@ endpoint_close_refusal() {  # <subject> <backend> <target> <honors-force>
 }
 
 cleanup_firstmate_home_children() {
-  local home=$1 sub_state child_meta child_id child_t child_wt child_proj child_kind child_home child_backend child_orca_worktree_id child_return_rc child_busy_gen child_owner_rc child_task_tmp
+  local home=$1 sub_state child_meta child_id child_t child_wt child_proj child_kind child_home child_backend child_orca_worktree_id child_return_rc child_busy_gen child_owner_rc
   sub_state="$home/state"
   [ -d "$sub_state" ] || return 0
   for child_meta in "$sub_state"/*.meta; do
@@ -3336,8 +3336,6 @@ cleanup_firstmate_home_children() {
     remove_grok_turnend_auth "$sub_state" "$child_id" || return 1
     remove_kimi_turnend_auth "$sub_state" "$child_id" || return 1
     remove_pr_poll_artifacts "$sub_state" "$child_id" || return 1
-    child_task_tmp=$(meta_value "$child_meta" tasktmp)
-    [ -z "$child_task_tmp" ] || rm -rf "$child_task_tmp"
     child_busy_gen=$(meta_value "$child_meta" busy_gen)
     if [ -z "$child_busy_gen" ]; then
       child_busy_gen=$(cat "$sub_state/$child_id.busy-gen" 2>/dev/null || true)

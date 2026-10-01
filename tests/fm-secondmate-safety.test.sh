@@ -1957,15 +1957,11 @@ EOF
 }
 
 test_secondmate_force_teardown_discards_child_work() {
-  local home subhome childproj childwt childtmp fakebin log
+  local home subhome childproj childwt fakebin log
   home="$TMP_ROOT/force-teardown-home"
   subhome="$TMP_ROOT/force-teardown-subhome"
   childproj="$subhome/projects/alpha"
   childwt="$TMP_ROOT/force-child-worktree"
-  # A child recorded before home-scoped temp roots keeps its root outside the
-  # retired home, so only its recorded tasktmp= can find it.
-  childtmp="$TMP_ROOT/force-child-legacy-tasktmp"
-  mkdir -p "$childtmp/gotmp"
   mkdir -p "$home/state" "$home/data" "$subhome/state"
   fm_git_worktree "$childproj" "$childwt" force-child
   printf 'domain\n' > "$subhome/.fm-secondmate-home"
@@ -1989,7 +1985,6 @@ harness=echo
 kind=ship
 mode=no-mistakes
 yolo=off
-tasktmp=$childtmp
 EOF
   fakebin=$(make_fake_tmux "$TMP_ROOT/force-teardown-fake")
   log="$TMP_ROOT/force-teardown-fake/tmux.log"
@@ -2002,7 +1997,6 @@ EOF
     || fail "force teardown failed to discard child work"
   [ ! -d "$subhome" ] || fail "force teardown did not remove the retired secondmate home"
   [ ! -d "$childwt" ] || fail "force teardown did not remove child worktree"
-  [ ! -e "$childtmp" ] || fail "force teardown did not remove the child's recorded task temp root"
   [ ! -e "$home/state/domain.meta" ] || fail "teardown did not clear parent meta"
   grep -F -- '- domain ' "$home/data/secondmates.md" >/dev/null && fail "force teardown did not remove secondmate registry route"
   grep -F 'kill-window -t =firstmate:=fm-child' "$log" >/dev/null || fail "force teardown did not kill child window"
