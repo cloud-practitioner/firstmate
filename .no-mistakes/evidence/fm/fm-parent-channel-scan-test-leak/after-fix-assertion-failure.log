@@ -1,0 +1,30 @@
+ok - only a remote mate home resolves its own parent channel for exclusion
+ok - fm_parent_channel_outbound_status resolves only the remote route
+ok - a remote mate's folds omit its channel and keep a genuine task
+ok - the cursor-backed incremental fold omits a remote mate's channel
+ok - the channel's resolution and note lines stay off the remote unread surface
+ok - a parent-replies.status in a main home still folds
+ok - a parent-replies.status in a local mate still folds
+injected cut failure for EXIT-cleanup validation
+injected cut failure for EXIT-cleanup validation
+not ok - the genuine task's status must still wake: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFR7DBEK89N243QTJQA5RB/.cleanup-validation-hf2pa_k8/after-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion.EXTQXo/remote-mate/state/.seen-real-task_status	r1:3830007374726f6e673a3231313a323433363139373a323032362d31302d30322032333a34313a34322e313833353838313932202b3030303000726567756c61722066696c653a38316134002d007265616461626c65007265616461626c65	/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFR7DBEK89N243QTJQA5RB/.cleanup-validation-hf2pa_k8/after-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion.EXTQXo/remote-mate/state/real-task.status
+
+EXIT/CLEANUP OBSERVATION
+{
+  "case": "after-fix-assertion-failure",
+  "command": "bash tests/fm-parent-channel-scan-exclusion.test.sh (isolated TMPDIR/HOME; allocation observer); cut forced to exit 99",
+  "test_exit_status": 1,
+  "observed_registered_roots": [
+    "after-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion.EXTQXo",
+    "after-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion-root.BYtK30"
+  ],
+  "observed_registry_files": [
+    "after-fix-assertion-failure/tmp/.fm-test-cleanup.3473888.0gxd4b",
+    "after-fix-assertion-failure/tmp/.fm-test-procevent.3473888.UWsCNi",
+    "after-fix-assertion-failure/tmp/.fm-test-watcher.3473888.9tZ46O"
+  ],
+  "remaining_roots_and_registries_after_exit": [],
+  "unregistered_sibling_preserved": true,
+  "checks_met": true,
+  "live_product_scenario": false
+}

@@ -1,0 +1,35 @@
+ok - only a remote mate home resolves its own parent channel for exclusion
+ok - fm_parent_channel_outbound_status resolves only the remote route
+ok - a remote mate's folds omit its channel and keep a genuine task
+ok - the cursor-backed incremental fold omits a remote mate's channel
+ok - the channel's resolution and note lines stay off the remote unread surface
+ok - a parent-replies.status in a main home still folds
+ok - a parent-replies.status in a local mate still folds
+injected cut failure for EXIT-cleanup validation
+injected cut failure for EXIT-cleanup validation
+not ok - the genuine task's status must still wake: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFR7DBEK89N243QTJQA5RB/.cleanup-validation-hf2pa_k8/before-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion.9OiKan/remote-mate/state/.seen-real-task_status	r1:3830007374726f6e673a3231313a323433363933383a323032362d31302d30322032333a34313a32382e353036383533333333202b3030303000726567756c61722066696c653a38316134002d007265616461626c65007265616461626c65	/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFR7DBEK89N243QTJQA5RB/.cleanup-validation-hf2pa_k8/before-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion.9OiKan/remote-mate/state/real-task.status
+
+EXIT/CLEANUP OBSERVATION
+{
+  "case": "before-fix-assertion-failure",
+  "command": "bash tests/.cleanup-validation-hf2pa_k8.baseline.sh (isolated TMPDIR/HOME; allocation observer); cut forced to exit 99",
+  "test_exit_status": 1,
+  "observed_registered_roots": [
+    "before-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion.9OiKan",
+    "before-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion-root.2SkeDO"
+  ],
+  "observed_registry_files": [
+    "before-fix-assertion-failure/tmp/.fm-test-cleanup.3459086.HbueGo",
+    "before-fix-assertion-failure/tmp/.fm-test-procevent.3459086.8HNCBp",
+    "before-fix-assertion-failure/tmp/.fm-test-watcher.3459086.OoF86o"
+  ],
+  "remaining_roots_and_registries_after_exit": [
+    "before-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion-root.2SkeDO",
+    "before-fix-assertion-failure/tmp/.fm-test-cleanup.3459086.HbueGo",
+    "before-fix-assertion-failure/tmp/.fm-test-procevent.3459086.8HNCBp",
+    "before-fix-assertion-failure/tmp/.fm-test-watcher.3459086.OoF86o"
+  ],
+  "unregistered_sibling_preserved": true,
+  "checks_met": true,
+  "live_product_scenario": false
+}

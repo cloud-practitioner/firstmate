@@ -1,0 +1,84 @@
+[
+  {
+    "case": "before-fix-normal-exit",
+    "command": "bash tests/.cleanup-validation-hf2pa_k8.baseline.sh (isolated TMPDIR/HOME; allocation observer)",
+    "test_exit_status": 0,
+    "observed_registered_roots": [
+      "before-fix-normal-exit/tmp/fm-parent-channel-scan-exclusion.4sPXPQ",
+      "before-fix-normal-exit/tmp/fm-parent-channel-scan-exclusion-root.dhf8ku"
+    ],
+    "observed_registry_files": [
+      "before-fix-normal-exit/tmp/.fm-test-cleanup.3446696.wzzJGb",
+      "before-fix-normal-exit/tmp/.fm-test-procevent.3446696.JKM5Hc",
+      "before-fix-normal-exit/tmp/.fm-test-watcher.3446696.fHszFL"
+    ],
+    "remaining_roots_and_registries_after_exit": [
+      "before-fix-normal-exit/tmp/fm-parent-channel-scan-exclusion-root.dhf8ku",
+      "before-fix-normal-exit/tmp/.fm-test-cleanup.3446696.wzzJGb",
+      "before-fix-normal-exit/tmp/.fm-test-procevent.3446696.JKM5Hc",
+      "before-fix-normal-exit/tmp/.fm-test-watcher.3446696.fHszFL"
+    ],
+    "unregistered_sibling_preserved": true,
+    "checks_met": true,
+    "live_product_scenario": false
+  },
+  {
+    "case": "before-fix-assertion-failure",
+    "command": "bash tests/.cleanup-validation-hf2pa_k8.baseline.sh (isolated TMPDIR/HOME; allocation observer); cut forced to exit 99",
+    "test_exit_status": 1,
+    "observed_registered_roots": [
+      "before-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion.9OiKan",
+      "before-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion-root.2SkeDO"
+    ],
+    "observed_registry_files": [
+      "before-fix-assertion-failure/tmp/.fm-test-cleanup.3459086.HbueGo",
+      "before-fix-assertion-failure/tmp/.fm-test-procevent.3459086.8HNCBp",
+      "before-fix-assertion-failure/tmp/.fm-test-watcher.3459086.OoF86o"
+    ],
+    "remaining_roots_and_registries_after_exit": [
+      "before-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion-root.2SkeDO",
+      "before-fix-assertion-failure/tmp/.fm-test-cleanup.3459086.HbueGo",
+      "before-fix-assertion-failure/tmp/.fm-test-procevent.3459086.8HNCBp",
+      "before-fix-assertion-failure/tmp/.fm-test-watcher.3459086.OoF86o"
+    ],
+    "unregistered_sibling_preserved": true,
+    "checks_met": true,
+    "live_product_scenario": false
+  },
+  {
+    "case": "after-fix-normal-exit",
+    "command": "bash tests/fm-parent-channel-scan-exclusion.test.sh (isolated TMPDIR/HOME; allocation observer)",
+    "test_exit_status": 0,
+    "observed_registered_roots": [
+      "after-fix-normal-exit/tmp/fm-parent-channel-scan-exclusion.vCv7nq",
+      "after-fix-normal-exit/tmp/fm-parent-channel-scan-exclusion-root.OIJtIh"
+    ],
+    "observed_registry_files": [
+      "after-fix-normal-exit/tmp/.fm-test-cleanup.3462339.uHokaC",
+      "after-fix-normal-exit/tmp/.fm-test-procevent.3462339.tFamuJ",
+      "after-fix-normal-exit/tmp/.fm-test-watcher.3462339.dPZZWH"
+    ],
+    "remaining_roots_and_registries_after_exit": [],
+    "unregistered_sibling_preserved": true,
+    "checks_met": true,
+    "live_product_scenario": false
+  },
+  {
+    "case": "after-fix-assertion-failure",
+    "command": "bash tests/fm-parent-channel-scan-exclusion.test.sh (isolated TMPDIR/HOME; allocation observer); cut forced to exit 99",
+    "test_exit_status": 1,
+    "observed_registered_roots": [
+      "after-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion.EXTQXo",
+      "after-fix-assertion-failure/tmp/fm-parent-channel-scan-exclusion-root.BYtK30"
+    ],
+    "observed_registry_files": [
+      "after-fix-assertion-failure/tmp/.fm-test-cleanup.3473888.0gxd4b",
+      "after-fix-assertion-failure/tmp/.fm-test-procevent.3473888.UWsCNi",
+      "after-fix-assertion-failure/tmp/.fm-test-watcher.3473888.9tZ46O"
+    ],
+    "remaining_roots_and_registries_after_exit": [],
+    "unregistered_sibling_preserved": true,
+    "checks_met": true,
+    "live_product_scenario": false
+  }
+]

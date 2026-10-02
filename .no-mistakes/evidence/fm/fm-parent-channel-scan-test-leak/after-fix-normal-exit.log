@@ -1,0 +1,34 @@
+ok - only a remote mate home resolves its own parent channel for exclusion
+ok - fm_parent_channel_outbound_status resolves only the remote route
+ok - a remote mate's folds omit its channel and keep a genuine task
+ok - the cursor-backed incremental fold omits a remote mate's channel
+ok - the channel's resolution and note lines stay off the remote unread surface
+ok - a parent-replies.status in a main home still folds
+ok - a parent-replies.status in a local mate still folds
+ok - scan_signals skips a remote mate's channel and still reports its tasks
+ok - the heartbeat backstop skips a remote mate's channel and keeps its tasks
+ok - scan_signals keeps parent-replies.status outside remote mate homes
+ok - the daemon's catch-all scan skips a remote mate's channel and keeps its tasks
+ok - the daemon's catch-all scan keeps parent-replies.status outside remote mate homes
+ok - the real drain presents no channel content from a remote mate home
+ok - stale channel records from an older watcher are dropped, not presented
+
+EXIT/CLEANUP OBSERVATION
+{
+  "case": "after-fix-normal-exit",
+  "command": "bash tests/fm-parent-channel-scan-exclusion.test.sh (isolated TMPDIR/HOME; allocation observer)",
+  "test_exit_status": 0,
+  "observed_registered_roots": [
+    "after-fix-normal-exit/tmp/fm-parent-channel-scan-exclusion.vCv7nq",
+    "after-fix-normal-exit/tmp/fm-parent-channel-scan-exclusion-root.OIJtIh"
+  ],
+  "observed_registry_files": [
+    "after-fix-normal-exit/tmp/.fm-test-cleanup.3462339.uHokaC",
+    "after-fix-normal-exit/tmp/.fm-test-procevent.3462339.tFamuJ",
+    "after-fix-normal-exit/tmp/.fm-test-watcher.3462339.dPZZWH"
+  ],
+  "remaining_roots_and_registries_after_exit": [],
+  "unregistered_sibling_preserved": true,
+  "checks_met": true,
+  "live_product_scenario": false
+}
