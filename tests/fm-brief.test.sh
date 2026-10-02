@@ -970,7 +970,7 @@ test_scaffolds_name_task_temp_root_for_scratch() {
     assert_grep 'never write them to a fixed path in shared /tmp' "$brief" \
       "$kind brief did not forbid fixed shared /tmp scratch paths"
   done
-  assert_grep 'If you pass `--intent` through a file, write it under your task temp root' \
+  assert_grep "If you pass \`--intent\` through a file, write it under your task temp root" \
     "$home/data/brief-task-tmp-ship-no-mistakes/brief.md" \
     "no-mistakes brief did not place the --intent file under the task temp root"
   pass "fm-brief.sh: ship and scout scaffolds keep scratch and --intent files in the task temp root"
