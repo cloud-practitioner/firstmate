@@ -1,0 +1,65 @@
+tree: /tmp/fm-base-tree.U1YyVy (base c8de201, before fix)
+
+[1] runner path: arm, start listener, remote mate appends a done line with report=, runner autohandles
+registered: remote-reply-ios (remote-reply)
+armed: remote-reply-ios offset=0
+  parent ios.status: done [corr=0123456789abcdef] [at=1700000000]: build verified report=data/remote-secondmates/ios/data/reply/report.md
+  mirrored doc     : report.md
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : .remote-reply-lifecycle-ios.lock
+.remote-reply-lifecycle-ios.lock.owner.K9jdkk
+  => runner autohandle of a delta: LEAK
+
+[2] runner path: remote log replaced (truncation) -> continuity break captured and autohandled
+  classify: continuity-broken
+  escalation: blocked [key=remote-reply-continuity-ios] [at=1790909233]: remote reply continuity broke for ios (truncated)
+  TMPDIR adapter temp paths: fm-remote-reply-ingest.Uc29m1
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : .remote-reply-lifecycle-ios.lock.owner.dix0D5
+.remote-reply-lifecycle-ios.lock
+  => runner autohandle of a continuity break: LEAK
+  manual handle of that continuity result:
+    continuity-broken: ios (truncated)
+    already-handled: remote-reply-ios 2
+    /tmp/fm-base-tree.U1YyVy/bin/fm-procevent-remote-reply.sh: line 1: tmp: unbound variable
+    rc=3
+  TMPDIR adapter temp paths: fm-remote-reply-ingest.cNKjZB
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : .remote-reply-lifecycle-ios.lock.owner.6DEkcg
+.remote-reply-lifecycle-ios.lock
+  => manual handle of continuity break: LEAK
+  direct ingest of that continuity result:
+    continuity-broken: ios (truncated)
+    /tmp/fm-base-tree.U1YyVy/bin/fm-procevent-remote-reply.sh: line 1: tmp: unbound variable
+    rc=3
+  TMPDIR adapter temp paths: fm-remote-reply-ingest.CN99Ff
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => direct ingest of continuity break: LEAK
+
+[3] adversarial: corrupted result (payload digest mismatch) -> die after staging
+    error: result payload bytes do not match its committed digest
+    rc=1
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => die after staging (ingest): CLEAN
+    error: result payload bytes do not match its committed digest
+    rc=1
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : .remote-reply-lifecycle-ios.lock.owner.HrZO5X
+.remote-reply-lifecycle-ios.lock
+  => die after staging (lifecycle-locked handle): LEAK
+
+[4] adversarial: SIGTERM delivered to ingest while the report= document fetch hangs
+  during fetch, TMPDIR holds: fm-remote-doc-reason.GdifAg fm-remote-reply-ingest.WkZnc4 
+  ingest exit status: 143
+  TMPDIR adapter temp paths: fm-remote-doc-reason.GdifAg
+fm-remote-reply-ingest.WkZnc4
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => SIGTERM during document fetch: LEAK
+
+[5] all other TMPDIR entries (non-adapter) for transparency:

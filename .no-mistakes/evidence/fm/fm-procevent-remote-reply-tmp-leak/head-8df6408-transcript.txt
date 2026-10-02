@@ -1,0 +1,58 @@
+tree: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3X7GYBZHCT20JSQGP217GW4 (HEAD 8df6408, with fix)
+
+[1] runner path: arm, start listener, remote mate appends a done line with report=, runner autohandles
+registered: remote-reply-ios (remote-reply)
+armed: remote-reply-ios offset=0
+  parent ios.status: done [corr=0123456789abcdef] [at=1700000000]: build verified report=data/remote-secondmates/ios/data/reply/report.md
+  mirrored doc     : report.md
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => runner autohandle of a delta: CLEAN
+
+[2] runner path: remote log replaced (truncation) -> continuity break captured and autohandled
+  classify: continuity-broken
+  escalation: blocked [key=remote-reply-continuity-ios] [at=1790909313]: remote reply continuity broke for ios (truncated)
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => runner autohandle of a continuity break: CLEAN
+  manual handle of that continuity result:
+    continuity-broken: ios (truncated)
+    already-handled: remote-reply-ios 2
+    rc=3
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => manual handle of continuity break: CLEAN
+  direct ingest of that continuity result:
+    continuity-broken: ios (truncated)
+    rc=3
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => direct ingest of continuity break: CLEAN
+
+[3] adversarial: corrupted result (payload digest mismatch) -> die after staging
+    error: result payload bytes do not match its committed digest
+    rc=1
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => die after staging (ingest): CLEAN
+    error: result payload bytes do not match its committed digest
+    rc=1
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => die after staging (lifecycle-locked handle): CLEAN
+
+[4] adversarial: SIGTERM delivered to ingest while the report= document fetch hangs
+  during fetch, TMPDIR holds: fm-remote-doc-reason.UkCINT fm-remote-reply-ingest.4DEmeV 
+  ingest exit status: 143
+  TMPDIR adapter temp paths: <none>
+  staged .remote-doc.* left: <none>
+  lifecycle lock left held : <none>
+  => SIGTERM during document fetch: CLEAN
+
+[5] all other TMPDIR entries (non-adapter) for transparency:
