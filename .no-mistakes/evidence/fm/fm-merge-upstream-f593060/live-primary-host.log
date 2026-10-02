@@ -1,0 +1,11 @@
+lock acquired: harness pid 584479
+lock: held by live harness pid 584479
+watcher: started pid=595492 (beacon fresh)
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+watcher: started pid=604303 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/lrKu/state/demo.status
+1790929914	start	gen=host-594059-1790929913	primary=claude
+1790929918	boundary	after 5s
+1790929925	start	gen=host-602741-1790929923	primary=claude
+1790929928	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/lrKu/state/demo.status
+A real Claude primary acquired its own lock; the host exited at its 5-second boundary, handed a main-only decision back with a successor, and the primary stopped that successor. The private server and lab are removed by cleanup.

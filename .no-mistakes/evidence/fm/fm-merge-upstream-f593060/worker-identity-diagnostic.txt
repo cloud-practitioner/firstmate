@@ -1,0 +1,19 @@
+Diagnostic from the disposable remote-reply fixture in this run (not operator fleet state):
+
+FM_REMOTE_JOB_STATE_ROOT=/tmp/fm-remote-reply.p61KEi/remote-jobs bash -c '. bin/fm-remote-job-lib.sh; fm_remote_job_worker_identity_matches "$PWD" "$HOME"; fm_remote_job_lock_owner_matches_process "$HOME"; fm_remote_job_probe "$HOME"'
+
+Observed:
+identity_match=0
+owner_match=1 owner_pid=
+probe=0
+expected_identity=52b84aee153c5494fc2223f4698d44cf1a462296:a60daf41d011440226413bc0672ca317de9bbd22:73191029ff022b7e8743791da196dc746c978894
+actual_identity=52b84aee153c5494fc2223f4698d44cf1a462296:a60daf41d011440226413bc0672ca317de9bbd22:73191029ff022b7e8743791da196dc746c978894
+
+Follow-up recorded/process identity comparison:
+pid=1787785
+recorded_start=Fri Oct  2 09:01:30 2026
+process_start=Fri Oct  2 09:01:32 2026
+recorded_command=/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/bin/fm-remote-job-worker.sh --serve
+process_command=/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/bin/fm-remote-job-worker.sh --serve
+
+The same PID and command had a two-second lstart discrepancy while code identity and readiness still matched. The worker log repeatedly reported: remote-job-worker: cannot acquire or safely reclaim worker ownership. Additional supervisors were scoped by this exact fixture's FM_REMOTE_JOB_STATE_ROOT and stopped through fm_remote_job_stop_worker_tree; operator workers were not selected.

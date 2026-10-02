@@ -1,0 +1,9 @@
+ok - host: a main-only pass-through leaves the successor watcher running and the close undelivered for main
+ok - host+hook: a successor close that lands during main's turn is delivered at the next turn end
+ok - host: an engine turn is bounded, and tool processes outside its process group are reaped
+ok - host: a restarted host stops, by recorded identity, the cycle a killed predecessor left running
+ok - host: the park ends itself with a boundary wake and a stopped watcher
+ok - host: waiting closes cannot carry the park past its boundary
+ok - host: a close whose margin runs out while the successor starts reaches main at the boundary without a turn
+ok - host: the park's test clock is inert without the test marker
+ok - host: an owner's later park limit lets a turn outlive the boundary, and no other limit does

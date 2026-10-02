@@ -1,0 +1,16 @@
+
+--- real drain transcript (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.test-phase-tmp/fm-parent-channel-scan-exclusion.XOhsf0/drain) ---
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+real-task note: benchmark results are in
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+real-task [key=api-shape] needs-decision: pick REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+ok - the real drain presents no channel content from a remote mate home
+
+--- real drain transcript (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.test-phase-tmp/fm-parent-channel-scan-exclusion.XOhsf0/drain-stale) ---
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+real-task note: benchmark results are in
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+real-task [key=api-shape] needs-decision: pick REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+ok - stale channel records from an older watcher are dropped, not presented

@@ -1,0 +1,40 @@
+
+ ▐▛███▛█   Claude Code v2.1.287
+▝▜██████▀  Haiku 4.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3
+
+⚠ AGENTS.md is over the 40.0k-char limit (48.0k chars) · /memory to free up context
+
+❯ You are validating an isolated disposable firstmate lab home selected by FM_HOME. This specific test is authorized;
+  do not delegate or operate on any other home, repository, backlog or fleet. Run exactly bash
+  .live-validation/primary-action.sh with timeout 150000. It acquires the disposable home lock, proves a short
+  supervision-host park boundary, then awaits one main-only event which the test driver appends to the disposable state
+  directory. Do not run session-start, sign in, change config, or edit source. After the command returns, output only
+  its exit status. The test driver will stop the lab. This is a bounded primary-harness verification, not an
+  implementation or delivery request.
+
+● Running bash .live-validation/primary-action.sh
+  ⎿  $ bash .live-validation/primary-action.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+✻ Moonwalking… (26s · ↓ 227 tokens)
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Haiku 4.5 | ctx: 23% used
+  ⏸ manual mode on · ← for agents

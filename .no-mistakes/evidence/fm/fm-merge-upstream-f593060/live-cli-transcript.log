@@ -1,0 +1,47 @@
+=== REAL WAKE DRAIN: remote ===
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+real-task note: genuine crew report
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+real-task [key=real] needs-decision: choose REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+PERSISTED PRESENTATION CURSOR:
+real-task	strong:211:2314476:2026-10-02 08:33:05.480292029 +0000	72	0
+=== REAL WAKE DRAIN: main ===
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+parent-replies note: outward release report
+real-task note: genuine crew report
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+parent-replies [key=outbound] needs-decision: choose the release region
+real-task [key=real] needs-decision: choose REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+PERSISTED PRESENTATION CURSOR:
+parent-replies	strong:211:2314704:2026-10-02 08:33:19.429385149 +0000	124	0
+real-task	strong:211:2314706:2026-10-02 08:33:19.429385149 +0000	72	0
+=== REAL WAKE DRAIN: local ===
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+parent-replies note: outward release report
+real-task note: genuine crew report
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+parent-replies [key=outbound] needs-decision: choose the release region
+real-task [key=real] needs-decision: choose REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+PERSISTED PRESENTATION CURSOR:
+parent-replies	strong:211:2313787:2026-10-02 08:33:37.027764937 +0000	124	0
+real-task	strong:211:2314486:2026-10-02 08:33:37.027764937 +0000	72	0
+=== REAL WAKE DRAIN: broken ===
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+parent-replies note: outward release report
+real-task note: genuine crew report
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+parent-replies [key=outbound] needs-decision: choose the release region
+real-task [key=real] needs-decision: choose REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+PERSISTED PRESENTATION CURSOR:
+parent-replies	strong:211:2314680:2026-10-02 08:33:50.796390131 +0000	124	0
+real-task	strong:211:2314711:2026-10-02 08:33:50.796390131 +0000	72	0
+=== LIVE WATCHER: outbound append leaves watcher running and queue empty ===
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.live-validation/cli-homes/remote/state/real-task.status
+PERSISTED QUEUE:
+1790930051	1	signal	real-task.status	needs-decision: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.live-validation/cli-homes/remote/state/real-task.status
+1790930052	2	signal	real-task.status	needs-decision: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.live-validation/cli-homes/remote/state/real-task.status
+process did not settle

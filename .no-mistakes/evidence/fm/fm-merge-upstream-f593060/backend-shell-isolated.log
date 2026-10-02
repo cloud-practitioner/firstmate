@@ -1,0 +1,268 @@
++ set -u
+++ dirname .gate-test-scratch/code/tests/fm-backend-targeted.test.sh
++ . .gate-test-scratch/code/tests/lib.sh
+++ '[' -n '' ']'
+++ FM_TEST_LIB_SOURCED=1
+++ umask 022
++++ dirname .gate-test-scratch/code/tests/lib.sh
+++ . .gate-test-scratch/code/tests/git-config-helpers.sh
++++++ dirname -- .gate-test-scratch/code/tests/git-config-helpers.sh
+++++ cd -P -- .gate-test-scratch/code/tests
+++++ pwd -P
++++ GIT_CONFIG_GLOBAL=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/tests/git-fixture.gitconfig
++++ export GIT_CONFIG_GLOBAL GIT_CONFIG_NOSYSTEM=1
++++ GIT_CONFIG_NOSYSTEM=1
++++ dirname .gate-test-scratch/code/tests/lib.sh
+++ . .gate-test-scratch/code/tests/fixture-tree-helpers.sh
+++ export FM_GATE_REFUSE_BYPASS=1
+++ FM_GATE_REFUSE_BYPASS=1
+++ export FM_TEST_SEAM=1
+++ FM_TEST_SEAM=1
+++ unset FM_TASK_ID
+++ unset TASKS_AXI_FILE TASKS_AXI_BACKEND
+++++ dirname .gate-test-scratch/code/tests/lib.sh
++++ cd .gate-test-scratch/code/tests/..
++++ pwd
+++ ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code
+++ FM_TEST_CLEANUP_DIRS=()
++++ mktemp /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-cleanup.4137598.XXXXXX
+++ FM_TEST_CLEANUP_REGISTRY=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-cleanup.4137598.fx7Ckb
++++ fm_test_pid_identity 4137598
++++ local pid=4137598
++++ FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp
++++ bash -c '. "$1"; fm_pid_identity "$2"' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/bin/fm-wake-lib.sh 4137598
+++ FM_TEST_OWNER_IDENTITY='linux-starttime=3671493 cmdline-hex=62617368002d78002e676174652d746573742d736372617463682f636f64652f74657374732f666d2d6261636b656e642d74617267657465642e746573742e736800'
++++ mktemp /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-procevent.4137598.XXXXXX
+++ FM_TEST_PROCEVENT_REGISTRY=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-procevent.4137598.8pILDQ
++++ mktemp /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-watcher.4137598.XXXXXX
+++ FM_TEST_WATCHER_REGISTRY=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-watcher.4137598.en8kCE
+++ FM_TEST_STUB_MAX_BLOCK_SECONDS=120
+++ export FM_TEST_STUB_MAX_BLOCK_SECONDS
+++ trap fm_test_cleanup EXIT
+++ trap 'fm_test_cleanup; exit 130' INT
+++ trap 'fm_test_cleanup; exit 143' TERM
+++ trap 'fm_test_cleanup; exit 129' HUP
+++ trap 'fm_test_cleanup; exit 131' QUIT
+++ FM_TEST_ORPHAN_MAX_AGE_SECONDS=3600
+++ '[' 0 '!=' 1 ']'
+++ fm_test_reap_orphans
+++ local marker dir mtime now owner_pid owner_identity current_identity
++++ date +%s
+++ now=1790936798
+++ for marker in "${TMPDIR:-/tmp}"/fm-*/.fm-test-fixture
+++ '[' -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-parent-channel-scan-exclusion-root.ahBoNw/.fm-test-fixture ']'
++++ sed -n 1p /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-parent-channel-scan-exclusion-root.ahBoNw/.fm-test-fixture
+++ owner_pid=3552326
++++ sed -n '2,$p' /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-parent-channel-scan-exclusion-root.ahBoNw/.fm-test-fixture
+++ owner_identity='linux-starttime=3590336 cmdline-hex=62617368002d780074657374732f666d2d706172656e742d6368616e6e656c2d7363616e2d6578636c7573696f6e2e746573742e736800'
+++ case "$owner_pid" in
++++ fm_test_pid_identity 3552326
+++ current_identity=
+++ current_identity=
+++ '[' -n 'linux-starttime=3590336 cmdline-hex=62617368002d780074657374732f666d2d706172656e742d6368616e6e656c2d7363616e2d6578636c7573696f6e2e746573742e736800' ']'
+++ '[' '' = 'linux-starttime=3590336 cmdline-hex=62617368002d780074657374732f666d2d706172656e742d6368616e6e656c2d7363616e2d6578636c7573696f6e2e746573742e736800' ']'
++++ stat -c %Y /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-parent-channel-scan-exclusion-root.ahBoNw/.fm-test-fixture
+++ mtime=1790935985
+++ '[' 813 -ge 3600 ']'
+++ continue
++ fm_git_identity fmtest fmtest@example.invalid
++ export GIT_AUTHOR_NAME=fmtest GIT_AUTHOR_EMAIL=fmtest@example.invalid
++ GIT_AUTHOR_NAME=fmtest
++ GIT_AUTHOR_EMAIL=fmtest@example.invalid
++ export GIT_COMMITTER_NAME=fmtest GIT_COMMITTER_EMAIL=fmtest@example.invalid
++ GIT_COMMITTER_NAME=fmtest
++ GIT_COMMITTER_EMAIL=fmtest@example.invalid
++ . /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/bin/fm-backend.sh
+++ FM_BACKEND_SCRIPT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/bin/fm-backend.sh
+++++ dirname /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/bin/fm-backend.sh
++++ cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/bin
++++ pwd
+++ FM_BACKEND_LIB_DIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/bin
+++ unset FM_BACKEND_SCRIPT
++++ cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/bin/..
++++ pwd
+++ FM_BACKEND_DEFAULT_ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code
+++ FM_ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code
+++ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code
+++ FM_BACKEND_CONFIG_DIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/config
+++ FM_BACKEND_KNOWN='tmux herdr zellij orca cmux'
+++ FM_BACKEND_SPAWN='tmux herdr zellij orca cmux'
+++ FM_BACKEND_CMUX_BUNDLE_ID=com.cmuxterm.app
+++ FM_BACKEND_VISIBLE_CAPTURE='tmux herdr zellij'
+++ fm_test_tmproot fm-backend-tests
+++ local prefix=fm-backend-tests root tmp_base
+++ tmp_base=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp
+++ tmp_base=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp
++++ mktemp -d /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.XXXXXX
+++ root=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
++++ cd -P -- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
++++ pwd -P
+++ root=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
+++ printf '%s\n%s\n' 4137598 'linux-starttime=3671493 cmdline-hex=62617368002d78002e676174652d746573742d736372617463682f636f64652f74657374732f666d2d6261636b656e642d74617267657465642e746573742e736800'
+++ printf '%s\n' /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
+++ printf '%s\n' /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
++ TMP_ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
++ SPAWN_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/user-home
++ mkdir -p /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/user-home
++ FAKE_NONDARWIN_BIN=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/fake-nondarwin-bin
++ mkdir -p /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/fake-nondarwin-bin
++ printf '#!/bin/sh\necho Linux\n'
++ chmod +x /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/fake-nondarwin-bin/uname
++ BASE_REF=
++ test_backend_source_shell_portable
++ local out status backend fns stub probe
++ command -v zsh
+++ zsh -c 'cd '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code'\'' && source bin/fm-backend.sh && fm_backend_source bogus'
++ out='error: unknown backend '\''bogus'\'' (known: tmux herdr zellij orca cmux)'
++ assert_contains 'error: unknown backend '\''bogus'\'' (known: tmux herdr zellij orca cmux)' 'unknown backend '\''bogus'\''' 'zsh: fm_backend_source did not reject bogus with the expected error'
++ case "$1" in
++ :
++ for backend in tmux herdr zellij orca cmux
++ case "$backend" in
++ fns='fm_backend_tmux_capture fm_tmux_strip_ghost fm_composer_classify_content fm_cursor_path_is_cursor fm_harness_path_name fm_agent_process_classify_name fm_gemini_path_is_gemini'
+++ zsh -c 'cd '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code'\'' && source bin/fm-backend.sh && fm_backend_source tmux && whence -w fm_backend_tmux_capture fm_tmux_strip_ghost fm_composer_classify_content fm_cursor_path_is_cursor fm_harness_path_name fm_agent_process_classify_name fm_gemini_path_is_gemini'
++ out=
++ '[' -z '' ']'
++ for backend in tmux herdr zellij orca cmux
++ case "$backend" in
++ fns='fm_backend_herdr_capture fm_composer_classify_content fm_transition_record fm_agent_process_classify_name fm_harness_path_name fm_cursor_path_is_cursor fm_gemini_path_is_gemini'
+++ zsh -c 'cd '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code'\'' && source bin/fm-backend.sh && fm_backend_source herdr && whence -w fm_backend_herdr_capture fm_composer_classify_content fm_transition_record fm_agent_process_classify_name fm_harness_path_name fm_cursor_path_is_cursor fm_gemini_path_is_gemini'
++ out=
++ '[' -z '' ']'
++ for backend in tmux herdr zellij orca cmux
++ case "$backend" in
++ fns='fm_backend_zellij_capture fm_backend_hometag fm_composer_classify_content'
+++ zsh -c 'cd '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code'\'' && source bin/fm-backend.sh && fm_backend_source zellij && whence -w fm_backend_zellij_capture fm_backend_hometag fm_composer_classify_content'
++ out=
++ '[' -z '' ']'
++ for backend in tmux herdr zellij orca cmux
++ case "$backend" in
++ fns='fm_backend_orca_capture fm_composer_classify_content'
+++ zsh -c 'cd '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code'\'' && source bin/fm-backend.sh && fm_backend_source orca && whence -w fm_backend_orca_capture fm_composer_classify_content'
++ out=
++ '[' -z '' ']'
++ for backend in tmux herdr zellij orca cmux
++ case "$backend" in
++ fns='fm_backend_cmux_capture fm_backend_hometag fm_composer_classify_content'
+++ zsh -c 'cd '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code'\'' && source bin/fm-backend.sh && fm_backend_source cmux && whence -w fm_backend_cmux_capture fm_backend_hometag fm_composer_classify_content'
++ out=
++ '[' -z '' ']'
++ pass 'zsh: fm_backend_source recognizes known backends and rejects unknown ones'
++ printf 'ok - %s\n' 'zsh: fm_backend_source recognizes known backends and rejects unknown ones'
+ok - zsh: fm_backend_source recognizes known backends and rejects unknown ones
++ stub=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/zsh-source-path
++ probe=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/zsh-source-path/probe
++ mkdir -p /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/zsh-source-path/backends
++ printf 'command -v dirname > "%s"\n' /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/zsh-source-path/probe
++ :
++ zsh -c 'cd '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code'\'' && source bin/fm-backend.sh && FM_BACKEND_LIB_DIR='\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/zsh-source-path'\'' && fm_backend_source orca'
++ '[' -s /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/zsh-source-path/probe ']'
++ pass 'zsh: fm_backend_source keeps PATH intact while loading a backend adapter'
++ printf 'ok - %s\n' 'zsh: fm_backend_source keeps PATH intact while loading a backend adapter'
+ok - zsh: fm_backend_source keeps PATH intact while loading a backend adapter
++ bash -c 'cd '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code'\'' && source bin/fm-backend.sh && fm_backend_source herdr && declare -F fm_backend_herdr_capture >/dev/null'
+++ bash -c 'cd '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code'\'' && source bin/fm-backend.sh && fm_backend_source bogus'
++ out='error: unknown backend '\''bogus'\'' (known: tmux herdr zellij orca cmux)'
++ assert_contains 'error: unknown backend '\''bogus'\'' (known: tmux herdr zellij orca cmux)' 'unknown backend '\''bogus'\''' 'bash: fm_backend_source did not reject bogus with the expected error'
++ case "$1" in
++ :
++ pass 'bash: fm_backend_source recognizes known backends and rejects unknown ones'
++ printf 'ok - %s\n' 'bash: fm_backend_source recognizes known backends and rejects unknown ones'
+ok - bash: fm_backend_source recognizes known backends and rejects unknown ones
++ test_backend_source_requires_adapter_file
++ local dir adapter exit_status continuation out rc condition test_bash
++ dir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck
++ adapter=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/backends/tmux.sh
++ test_bash=/usr/bin/bash
++ mkdir -p /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/backends
++ for condition in missing unreadable
++ '[' missing = unreadable ']'
++ exit_status=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/missing.exit
++ continuation=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/missing.continued
+++ /usr/bin/bash -c '
+      . "$1"
+      FM_BACKEND_LIB_DIR=$2
+      trap '\''printf "%s\n" "$?" > "$3"'\'' EXIT
+      set -e
+      fm_backend_source tmux
+      : > "$4"
+    ' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/bin/fm-backend.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/missing.exit /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/missing.continued
++ out=
++ rc=1
++ '[' 1 -ne 0 ']'
++ '[' -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/missing.exit ']'
+++ cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/missing.exit
++ '[' 1 -ne 0 ']'
++ '[' '!' -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/missing.continued ']'
++ pass 'fm_backend_source: missing adapter fails before lifecycle continuation'
++ printf 'ok - %s\n' 'fm_backend_source: missing adapter fails before lifecycle continuation'
+ok - fm_backend_source: missing adapter fails before lifecycle continuation
++ for condition in missing unreadable
++ '[' unreadable = unreadable ']'
++ printf ':\n'
++ chmod 000 /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/backends/tmux.sh
++ '[' -r /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/backends/tmux.sh ']'
++ exit_status=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/unreadable.exit
++ continuation=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/unreadable.continued
+++ /usr/bin/bash -c '
+      . "$1"
+      FM_BACKEND_LIB_DIR=$2
+      trap '\''printf "%s\n" "$?" > "$3"'\'' EXIT
+      set -e
+      fm_backend_source tmux
+      : > "$4"
+    ' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/code/bin/fm-backend.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/unreadable.exit /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/unreadable.continued
++ out=
++ rc=1
++ '[' 1 -ne 0 ']'
++ '[' -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/unreadable.exit ']'
+++ cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/unreadable.exit
++ '[' 1 -ne 0 ']'
++ '[' '!' -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr/adapter-precheck/unreadable.continued ']'
++ pass 'fm_backend_source: unreadable adapter fails before lifecycle continuation'
++ printf 'ok - %s\n' 'fm_backend_source: unreadable adapter fails before lifecycle continuation'
+ok - fm_backend_source: unreadable adapter fails before lifecycle continuation
++ fm_test_cleanup
++ local d
++ fm_test_reap_watchers
++ local state lock_home 'seen=
+'
++ '[' -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-watcher.4137598.en8kCE ']'
++ IFS=
++ read -r state
++ rm -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-watcher.4137598.en8kCE
++ fm_test_reap_procevent_homes
++ local home claim_root 'seen=
+'
++ '[' -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-procevent.4137598.8pILDQ ']'
++ IFS='	'
++ read -r home claim_root
++ rm -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-procevent.4137598.8pILDQ
++ for d in "${FM_TEST_CLEANUP_DIRS[@]:-}"
++ '[' -n '' ']'
++ continue
++ '[' -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-cleanup.4137598.fx7Ckb ']'
++ IFS=
++ read -r d
++ '[' -n /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr ']'
++ fm_test_remove_spawn_launch_dirs /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
++ local root=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr home hash dir
++ '[' -d /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr ']'
++ '[' '!' -L /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr ']'
+++ find /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr -type d -name state -prune -exec dirname '{}' ';'
++ IFS=
++ read -r home
++ '[' -n '' ']'
++ continue
++ IFS=
++ read -r home
++ return 0
++ fm_test_remove_tree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
++ local dir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
++ '[' -d /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr ']'
++ '[' '!' -L /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr ']'
++ find /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr -type d -exec chmod u+rwx '{}' +
++ rm -rf /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-backend-tests.DeikCr
++ IFS=
++ read -r d
++ rm -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/.fm-test-cleanup.4137598.fx7Ckb

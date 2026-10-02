@@ -1,0 +1,4 @@
+ok - drain: a long away window costs one short drain, captain outcomes collapsed per task and routine overflow counted, and nothing from it is shown again
+ok - host: parked child-exit sampling uses ordinary half-second sleeps
+not ok - attended: the wake was not handled on the engine: watcher: started pid=2997213 (beacon fresh)
+1790934027	start	gen=host-2995777-1790934023	primary=claude

@@ -1,0 +1,6 @@
+ok - host: parked child-exit sampling uses ordinary half-second sleeps
+ok - host: a main-only pass-through leaves the successor watcher running and the close undelivered for main
+not ok - successor close: the next turn end never closed: 1790930037	start	gen=host-705806-1790930034	primary=claude
+1790930050	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.live-validation/tmp/fm-supervision-host.k40uz8/hook-successor-close/state/demo.status
+1790930094	start	gen=host-767806-1790930088	primary=claude
+1790930107	pass-through	attended	main-only	check: rearm-resurface

@@ -1,0 +1,5 @@
+not ok - a test clock without FM_TEST_SEAM changed the park: watcher: started pid=2532795 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.test-phase-tmp/fm-supervision-host.SOOxc1/clock-unmarked/state/demo.status
+supervision-host: the away session could not take this wake: branch eligibility could not be computed; this wake is yours
+1790932754	start	gen=host-2528754-1790932750	primary=claude
+1790932795	to-main	the away session could not take this wake: branch eligibility could not be computed; this wake is yours

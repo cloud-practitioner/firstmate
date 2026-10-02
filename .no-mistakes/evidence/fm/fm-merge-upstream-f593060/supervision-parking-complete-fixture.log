@@ -1,0 +1,256 @@
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-cadence):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-cadence/host.out
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-cadence/state/.supervision-host.log
+1790936852	start	gen=host-4164965-1790936850	primary=claude
+ok - host: parked child-exit sampling uses ordinary half-second sleeps
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-cadence):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-cadence/host.out
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-cadence/state/.supervision-host.log
+1790936852	start	gen=host-4164965-1790936850	primary=claude
+ok - host: the park ends itself with a boundary wake and a stopped watcher
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary/host.out
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary/state/.supervision-host.log
+1790936857	start	gen=host-4167588-1790936856	primary=claude
+1790936859	boundary	after 60s
+ok - host: waiting closes cannot carry the park past its boundary
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/host.out
+watcher: started pid=4171275 (beacon fresh)
+watcher: started pid=4173026 (beacon fresh) recovery-generation=4171275.1790936861.Q8TrUW
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/state/.supervision-host.log
+1790936860	start	gen=host-4171073-1790936859	primary=claude
+1790936868	handled	turn=host-4171073-1790936859.1	posture=away	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/state/demo.status
+1790936869	boundary	after 280s
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/engine-drain.1
+1790936861	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/state/demo.status
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 4171275.1790936861.Q8TrUW
+wake annotation: unread wake-EVENT since last drain, not current state: demo.status: working [at=1790936860]: the first of many
+wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: working [at=1790936865]: queued while the first close is still handled
+ok - host: a close whose margin runs out while the successor starts reaches main at the boundary without a turn
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-late):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-late/host.out
+watcher: started pid=4181292 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-late/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-late/state/.supervision-host.log
+1790936870	start	gen=host-4181022-1790936869	primary=claude
+1790936875	boundary	after 116s
+ok - host: the park's test clock is inert without the test marker
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-armed):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-armed/host.out
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-armed/state/.supervision-host.log
+1790936876	start	gen=host-4186640-1790936876	primary=claude
+1790936877	boundary	after 99999s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/host.out
+watcher: started pid=4188179 (beacon fresh)
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/state/.supervision-host.log
+1790936878	start	gen=host-4187726-1790936877	primary=claude
+1790936890	handled	turn=host-4187726-1790936877.1	posture=away	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/state/demo.status
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/engine-drain.1
+1790936883	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/state/demo.status
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 4188179.1790936882.85YQ1g
+wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: working [at=1790936878]: handled on the wall clock
+ok - host: a park at or beyond the Stop-hook registration falls back to the default boundary
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/host.out
+watcher: started pid=10461 (beacon fresh)
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/state/.supervision-host.log
+1790936892	start	gen=host-9576-1790936892	primary=claude
+1790936902	handled	turn=host-9576-1790936892.1	posture=away	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/state/demo.status
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/engine-drain.1
+1790936895	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/state/demo.status
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 10461.1790936895.Sa4ddY
+wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: working [at=1790936893]: one close
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28800):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28800/host.out
+watcher: started pid=23408 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28800/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28800/state/.supervision-host.log
+1790936904	start	gen=host-22824-1790936903	primary=claude
+1790936906	boundary	after 3s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-huge):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-huge/host.out
+watcher: started pid=26720 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-huge/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-huge/state/.supervision-host.log
+1790936907	start	gen=host-26537-1790936907	primary=claude
+1790936918	boundary	after 11s
+ok - host: an owner's later park limit lets a turn outlive the boundary, and no other limit does
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/host.out
+watcher: started pid=31573 (beacon fresh)
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/state/.supervision-host.log
+1790936923	start	gen=host-30807-1790936920	primary=claude
+1790936948	handled	turn=host-30807-1790936920.1	posture=away	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/state/demo.status
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/engine-drain.1
+1790936931	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/state/demo.status
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 31573.1790936930.pTchUT
+wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: working [at=1790936924]: one close
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-earlier):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-earlier/host.out
+watcher: started pid=55641 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-earlier/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-earlier/state/.supervision-host.log
+1790936952	start	gen=host-54671-1790936951	primary=claude
+1790936958	boundary	after 7s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-registration):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-registration/host.out
+watcher: started pid=63312 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-registration/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-registration/state/.supervision-host.log
+1790936959	start	gen=host-62889-1790936959	primary=claude
+1790936963	boundary	after 4s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-absent):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-absent/host.out
+watcher: started pid=66530 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-absent/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-absent/state/.supervision-host.log
+1790936964	start	gen=host-66359-1790936963	primary=claude
+1790936969	boundary	after 6s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-cadence):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-cadence/host.out
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-cadence/state/.supervision-host.log
+1790936852	start	gen=host-4164965-1790936850	primary=claude
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary/host.out
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary/state/.supervision-host.log
+1790936857	start	gen=host-4167588-1790936856	primary=claude
+1790936859	boundary	after 60s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/host.out
+watcher: started pid=4171275 (beacon fresh)
+watcher: started pid=4173026 (beacon fresh) recovery-generation=4171275.1790936861.Q8TrUW
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/state/.supervision-host.log
+1790936860	start	gen=host-4171073-1790936859	primary=claude
+1790936868	handled	turn=host-4171073-1790936859.1	posture=away	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/state/demo.status
+1790936869	boundary	after 280s
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/engine-drain.1
+1790936861	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-busy/state/demo.status
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 4171275.1790936861.Q8TrUW
+wake annotation: unread wake-EVENT since last drain, not current state: demo.status: working [at=1790936860]: the first of many
+wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: working [at=1790936865]: queued while the first close is still handled
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-late):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-late/host.out
+watcher: started pid=4181292 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-late/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/boundary-late/state/.supervision-host.log
+1790936870	start	gen=host-4181022-1790936869	primary=claude
+1790936875	boundary	after 116s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-armed):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-armed/host.out
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-armed/state/.supervision-host.log
+1790936876	start	gen=host-4186640-1790936876	primary=claude
+1790936877	boundary	after 99999s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/host.out
+watcher: started pid=4188179 (beacon fresh)
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/state/.supervision-host.log
+1790936878	start	gen=host-4187726-1790936877	primary=claude
+1790936890	handled	turn=host-4187726-1790936877.1	posture=away	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/state/demo.status
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/engine-drain.1
+1790936883	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/clock-unmarked/state/demo.status
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 4188179.1790936882.85YQ1g
+wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: working [at=1790936878]: handled on the wall clock
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/host.out
+watcher: started pid=10461 (beacon fresh)
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/state/.supervision-host.log
+1790936892	start	gen=host-9576-1790936892	primary=claude
+1790936902	handled	turn=host-9576-1790936892.1	posture=away	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/state/demo.status
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/engine-drain.1
+1790936895	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28799/state/demo.status
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 10461.1790936895.Sa4ddY
+wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: working [at=1790936893]: one close
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28800):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28800/host.out
+watcher: started pid=23408 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28800/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-28800/state/.supervision-host.log
+1790936904	start	gen=host-22824-1790936903	primary=claude
+1790936906	boundary	after 3s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-huge):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-huge/host.out
+watcher: started pid=26720 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-huge/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/park-huge/state/.supervision-host.log
+1790936907	start	gen=host-26537-1790936907	primary=claude
+1790936918	boundary	after 11s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/host.out
+watcher: started pid=31573 (beacon fresh)
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/state/.supervision-host.log
+1790936923	start	gen=host-30807-1790936920	primary=claude
+1790936948	handled	turn=host-30807-1790936920.1	posture=away	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/state/demo.status
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/engine-drain.1
+1790936931	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-later/state/demo.status
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 31573.1790936930.pTchUT
+wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: working [at=1790936924]: one close
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-earlier):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-earlier/host.out
+watcher: started pid=55641 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-earlier/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-earlier/state/.supervision-host.log
+1790936952	start	gen=host-54671-1790936951	primary=claude
+1790936958	boundary	after 7s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-registration):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-registration/host.out
+watcher: started pid=63312 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-registration/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-registration/state/.supervision-host.log
+1790936959	start	gen=host-62889-1790936959	primary=claude
+1790936963	boundary	after 4s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-absent):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-absent/host.out
+watcher: started pid=66530 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-absent/state/demo.status
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.eqZCra/limit-absent/state/.supervision-host.log
+1790936964	start	gen=host-66359-1790936963	primary=claude
+1790936969	boundary	after 6s

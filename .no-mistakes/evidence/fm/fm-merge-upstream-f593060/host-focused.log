@@ -1,0 +1,9 @@
+ok - host: parked child-exit sampling uses ordinary half-second sleeps
+ok - host: an away wake is handled on the engine through the branch contract and never reaches main
+ok - host+hook: failed at-turn downtime write notifies main despite a healthy successor
+ok - host: an engine turn is bounded, and tool processes outside its process group are reaped
+ok - host: the park ends itself with a boundary wake and a stopped watcher
+ok - host: waiting closes cannot carry the park past its boundary
+ok - host: a close whose margin runs out while the successor starts reaches main at the boundary without a turn
+not ok - a test clock without FM_TEST_SEAM changed the park: watcher: started pid=2432802 (beacon fresh)
+1790932594	start	gen=host-2431365-1790932593	primary=claude

@@ -1,0 +1,45 @@
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/park-cadence):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/park-cadence/host.out
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/park-cadence/state/.supervision-host.log
+1790936806	start	gen=host-4142672-1790936805	primary=claude
+ok - host: parked child-exit sampling uses ordinary half-second sleeps
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/park-cadence):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/park-cadence/host.out
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/park-cadence/state/.supervision-host.log
+1790936806	start	gen=host-4142672-1790936805	primary=claude
+ok - host: the park ends itself with a boundary wake and a stopped watcher
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary/host.out
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary/state/.supervision-host.log
+1790936816	start	gen=host-4146929-1790936813	primary=claude
+1790936820	boundary	after 60s
+not ok - boundary-busy: the host exited without starting the first turn: watcher: started pid=4153750 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary-busy/state/demo.status
+supervision-host: the away session could not take this wake: branch eligibility could not be computed; this wake is yours
+1790936823	start	gen=host-4152480-1790936821	primary=claude
+1790936829	to-main	the away session could not take this wake: branch eligibility could not be computed; this wake is yours
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/park-cadence):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/park-cadence/host.out
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/park-cadence/state/.supervision-host.log
+1790936806	start	gen=host-4142672-1790936805	primary=claude
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary/host.out
+supervision-host: cycle boundary - the host ended its park at its bound; drain, acknowledge, and end the turn, and the next park starts on its own
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary/state/.supervision-host.log
+1790936816	start	gen=host-4146929-1790936813	primary=claude
+1790936820	boundary	after 60s
+
+PRODUCT HOST OUTPUT (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary-busy):
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary-busy/host.out
+watcher: started pid=4153750 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary-busy/state/demo.status
+supervision-host: the away session could not take this wake: branch eligibility could not be computed; this wake is yours
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.gate-test-scratch/tmp/fm-supervision-host.u7Kepr/boundary-busy/state/.supervision-host.log
+1790936823	start	gen=host-4152480-1790936821	primary=claude
+1790936829	to-main	the away session could not take this wake: branch eligibility could not be computed; this wake is yours

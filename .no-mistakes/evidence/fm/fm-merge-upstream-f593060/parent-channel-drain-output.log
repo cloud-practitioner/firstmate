@@ -1,0 +1,15 @@
+Actual fm-wake-drain.sh output, extracted verbatim from this run's shell trace.
+
+REMOTE MATE DRAIN:
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+real-task note: benchmark results are in
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+real-task [key=api-shape] needs-decision: pick REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+
+REMOTE MATE DRAIN WITH OLD PHANTOM CHANNEL CURSORS:
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+real-task note: benchmark results are in
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+real-task [key=api-shape] needs-decision: pick REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'

@@ -1,0 +1,2 @@
+1790934944	start	gen=host-3306884-1790934941	primary=claude
+1790934995	handled	turn=host-3306884-1790934941.1	posture=away	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.test-phase/tmp/fm-supervision-host.G6P5BG/clock-unmarked/state/demo.status

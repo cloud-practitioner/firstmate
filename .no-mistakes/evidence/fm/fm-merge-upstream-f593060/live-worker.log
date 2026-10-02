@@ -1,0 +1,19 @@
+=== LIVE WORKER: queued document get preempts an active reply long poll ===
+document from the real worker
+reply exit=76, elapsed=5s (original poll window=20s)
+=== LIVE WORKER: rearm uses unchanged cursor and preserves the source ===
+schema=fm-remote-delta.v1
+status=delta
+path=state/replies.status
+from_offset=0
+to_offset=27
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=b2b8eaf96bdfd76f8d7d43e3c19afbba6247ccf08084fee6c2c04ba7564d8e1e
+payload_sha256=b2b8eaf96bdfd76f8d7d43e3c19afbba6247ccf08084fee6c2c04ba7564d8e1e
+payload_bytes=27
+reason=
+
+delivered after preemption
+=== LIVE WORKER: cancelled active reply is stopped and reaped; worker remains ready ===
+=== LIVE WORKER: bounded active reply publishes timeout exit=124 ===
+All disposable CLI scenarios passed; exact processes and homes are removed by EXIT cleanup.

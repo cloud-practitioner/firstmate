@@ -1,0 +1,15 @@
+ok - a parent-replies.status in a main home still folds
+ok - a parent-replies.status in a local mate still folds
+
+--- real drain transcript (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.test-phase-tmp/fm-parent-channel-scan-exclusion.KKjwp6/main-home) ---
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+other-task [key=other-task] needs-decision: a genuine sibling task decision
+parent-replies [key=name-only] needs-decision: an ordinary task file that shares the name
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+ok - real drain preserves a name-sharing task outside a remote mate home
+
+--- real drain transcript (/home/node/.no-mistakes/worktrees/450411b3e67c/01M3XTSNQKCZS9HXBS45ERJ5Y3/.test-phase-tmp/fm-parent-channel-scan-exclusion.KKjwp6/local-mate) ---
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+parent-replies [key=local-shape] needs-decision: still an ordinary self-home file
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+ok - real drain preserves a name-sharing task outside a remote mate home

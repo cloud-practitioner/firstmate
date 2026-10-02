@@ -1,0 +1,3 @@
+ok - host: the park ends itself with a boundary wake and a stopped watcher
+not ok - boundary-late: the host neither reached the wake render nor exited: watcher: started pid=3183121 (beacon fresh)
+1790934694	start	gen=host-3180550-1790934686	primary=claude

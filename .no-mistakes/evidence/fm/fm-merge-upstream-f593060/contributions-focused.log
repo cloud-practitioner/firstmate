@@ -1,0 +1,6 @@
+ok - expired child unsupported-forge coverage remains unmeasured
+ok - parent consumes measured child coverage and refuses expired child silence
+ok - budget exhausted mid-observation (exhaust) keeps the prior record and stays silent
+ok - a genuine forge failure inside the budget still records the error and wakes
+ok - a later URL waits when fewer than fifteen seconds remain for its observation
+ok - a read killed at the five-second bound is budget refusal and stays silent

@@ -1,0 +1,1 @@
+arm_pid=3172735	watcher_pid=3173092	origin=started	started_at=1790934673	ended_at=1790934680	exit_code=143	signal=TERM	reason=arm-interrupted	beacon_age=2	lock_before=pid:none|identity:none	lock_after=pid:none|identity:none	successor=none
