@@ -1,0 +1,18 @@
+$ FM_HOME=<tmp> bin/fm-remote-delta-read.sh state/replies.status 0 <empty-sha> 30   # a writer appends 'captain: ship it' after 1.2s
+schema=fm-remote-delta.v1
+status=delta
+path=state/replies.status
+from_offset=0
+to_offset=17
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=5e39045efbbf40c18bf37b4801c36c421f42c56d2e1bf5fd68c359d6149b3d32
+payload_sha256=5e39045efbbf40c18bf37b4801c36c421f42c56d2e1bf5fd68c359d6149b3d32
+payload_bytes=17
+reason=
+
+captain: ship it
+[exit 0] returned after 1.79s (append at 1.2s, default poll 0.5s => expect <~1.8s)
+source log afterwards (unchanged by the read): captain: ship it
+
+$ ... same read at the new offset with no append and a 2s window (expect exit 75 window-closed)
+[exit 75] after 1.71s

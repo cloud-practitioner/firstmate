@@ -1,0 +1,16 @@
+===== zsh zsh 5.9.1 (x86_64-pc-linux-gnu)
+fm_backend_source tmux -> ok
+fm_backend_source herdr -> ok
+fm_backend_source zellij -> ok
+fm_backend_source orca -> ok
+fm_backend_source cmux -> ok
+fm_backend_source bogus -> refused (rc=1)
+PATH intact after sourcing
+===== bash GNU bash, version 5.2.37(1)-release (x86_64-pc-linux-gnu)
+fm_backend_source tmux -> ok
+fm_backend_source herdr -> ok
+fm_backend_source zellij -> ok
+fm_backend_source orca -> ok
+fm_backend_source cmux -> ok
+fm_backend_source bogus -> refused (rc=1)
+PATH intact after sourcing

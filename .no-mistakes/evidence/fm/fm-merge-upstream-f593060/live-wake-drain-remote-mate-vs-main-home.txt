@@ -1,0 +1,47 @@
+===== [HEAD] fm-wake-drain.sh over a remote home (route=remote mate, state/parent-replies.status is its outbound parent channel)
+$ FM_HOME=<lab>/HEAD-remote FM_STATE_OVERRIDE=<lab>/HEAD-remote/state bin/fm-wake-drain.sh
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+real-task note: benchmark results are in
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+real-task [key=api-shape] needs-decision: pick REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+[exit 0]
+--- .status-presentation-cursor:
+real-task	strong:211:1407358:2026-10-02 05:11:20.457766543 +0000	80	0
+
+===== [HEAD] fm-wake-drain.sh over a main home (main home, parent-replies.status is just a task named that)
+$ FM_HOME=<lab>/HEAD-main FM_STATE_OVERRIDE=<lab>/HEAD-main/state bin/fm-wake-drain.sh
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+other-task [key=other-task] needs-decision: a genuine sibling task decision
+parent-replies [key=name-only] needs-decision: an ordinary task file that shares the name
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+[exit 0]
+--- .status-presentation-cursor:
+other-task	strong:211:1407370:2026-10-02 05:11:20.461877365 +0000	0	0
+parent-replies	strong:211:1407369:2026-10-02 05:11:20.461877365 +0000	0	0
+
+===== [BASE] fm-wake-drain.sh over a remote home (route=remote mate, state/parent-replies.status is its outbound parent channel)
+$ FM_HOME=<lab>/BASE-remote FM_STATE_OVERRIDE=<lab>/BASE-remote/state bin/fm-wake-drain.sh
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+parent-replies note: the release branch is cut
+real-task note: benchmark results are in
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+parent-replies [key=captain-hold-pr-7-1] needs-decision: captain hold pr-7: merge the green PR?
+real-task [key=api-shape] needs-decision: pick REST or RPC
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+[exit 0]
+--- .status-presentation-cursor:
+parent-replies	strong:211:1407602:2026-10-02 05:11:23.210428343 +0000	113	0
+real-task	strong:211:1407603:2026-10-02 05:11:23.210428343 +0000	80	0
+
+===== [BASE] fm-wake-drain.sh over a main home (main home, parent-replies.status is just a task named that)
+$ FM_HOME=<lab>/BASE-main FM_STATE_OVERRIDE=<lab>/BASE-main/state bin/fm-wake-drain.sh
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+other-task [key=other-task] needs-decision: a genuine sibling task decision
+parent-replies [key=name-only] needs-decision: an ordinary task file that shares the name
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+[exit 0]
+--- .status-presentation-cursor:
+other-task	strong:211:1407609:2026-10-02 05:11:23.210428343 +0000	0	0
+parent-replies	strong:211:1407608:2026-10-02 05:11:23.210428343 +0000	0	0
+
