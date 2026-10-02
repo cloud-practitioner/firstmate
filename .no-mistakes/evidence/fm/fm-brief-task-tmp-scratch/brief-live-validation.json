@@ -1,0 +1,126 @@
+[
+  {
+    "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/bin/fm-brief.sh live-no-mistakes firstmate --mode no-mistakes",
+    "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home",
+    "state_override": null,
+    "stdout": "scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/data/live-no-mistakes/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})\n",
+    "stderr": "",
+    "brief": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/data/live-no-mistakes/brief.md",
+    "observed_contract": {
+      "permission": "2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.",
+      "scratch_rule": "   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/state/live-no-mistakes.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.",
+      "decoded_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/state/live-no-mistakes.tasktmp"
+    },
+    "artifact": "/home/node/.no-mistakes/evidence/01M3ZFZSTC6HHJWFSYAXAYC82K/generated-no-mistakes-brief.md"
+  },
+  {
+    "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/bin/fm-brief.sh live-direct-PR firstmate --mode direct-PR",
+    "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home",
+    "state_override": null,
+    "stdout": "scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/data/live-direct-PR/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})\n",
+    "stderr": "",
+    "brief": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/data/live-direct-PR/brief.md",
+    "observed_contract": {
+      "permission": "2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.",
+      "scratch_rule": "   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/state/live-direct-PR.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.",
+      "decoded_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/state/live-direct-PR.tasktmp"
+    },
+    "artifact": "/home/node/.no-mistakes/evidence/01M3ZFZSTC6HHJWFSYAXAYC82K/generated-direct-PR-brief.md"
+  },
+  {
+    "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/bin/fm-brief.sh live-local-only firstmate --mode local-only",
+    "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home",
+    "state_override": null,
+    "stdout": "scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/data/live-local-only/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})\n",
+    "stderr": "",
+    "brief": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/data/live-local-only/brief.md",
+    "observed_contract": {
+      "permission": "2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.",
+      "scratch_rule": "   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/state/live-local-only.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.",
+      "decoded_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/state/live-local-only.tasktmp"
+    },
+    "artifact": "/home/node/.no-mistakes/evidence/01M3ZFZSTC6HHJWFSYAXAYC82K/generated-local-only-brief.md"
+  },
+  {
+    "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/bin/fm-brief.sh live-scout firstmate --scout",
+    "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home",
+    "state_override": null,
+    "stdout": "scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/data/live-scout/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})\n",
+    "stderr": "",
+    "brief": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/data/live-scout/brief.md",
+    "observed_contract": {
+      "permission": "2. Stay inside this worktree; the only files you may write outside it are the report, the status file below, and scratch files under your task temp root.",
+      "scratch_rule": "   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/state/live-scout.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.",
+      "decoded_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/ordinary-home/state/live-scout.tasktmp"
+    },
+    "artifact": "/home/node/.no-mistakes/evidence/01M3ZFZSTC6HHJWFSYAXAYC82K/generated-scout-brief.md"
+  },
+  {
+    "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/bin/fm-brief.sh same-task firstmate --mode no-mistakes",
+    "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/lane one's home",
+    "state_override": null,
+    "stdout": "scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/lane one's home/data/same-task/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})\n",
+    "stderr": "",
+    "brief": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/lane one's home/data/same-task/brief.md",
+    "observed_contract": {
+      "permission": "2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.",
+      "scratch_rule": "   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/lane one'\\''s home/state/same-task.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.",
+      "decoded_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/lane one's home/state/same-task.tasktmp"
+    },
+    "artifact": "/home/node/.no-mistakes/evidence/01M3ZFZSTC6HHJWFSYAXAYC82K/concurrent-lane-1-brief.md"
+  },
+  {
+    "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/bin/fm-brief.sh same-task firstmate --scout",
+    "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/lane two home",
+    "state_override": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/separate state's root",
+    "stdout": "scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/lane two home/data/same-task/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})\n",
+    "stderr": "",
+    "brief": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/lane two home/data/same-task/brief.md",
+    "observed_contract": {
+      "permission": "2. Stay inside this worktree; the only files you may write outside it are the report, the status file below, and scratch files under your task temp root.",
+      "scratch_rule": "   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/separate state'\\''s root/same-task.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.",
+      "decoded_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/separate state's root/same-task.tasktmp"
+    },
+    "artifact": "/home/node/.no-mistakes/evidence/01M3ZFZSTC6HHJWFSYAXAYC82K/concurrent-lane-2-brief.md"
+  },
+  {
+    "concurrent_result": "Same task ID emits distinct home-specific scratch roots; quoted paths decode without splitting; explicit state override honored.",
+    "roots": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/lane one's home/state/same-task.tasktmp",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/separate state's root/same-task.tasktmp"
+    ]
+  },
+  {
+    "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/baseline/bin/fm-brief.sh regression firstmate --mode no-mistakes",
+    "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/baseline-no-mistakes",
+    "state_override": null,
+    "stdout": "scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/baseline-no-mistakes/data/regression/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})\n",
+    "stderr": "",
+    "brief": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/baseline-no-mistakes/data/regression/brief.md",
+    "regression": "Pre-change emitted brief fails the task-scratch contract; target passes.",
+    "artifact": "/home/node/.no-mistakes/evidence/01M3ZFZSTC6HHJWFSYAXAYC82K/baseline-no-mistakes-brief.md"
+  },
+  {
+    "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/baseline/bin/fm-brief.sh regression firstmate --scout",
+    "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/baseline-scout",
+    "state_override": null,
+    "stdout": "scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/baseline-scout/data/regression/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})\n",
+    "stderr": "",
+    "brief": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZFZSTC6HHJWFSYAXAYC82K/.brief-live-f9tth29f/baseline-scout/data/regression/brief.md",
+    "regression": "Pre-change emitted brief fails the task-scratch contract; target passes.",
+    "artifact": "/home/node/.no-mistakes/evidence/01M3ZFZSTC6HHJWFSYAXAYC82K/baseline-scout-brief.md"
+  },
+  {
+    "test_selector": "tests/fm-brief.test.sh::test_scaffolds_name_task_temp_root_for_scratch",
+    "target": {
+      "exit_code": 0,
+      "stdout": "ok - fm-brief: scaffolds leave the worker role scope to the launch boundary and keep the secondmate contract\nok - fm-brief.sh: ship and scout scaffolds keep scratch and --intent files in the task temp root\n",
+      "stderr": ""
+    },
+    "baseline": {
+      "exit_code": 1,
+      "stdout": "ok - fm-brief: scaffolds leave the worker role scope to the launch boundary and keep the secondmate contract\n",
+      "stderr": "not ok - ship:no-mistakes brief did not name the task temp root\n"
+    }
+  }
+]
