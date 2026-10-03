@@ -4645,6 +4645,49 @@ test_historical_self_inventory_has_workable_repair
 test_inventory_compares_backend_identities
 test_origin_is_never_its_own_inventory_entry
 test_complete_refuses_an_entry_held_for_another_origin
+
+# Done retention prunes an answered captain call out of the live backlog into
+# the archive; the completion gate must still see its recorded answer there,
+# while an archived row with no recorded answer stays refused.
+test_verify_accepts_an_answered_call_pruned_to_the_archive() {
+  local home id err
+  home=$(make_home verify-archived-answer)
+  id=sample-archive-review
+  mkdir -p "$home/data/$id"
+  tasks_in "$home" add "$id" "Investigate archive" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the archive origin"
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  printf '# Archive review\n\nTwo captain choices remain.\n' > "$home/data/$id/report.md"
+  run_captain "$home" hold sample-archived-call \
+    --title "Choose archived option" --reason "captain choice pending" --repo sample >/dev/null \
+    || fail "could not hold the archived call"
+  run_captain "$home" complete "$id" sample-archived-call >/dev/null \
+    || fail "completion failed for the held inventory"
+  printf 'Captain chose the archived option.\n' > "$home/archived-decision.txt"
+  run_captain "$home" answer sample-archived-call --decision-file "$home/archived-decision.txt" >/dev/null \
+    || fail "could not answer the archived call"
+  tasks_in "$home" prune --keep 0 >/dev/null || fail "could not prune the Done section"
+  assert_grep "sample-archived-call" "$home/data/done-archive.md" "the answered call was not archived"
+  if tasks_in "$home" show sample-archived-call >/dev/null 2>&1; then
+    fail "fixture left the answered call in the live backlog"
+  fi
+
+  run_captain "$home" verify "$id" >/dev/null 2> "$home/archived.err" \
+    || fail "an answered captain call pruned to the archive did not satisfy the gate: $(cat "$home/archived.err")"
+
+  # An archived row carrying no recorded captain answer is still refused.
+  tasks_in "$home" add sample-unanswered-call "Unanswered" --kind captain --repo sample >/dev/null \
+    || fail "could not add the unanswered row"
+  tasks_in "$home" "done" sample-unanswered-call --keep 0 >/dev/null || fail "could not archive the unanswered row"
+  assert_grep "sample-unanswered-call" "$home/data/done-archive.md" "the unanswered row was not archived"
+  printf 'decision_keys=sample-archived-call,sample-unanswered-call\n' >> "$home/state/$id.meta"
+  if run_captain "$home" verify "$id" > "$home/unanswered.out" 2> "$home/unanswered.err"; then
+    fail "an archived row with no recorded captain answer satisfied the gate"
+  fi
+  pass "verify accepts an answered call pruned to the archive and still refuses unanswered ones"
+}
+
 test_uninventoried_report_decision_refuses_completion
 test_hold_decodes_a_bare_scalar_body_without_the_nonref_default
 test_retained_body_keeps_its_utf8_bytes
@@ -4701,3 +4744,4 @@ test_verify_names_the_unresolvable_legacy_id_once
 test_verify_resolves_a_pre_collapse_key_through_its_derived_marker
 test_captain_hold_mutations_address_the_beads_backend
 test_hold_creates_a_captain_row_when_beads_requires_due_without_custom_type
+test_verify_accepts_an_answered_call_pruned_to_the_archive

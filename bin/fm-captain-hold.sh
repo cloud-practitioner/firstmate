@@ -150,7 +150,9 @@
 # `verify` is read-only and is called by scout teardown, so teardown cannot
 # erase a source before this gate has succeeded: every recorded inventory
 # entry must still satisfy the same durability and origin checks as `complete`,
-# and no keyed status decision may be open.
+# and no keyed status decision may be open. An answered call that Done retention
+# pruned into the markdown archive stays durable when it carries a recorded
+# captain answer; an archived row without one does not.
 # Metadata compatibility: the attestation keeps the historical
 # `decisions_reviewed=1` and `decision_keys=` keys, and an inventory entry that
 # names no existing task resolves through the legacy `<origin>-decision-<entry>`
@@ -539,6 +541,35 @@ verify_hold_durable() {  # <task-id>
   fail "captain-held task $id is neither held for the captain nor closed with a recorded captain answer"
 }
 
+# Done retention moves a closed row from the live backlog into the markdown
+# archive, where tasks-axi cannot show it. The archive keeps each row as a
+# "- [x] <id> - ..." line followed by its body indented two spaces, so the
+# newest archived row for <id> is read directly and judged by the same
+# resolution-record test as a live row. The archive is the configured
+# `[markdown] archive` of the backlog's root, else done-archive.md beside the
+# backlog; any other backend has no such file and reports no archived answer.
+archived_answer_recorded() {  # <task-id>; prints the unindented answered body
+  local id=$1 data root archive body
+  data=$(fm_backlog_data_absolute "$DATA") || return 1
+  root=$(fm_backlog_root "$data") || return 1
+  [ "$(fm_tasks_axi_backend "$root" 2>/dev/null)" = markdown ] || return 1
+  archive=$(sed -n '/^\[markdown\]/,/^\[/s/^archive[[:space:]]*=[[:space:]]*"\(.*\)"[[:space:]]*$/\1/p' \
+    "$root/.tasks.toml" 2>/dev/null | head -1)
+  case "$archive" in
+    '') archive=$data/done-archive.md ;;
+    /*) ;;
+    *) archive=$root/$archive ;;
+  esac
+  [ -f "$archive" ] || return 1
+  body=$(awk -v id="$id" '
+    /^(- \[|## )/ { if (hit) last = body; hit = (index($0, "] " id " - ") == 5); body = ""; found = found || hit; next }
+    hit && /^  / { body = body $0 "\n" }
+    END { if (hit) last = body; if (found) printf "%s", last }
+  ' "$archive")
+  body_has_resolution_record "$body" || return 1
+  printf '%s' "$body" | sed 's/^  //'
+}
+
 # --- migrated legacy-id resolution on the Beads backend ---------------------
 #
 # A home that moved its backlog from markdown to Beads no longer carries the
@@ -860,29 +891,44 @@ refuse_self_inventory() {
 
 # Resolve one entry and verify the row it names is durably captain-held. A
 # resolution failure that is not the read bound keeps resolve_entry's own
-# status - its stderr already named the entry; 124 means the backend never
+# status and diagnostic; 124 means the backend never
 # answered, which is not the same as an unknown entry and must not be spent
 # as absence. The result carries the attestation evidence and whether an
 # origin was recorded, so completion can disclose the legacy fallback.
 verify_entry_durable() {  # <origin-or-empty> <entry>; prints "<id> <how> <origin-state>"
-  local origin=$1 entry=$2 resolved resolve_status=0 id how stored origin_state=unrecorded origin_id stored_id
+  local origin=$1 entry=$2 resolved resolve_status=0 id how stored origin_state=unrecorded origin_id stored_id archived_body
   # The origin task is never its own captain-call inventory: it is the work the
   # calls were found in, so accepting it would let a refused hold look recorded.
   if [ -n "$origin" ] && [ "$origin" != "$BINDING_ANY" ] && [ "$entry" = "$origin" ]; then
     refuse_self_inventory "$origin" "$entry"
   fi
-  resolved=$(resolve_entry "$origin" "$entry") || resolve_status=$?
+  resolved=$(resolve_entry "$origin" "$entry" 2>&1) || resolve_status=$?
+  # Current exact and legacy rows take precedence over earlier archived calls.
+  if [ "$resolve_status" -eq 1 ]; then
+    for id in "$entry" "${origin:+$(legacy_hold_id "$origin" "$entry")}"; do
+      [ -n "$id" ] || continue
+      if archived_body=$(archived_answer_recorded "$id"); then
+        resolved="$id archived"
+        stored=$(body_hold_origin "$archived_body")
+        resolve_status=0
+        break
+      fi
+    done
+  fi
   if [ "$resolve_status" -ne 0 ]; then
+    printf '%s\n' "$resolved" >&2
     [ "$resolve_status" -ne 124 ] \
       || fail "the backlog backend exceeded its read bound resolving $entry"
     exit "$resolve_status"
   fi
   id=${resolved%% *}
   how=${resolved##* }
-  verify_hold_durable "$id"
-  id=$(show_field_value "$TASK_SHOW_OUTPUT" id)
+  if [ "$how" != archived ]; then
+    verify_hold_durable "$id"
+    id=$(show_field_value "$TASK_SHOW_OUTPUT" id)
+    stored=$(body_hold_origin "$(decode_shown_value "$(show_field "$TASK_SHOW_OUTPUT" body)")")
+  fi
   validate_slug backend-task-id "$id"
-  stored=$(body_hold_origin "$(decode_shown_value "$(show_field "$TASK_SHOW_OUTPUT" body)")")
   origin_id=$origin
   if [ -n "$origin" ] && [ "$origin" != "$BINDING_ANY" ]; then
     origin_id=$(task_identity "$origin") || exit $?
