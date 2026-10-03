@@ -1,0 +1,21 @@
+ok - canonical Bitbucket Cloud pull request URLs parse
+ok - malformed Bitbucket URLs, other forges' shapes on bitbucket.org, and Data Center URLs are refused
+ok - the Bitbucket record read reports state and merged, refuses another record, and keeps the token out of argv
+ok - the status read follows pagination and refuses a next link that leaves the API base
+ok - fm-pr-check records a Bitbucket pull request with its full head and arms the poll
+ok - fm-pr-check refuses a draft Bitbucket pull request
+ok - fm-pr-check refuses a Bitbucket watch without the credential and names it
+ok - the Bitbucket merge poll wakes only on the exact merged record and stays silent otherwise
+ok - fm-pr-state reports a Bitbucket pull request's state, draft, builds, and requested changes
+ok - fm-pr-merge merges a green Bitbucket pull request, keeps its branch, and proves the merge by reading it back
+ok - fm-pr-merge sends a requested Bitbucket strategy and refuses arguments it cannot translate
+ok - fm-pr-merge refuses red builds, an unmet required build count, and an unreadable restriction set
+ok - fm-pr-merge refuses a draft, a closed pull request, and a missing credential
+ok - Bitbucket build waivers match the exact key, stay attended-only, and --allow-missing is refused
+ok - a Bitbucket merge under away authority stays synchronous, records that authority, and keeps the green gate
+ok - fm-pr-merge re-reads the Bitbucket head immediately before merging and refuses a moved head
+ok - fm-pr-merge quotes Bitbucket's refusal, leaves an unconfirmed merge armed, and flags a landed head it did not verify
+ok - fm-pr-merge refuses a Bitbucket pull request that misses an approval, default-reviewer, changes-requested, or task merge check
+ok - fm-pr-merge reads a Bitbucket pull request back after its merge request got no response
+
+Initial invocation exceeded its 120-second command budget after all case output. The 300-second rerun completed with exit 0; see bitbucket-regression-tests-rerun.log.

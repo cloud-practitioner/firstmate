@@ -1,0 +1,2515 @@
+{
+  "environment": "Unmodified real Firstmate CLI, real jq and curl, disposable stateful Bitbucket-compatible TLS API at loopback only; no cloud repository or real credentials accessed.",
+  "curl": "curl 8.14.1 (x86_64-pc-linux-gnu) libcurl/8.14.1 OpenSSL/3.5.7 zlib/1.3.1 brotli/1.1.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.2 libssh2/1.11.1 nghttp2/1.64.0 nghttp3/1.8.0 librtmp/2.3 OpenLDAP/2.6.10",
+  "observations": [
+    {
+      "name": "baseline-feature-met",
+      "version": "base 93d82355",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/base/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/baseline-feature-met/pull-requests/7",
+      "destination": "feature/login",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "feature",
+        "value": 1
+      },
+      "model": {
+        "development": {
+          "name": "main",
+          "use_mainbranch": true,
+          "branch": {
+            "name": "main"
+          }
+        },
+        "production": {
+          "name": "production",
+          "branch": {
+            "name": "production"
+          }
+        },
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "release/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "feature/"
+          }
+        ]
+      },
+      "exit_code": 1,
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/baseline-feature-met/pull-requests/7\n  - the branch restrictions for base branch feature/login could not be interpreted, so an unmet merge check cannot be ruled out\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/baseline-feature-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "4f2e1307b0cf",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "feature/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/baseline-feature-met/commit/4f2e1307b0cf?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "4f2e1307b0cfadf8a6927fa4c930d207f1e6a188"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/baseline-feature-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "4f2e1307b0cf",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "feature/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/baseline-feature-met/commit/4f2e1307b0cf?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "4f2e1307b0cfadf8a6927fa4c930d207f1e6a188"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/baseline-feature-met/commit/4f2e1307b0cfadf8a6927fa4c930d207f1e6a188/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/baseline-feature-met/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "feature",
+                "value": 1
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/baseline-feature-met/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "development": {
+              "name": "main",
+              "use_mainbranch": true,
+              "branch": {
+                "name": "main"
+              }
+            },
+            "production": {
+              "name": "production",
+              "branch": {
+                "name": "production"
+              }
+            },
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "release/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "feature/"
+              }
+            ]
+          }
+        }
+      ],
+      "persisted_api_state": "OPEN",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/baseline-feature-met/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/baseline-feature-met/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/baseline-feature-met/pull-requests/7\npr_head=4f2e1307b0cfadf8a6927fa4c930d207f1e6a188\n",
+      "merge_outcome_recorded": false,
+      "errors": [],
+      "result": "pass"
+    },
+    {
+      "name": "feature-met",
+      "version": "target 3fdcaa00",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/feature-met/pull-requests/7",
+      "destination": "feature/login",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "feature",
+        "value": 1
+      },
+      "model": {
+        "development": {
+          "name": "main",
+          "use_mainbranch": true,
+          "branch": {
+            "name": "main"
+          }
+        },
+        "production": {
+          "name": "production",
+          "branch": {
+            "name": "production"
+          }
+        },
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "release/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "feature/"
+          }
+        ]
+      },
+      "exit_code": 0,
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/feature-met/pull-requests/7 is merged at the verified head 9581f186df270670ff2dba6d51674b0a462f8a86\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/feature-met/pull-requests/7 is open, with every unwaived build green and every merge check met at head 9581f186df270670ff2dba6d51674b0a462f8a86\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "9581f186df27",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "feature/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/commit/9581f186df27?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "9581f186df270670ff2dba6d51674b0a462f8a86"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "9581f186df27",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "feature/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/commit/9581f186df27?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "9581f186df270670ff2dba6d51674b0a462f8a86"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/commit/9581f186df270670ff2dba6d51674b0a462f8a86/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "feature",
+                "value": 1
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "development": {
+              "name": "main",
+              "use_mainbranch": true,
+              "branch": {
+                "name": "main"
+              }
+            },
+            "production": {
+              "name": "production",
+              "branch": {
+                "name": "production"
+              }
+            },
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "release/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "feature/"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "9581f186df27",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "feature/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/commit/9581f186df27?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "9581f186df270670ff2dba6d51674b0a462f8a86"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/2.0/repositories/fm-lab/feature-met/pullrequests/7/merge",
+          "request_body": {
+            "type": "pullrequest",
+            "close_source_branch": false
+          },
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "9581f186df27",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "feature/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "9581f186df27",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "feature/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        }
+      ],
+      "persisted_api_state": "MERGED",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/feature-met/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/feature-met/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/feature-met/pull-requests/7\npr_head=9581f186df270670ff2dba6d51674b0a462f8a86\n",
+      "merge_outcome_recorded": true,
+      "errors": [],
+      "result": "pass"
+    },
+    {
+      "name": "feature-unmet",
+      "version": "target 3fdcaa00",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/feature-unmet/pull-requests/7",
+      "destination": "feature/login",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "feature",
+        "value": 2
+      },
+      "model": {
+        "development": {
+          "name": "main",
+          "use_mainbranch": true,
+          "branch": {
+            "name": "main"
+          }
+        },
+        "production": {
+          "name": "production",
+          "branch": {
+            "name": "production"
+          }
+        },
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "release/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "feature/"
+          }
+        ]
+      },
+      "exit_code": 1,
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/feature-unmet/pull-requests/7\n  - base branch feature/login requires 2 successful builds, and 1 reported at head 2e09aff571ce32f8f29e15a33845a899626b3221\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-unmet/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "2e09aff571ce",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "feature/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-unmet/commit/2e09aff571ce?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "2e09aff571ce32f8f29e15a33845a899626b3221"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-unmet/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "2e09aff571ce",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "feature/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-unmet/commit/2e09aff571ce?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "2e09aff571ce32f8f29e15a33845a899626b3221"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-unmet/commit/2e09aff571ce32f8f29e15a33845a899626b3221/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-unmet/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "feature",
+                "value": 2
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/feature-unmet/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "development": {
+              "name": "main",
+              "use_mainbranch": true,
+              "branch": {
+                "name": "main"
+              }
+            },
+            "production": {
+              "name": "production",
+              "branch": {
+                "name": "production"
+              }
+            },
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "release/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "feature/"
+              }
+            ]
+          }
+        }
+      ],
+      "persisted_api_state": "OPEN",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/feature-unmet/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/feature-unmet/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/feature-unmet/pull-requests/7\npr_head=2e09aff571ce32f8f29e15a33845a899626b3221\n",
+      "merge_outcome_recorded": false,
+      "errors": [],
+      "result": "pass"
+    },
+    {
+      "name": "other-branch",
+      "version": "target 3fdcaa00",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/other-branch/pull-requests/7",
+      "destination": "main",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "feature",
+        "value": 3
+      },
+      "model": {
+        "development": {
+          "name": "main",
+          "use_mainbranch": true,
+          "branch": {
+            "name": "main"
+          }
+        },
+        "production": {
+          "name": "production",
+          "branch": {
+            "name": "production"
+          }
+        },
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "release/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "feature/"
+          }
+        ]
+      },
+      "exit_code": 0,
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/other-branch/pull-requests/7 is merged at the verified head 7c65e2bdc587eeef4c6f192883f35abf1ac0b019\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/other-branch/pull-requests/7 is open, with every unwaived build green and every merge check met at head 7c65e2bdc587eeef4c6f192883f35abf1ac0b019\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "7c65e2bdc587",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "main"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/commit/7c65e2bdc587?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "7c65e2bdc587eeef4c6f192883f35abf1ac0b019"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "7c65e2bdc587",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "main"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/commit/7c65e2bdc587?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "7c65e2bdc587eeef4c6f192883f35abf1ac0b019"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/commit/7c65e2bdc587eeef4c6f192883f35abf1ac0b019/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "feature",
+                "value": 3
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "development": {
+              "name": "main",
+              "use_mainbranch": true,
+              "branch": {
+                "name": "main"
+              }
+            },
+            "production": {
+              "name": "production",
+              "branch": {
+                "name": "production"
+              }
+            },
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "release/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "feature/"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "7c65e2bdc587",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "main"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/commit/7c65e2bdc587?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "7c65e2bdc587eeef4c6f192883f35abf1ac0b019"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/2.0/repositories/fm-lab/other-branch/pullrequests/7/merge",
+          "request_body": {
+            "type": "pullrequest",
+            "close_source_branch": false
+          },
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "7c65e2bdc587",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "main"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/other-branch/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "7c65e2bdc587",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "main"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        }
+      ],
+      "persisted_api_state": "MERGED",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/other-branch/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/other-branch/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/other-branch/pull-requests/7\npr_head=7c65e2bdc587eeef4c6f192883f35abf1ac0b019\n",
+      "merge_outcome_recorded": true,
+      "errors": [],
+      "result": "pass"
+    },
+    {
+      "name": "near-prefix",
+      "version": "target 3fdcaa00",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/near-prefix/pull-requests/7",
+      "destination": "features/login",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "feature",
+        "value": 3
+      },
+      "model": {
+        "development": {
+          "name": "main",
+          "use_mainbranch": true,
+          "branch": {
+            "name": "main"
+          }
+        },
+        "production": {
+          "name": "production",
+          "branch": {
+            "name": "production"
+          }
+        },
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "release/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "feature/"
+          }
+        ]
+      },
+      "exit_code": 0,
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/near-prefix/pull-requests/7 is merged at the verified head ab1cbe9e1b42553c877bae9164f6f6696253a701\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/near-prefix/pull-requests/7 is open, with every unwaived build green and every merge check met at head ab1cbe9e1b42553c877bae9164f6f6696253a701\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "ab1cbe9e1b42",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "features/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/commit/ab1cbe9e1b42?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "ab1cbe9e1b42553c877bae9164f6f6696253a701"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "ab1cbe9e1b42",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "features/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/commit/ab1cbe9e1b42?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "ab1cbe9e1b42553c877bae9164f6f6696253a701"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/commit/ab1cbe9e1b42553c877bae9164f6f6696253a701/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "feature",
+                "value": 3
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "development": {
+              "name": "main",
+              "use_mainbranch": true,
+              "branch": {
+                "name": "main"
+              }
+            },
+            "production": {
+              "name": "production",
+              "branch": {
+                "name": "production"
+              }
+            },
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "release/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "feature/"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "ab1cbe9e1b42",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "features/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/commit/ab1cbe9e1b42?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "ab1cbe9e1b42553c877bae9164f6f6696253a701"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/2.0/repositories/fm-lab/near-prefix/pullrequests/7/merge",
+          "request_body": {
+            "type": "pullrequest",
+            "close_source_branch": false
+          },
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "ab1cbe9e1b42",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "features/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/near-prefix/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "ab1cbe9e1b42",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "features/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        }
+      ],
+      "persisted_api_state": "MERGED",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/near-prefix/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/near-prefix/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/near-prefix/pull-requests/7\npr_head=ab1cbe9e1b42553c877bae9164f6f6696253a701\n",
+      "merge_outcome_recorded": true,
+      "errors": [],
+      "result": "pass"
+    },
+    {
+      "name": "custom-prefix-met",
+      "version": "target 3fdcaa00",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/custom-prefix-met/pull-requests/7",
+      "destination": "topic/login",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "feature",
+        "value": 1
+      },
+      "model": {
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "topic/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "topic/"
+          }
+        ]
+      },
+      "exit_code": 0,
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/custom-prefix-met/pull-requests/7 is merged at the verified head 5df35e34a641a8e0bf123acfc027e0917c685c20\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/custom-prefix-met/pull-requests/7 is open, with every unwaived build green and every merge check met at head 5df35e34a641a8e0bf123acfc027e0917c685c20\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "5df35e34a641",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "topic/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/commit/5df35e34a641?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "5df35e34a641a8e0bf123acfc027e0917c685c20"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "5df35e34a641",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "topic/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/commit/5df35e34a641?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "5df35e34a641a8e0bf123acfc027e0917c685c20"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/commit/5df35e34a641a8e0bf123acfc027e0917c685c20/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "feature",
+                "value": 1
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "topic/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "topic/"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "5df35e34a641",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "topic/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/commit/5df35e34a641?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "5df35e34a641a8e0bf123acfc027e0917c685c20"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/pullrequests/7/merge",
+          "request_body": {
+            "type": "pullrequest",
+            "close_source_branch": false
+          },
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "5df35e34a641",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "topic/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "5df35e34a641",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "topic/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        }
+      ],
+      "persisted_api_state": "MERGED",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/custom-prefix-met/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/custom-prefix-met/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/custom-prefix-met/pull-requests/7\npr_head=5df35e34a641a8e0bf123acfc027e0917c685c20\n",
+      "merge_outcome_recorded": true,
+      "errors": [],
+      "result": "pass"
+    },
+    {
+      "name": "custom-prefix-unmet",
+      "version": "target 3fdcaa00",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/custom-prefix-unmet/pull-requests/7",
+      "destination": "topic/login",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "feature",
+        "value": 2
+      },
+      "model": {
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "topic/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "topic/"
+          }
+        ]
+      },
+      "exit_code": 1,
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/custom-prefix-unmet/pull-requests/7\n  - base branch topic/login requires 2 successful builds, and 1 reported at head 1bc707ddb1edac28edd9ea8182e3d54cc36cf0bd\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-unmet/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "1bc707ddb1ed",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "topic/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-unmet/commit/1bc707ddb1ed?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "1bc707ddb1edac28edd9ea8182e3d54cc36cf0bd"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-unmet/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "1bc707ddb1ed",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "topic/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-unmet/commit/1bc707ddb1ed?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "1bc707ddb1edac28edd9ea8182e3d54cc36cf0bd"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-unmet/commit/1bc707ddb1edac28edd9ea8182e3d54cc36cf0bd/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-unmet/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "feature",
+                "value": 2
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/custom-prefix-unmet/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "topic/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "topic/"
+              }
+            ]
+          }
+        }
+      ],
+      "persisted_api_state": "OPEN",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/custom-prefix-unmet/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/custom-prefix-unmet/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/custom-prefix-unmet/pull-requests/7\npr_head=1bc707ddb1edac28edd9ea8182e3d54cc36cf0bd\n",
+      "merge_outcome_recorded": false,
+      "errors": [],
+      "result": "pass"
+    },
+    {
+      "name": "wrong-type",
+      "version": "target 3fdcaa00",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/wrong-type/pull-requests/7",
+      "destination": "release/login",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "feature",
+        "value": 3
+      },
+      "model": {
+        "development": {
+          "name": "main",
+          "use_mainbranch": true,
+          "branch": {
+            "name": "main"
+          }
+        },
+        "production": {
+          "name": "production",
+          "branch": {
+            "name": "production"
+          }
+        },
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "release/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "feature/"
+          }
+        ]
+      },
+      "exit_code": 0,
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/wrong-type/pull-requests/7 is merged at the verified head a9a4b42e18059697fdae9d3dd32346ecc9b734fb\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/wrong-type/pull-requests/7 is open, with every unwaived build green and every merge check met at head a9a4b42e18059697fdae9d3dd32346ecc9b734fb\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "a9a4b42e1805",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "release/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/commit/a9a4b42e1805?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "a9a4b42e18059697fdae9d3dd32346ecc9b734fb"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "a9a4b42e1805",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "release/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/commit/a9a4b42e1805?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "a9a4b42e18059697fdae9d3dd32346ecc9b734fb"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/commit/a9a4b42e18059697fdae9d3dd32346ecc9b734fb/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "feature",
+                "value": 3
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "development": {
+              "name": "main",
+              "use_mainbranch": true,
+              "branch": {
+                "name": "main"
+              }
+            },
+            "production": {
+              "name": "production",
+              "branch": {
+                "name": "production"
+              }
+            },
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "release/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "feature/"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "a9a4b42e1805",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "release/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/commit/a9a4b42e1805?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "a9a4b42e18059697fdae9d3dd32346ecc9b734fb"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/2.0/repositories/fm-lab/wrong-type/pullrequests/7/merge",
+          "request_body": {
+            "type": "pullrequest",
+            "close_source_branch": false
+          },
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "a9a4b42e1805",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "release/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/wrong-type/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "a9a4b42e1805",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "release/login"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        }
+      ],
+      "persisted_api_state": "MERGED",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/wrong-type/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/wrong-type/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/wrong-type/pull-requests/7\npr_head=a9a4b42e18059697fdae9d3dd32346ecc9b734fb\n",
+      "merge_outcome_recorded": true,
+      "errors": [],
+      "result": "pass"
+    },
+    {
+      "name": "development-unmet",
+      "version": "target 3fdcaa00",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/development-unmet/pull-requests/7",
+      "destination": "main",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "development",
+        "value": 2
+      },
+      "model": {
+        "development": {
+          "name": "main",
+          "use_mainbranch": true,
+          "branch": {
+            "name": "main"
+          }
+        },
+        "production": {
+          "name": "production",
+          "branch": {
+            "name": "production"
+          }
+        },
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "release/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "feature/"
+          }
+        ]
+      },
+      "exit_code": 1,
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/development-unmet/pull-requests/7\n  - base branch main requires 2 successful builds, and 1 reported at head 53b883f48b5a0716954be49ce4f5ffbe321d1842\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/development-unmet/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "53b883f48b5a",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "main"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/development-unmet/commit/53b883f48b5a?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "53b883f48b5a0716954be49ce4f5ffbe321d1842"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/development-unmet/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "53b883f48b5a",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "main"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/development-unmet/commit/53b883f48b5a?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "53b883f48b5a0716954be49ce4f5ffbe321d1842"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/development-unmet/commit/53b883f48b5a0716954be49ce4f5ffbe321d1842/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/development-unmet/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "development",
+                "value": 2
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/development-unmet/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "development": {
+              "name": "main",
+              "use_mainbranch": true,
+              "branch": {
+                "name": "main"
+              }
+            },
+            "production": {
+              "name": "production",
+              "branch": {
+                "name": "production"
+              }
+            },
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "release/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "feature/"
+              }
+            ]
+          }
+        }
+      ],
+      "persisted_api_state": "OPEN",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/development-unmet/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/development-unmet/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/development-unmet/pull-requests/7\npr_head=53b883f48b5a0716954be49ce4f5ffbe321d1842\n",
+      "merge_outcome_recorded": false,
+      "errors": [],
+      "result": "pass"
+    },
+    {
+      "name": "production-met",
+      "version": "target 3fdcaa00",
+      "command": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-lab/production-met/pull-requests/7",
+      "destination": "production",
+      "restriction": {
+        "kind": "require_passing_builds_to_merge",
+        "branch_match_kind": "branching_model",
+        "branch_type": "production",
+        "value": 1
+      },
+      "model": {
+        "development": {
+          "name": "main",
+          "use_mainbranch": true,
+          "branch": {
+            "name": "main"
+          }
+        },
+        "production": {
+          "name": "production",
+          "branch": {
+            "name": "production"
+          }
+        },
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "release/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "feature/"
+          }
+        ]
+      },
+      "exit_code": 0,
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/production-met/pull-requests/7 is merged at the verified head bc4de6b09d44f8d68d56e297664fdbc25cb093ee\n",
+      "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/production-met/pull-requests/7 is open, with every unwaived build green and every merge check met at head bc4de6b09d44f8d68d56e297664fdbc25cb093ee\n",
+      "http_exchanges": [
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "bc4de6b09d44",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "production"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/commit/bc4de6b09d44?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "bc4de6b09d44f8d68d56e297664fdbc25cb093ee"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "bc4de6b09d44",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "production"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/commit/bc4de6b09d44?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "bc4de6b09d44f8d68d56e297664fdbc25cb093ee"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/commit/bc4de6b09d44f8d68d56e297664fdbc25cb093ee/statuses?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "key": "pipeline",
+                "name": "Pipeline #1",
+                "state": "SUCCESSFUL"
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/branch-restrictions?pagelen=100",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "values": [
+              {
+                "kind": "require_passing_builds_to_merge",
+                "branch_match_kind": "branching_model",
+                "branch_type": "production",
+                "value": 1
+              }
+            ],
+            "pagelen": 100,
+            "page": 1
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/effective-branching-model",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "development": {
+              "name": "main",
+              "use_mainbranch": true,
+              "branch": {
+                "name": "main"
+              }
+            },
+            "production": {
+              "name": "production",
+              "branch": {
+                "name": "production"
+              }
+            },
+            "branch_types": [
+              {
+                "kind": "release",
+                "prefix": "release/"
+              },
+              {
+                "kind": "feature",
+                "prefix": "feature/"
+              }
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "OPEN",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "bc4de6b09d44",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "production"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/commit/bc4de6b09d44?fields=hash",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "hash": "bc4de6b09d44f8d68d56e297664fdbc25cb093ee"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/2.0/repositories/fm-lab/production-met/pullrequests/7/merge",
+          "request_body": {
+            "type": "pullrequest",
+            "close_source_branch": false
+          },
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "bc4de6b09d44",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "production"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/2.0/repositories/fm-lab/production-met/pullrequests/7",
+          "request_body": null,
+          "http_status": 200,
+          "response": {
+            "type": "pullrequest",
+            "id": 7,
+            "state": "MERGED",
+            "draft": false,
+            "source": {
+              "branch": {
+                "name": "fm/task-x1"
+              },
+              "commit": {
+                "hash": "bc4de6b09d44",
+                "type": "commit"
+              }
+            },
+            "destination": {
+              "branch": {
+                "name": "production"
+              },
+              "commit": {
+                "hash": "0123456789ab"
+              }
+            },
+            "participants": [],
+            "close_source_branch": false
+          }
+        }
+      ],
+      "persisted_api_state": "MERGED",
+      "persisted_task_metadata": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/production-met/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M40YXRAMDJ28ZJ78WK9ZGBSB/.validation-bitbucket/cases/production-met/project\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/fm-lab/production-met/pull-requests/7\npr_head=bc4de6b09d44f8d68d56e297664fdbc25cb093ee\n",
+      "merge_outcome_recorded": true,
+      "errors": [],
+      "result": "pass"
+    }
+  ],
+  "proxy_stopped": true
+}

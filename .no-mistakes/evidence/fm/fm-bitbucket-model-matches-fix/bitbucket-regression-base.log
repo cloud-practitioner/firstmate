@@ -1,0 +1,14 @@
+ok - canonical Bitbucket Cloud pull request URLs parse
+ok - malformed Bitbucket URLs, other forges' shapes on bitbucket.org, and Data Center URLs are refused
+ok - the Bitbucket record read reports state and merged, refuses another record, and keeps the token out of argv
+ok - the status read follows pagination and refuses a next link that leaves the API base
+ok - fm-pr-check records a Bitbucket pull request with its full head and arms the poll
+ok - fm-pr-check refuses a draft Bitbucket pull request
+ok - fm-pr-check refuses a Bitbucket watch without the credential and names it
+ok - the Bitbucket merge poll wakes only on the exact merged record and stays silent otherwise
+ok - fm-pr-state reports a Bitbucket pull request's state, draft, builds, and requested changes
+ok - fm-pr-merge merges a green Bitbucket pull request, keeps its branch, and proves the merge by reading it back
+ok - fm-pr-merge sends a requested Bitbucket strategy and refuses arguments it cannot translate
+not ok - merge-type-unmet: the named branch type requirement was not applied
+
+BASE_SUITE_EXIT=1 (expected regression failure: 1)
