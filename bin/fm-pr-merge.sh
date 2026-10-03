@@ -1493,10 +1493,10 @@ bitbucket_read_merge_checks() {
       def model_branch($kind):
         ($model[$kind] // null) as $m
         | if $m == null then null else ($m.branch.name // $m.name // null) end;
-      def model_matches($type):
-        if $type == "development" or $type == "production" then model_branch($type) == $dest
-        else any(($model.branch_types // [])[]; .kind == $type and (.prefix | type) == "string"
-          and .prefix != "" and ($dest | startswith(.prefix)))
+      def model_matches($branch_type):
+        if $branch_type == "development" or $branch_type == "production" then model_branch($branch_type) == $dest
+        else any(($model.branch_types // [])[]; .kind == $branch_type and (.prefix | type) == "string"
+          and .prefix != "" and (.prefix as $prefix | $dest | startswith($prefix)))
         end;
       [ .[]
         | select(.kind | IN($checks[]))
