@@ -1395,19 +1395,24 @@ trap spawn_abort_cleanup EXIT
 # One bounded lock per live Herdr session/socket, shared across all homes.
 # <session> is required so secondmate and primary spawns serialize against the
 # same session without writing any other home's state directory.
-# [wait-seconds] (default 5) bounds the whole wait; the waiter always waits at
-# least that long before giving up.
 spawn_herdr_presentation_order_lock_acquire() {  # <session> [wait-seconds]
-  local session=${1:-} limit=$(( ${2:-5} * 10 )) attempt=0 lock_path
+  local session=${1:-} deadline=$((SECONDS + ${2:-5})) lock_path
   [ -n "$session" ] || session=$(fm_backend_herdr_session)
   lock_path=$(fm_backend_herdr_presentation_session_lock_path "$session") || return 1
   HERDR_PRESENTATION_ORDER_LOCK="$lock_path"
-  while ! fm_lock_try_acquire "$HERDR_PRESENTATION_ORDER_LOCK"; do
-    [ "$attempt" -lt "$limit" ] || return 1
+  while [ "$SECONDS" -lt "$deadline" ]; do
+    if fm_lock_try_acquire "$HERDR_PRESENTATION_ORDER_LOCK"; then
+      if [ "$SECONDS" -ge "$deadline" ]; then
+        fm_lock_release "$HERDR_PRESENTATION_ORDER_LOCK" || true
+        return 1
+      fi
+      HERDR_PRESENTATION_ORDER_LOCK_HELD=1
+      return 0
+    fi
+    [ "$SECONDS" -lt "$deadline" ] || return 1
     sleep 0.1
-    attempt=$((attempt + 1))
   done
-  HERDR_PRESENTATION_ORDER_LOCK_HELD=1
+  return 1
 }
 
 clear_relaunch_harness_wiring() {

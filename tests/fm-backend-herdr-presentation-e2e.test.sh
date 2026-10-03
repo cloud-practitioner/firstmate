@@ -19,6 +19,7 @@ command -v treehouse >/dev/null 2>&1 || { echo "skip: treehouse not found"; exit
 
 REAL_HERDR=$(command -v herdr)
 REAL_TREEHOUSE=$(command -v treehouse)
+REAL_MKTEMP=$(command -v mktemp)
 HERDR_ORIGINAL_PATH=$PATH
 TMP_ROOT=$(mktemp -d "$(cd "${TMPDIR:-/tmp}" && pwd -P)/fm-herdr-presentation.XXXXXX")
 FAKEBIN="$TMP_ROOT/fakebin"
@@ -36,7 +37,7 @@ mkdir -p "$FAKEBIN"
 : > "$MOVE_CALL_LOG"
 : > "$FOCUS_AUDIT_LOG"
 REAL_MOVER="$ROOT/bin/backends/herdr-workspace-move.py"
-export REAL_HERDR REAL_TREEHOUSE REAL_MOVER HERDR_CALL_LOG TREEHOUSE_CALL_LOG TREEHOUSE_LOCK_DIR MOVE_CALL_LOG FOCUS_AUDIT_LOG HERDR_ORIGINAL_PATH HERDR_LAB_HELPER
+export REAL_HERDR REAL_TREEHOUSE REAL_MKTEMP REAL_MOVER HERDR_CALL_LOG TREEHOUSE_CALL_LOG TREEHOUSE_LOCK_DIR MOVE_CALL_LOG FOCUS_AUDIT_LOG HERDR_ORIGINAL_PATH HERDR_LAB_HELPER
 export ACTIVE_SEEDED_CONTROL POST_CREATE_ABORT_CONTROL SLOW_HOLDER_CONTROL TMP_ROOT
 
 # Log every production-adapter call, remove its already-validated trailing
@@ -144,14 +145,12 @@ if [ "${1:-} ${2:-}" = "pane get" ] && [ -d "$ACTIVE_SEEDED_CONTROL" ] \
 fi
 before=
 [ -z "$mutation" ] || before=$(focus_snapshot || printf ambiguous/ambiguous)
-# A slow-holder fixture stretches one named task tab create, which runs while
-# its spawn holds the shared session presentation lock, and logs when each
-# stretched call starts and ends.
 slow_holder=0
 if [ "$mutation" = tab-create ] && [ -n "$label" ] && [ -e "$SLOW_HOLDER_CONTROL/$label" ]; then
   slow_holder=1
   printf '%s\tstart\t%s\n' "$label" "$(date +%s)" >> "$SLOW_HOLDER_CONTROL/log"
-  sleep "$(cat "$SLOW_HOLDER_CONTROL/$label")"
+  : > "$SLOW_HOLDER_CONTROL/$label.started"
+  while [ ! -e "$SLOW_HOLDER_CONTROL/release" ]; do sleep 0.05; done
 fi
 if out=$(env PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" run "$HERDR_LAB_SESSION" "$@"); then
   status=0
@@ -270,7 +269,17 @@ printf 'workspace-move\t%s\t%s\t%s\n' "$before" "$after" "$2" >> "$FOCUS_AUDIT_L
 [ -z "$out" ] || printf '%s\n' "$out"
 exit "$status"
 SH
-chmod +x "$FAKEBIN/herdr" "$FAKEBIN/treehouse"
+cat > "$FAKEBIN/mktemp" <<'SH'
+#!/usr/bin/env bash
+set -u
+if [ "$#" -eq 2 ] && [ "$1" = -d ] \
+  && [ "$2" = "${FM_TEST_PRESENTATION_LOCK:-}.owner.XXXXXX" ]; then
+  printf '%s\n' "$(date +%s)" >> "$FM_TEST_PRESENTATION_WAIT_LOG"
+  [ -z "${FM_TEST_PRESENTATION_ATTEMPT_DELAY:-}" ] || sleep "$FM_TEST_PRESENTATION_ATTEMPT_DELAY"
+fi
+exec "$REAL_MKTEMP" "$@"
+SH
+chmod +x "$FAKEBIN/herdr" "$FAKEBIN/treehouse" "$FAKEBIN/mktemp"
 chmod +x "$FAKEBIN/herdr-workspace-mover"
 export PATH="$FAKEBIN:$PATH"
 export FM_BACKEND_HERDR_WORKSPACE_MOVER="$FAKEBIN/herdr-workspace-mover"
@@ -289,8 +298,15 @@ export HERDR_SESSION="$HERDR_LAB_SESSION" HERDR_LAB_SESSION
 LAB_READY=0
 RECORDED_WORKTREES=""
 LOCK_CONTENTION_OWNER_PID=
+PRIMARY_WAVE_PID=
+BRAVO_WAVE_PID=
 cleanup_all() {
   local wt
+  [ ! -d "$SLOW_HOLDER_CONTROL" ] || : > "$SLOW_HOLDER_CONTROL/release"
+  [ -z "$PRIMARY_WAVE_PID" ] || wait "$PRIMARY_WAVE_PID" 2>/dev/null || true
+  [ -z "$BRAVO_WAVE_PID" ] || wait "$BRAVO_WAVE_PID" 2>/dev/null || true
+  PRIMARY_WAVE_PID=
+  BRAVO_WAVE_PID=
   if [ -n "$LOCK_CONTENTION_OWNER_PID" ]; then
     kill "$LOCK_CONTENTION_OWNER_PID" 2>/dev/null || true
     wait "$LOCK_CONTENTION_OWNER_PID" 2>/dev/null || true
@@ -1347,7 +1363,9 @@ LOCK_CONTENTION_OWNER_PID=$!
 while [ ! -e "$STUCK_RECOVERY_READY" ] && kill -0 "$LOCK_CONTENTION_OWNER_PID" 2>/dev/null; do sleep 0.01; done
 [ -e "$STUCK_RECOVERY_READY" ] || fail "could not hold the session presentation lock for stuck-holder recovery"
 STUCK_RECOVERY_CALLS=$(log_line_count)
-if FM_TEST_HERDR_RECOVERY_LOCK_WAIT=1 spawn_task "$PRIMARY_WAVE_ID" "$HOME_DIR" "$RECOVERY_PROJECT_DIR" \
+if FM_TEST_HERDR_RECOVERY_LOCK_WAIT=1 FM_TEST_PRESENTATION_LOCK="$STUCK_RECOVERY_LOCK" \
+  FM_TEST_PRESENTATION_WAIT_LOG="$TMP_ROOT/stuck-recovery-attempts" FM_TEST_PRESENTATION_ATTEMPT_DELAY=0.4 \
+  spawn_task "$PRIMARY_WAVE_ID" "$HOME_DIR" "$RECOVERY_PROJECT_DIR" \
   > "$TMP_ROOT/stuck-recovery.out" 2> "$TMP_ROOT/stuck-recovery.err"; then
   STUCK_RECOVERY_STATUS=0
 else
@@ -1357,6 +1375,10 @@ fi
 wait "$LOCK_CONTENTION_OWNER_PID" || fail "stuck-holder recovery lock owner failed"
 LOCK_CONTENTION_OWNER_PID=
 [ "$STUCK_RECOVERY_STATUS" -ne 0 ] || fail "recovery behind a stuck session lock holder unexpectedly succeeded"
+STUCK_RECOVERY_START=$(head -n 1 "$TMP_ROOT/stuck-recovery-attempts")
+STUCK_RECOVERY_END=$(tail -n 1 "$TMP_ROOT/stuck-recovery-attempts")
+[ -n "$STUCK_RECOVERY_START" ] && [ $((STUCK_RECOVERY_END - STUCK_RECOVERY_START)) -le 1 ] \
+  || fail "slow lock attempts extended the elapsed recovery wait budget"
 grep -F "herdr presentation recovery could not acquire its session lock within 1s; refusing a concurrent resume" \
   "$TMP_ROOT/stuck-recovery.err" >/dev/null 2>&1 \
   || fail "recovery behind a stuck holder did not refuse clearly: $(cat "$TMP_ROOT/stuck-recovery.err")"
@@ -1366,20 +1388,35 @@ if sed -n "$((STUCK_RECOVERY_CALLS + 1)),\$p" "$HERDR_CALL_LOG" | grep -E $'^(wo
   fail "a refused stuck-holder recovery mutated Herdr: $(sed -n "$((STUCK_RECOVERY_CALLS + 1)),\$p" "$HERDR_CALL_LOG")"
 fi
 assert_focus_is "$CONCURRENT_RECOVERY_FOCUS" "refused stuck-holder recovery"
-# Each recovery's husk-replacement tab create is stretched past the former
-# fixed five-second lock budget, so whichever recovery wins the session lock
-# holds it long enough that the other must wait for it rather than refuse.
-SLOW_HOLDER_SECONDS=8
 mkdir -p "$SLOW_HOLDER_CONTROL"
-printf '%s\n' "$SLOW_HOLDER_SECONDS" > "$SLOW_HOLDER_CONTROL/fm-$PRIMARY_WAVE_ID"
-printf '%s\n' "$SLOW_HOLDER_SECONDS" > "$SLOW_HOLDER_CONTROL/fm-$BRAVO_WAVE_ID"
-CONCURRENT_RECOVERY_START=$(date +%s)
+: > "$SLOW_HOLDER_CONTROL/fm-$PRIMARY_WAVE_ID"
+: > "$SLOW_HOLDER_CONTROL/fm-$BRAVO_WAVE_ID"
 spawn_task "$PRIMARY_WAVE_ID" "$HOME_DIR" "$RECOVERY_PROJECT_DIR" > "$TMP_ROOT/primary-wave-resume.out" 2> "$TMP_ROOT/primary-wave-resume.err" &
 PRIMARY_WAVE_PID=$!
-spawn_task "$BRAVO_WAVE_ID" "$SECOND_HOME_B" "$RECOVERY_PROJECT_DIR" > "$TMP_ROOT/bravo-wave-resume.out" 2> "$TMP_ROOT/bravo-wave-resume.err" &
+RECOVERY_READY_DEADLINE=$((SECONDS + 60))
+while [ ! -e "$SLOW_HOLDER_CONTROL/fm-$PRIMARY_WAVE_ID.started" ] \
+  && kill -0 "$PRIMARY_WAVE_PID" 2>/dev/null && [ "$SECONDS" -lt "$RECOVERY_READY_DEADLINE" ]; do sleep 0.05; done
+[ -e "$SLOW_HOLDER_CONTROL/fm-$PRIMARY_WAVE_ID.started" ] \
+  || fail "primary recovery did not reach its lock-held husk replacement"
+FM_TEST_PRESENTATION_LOCK="$STUCK_RECOVERY_LOCK" FM_TEST_PRESENTATION_WAIT_LOG="$TMP_ROOT/bravo-recovery-attempts" \
+  spawn_task "$BRAVO_WAVE_ID" "$SECOND_HOME_B" "$RECOVERY_PROJECT_DIR" > "$TMP_ROOT/bravo-wave-resume.out" 2> "$TMP_ROOT/bravo-wave-resume.err" &
 BRAVO_WAVE_PID=$!
+RECOVERY_READY_DEADLINE=$((SECONDS + 60))
+while [ ! -s "$TMP_ROOT/bravo-recovery-attempts" ] \
+  && kill -0 "$BRAVO_WAVE_PID" 2>/dev/null && [ "$SECONDS" -lt "$RECOVERY_READY_DEADLINE" ]; do sleep 0.05; done
+[ -s "$TMP_ROOT/bravo-recovery-attempts" ] || fail "secondmate recovery did not reach session lock acquisition"
+sleep 8
+while [ "$(wc -l < "$TMP_ROOT/bravo-recovery-attempts")" -le 50 ] \
+  && kill -0 "$BRAVO_WAVE_PID" 2>/dev/null && [ "$SECONDS" -lt "$RECOVERY_READY_DEADLINE" ]; do sleep 0.05; done
+kill -0 "$BRAVO_WAVE_PID" 2>/dev/null \
+  && [ "$(wc -l < "$TMP_ROOT/bravo-recovery-attempts")" -gt 50 ] \
+  && [ ! -e "$SLOW_HOLDER_CONTROL/fm-$BRAVO_WAVE_ID.started" ] \
+  || fail "secondmate recovery did not remain pending beyond the former lock budget: $(cat "$TMP_ROOT/bravo-wave-resume.err")"
+: > "$SLOW_HOLDER_CONTROL/release"
 wait "$PRIMARY_WAVE_PID" || fail "concurrent primary recovery failed: $(cat "$TMP_ROOT/primary-wave-resume.err")"
+PRIMARY_WAVE_PID=
 wait "$BRAVO_WAVE_PID" || fail "concurrent secondmate recovery failed: $(cat "$TMP_ROOT/bravo-wave-resume.err")"
+BRAVO_WAVE_PID=
 [ "$(grep -c $'\tstart\t' "$SLOW_HOLDER_CONTROL/log")" = 2 ] \
   && [ "$(grep -c $'\tend\t' "$SLOW_HOLDER_CONTROL/log")" = 2 ] \
   || fail "concurrent recovery did not stretch both husk replacements: $(cat "$SLOW_HOLDER_CONTROL/log")"
@@ -1387,8 +1424,6 @@ SLOW_FIRST_END=$(awk -F '\t' '$2 == "end" { print $3; exit }' "$SLOW_HOLDER_CONT
 SLOW_SECOND_START=$(awk -F '\t' '$2 == "start" { n++; if (n == 2) { print $3; exit } }' "$SLOW_HOLDER_CONTROL/log")
 [ "$SLOW_SECOND_START" -ge "$SLOW_FIRST_END" ] \
   || fail "concurrent recoveries overlapped their husk replacements instead of serializing: $(cat "$SLOW_HOLDER_CONTROL/log")"
-[ $((SLOW_SECOND_START - CONCURRENT_RECOVERY_START)) -ge "$SLOW_HOLDER_SECONDS" ] \
-  || fail "the second concurrent recovery was not held behind the slow lock holder: $(cat "$SLOW_HOLDER_CONTROL/log")"
 rm -rf "$SLOW_HOLDER_CONTROL"
 PRIMARY_WAVE_NEW_WT=$(remember_meta_worktree "$PRIMARY_WAVE_META")
 BRAVO_WAVE_NEW_WT=$(remember_meta_worktree "$BRAVO_WAVE_META")
