@@ -4730,6 +4730,49 @@ test_verify_accepts_an_answered_call_pruned_to_the_archive() (
   pass "archive gates accept answered calls and refuse unanswered ones ($variant)"
 )
 
+# A legacy inventory key must resolve to its current derived row before trying
+# that id's archive. An earlier answered lifecycle cannot satisfy a newer Done
+# row that carries captain-hold provenance but no recorded answer.
+test_verify_refuses_a_live_legacy_row_despite_an_old_archived_answer() (
+  local home id call_id
+  home=$(make_home verify-live-legacy-over-archive)
+  export HOME="$home/user-home"
+  mkdir -p "$HOME/.tasks-axi"
+  id=sample-reused-review
+  call_id="$id-decision-route"
+  tasks_in "$home" add "$id" "Review reused captain call" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the reused origin"
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  run_captain "$home" hold "$call_id" --title "Choose route" \
+    --reason "captain route choice pending" --repo sample >/dev/null \
+    || fail "could not hold the earlier lifecycle"
+  run_captain "$home" complete "$id" route >/dev/null \
+    || fail "could not attest the live legacy identity"
+  printf 'Choose route north.\n' > "$home/answer.txt"
+  run_captain "$home" answer "$call_id" --decision-file "$home/answer.txt" >/dev/null \
+    || fail "could not answer the earlier lifecycle"
+  tasks_in "$home" prune --keep 0 >/dev/null || fail "could not archive the earlier answer"
+  tasks_in "$home" add "$call_id" "Choose a new route" --kind captain --repo sample >/dev/null \
+    || fail "could not reuse the archived identity"
+  run_captain "$home" hold "$call_id" --reason "new captain choice pending" >/dev/null \
+    || fail "could not hold the new lifecycle"
+  tasks_in "$home" done "$call_id" --keep 10 >/dev/null \
+    || fail "could not close the newer row without an answer"
+
+  if run_captain "$home" verify "$id" > "$home/verify.out" 2> "$home/verify.err"; then
+    fail "legacy verification accepted an old archived answer over a current unanswered Done row"
+  fi
+  assert_grep "captain-held task $call_id is neither held for the captain nor closed with a recorded captain answer" \
+    "$home/verify.err" "verification did not reject the current unanswered call"
+  if run_captain "$home" complete "$id" route > "$home/complete.out" 2> "$home/complete.err"; then
+    fail "legacy completion accepted an old archived answer over a current unanswered Done row"
+  fi
+  assert_grep "captain-held task $call_id is neither held for the captain nor closed with a recorded captain answer" \
+    "$home/complete.err" "completion did not reject the current unanswered call"
+  pass "a live legacy row takes precedence over its earlier archived answer"
+)
+
 test_uninventoried_report_decision_refuses_completion
 test_hold_decodes_a_bare_scalar_body_without_the_nonref_default
 test_retained_body_keeps_its_utf8_bytes
@@ -4789,3 +4832,4 @@ test_hold_creates_a_captain_row_when_beads_requires_due_without_custom_type
 for archive_variant in default unset inline-comment single-quoted inherited project-precedence absolute; do
   test_verify_accepts_an_answered_call_pruned_to_the_archive "$archive_variant" || exit $?
 done
+test_verify_refuses_a_live_legacy_row_despite_an_old_archived_answer
