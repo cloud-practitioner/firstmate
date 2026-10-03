@@ -1,0 +1,251 @@
+Scenario: delayed inheritance transaction, delayed watcher start, delayed respawn launch; each fault is a real sleep 45, original counted polling/assertions unchanged. SSH/Herdr/tmux remain the existing mocked boundaries, not live fleet validation.
+Setup: isolated HOME/TMPDIR in the worktree; a git-init ancestor bounds disposable remote workers to the fixture, and a dangling .git sentinel explicitly makes the not-a-checkout negative fixture non-discoverable.
+Command: bin/fm-test-run.sh tests/.remote-lifecycle-validation.test.sh --per-script-timeout-secs 1200 --json /home/node/.no-mistakes/evidence/01M40012HAGF4C4Q91QNT4Q373/delayed-lifecycle-timing.json
+FM_TEST_BEGIN 2026-10-03T05:04:31Z tests/.remote-lifecycle-validation.test.sh family=unclassified expected_gate_skip=none
+ok - overlapping remote home provisioning serializes through publication and rollback
+ok - competing cleanup of the public home cannot reach a live provisioning clone
+ok - a home that appears mid-provision makes the provision die without touching it
+ok - remote seed rollback preserves serialized competing routes
+ok - unknown readiness preserves its route and brief for reconciliation
+ok - remote seeding checks, repairs, and re-checks readiness, then stops on a remaining gap
+ok - remote seeding proceeds once the repair closes every gap
+ok - remote seeding provisions a supplied origin without touching the primary project tree
+ok - remote provisioning re-validates a supplied origin at the receiving host
+ok - seeding carries bitbucket, self-hosted, and scp-like origins through to the remote clone
+ok - remote seed registers the route and provisions the whole home and project clone on that host
+ok - remote inheritance rejects incomplete and superseded payload generations
+ok - mixed local and remote routes validate without migration
+ok - remote spawn launches on the remote-local backend and records a host-qualified route
+ok - legacy and mismatched remote endpoints fail closed before backend access
+ok - non-herdr remote endpoints are refused without changing either route
+ok - remote spawn serializes inheritance through launch publication
+ok - marked send and routed reply complete through the existing parent correlation owner
+ok - partial remote inheritance retains reread intent through bootstrap convergence
+ok - config push and bootstrap serialize remote inheritance convergence
+WARNING: watcher still down (same stale episode; last beat: 258s ago, grace 300s) - full banner already printed this episode.
+ok - remote inherited config retains and retries a failed live reread nudge
+secondmate projection:
+{
+  "registry": {
+    "present": true,
+    "available": true,
+    "reason": null,
+    "provenance": "registered-table",
+    "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.Ls8oEp/parent/data/secondmates.md",
+    "freshness": {
+      "status": "fresh",
+      "observed_at": "2026-10-03T05:18:06Z"
+    },
+    "records": [
+      {
+        "id": "ios",
+        "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.Ls8oEp/remote-home",
+        "host": "remote-mac",
+        "root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.Ls8oEp/remote-root",
+        "remote": true,
+        "registered": true,
+        "registry_error": null
+      },
+      {
+        "id": "local",
+        "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.Ls8oEp/local-home",
+        "host": null,
+        "root": null,
+        "remote": false,
+        "registered": true,
+        "registry_error": null
+      }
+    ],
+    "input_truncated": false,
+    "records_truncated": false,
+    "complete": true,
+    "reasons": [],
+    "lines_in_window": 2,
+    "records_in_window": 2
+  },
+  "records": [
+    {
+      "id": "ios",
+      "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.Ls8oEp/remote-home",
+      "host": "remote-mac",
+      "remote": true,
+      "registered": true,
+      "spawn_gen": null,
+      "current": {
+        "state": "unknown",
+        "reason": "structured home ledger collection timed out and no valid cached copy is available"
+      },
+      "invalidity": null,
+      "reconcile_inventory": null,
+      "provenance": {
+        "selected": "parent-event-fallback",
+        "structured_home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.Ls8oEp/remote-home",
+        "parent_event_role": "fallback-only-not-current"
+      },
+      "freshness": {
+        "status": "historical-event",
+        "observed_at": "2026-10-03T05:18:06Z",
+        "age_seconds": 34
+      },
+      "active_children": [],
+      "decisions_open": [],
+      "holds": [],
+      "queued": [],
+      "landed": [],
+      "endpoints": [],
+      "counts": {
+        "active_children": 0,
+        "decisions_open": 0,
+        "holds": 0,
+        "queued": 0,
+        "landed": 0,
+        "endpoints": 0
+      },
+      "omitted": [],
+      "parent_event": {
+        "raw": "done [corr=a73363a4ff9818f9]: concurrent inherited data re-read",
+        "note": "concurrent inherited data re-read",
+        "age_seconds": null,
+        "open_activities": [],
+        "open_decisions": [],
+        "activity_scan": {
+          "records": [],
+          "available": true,
+          "input_truncated": false,
+          "retained_truncated": false,
+          "reasons": [],
+          "lines_in_window": 6,
+          "records_in_window": 0
+        }
+      },
+      "terminal_evidence": {
+        "provenance": "remote-direct-report-terminal",
+        "trust": "untrusted-supplement",
+        "captured": false,
+        "observed_at": "2026-10-03T05:18:06Z",
+        "freshness": "not-collected",
+        "reason": "remote terminal evidence is not collected by the primary",
+        "lines": 0,
+        "bytes": 0,
+        "event_note_seen": false,
+        "contradiction": false
+      },
+      "contradiction": false
+    },
+    {
+      "id": "local",
+      "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.Ls8oEp/local-home",
+      "host": null,
+      "remote": false,
+      "registered": true,
+      "spawn_gen": null,
+      "current": {
+        "state": "no_active_work",
+        "reason": null
+      },
+      "invalidity": {
+        "kind": null,
+        "ids": []
+      },
+      "reconcile_inventory": {
+        "kind": null,
+        "ids": []
+      },
+      "provenance": {
+        "selected": "structured-home",
+        "structured_home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.Ls8oEp/local-home",
+        "summary_source": "local-ledger",
+        "summary_valid": true,
+        "trust": "complete",
+        "parent_event_role": "historical-only"
+      },
+      "freshness": {
+        "status": "fresh",
+        "observed_at": "2026-10-03T05:17:49Z",
+        "age_seconds": 17
+      },
+      "active_children": [],
+      "decisions_open": [],
+      "holds": [],
+      "queued": [],
+      "contributions": {
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "unmeasured": 0,
+        "complete": true,
+        "proven_clear": true,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "unreadable_records": 0,
+        "valid_until": 900,
+        "captain": [],
+        "captain_omitted": 0
+      },
+      "landed": [],
+      "endpoints": [],
+      "counts": {
+        "active_children": 0,
+        "decisions_open": 0,
+        "holds": 0,
+        "queued": 0,
+        "landed": 0,
+        "endpoints": 0
+      },
+      "omitted": [],
+      "parent_event": {
+        "raw": "",
+        "note": "",
+        "age_seconds": null,
+        "open_activities": [],
+        "open_decisions": [],
+        "activity_scan": {
+          "records": [],
+          "available": true,
+          "input_truncated": false,
+          "retained_truncated": false,
+          "reasons": [],
+          "lines_in_window": 0,
+          "records_in_window": 0
+        },
+        "reconciliation": {
+          "provenance": "parent-status-keyed-fold",
+          "trust": "untrusted-supplement",
+          "activities": [],
+          "decisions": [],
+          "contradiction": false,
+          "inconclusive": false
+        }
+      },
+      "terminal_evidence": {
+        "provenance": "parent-direct-report-terminal",
+        "trust": "untrusted-supplement",
+        "captured": false,
+        "observed_at": "2026-10-03T05:18:06Z",
+        "freshness": "not-collected",
+        "reason": "no useful contradiction check",
+        "lines": 0,
+        "bytes": 0,
+        "event_note_seen": false,
+        "contradiction": false
+      },
+      "contradiction": false
+    }
+  ],
+  "total_registered": 2,
+  "total": 2,
+  "shown": 2,
+  "truncated": 0
+}
+not ok - fleet snapshot did not select the remote structured-home projection
+FM_TEST_END 2026-10-03T05:18:33Z tests/.remote-lifecycle-validation.test.sh exit=1 duration_ms=842754 gate_skip=false
+FM_TEST_SUMMARY total=1 failed=1 skipped_gate=0 duration_ms=842866
+FM_TEST_SUMMARY_FAMILY family=unclassified count=1 duration_ms=842754 failed=1
+FM_TEST_SLOWEST rank=1 script=tests/.remote-lifecycle-validation.test.sh duration_ms=842754
+fm-test-run: wrote timing artifact: /home/node/.no-mistakes/evidence/01M40012HAGF4C4Q91QNT4Q373/delayed-lifecycle-timing.json
+Command exit=1 elapsed_seconds=842.369

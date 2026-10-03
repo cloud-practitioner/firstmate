@@ -1,0 +1,66 @@
+[
+  {
+    "version": "base",
+    "scenario": "inheritance",
+    "mode": "delayed",
+    "exit": 1,
+    "elapsed_seconds": 33.437,
+    "output": "ASSERTION_FAILURE: first inheritance transaction never reached its blocked write\nFAILURE_POLLS=1501\n"
+  },
+  {
+    "version": "base",
+    "scenario": "watcher",
+    "mode": "delayed",
+    "exit": 1,
+    "elapsed_seconds": 33.352,
+    "output": "ASSERTION_FAILURE: the watcher did not exit on its auto-relaunch wake within the bound\nFAILURE_POLLS=1500\n"
+  },
+  {
+    "version": "base",
+    "scenario": "respawn",
+    "mode": "delayed",
+    "exit": 1,
+    "elapsed_seconds": 33.426,
+    "output": "ASSERTION_FAILURE: remote respawn never reached its blocked launch\nFAILURE_POLLS=1501\n"
+  },
+  {
+    "version": "target",
+    "scenario": "inheritance",
+    "mode": "delayed",
+    "exit": 0,
+    "elapsed_seconds": 70.02,
+    "output": "OBSERVED_POLLS=3133\n"
+  },
+  {
+    "version": "target",
+    "scenario": "watcher",
+    "mode": "delayed",
+    "exit": 0,
+    "elapsed_seconds": 70.033,
+    "output": "OBSERVED_POLLS=3129\n"
+  },
+  {
+    "version": "target",
+    "scenario": "respawn",
+    "mode": "delayed",
+    "exit": 0,
+    "elapsed_seconds": 70.035,
+    "output": "OBSERVED_POLLS=3123\n"
+  },
+  {
+    "version": "target",
+    "scenario": "inheritance",
+    "mode": "early-exit",
+    "exit": 1,
+    "elapsed_seconds": 0.119,
+    "output": "ASSERTION_FAILURE: first inheritance transaction exited before its blocked write\nFAILURE_POLLS=5\n"
+  },
+  {
+    "version": "target",
+    "scenario": "respawn",
+    "mode": "early-exit",
+    "exit": 1,
+    "elapsed_seconds": 0.118,
+    "output": "ASSERTION_FAILURE: remote respawn exited before its blocked launch\nFAILURE_POLLS=5\n"
+  }
+]

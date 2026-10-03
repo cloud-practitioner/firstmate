@@ -1,0 +1,2 @@
+{"version": "target", "scenario": "watcher", "mode": "no-arrival", "exit": 1, "elapsed_seconds": 498.981, "output": "ASSERTION_FAILURE: the watcher did not exit on its auto-relaunch wake within the bound\nFAILURE_POLLS=15000\n"}
+No-arrival watcher still fails at the fixed counted bound.

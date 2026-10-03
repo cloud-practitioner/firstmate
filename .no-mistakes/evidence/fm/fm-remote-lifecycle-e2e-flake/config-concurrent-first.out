@@ -1,0 +1,19 @@
+WARNING: watcher still down (same stale episode; last beat: 62s ago, grace 300s) - full banner already printed this episode.
+config-push: /home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.adMqhq/parent -> live secondmate homes
+secondmate ios (remote-mac:/home/node/.no-mistakes/worktrees/450411b3e67c/01M40012HAGF4C4Q91QNT4Q373/.no-mistakes/test-phase/tmp/fm-remote-secondmate-e2e.adMqhq/remote-home):
+  unchanged: config/crew-dispatch.json
+  unchanged: config/dispatch-never-send
+  unchanged: config/crew-harness
+  unchanged: config/backlog-backend
+  unchanged: config/backend
+  unchanged: config/herdr-presentation-spaces
+  unchanged: config/startup-memory-budget
+  unchanged: config/trace-context
+  unchanged: config/launch-env-allowlist
+  unchanged: config/claude-permission-mode
+  unchanged: config/lavish-axi-host
+  unchanged: config/keep-ai-trailers
+  unchanged: config/supervision-host-off
+  FAULT: second inheritance arrival delayed 45 seconds
+  pushed: data/captain-shared.md
+  config-reread: sent
