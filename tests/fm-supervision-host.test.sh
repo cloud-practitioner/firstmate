@@ -268,6 +268,13 @@ start_host() {  # <home> [park options...]
     ' "$HOST" "$@" 2>> "$home/claude.err" &
 }
 
+# A rendered "recorded Nm ago" age depends on how long the test ran, so a
+# minute boundary crossed under load flips "0m" to "1m".
+# Pin the minute-scale ages to 0m before asserting; hour and day ages stay exact.
+zero_minute_age() {  # <text>
+  printf '%s\n' "$1" | sed -E 's/(recorded )[0-9]+m ago/\10m ago/'
+}
+
 # Extended-regex twins of tests/lib.sh's fixed-string assert_grep pair.
 assert_re() {  # <regex> <file> <msg>
   grep -E -- "$1" "$2" >/dev/null || fail "$3"$'\n'"--- $2 ---"$'\n'"$(cat "$2" 2>/dev/null)"
@@ -484,10 +491,12 @@ test_branch_outcomes_only_on_a_host_home_off_pi() {
   assert_absent "$home/state/.branch-outcomes-cursor" "a Pi primary's drain must not advance the store's read cursor"
 
   drained=$(FM_HOME="$home" "$FAKE_CLAUDE" -c '"$0" 2>&1' "$ROOT/bin/fm-wake-drain.sh")
+  drained=$(zero_minute_age "$drained")
   assert_contains "$drained" "[seq 1, recorded 0m ago] demo: PR ready for review" "a Claude home without config/supervision-host must present the captain outcome"
 
   : > "$home/config/supervision-host"
   drained=$(FM_HOME="$home" "$fakes/codex" -c '"$0" 2>&1' "$ROOT/bin/fm-wake-drain.sh")
+  drained=$(zero_minute_age "$drained")
   assert_contains "$drained" "[seq 1, recorded 0m ago] demo: PR ready for review" "a Codex home with config/supervision-host must present the captain outcome"
   pass "drain: BRANCH OUTCOMES runs on a Claude home by default and on another primary with the file, never with off, and never on Pi"
 }
@@ -510,6 +519,7 @@ test_branch_outcomes_put_captain_first_and_collapse_routine_overflow() {
     || fail "fixture: could not record the captain outcome"
 
   drained=$(FM_HOME="$home" "$FAKE_CLAUDE" -c '"$0" 2>&1' "$ROOT/bin/fm-wake-drain.sh")
+  drained=$(zero_minute_age "$drained")
   assert_contains "$drained" "[seq 13, recorded 0m ago] demo: PR ready for review" "the captain outcome must be presented despite the routine backlog"
   assert_contains "$drained" "run bin/fm-branch-outcome.sh mark-processed --through 13" "the captain outcome must carry its acknowledgement"
   [ "$(printf '%s\n' "$drained" | grep -n 'PR ready for review' | cut -d: -f1)" -lt "$(printf '%s\n' "$drained" | grep -n 'routine 12' | cut -d: -f1)" ] \
@@ -543,6 +553,7 @@ test_branch_outcomes_collapse_repeated_captain_outcomes_per_task() {
   FM_HOME="$home" "$ROOT/bin/fm-branch-outcome.sh" append --task beta --verdict captain --summary 'beta ready to merge' >/dev/null \
     || fail "fixture: could not record the beta outcome"
   drained=$(FM_HOME="$home" "$FAKE_CLAUDE" -c '"$0" 2>&1' "$ROOT/bin/fm-wake-drain.sh")
+  drained=$(zero_minute_age "$drained")
   assert_contains "$drained" "[seq 3, newest of 3 for this task, recorded 0m ago] alpha: alpha still blocked 3" "repeated outcomes for one task must collapse to its newest"
   assert_not_contains "$drained" "alpha still blocked 1" "an older outcome for the same task must not be repeated"
   assert_contains "$drained" "[seq 4, recorded 0m ago] beta: beta ready to merge" "another task's outcome must keep its own line"
@@ -558,6 +569,7 @@ test_branch_outcomes_collapse_repeated_captain_outcomes_per_task() {
   FM_HOME="$home" "$ROOT/bin/fm-branch-outcome.sh" append --task task-1 --verdict captain --summary 'task-1 changed again' >/dev/null \
     || fail "fixture: could not record the later task-1 outcome"
   drained=$(FM_HOME="$home" "$FAKE_CLAUDE" -c '"$0" 2>&1' "$ROOT/bin/fm-wake-drain.sh")
+  drained=$(zero_minute_age "$drained")
   assert_contains "$drained" "BRANCH OUTCOMES: 3 newer captain outcome(s) are held back (byte cap); they follow on the next drain once these are acknowledged" \
     "the section must count every held-back captain row"
   assert_contains "$drained" "[seq 5, recorded 0m ago] task-1: task-1 $pad" "the first task must show its newest outcome the acknowledgement covers"
@@ -566,6 +578,7 @@ test_branch_outcomes_collapse_repeated_captain_outcomes_per_task() {
   assert_contains "$drained" "mark-processed --through 10;" "the acknowledgement must cover exactly the presented run"
   FM_HOME="$home" "$ROOT/bin/fm-branch-outcome.sh" mark-processed --through 10 >/dev/null 2>&1 || fail "the acknowledgement was refused"
   drained=$(FM_HOME="$home" "$FAKE_CLAUDE" -c '"$0" 2>&1' "$ROOT/bin/fm-wake-drain.sh")
+  drained=$(zero_minute_age "$drained")
   assert_contains "$drained" "task-8: task-8" "a held-back task must follow once the shown tasks are acknowledged"
   assert_contains "$drained" "[seq 13, recorded 0m ago] task-1: task-1 changed again" "the held-back row of a shown task must follow once the run is acknowledged"
   assert_not_contains "$drained" "held back" "the rest must fit once the run is acknowledged"
@@ -605,6 +618,7 @@ test_branch_outcomes_present_a_long_away_window_once() {
   FM_HOME="$home" "$ROOT/bin/fm-afk-contract.sh" archive >/dev/null 2>&1 || fail "fixture: could not archive the away posture"
 
   drained=$(FM_HOME="$home" "$FAKE_CLAUDE" -c '"$0" 2>&1' "$ROOT/bin/fm-wake-drain.sh")
+  drained=$(zero_minute_age "$drained")
   assert_contains "$drained" "[seq 33, newest of 3 for this task, recorded 0m ago] alpha: alpha still needs review 30" "a task's repeated captain outcomes must collapse to its newest"
   [ "$(printf '%s\n' "$drained" | grep -c '] alpha: ')" -eq 1 ] || fail "a task's captain outcomes must take one line: $drained"
   assert_contains "$drained" "[seq 44, recorded 0m ago] beta: beta ready to merge" "another task's captain outcome must keep its own line"
@@ -673,6 +687,7 @@ test_branch_outcomes_stay_unread_when_a_projection_fails() {
   assert_contains "$drained" "BRANCH OUTCOMES SKIPPED: the outcome store could not be projected safely" \
     "a failed projection must be reported"
   drained=$(FM_HOME="$home" "$FAKE_CLAUDE" -c '"$0" 2>&1' "$ROOT/bin/fm-wake-drain.sh")
+  drained=$(zero_minute_age "$drained")
   assert_contains "$drained" "[seq 1] demo: merged the docs fix" "a routine outcome behind a failed projection must follow on the next drain"
   assert_contains "$drained" "[seq 2, recorded 0m ago] cap: needs your merge call" "a captain outcome behind a failed projection must follow on the next drain"
   pass "drain: branch outcomes stay unread when a projection of the store fails"
