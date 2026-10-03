@@ -26,7 +26,7 @@ test_git_config_isolation() (
   git -C "$dir/caller" config commit.gpgsign false
   cd "$dir/caller" || exit 1
   cp "$ROOT/bin/fm-test-run.sh" "$ROOT/bin/fm-timeout-lib.sh" "$dir/runner/bin/"
-  cp "$ROOT/tests/git-config-helpers.sh" "$dir/runner/tests/"
+  cp "$ROOT/tests/git-config-helpers.sh" "$ROOT/tests/git-fixture.gitconfig" "$dir/runner/tests/"
   fakebin=$(fm_fakebin "$dir/standalone")
   fm_fake_exit0 "$fakebin" pi
   cat > "$fakebin/tmux" <<'SH'
@@ -49,6 +49,7 @@ trap 'rm -rf "$repo"' EXIT
 git init -q "$repo"
 git -C "$repo" config user.name 'Runner Fixture'
 git -C "$repo" config user.email runner@example.invalid
+[ "$(git -C "$repo" config --bool --get maintenance.auto)" = false ]
 git -C "$repo" commit -q --allow-empty -m initial
 [ "$(git -C "$repo" log -1 --format='%s:%an:%ae')" = 'initial:Runner Fixture:runner@example.invalid' ]
 [ "$(git -C "$repo" config --get fixture.input)" = preserved ]
