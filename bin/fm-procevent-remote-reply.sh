@@ -99,11 +99,10 @@ DOCUMENT_LOCAL_FAILURE=2
 die() { printf 'error: %s\n' "$1" >&2; exit 1; }
 usage() { sed -n '2,66p' "$0" | sed 's/^# \{0,1\}//'; exit 2; }
 
-# Every temporary path this process currently owns. One EXIT trap removes them
-# on success, return, die, and every catchable signal alike. A lifecycle-lock
-# subshell's own EXIT trap runs this cleanup before releasing its lock, and
-# nothing else ever replaces a trap, so neither can silently drop the other.
-# That trap names the lock through LIFECYCLE_LOCK because cmd_ingest's own
+# Lifecycle-lock EXIT traps must compose temporary-path cleanup with lock
+# release; installing only one would silently drop the other obligation.
+# Track ingest/fetch paths outside function locals so cleanup survives unwinding.
+# Those traps name the lock through LIFECYCLE_LOCK because cmd_ingest's own
 # local lock would shadow the subshell's when a die fires inside it.
 INGEST_TMP=''
 FETCH_ERR=''
