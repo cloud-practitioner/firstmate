@@ -150,9 +150,9 @@
 # `verify` is read-only and is called by scout teardown, so teardown cannot
 # erase a source before this gate has succeeded: every recorded inventory
 # entry must still satisfy the same durability and origin checks as `complete`,
-# and no keyed status decision may be open. An answered call that Done retention
-# pruned into the markdown archive stays durable when it carries a recorded
-# captain answer; an archived row without one does not.
+# and no keyed status decision may be open.
+# docs/captain-hold-lifecycle.md, "Checking before scout teardown", owns the
+# shared durability lookup, including archive fallback.
 # Metadata compatibility: the attestation keeps the historical
 # `decisions_reviewed=1` and `decision_keys=` keys, and an inventory entry that
 # names no existing task resolves through the legacy `<origin>-decision-<entry>`
@@ -545,9 +545,11 @@ verify_hold_durable() {  # <task-id>
 # archive, where tasks-axi cannot show it. The archive keeps each row as a
 # "- [x] <id> - ..." line followed by its body indented two spaces, so the
 # newest archived row for <id> is read directly and judged by the same
-# resolution-record test as a live row. The archive is the configured
-# `[markdown] archive` of the backlog's root, else done-archive.md beside the
-# backlog; any other backend has no such file and reports no archived answer.
+# resolution-record test as a live row. The `[markdown] archive` setting is
+# inherited from ~/.tasks-axi/config.toml and overridden by the backlog root's
+# .tasks.toml; relative paths resolve from that root. Only an unset setting
+# falls back to done-archive.md in the configured data directory. Other
+# backends have no such file and report no archived answer.
 archived_answer_recorded() {  # <task-id>; prints the unindented answered body
   local id=$1 data root archive body
   data=$(fm_backlog_data_absolute "$DATA") || return 1

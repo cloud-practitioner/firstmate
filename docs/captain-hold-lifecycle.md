@@ -107,7 +107,7 @@ A post-teardown visual review can complete against the surviving report and dura
 
 `complete` accepts `--none` as an explicit semantic inventory result.
 `--none` is refused while the origin still has a lifecycle-open keyed status decision.
-Before recording completion, `complete` verifies every listed task against tasks-axi.
+Before recording completion, `complete` applies the same [durability check as `verify`](#checking-before-scout-teardown-verify) to every inventory entry.
 The origin is never its own inventory entry, so a hold that failed cannot be vouched for by the origin row.
 For a historical inventory that names its own origin, hold a separate captain task with `--origin`, replace only the invalid entry in the final `decision_keys=` line of the origin metadata with that task id while preserving all other entries, and re-run `complete`.
 An entry whose recorded origin differs from the one being completed is refused.
@@ -125,6 +125,11 @@ Scout teardown calls the read-only `verify` subcommand after checking for the re
 - The recorded attestation exists.
 - Every recorded inventory entry still passes the [completion inventory checks](#recording-a-reviewed-inventory-complete).
 - No keyed status decision opened after the last `complete`.
+
+The durability check shared by `complete` and `verify` reads current tasks first, including retained Done records.
+For the markdown backend, when neither the exact nor the legacy identity resolves to a current row, it checks the configured Done archive using the same resolution-record predicate.
+Only the newest archived row for each candidate identity is considered; a row without a recorded resolution is refused, and an earlier archived answer never overrides a current row.
+Archive lookup and current-row precedence have regression coverage in [`tests/fm-captain-hold-lifecycle.test.sh`](../tests/fm-captain-hold-lifecycle.test.sh).
 
 A keyed status decision opened after the last `complete` makes `verify` fail, and re-running `complete` is the repair.
 The `--force` path remains the explicit captain-approved discard escape hatch.
