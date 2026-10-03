@@ -553,8 +553,41 @@ archived_answer_recorded() {  # <task-id>; prints the unindented answered body
   data=$(fm_backlog_data_absolute "$DATA") || return 1
   root=$(fm_backlog_root "$data") || return 1
   [ "$(fm_tasks_axi_backend "$root" 2>/dev/null)" = markdown ] || return 1
-  archive=$(sed -n '/^\[markdown\]/,/^\[/s/^archive[[:space:]]*=[[:space:]]*"\(.*\)"[[:space:]]*$/\1/p' \
-    "$root/.tasks.toml" 2>/dev/null | head -1)
+  archive=$(perl -e '
+    my $archive;
+    for my $file (@ARGV) {
+      next unless -e $file || -l $file;
+      -f $file && -r $file or die "Cannot read tasks-axi config $file\n";
+      open my $fh, "<", $file or die "Cannot read tasks-axi config $file: $!\n";
+      my $table = "";
+      while (my $raw = <$fh>) {
+        my ($line, $quote) = ("", "");
+        for my $ch (split //, $raw) {
+          last if !$quote && $ch eq "#";
+          if ($quote) {
+            $quote = "" if $ch eq $quote;
+          } elsif ($ch eq "\"" || $ch eq "\x27") {
+            $quote = $ch;
+          }
+          $line .= $ch;
+        }
+        $line =~ s/^\s+|\s+$//g;
+        if ($line =~ /^\[([^\]]+)\]$/) {
+          $table = $1;
+          $table =~ s/^\s+|\s+$//g;
+          next;
+        }
+        next unless $table eq "markdown" && $line =~ /^archive\s*=\s*(.*)$/;
+        my $value = $1;
+        $value =~ /^(["\x27])(.*)\1$/ or die "Invalid markdown.archive in $file\n";
+        $archive = $2;
+      }
+    }
+    if (defined $archive) {
+      $archive =~ /\S/ or die "markdown.archive must not be empty\n";
+      print $archive;
+    }
+  ' "${HOME:-}/.tasks-axi/config.toml" "$root/.tasks.toml") || return 1
   case "$archive" in
     '') archive=$data/done-archive.md ;;
     /*) ;;

@@ -4649,44 +4649,86 @@ test_complete_refuses_an_entry_held_for_another_origin
 # Done retention prunes an answered captain call out of the live backlog into
 # the archive; the completion gate must still see its recorded answer there,
 # while an archived row with no recorded answer stays refused.
-test_verify_accepts_an_answered_call_pruned_to_the_archive() {
-  local home id err
-  home=$(make_home verify-archived-answer)
+test_verify_accepts_an_answered_call_pruned_to_the_archive() (
+  local home id call_id archive variant=${1:-default}
+  home=$(make_home "verify-archived-answer-$variant")
+  export HOME="$home/user-home"
+  mkdir -p "$HOME/.tasks-axi"
+  archive="$home/data/done-archive.md"
+  if [ "$variant" != default ]; then
+    printf 'backend = "markdown"\n\n[markdown]\npath = "data/backlog.md"\ndone_keep = 10\n' > "$home/.tasks.toml"
+  fi
+  case "$variant" in
+    inline-comment|project-precedence)
+      archive="$home/data/history.md"
+      printf 'archive = "data/history.md" # retained answers\n' >> "$home/.tasks.toml"
+      if [ "$variant" = project-precedence ]; then
+        printf '[markdown]\narchive = "data/other-history.md"\n' > "$HOME/.tasks-axi/config.toml"
+      fi
+      ;;
+    single-quoted)
+      archive="$home/data/history # retained.md"
+      printf "  [ markdown ] # archive settings\n  archive = 'data/history # retained.md' # retained answers\n" >> "$home/.tasks.toml"
+      ;;
+    inherited)
+      archive="$home/data/home-history.md"
+      printf "[markdown]\n  archive = 'data/home-history.md' # retained answers\n" > "$HOME/.tasks-axi/config.toml"
+      ;;
+    absolute)
+      archive="$home/history.md"
+      printf 'archive = "%s" # retained answers\n' "$archive" >> "$home/.tasks.toml"
+      ;;
+    default|unset) ;;
+    *) fail "unknown archive fixture: $variant" ;;
+  esac
   id=sample-archive-review
+  call_id="$id-decision-archived-call"
   mkdir -p "$home/data/$id"
   tasks_in "$home" add "$id" "Investigate archive" --kind scout --repo sample --start >/dev/null \
     || fail "could not create the archive origin"
   write_origin_meta "$home" "$id"
   printf 'done: report complete\n' > "$home/state/$id.status"
   printf '# Archive review\n\nTwo captain choices remain.\n' > "$home/data/$id/report.md"
-  run_captain "$home" hold sample-archived-call \
+  run_captain "$home" hold "$call_id" \
     --title "Choose archived option" --reason "captain choice pending" --repo sample >/dev/null \
     || fail "could not hold the archived call"
-  run_captain "$home" complete "$id" sample-archived-call >/dev/null \
+  run_captain "$home" complete "$id" "$call_id" >/dev/null \
     || fail "completion failed for the held inventory"
   printf 'Captain chose the archived option.\n' > "$home/archived-decision.txt"
-  run_captain "$home" answer sample-archived-call --decision-file "$home/archived-decision.txt" >/dev/null \
+  run_captain "$home" answer "$call_id" --decision-file "$home/archived-decision.txt" >/dev/null \
     || fail "could not answer the archived call"
+  run_captain "$home" verify "$id" >/dev/null \
+    || fail "verification refused the answer retained in Done"
   tasks_in "$home" prune --keep 0 >/dev/null || fail "could not prune the Done section"
-  assert_grep "sample-archived-call" "$home/data/done-archive.md" "the answered call was not archived"
-  if tasks_in "$home" show sample-archived-call >/dev/null 2>&1; then
+  assert_grep "$call_id" "$archive" "the answered call was not archived"
+  if tasks_in "$home" show "$call_id" >/dev/null 2>&1; then
     fail "fixture left the answered call in the live backlog"
   fi
 
   run_captain "$home" verify "$id" >/dev/null 2> "$home/archived.err" \
     || fail "an answered captain call pruned to the archive did not satisfy the gate: $(cat "$home/archived.err")"
+  run_captain "$home" complete "$id" "$call_id" >/dev/null \
+    || fail "completion refused the archived answer"
+  printf 'decision_keys=archived-call\n' >> "$home/state/$id.meta"
+  run_captain "$home" verify "$id" >/dev/null \
+    || fail "verification refused the archived legacy identity"
+  run_captain "$home" complete "$id" archived-call >/dev/null \
+    || fail "completion refused the archived legacy identity"
 
   # An archived row carrying no recorded captain answer is still refused.
   tasks_in "$home" add sample-unanswered-call "Unanswered" --kind captain --repo sample >/dev/null \
     || fail "could not add the unanswered row"
   tasks_in "$home" "done" sample-unanswered-call --keep 0 >/dev/null || fail "could not archive the unanswered row"
-  assert_grep "sample-unanswered-call" "$home/data/done-archive.md" "the unanswered row was not archived"
-  printf 'decision_keys=sample-archived-call,sample-unanswered-call\n' >> "$home/state/$id.meta"
+  assert_grep "sample-unanswered-call" "$archive" "the unanswered row was not archived"
+  printf 'decision_keys=%s,sample-unanswered-call\n' "$call_id" >> "$home/state/$id.meta"
   if run_captain "$home" verify "$id" > "$home/unanswered.out" 2> "$home/unanswered.err"; then
     fail "an archived row with no recorded captain answer satisfied the gate"
   fi
-  pass "verify accepts an answered call pruned to the archive and still refuses unanswered ones"
-}
+  if run_captain "$home" complete "$id" sample-unanswered-call >/dev/null 2>&1; then
+    fail "completion accepted an archived row with no recorded captain answer"
+  fi
+  pass "archive gates accept answered calls and refuse unanswered ones ($variant)"
+)
 
 test_uninventoried_report_decision_refuses_completion
 test_hold_decodes_a_bare_scalar_body_without_the_nonref_default
@@ -4744,4 +4786,6 @@ test_verify_names_the_unresolvable_legacy_id_once
 test_verify_resolves_a_pre_collapse_key_through_its_derived_marker
 test_captain_hold_mutations_address_the_beads_backend
 test_hold_creates_a_captain_row_when_beads_requires_due_without_custom_type
-test_verify_accepts_an_answered_call_pruned_to_the_archive
+for archive_variant in default unset inline-comment single-quoted inherited project-precedence absolute; do
+  test_verify_accepts_an_answered_call_pruned_to_the_archive "$archive_variant" || exit $?
+done
