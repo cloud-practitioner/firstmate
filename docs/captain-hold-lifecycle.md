@@ -126,9 +126,10 @@ Scout teardown calls the read-only `verify` subcommand after checking for the re
 - Every recorded inventory entry still passes the [completion inventory checks](#recording-a-reviewed-inventory-complete).
 - No keyed status decision opened after the last `complete`.
 
-The durability check shared by `complete` and `verify` reads current tasks first, including retained Done records.
-For the markdown backend, when neither the exact nor the legacy identity resolves to a current row, it checks the configured Done archive using the same resolution-record predicate.
-Only the newest archived row for each candidate identity is considered; a row without a recorded resolution is refused, and an earlier archived answer never overrides a current row.
+The durability check shared by `complete` and `verify` resolves the exact identity before trying the legacy-derived identity.
+For each identity, it checks the current row, including retained Done records, then the configured Done archive on the markdown backend using the same resolution-record predicate.
+Only the newest archived row for that identity is considered; a row without a recorded resolution is refused, and an earlier archived answer never overrides its current row.
+The legacy-derived identity is tried only when the exact identity is absent from both the current backlog and the archive.
 Archive lookup and current-row precedence have regression coverage in [`tests/fm-captain-hold-lifecycle.test.sh`](../tests/fm-captain-hold-lifecycle.test.sh).
 
 A keyed status decision opened after the last `complete` makes `verify` fail, and re-running `complete` is the repair.

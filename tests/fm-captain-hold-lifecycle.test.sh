@@ -4776,7 +4776,8 @@ test_verify_refuses_a_live_legacy_row_despite_an_old_archived_answer() (
 )
 
 test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer() (
-  local variant=$1 home id call_id earlier_id archived_id HOME
+  local variant=$1 home id call_id earlier_id HOME
+  local answer_args=()
   home=$(make_home "verify-unanswered-archive-$variant")
   export HOME="$home/user-home"
   mkdir -p "$HOME/.tasks-axi"
@@ -4792,9 +4793,16 @@ test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer() (
     --reason "earlier captain choice pending" --repo sample --origin "$id" >/dev/null \
     || fail "could not hold the earlier call"
   printf 'Choose route north.\n' > "$home/answer.txt"
-  run_captain "$home" answer "$earlier_id" --decision-file "$home/answer.txt" >/dev/null \
-    || fail "could not answer the earlier call"
-  tasks_in "$home" prune --keep 0 >/dev/null || fail "could not archive the earlier answer"
+  answer_args=(--decision-file "$home/answer.txt")
+  case "$variant" in live-legacy*) answer_args+=(--release) ;; esac
+  if [ "$variant" != live-legacy-held ]; then
+    run_captain "$home" answer "$earlier_id" "${answer_args[@]}" >/dev/null \
+      || fail "could not answer the earlier call"
+  fi
+  case "$variant" in
+    live-legacy*) ;;
+    *) tasks_in "$home" prune --keep 0 >/dev/null || fail "could not archive the earlier answer" ;;
+  esac
 
   tasks_in "$home" add "$call_id" "Choose next route" --kind captain --repo sample >/dev/null \
     || fail "could not create the unanswered exact row"
@@ -4810,11 +4818,24 @@ test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer() (
   fi
   tasks_in "$home" "done" "$call_id" --keep 0 >/dev/null \
     || fail "could not archive the unanswered exact row"
-  for archived_id in "$call_id" "$earlier_id"; do
-    if tasks_in "$home" show "$archived_id" >/dev/null 2>&1; then
-      fail "fixture left $archived_id in the live backlog"
-    fi
-  done
+  if [ "$variant" = live-legacy-done ]; then
+    tasks_in "$home" "done" "$earlier_id" --keep 10 >/dev/null \
+      || fail "could not retain the answered legacy row in Done"
+  fi
+  if tasks_in "$home" show "$call_id" >/dev/null 2>&1; then
+    fail "fixture left $call_id in the live backlog"
+  fi
+  case "$variant" in
+    live-legacy*)
+      tasks_in "$home" show "$earlier_id" >/dev/null \
+        || fail "fixture did not retain the live legacy row"
+      ;;
+    *)
+      if tasks_in "$home" show "$earlier_id" >/dev/null 2>&1; then
+        fail "fixture left $earlier_id in the live backlog"
+      fi
+      ;;
+  esac
 
   if run_captain "$home" verify "$id" > "$home/verify.out" 2> "$home/verify.err"; then
     fail "verification accepted an earlier answer over an unanswered archived row ($variant)"
@@ -4827,6 +4848,46 @@ test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer() (
   assert_grep "captain-held task $call_id is neither held for the captain nor closed with a recorded captain answer" \
     "$home/complete.err" "completion did not reject the unanswered archived row"
   pass "an unanswered archived row takes precedence over an earlier answer ($variant)"
+)
+
+test_verify_accepts_an_exact_archived_answer_despite_a_live_legacy_row() (
+  local home id call_id legacy_id other HOME
+  home=$(make_home verify-exact-archive-over-live-legacy)
+  export HOME="$home/user-home"
+  mkdir -p "$HOME/.tasks-axi"
+  id=sample-review
+  other=sample-other-review
+  call_id=sample-route
+  legacy_id="$id-decision-$call_id"
+  tasks_in "$home" add "$id" "Review current route" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the current origin"
+  tasks_in "$home" add "$other" "Review earlier route" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the earlier origin"
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  printf 'Choose route north.\n' > "$home/answer.txt"
+  run_captain "$home" hold "$legacy_id" --title "Earlier route" \
+    --reason "earlier captain choice pending" --repo sample --origin "$other" >/dev/null \
+    || fail "could not hold the earlier legacy row"
+  run_captain "$home" answer "$legacy_id" --decision-file "$home/answer.txt" --release >/dev/null \
+    || fail "could not release the answered legacy row"
+  run_captain "$home" hold "$call_id" --title "Current route" \
+    --reason "current captain choice pending" --repo sample --origin "$id" >/dev/null \
+    || fail "could not hold the exact row"
+  run_captain "$home" complete "$id" "$call_id" >/dev/null \
+    || fail "completion refused the current exact hold"
+  run_captain "$home" answer "$call_id" --decision-file "$home/answer.txt" >/dev/null \
+    || fail "could not answer the exact row"
+  tasks_in "$home" prune --keep 0 >/dev/null || fail "could not archive the exact answer"
+  tasks_in "$home" show "$legacy_id" >/dev/null || fail "fixture lost the live legacy row"
+  if tasks_in "$home" show "$call_id" >/dev/null 2>&1; then
+    fail "fixture left the exact answer in the live backlog"
+  fi
+  run_captain "$home" verify "$id" >/dev/null \
+    || fail "verification selected the live legacy row over the exact archived answer"
+  run_captain "$home" complete "$id" "$call_id" >/dev/null \
+    || fail "completion selected the live legacy row over the exact archived answer"
+  pass "the exact archived answer takes precedence over a live legacy row for another origin"
 )
 
 test_uninventoried_report_decision_refuses_completion
@@ -4889,6 +4950,7 @@ for archive_variant in default unset inline-comment single-quoted inherited proj
   test_verify_accepts_an_answered_call_pruned_to_the_archive "$archive_variant" || exit $?
 done
 test_verify_refuses_a_live_legacy_row_despite_an_old_archived_answer
-for archive_variant in held-body empty-body reused-id; do
+for archive_variant in held-body empty-body reused-id live-legacy live-legacy-held live-legacy-done; do
   test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer "$archive_variant" || exit $?
 done
+test_verify_accepts_an_exact_archived_answer_despite_a_live_legacy_row

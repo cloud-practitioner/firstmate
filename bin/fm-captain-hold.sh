@@ -803,18 +803,27 @@ resolve_migrated_entry() {  # <origin-or-empty> <entry>
 # Prints "<resolved id> <how>", where <how> is exact, legacy, migrated-note or
 # migrated-prefix, so a caller can record which evidence carried the attestation.
 resolve_entry() {  # <origin-or-empty> <entry>; prints "<id> <how>" or fails
-  local origin=$1 entry=$2 legacy migrated rc
-  if task_show "$entry"; then
-    printf '%s exact' "$entry"
-    return 0
-  fi
+  local origin=$1 entry=$2 archives=${3:-0} legacy='' id how migrated rc
   if [ -n "$origin" ] && [ "$origin" != "$BINDING_ANY" ]; then
     legacy=$(legacy_hold_id "$origin" "$entry")
-    if task_show "$legacy"; then
-      printf '%s legacy' "$legacy"
+  fi
+  for id in "$entry" "$legacy"; do
+    [ -n "$id" ] || continue
+    if task_show "$id"; then
+      how=exact
+      [ "$id" = "$entry" ] || how=legacy
+      printf '%s %s' "$id" "$how"
       return 0
     fi
-  fi
+    if [ "$archives" = 1 ]; then
+      rc=0
+      archived_answer_recorded "$id" >/dev/null || rc=$?
+      case "$rc" in
+        0) printf '%s archived' "$id"; return 0 ;;
+        2) fail "captain-held task $id is neither held for the captain nor closed with a recorded captain answer" ;;
+      esac
+    fi
+  done
   rc=0
   migrated=$(resolve_migrated_entry "$origin" "$entry") || rc=$?
   case "$rc" in
@@ -822,8 +831,7 @@ resolve_entry() {  # <origin-or-empty> <entry>; prints "<id> <how>" or fails
     2) return 2 ;;
     124) return 124 ;;
   esac
-  if [ -n "$origin" ] && [ "$origin" != "$BINDING_ANY" ]; then
-    legacy=$(legacy_hold_id "$origin" "$entry")
+  if [ -n "$legacy" ]; then
     fail "no captain-held task $entry and no migrated hold for it in this home's configured backlog (data directory $DATA); the nearest legacy identity $legacy also resolves to nothing"
   fi
   fail "no captain-held task $entry and no migrated hold for it in this home's configured backlog (data directory $DATA)"
@@ -931,30 +939,13 @@ refuse_self_inventory() {
 # as absence. The result carries the attestation evidence and whether an
 # origin was recorded, so completion can disclose the legacy fallback.
 verify_entry_durable() {  # <origin-or-empty> <entry>; prints "<id> <how> <origin-state>"
-  local origin=$1 entry=$2 resolved resolve_status=0 id how stored origin_state=unrecorded origin_id stored_id archived_body archived_status
+  local origin=$1 entry=$2 resolved resolve_status=0 id how stored origin_state=unrecorded origin_id stored_id archived_body
   # The origin task is never its own captain-call inventory: it is the work the
   # calls were found in, so accepting it would let a refused hold look recorded.
   if [ -n "$origin" ] && [ "$origin" != "$BINDING_ANY" ] && [ "$entry" = "$origin" ]; then
     refuse_self_inventory "$origin" "$entry"
   fi
-  resolved=$(resolve_entry "$origin" "$entry" 2>&1) || resolve_status=$?
-  # Current exact and legacy rows take precedence over earlier archived calls.
-  if [ "$resolve_status" -eq 1 ]; then
-    for id in "$entry" "${origin:+$(legacy_hold_id "$origin" "$entry")}"; do
-      [ -n "$id" ] || continue
-      archived_status=0
-      archived_body=$(archived_answer_recorded "$id") || archived_status=$?
-      case "$archived_status" in
-        0)
-          resolved="$id archived"
-          stored=$(body_hold_origin "$archived_body")
-          resolve_status=0
-          break
-          ;;
-        2) fail "captain-held task $id is neither held for the captain nor closed with a recorded captain answer" ;;
-      esac
-    done
-  fi
+  resolved=$(resolve_entry "$origin" "$entry" 1 2>&1) || resolve_status=$?
   if [ "$resolve_status" -ne 0 ]; then
     printf '%s\n' "$resolved" >&2
     [ "$resolve_status" -ne 124 ] \
@@ -963,7 +954,11 @@ verify_entry_durable() {  # <origin-or-empty> <entry>; prints "<id> <how> <origi
   fi
   id=${resolved%% *}
   how=${resolved##* }
-  if [ "$how" != archived ]; then
+  if [ "$how" = archived ]; then
+    archived_body=$(archived_answer_recorded "$id") \
+      || fail "captain-held task $id is neither held for the captain nor closed with a recorded captain answer"
+    stored=$(body_hold_origin "$archived_body")
+  else
     verify_hold_durable "$id"
     id=$(show_field_value "$TASK_SHOW_OUTPUT" id)
     stored=$(body_hold_origin "$(decode_shown_value "$(show_field "$TASK_SHOW_OUTPUT" body)")")
