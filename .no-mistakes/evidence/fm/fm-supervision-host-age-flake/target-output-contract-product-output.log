@@ -1,0 +1,112 @@
+
+=== fixture 0s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+
+=== fixture 65s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 1m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+
+=== fixture 125s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 2m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+
+=== fixture 3545s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 59m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+
+=== fixture 7205s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 2h ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 2h ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+Incorrect minute expectation for hour/day output: rejected.
+
+=== fixture 172805s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 2d ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 2d ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+Incorrect minute expectation for hour/day output: rejected.
+
+=== fixture 0s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+
+=== fixture 65s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 1m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+
+=== fixture 125s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 2m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+
+=== fixture 3545s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 59m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 0m ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+
+=== fixture 7205s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 2h ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 2h ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+Incorrect minute expectation for hour/day output: rejected.
+
+=== fixture 172805s: actual drain output ===
+[seq 2, newest of 2 for this task, recorded 2d ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+
+=== normalized assertion input (test-only) ===
+[seq 2, newest of 2 for this task, recorded 2d ago] alpha: alpha still blocked 2
+BRANCH OUTCOMES: after processing them run bin/fm-branch-outcome.sh mark-processed --through 2; until then every drain presents them again
+Sequence, task, summary, and duplicate-count mutations: rejected by existing assertion.
+Incorrect minute expectation for hour/day output: rejected.

@@ -1,0 +1,6 @@
+Fixture age: 125s
+Selected cases: test_branch_outcomes_only_on_a_host_home_off_pi, test_branch_outcomes_put_captain_first_and_collapse_routine_overflow, test_branch_outcomes_collapse_repeated_captain_outcomes_per_task, test_branch_outcomes_present_a_long_away_window_once, test_branch_outcomes_stay_unread_when_a_projection_fails
+Exit: 1
+not ok - a Claude home without config/supervision-host must present the captain outcome (missing: '[seq 1, recorded 0m ago] demo: PR ready for review')
+--- output ---
+BRANCH OUTCOMES SKIPPED: the outcome store could not be read safely; repair it before relying on this section.

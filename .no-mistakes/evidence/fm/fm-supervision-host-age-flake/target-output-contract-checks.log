@@ -1,0 +1,4 @@
+Fixture age: 0s
+Selected cases: 
+Exit: 0
+ok - normalization: minutes normalize; hour/day ages and outcome metadata remain exact

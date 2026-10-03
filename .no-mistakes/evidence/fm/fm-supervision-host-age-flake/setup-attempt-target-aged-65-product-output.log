@@ -1,0 +1,5 @@
+
+=== drain-scope, age fixture 65s, drain exit 0 ===
+
+=== drain-scope, age fixture 65s, drain exit 1 ===
+BRANCH OUTCOMES SKIPPED: the outcome store could not be read safely; repair it before relying on this section.

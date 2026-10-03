@@ -1,0 +1,10 @@
+Fixture age: 0s
+Selected cases: test_branch_outcomes_only_on_a_host_home_off_pi, test_branch_outcomes_put_captain_first_and_collapse_routine_overflow, test_branch_outcomes_collapse_repeated_captain_outcomes_per_task, test_branch_outcomes_present_a_long_away_window_once, test_branch_outcomes_stay_unread_when_a_projection_fails, test_branch_outcomes_date_a_legacy_backlog_without_adopting_it, test_branch_outcomes_date_an_outcome_carried_across_a_switch_off_pi
+Exit: 0
+ok - drain: BRANCH OUTCOMES runs on a Claude home by default and on another primary with the file, never with off, and never on Pi
+ok - drain: captain outcomes come first, and routine overflow collapses into a count one drain clears
+ok - drain: repeated captain outcomes collapse per task, and the byte cap presents only the run its acknowledgement covers
+ok - drain: a long away window costs one short drain, captain outcomes collapsed per task and routine overflow counted, and nothing from it is shown again
+ok - drain: branch outcomes stay unread when a projection of the store fails
+ok - drain: a legacy backlog is presented with each outcome's age and a check-first instruction, never adopted
+ok - drain: an outcome carried across a switch off Pi comes back with its age, never adopted
