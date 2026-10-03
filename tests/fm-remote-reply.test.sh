@@ -239,8 +239,13 @@ wait_for_content() {
 }
 wait_for_content "$TMP_ROOT/leak-fetch-started" || fail "the leak-check document fetch never started"
 kill -TERM "$leak_pid"
-wait "$leak_pid" 2>/dev/null || true
-kill -TERM "$(cat "$TMP_ROOT/leak-fetch-started")" 2>/dev/null || true
+# Bash can defer TERM until its foreground fetch exits. Interrupt that fetch
+# before waiting so normal completion cannot satisfy the cleanup assertion.
+kill -TERM "$(cat "$TMP_ROOT/leak-fetch-started")" 2>/dev/null \
+  || fail "the leak-check fetch exited before it could be interrupted"
+leak_rc=0
+wait "$leak_pid" 2>/dev/null || leak_rc=$?
+[ "$leak_rc" -eq 143 ] || fail "interrupted ingest returned an unexpected status: $leak_rc"
 assert_no_leak "signal during a document fetch"
 pass "remote reply ingest leaves no temporary path or lifecycle lock behind on any exit"
 
