@@ -1,0 +1,153 @@
+Reuse an archived answered identity, close its new row unanswered, and attempt cleanup
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.hxG37T
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.hxG37T
+[exit 0]
+
+ISOLATION: current unanswered Done over older archived same-id answer; marked lab FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.hxG37T; HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.hxG37T/user-home; no FM_*_OVERRIDE, gate bypass, backend mocks, or real fleet data.
+
+Effective input .tasks.toml:
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "data/done-archive.md"
+
+
+$ tasks-axi add sample-review 'Investigate routing' --kind scout --repo sample --start
+ok: added sample-review (scout, repo sample) -> In flight
+task:
+  id: sample-review
+  title: Investigate routing
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done sample-review --pr <url>` when it ships
+  - Run `tasks-axi block sample-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-review-decision-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample
+sample-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review route
+complete: sample-review captain-call inventory reviewed (route) [no recorded origin on: sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh answer sample-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.hxG37T/answer.txt
+answered: sample-review-decision-route
+[exit 0]
+
+$ tasks-axi prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-review-decision-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample
+sample-review-decision-route
+[exit 0]
+
+$ tasks-axi done sample-review-decision-route --keep 10
+ok: done sample-review-decision-route -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ tasks-axi show sample-review-decision-route --full
+task:
+  id: sample-review-decision-route
+  title: Choose route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA=="
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-03T07:29:18Z"
+[exit 0]
+
+CURRENT UNANSWERED DONE AND OLD ARCHIVED ANSWER BACKLOG:
+## In flight
+- [ ] sample-review - Investigate routing (repo: sample) (kind: scout) (since 2026-10-03)
+
+## Queued
+## Done
+- [x] sample-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Captain hold set: 2026-10-03T07:29:18Z
+
+
+CURRENT UNANSWERED DONE AND OLD ARCHIVED ANSWER ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+
+
+CURRENT UNANSWERED DONE AND OLD ARCHIVED ANSWER METADATA sample-review.meta:
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.hxG37T/projects/missing-sample-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.hxG37T/projects/sample
+branch=fm/sample-review
+mode=no-mistakes
+decisions_reviewed=1
+decision_keys=route
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+[stderr]
+fm-captain-hold: captain-held task sample-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review route
+[stderr]
+fm-captain-hold: captain-held task sample-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-teardown.sh sample-review
+[stderr]
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.hxG37T
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-captain-hold: captain-held task sample-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+REFUSED: scout task sample-review has not passed the captain-call completion gate.
+Inventory its report and any visual review through bin/fm-captain-hold.sh before teardown.
+[exit 1]
+
+OBSERVED: verify, complete and scout teardown all refused the unanswered call; source metadata is byte-identical and report survives.
+
+TEARDOWN: removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.hxG37T
+

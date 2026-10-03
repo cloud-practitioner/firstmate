@@ -1,0 +1,176 @@
+Answer and prune a captain call, then clean up its finished scout
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM
+[exit 0]
+
+ISOLATION: answered archived scout cleanup; marked lab FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM; HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM/user-home; no FM_*_OVERRIDE, gate bypass, backend mocks, or real fleet data.
+
+Effective input .tasks.toml:
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "data/done-archive.md"
+
+
+$ tasks-axi add sample-review 'Investigate routing' --kind scout --repo sample --start
+ok: added sample-review (scout, repo sample) -> In flight
+task:
+  id: sample-review
+  title: Investigate routing
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done sample-review --pr <url>` when it ships
+  - Run `tasks-axi block sample-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample --origin sample-review
+sample-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review sample-route
+complete: sample-review captain-call inventory reviewed (sample-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh answer sample-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM/answer.txt
+answered: sample-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+$ tasks-axi prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ tasks-axi show sample-route --full
+error: "Task \"sample-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review sample-route
+complete: sample-review captain-call inventory reviewed (sample-route)
+[exit 0]
+
+BEFORE CLEANUP BACKLOG:
+## In flight
+- [ ] sample-review - Investigate routing (repo: sample) (kind: scout) (since 2026-10-03)
+
+## Queued
+## Done
+
+
+BEFORE CLEANUP ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+  Captain hold origin: sample-review
+
+  Origin: sample-review
+
+
+
+BEFORE CLEANUP METADATA sample-review.meta:
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM/projects/missing-sample-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM/projects/sample
+branch=fm/sample-review
+mode=no-mistakes
+decisions_reviewed=1
+decision_keys=sample-route
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-teardown.sh sample-review
+teardown sample-review complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM/projects/missing-sample-review, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261003T072650Z-1924044)
+Backlog: sample-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+[stderr]
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+
+$ tasks-axi show sample-review --full
+task:
+  id: sample-review
+  title: Investigate routing data/sample-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/sample-review/report.md"
+  body: ""
+[exit 0]
+
+AFTER CLEANUP BACKLOG:
+## In flight
+## Queued
+## Done
+- [x] sample-review - Investigate routing data/sample-review/report.md (repo: sample) (kind: scout) (reported 2026-10-03)
+
+
+AFTER CLEANUP ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+  Captain hold origin: sample-review
+
+  Origin: sample-review
+
+
+
+OBSERVED: scout cleanup succeeded without force; metadata retired, scout backlog row Done, report and archived captain answer retained.
+
+TEARDOWN: removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.8libwM
+

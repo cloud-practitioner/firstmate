@@ -1,51 +1,58 @@
 [
   {
-    "name": "Clean up a scout after verifying an answered call retained in Done",
+    "name": "Answer and prune a captain call, then clean up its finished scout",
     "result": "pass",
     "live": true,
-    "evidence": "captain-archive-live.txt",
-    "reason": ""
+    "evidence": "/home/node/.no-mistakes/evidence/01M407REF5PH99EKVJW42BPVGA/01-archived-cleanup.log",
+    "reason": "Real Firstmate and tasks-axi CLI commands produced the expected output and persisted state in disposable marked lab homes."
   },
   {
-    "name": "Clean up a scout after its answered call is pruned into the default archive, using exact and legacy identities",
+    "name": "Keep an answered captain call in Done and complete/verify its scout inventory",
     "result": "pass",
     "live": true,
-    "evidence": "captain-archive-live.txt",
-    "reason": ""
+    "evidence": "/home/node/.no-mistakes/evidence/01M407REF5PH99EKVJW42BPVGA/02-retained-done.log",
+    "reason": "Real Firstmate and tasks-axi CLI commands produced the expected output and persisted state in disposable marked lab homes."
   },
   {
-    "name": "Clean up a scout using tasks-axi configured or inherited archives",
+    "name": "Open a new untransferred captain decision and attempt scout cleanup",
     "result": "pass",
     "live": true,
-    "evidence": "captain-archive-live.txt",
-    "reason": ""
+    "evidence": "/home/node/.no-mistakes/evidence/01M407REF5PH99EKVJW42BPVGA/03-open-status.log",
+    "reason": "Real Firstmate and tasks-axi CLI commands produced the expected output and persisted state in disposable marked lab homes."
   },
   {
-    "name": "Refuse a live unheld unanswered call without destroying the scout report or metadata",
+    "name": "Prune answers using supported archive settings and resolve exact/legacy identities",
     "result": "pass",
     "live": true,
-    "evidence": "captain-archive-live.txt",
-    "reason": ""
+    "evidence": "/home/node/.no-mistakes/evidence/01M407REF5PH99EKVJW42BPVGA/04-archive-configuration.log",
+    "reason": "Real Firstmate and tasks-axi CLI commands produced the expected output and persisted state in disposable marked lab homes."
   },
   {
-    "name": "Refuse an archived unanswered call without destroying the scout report or metadata",
+    "name": "Close without an answer and try to satisfy cleanup with missing, older, or legacy answers",
     "result": "pass",
     "live": true,
-    "evidence": "captain-archive-live.txt",
-    "reason": ""
+    "evidence": "/home/node/.no-mistakes/evidence/01M407REF5PH99EKVJW42BPVGA/05-unanswered-archive.log",
+    "reason": "Real Firstmate and tasks-axi CLI commands produced the expected output and persisted state in disposable marked lab homes."
   },
   {
-    "name": "Reject stale archived answers when newer exact, legacy, or archived lifecycles are unanswered",
+    "name": "Reuse an archived answered identity, close its new row unanswered, and attempt cleanup",
     "result": "pass",
     "live": true,
-    "evidence": "captain-archive-live.txt",
-    "reason": ""
+    "evidence": "/home/node/.no-mistakes/evidence/01M407REF5PH99EKVJW42BPVGA/06-current-row-precedence.log",
+    "reason": "Real Firstmate and tasks-axi CLI commands produced the expected output and persisted state in disposable marked lab homes."
   },
   {
-    "name": "Refuse scout cleanup when a new status-stream captain decision is still open",
+    "name": "Resolve an exact archived answer before a legacy row and reject wrong-origin or missing calls",
     "result": "pass",
     "live": true,
-    "evidence": "captain-archive-live.txt",
-    "reason": ""
+    "evidence": "/home/node/.no-mistakes/evidence/01M407REF5PH99EKVJW42BPVGA/07-origin-boundary.log",
+    "reason": "Real Firstmate and tasks-axi CLI commands produced the expected output and persisted state in disposable marked lab homes."
+  },
+  {
+    "name": "Run pre-fix and fixed verify against the same real pruned answer",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M407REF5PH99EKVJW42BPVGA/08-baseline-regression.log",
+    "reason": "Real Firstmate and tasks-axi CLI commands produced the expected output and persisted state in disposable marked lab homes."
   }
 ]

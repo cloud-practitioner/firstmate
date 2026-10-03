@@ -1,0 +1,788 @@
+Prune answers using supported archive settings and resolve exact/legacy identities
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.cy96Se
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.cy96Se
+[exit 0]
+
+ISOLATION: configured archive default; marked lab FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.cy96Se; HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.cy96Se/user-home; no FM_*_OVERRIDE, gate bypass, backend mocks, or real fleet data.
+
+Effective input .tasks.toml:
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "data/done-archive.md"
+
+
+$ tasks-axi add sample-review 'Investigate routing' --kind scout --repo sample --start
+ok: added sample-review (scout, repo sample) -> In flight
+task:
+  id: sample-review
+  title: Investigate routing
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done sample-review --pr <url>` when it ships
+  - Run `tasks-axi block sample-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-review-decision-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample
+sample-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review sample-review-decision-route
+complete: sample-review captain-call inventory reviewed (sample-review-decision-route) [no recorded origin on: sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh answer sample-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.cy96Se/answer.txt
+answered: sample-review-decision-route
+[exit 0]
+
+$ tasks-axi prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ tasks-axi show sample-review-decision-route
+error: "Task \"sample-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review route
+complete: sample-review captain-call inventory reviewed (route,sample-review-decision-route) [no recorded origin on: sample-review-decision-route sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+CONFIGURED default EXACT/LEGACY ACCEPTED BACKLOG:
+## In flight
+- [ ] sample-review - Investigate routing (repo: sample) (kind: scout) (since 2026-10-03)
+
+## Queued
+## Done
+
+
+CONFIGURED default EXACT/LEGACY ACCEPTED ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+
+
+CONFIGURED default EXACT/LEGACY ACCEPTED METADATA sample-review.meta:
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.cy96Se/projects/missing-sample-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.cy96Se/projects/sample
+branch=fm/sample-review
+mode=no-mistakes
+decisions_reviewed=1
+decision_keys=sample-review-decision-route
+decisions_reviewed=1
+decision_keys=route,sample-review-decision-route
+
+
+TEARDOWN: removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.cy96Se
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.1c1sXU
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.1c1sXU
+[exit 0]
+
+ISOLATION: configured archive unset; marked lab FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.1c1sXU; HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.1c1sXU/user-home; no FM_*_OVERRIDE, gate bypass, backend mocks, or real fleet data.
+
+Effective input .tasks.toml:
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+
+
+$ tasks-axi add sample-review 'Investigate routing' --kind scout --repo sample --start
+ok: added sample-review (scout, repo sample) -> In flight
+task:
+  id: sample-review
+  title: Investigate routing
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done sample-review --pr <url>` when it ships
+  - Run `tasks-axi block sample-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-review-decision-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample
+sample-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review sample-review-decision-route
+complete: sample-review captain-call inventory reviewed (sample-review-decision-route) [no recorded origin on: sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh answer sample-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.1c1sXU/answer.txt
+answered: sample-review-decision-route
+[exit 0]
+
+$ tasks-axi prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ tasks-axi show sample-review-decision-route
+error: "Task \"sample-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review route
+complete: sample-review captain-call inventory reviewed (route,sample-review-decision-route) [no recorded origin on: sample-review-decision-route sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+CONFIGURED unset EXACT/LEGACY ACCEPTED BACKLOG:
+## In flight
+- [ ] sample-review - Investigate routing (repo: sample) (kind: scout) (since 2026-10-03)
+
+## Queued
+## Done
+
+
+CONFIGURED unset EXACT/LEGACY ACCEPTED ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+
+
+CONFIGURED unset EXACT/LEGACY ACCEPTED METADATA sample-review.meta:
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.1c1sXU/projects/missing-sample-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.1c1sXU/projects/sample
+branch=fm/sample-review
+mode=no-mistakes
+decisions_reviewed=1
+decision_keys=sample-review-decision-route
+decisions_reviewed=1
+decision_keys=route,sample-review-decision-route
+
+
+TEARDOWN: removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.1c1sXU
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.sMKfPe
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.sMKfPe
+[exit 0]
+
+ISOLATION: configured archive inline-comment; marked lab FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.sMKfPe; HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.sMKfPe/user-home; no FM_*_OVERRIDE, gate bypass, backend mocks, or real fleet data.
+
+Effective input .tasks.toml:
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "data/history.md" # retained answers
+
+
+$ tasks-axi add sample-review 'Investigate routing' --kind scout --repo sample --start
+ok: added sample-review (scout, repo sample) -> In flight
+task:
+  id: sample-review
+  title: Investigate routing
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done sample-review --pr <url>` when it ships
+  - Run `tasks-axi block sample-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-review-decision-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample
+sample-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review sample-review-decision-route
+complete: sample-review captain-call inventory reviewed (sample-review-decision-route) [no recorded origin on: sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh answer sample-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.sMKfPe/answer.txt
+answered: sample-review-decision-route
+[exit 0]
+
+$ tasks-axi prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ tasks-axi show sample-review-decision-route
+error: "Task \"sample-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review route
+complete: sample-review captain-call inventory reviewed (route,sample-review-decision-route) [no recorded origin on: sample-review-decision-route sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+CONFIGURED inline-comment EXACT/LEGACY ACCEPTED BACKLOG:
+## In flight
+- [ ] sample-review - Investigate routing (repo: sample) (kind: scout) (since 2026-10-03)
+
+## Queued
+## Done
+
+
+CONFIGURED inline-comment EXACT/LEGACY ACCEPTED ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+
+
+CONFIGURED inline-comment EXACT/LEGACY ACCEPTED METADATA sample-review.meta:
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.sMKfPe/projects/missing-sample-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.sMKfPe/projects/sample
+branch=fm/sample-review
+mode=no-mistakes
+decisions_reviewed=1
+decision_keys=sample-review-decision-route
+decisions_reviewed=1
+decision_keys=route,sample-review-decision-route
+
+
+TEARDOWN: removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.sMKfPe
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.OHc16c
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.OHc16c
+[exit 0]
+
+ISOLATION: configured archive single-quoted; marked lab FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.OHc16c; HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.OHc16c/user-home; no FM_*_OVERRIDE, gate bypass, backend mocks, or real fleet data.
+
+Effective input .tasks.toml:
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+  [ markdown ] # archive settings
+  archive = 'data/history # retained.md' # retained answers
+
+
+$ tasks-axi add sample-review 'Investigate routing' --kind scout --repo sample --start
+ok: added sample-review (scout, repo sample) -> In flight
+task:
+  id: sample-review
+  title: Investigate routing
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done sample-review --pr <url>` when it ships
+  - Run `tasks-axi block sample-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-review-decision-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample
+sample-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review sample-review-decision-route
+complete: sample-review captain-call inventory reviewed (sample-review-decision-route) [no recorded origin on: sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh answer sample-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.OHc16c/answer.txt
+answered: sample-review-decision-route
+[exit 0]
+
+$ tasks-axi prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ tasks-axi show sample-review-decision-route
+error: "Task \"sample-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review route
+complete: sample-review captain-call inventory reviewed (route,sample-review-decision-route) [no recorded origin on: sample-review-decision-route sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+CONFIGURED single-quoted EXACT/LEGACY ACCEPTED BACKLOG:
+## In flight
+- [ ] sample-review - Investigate routing (repo: sample) (kind: scout) (since 2026-10-03)
+
+## Queued
+## Done
+
+
+CONFIGURED single-quoted EXACT/LEGACY ACCEPTED ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+
+
+CONFIGURED single-quoted EXACT/LEGACY ACCEPTED METADATA sample-review.meta:
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.OHc16c/projects/missing-sample-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.OHc16c/projects/sample
+branch=fm/sample-review
+mode=no-mistakes
+decisions_reviewed=1
+decision_keys=sample-review-decision-route
+decisions_reviewed=1
+decision_keys=route,sample-review-decision-route
+
+
+TEARDOWN: removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.OHc16c
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.FK9eha
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.FK9eha
+[exit 0]
+
+ISOLATION: configured archive inherited; marked lab FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.FK9eha; HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.FK9eha/user-home; no FM_*_OVERRIDE, gate bypass, backend mocks, or real fleet data.
+
+Effective input .tasks.toml:
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+
+
+Isolated user config:
+[markdown]
+  archive = 'data/home-history.md' # inherited archive
+
+
+$ tasks-axi add sample-review 'Investigate routing' --kind scout --repo sample --start
+ok: added sample-review (scout, repo sample) -> In flight
+task:
+  id: sample-review
+  title: Investigate routing
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done sample-review --pr <url>` when it ships
+  - Run `tasks-axi block sample-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-review-decision-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample
+sample-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review sample-review-decision-route
+complete: sample-review captain-call inventory reviewed (sample-review-decision-route) [no recorded origin on: sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh answer sample-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.FK9eha/answer.txt
+answered: sample-review-decision-route
+[exit 0]
+
+$ tasks-axi prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ tasks-axi show sample-review-decision-route
+error: "Task \"sample-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review route
+complete: sample-review captain-call inventory reviewed (route,sample-review-decision-route) [no recorded origin on: sample-review-decision-route sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+CONFIGURED inherited EXACT/LEGACY ACCEPTED BACKLOG:
+## In flight
+- [ ] sample-review - Investigate routing (repo: sample) (kind: scout) (since 2026-10-03)
+
+## Queued
+## Done
+
+
+CONFIGURED inherited EXACT/LEGACY ACCEPTED ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+
+
+CONFIGURED inherited EXACT/LEGACY ACCEPTED METADATA sample-review.meta:
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.FK9eha/projects/missing-sample-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.FK9eha/projects/sample
+branch=fm/sample-review
+mode=no-mistakes
+decisions_reviewed=1
+decision_keys=sample-review-decision-route
+decisions_reviewed=1
+decision_keys=route,sample-review-decision-route
+
+
+TEARDOWN: removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.FK9eha
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.t3rKxq
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.t3rKxq
+[exit 0]
+
+ISOLATION: configured archive project-precedence; marked lab FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.t3rKxq; HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.t3rKxq/user-home; no FM_*_OVERRIDE, gate bypass, backend mocks, or real fleet data.
+
+Effective input .tasks.toml:
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "data/history.md" # retained answers
+
+
+Isolated user config:
+[markdown]
+archive = "data/other-history.md"
+
+
+$ tasks-axi add sample-review 'Investigate routing' --kind scout --repo sample --start
+ok: added sample-review (scout, repo sample) -> In flight
+task:
+  id: sample-review
+  title: Investigate routing
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done sample-review --pr <url>` when it ships
+  - Run `tasks-axi block sample-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-review-decision-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample
+sample-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review sample-review-decision-route
+complete: sample-review captain-call inventory reviewed (sample-review-decision-route) [no recorded origin on: sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh answer sample-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.t3rKxq/answer.txt
+answered: sample-review-decision-route
+[exit 0]
+
+$ tasks-axi prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ tasks-axi show sample-review-decision-route
+error: "Task \"sample-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review route
+complete: sample-review captain-call inventory reviewed (route,sample-review-decision-route) [no recorded origin on: sample-review-decision-route sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+CONFIGURED project-precedence EXACT/LEGACY ACCEPTED BACKLOG:
+## In flight
+- [ ] sample-review - Investigate routing (repo: sample) (kind: scout) (since 2026-10-03)
+
+## Queued
+## Done
+
+
+CONFIGURED project-precedence EXACT/LEGACY ACCEPTED ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+
+
+CONFIGURED project-precedence EXACT/LEGACY ACCEPTED METADATA sample-review.meta:
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.t3rKxq/projects/missing-sample-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.t3rKxq/projects/sample
+branch=fm/sample-review
+mode=no-mistakes
+decisions_reviewed=1
+decision_keys=sample-review-decision-route
+decisions_reviewed=1
+decision_keys=route,sample-review-decision-route
+
+
+TEARDOWN: removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.t3rKxq
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.CR4aXf
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.CR4aXf
+[exit 0]
+
+ISOLATION: configured archive absolute; marked lab FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.CR4aXf; HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.CR4aXf/user-home; no FM_*_OVERRIDE, gate bypass, backend mocks, or real fleet data.
+
+Effective input .tasks.toml:
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.CR4aXf/history.md" # absolute archive
+
+
+$ tasks-axi add sample-review 'Investigate routing' --kind scout --repo sample --start
+ok: added sample-review (scout, repo sample) -> In flight
+task:
+  id: sample-review
+  title: Investigate routing
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done sample-review --pr <url>` when it ships
+  - Run `tasks-axi block sample-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh hold sample-review-decision-route --title 'Choose route' --reason 'captain must choose north or south' --repo sample
+sample-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review sample-review-decision-route
+complete: sample-review captain-call inventory reviewed (sample-review-decision-route) [no recorded origin on: sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh answer sample-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.CR4aXf/answer.txt
+answered: sample-review-decision-route
+[exit 0]
+
+$ tasks-axi prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ tasks-axi show sample-review-decision-route
+error: "Task \"sample-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh complete sample-review route
+complete: sample-review captain-call inventory reviewed (route,sample-review-decision-route) [no recorded origin on: sample-review-decision-route sample-review-decision-route; not checked against sample-review]
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/bin/fm-captain-hold.sh verify sample-review
+verified: sample-review captain-call inventory
+[exit 0]
+
+CONFIGURED absolute EXACT/LEGACY ACCEPTED BACKLOG:
+## In flight
+- [ ] sample-review - Investigate routing (repo: sample) (kind: scout) (since 2026-10-03)
+
+## Queued
+## Done
+
+
+CONFIGURED absolute EXACT/LEGACY ACCEPTED ARCHIVE:
+
+## Archived 2026-10-03
+- [x] sample-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: fm-hold-v1:Y2FwdGFpbiBtdXN0IGNob29zZSBub3J0aCBvciBzb3V0aA==) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e3b59d03ce91fd006e406e6be97a6f2cb72407bdadd23beb23a9f688e680292b
+  Resolution mode: answered
+
+  Captain decision:
+  Choose north.
+
+
+
+CONFIGURED absolute EXACT/LEGACY ACCEPTED METADATA sample-review.meta:
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.CR4aXf/projects/missing-sample-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.CR4aXf/projects/sample
+branch=fm/sample-review
+mode=no-mistakes
+decisions_reviewed=1
+decision_keys=sample-review-decision-route
+decisions_reviewed=1
+decision_keys=route,sample-review-decision-route
+
+
+TEARDOWN: removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M407REF5PH99EKVJW42BPVGA/.live-captain.Jes6fW/fm-lab.CR4aXf
+
