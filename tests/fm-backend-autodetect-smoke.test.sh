@@ -77,7 +77,8 @@ cleanup_all() {
   local cleanup_status=0
   [ -n "$WT" ] && command -v treehouse >/dev/null 2>&1 && treehouse return --force "$WT" >/dev/null 2>&1
   "$HERDR_LAB_HELPER" teardown "$HERDR_LAB_SESSION" || cleanup_status=$?
-  rm -rf "$TMP_ROOT"
+  fm_test_remove_spawn_launch_dirs "$TMP_ROOT"
+  fm_test_remove_tree "$TMP_ROOT"
   return "$cleanup_status"
 }
 on_exit() {
