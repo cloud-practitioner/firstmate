@@ -599,9 +599,9 @@ archived_answer_recorded() {  # <task-id>; prints the unindented answered body
   body=$(awk -v id="$id" '
     /^(- \[|## )/ { if (hit) last = body; hit = (index($0, "] " id " - ") == 5); body = ""; found = found || hit; next }
     hit && /^  / { body = body $0 "\n" }
-    END { if (hit) last = body; if (found) printf "%s", last }
-  ' "$archive")
-  body_has_resolution_record "$body" || return 1
+    END { if (!found) exit 1; if (hit) last = body; printf "%s", last }
+  ' "$archive") || return 1
+  body_has_resolution_record "$body" || return 2
   printf '%s' "$body" | sed 's/^  //'
 }
 
@@ -931,7 +931,7 @@ refuse_self_inventory() {
 # as absence. The result carries the attestation evidence and whether an
 # origin was recorded, so completion can disclose the legacy fallback.
 verify_entry_durable() {  # <origin-or-empty> <entry>; prints "<id> <how> <origin-state>"
-  local origin=$1 entry=$2 resolved resolve_status=0 id how stored origin_state=unrecorded origin_id stored_id archived_body
+  local origin=$1 entry=$2 resolved resolve_status=0 id how stored origin_state=unrecorded origin_id stored_id archived_body archived_status
   # The origin task is never its own captain-call inventory: it is the work the
   # calls were found in, so accepting it would let a refused hold look recorded.
   if [ -n "$origin" ] && [ "$origin" != "$BINDING_ANY" ] && [ "$entry" = "$origin" ]; then
@@ -942,12 +942,17 @@ verify_entry_durable() {  # <origin-or-empty> <entry>; prints "<id> <how> <origi
   if [ "$resolve_status" -eq 1 ]; then
     for id in "$entry" "${origin:+$(legacy_hold_id "$origin" "$entry")}"; do
       [ -n "$id" ] || continue
-      if archived_body=$(archived_answer_recorded "$id"); then
-        resolved="$id archived"
-        stored=$(body_hold_origin "$archived_body")
-        resolve_status=0
-        break
-      fi
+      archived_status=0
+      archived_body=$(archived_answer_recorded "$id") || archived_status=$?
+      case "$archived_status" in
+        0)
+          resolved="$id archived"
+          stored=$(body_hold_origin "$archived_body")
+          resolve_status=0
+          break
+          ;;
+        2) fail "captain-held task $id is neither held for the captain nor closed with a recorded captain answer" ;;
+      esac
     done
   fi
   if [ "$resolve_status" -ne 0 ]; then
