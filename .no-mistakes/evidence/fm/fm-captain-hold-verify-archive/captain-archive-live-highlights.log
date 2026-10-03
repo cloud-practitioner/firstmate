@@ -1,0 +1,192 @@
+=== Base refuses pruned answer; target accepts it ===
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+error: "Task \"live-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+--- default: tasks-axi persisted archive ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/.fm-captain-hold-before-test.sh verify live-review
+fm-captain-hold: no captain-held task live-review-decision-route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/data); the nearest legacy identity live-review-decision-live-review-decision-route also resolves to nothing
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+
+=== Stale archived answer overrides a live unanswered legacy row ===
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-review-decision-route --reason 'New captain choice remains unanswered'
+live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done live-review-decision-route --keep 10
+ok: done live-review-decision-route -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+task:
+  id: live-review-decision-route
+  title: Reopened route needing an answer
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: New captain choice remains unanswered
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-03T04:21:36Z"
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/.fm-captain-hold-before-test.sh verify live-review
+fm-captain-hold: captain-held task live-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+fm-captain-hold: captain-held task live-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+--- PRODUCT FAILURE: legacy archive lookup bypasses current unanswered Done row ---
+Current verify and complete(route) exit 0; baseline verify exits 1. Complete(full task id) correctly exits 1.
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh rm live-review-decision-route
+
+=== Open decision preserves scout source and endpoint ===
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+fm-captain-hold: open captain decision live-review/late-call is not transferred to the captain-held inventory; re-run complete
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-captain-hold: open captain decision live-review/late-call is not transferred to the captain-held inventory; re-run complete
+REFUSED: scout task live-review has not passed the captain-call completion gate.
+Inventory its report and any visual review through bin/fm-captain-hold.sh before teardown.
+[exit 1]
+
+$ tmux -L fm-lab has-session -t fixture
+
+=== Archived answers permit real scout cleanup ===
+answered: late-call
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-review
+teardown live-review complete (window fixture:fm-live-review, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/projects/retired-live-review)
+Backlog: live-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review --full
+task:
+  id: live-review
+  title: Review archive cleanup data/live-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-review/report.md"
+  body: ""
+[exit 0]
+
+$ tmux -L fm-lab has-session -t fixture
+no server running on /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/tmux/tmux-1000/fm-lab
+[exit 1]
+
+--- scout cleanup persisted state ---
+metadata absent; report retained; private scout pane gone
+task:
+  id: live-review
+  title: Review archive cleanup data/live-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-review/report.md"
+  body: ""
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-review 'Review archive cleanup' --kind scout --repo sample
+ok: added unanswered-review (scout, repo sample) -> Queued
+task:
+  id: unanswered-review
+  title: Review archive cleanup

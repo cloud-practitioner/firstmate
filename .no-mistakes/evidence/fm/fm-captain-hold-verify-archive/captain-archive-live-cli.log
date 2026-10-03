@@ -1,0 +1,2120 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp
+[exit 0]
+
+--- default: project tasks-axi configuration ---
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "data/done-archive.md"
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-review 'Review archive cleanup' --kind scout --repo sample
+ok: added live-review (scout, repo sample) -> Queued
+task:
+  id: live-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-review` to move it to in flight
+  - Run `tasks-axi block live-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-review
+ok: start live-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-review-decision-route --title 'Choose the route' --reason 'Captain route choice pending' --repo sample
+live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/answer.txt
+answered: live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+task:
+  id: live-review-decision-route
+  title: Choose the route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: Captain route choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7\nResolution mode: answered\n\nCaptain decision:\nChoose route north; the investigation may be cleaned up."
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+error: "Task \"live-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+--- default: tasks-axi persisted archive ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/.fm-captain-hold-before-test.sh verify live-review
+fm-captain-hold: no captain-held task live-review-decision-route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/data); the nearest legacy identity live-review-decision-live-review-decision-route also resolves to nothing
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+--- default: attestation persisted after archived legacy-key completion ---
+window=fixture:fm-live-review
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/projects/retired-live-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/projects/sample
+harness=codex
+kind=scout
+mode=scout
+spawn_gen=validation-live-review
+decisions_reviewed=1
+decision_keys=live-review-decision-route
+decision_keys=route
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-review-decision-route 'Reopened route needing an answer' --kind captain --repo sample
+ok: added live-review-decision-route (captain, repo sample) -> Queued
+task:
+  id: live-review-decision-route
+  title: Reopened route needing an answer
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-review-decision-route` to move it to in flight
+  - Run `tasks-axi block live-review-decision-route --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-review-decision-route --reason 'New captain choice remains unanswered'
+live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done live-review-decision-route --keep 10
+ok: done live-review-decision-route -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+task:
+  id: live-review-decision-route
+  title: Reopened route needing an answer
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: New captain choice remains unanswered
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-03T04:21:36Z"
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/.fm-captain-hold-before-test.sh verify live-review
+fm-captain-hold: captain-held task live-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+fm-captain-hold: captain-held task live-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+--- PRODUCT FAILURE: legacy archive lookup bypasses current unanswered Done row ---
+Current verify and complete(route) exit 0; baseline verify exits 1. Complete(full task id) correctly exits 1.
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh rm live-review-decision-route
+ok: removed live-review-decision-route
+help[1]:
+  - Run `tasks-axi list` to see remaining tasks
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ tmux -f /dev/null -L fm-lab new-session -d -s fixture -n fm-live-review -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY 'bash --noprofile --norc'
+[exit 0]
+
+$ tmux -L fm-lab display-message -p -t fixture '#{socket_path},#{pid},0'
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/tmux/tmux-1000/fm-lab,2032303,0
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+fm-captain-hold: open captain decision live-review/late-call is not transferred to the captain-held inventory; re-run complete
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-captain-hold: open captain decision live-review/late-call is not transferred to the captain-held inventory; re-run complete
+REFUSED: scout task live-review has not passed the captain-call completion gate.
+Inventory its report and any visual review through bin/fm-captain-hold.sh before teardown.
+[exit 1]
+
+$ tmux -L fm-lab has-session -t fixture
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold late-call --title 'Decide the late choice' --reason 'Captain choice still pending' --repo sample
+late-call
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review late-call
+complete: live-review captain-call inventory reviewed (late-call,route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer late-call --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/answer.txt
+answered: late-call
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-review
+teardown live-review complete (window fixture:fm-live-review, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/projects/retired-live-review)
+Backlog: live-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review --full
+task:
+  id: live-review
+  title: Review archive cleanup data/live-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-review/report.md"
+  body: ""
+[exit 0]
+
+$ tmux -L fm-lab has-session -t fixture
+no server running on /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/tmux/tmux-1000/fm-lab
+[exit 1]
+
+--- scout cleanup persisted state ---
+metadata absent; report retained; private scout pane gone
+task:
+  id: live-review
+  title: Review archive cleanup data/live-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-review/report.md"
+  body: ""
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-review 'Review archive cleanup' --kind scout --repo sample
+ok: added unanswered-review (scout, repo sample) -> Queued
+task:
+  id: unanswered-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-review` to move it to in flight
+  - Run `tasks-axi block unanswered-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start unanswered-review
+ok: start unanswered-review -> In flight
+help[1]:
+  - Run `tasks-axi done unanswered-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-call 'No captain answer' --kind captain --repo sample
+ok: added unanswered-call (captain, repo sample) -> Queued
+task:
+  id: unanswered-call
+  title: No captain answer
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-call` to move it to in flight
+  - Run `tasks-axi block unanswered-call --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done unanswered-call --keep 10
+ok: done unanswered-call -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 2 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+--- default: archived unanswered persisted row ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+## Archived 2026-10-03
+- [x] late-call - Decide the late choice (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain choice still pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+## Archived 2026-10-03
+- [x] unanswered-call - No captain answer (repo: sample) (kind: captain) (done 2026-10-03)
+- [x] live-review - Review archive cleanup data/live-review/report.md (repo: sample) (kind: scout) (reported 2026-10-03)
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add open-review 'Review archive cleanup' --kind scout --repo sample
+ok: added open-review (scout, repo sample) -> Queued
+task:
+  id: open-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start open-review` to move it to in flight
+  - Run `tasks-axi block open-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start open-review
+ok: start open-review -> In flight
+help[1]:
+  - Run `tasks-axi done open-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete open-review --none
+fm-captain-hold: origin open-review still has open captain decisions in its status stream; hold a captain task for what remains, or answer them, before attesting --none
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.mrzd3xz8
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.mrzd3xz8
+[exit 0]
+
+--- unset: project tasks-axi configuration ---
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-review 'Review archive cleanup' --kind scout --repo sample
+ok: added live-review (scout, repo sample) -> Queued
+task:
+  id: live-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-review` to move it to in flight
+  - Run `tasks-axi block live-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-review
+ok: start live-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-review-decision-route --title 'Choose the route' --reason 'Captain route choice pending' --repo sample
+live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.mrzd3xz8/answer.txt
+answered: live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+task:
+  id: live-review-decision-route
+  title: Choose the route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: Captain route choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7\nResolution mode: answered\n\nCaptain decision:\nChoose route north; the investigation may be cleaned up."
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+error: "Task \"live-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+--- unset: tasks-axi persisted archive ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+--- unset: attestation persisted after archived legacy-key completion ---
+window=fixture:fm-live-review
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.mrzd3xz8/projects/retired-live-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.mrzd3xz8/projects/sample
+harness=codex
+kind=scout
+mode=scout
+spawn_gen=validation-live-review
+decisions_reviewed=1
+decision_keys=live-review-decision-route
+decision_keys=route
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-review 'Review archive cleanup' --kind scout --repo sample
+ok: added unanswered-review (scout, repo sample) -> Queued
+task:
+  id: unanswered-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-review` to move it to in flight
+  - Run `tasks-axi block unanswered-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start unanswered-review
+ok: start unanswered-review -> In flight
+help[1]:
+  - Run `tasks-axi done unanswered-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-call 'No captain answer' --kind captain --repo sample
+ok: added unanswered-call (captain, repo sample) -> Queued
+task:
+  id: unanswered-call
+  title: No captain answer
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-call` to move it to in flight
+  - Run `tasks-axi block unanswered-call --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done unanswered-call --keep 10
+ok: done unanswered-call -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.mrzd3xz8/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.mrzd3xz8/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+--- unset: archived unanswered persisted row ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+## Archived 2026-10-03
+- [x] unanswered-call - No captain answer (repo: sample) (kind: captain) (done 2026-10-03)
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add open-review 'Review archive cleanup' --kind scout --repo sample
+ok: added open-review (scout, repo sample) -> Queued
+task:
+  id: open-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start open-review` to move it to in flight
+  - Run `tasks-axi block open-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start open-review
+ok: start open-review -> In flight
+help[1]:
+  - Run `tasks-axi done open-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete open-review --none
+fm-captain-hold: origin open-review still has open captain decisions in its status stream; hold a captain task for what remains, or answer them, before attesting --none
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.odq2q468
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.odq2q468
+[exit 0]
+
+--- inline-comment: project tasks-axi configuration ---
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "data/history.md" # retained answers
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-review 'Review archive cleanup' --kind scout --repo sample
+ok: added live-review (scout, repo sample) -> Queued
+task:
+  id: live-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-review` to move it to in flight
+  - Run `tasks-axi block live-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-review
+ok: start live-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-review-decision-route --title 'Choose the route' --reason 'Captain route choice pending' --repo sample
+live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.odq2q468/answer.txt
+answered: live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+task:
+  id: live-review-decision-route
+  title: Choose the route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: Captain route choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7\nResolution mode: answered\n\nCaptain decision:\nChoose route north; the investigation may be cleaned up."
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+error: "Task \"live-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+--- inline-comment: tasks-axi persisted archive ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+--- inline-comment: attestation persisted after archived legacy-key completion ---
+window=fixture:fm-live-review
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.odq2q468/projects/retired-live-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.odq2q468/projects/sample
+harness=codex
+kind=scout
+mode=scout
+spawn_gen=validation-live-review
+decisions_reviewed=1
+decision_keys=live-review-decision-route
+decision_keys=route
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-review 'Review archive cleanup' --kind scout --repo sample
+ok: added unanswered-review (scout, repo sample) -> Queued
+task:
+  id: unanswered-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-review` to move it to in flight
+  - Run `tasks-axi block unanswered-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start unanswered-review
+ok: start unanswered-review -> In flight
+help[1]:
+  - Run `tasks-axi done unanswered-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-call 'No captain answer' --kind captain --repo sample
+ok: added unanswered-call (captain, repo sample) -> Queued
+task:
+  id: unanswered-call
+  title: No captain answer
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-call` to move it to in flight
+  - Run `tasks-axi block unanswered-call --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done unanswered-call --keep 10
+ok: done unanswered-call -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.odq2q468/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.odq2q468/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+--- inline-comment: archived unanswered persisted row ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+## Archived 2026-10-03
+- [x] unanswered-call - No captain answer (repo: sample) (kind: captain) (done 2026-10-03)
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add open-review 'Review archive cleanup' --kind scout --repo sample
+ok: added open-review (scout, repo sample) -> Queued
+task:
+  id: open-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start open-review` to move it to in flight
+  - Run `tasks-axi block open-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start open-review
+ok: start open-review -> In flight
+help[1]:
+  - Run `tasks-axi done open-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete open-review --none
+fm-captain-hold: origin open-review still has open captain decisions in its status stream; hold a captain task for what remains, or answer them, before attesting --none
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.uxu77273
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.uxu77273
+[exit 0]
+
+--- single-quoted: project tasks-axi configuration ---
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+  [ markdown ] # archive settings
+  archive = 'data/history # retained.md' # retained answers
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-review 'Review archive cleanup' --kind scout --repo sample
+ok: added live-review (scout, repo sample) -> Queued
+task:
+  id: live-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-review` to move it to in flight
+  - Run `tasks-axi block live-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-review
+ok: start live-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-review-decision-route --title 'Choose the route' --reason 'Captain route choice pending' --repo sample
+live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.uxu77273/answer.txt
+answered: live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+task:
+  id: live-review-decision-route
+  title: Choose the route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: Captain route choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7\nResolution mode: answered\n\nCaptain decision:\nChoose route north; the investigation may be cleaned up."
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+error: "Task \"live-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+--- single-quoted: tasks-axi persisted archive ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+--- single-quoted: attestation persisted after archived legacy-key completion ---
+window=fixture:fm-live-review
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.uxu77273/projects/retired-live-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.uxu77273/projects/sample
+harness=codex
+kind=scout
+mode=scout
+spawn_gen=validation-live-review
+decisions_reviewed=1
+decision_keys=live-review-decision-route
+decision_keys=route
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-review 'Review archive cleanup' --kind scout --repo sample
+ok: added unanswered-review (scout, repo sample) -> Queued
+task:
+  id: unanswered-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-review` to move it to in flight
+  - Run `tasks-axi block unanswered-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start unanswered-review
+ok: start unanswered-review -> In flight
+help[1]:
+  - Run `tasks-axi done unanswered-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-call 'No captain answer' --kind captain --repo sample
+ok: added unanswered-call (captain, repo sample) -> Queued
+task:
+  id: unanswered-call
+  title: No captain answer
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-call` to move it to in flight
+  - Run `tasks-axi block unanswered-call --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done unanswered-call --keep 10
+ok: done unanswered-call -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.uxu77273/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.uxu77273/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+--- single-quoted: archived unanswered persisted row ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+## Archived 2026-10-03
+- [x] unanswered-call - No captain answer (repo: sample) (kind: captain) (done 2026-10-03)
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add open-review 'Review archive cleanup' --kind scout --repo sample
+ok: added open-review (scout, repo sample) -> Queued
+task:
+  id: open-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start open-review` to move it to in flight
+  - Run `tasks-axi block open-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start open-review
+ok: start open-review -> In flight
+help[1]:
+  - Run `tasks-axi done open-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete open-review --none
+fm-captain-hold: origin open-review still has open captain decisions in its status stream; hold a captain task for what remains, or answer them, before attesting --none
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.djzj7snv
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.djzj7snv
+[exit 0]
+
+--- inherited: project tasks-axi configuration ---
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-review 'Review archive cleanup' --kind scout --repo sample
+ok: added live-review (scout, repo sample) -> Queued
+task:
+  id: live-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-review` to move it to in flight
+  - Run `tasks-axi block live-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-review
+ok: start live-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-review-decision-route --title 'Choose the route' --reason 'Captain route choice pending' --repo sample
+live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.djzj7snv/answer.txt
+answered: live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+task:
+  id: live-review-decision-route
+  title: Choose the route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: Captain route choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7\nResolution mode: answered\n\nCaptain decision:\nChoose route north; the investigation may be cleaned up."
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+error: "Task \"live-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+--- inherited: tasks-axi persisted archive ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+--- inherited: attestation persisted after archived legacy-key completion ---
+window=fixture:fm-live-review
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.djzj7snv/projects/retired-live-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.djzj7snv/projects/sample
+harness=codex
+kind=scout
+mode=scout
+spawn_gen=validation-live-review
+decisions_reviewed=1
+decision_keys=live-review-decision-route
+decision_keys=route
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-review 'Review archive cleanup' --kind scout --repo sample
+ok: added unanswered-review (scout, repo sample) -> Queued
+task:
+  id: unanswered-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-review` to move it to in flight
+  - Run `tasks-axi block unanswered-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start unanswered-review
+ok: start unanswered-review -> In flight
+help[1]:
+  - Run `tasks-axi done unanswered-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-call 'No captain answer' --kind captain --repo sample
+ok: added unanswered-call (captain, repo sample) -> Queued
+task:
+  id: unanswered-call
+  title: No captain answer
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-call` to move it to in flight
+  - Run `tasks-axi block unanswered-call --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done unanswered-call --keep 10
+ok: done unanswered-call -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.djzj7snv/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.djzj7snv/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+--- inherited: archived unanswered persisted row ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+## Archived 2026-10-03
+- [x] unanswered-call - No captain answer (repo: sample) (kind: captain) (done 2026-10-03)
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add open-review 'Review archive cleanup' --kind scout --repo sample
+ok: added open-review (scout, repo sample) -> Queued
+task:
+  id: open-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start open-review` to move it to in flight
+  - Run `tasks-axi block open-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start open-review
+ok: start open-review -> In flight
+help[1]:
+  - Run `tasks-axi done open-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete open-review --none
+fm-captain-hold: origin open-review still has open captain decisions in its status stream; hold a captain task for what remains, or answer them, before attesting --none
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.yrsut4aa
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.yrsut4aa
+[exit 0]
+
+--- project-precedence: project tasks-axi configuration ---
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "data/history.md" # retained answers
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-review 'Review archive cleanup' --kind scout --repo sample
+ok: added live-review (scout, repo sample) -> Queued
+task:
+  id: live-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-review` to move it to in flight
+  - Run `tasks-axi block live-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-review
+ok: start live-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-review-decision-route --title 'Choose the route' --reason 'Captain route choice pending' --repo sample
+live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.yrsut4aa/answer.txt
+answered: live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+task:
+  id: live-review-decision-route
+  title: Choose the route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: Captain route choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7\nResolution mode: answered\n\nCaptain decision:\nChoose route north; the investigation may be cleaned up."
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+error: "Task \"live-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+--- project-precedence: tasks-axi persisted archive ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+--- project-precedence: attestation persisted after archived legacy-key completion ---
+window=fixture:fm-live-review
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.yrsut4aa/projects/retired-live-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.yrsut4aa/projects/sample
+harness=codex
+kind=scout
+mode=scout
+spawn_gen=validation-live-review
+decisions_reviewed=1
+decision_keys=live-review-decision-route
+decision_keys=route
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-review 'Review archive cleanup' --kind scout --repo sample
+ok: added unanswered-review (scout, repo sample) -> Queued
+task:
+  id: unanswered-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-review` to move it to in flight
+  - Run `tasks-axi block unanswered-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start unanswered-review
+ok: start unanswered-review -> In flight
+help[1]:
+  - Run `tasks-axi done unanswered-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-call 'No captain answer' --kind captain --repo sample
+ok: added unanswered-call (captain, repo sample) -> Queued
+task:
+  id: unanswered-call
+  title: No captain answer
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-call` to move it to in flight
+  - Run `tasks-axi block unanswered-call --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done unanswered-call --keep 10
+ok: done unanswered-call -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.yrsut4aa/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.yrsut4aa/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+--- project-precedence: archived unanswered persisted row ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+## Archived 2026-10-03
+- [x] unanswered-call - No captain answer (repo: sample) (kind: captain) (done 2026-10-03)
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add open-review 'Review archive cleanup' --kind scout --repo sample
+ok: added open-review (scout, repo sample) -> Queued
+task:
+  id: open-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start open-review` to move it to in flight
+  - Run `tasks-axi block open-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start open-review
+ok: start open-review -> In flight
+help[1]:
+  - Run `tasks-axi done open-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete open-review --none
+fm-captain-hold: origin open-review still has open captain decisions in its status stream; hold a captain task for what remains, or answer them, before attesting --none
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.jb1lqet9
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.jb1lqet9
+[exit 0]
+
+--- absolute: project tasks-axi configuration ---
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.jb1lqet9/history.md" # retained answers
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-review 'Review archive cleanup' --kind scout --repo sample
+ok: added live-review (scout, repo sample) -> Queued
+task:
+  id: live-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-review` to move it to in flight
+  - Run `tasks-axi block live-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-review
+ok: start live-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-review-decision-route --title 'Choose the route' --reason 'Captain route choice pending' --repo sample
+live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.jb1lqet9/answer.txt
+answered: live-review-decision-route
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+task:
+  id: live-review-decision-route
+  title: Choose the route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: Captain route choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7\nResolution mode: answered\n\nCaptain decision:\nChoose route north; the investigation may be cleaned up."
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-review-decision-route --full
+error: "Task \"live-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+[exit 1]
+
+--- absolute: tasks-axi persisted archive ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review live-review-decision-route
+complete: live-review captain-call inventory reviewed (live-review-decision-route)
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-review
+verified: live-review captain-call inventory
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-review route
+complete: live-review captain-call inventory reviewed (route)
+[exit 0]
+
+--- absolute: attestation persisted after archived legacy-key completion ---
+window=fixture:fm-live-review
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.jb1lqet9/projects/retired-live-review
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.jb1lqet9/projects/sample
+harness=codex
+kind=scout
+mode=scout
+spawn_gen=validation-live-review
+decisions_reviewed=1
+decision_keys=live-review-decision-route
+decision_keys=route
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-review 'Review archive cleanup' --kind scout --repo sample
+ok: added unanswered-review (scout, repo sample) -> Queued
+task:
+  id: unanswered-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-review` to move it to in flight
+  - Run `tasks-axi block unanswered-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start unanswered-review
+ok: start unanswered-review -> In flight
+help[1]:
+  - Run `tasks-axi done unanswered-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add unanswered-call 'No captain answer' --kind captain --repo sample
+ok: added unanswered-call (captain, repo sample) -> Queued
+task:
+  id: unanswered-call
+  title: No captain answer
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start unanswered-call` to move it to in flight
+  - Run `tasks-axi block unanswered-call --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done unanswered-call --keep 10
+ok: done unanswered-call -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: captain-held task unanswered-call is neither held for the captain nor closed with a recorded captain answer
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify unanswered-review
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.jb1lqet9/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete unanswered-review unanswered-call
+fm-captain-hold: no captain-held task unanswered-call and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.jb1lqet9/data); the nearest legacy identity unanswered-review-decision-unanswered-call also resolves to nothing
+[exit 1]
+
+--- absolute: archived unanswered persisted row ---
+
+## Archived 2026-10-03
+- [x] live-review-decision-route - Choose the route (repo: sample) (kind: captain) (done 2026-10-03) (hold: Captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: 6fa6f0899f6ab8387aa7c3d56d23f83c65a45b7ded0647d5ad79b4d8c3680da7
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north; the investigation may be cleaned up.
+
+
+## Archived 2026-10-03
+- [x] unanswered-call - No captain answer (repo: sample) (kind: captain) (done 2026-10-03)
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add open-review 'Review archive cleanup' --kind scout --repo sample
+ok: added open-review (scout, repo sample) -> Queued
+task:
+  id: open-review
+  title: Review archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start open-review` to move it to in flight
+  - Run `tasks-axi block open-review --by <other>` to record a dependency
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start open-review
+ok: start open-review -> In flight
+help[1]:
+  - Run `tasks-axi done open-review --pr <url>` when it ships
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete open-review --none
+fm-captain-hold: origin open-review still has open captain decisions in its status stream; hold a captain task for what remains, or answer them, before attesting --none
+[exit 1]

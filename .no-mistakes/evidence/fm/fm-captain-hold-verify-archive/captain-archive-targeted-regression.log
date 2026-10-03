@@ -1,0 +1,20 @@
+=== Seven existing archived-answer E2E variants on target ===
+CAPTAIN_TEST_BIN=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh bash tests/.fm-archive-selected.test.sh archive
+ok - archive gates accept answered calls and refuse unanswered ones (default)
+ok - archive gates accept answered calls and refuse unanswered ones (unset)
+ok - archive gates accept answered calls and refuse unanswered ones (inline-comment)
+ok - archive gates accept answered calls and refuse unanswered ones (single-quoted)
+ok - archive gates accept answered calls and refuse unanswered ones (inherited)
+ok - archive gates accept answered calls and refuse unanswered ones (project-precedence)
+ok - archive gates accept answered calls and refuse unanswered ones (absolute)
+exit: 0
+
+=== New live-legacy precedence regression on base ===
+CAPTAIN_TEST_BIN=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/.fm-captain-hold-before-test.sh bash tests/.fm-archive-selected.test.sh legacy
+ok - a live legacy row takes precedence over its earlier archived answer
+exit: 0
+
+=== New live-legacy precedence regression on target ===
+CAPTAIN_TEST_BIN=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh bash tests/.fm-archive-selected.test.sh legacy
+not ok - legacy verification accepted an old archived answer over a current unanswered Done row
+exit: 1

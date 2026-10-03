@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Clean up a scout after verifying an answered call retained in Done",
+    "result": "pass",
+    "live": true,
+    "evidence": "captain-archive-live.txt",
+    "reason": ""
+  },
+  {
+    "name": "Clean up a scout after its answered call is pruned into the default archive, using exact and legacy identities",
+    "result": "pass",
+    "live": true,
+    "evidence": "captain-archive-live.txt",
+    "reason": ""
+  },
+  {
+    "name": "Clean up a scout using tasks-axi configured or inherited archives",
+    "result": "pass",
+    "live": true,
+    "evidence": "captain-archive-live.txt",
+    "reason": ""
+  },
+  {
+    "name": "Refuse a live unheld unanswered call without destroying the scout report or metadata",
+    "result": "pass",
+    "live": true,
+    "evidence": "captain-archive-live.txt",
+    "reason": ""
+  },
+  {
+    "name": "Refuse an archived unanswered call without destroying the scout report or metadata",
+    "result": "pass",
+    "live": true,
+    "evidence": "captain-archive-live.txt",
+    "reason": ""
+  },
+  {
+    "name": "Reject stale archived answers when newer exact, legacy, or archived lifecycles are unanswered",
+    "result": "pass",
+    "live": true,
+    "evidence": "captain-archive-live.txt",
+    "reason": ""
+  },
+  {
+    "name": "Refuse scout cleanup when a new status-stream captain decision is still open",
+    "result": "pass",
+    "live": true,
+    "evidence": "captain-archive-live.txt",
+    "reason": ""
+  }
+]

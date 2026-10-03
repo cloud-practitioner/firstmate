@@ -1,0 +1,1551 @@
+Real backend: tasks-axi 0.2.6
+No harness mocks, no fleet/session commands; cleanup uses the supported endpoint-less legacy record path.
+
+========== SCENARIO: Clean up a scout after verifying an answered call retained in Done ==========
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-retained-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-retained-review (scout, repo sample) -> Queued
+task:
+  id: live-retained-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-retained-review` to move it to in flight
+  - Run `tasks-axi block live-retained-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-retained-review
+ok: start live-retained-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-retained-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-retained-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-retained-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-retained-review live-retained-review-decision-route
+complete: live-retained-review captain-call inventory reviewed (live-retained-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-retained-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2/answer.txt
+answered: live-retained-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-retained-review-decision-route --full
+task:
+  id: live-retained-review-decision-route
+  title: Choose route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: captain route choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c\nResolution mode: answered\n\nCaptain decision:\nChoose route north."
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-retained-review
+verified: live-retained-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-retained-review live-retained-review-decision-route
+complete: live-retained-review captain-call inventory reviewed (live-retained-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-retained-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown live-retained-review complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2/projects/missing-live-retained-review, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261003T043702Z-2525783)
+Backlog: live-retained-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-retained-review --full
+task:
+  id: live-retained-review
+  title: Investigate archive cleanup data/live-retained-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-retained-review/report.md"
+  body: ""
+exit=0
+Observed: scout metadata removed, report retained, origin Done with report link.
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-mh3bocz2/data/backlog.md ---
+## In flight
+## Queued
+## Done
+- [x] live-retained-review - Investigate archive cleanup data/live-retained-review/report.md (repo: sample) (kind: scout) (reported 2026-10-03)
+- [x] live-retained-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+Scenario observable assertions passed.
+
+========== SCENARIO: Clean up a scout after its answered call is pruned into the default archive, using exact and legacy identities ==========
+
+--- Archive configuration variant: default ---
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-archived-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-archived-review (scout, repo sample) -> Queued
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-archived-review` to move it to in flight
+  - Run `tasks-axi block live-archived-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-archived-review
+ok: start live-archived-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-archived-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-archived-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-archived-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk/answer.txt
+answered: live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review-decision-route --full
+error: "Task \"live-archived-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+exit=1
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk/.tasks.toml ---
+backend = "markdown"
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "data/done-archive.md"
+
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk/data/done-archive.md ---
+
+## Archived 2026-10-03
+- [x] live-archived-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+Regression reproduction: base commit cannot verify the pruned answered row.
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/.archive-prior-ibhqz3qu.sh verify live-archived-review
+fm-captain-hold: no captain-held task live-archived-review-decision-route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk/data); the nearest legacy identity live-archived-review-decision-live-archived-review-decision-route also resolves to nothing
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review route
+complete: live-archived-review captain-call inventory reviewed (route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-archived-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown live-archived-review complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk/projects/missing-live-archived-review, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261003T043719Z-2546829)
+Backlog: live-archived-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-t3sgzhbk HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review --full
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup data/live-archived-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-archived-review/report.md"
+  body: ""
+exit=0
+Observed: scout metadata removed, report retained, origin Done with report link.
+Scenario observable assertions passed.
+
+========== SCENARIO: Clean up a scout using tasks-axi configured or inherited archives ==========
+
+--- Archive configuration variant: unset ---
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-archived-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-archived-review (scout, repo sample) -> Queued
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-archived-review` to move it to in flight
+  - Run `tasks-axi block live-archived-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-archived-review
+ok: start live-archived-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-archived-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-archived-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-archived-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9/answer.txt
+answered: live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review-decision-route --full
+error: "Task \"live-archived-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+exit=1
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9/.tasks.toml ---
+backend = "markdown"
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9/data/done-archive.md ---
+
+## Archived 2026-10-03
+- [x] live-archived-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review route
+complete: live-archived-review captain-call inventory reviewed (route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-archived-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown live-archived-review complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9/projects/missing-live-archived-review, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261003T043733Z-2562847)
+Backlog: live-archived-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-6osgokx9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review --full
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup data/live-archived-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-archived-review/report.md"
+  body: ""
+exit=0
+Observed: scout metadata removed, report retained, origin Done with report link.
+
+--- Archive configuration variant: inline-comment ---
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-archived-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-archived-review (scout, repo sample) -> Queued
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-archived-review` to move it to in flight
+  - Run `tasks-axi block live-archived-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-archived-review
+ok: start live-archived-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-archived-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-archived-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-archived-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9/answer.txt
+answered: live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review-decision-route --full
+error: "Task \"live-archived-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+exit=1
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9/.tasks.toml ---
+backend = "markdown"
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+  archive = "data/history.md" # retained answers
+
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9/data/history.md ---
+
+## Archived 2026-10-03
+- [x] live-archived-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review route
+complete: live-archived-review captain-call inventory reviewed (route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-archived-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown live-archived-review complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9/projects/missing-live-archived-review, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261003T043748Z-2578849)
+Backlog: live-archived-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_jrk7oi9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review --full
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup data/live-archived-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-archived-review/report.md"
+  body: ""
+exit=0
+Observed: scout metadata removed, report retained, origin Done with report link.
+
+--- Archive configuration variant: single-quoted ---
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-archived-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-archived-review (scout, repo sample) -> Queued
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-archived-review` to move it to in flight
+  - Run `tasks-axi block live-archived-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-archived-review
+ok: start live-archived-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-archived-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-archived-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-archived-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv/answer.txt
+answered: live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review-decision-route --full
+error: "Task \"live-archived-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+exit=1
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv/.tasks.toml ---
+backend = "markdown"
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+  [ markdown ] # archive settings
+  archive = 'data/history # retained.md' # retained answers
+
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv/data/history # retained.md ---
+
+## Archived 2026-10-03
+- [x] live-archived-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review route
+complete: live-archived-review captain-call inventory reviewed (route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-archived-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown live-archived-review complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv/projects/missing-live-archived-review, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261003T043803Z-2598222)
+Backlog: live-archived-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-zl_b8rbv HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review --full
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup data/live-archived-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-archived-review/report.md"
+  body: ""
+exit=0
+Observed: scout metadata removed, report retained, origin Done with report link.
+
+--- Archive configuration variant: inherited ---
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-archived-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-archived-review (scout, repo sample) -> Queued
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-archived-review` to move it to in flight
+  - Run `tasks-axi block live-archived-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-archived-review
+ok: start live-archived-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-archived-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-archived-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-archived-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id/answer.txt
+answered: live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review-decision-route --full
+error: "Task \"live-archived-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+exit=1
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id/.tasks.toml ---
+backend = "markdown"
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id/user-home/.tasks-axi/config.toml ---
+[markdown]
+  archive = 'data/home-history.md' # retained answers
+
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id/data/home-history.md ---
+
+## Archived 2026-10-03
+- [x] live-archived-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review route
+complete: live-archived-review captain-call inventory reviewed (route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-archived-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown live-archived-review complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id/projects/missing-live-archived-review, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261003T043819Z-2616211)
+Backlog: live-archived-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-_r9sm4id HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review --full
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup data/live-archived-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-archived-review/report.md"
+  body: ""
+exit=0
+Observed: scout metadata removed, report retained, origin Done with report link.
+
+--- Archive configuration variant: project-precedence ---
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-archived-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-archived-review (scout, repo sample) -> Queued
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-archived-review` to move it to in flight
+  - Run `tasks-axi block live-archived-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-archived-review
+ok: start live-archived-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-archived-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-archived-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-archived-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l/answer.txt
+answered: live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review-decision-route --full
+error: "Task \"live-archived-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+exit=1
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l/.tasks.toml ---
+backend = "markdown"
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+  archive = "data/history.md" # retained answers
+
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l/user-home/.tasks-axi/config.toml ---
+[markdown]
+archive = "data/other-history.md"
+
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l/data/history.md ---
+
+## Archived 2026-10-03
+- [x] live-archived-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review route
+complete: live-archived-review captain-call inventory reviewed (route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-archived-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown live-archived-review complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l/projects/missing-live-archived-review, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261003T043838Z-2636486)
+Backlog: live-archived-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-b8997c1l HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review --full
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup data/live-archived-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-archived-review/report.md"
+  body: ""
+exit=0
+Observed: scout metadata removed, report retained, origin Done with report link.
+
+--- Archive configuration variant: absolute ---
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-archived-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-archived-review (scout, repo sample) -> Queued
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-archived-review` to move it to in flight
+  - Run `tasks-axi block live-archived-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-archived-review
+ok: start live-archived-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-archived-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-archived-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-archived-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o/answer.txt
+answered: live-archived-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review-decision-route --full
+error: "Task \"live-archived-review-decision-route\" not found in this backlog"
+code: NOT_FOUND
+help[1]: Run `tasks-axi list` to see existing tasks
+exit=1
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o/.tasks.toml ---
+backend = "markdown"
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+archive = "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o/history.md" # retained answers
+
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o/history.md ---
+
+## Archived 2026-10-03
+- [x] live-archived-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review live-archived-review-decision-route
+complete: live-archived-review captain-call inventory reviewed (live-archived-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-archived-review
+verified: live-archived-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-archived-review route
+complete: live-archived-review captain-call inventory reviewed (route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-archived-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown live-archived-review complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o/projects/missing-live-archived-review, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261003T043856Z-2657725)
+Backlog: live-archived-review is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-5rqd793o HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-archived-review --full
+task:
+  id: live-archived-review
+  title: Investigate archive cleanup data/live-archived-review/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: "report:data/live-archived-review/report.md"
+  body: ""
+exit=0
+Observed: scout metadata removed, report retained, origin Done with report link.
+Scenario observable assertions passed.
+
+========== SCENARIO: Refuse a live unheld unanswered call without destroying the scout report or metadata ==========
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-unanswered-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-unanswered-review (scout, repo sample) -> Queued
+task:
+  id: live-unanswered-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-unanswered-review` to move it to in flight
+  - Run `tasks-axi block live-unanswered-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-unanswered-review
+ok: start live-unanswered-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-unanswered-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-unanswered-review-decision-route --title 'Choose route' --reason 'captain choice pending' --repo sample
+live-unanswered-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-unanswered-review live-unanswered-review-decision-route
+complete: live-unanswered-review captain-call inventory reviewed (live-unanswered-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-unanswered-review
+verified: live-unanswered-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh unhold live-unanswered-review-decision-route
+ok: unhold live-unanswered-review-decision-route -> cleared
+task:
+  id: live-unanswered-review-decision-route
+  title: Choose route
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-03T04:39:00Z"
+help[1]:
+  - Run `tasks-axi ready` to see dispatchable work
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-unanswered-review-decision-route --full
+task:
+  id: live-unanswered-review-decision-route
+  title: Choose route
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-03T04:39:00Z"
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-unanswered-review
+fm-captain-hold: captain-held task live-unanswered-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-unanswered-review live-unanswered-review-decision-route
+fm-captain-hold: captain-held task live-unanswered-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-unanswered-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-sor76_on
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-captain-hold: captain-held task live-unanswered-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+REFUSED: scout task live-unanswered-review has not passed the captain-call completion gate.
+Inventory its report and any visual review through bin/fm-captain-hold.sh before teardown.
+exit=1
+Observed: refused at captain-call gate; scout metadata and report remain.
+Scenario observable assertions passed.
+
+========== SCENARIO: Refuse an archived unanswered call without destroying the scout report or metadata ==========
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-unanswered-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-unanswered-review (scout, repo sample) -> Queued
+task:
+  id: live-unanswered-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-unanswered-review` to move it to in flight
+  - Run `tasks-axi block live-unanswered-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-unanswered-review
+ok: start live-unanswered-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-unanswered-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-unanswered-review-decision-route --title 'Choose route' --reason 'captain choice pending' --repo sample
+live-unanswered-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-unanswered-review live-unanswered-review-decision-route
+complete: live-unanswered-review captain-call inventory reviewed (live-unanswered-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-unanswered-review
+verified: live-unanswered-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done live-unanswered-review-decision-route --keep 0
+ok: done live-unanswered-review-decision-route -> Done; pruned 1
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+exit=0
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1/data/done-archive.md ---
+
+## Archived 2026-10-03
+- [x] live-unanswered-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain choice pending) (hold-kind: captain)
+  Captain hold set: 2026-10-03T04:39:10Z
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-unanswered-review
+fm-captain-hold: no captain-held task live-unanswered-review-decision-route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1/data); the nearest legacy identity live-unanswered-review-decision-live-unanswered-review-decision-route also resolves to nothing
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-unanswered-review live-unanswered-review-decision-route
+fm-captain-hold: no captain-held task live-unanswered-review-decision-route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1/data); the nearest legacy identity live-unanswered-review-decision-live-unanswered-review-decision-route also resolves to nothing
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-unanswered-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-captain-hold: no captain-held task live-unanswered-review-decision-route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-l2xx5kr1/data); the nearest legacy identity live-unanswered-review-decision-live-unanswered-review-decision-route also resolves to nothing
+REFUSED: scout task live-unanswered-review has not passed the captain-call completion gate.
+Inventory its report and any visual review through bin/fm-captain-hold.sh before teardown.
+exit=1
+Observed: refused at captain-call gate; scout metadata and report remain.
+Scenario observable assertions passed.
+
+========== SCENARIO: Reject stale archived answers when newer exact, legacy, or archived lifecycles are unanswered ==========
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-reused-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-reused-review (scout, repo sample) -> Queued
+task:
+  id: live-reused-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-reused-review` to move it to in flight
+  - Run `tasks-axi block live-reused-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-reused-review
+ok: start live-reused-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-reused-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-reused-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-reused-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-reused-review live-reused-review-decision-route
+complete: live-reused-review captain-call inventory reviewed (live-reused-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-reused-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u/answer.txt
+answered: live-reused-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-reused-review-decision-route 'Choose a new route' --kind captain --repo sample
+ok: added live-reused-review-decision-route (captain, repo sample) -> Queued
+task:
+  id: live-reused-review-decision-route
+  title: Choose a new route
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-reused-review-decision-route` to move it to in flight
+  - Run `tasks-axi block live-reused-review-decision-route --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-reused-review-decision-route --reason 'new captain choice pending'
+live-reused-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done live-reused-review-decision-route --keep 10
+ok: done live-reused-review-decision-route -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+exit=0
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u/data/done-archive.md ---
+
+## Archived 2026-10-03
+- [x] live-reused-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-reused-review-decision-route --full
+task:
+  id: live-reused-review-decision-route
+  title: Choose a new route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: new captain choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-03T04:39:32Z"
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-reused-review
+fm-captain-hold: captain-held task live-reused-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-reused-review live-reused-review-decision-route
+fm-captain-hold: captain-held task live-reused-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-reused-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-captain-hold: captain-held task live-reused-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+REFUSED: scout task live-reused-review has not passed the captain-call completion gate.
+Inventory its report and any visual review through bin/fm-captain-hold.sh before teardown.
+exit=1
+Observed: refused at captain-call gate; scout metadata and report remain.
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u/data/done-archive.md ---
+
+## Archived 2026-10-03
+- [x] live-reused-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+## Archived 2026-10-03
+- [x] live-reused-review-decision-route - Choose a new route (repo: sample) (kind: captain) (done 2026-10-03) (hold: new captain choice pending) (hold-kind: captain)
+  Captain hold set: 2026-10-03T04:39:32Z
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-reused-review
+fm-captain-hold: no captain-held task live-reused-review-decision-route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u/data); the nearest legacy identity live-reused-review-decision-live-reused-review-decision-route also resolves to nothing
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-reused-review live-reused-review-decision-route
+fm-captain-hold: no captain-held task live-reused-review-decision-route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-9c4l6r7u/data); the nearest legacy identity live-reused-review-decision-live-reused-review-decision-route also resolves to nothing
+exit=1
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-reused-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-reused-review (scout, repo sample) -> Queued
+task:
+  id: live-reused-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-reused-review` to move it to in flight
+  - Run `tasks-axi block live-reused-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-reused-review
+ok: start live-reused-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-reused-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-reused-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-reused-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-reused-review route
+complete: live-reused-review captain-call inventory reviewed (route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-reused-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9/answer.txt
+answered: live-reused-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-reused-review-decision-route 'Choose a new route' --kind captain --repo sample
+ok: added live-reused-review-decision-route (captain, repo sample) -> Queued
+task:
+  id: live-reused-review-decision-route
+  title: Choose a new route
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-reused-review-decision-route` to move it to in flight
+  - Run `tasks-axi block live-reused-review-decision-route --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-reused-review-decision-route --reason 'new captain choice pending'
+live-reused-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh done live-reused-review-decision-route --keep 10
+ok: done live-reused-review-decision-route -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+exit=0
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9/data/done-archive.md ---
+
+## Archived 2026-10-03
+- [x] live-reused-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh show live-reused-review-decision-route --full
+task:
+  id: live-reused-review-decision-route
+  title: Choose a new route
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: new captain choice pending
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-03T04:39:48Z"
+exit=0
+Regression reproduction: pre-fix commit incorrectly accepts an old answer over a newer legacy row.
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/.archive-prior-39b2tacp.sh verify live-reused-review
+verified: live-reused-review captain-call inventory
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-reused-review
+fm-captain-hold: captain-held task live-reused-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-reused-review route
+fm-captain-hold: captain-held task live-reused-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-reused-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-captain-hold: captain-held task live-reused-review-decision-route is neither held for the captain nor closed with a recorded captain answer
+REFUSED: scout task live-reused-review has not passed the captain-call completion gate.
+Inventory its report and any visual review through bin/fm-captain-hold.sh before teardown.
+exit=1
+Observed: refused at captain-call gate; scout metadata and report remain.
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9/data/done-archive.md ---
+
+## Archived 2026-10-03
+- [x] live-reused-review-decision-route - Choose route (repo: sample) (kind: captain) (done 2026-10-03) (hold: captain route choice pending) (hold-kind: captain)
+  Resolution recorded by fm-captain-hold.
+  Decision digest: e721635d2c458f2323256ba70d9a9ce1bdd3835c61fd1dd18128cecfae4e681c
+  Resolution mode: answered
+
+  Captain decision:
+  Choose route north.
+
+
+## Archived 2026-10-03
+- [x] live-reused-review-decision-route - Choose a new route (repo: sample) (kind: captain) (done 2026-10-03) (hold: new captain choice pending) (hold-kind: captain)
+  Captain hold set: 2026-10-03T04:39:48Z
+
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-reused-review
+fm-captain-hold: no captain-held task route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9/data); the nearest legacy identity live-reused-review-decision-route also resolves to nothing
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-reused-review route
+fm-captain-hold: no captain-held task route and no migrated hold for it in this home's configured backlog (data directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-j21dqxa9/data); the nearest legacy identity live-reused-review-decision-route also resolves to nothing
+exit=1
+Scenario observable assertions passed.
+
+========== SCENARIO: Refuse scout cleanup when a new status-stream captain decision is still open ==========
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh add live-status-review 'Investigate archive cleanup' --kind scout --repo sample
+ok: added live-status-review (scout, repo sample) -> Queued
+task:
+  id: live-status-review
+  title: Investigate archive cleanup
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start live-status-review` to move it to in flight
+  - Run `tasks-axi block live-status-review --by <other>` to record a dependency
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh start live-status-review
+ok: start live-status-review -> In flight
+help[1]:
+  - Run `tasks-axi done live-status-review --pr <url>` when it ships
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh hold live-status-review-decision-route --title 'Choose route' --reason 'captain route choice pending' --repo sample
+live-status-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh complete live-status-review live-status-review-decision-route
+complete: live-status-review captain-call inventory reviewed (live-status-review-decision-route)
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh answer live-status-review-decision-route --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8/answer.txt
+answered: live-status-review-decision-route
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-tasks-axi.sh prune --keep 0
+ok: prune done -> archived 1 (kept 0)
+help[1]:
+  - Run `tasks-axi list --state done` to see retained Done items
+exit=0
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-captain-hold.sh verify live-status-review
+fm-captain-hold: open captain decision live-status-review/new-choice is not transferred to the captain-held inventory; re-run complete
+exit=1
+$ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8 HOME=<isolated> /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/bin/fm-teardown.sh live-status-review
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-captain-hold: open captain decision live-status-review/new-choice is not transferred to the captain-held inventory; re-run complete
+REFUSED: scout task live-status-review has not passed the captain-call completion gate.
+Inventory its report and any visual review through bin/fm-captain-hold.sh before teardown.
+exit=1
+Observed: refused at captain-call gate; scout metadata and report remain.
+
+--- Persisted public state: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/fm-lab.archive-v64lnej8/state/live-status-review.status ---
+done: report complete
+needs-decision [key=new-choice]: new captain decision remains
+
+Scenario observable assertions passed.

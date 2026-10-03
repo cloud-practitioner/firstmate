@@ -1,0 +1,42 @@
+[
+  {
+    "scenario": "live legacy row overrides stale archived answer",
+    "result": "fail",
+    "reason": "Legacy-key verify and complete accept the stale archive instead of rejecting the current Done row with no recorded answer; baseline verify refuses."
+  },
+  {
+    "variant": "default",
+    "result": "pass",
+    "archive": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.cgpu9bkp/data/done-archive.md"
+  },
+  {
+    "variant": "unset",
+    "result": "pass",
+    "archive": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.mrzd3xz8/data/done-archive.md"
+  },
+  {
+    "variant": "inline-comment",
+    "result": "pass",
+    "archive": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.odq2q468/data/history.md"
+  },
+  {
+    "variant": "single-quoted",
+    "result": "pass",
+    "archive": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.uxu77273/data/history # retained.md"
+  },
+  {
+    "variant": "inherited",
+    "result": "pass",
+    "archive": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.djzj7snv/data/home-history.md"
+  },
+  {
+    "variant": "project-precedence",
+    "result": "pass",
+    "archive": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.yrsut4aa/data/history.md"
+  },
+  {
+    "variant": "absolute",
+    "result": "pass",
+    "archive": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZYE1DS003X0Y14YX40P7WY/l.jb1lqet9/history.md"
+  }
+]
