@@ -511,7 +511,9 @@ projection_labels_from_log() {  # <start-line>
 session_presentation_lock_path() {
   PATH="$FAKEBIN:$PATH" HERDR_SESSION="$HERDR_LAB_SESSION" bash -c '
     . "$0/bin/backends/herdr.sh"
-    fm_backend_herdr_presentation_session_lock_path "$1"
+    . "$0/bin/fm-wake-lib.sh"
+    lock_path=$(fm_backend_herdr_presentation_session_lock_path "$1") || exit 1
+    fm_lock_abs_path "$lock_path"
   ' "$ROOT" "$HERDR_LAB_SESSION"
 }
 
