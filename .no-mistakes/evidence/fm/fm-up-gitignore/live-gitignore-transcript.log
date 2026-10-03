@@ -1,0 +1,127 @@
+Real Git consumer validation; all settings and identities are synthetic.
+git version 2.55.0
+$ git -C 01M40YVJWSTKAKKCZ1EQJ228JJ show 1f3e769616fdf9f31f85f4c3e6a9f71606634238:.gitignore
+projects/
+state/
+data/
+scratchpad*
+.no-mistakes/
+.lavish/
+.fm-secondmate-home
+.fm-secondmate-parent
+.DS_Store
+__pycache__/
+*.pyc
+.env
+config/
+
+.tools/
+exit=0
+
+=== Baseline: session-created local settings dirty status and enter normal staging ===
+$ git -C baseline init -q --initial-branch=main
+(no stdout)
+exit=0
+$ git -C baseline add .gitignore
+(no stdout)
+exit=0
+$ git -C baseline commit -qm 'Seed disposable ignore rules'
+(no stdout)
+exit=0
+$ git -C baseline status --porcelain=v1 --untracked-files=all
+?? .claude/settings.local.json
+exit=0
+$ git -C baseline check-ignore -v .claude/settings.local.json
+(no stdout)
+exit=1
+$ git -C baseline add --all
+(no stdout)
+exit=0
+$ git -C baseline diff --cached --name-only
+.claude/settings.local.json
+exit=0
+Reported pre-fix failure reproduced with the baseline rules.
+
+=== Target: local settings do not dirty status ===
+$ git -C target init -q --initial-branch=main
+(no stdout)
+exit=0
+$ git -C target add .gitignore
+(no stdout)
+exit=0
+$ git -C target commit -qm 'Seed disposable ignore rules'
+(no stdout)
+exit=0
+$ git -C target status --porcelain=v1 --untracked-files=all
+(no stdout)
+exit=0
+$ git -C target status --porcelain=v1 --ignored --untracked-files=all
+!! .claude/settings.local.json
+exit=0
+$ git -C target check-ignore -v .claude/settings.local.json
+.gitignore:14:.claude/settings.local.json	.claude/settings.local.json
+exit=0
+
+=== Target adversarial: ordinary explicit staging rejects local settings ===
+$ git -C target add -- .claude/settings.local.json
+(no stdout)
+The following paths are ignored by one of your .gitignore files:
+.claude/settings.local.json
+hint: Use -f if you really want to add them.
+hint: Disable this message with "git config set advice.addIgnoredFile false"
+exit=1
+$ git -C target diff --cached --name-only
+(no stdout)
+exit=0
+$ git -C target ls-files
+.gitignore
+exit=0
+
+=== Target controls: shared settings and other contributions stay visible ===
+$ git -C target check-ignore -v .claude/commands/contribution.md
+(no stdout)
+exit=1
+$ git -C target check-ignore -v .claude/settings.json
+(no stdout)
+exit=1
+$ git -C target check-ignore -v contributor-notes.txt
+(no stdout)
+exit=1
+$ git -C target status --porcelain=v1 --untracked-files=all
+?? .claude/commands/contribution.md
+?? .claude/settings.json
+?? contributor-notes.txt
+exit=0
+
+=== Target bulk staging and exported commit omit per-user settings ===
+$ git -C target add --all
+(no stdout)
+exit=0
+$ git -C target diff --cached --name-only
+.claude/commands/contribution.md
+.claude/settings.json
+contributor-notes.txt
+exit=0
+$ git -C target commit -qm 'Add disposable shared contributions'
+(no stdout)
+exit=0
+$ git -C target ls-tree -r --name-only HEAD
+.claude/commands/contribution.md
+.claude/settings.json
+.gitignore
+contributor-notes.txt
+exit=0
+$ git -C target archive --format=tar HEAD | inspect exported file list
+.claude/commands/contribution.md
+.claude/settings.json
+.gitignore
+contributor-notes.txt
+$ git -C target status --porcelain=v1 --untracked-files=all
+(no stdout)
+exit=0
+$ git -C target status --porcelain=v1 --ignored --untracked-files=all
+!! .claude/settings.local.json
+exit=0
+Normal contribution staging and commit export exclude the local file while retaining shared files.
+
+Both disposable repositories removed; no operator configuration or credentials used.
