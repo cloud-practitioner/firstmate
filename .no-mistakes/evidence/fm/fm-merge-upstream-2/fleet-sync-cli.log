@@ -1,0 +1,13 @@
+Local bare remote plus real fleet-sync, symlink alias and non-clone boundary
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  2 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+alias: synced cb41cf0..811de58
+Synced clone value: v2
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+not-a-clone: skipped: not a clone root (git would act on /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C)
+Enclosing worktree HEAD remained 109825e2d232b179d8880c2cb123f3f1176a0b2f

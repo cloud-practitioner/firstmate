@@ -1,0 +1,11 @@
+diagnostic seeded secondmate status=0 output=warning: secondmate profile-pi-seeded-approve-z8e sync skipped before launch: primary default-branch commit cannot be resolved
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-spawn-dispatch-profile.PaA8vm/profile-pi-seeded-approve/fake/fakebin/timeout: line 3: exec: 1: not found
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-spawn-dispatch-profile.PaA8vm/profile-pi-seeded-approve/fake/fakebin/timeout: line 3: exec: 1: not found
+spawned profile-pi-seeded-approve-z8e harness=pi kind=secondmate mode=secondmate yolo=off window=firstmate:fm-profile-pi-seeded-approve-z8e worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-spawn-dispatch-profile.PaA8vm/profile-pi-seeded-approve/secondmate-home
+diagnostic seeded secondmate status=0 output=warning: secondmate profile-pi-signed-seeded-approve-z8e sync skipped before launch: primary default-branch commit cannot be resolved
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-spawn-dispatch-profile.PaA8vm/profile-pi-signed-seeded-approve/fake/fakebin/timeout: line 3: exec: 1: not found
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-spawn-dispatch-profile.PaA8vm/profile-pi-signed-seeded-approve/fake/fakebin/timeout: line 3: exec: 1: not found
+spawned profile-pi-signed-seeded-approve-z8e harness=pi-signed kind=secondmate mode=secondmate yolo=off window=firstmate:fm-profile-pi-signed-seeded-approve-z8e worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-spawn-dispatch-profile.PaA8vm/profile-pi-signed-seeded-approve/secondmate-home
+ok - seeded Pi/pi-signed secondmate launches carry session --approve when advertised
+ok - ordinary Pi worker launches omit --approve
+ok - Pi approve probing omits --approve when help does not advertise it

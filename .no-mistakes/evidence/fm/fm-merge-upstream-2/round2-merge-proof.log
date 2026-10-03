@@ -1,0 +1,9 @@
+Git merge proof for submitted commit 109825e2d232b179d8880c2cb123f3f1176a0b2f
+parents: e42087e4513c4483d832aa8898b28efd410fdac8 d719ef3d9abdd11b0a8aea57c74de074feca99b9
+first-parent commits after base: 1 (the merge only)
+new upstream commits: 10
+merge-tree: only tests/fm-supervision-host.test.sh conflicted
+all non-conflicted paths byte-identical to Git automatic merge
+sole conflict resolution preserves fork cleanup wrapper and union of upstream/fork executable cases without duplicates
+tracked worktree changes: none
+No source fixes or feature-branch commits were added by Test. PR creation/title/merge method belong to the outer executor, not this test phase.

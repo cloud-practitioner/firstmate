@@ -1,0 +1,23 @@
+Real worker and real tracked commands, private account/home/job queue; no SSH or command stubs
+job-uJ2BTb
+job-YLJHZV
+Both independent home lanes: own=running other=running
+job-8UTpC7
+Same-home long poll preemption exit=76
+Other-home long poll state after preemption=running
+Short command output:
+⁣FIRSTMATE_OP: v1 launch-brief: Short interactive job payload
+Other-home completed result:
+schema=fm-remote-delta.v1
+status=delta
+path=state/replies.status
+from_offset=0
+to_offset=21
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=f48c765dd13da447c3fbbfcc06e766799ecef59e14a33b3c0c53fd6f4f8e4003
+payload_sha256=f48c765dd13da447c3fbbfcc06e766799ecef59e14a33b3c0c53fd6f4f8e4003
+payload_bytes=21
+reason=
+
+Remote reply arrived
+No pending consumer records: 0

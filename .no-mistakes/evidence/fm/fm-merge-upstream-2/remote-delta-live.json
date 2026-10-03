@@ -1,0 +1,39 @@
+[
+  {
+    "scenario": "unchanged log closes with no data",
+    "exit": 75,
+    "response": "",
+    "stderr": ""
+  },
+  {
+    "scenario": "append waits for newline then returns whole line",
+    "exit": 0,
+    "response": "schema=fm-remote-delta.v1\nstatus=delta\npath=state/replies.status\nfrom_offset=9\nto_offset=27\nfrom_prefix_sha256=25718360e05d3c2d0963d1381e9dd4dae5fca789244ee4b9f861adcc0cc96218\nto_prefix_sha256=22016a7494b2e6d8733d91d2ffdaf1b2e61080f92c455e7f095db23ac93d55b6\npayload_sha256=0494494627db006dbfb1ccf6310f6de1de6c1ece9cd4b74127176022036177a6\npayload_bytes=18\nreason=\n\npartial-completed\n",
+    "stderr": ""
+  },
+  {
+    "scenario": "same-size same-second in-place rewrite breaks continuity",
+    "exit": 0,
+    "response": "schema=fm-remote-delta.v1\nstatus=continuity-broken\npath=state/replies.status\nfrom_offset=11\nto_offset=11\nfrom_prefix_sha256=e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee\nto_prefix_sha256=105574d777006ec9bddf92f16dae3a0b7aaec1a3161e63033aa041014ec15223\npayload_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_bytes=0\nreason=prefix-changed\n\n",
+    "stderr": "",
+    "filesystem": {
+      "same_inode": true,
+      "same_size": true,
+      "same_epoch_second": true,
+      "mtime_before_ns": 1791003684044317818,
+      "mtime_after_ns": 1791003684234971719
+    }
+  },
+  {
+    "scenario": "truncation breaks continuity rather than rebasing cursor",
+    "exit": 0,
+    "response": "schema=fm-remote-delta.v1\nstatus=continuity-broken\npath=state/replies.status\nfrom_offset=11\nto_offset=2\nfrom_prefix_sha256=e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee\nto_prefix_sha256=73cb3858a687a8494ca3323053016282f3dad39d42cf62ca4e79dda2aac7d9ac\npayload_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_bytes=0\nreason=truncated\n\n",
+    "stderr": ""
+  },
+  {
+    "scenario": "reject relative path traversal",
+    "exit": 1,
+    "response": "",
+    "stderr": "error: log traversal is not allowed: ../outside.status\n"
+  }
+]

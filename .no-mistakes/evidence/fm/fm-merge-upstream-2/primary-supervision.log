@@ -1,0 +1,3 @@
+Real Claude primary in a marked private tmux lab; real Stop hook, host, watcher, status log, drain and acknowledgements.
+Native Stop callback entered
+Native primary acquired its session lock, and the actual Stop callback fired. The shipped primary-scope predicate refuses this linked gate worktree, so no host can park under the required gate-root launch recipe. Native host hand-back remains untested; no root identity was forged and no guard was bypassed.

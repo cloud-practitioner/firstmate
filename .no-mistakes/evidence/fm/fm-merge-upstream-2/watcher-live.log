@@ -1,0 +1,14 @@
+Real arm/watcher/wake queue and drain in a marked home; no stubs or native-primary impersonation.
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 0 --recovery-generation 3680811.1791003681.avtK7W
+Initial owner arm=3682213 watcher=3682269
+Take-over arm=3683336 watcher=3685879
+Handled downtime generation retained exactly: acked:handling:3680811.1791003681.avtK7W
+New owning cycle emitted:
+watcher: started pid=3685879 (beacon fresh)
+check: rearm-resurface
+1791003689	1	check	lab-live	check: lab-live - new actionable test record
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 3680811.1791003689.BVV67s
+Ownership ledger:
+arm_pid=3682213	watcher_pid=3682269	origin=started	started_at=1791003683	ended_at=1791003684	exit_code=143	signal=TERM	reason=signal-exit	beacon_age=1	lock_before=pid:3682269|identity:linux-starttime=10305974 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3435303431316233653637632f30314d335a5a5a445239583248354e38504a37414257485a33432f62696e2f666d2d77617463682e736800	lock_after=pid:none|identity:none	successor=none
+arm_pid=3683336	watcher_pid=3682269	origin=attached	started_at=1791003684	ended_at=1791003685	exit_code=unknown	signal=unknown	reason=taken-over	beacon_age=2	lock_before=pid:3682269|identity:linux-starttime=10305974 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3435303431316233653637632f30314d335a5a5a445239583248354e38504a37414257485a33432f62696e2f666d2d77617463682e736800	lock_after=pid:none|identity:none	successor=started:3685879
+arm_pid=3683336	watcher_pid=3685879	origin=started	started_at=1791003685	ended_at=1791003691	exit_code=0	signal=none	reason=actionable-check	beacon_age=1	lock_before=pid:3685879|identity:linux-starttime=10306229 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3435303431316233653637632f30314d335a5a5a445239583248354e38504a37414257485a33432f62696e2f666d2d77617463682e736800	lock_after=pid:none|identity:none	successor=none

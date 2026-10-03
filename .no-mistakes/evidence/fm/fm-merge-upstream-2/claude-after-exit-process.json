@@ -1,0 +1,1 @@
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":3708278,"foreground_processes":[{"argv":["/bin/zsh"],"cmdline":"/bin/zsh","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C","name":"zsh","pid":3708278}],"pane_id":"w1:p1","shell_pid":3708278},"type":"pane_process_info"}}

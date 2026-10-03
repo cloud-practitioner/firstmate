@@ -1,0 +1,429 @@
+{
+  "schema": "fm-fleet-snapshot.v1",
+  "generated": "2026-10-03T05:01:26Z",
+  "fm_home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO",
+  "roots": {
+    "fm_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C",
+    "state": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/state",
+    "data": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/data",
+    "config": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/config",
+    "projects": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/projects"
+  },
+  "backlog": {
+    "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/data/backlog.md",
+    "present": true,
+    "records": [
+      {
+        "hold_bucket": null,
+        "merged": null,
+        "requires_child_metadata": true,
+        "kind": "scout",
+        "title": "Investigation review-b",
+        "id": "review-b",
+        "since": "2026-10-03",
+        "pr_url": null,
+        "structured": true,
+        "hold_kind": null,
+        "priority": null,
+        "repo": "demo",
+        "hold_reason": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "raw": "- [ ] review-b - Investigation review-b (repo: demo) (kind: scout) (since 2026-10-03)",
+        "reported": null,
+        "blocked_by_ids": [],
+        "hold_until": null,
+        "hold_age_days": 0,
+        "order": 1,
+        "state": "in_flight",
+        "captain_actionable": false,
+        "body_excerpt": null,
+        "checked": false,
+        "local_note": null,
+        "report_path": null,
+        "unresolved_blocker_ids": [],
+        "blocked_reason": null,
+        "hold_set": null,
+        "links": [],
+        "blocked_by": null,
+        "body_lines": [],
+        "done": null,
+        "current_role": "worker"
+      },
+      {
+        "captain_actionable": false,
+        "state": "in_flight",
+        "order": 2,
+        "hold_age_days": 0,
+        "hold_until": null,
+        "blocked_by_ids": [],
+        "unresolved_blocker_ids": [],
+        "blocked_reason": null,
+        "local_note": null,
+        "report_path": null,
+        "checked": false,
+        "body_excerpt": null,
+        "links": [],
+        "blocked_by": null,
+        "body_lines": [],
+        "hold_set": null,
+        "current_role": "worker",
+        "done": null,
+        "requires_child_metadata": true,
+        "kind": "scout",
+        "title": "Investigation review-a",
+        "hold_bucket": null,
+        "merged": null,
+        "hold_kind": null,
+        "priority": null,
+        "structured": true,
+        "pr_url": null,
+        "id": "review-a",
+        "since": "2026-10-03",
+        "hold_reason": null,
+        "repo": "demo",
+        "raw": "- [ ] review-a - Investigation review-a (repo: demo) (kind: scout) (since 2026-10-03)",
+        "reported": null,
+        "completion": {
+          "verb": null,
+          "date": null
+        }
+      },
+      {
+        "hold_set": "2026-10-03T05:01:22Z",
+        "body_lines": [
+          "Captain hold set: 2026-10-03T05:01:22Z",
+          "Captain hold origin: review-a",
+          "Origin: review-a"
+        ],
+        "links": [],
+        "blocked_by": null,
+        "current_role": "queued",
+        "done": null,
+        "order": 3,
+        "hold_age_days": 0,
+        "state": "queued",
+        "captain_actionable": true,
+        "blocked_by_ids": [],
+        "hold_until": null,
+        "report_path": null,
+        "local_note": null,
+        "blocked_reason": null,
+        "unresolved_blocker_ids": [],
+        "checked": false,
+        "body_excerpt": "Captain hold set: 2026-10-03T05:01:22Z Captain hold origin: review-a Origin: review-a",
+        "repo": "demo",
+        "hold_reason": "Choose (safe mode)\nKeep café and literal fm-hold-v1:YWJj.",
+        "reported": null,
+        "raw": "- [ ] call-a - Choose safe mode (repo: demo) (kind: captain) (since 2026-10-03) (hold: fm-hold-v1:Q2hvb3NlIChzYWZlIG1vZGUpCktlZXAgY2Fmw6kgYW5kIGxpdGVyYWwgZm0taG9sZC12MTpZV0pqLg==) (hold-kind: captain)",
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "title": "Choose safe mode",
+        "kind": "captain",
+        "requires_child_metadata": false,
+        "merged": null,
+        "hold_bucket": "live",
+        "structured": true,
+        "priority": null,
+        "hold_kind": "captain",
+        "since": "2026-10-03",
+        "id": "call-a",
+        "pr_url": null
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "review-a",
+      "kind": "scout",
+      "harness": "claude",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "demo",
+      "spawn_gen": "lab-review-a",
+      "backend": "tmux",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/state/review-a.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/state/review-a.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "done",
+            "note": "report complete",
+            "raw": "done: report complete",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": null,
+          "present": false
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/data/review-a/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "unknown",
+        "source": "none",
+        "detail": "worktree gone (torn down?)",
+        "raw": "state: unknown · source: none · worktree gone (torn down?)",
+        "observed_at": "2026-10-03T05:01:26Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": null,
+        "exists": null,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-03T05:01:26Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": "done: report complete"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-review-a",
+        "steer": "bin/fm-send.sh fm-review-a '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "captain_actionable": false,
+        "state": "in_flight",
+        "order": 2,
+        "hold_age_days": 0,
+        "hold_until": null,
+        "blocked_by_ids": [],
+        "unresolved_blocker_ids": [],
+        "blocked_reason": null,
+        "local_note": null,
+        "report_path": null,
+        "checked": false,
+        "body_excerpt": null,
+        "links": [],
+        "blocked_by": null,
+        "body_lines": [],
+        "hold_set": null,
+        "current_role": "worker",
+        "done": null,
+        "requires_child_metadata": true,
+        "kind": "scout",
+        "title": "Investigation review-a",
+        "hold_bucket": null,
+        "merged": null,
+        "hold_kind": null,
+        "priority": null,
+        "structured": true,
+        "pr_url": null,
+        "id": "review-a",
+        "since": "2026-10-03",
+        "hold_reason": null,
+        "repo": "demo",
+        "raw": "- [ ] review-a - Investigation review-a (repo: demo) (kind: scout) (since 2026-10-03)",
+        "reported": null,
+        "completion": {
+          "verb": null,
+          "date": null
+        }
+      }
+    },
+    {
+      "id": "review-b",
+      "kind": "scout",
+      "harness": "claude",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "demo",
+      "spawn_gen": "lab-review-b",
+      "backend": "tmux",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/state/review-b.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/state/review-b.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "done",
+            "note": "report complete",
+            "raw": "done: report complete",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": null,
+          "present": false
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/data/review-b/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "unknown",
+        "source": "none",
+        "detail": "worktree gone (torn down?)",
+        "raw": "state: unknown · source: none · worktree gone (torn down?)",
+        "observed_at": "2026-10-03T05:01:26Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": null,
+        "exists": null,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-03T05:01:26Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": "done: report complete"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-review-b",
+        "steer": "bin/fm-send.sh fm-review-b '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "hold_bucket": null,
+        "merged": null,
+        "requires_child_metadata": true,
+        "kind": "scout",
+        "title": "Investigation review-b",
+        "id": "review-b",
+        "since": "2026-10-03",
+        "pr_url": null,
+        "structured": true,
+        "hold_kind": null,
+        "priority": null,
+        "repo": "demo",
+        "hold_reason": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "raw": "- [ ] review-b - Investigation review-b (repo: demo) (kind: scout) (since 2026-10-03)",
+        "reported": null,
+        "blocked_by_ids": [],
+        "hold_until": null,
+        "hold_age_days": 0,
+        "order": 1,
+        "state": "in_flight",
+        "captain_actionable": false,
+        "body_excerpt": null,
+        "checked": false,
+        "local_note": null,
+        "report_path": null,
+        "unresolved_blocker_ids": [],
+        "blocked_reason": null,
+        "hold_set": null,
+        "links": [],
+        "blocked_by": null,
+        "body_lines": [],
+        "done": null,
+        "current_role": "worker"
+      }
+    }
+  ],
+  "main_inventory": {
+    "valid": true,
+    "reason": null,
+    "orphan_in_flight": [],
+    "unstructured_current_count": 0
+  },
+  "contributions": {
+    "known": 0,
+    "checked": 0,
+    "counts": {
+      "captain": 0,
+      "fleet": 0,
+      "maintainer": 0,
+      "nobody": 0
+    },
+    "unmeasured": 0,
+    "complete": true,
+    "proven_clear": true,
+    "stale_verdicts": 0,
+    "missing_verdicts": 0,
+    "unreadable_records": 0,
+    "valid_until": 900,
+    "captain": [],
+    "captain_omitted": 0
+  },
+  "scout_reports": [],
+  "secondmate_current": {
+    "registry": {
+      "present": false,
+      "available": true,
+      "complete": true,
+      "reason": null,
+      "provenance": "registered-table",
+      "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-lab.fkJcfO/data/secondmates.md",
+      "freshness": {
+        "status": "fresh",
+        "observed_at": "2026-10-03T05:01:26Z"
+      },
+      "records": [],
+      "input_truncated": false,
+      "records_truncated": false,
+      "reasons": [],
+      "lines_in_window": 0,
+      "records_in_window": 0
+    },
+    "records": [],
+    "total_registered": 0,
+    "total": 0,
+    "shown": 0,
+    "truncated": 0
+  },
+  "secondmate_landed": {
+    "records": [],
+    "truncated": [],
+    "unreadable": [],
+    "partial": []
+  },
+  "secondmate_guidance": {
+    "note": "For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority."
+  }
+}

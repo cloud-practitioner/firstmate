@@ -1,0 +1,28 @@
+Real verdict command against an isolated owned contribution record; no network or forge mutations
+delivery
+{
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source": "https://github.com/example/disposable-lab/pull/1#issuecomment-1",
+  "actor": "captain",
+  "summary": "Lab judgment"
+}
+{
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source": "https://github.com/example/disposable-lab/pull/1#issuecomment-1",
+  "actor": "fleet",
+  "summary": "Lab judgment"
+}
+{
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source": "https://github.com/example/disposable-lab/pull/1#issuecomment-1",
+  "actor": "maintainer",
+  "summary": "Lab judgment"
+}
+{
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source": "https://github.com/example/disposable-lab/pull/1#issuecomment-1",
+  "actor": "nobody",
+  "summary": "Lab judgment"
+}
+fm-contributions: invalid required actor 'bogus'; expected one of: captain, fleet, maintainer, nobody
+Invalid actor left persisted contribution record unchanged.

@@ -1,0 +1,100 @@
+Real tasks-axi and Firstmate CLI, isolated marked lab; no stubs
+ok: added review-a (scout, repo demo) -> In flight
+task:
+  id: review-a
+  title: Investigation review-a
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: demo
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done review-a --pr <url>` when it ships
+  - Run `tasks-axi block review-a --by <other>` to record a dependency
+ok: added review-b (scout, repo demo) -> In flight
+task:
+  id: review-b
+  title: Investigation review-b
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: demo
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done review-b --pr <url>` when it ships
+  - Run `tasks-axi block review-b --by <other>` to record a dependency
+call-a
+task:
+  id: call-a
+  title: Choose safe mode
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: yes
+  hold_reason: "Choose (safe mode)\nKeep café and literal fm-hold-v1:YWJj."
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: demo
+  priority: "-"
+  created: 2026-10-03
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-03T05:01:22Z\nCaptain hold origin: review-a\n\nOrigin: review-a"
+{
+  "id": "call-a",
+  "hold_kind": "captain",
+  "hold_reason": "Choose (safe mode)\nKeep café and literal fm-hold-v1:YWJj.",
+  "captain_actionable": true
+}
+fm-captain-hold: captain-held task call-a was held for origin review-a, not review-b; hold a task for review-b or list the right one
+Wrong-origin completion refused
+review-a
+fm-captain-hold: origin review-a cannot be its own captain-call inventory entry; hold a separate captain task for the call and list that task
+Self-inventory refused
+complete: review-a captain-call inventory reviewed (call-a)
+verified: review-a captain-call inventory
+Recorded inventory:
+decisions_reviewed=1
+decision_keys=call-a
+answered: call-a
+verified: review-a captain-call inventory
+task:
+  id: call-a
+  title: Choose safe mode
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "Choose (safe mode)\nKeep café and literal fm-hold-v1:YWJj."
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: demo
+  priority: "-"
+  created: "-"
+  closed: 2026-10-03
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 514c9836f8d253f23711cefce39156bde1bac6831ba2a410e27261254f38c9bc\nResolution mode: answered\n\nCaptain decision:\nUse safe mode.\n\nCaptain hold origin: review-a\n\nOrigin: review-a"

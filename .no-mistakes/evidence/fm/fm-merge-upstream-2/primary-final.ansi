@@ -1,0 +1,40 @@
+
+[38;5;174m ▐[48;5;16m▛███▛█[39m[49m   [1mClaude Code[0m[39m[49m [38;5;246mv2.1.288
+[38;5;174m▝▜[48;5;16m█████[49m█▀[39m  [38;5;246mHaiku 4.5 · Claude Team
+[38;5;174m ▝▝   ▝▝ [39m  [38;5;246m~/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C
+
+
+[48;5;237m❯ [38;5;231mThis is a captain-authorized isolated live validation. Only mutate the disposable [39m
+  [38;5;231mFM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.l7zC. Do not start networking, [39m
+  [38;5;231msession-start, delegate, install, commit, or change project files. First run bin/fm-lock.sh and respond LAB_READY. [39m
+  [38;5;231mThe configured native Stop hook will own supervision; do not manually park. When that hook wakes you about a lab [39m
+  [38;5;231mdecision, run bin/fm-wake-drain.sh, append a resolved status line for that exact lab-first or lab-second key to [39m
+  [38;5;231m$FM_HOME/state/demo.status, and execute the precise acknowledgement command printed by the drain. Do not do other [39m
+  [38;5;231mwork. Return LAB_HANDLED after each wake. Those lab keys are disposable test records, not real captain decisions.[39m
+
+[38;5;231m[49m●[39m I'll initialize the lab environment by running the lock script.
+
+  [38;5;246mRan [1m1[0m[38;5;246m[49m shell command [39m
+
+[38;5;231m●[39m LAB_READY
+
+  Awaiting lab decision notifications from the Stop hook.
+
+[38;5;246m✻[39m [38;5;246mCooked for 8s · done 5:02 AM
+
+
+
+
+
+
+[39m
+
+
+
+
+
+                  [38;5;246mtmux focus-events off · add 'set -g focus-events on' to ~/.tmux.conf and reattach for focus tracking
+[38;5;244m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[39m❯ 
+[38;5;244m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[39m  [38;5;211m⏵⏵ bypass permissions on[38;5;246m (shift+tab to cycle) · ← for agents[39m

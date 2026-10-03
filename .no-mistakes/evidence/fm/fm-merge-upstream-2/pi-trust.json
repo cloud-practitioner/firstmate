@@ -1,0 +1,15 @@
+[
+  {
+    "scenario": "unseeded-stall",
+    "argv": [
+      "/workspaces/wp/.pi/bin/pi",
+      "--no-session",
+      "--no-skills",
+      "--no-prompt-templates"
+    ],
+    "grid": "120x40",
+    "trust_dialog": true,
+    "trust_store": "{}",
+    "result": "pass"
+  }
+]

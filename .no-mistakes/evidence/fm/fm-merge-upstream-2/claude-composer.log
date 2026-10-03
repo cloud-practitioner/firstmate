@@ -1,0 +1,8 @@
+Named lab=fm-lab-round2 pane=w1:p1; normal Claude login, isolated FM_HOME; no model prompts
+viewer attached to fm-lab-round2 (pid 3708352)
+Named-session idle composer state=empty
+Visible typed slash-command payload=/exit
+Attempt to inject over an existing draft=send-failed
+Submit a grey slash command from empty=empty
+Exit submit verdict=unknown (a closed agent may read unknown)
+Grey slash delivered and /exit returned to the pane shell (real process-info confirms zsh).

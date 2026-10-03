@@ -1,0 +1,11 @@
+RUN tests/.test-phase-fm-supervision-host.test.sh
+ok - host+hook: a successor closed before exit_to_main does not suppress the branch-outcome rewake
+ok - host+hook: a successor that closes during a held engine turn does not suppress the branch-outcome rewake
+ok - host+hook: the next park takes over the cycle a main-only pass-through left, so one arm owns it
+RUN tests/.test-phase-fm-watch-arm.test.sh
+ok - watch-arm: --take-over owns a fresh cycle without a recovery wake and still surfaces queued work
+watcher: secondmate liveness check failed
+ok - watch-arm: takeover preserves self-exit downtime and surfaces a recovery wake
+RUN tests/.test-phase-fm-spawn-dispatch-profile.test.sh
+diagnostic seeded secondmate status=1 output=error: secondmate home cannot be inside the firstmate repo: /home/node/.no-mistakes/worktrees/450411b3e67c/01M3ZZZDR9X2H5N8PJ7ABWHZ3C/.test-phase-tmp/fm-spawn-dispatch-profile.XTwVpG/profile-pi-seeded-approve/secondmate-home
+not ok - pi seeded secondmate spawn should succeed: expected exit 0, got 1

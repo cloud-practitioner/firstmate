@@ -1,0 +1,11 @@
+Replay with real Git in a disposable repository
+target=109825e2d232b179d8880c2cb123f3f1176a0b2f
+parents=e42087e4513c4483d832aa8898b28efd410fdac8 d719ef3d9abdd11b0a8aea57c74de074feca99b9
+subject=Merge upstream firstmate main (d719ef3d) into the fork
+automatic_merge_exit=1
+automatically merged paths differing from submitted resolution:
+ tests/fm-supervision-host.test.sh | 83 ++++-----------------------------------
+ 1 file changed, 7 insertions(+), 76 deletions(-)
+fork first-parent commits since base=1
+new upstream commits=10
+Manual conflict-resolution inspection: only the supervision-host test invocation list conflicted. Resolution retains the fork run_case cleanup wrapper and adds upstream cases. All other paths match Git merge-tree output; no pipeline fixes were added.
