@@ -52,14 +52,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-# Readiness waits poll against one wall-clock deadline rather than an iteration
-# count: under load each probe and sleep stretches, so a counted loop either
-# trips early or hides how long it really waited. The bound is generous so a
-# loaded portable runner cannot fail the test, while a genuine hang still fails
-# in bounded time. The caller's liveness check stays inside the loop.
-WAIT_BOUND_SECONDS=${FM_TEST_WAIT_BOUND_SECONDS:-300}
-# wait_deadline prints the SECONDS value at which a wait that starts now expires.
-wait_deadline() { printf '%s' $((SECONDS + WAIT_BOUND_SECONDS)); }
+WAIT_BOUND_POLLS=15000
 
 # Materialize the current branch as the remote host's tracked code root. The
 # fixture is a real git repository because provisioning and guarded sync exercise
@@ -394,10 +387,11 @@ PATH="$FAKEBIN:$PATH" FM_HOME="$TMP_ROOT/concurrent-home" FM_ROOT_OVERRIDE="$REM
   "$REMOTE_ROOT/bin/fm-remote-home-provision.sh" < "$TMP_ROOT/provision.manifest" \
   > "$TMP_ROOT/provision-one.out" 2>&1 &
 provision_one=$!
-provision_deadline=$(wait_deadline)
+provision_wait=0
 while [ ! -f "$TMP_ROOT/provision.entered" ]; do
   kill -0 "$provision_one" 2>/dev/null || fail "first provisioning attempt exited before cloning"
-  [ "$SECONDS" -lt "$provision_deadline" ] || fail "first provisioning attempt never reached cloning"
+  provision_wait=$((provision_wait + 1))
+  [ "$provision_wait" -le "$WAIT_BOUND_POLLS" ] || fail "first provisioning attempt never reached cloning"
   sleep 0.02
 done
 PATH="$FAKEBIN:$PATH" FM_HOME="$TMP_ROOT/concurrent-home" FM_ROOT_OVERRIDE="$REMOTE_ROOT" \
@@ -428,10 +422,11 @@ PATH="$FAKEBIN:$PATH" FM_HOME="$TMP_ROOT/raced-home" FM_ROOT_OVERRIDE="$REMOTE_R
   "$REMOTE_ROOT/bin/fm-remote-home-provision.sh" < "$TMP_ROOT/race.manifest" \
   > "$TMP_ROOT/race-provision.out" 2>&1 &
 race_provision=$!
-race_deadline=$(wait_deadline)
+race_wait=0
 while [ ! -f "$TMP_ROOT/race-clone.held" ]; do
   kill -0 "$race_provision" 2>/dev/null || fail "provision exited before its clone could be held"
-  [ "$SECONDS" -lt "$race_deadline" ] || fail "provision clone never reached the held point"
+  race_wait=$((race_wait + 1))
+  [ "$race_wait" -le "$WAIT_BOUND_POLLS" ] || fail "provision clone never reached the held point"
   sleep 0.02
 done
 rm -rf -- "$TMP_ROOT/raced-home"
@@ -462,10 +457,11 @@ PATH="$FAKEBIN:$PATH" FM_HOME="$TMP_ROOT/appeared-home" FM_ROOT_OVERRIDE="$REMOT
   "$REMOTE_ROOT/bin/fm-remote-home-provision.sh" < "$TMP_ROOT/race.manifest" \
   > "$TMP_ROOT/appeared-provision.out" 2>&1 &
 appeared_provision=$!
-race_deadline=$(wait_deadline)
+race_wait=0
 while [ ! -f "$TMP_ROOT/race-clone.held" ]; do
   kill -0 "$appeared_provision" 2>/dev/null || fail "appeared-home provision exited before its clone could be held"
-  [ "$SECONDS" -lt "$race_deadline" ] || fail "appeared-home provision clone never reached the held point"
+  race_wait=$((race_wait + 1))
+  [ "$race_wait" -le "$WAIT_BOUND_POLLS" ] || fail "appeared-home provision clone never reached the held point"
   sleep 0.02
 done
 mkdir "$TMP_ROOT/appeared-home"
@@ -494,10 +490,11 @@ FM_SECONDMATE_CHARTER='Failing seed charter.' FM_SECONDMATE_SCOPE='failed seed' 
   seed-fail remote-mac "$REMOTE_ROOT" "$TMP_ROOT/seed-fail-home" --no-projects \
   > "$TMP_ROOT/seed-fail.out" 2>&1 &
 seed_fail_pid=$!
-seed_deadline=$(wait_deadline)
+seed_wait=0
 while [ ! -f "$TMP_ROOT/seed.entered" ]; do
   kill -0 "$seed_fail_pid" 2>/dev/null || fail "failing seed exited before remote provisioning"
-  [ "$SECONDS" -lt "$seed_deadline" ] || fail "failing seed never reached remote provisioning"
+  seed_wait=$((seed_wait + 1))
+  [ "$seed_wait" -le "$WAIT_BOUND_POLLS" ] || fail "failing seed never reached remote provisioning"
   sleep 0.02
 done
 FM_SECONDMATE_CHARTER='Successful seed charter.' FM_SECONDMATE_SCOPE='successful seed' \
@@ -970,12 +967,11 @@ EOF
 FM_FAKE_SSH_MODE=inherit-block remote_env "$ROOT/bin/fm-spawn.sh" ios --secondmate \
   > "$TMP_ROOT/spawn-concurrent.out" 2>&1 &
 spawn_concurrent=$!
-spawn_inherit_deadline=$(wait_deadline)
-# Earlier inherited files traverse the worker before captain-shared.md, so give
-# a loaded portable runner 30 seconds to reach this deliberately blocked write.
+spawn_inherit_wait=0
 while [ ! -f "$TMP_ROOT/inherit.entered" ]; do
   kill -0 "$spawn_concurrent" 2>/dev/null || fail "remote spawn exited before its blocked inheritance write"
-  [ "$SECONDS" -lt "$spawn_inherit_deadline" ] || fail "remote spawn never reached its blocked inheritance write"
+  spawn_inherit_wait=$((spawn_inherit_wait + 1))
+  [ "$spawn_inherit_wait" -le "$WAIT_BOUND_POLLS" ] || fail "remote spawn never reached its blocked inheritance write"
   sleep 0.02
 done
 cat > "$PARENT/data/captain-shared.md" <<'EOF'
@@ -1080,10 +1076,11 @@ EOF
 FM_FAKE_SSH_MODE=inherit-block remote_env "$ROOT/bin/fm-config-push.sh" \
   > "$TMP_ROOT/config-concurrent-first.out" 2>&1 &
 config_first=$!
-inherit_deadline=$(wait_deadline)
+inherit_wait=0
 while [ ! -f "$TMP_ROOT/inherit.entered" ]; do
   kill -0 "$config_first" 2>/dev/null || fail "first inheritance transaction exited before its blocked write"
-  [ "$SECONDS" -lt "$inherit_deadline" ] || fail "first inheritance transaction never reached its blocked write"
+  inherit_wait=$((inherit_wait + 1))
+  [ "$inherit_wait" -le "$WAIT_BOUND_POLLS" ] || fail "first inheritance transaction never reached its blocked write"
   sleep 0.02
 done
 cat > "$PARENT/data/captain-shared.md" <<'EOF'
@@ -1285,9 +1282,10 @@ FM_STATE_OVERRIDE="$WATCH_STATE" FM_SECONDMATE_LIVENESS_SECS=1 FM_POLL=1 \
   remote_env exec "$ROOT/bin/fm-watch.sh" \
   > "$TMP_ROOT/watch-liveness.out" 2> "$TMP_ROOT/watch-liveness.err" &
 watch_pid=$!
-watch_deadline=$(wait_deadline)
-while kill -0 "$watch_pid" 2>/dev/null && [ "$SECONDS" -lt "$watch_deadline" ]; do
+watch_wait=0
+while kill -0 "$watch_pid" 2>/dev/null && [ "$watch_wait" -lt "$WAIT_BOUND_POLLS" ]; do
   sleep 0.02
+  watch_wait=$((watch_wait + 1))
 done
 if kill -0 "$watch_pid" 2>/dev/null; then
   kill "$watch_pid" 2>/dev/null || true
@@ -1510,10 +1508,11 @@ liveness_lock="$PARENT/state/.secondmate-liveness-ios.lock"
 ( STATE="$PARENT/state" exec bash -c '. "$1" && fm_lock_acquire_wait "$2" && touch "$3" && exec sleep 120' \
     _ "$ROOT/bin/fm-wake-lib.sh" "$liveness_lock" "$TMP_ROOT/liveness.entered" ) &
 liveness_holder_pid=$!
-liveness_deadline=$(wait_deadline)
+liveness_wait=0
 while [ ! -f "$TMP_ROOT/liveness.entered" ]; do
   kill -0 "$liveness_holder_pid" 2>/dev/null || fail "liveness lock holder exited before acquiring the lock"
-  [ "$SECONDS" -lt "$liveness_deadline" ] || fail "liveness lock holder never acquired the lock"
+  liveness_wait=$((liveness_wait + 1))
+  [ "$liveness_wait" -le "$WAIT_BOUND_POLLS" ] || fail "liveness lock holder never acquired the lock"
   sleep 0.02
 done
 liveness_owner=$liveness_holder_pid
@@ -1541,22 +1540,22 @@ FM_HOME="$PARENT" /bin/bash -c '
 ' _ "$ROOT/bin/fm-wake-lib.sh" "$handoff_lock" "$TMP_ROOT/handoff.entered" \
   "$TMP_ROOT/handoff.release" &
 handoff_holder_pid=$!
-handoff_deadline=$(wait_deadline)
+handoff_wait=0
 while [ ! -f "$TMP_ROOT/handoff.entered" ]; do
   kill -0 "$handoff_holder_pid" 2>/dev/null || fail "handoff lock holder exited before acquiring the route lock"
-  [ "$SECONDS" -lt "$handoff_deadline" ] || fail "handoff lock holder never acquired the route lock"
+  handoff_wait=$((handoff_wait + 1))
+  [ "$handoff_wait" -le "$WAIT_BOUND_POLLS" ] || fail "handoff lock holder never acquired the route lock"
   sleep 0.02
 done
 rm -f "$TMUX_STATE" "$TMP_ROOT/launch.entered" "$TMP_ROOT/launch.release"
 FM_FAKE_SSH_MODE=launch-block remote_env "$ROOT/bin/fm-spawn.sh" ios --secondmate \
   > "$TMP_ROOT/spawn-retirement.out" 2>&1 &
 spawn_retirement_pid=$!
-launch_deadline=$(wait_deadline)
-# The respawn performs readiness and inheritance jobs before launch, so allow
-# the same 30-second loaded-runner bound as the earlier blocked worker path.
+launch_wait=0
 while [ ! -f "$TMP_ROOT/launch.entered" ]; do
   kill -0 "$spawn_retirement_pid" 2>/dev/null || fail "remote respawn exited before its blocked launch"
-  [ "$SECONDS" -lt "$launch_deadline" ] || fail "remote respawn never reached its blocked launch"
+  launch_wait=$((launch_wait + 1))
+  [ "$launch_wait" -le "$WAIT_BOUND_POLLS" ] || fail "remote respawn never reached its blocked launch"
   sleep 0.02
 done
 remote_env "$ROOT/bin/fm-teardown.sh" ios > "$TMP_ROOT/teardown-serialized.out" 2>&1 &
