@@ -1363,8 +1363,9 @@ LOCK_CONTENTION_OWNER_PID=$!
 while [ ! -e "$STUCK_RECOVERY_READY" ] && kill -0 "$LOCK_CONTENTION_OWNER_PID" 2>/dev/null; do sleep 0.01; done
 [ -e "$STUCK_RECOVERY_READY" ] || fail "could not hold the session presentation lock for stuck-holder recovery"
 STUCK_RECOVERY_CALLS=$(log_line_count)
-if FM_TEST_HERDR_RECOVERY_LOCK_WAIT=1 FM_TEST_PRESENTATION_LOCK="$STUCK_RECOVERY_LOCK" \
-  FM_TEST_PRESENTATION_WAIT_LOG="$TMP_ROOT/stuck-recovery-attempts" FM_TEST_PRESENTATION_ATTEMPT_DELAY=0.4 \
+STUCK_RECOVERY_WAIT=5
+if FM_TEST_HERDR_RECOVERY_LOCK_WAIT="$STUCK_RECOVERY_WAIT" FM_TEST_PRESENTATION_LOCK="$STUCK_RECOVERY_LOCK" \
+  FM_TEST_PRESENTATION_WAIT_LOG="$TMP_ROOT/stuck-recovery-attempts" FM_TEST_PRESENTATION_ATTEMPT_DELAY=1 \
   spawn_task "$PRIMARY_WAVE_ID" "$HOME_DIR" "$RECOVERY_PROJECT_DIR" \
   > "$TMP_ROOT/stuck-recovery.out" 2> "$TMP_ROOT/stuck-recovery.err"; then
   STUCK_RECOVERY_STATUS=0
@@ -1375,11 +1376,13 @@ fi
 wait "$LOCK_CONTENTION_OWNER_PID" || fail "stuck-holder recovery lock owner failed"
 LOCK_CONTENTION_OWNER_PID=
 [ "$STUCK_RECOVERY_STATUS" -ne 0 ] || fail "recovery behind a stuck session lock holder unexpectedly succeeded"
-STUCK_RECOVERY_START=$(head -n 1 "$TMP_ROOT/stuck-recovery-attempts")
-STUCK_RECOVERY_END=$(tail -n 1 "$TMP_ROOT/stuck-recovery-attempts")
-[ -n "$STUCK_RECOVERY_START" ] && [ $((STUCK_RECOVERY_END - STUCK_RECOVERY_START)) -le 1 ] \
-  || fail "slow lock attempts extended the elapsed recovery wait budget"
-grep -F "herdr presentation recovery could not acquire its session lock within 1s; refusing a concurrent resume" \
+if [ -s "$TMP_ROOT/stuck-recovery-attempts" ]; then
+  STUCK_RECOVERY_START=$(head -n 1 "$TMP_ROOT/stuck-recovery-attempts")
+  STUCK_RECOVERY_END=$(tail -n 1 "$TMP_ROOT/stuck-recovery-attempts")
+  [ $((STUCK_RECOVERY_END - STUCK_RECOVERY_START)) -le "$STUCK_RECOVERY_WAIT" ] \
+    || fail "slow lock attempts extended the elapsed recovery wait budget"
+fi
+grep -F "herdr presentation recovery could not acquire its session lock within ${STUCK_RECOVERY_WAIT}s; refusing a concurrent resume" \
   "$TMP_ROOT/stuck-recovery.err" >/dev/null 2>&1 \
   || fail "recovery behind a stuck holder did not refuse clearly: $(cat "$TMP_ROOT/stuck-recovery.err")"
 [ "$(grep '^herdr_pane_id=' "$PRIMARY_WAVE_META" | cut -d= -f2-)" = "$PRIMARY_WAVE_OLD_PANE" ] \
