@@ -85,9 +85,9 @@ test_scratchpad2_does_not_dirty_porcelain() {
 }
 
 test_claude_local_settings_ignored() {
-  git -C "$ROOT" check-ignore -q .claude/settings.local.json \
+  git -C "$ROOT" check-ignore --no-index -q .claude/settings.local.json \
     || fail "git does not ignore .claude/settings.local.json (per-user Claude Code settings)"
-  git -C "$ROOT" check-ignore -q .claude/settings.json \
+  git -C "$ROOT" check-ignore --no-index -q .claude/settings.json \
     && fail "git unexpectedly ignores .claude/settings.json (shared settings must stay visible)"
   pass "Claude Code's per-user local settings file is gitignored"
 }
