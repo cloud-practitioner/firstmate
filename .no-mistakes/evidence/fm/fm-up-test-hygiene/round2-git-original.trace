@@ -1,0 +1,4 @@
+15:44:40.534644 git.c:502               trace: built-in: git commit -qm fixture
+15:44:40.542569 run-command.c:673       trace: run_command: git maintenance run --auto --quiet --detach
+15:44:40.542598 run-command.c:765       trace: start_command: /usr/local/libexec/git-core/git maintenance run --auto --quiet --detach
+15:44:40.544359 git.c:502               trace: built-in: git maintenance run --auto --quiet --detach

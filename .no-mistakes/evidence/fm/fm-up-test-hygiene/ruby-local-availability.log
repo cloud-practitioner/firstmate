@@ -1,0 +1,6 @@
+E: Unable to locate package ruby3.1
+E: Couldn't find any package by glob 'ruby3.1'
+E: Couldn't find any package by regex 'ruby3.1'
+E: Unable to locate package libruby3.1
+E: Couldn't find any package by glob 'libruby3.1'
+E: Couldn't find any package by regex 'libruby3.1'

@@ -1,0 +1,35 @@
+ok - real herdr: fm-spawn.sh auto-detects verified herdr from HERDR_ENV=1 (no explicit config) without an opt-out steer
+ok - real herdr: auto-detected spawn records backend=herdr and herdr_session/workspace/tab/pane fields in meta
+ok - real herdr: the auto-detected spawn's launch command actually ran in the herdr pane
+before forced failure: fixture=/home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-validation/tmp/fm-backend-autodetect-smoke.gvB8Xw staged_launch=/tmp/fm-autodetectsmoke1+8a2c3cd6eb2b033b393ebd667898acd85d6d61cb1576124705c7ba95bddc00f5 hook_mode=500
+raw launch pane capture:
+treehouse get
+scratch-project on  master
+❯ treehouse get
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.treehouse/scratch-project-e7baae/1/scratch-project. Type 'exit' to return.
+scratch-project on  HEAD
+❯ cd -- '/home/node/.treehouse/scratch-project-e7baae/1/scratch-project'
+scratch-project on  HEAD
+❯ export GOTMPDIR=/tmp/fm-autodetectsmoke1/gotmp
+scratch-project on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+export FM_TASK_ID=autodetectsmoke1
+scratch-project on  HEAD
+❯ export FM_TASK_ID=autodetectsmoke1
+scratch-project on  HEAD
+❯ . '/tmp/fm-autodetectsmoke1+8a2c3cd6eb2b033b393ebd667898acd85d6d61cb1576124705c7ba95bddc00f5/launch.s1791041613.134204
+.11632.sh'
+autodetect-smoke-ok
+scratch-project on  HEAD
+❯
+Task metadata intentionally removed before EXIT cleanup
+child forced-failure exit=37
+{
+  "fixture_exists_after_EXIT": false,
+  "staged_launch_exists_after_EXIT": false,
+  "lab_session": "fm-lab-fm-autodetect-sm-133710-7572"
+}

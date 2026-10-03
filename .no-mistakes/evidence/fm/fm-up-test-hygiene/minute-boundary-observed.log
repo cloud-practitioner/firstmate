@@ -1,0 +1,8 @@
+1
+before real minute boundary:
+{"seq":1,"epoch":1791040818,"task":"boundary","wake":"","verdict":"captain","summary":"PR ready for review","silent":false,"statusEndpoint":0,"statusIdent":"-","unread":true,"recordedAgo":"0m"}
+after real minute boundary:
+{"seq":1,"epoch":1791040818,"task":"boundary","wake":"","verdict":"captain","summary":"PR ready for review","silent":false,"statusEndpoint":0,"statusIdent":"-","unread":true,"recordedAgo":"1m"}
+normalized minute-age contract: [seq 1, recorded 0m ago] boundary: PR ready for review
+normalized minute-age contract: [seq 1, recorded 0m ago] boundary: PR ready for review
+hour/day wording preserved

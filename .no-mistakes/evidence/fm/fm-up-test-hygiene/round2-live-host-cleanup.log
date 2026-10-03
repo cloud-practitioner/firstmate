@@ -1,0 +1,18 @@
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/tmp/fm-lab.IvtRTT
+created isolated workspace: {"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65cf19e075ad41","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"hygiene-primary","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+viewer attached to fm-lab-hygiene-primary-791247-12034 (pid 791564)
+actual Bash-tool product transcript from the real Claude primary:
+lock acquired: harness pid 792095
+actual primary lock owner: claude          claude -p --verbose --output-format stream-json --setting-sources project --permission-mode bypassPermissions --allowedTools Bash -- Use Bash to run bash .no-mistakes/test-phase/live-host-case.sh from the current working directory. This is the entire isolated test task. Do not change files or run any other command. Report the output and exit code.
+before run_case cleanup: host pid=798547 alive
+before run_case cleanup: arm pid=799203 alive
+before run_case cleanup: watcher pid=799261 alive
+after run_case cleanup: host pid=798547 stopped
+after run_case cleanup: arm pid=799203 stopped
+after run_case cleanup: watcher pid=799261 stopped
+LIVE_CASE_CLEANUP_COMPLETE
+completed primary process view:
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":791461,"foreground_processes":[{"argv":["/bin/zsh"],"cmdline":"/bin/zsh","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG","name":"zsh","pid":791461}],"pane_id":"w1:p1","shell_pid":791461},"type":"pane_process_info"}}
+teardown will remove this owned lab and verify the default-session tripwire
+
+Lab helper returned success after teardown: owned lab session/home removed; default-session tripwire verified unchanged.

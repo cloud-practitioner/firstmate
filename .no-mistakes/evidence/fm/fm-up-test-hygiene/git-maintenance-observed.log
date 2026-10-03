@@ -1,0 +1,5 @@
+original policy: 15:16:35.969965 run-command.c:673       trace: run_command: git maintenance run --auto --quiet --detach
+fixed policy: no background maintenance launched
+effective maintenance.auto=false
+clone objects verified: fixture
+all 300 committed files copied intact

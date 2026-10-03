@@ -1,0 +1,3 @@
+before cleanup: installed hook directory mode=500
+plain rm refusal: rm: cannot remove '/home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.test-validation/readonly-tree/state/contract.git-hooks/post-rewrite': Permission denied
+after shared helper: fixture tree absent; outside target mode=500

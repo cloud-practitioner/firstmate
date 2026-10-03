@@ -1,0 +1,4 @@
+ok - host: a main-only pass-through leaves the successor watcher running and the close undelivered for main
+case completed, leftover watcher pid=3547261
+fixed case boundary: watcher state=gone
+fixture watcher stopped at the case boundary

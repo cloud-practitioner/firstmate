@@ -1,0 +1,45 @@
+ok - only a remote mate home resolves its own parent channel for exclusion
+ok - fm_parent_channel_outbound_status resolves only the remote route
+ok - a remote mate's folds omit its channel and keep a genuine task
+ok - the cursor-backed incremental fold omits a remote mate's channel
+ok - the channel's resolution and note lines stay off the remote unread surface
+ok - a parent-replies.status in a main home still folds
+ok - a parent-replies.status in a local mate still folds
+ok - scan_signals skips a remote mate's channel and still reports its tasks
+ok - the heartbeat backstop skips a remote mate's channel and keeps its tasks
+ok - scan_signals keeps parent-replies.status outside remote mate homes
+ok - the daemon's catch-all scan skips a remote mate's channel and keeps its tasks
+ok - the daemon's catch-all scan keeps parent-replies.status outside remote mate homes
+ok - the real drain presents no channel content from a remote mate home
+ok - stale channel records from an older watcher are dropped, not presented
+original after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/original/fm-parent-channel-scan-exclusion.7BGfm4
+original after EXIT: leaked /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/original/fm-parent-channel-scan-exclusion-root.OL3cZt
+original after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/original/fm-parent-channel-scan-exclusion.7BGfm4/drain/home/state/.wake-queue.lock.owner.91wUyZ
+original after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/original/fm-parent-channel-scan-exclusion.7BGfm4/drain/home/state/.watcher-down.lock.owner.nvPlVm
+original after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/original/fm-parent-channel-scan-exclusion.7BGfm4/drain/home/state/.status-presentation-lock.owner.jQvGTu
+original after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/original/fm-parent-channel-scan-exclusion.7BGfm4/drain-stale/home/state/.wake-queue.lock.owner.8PsrDi
+original after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/original/fm-parent-channel-scan-exclusion.7BGfm4/drain-stale/home/state/.watcher-down.lock.owner.uL6oRJ
+original after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/original/fm-parent-channel-scan-exclusion.7BGfm4/drain-stale/home/state/.status-presentation-lock.owner.AbuGyf
+ok - only a remote mate home resolves its own parent channel for exclusion
+ok - fm_parent_channel_outbound_status resolves only the remote route
+ok - a remote mate's folds omit its channel and keep a genuine task
+ok - the cursor-backed incremental fold omits a remote mate's channel
+ok - the channel's resolution and note lines stay off the remote unread surface
+ok - a parent-replies.status in a main home still folds
+ok - a parent-replies.status in a local mate still folds
+ok - scan_signals skips a remote mate's channel and still reports its tasks
+ok - the heartbeat backstop skips a remote mate's channel and keeps its tasks
+ok - scan_signals keeps parent-replies.status outside remote mate homes
+ok - the daemon's catch-all scan skips a remote mate's channel and keeps its tasks
+ok - the daemon's catch-all scan keeps parent-replies.status outside remote mate homes
+ok - the real drain presents no channel content from a remote mate home
+ok - stale channel records from an older watcher are dropped, not presented
+fixed after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/fixed/fm-parent-channel-scan-exclusion.H4goK0
+fixed after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/fixed/fm-parent-channel-scan-exclusion-root.pkesYJ
+fixed after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/fixed/fm-parent-channel-scan-exclusion.H4goK0/drain/home/state/.wake-queue.lock.owner.LJjmew
+fixed after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/fixed/fm-parent-channel-scan-exclusion.H4goK0/drain/home/state/.watcher-down.lock.owner.XGeBV5
+fixed after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/fixed/fm-parent-channel-scan-exclusion.H4goK0/drain/home/state/.status-presentation-lock.owner.1VWUIN
+fixed after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/fixed/fm-parent-channel-scan-exclusion.H4goK0/drain-stale/home/state/.wake-queue.lock.owner.PiC5Jw
+fixed after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/fixed/fm-parent-channel-scan-exclusion.H4goK0/drain-stale/home/state/.watcher-down.lock.owner.h0Omhz
+fixed after EXIT: absent /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.no-mistakes/test-phase/parent-check/fixed/fm-parent-channel-scan-exclusion.H4goK0/drain-stale/home/state/.status-presentation-lock.owner.VY0WqQ
+Both fixture roots are removed only with the shared EXIT cleanup; negative control reproduced the second-root leak.

@@ -1,0 +1,29 @@
+FM_TEST_BEGIN 2026-10-03T15:10:22Z tests/fm-test-fixtures.test.sh family=standalone expected_gate_skip=none
+ok - runner and shared helpers isolate host Git config and preserve explicit config and outside commits
+not ok - fixture spawn failed: warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.test-validation/tmp/fm-test-fixture-spawn.CFjuNL/home/data/fixtreespawn3054446/launch-brief.md records no ship branch; defaulting to legacy branch fm/fixtreespawn3054446
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M413T6W51NRDPGZAHW3WBTQG/.test-validation/tmp/fm-test-fixture-spawn.CFjuNL/home/data/fixtreespawn3054446/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+warning: the selected herdr release could not be read, so the 0.8.0 floor for presentation spaces cannot be verified; using the ordinary flat layout instead. Upgrade herdr to 0.8.0 or newer (herdr update) to restore the projection, or write "on" into config/herdr-presentation-spaces to force it on this release.
+error: herdr server for session 'default' did not report running within 10s
+not ok - child suite failed: 
+FM_TEST_END 2026-10-03T15:10:35Z tests/fm-test-fixtures.test.sh exit=1 duration_ms=12686 gate_skip=false
+FM_TEST_BEGIN 2026-10-03T15:10:35Z tests/fm-parent-channel-scan-exclusion.test.sh family=watcher-wake-lock expected_gate_skip=none
+ok - only a remote mate home resolves its own parent channel for exclusion
+ok - fm_parent_channel_outbound_status resolves only the remote route
+ok - a remote mate's folds omit its channel and keep a genuine task
+ok - the cursor-backed incremental fold omits a remote mate's channel
+ok - the channel's resolution and note lines stay off the remote unread surface
+ok - a parent-replies.status in a main home still folds
+ok - a parent-replies.status in a local mate still folds
+ok - scan_signals skips a remote mate's channel and still reports its tasks
+ok - the heartbeat backstop skips a remote mate's channel and keeps its tasks
+ok - scan_signals keeps parent-replies.status outside remote mate homes
+ok - the daemon's catch-all scan skips a remote mate's channel and keeps its tasks
+ok - the daemon's catch-all scan keeps parent-replies.status outside remote mate homes
+ok - the real drain presents no channel content from a remote mate home
+ok - stale channel records from an older watcher are dropped, not presented
+FM_TEST_END 2026-10-03T15:10:40Z tests/fm-parent-channel-scan-exclusion.test.sh exit=0 duration_ms=5180 gate_skip=false
+FM_TEST_SUMMARY total=2 failed=1 skipped_gate=0 duration_ms=17936
+FM_TEST_SUMMARY_FAMILY family=standalone count=1 duration_ms=12686 failed=1
+FM_TEST_SUMMARY_FAMILY family=watcher-wake-lock count=1 duration_ms=5180 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-test-fixtures.test.sh duration_ms=12686
+FM_TEST_SLOWEST rank=2 script=tests/fm-parent-channel-scan-exclusion.test.sh duration_ms=5180

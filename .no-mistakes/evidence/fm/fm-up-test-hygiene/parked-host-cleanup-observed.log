@@ -1,0 +1,7 @@
+ok - host: an attended wake the branch may take is handled on the engine, and its routine outcome never wakes main
+before case cleanup: host pid=4079478 state=S
+before case cleanup: arm pid=4082040 state=S
+before case cleanup: watcher pid=4082084 state=S
+after case cleanup: host pid=4079478 state=gone
+after case cleanup: arm pid=4082040 state=gone
+after case cleanup: watcher pid=4082084 state=gone

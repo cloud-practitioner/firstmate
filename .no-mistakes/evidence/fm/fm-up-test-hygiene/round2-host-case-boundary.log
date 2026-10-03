@@ -1,0 +1,14 @@
+ok - host: a main-only pass-through leaves the successor watcher running and the close undelivered for main
+case completed, leftover watcher pid=504278
+original case boundary: watcher state=S
+ok - host: a main-only pass-through leaves the successor watcher running and the close undelivered for main
+case completed, leftover watcher pid=511578
+fixed case boundary: watcher state=gone
+fixture watcher stopped at the case boundary
+ok - host: an attended wake the branch may take is handled on the engine, and its routine outcome never wakes main
+before case cleanup: host pid=516835 state=S
+before case cleanup: arm pid=523106 state=S
+before case cleanup: watcher pid=523157 state=S
+after case cleanup: host pid=516835 state=gone
+after case cleanup: arm pid=523106 state=gone
+after case cleanup: watcher pid=523157 state=gone

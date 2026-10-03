@@ -1,0 +1,6 @@
+FM_TEST_BEGIN 2026-10-03T15:24:36Z tests/fm-test-fixture-cleanup.test.sh family=standalone expected_gate_skip=none
+ok - fm_test_tmproot cleans up its fixture root on normal exit
+ok - fm_test_tmproot cleans up its fixture root on SIGTERM
+ok - the cleanup registry cannot be injected through path precreation
+ok - failed fixture registration rolls back the new root
+not ok - a stale fixture root whose PID was reused by another process was not reaped
