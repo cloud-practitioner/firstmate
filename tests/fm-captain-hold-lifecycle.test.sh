@@ -4737,7 +4737,7 @@ test_verify_accepts_an_answered_call_pruned_to_the_archive() (
 test_verify_refuses_a_live_legacy_row_despite_an_old_archived_answer() (
   local home id call_id
   home=$(make_home verify-live-legacy-over-archive)
-  # shellcheck disable=SC2031 # This fixture sets its own HOME, independent of earlier subshells.
+  # shellcheck disable=SC2030,SC2031 # HOME is isolated here and reset independently in each fixture.
   export HOME="$home/user-home"
   mkdir -p "$HOME/.tasks-axi"
   id=sample-reused-review
@@ -4779,6 +4779,7 @@ test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer() (
   local variant=$1 home id call_id earlier_id HOME
   local answer_args=()
   home=$(make_home "verify-unanswered-archive-$variant")
+  # shellcheck disable=SC2030,SC2031 # HOME is isolated here and reset independently in each fixture.
   export HOME="$home/user-home"
   mkdir -p "$HOME/.tasks-axi"
   id=sample-review
@@ -4853,6 +4854,7 @@ test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer() (
 test_verify_accepts_an_exact_archived_answer_despite_a_live_legacy_row() (
   local home id call_id legacy_id other HOME
   home=$(make_home verify-exact-archive-over-live-legacy)
+  # shellcheck disable=SC2031 # This fixture sets its own HOME, independent of earlier subshells.
   export HOME="$home/user-home"
   mkdir -p "$HOME/.tasks-axi"
   id=sample-review
