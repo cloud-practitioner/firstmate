@@ -1,0 +1,549 @@
+[
+  {
+    "scenario": "baseline-continuity-ingest",
+    "result": "fail",
+    "live": false,
+    "response": {
+      "argv": [
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline/bin/fm-procevent-remote-reply.sh",
+        "ingest",
+        "labmate",
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline-continuity-ingest/result"
+      ],
+      "exit": 3,
+      "stdout": "continuity-broken: labmate (disposable-live-check)\n",
+      "stderr": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline/bin/fm-procevent-remote-reply.sh: line 1: tmp: unbound variable\n"
+    },
+    "after_exit": {
+      "TMPDIR": [
+        "tmp/fm-remote-reply-ingest.iBGfog"
+      ],
+      "document_staging": [],
+      "lifecycle_locks": []
+    },
+    "persisted_state": {
+      ".remote-reply-mirrored-labmate": "",
+      "labmate.status": "blocked [key=remote-reply-continuity-labmate] [at=1791035596]: remote reply continuity broke for labmate (disposable-live-check)\n",
+      "procevent-inbox/remote-reply-labmate.1.result": "schema=fm-remote-delta.v1\nstatus=continuity-broken\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=0\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_bytes=0\nreason=disposable-live-check\n\n",
+      "procevent-inbox/remote-reply-labmate.1.adapter": "remote-reply\n"
+    },
+    "followup": null
+  },
+  {
+    "scenario": "baseline-continuity-handle",
+    "result": "fail",
+    "live": false,
+    "response": {
+      "argv": [
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline/bin/fm-procevent-remote-reply.sh",
+        "handle",
+        "labmate",
+        "1",
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline-continuity-handle/result"
+      ],
+      "exit": 3,
+      "stdout": "continuity-broken: labmate (disposable-live-check)\nhandled: remote-reply-labmate 1\n",
+      "stderr": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline/bin/fm-procevent-remote-reply.sh: line 1: tmp: unbound variable\n"
+    },
+    "after_exit": {
+      "TMPDIR": [
+        "tmp/fm-remote-reply-ingest.YmLZsB"
+      ],
+      "document_staging": [],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.WCEqF1"
+      ]
+    },
+    "persisted_state": {
+      ".remote-reply-mirrored-labmate": "",
+      "labmate.status": "blocked [key=remote-reply-continuity-labmate] [at=1791035596]: remote reply continuity broke for labmate (disposable-live-check)\n",
+      "procevent-inbox/remote-reply-labmate.1.result": "schema=fm-remote-delta.v1\nstatus=continuity-broken\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=0\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_bytes=0\nreason=disposable-live-check\n\n",
+      "procevent-inbox/remote-reply-labmate.1.handled": "",
+      "procevent-inbox/remote-reply-labmate.1.adapter": "remote-reply\n",
+      ".remote-reply-lifecycle-labmate.lock.owner.WCEqF1/pid": "294108\n"
+    },
+    "followup": null
+  },
+  {
+    "scenario": "baseline-digest-ingest",
+    "result": "pass",
+    "live": false,
+    "response": {
+      "argv": [
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline/bin/fm-procevent-remote-reply.sh",
+        "ingest",
+        "labmate",
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline-digest-ingest/result"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "error: result payload bytes do not match its committed digest\n"
+    },
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    },
+    "persisted_state": {
+      "procevent-inbox/remote-reply-labmate.1.result": "schema=fm-remote-delta.v1\nstatus=delta\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=39\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=9812e0f85ab58739cf74a8434b248c344cb9340737bdf21c4844559e12641def\npayload_sha256=0000000000000000000000000000000000000000000000000000000000000000\npayload_bytes=39\nreason=disposable-live-check\n\nworking: disposable relay verification\n",
+      "procevent-inbox/remote-reply-labmate.1.adapter": "remote-reply\n"
+    },
+    "followup": null
+  },
+  {
+    "scenario": "baseline-digest-handle",
+    "result": "fail",
+    "live": false,
+    "response": {
+      "argv": [
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline/bin/fm-procevent-remote-reply.sh",
+        "handle",
+        "labmate",
+        "1",
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline-digest-handle/result"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "error: result payload bytes do not match its committed digest\n"
+    },
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.1eXQTs"
+      ]
+    },
+    "persisted_state": {
+      "procevent-inbox/remote-reply-labmate.1.result": "schema=fm-remote-delta.v1\nstatus=delta\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=39\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=9812e0f85ab58739cf74a8434b248c344cb9340737bdf21c4844559e12641def\npayload_sha256=0000000000000000000000000000000000000000000000000000000000000000\npayload_bytes=39\nreason=disposable-live-check\n\nworking: disposable relay verification\n",
+      "procevent-inbox/remote-reply-labmate.1.adapter": "remote-reply\n",
+      ".remote-reply-lifecycle-labmate.lock.owner.1eXQTs/pid": "295436\n"
+    },
+    "followup": null
+  },
+  {
+    "scenario": "baseline-sigterm-fetch-ingest",
+    "result": "fail",
+    "live": false,
+    "argv": [
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline/bin/fm-procevent-remote-reply.sh",
+      "ingest",
+      "labmate",
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline-sigterm-fetch-ingest/result"
+    ],
+    "peer": "disposable loopback TCP endpoint stalled before server SSH banner",
+    "real_ssh_client_banner": "SSH-2.0-OpenSSH_10.0p2 Debian-7+deb13u4\r\n",
+    "signal": "SIGTERM to adapter PID after SSH connected",
+    "before_signal": {
+      "TMPDIR": [
+        "tmp/fm-remote-doc-reason.E003Cy",
+        "tmp/fm-remote-reply-ingest.OXUKFf"
+      ],
+      "document_staging": [
+        "home/data/remote-secondmates/labmate/data/proof/.remote-doc.dSTRyv"
+      ],
+      "lifecycle_locks": []
+    },
+    "exit": -15,
+    "stdout": "",
+    "stderr": "",
+    "after_exit": {
+      "TMPDIR": [
+        "tmp/fm-remote-doc-reason.E003Cy",
+        "tmp/fm-remote-reply-ingest.OXUKFf"
+      ],
+      "document_staging": [],
+      "lifecycle_locks": []
+    }
+  },
+  {
+    "scenario": "baseline-sigterm-fetch-handle",
+    "result": "fail",
+    "live": false,
+    "argv": [
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline/bin/fm-procevent-remote-reply.sh",
+      "handle",
+      "labmate",
+      "1",
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline-sigterm-fetch-handle/result"
+    ],
+    "peer": "disposable loopback TCP endpoint stalled before server SSH banner",
+    "real_ssh_client_banner": "SSH-2.0-OpenSSH_10.0p2 Debian-7+deb13u4\r\n",
+    "signal": "SIGTERM to adapter PID after SSH connected",
+    "before_signal": {
+      "TMPDIR": [
+        "tmp/fm-remote-doc-reason.aMo2qk",
+        "tmp/fm-remote-reply-ingest.UZPeIR"
+      ],
+      "document_staging": [
+        "home/data/remote-secondmates/labmate/data/proof/.remote-doc.BoL2Uv"
+      ],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.URSdcG"
+      ]
+    },
+    "exit": -15,
+    "stdout": "",
+    "stderr": "error: remote transport was unavailable while fetching data/proof/report.md\n",
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.URSdcG"
+      ]
+    },
+    "after_owned_children_stop": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.URSdcG"
+      ]
+    }
+  },
+  {
+    "scenario": "baseline-sigterm-group-fetch-handle",
+    "result": "fail",
+    "live": false,
+    "argv": [
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline/bin/fm-procevent-remote-reply.sh",
+      "handle",
+      "labmate",
+      "1",
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/baseline-sigterm-group-fetch-handle/result"
+    ],
+    "peer": "disposable loopback TCP endpoint stalled before server SSH banner",
+    "real_ssh_client_banner": "SSH-2.0-OpenSSH_10.0p2 Debian-7+deb13u4\r\n",
+    "signal": "SIGTERM to private process group while peer stayed stalled",
+    "before_signal": {
+      "TMPDIR": [
+        "tmp/fm-remote-doc-reason.gAQv4A",
+        "tmp/fm-remote-reply-ingest.Vc8qzi"
+      ],
+      "document_staging": [
+        "home/data/remote-secondmates/labmate/data/proof/.remote-doc.ZF1FOk"
+      ],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.2AUdBm"
+      ]
+    },
+    "exit": -15,
+    "stdout": "",
+    "stderr": "",
+    "after_exit": {
+      "TMPDIR": [
+        "tmp/fm-remote-doc-reason.gAQv4A",
+        "tmp/fm-remote-reply-ingest.Vc8qzi"
+      ],
+      "document_staging": [],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.2AUdBm"
+      ]
+    },
+    "after_owned_children_stop": {
+      "TMPDIR": [
+        "tmp/fm-remote-doc-reason.gAQv4A",
+        "tmp/fm-remote-reply-ingest.Vc8qzi"
+      ],
+      "document_staging": [],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.2AUdBm"
+      ]
+    }
+  },
+  {
+    "scenario": "target-continuity-ingest",
+    "result": "pass",
+    "live": true,
+    "response": {
+      "argv": [
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/bin/fm-procevent-remote-reply.sh",
+        "ingest",
+        "labmate",
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/target-continuity-ingest/result"
+      ],
+      "exit": 3,
+      "stdout": "continuity-broken: labmate (disposable-live-check)\n",
+      "stderr": ""
+    },
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    },
+    "persisted_state": {
+      ".remote-reply-mirrored-labmate": "",
+      "labmate.status": "blocked [key=remote-reply-continuity-labmate] [at=1791035610]: remote reply continuity broke for labmate (disposable-live-check)\n",
+      "procevent-inbox/remote-reply-labmate.1.result": "schema=fm-remote-delta.v1\nstatus=continuity-broken\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=0\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_bytes=0\nreason=disposable-live-check\n\n",
+      "procevent-inbox/remote-reply-labmate.1.adapter": "remote-reply\n"
+    },
+    "followup": null
+  },
+  {
+    "scenario": "target-continuity-handle",
+    "result": "pass",
+    "live": true,
+    "response": {
+      "argv": [
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/bin/fm-procevent-remote-reply.sh",
+        "handle",
+        "labmate",
+        "1",
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/target-continuity-handle/result"
+      ],
+      "exit": 3,
+      "stdout": "continuity-broken: labmate (disposable-live-check)\nhandled: remote-reply-labmate 1\n",
+      "stderr": ""
+    },
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    },
+    "persisted_state": {
+      ".remote-reply-mirrored-labmate": "",
+      "labmate.status": "blocked [key=remote-reply-continuity-labmate] [at=1791035611]: remote reply continuity broke for labmate (disposable-live-check)\n",
+      "procevent-inbox/remote-reply-labmate.1.result": "schema=fm-remote-delta.v1\nstatus=continuity-broken\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=0\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npayload_bytes=0\nreason=disposable-live-check\n\n",
+      "procevent-inbox/remote-reply-labmate.1.handled": "",
+      "procevent-inbox/remote-reply-labmate.1.adapter": "remote-reply\n"
+    },
+    "followup": {
+      "command": "arm labmate (prove lifecycle lock reusable)",
+      "exit": 0,
+      "stdout": "registered: remote-reply-labmate (remote-reply)\narmed: remote-reply-labmate offset=0\n",
+      "stderr": "",
+      "remaining": {
+        "TMPDIR": [],
+        "document_staging": [],
+        "lifecycle_locks": []
+      }
+    }
+  },
+  {
+    "scenario": "target-digest-ingest",
+    "result": "pass",
+    "live": true,
+    "response": {
+      "argv": [
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/bin/fm-procevent-remote-reply.sh",
+        "ingest",
+        "labmate",
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/target-digest-ingest/result"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "error: result payload bytes do not match its committed digest\n"
+    },
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    },
+    "persisted_state": {
+      "procevent-inbox/remote-reply-labmate.1.result": "schema=fm-remote-delta.v1\nstatus=delta\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=39\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=9812e0f85ab58739cf74a8434b248c344cb9340737bdf21c4844559e12641def\npayload_sha256=0000000000000000000000000000000000000000000000000000000000000000\npayload_bytes=39\nreason=disposable-live-check\n\nworking: disposable relay verification\n",
+      "procevent-inbox/remote-reply-labmate.1.adapter": "remote-reply\n"
+    },
+    "followup": null
+  },
+  {
+    "scenario": "target-digest-handle",
+    "result": "pass",
+    "live": true,
+    "response": {
+      "argv": [
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/bin/fm-procevent-remote-reply.sh",
+        "handle",
+        "labmate",
+        "1",
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/target-digest-handle/result"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "error: result payload bytes do not match its committed digest\n"
+    },
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    },
+    "persisted_state": {
+      "procevent-inbox/remote-reply-labmate.1.result": "schema=fm-remote-delta.v1\nstatus=delta\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=39\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=9812e0f85ab58739cf74a8434b248c344cb9340737bdf21c4844559e12641def\npayload_sha256=0000000000000000000000000000000000000000000000000000000000000000\npayload_bytes=39\nreason=disposable-live-check\n\nworking: disposable relay verification\n",
+      "procevent-inbox/remote-reply-labmate.1.adapter": "remote-reply\n"
+    },
+    "followup": {
+      "command": "arm labmate (prove lifecycle lock reusable)",
+      "exit": 0,
+      "stdout": "registered: remote-reply-labmate (remote-reply)\narmed: remote-reply-labmate offset=0\n",
+      "stderr": "",
+      "remaining": {
+        "TMPDIR": [],
+        "document_staging": [],
+        "lifecycle_locks": []
+      }
+    }
+  },
+  {
+    "scenario": "target-success-handle",
+    "result": "pass",
+    "live": true,
+    "response": {
+      "argv": [
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/bin/fm-procevent-remote-reply.sh",
+        "handle",
+        "labmate",
+        "1",
+        "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/target-success-handle/result"
+      ],
+      "exit": 0,
+      "stdout": "ingested: labmate appended=1 offset=39\nregistered: remote-reply-labmate (remote-reply)\narmed: remote-reply-labmate offset=39\nhandled: remote-reply-labmate 1\n",
+      "stderr": ""
+    },
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    },
+    "persisted_state": {
+      ".remote-reply-mirrored-labmate": "working: disposable relay verification\n",
+      "labmate.status": "working: disposable relay verification\n",
+      "procevent-inbox/remote-reply-labmate.1.result": "schema=fm-remote-delta.v1\nstatus=delta\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=39\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=9812e0f85ab58739cf74a8434b248c344cb9340737bdf21c4844559e12641def\npayload_sha256=9812e0f85ab58739cf74a8434b248c344cb9340737bdf21c4844559e12641def\npayload_bytes=39\nreason=disposable-live-check\n\nworking: disposable relay verification\n",
+      "procevent-inbox/remote-reply-labmate.1.handled": "",
+      "procevent-inbox/remote-reply-labmate.1.adapter": "remote-reply\n",
+      "remote-replies/labmate.1.ingested": "result_sha256=0bd37b9a4f97934f32a245b9e35db279ef693d7603795bcd1e07d1d7636764ae\n",
+      "remote-replies/labmate.cursor": "schema=fm-remote-reply-cursor.v1\noffset=39\nprefix_sha256=9812e0f85ab58739cf74a8434b248c344cb9340737bdf21c4844559e12641def\n",
+      "procevent/.owner-lease": "134955.855139\n",
+      "procevent/remote-reply-labmate.source": "adapter=remote-reply\nargc=3\nargv:\n/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/bin/fm-procevent-remote-reply.sh\nsource\nlabmate\n"
+    },
+    "followup": {
+      "command": "arm labmate (prove lifecycle lock reusable)",
+      "exit": 0,
+      "stdout": "registered: remote-reply-labmate (remote-reply)\narmed: remote-reply-labmate offset=39\n",
+      "stderr": "",
+      "remaining": {
+        "TMPDIR": [],
+        "document_staging": [],
+        "lifecycle_locks": []
+      }
+    }
+  },
+  {
+    "scenario": "target-sigterm-fetch-ingest",
+    "result": "pass",
+    "live": true,
+    "argv": [
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/bin/fm-procevent-remote-reply.sh",
+      "ingest",
+      "labmate",
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/target-sigterm-fetch-ingest/result"
+    ],
+    "peer": "disposable loopback TCP endpoint stalled before server SSH banner",
+    "real_ssh_client_banner": "SSH-2.0-OpenSSH_10.0p2 Debian-7+deb13u4\r\n",
+    "signal": "SIGTERM to adapter PID after SSH connected",
+    "before_signal": {
+      "TMPDIR": [
+        "tmp/fm-remote-doc-reason.cHLGIs",
+        "tmp/fm-remote-reply-ingest.Y0aEdD"
+      ],
+      "document_staging": [
+        "home/data/remote-secondmates/labmate/data/proof/.remote-doc.Jg4PzF"
+      ],
+      "lifecycle_locks": []
+    },
+    "exit": -15,
+    "stdout": "",
+    "stderr": "",
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    }
+  },
+  {
+    "scenario": "target-sigterm-fetch-handle",
+    "result": "pass",
+    "live": true,
+    "argv": [
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/bin/fm-procevent-remote-reply.sh",
+      "handle",
+      "labmate",
+      "1",
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/target-sigterm-fetch-handle/result"
+    ],
+    "peer": "disposable loopback TCP endpoint stalled before server SSH banner",
+    "real_ssh_client_banner": "SSH-2.0-OpenSSH_10.0p2 Debian-7+deb13u4\r\n",
+    "signal": "SIGTERM to adapter PID after SSH connected",
+    "before_signal": {
+      "TMPDIR": [
+        "tmp/fm-remote-doc-reason.CkkxM1",
+        "tmp/fm-remote-reply-ingest.SBhVEH"
+      ],
+      "document_staging": [
+        "home/data/remote-secondmates/labmate/data/proof/.remote-doc.f0DyFy"
+      ],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.OYMYuy"
+      ]
+    },
+    "exit": -15,
+    "stdout": "",
+    "stderr": "error: remote transport was unavailable while fetching data/proof/report.md\n",
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    },
+    "after_owned_children_stop": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    }
+  },
+  {
+    "scenario": "target-sigterm-group-fetch-handle",
+    "result": "pass",
+    "live": true,
+    "argv": [
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/bin/fm-procevent-remote-reply.sh",
+      "handle",
+      "labmate",
+      "1",
+      "/home/node/.no-mistakes/worktrees/c98b859efde5/01M40ZWNEA2SFB6TYZ9XPBVA68/.test-remote-reply/target-sigterm-group-fetch-handle/result"
+    ],
+    "peer": "disposable loopback TCP endpoint stalled before server SSH banner",
+    "real_ssh_client_banner": "SSH-2.0-OpenSSH_10.0p2 Debian-7+deb13u4\r\n",
+    "signal": "SIGTERM to private process group while peer stayed stalled",
+    "before_signal": {
+      "TMPDIR": [
+        "tmp/fm-remote-doc-reason.gr8jMC",
+        "tmp/fm-remote-reply-ingest.9vspKe"
+      ],
+      "document_staging": [
+        "home/data/remote-secondmates/labmate/data/proof/.remote-doc.VReIm4"
+      ],
+      "lifecycle_locks": [
+        "home/state/.remote-reply-lifecycle-labmate.lock",
+        "home/state/.remote-reply-lifecycle-labmate.lock.owner.vE5zvI"
+      ]
+    },
+    "exit": -15,
+    "stdout": "",
+    "stderr": "Terminated\n",
+    "after_exit": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    },
+    "after_owned_children_stop": {
+      "TMPDIR": [],
+      "document_staging": [],
+      "lifecycle_locks": []
+    }
+  }
+]

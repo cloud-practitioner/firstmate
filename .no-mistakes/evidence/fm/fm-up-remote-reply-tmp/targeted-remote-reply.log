@@ -1,0 +1,11 @@
+FM_TEST_BEGIN 2026-10-03T13:42:59Z tests/fm-remote-reply.test.sh family=secondmate expected_gate_skip=none
+ok - default delta reader waits 0.5 seconds then delivers a non-destructive complete-line delta
+ok - override delta reader waits 0.07 seconds then delivers a non-destructive complete-line delta
+ok - remote reply ingest leaves no temporary path or lifecycle lock behind on any exit
+runner output:
+no-result: remote-reply-ios (exit 64)
+not ok - the remote reply delta was not durably captured
+FM_TEST_END 2026-10-03T13:43:54Z tests/fm-remote-reply.test.sh exit=1 duration_ms=55103 gate_skip=false
+FM_TEST_SUMMARY total=1 failed=1 skipped_gate=0 duration_ms=55235
+FM_TEST_SUMMARY_FAMILY family=secondmate count=1 duration_ms=55103 failed=1
+FM_TEST_SLOWEST rank=1 script=tests/fm-remote-reply.test.sh duration_ms=55103
