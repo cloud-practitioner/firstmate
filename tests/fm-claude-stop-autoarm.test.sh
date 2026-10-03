@@ -1438,6 +1438,14 @@ printf 'supervision-host: the away session could not take this wake: fixture; re
 for i in 1 2 3 4 5 6 7 8 9 10; do printf 'supervision-host: outcome %s for demo [routine]: fixture %s\n' "$i" "$i"; done
 SH
         ;;
+      handback-failed-empty|handback-failed-status)
+        printf "printf 'pending:handling:fixture-generation\\n' > \"\$FM_HOME/state/.watcher-down\"\n"
+        if [ "$kind" = handback-failed-status ]; then
+          printf "printf 'watcher: started pid=123 (beacon fresh)\\n'\n"
+        fi
+        printf 'exit 1\n'
+        ;;
+      empty) ;;
       crash)
         printf 'kill -KILL "$$"\n'
         ;;
@@ -1638,6 +1646,37 @@ test_host_lost_announced_handback_notifies_once_per_episode() {
   pass "auto-arm: a lost host hand-back on an announced marker notifies once per failure episode"
 }
 
+test_host_failed_handback_is_not_retried() {
+  local dir kind out status
+  for kind in handback-failed-status handback-failed-empty; do
+    dir=$(make_primary_dir "$TMP_ROOT/host-$kind")
+    rm -f "$dir/config/supervision-host-off"
+    : > "$dir/state/task.meta"
+    write_host_fixture "$dir" "$kind"
+    out=$(run_autoarm "$dir" 2>/dev/null); status=$?
+    expect_code 2 "$status" "a failed handback must notify main with or without a startup status"
+    [ "$(wc -l < "$dir/state/host-ran" | tr -d ' ')" -eq 1 ] || fail "a failed handback was retried: $kind"
+    assert_contains "$out" "auto-arm FAILED" "a failed handback must deliver the failure notice"
+    assert_contains "$out" "last one exited 1 without a wake" "the notice must name the host's failure status"
+    [ "$(epoch_outcome "$dir")" = failed ] || fail "a failed handback must record outcome=failed"
+    assert_grep 'pending:handling:fixture-generation' "$dir/state/.watcher-down" "a failed handback must not consume the handling marker"
+  done
+  pass "auto-arm: a failed handback is reported without retry, with or without startup output"
+}
+
+test_host_empty_success_is_retried() {
+  local dir out status
+  dir=$(make_primary_dir "$TMP_ROOT/host-empty-success")
+  rm -f "$dir/config/supervision-host-off"
+  : > "$dir/state/task.meta"
+  write_host_fixture "$dir" empty
+  out=$(run_autoarm "$dir" 2>/dev/null); status=$?
+  expect_code 2 "$status" "an exhausted empty host close must notify"
+  [ "$(wc -l < "$dir/state/host-ran" | tr -d ' ')" -eq 2 ] || fail "a successful empty close was not retried within the attempt bound"
+  assert_contains "$out" "auto-arm FAILED" "an exhausted empty host close must deliver the failure notice"
+  pass "auto-arm: a successful empty host close still gets a bounded retry"
+}
+
 test_host_crash_is_retried_then_reported() {
   local dir out status
   dir=$(make_primary_dir "$TMP_ROOT/host-crash")
@@ -1763,6 +1802,8 @@ test_host_stand_down_is_silent
 test_host_benign_rewake_refusal_opens_no_failure_episode
 test_host_lost_handback_notifies_once_per_episode
 test_host_lost_announced_handback_notifies_once_per_episode
+test_host_failed_handback_is_not_retried
+test_host_empty_success_is_retried
 test_host_crash_is_retried_then_reported
 test_arguments_never_arm
 test_fm_lock_status_still_works_with_shared_lib
