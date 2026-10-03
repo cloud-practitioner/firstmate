@@ -4652,6 +4652,7 @@ test_complete_refuses_an_entry_held_for_another_origin
 test_verify_accepts_an_answered_call_pruned_to_the_archive() (
   local home id call_id archive variant=${1:-default}
   home=$(make_home "verify-archived-answer-$variant")
+  # shellcheck disable=SC2030 # HOME is intentionally isolated to this fixture's subshell.
   export HOME="$home/user-home"
   mkdir -p "$HOME/.tasks-axi"
   archive="$home/data/done-archive.md"
@@ -4736,6 +4737,7 @@ test_verify_accepts_an_answered_call_pruned_to_the_archive() (
 test_verify_refuses_a_live_legacy_row_despite_an_old_archived_answer() (
   local home id call_id
   home=$(make_home verify-live-legacy-over-archive)
+  # shellcheck disable=SC2031 # This fixture sets its own HOME, independent of earlier subshells.
   export HOME="$home/user-home"
   mkdir -p "$HOME/.tasks-axi"
   id=sample-reused-review
@@ -4757,7 +4759,7 @@ test_verify_refuses_a_live_legacy_row_despite_an_old_archived_answer() (
     || fail "could not reuse the archived identity"
   run_captain "$home" hold "$call_id" --reason "new captain choice pending" >/dev/null \
     || fail "could not hold the new lifecycle"
-  tasks_in "$home" done "$call_id" --keep 10 >/dev/null \
+  tasks_in "$home" "done" "$call_id" --keep 10 >/dev/null \
     || fail "could not close the newer row without an answer"
 
   if run_captain "$home" verify "$id" > "$home/verify.out" 2> "$home/verify.err"; then
