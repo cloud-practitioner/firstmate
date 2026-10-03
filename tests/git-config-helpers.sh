@@ -23,9 +23,9 @@
 # shared helpers, the runner, and the standalone entry points that run without a
 # live vendor - and the changed-file map selects it for a change to this file.
 #
-# The global layer is tests/git-fixture.gitconfig rather than an empty file: it
-# carries the few settings fixture repositories need, such as no background
-# maintenance rewriting a fixture's objects while a test still reads them.
+# The global layer is the adjacent git-fixture.gitconfig, whose comments own
+# the fixture settings and their rationale. A copied-runner fixture must copy
+# that file alongside this helper so its Git processes receive those settings.
 
 GIT_CONFIG_GLOBAL=$(cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)/git-fixture.gitconfig
 export GIT_CONFIG_GLOBAL GIT_CONFIG_NOSYSTEM=1
