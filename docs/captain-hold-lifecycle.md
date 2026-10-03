@@ -107,7 +107,7 @@ A post-teardown visual review can complete against the surviving report and dura
 
 `complete` accepts `--none` as an explicit semantic inventory result.
 `--none` is refused while the origin still has a lifecycle-open keyed status decision.
-Before recording completion, `complete` verifies every listed task against tasks-axi.
+Before recording completion, `complete` applies the same [durability check as `verify`](#checking-before-scout-teardown-verify) to every inventory entry.
 The origin is never its own inventory entry, so a hold that failed cannot be vouched for by the origin row.
 For a historical inventory that names its own origin, hold a separate captain task with `--origin`, replace only the invalid entry in the final `decision_keys=` line of the origin metadata with that task id while preserving all other entries, and re-run `complete`.
 An entry whose recorded origin differs from the one being completed is refused.
@@ -125,6 +125,13 @@ Scout teardown calls the read-only `verify` subcommand after checking for the re
 - The recorded attestation exists.
 - Every recorded inventory entry still passes the [completion inventory checks](#recording-a-reviewed-inventory-complete).
 - No keyed status decision opened after the last `complete`.
+
+The durability check shared by `complete` and `verify` resolves the exact identity before trying the legacy-derived `<origin>-decision-<entry>` identity.
+For each identity, a current row, including retained Done records, takes precedence and must be a non-Done captain hold or carry a recorded resolution.
+Only when that row is absent does the markdown backend consult its configured Done archive using the same resolution-record predicate.
+Only the newest archived row for that identity is considered; a row without a recorded resolution is refused, and an earlier archived answer never overrides its current row.
+The legacy-derived identity is tried only when the exact identity is absent from both the current backlog and the archive.
+Archive lookup and current-row precedence have regression coverage in [`tests/fm-captain-hold-lifecycle.test.sh`](../tests/fm-captain-hold-lifecycle.test.sh).
 
 A keyed status decision opened after the last `complete` makes `verify` fail, and re-running `complete` is the repair.
 The `--force` path remains the explicit captain-approved discard escape hatch.
@@ -463,8 +470,8 @@ Those rows are already plain task ids, so they render, answer, verify, and close
 
 Three legacy inputs are resolved in place:
 
-- A `decision_keys=` metadata entry that names no task resolves through `<origin>-decision-<entry>`.
-- A channel key that names no task resolves the same way when the source's binding carries a concrete legacy origin.
+- `decision_keys=` metadata entries use the [completion durability lookup](#checking-before-scout-teardown-verify).
+- Channel keys retain the legacy binding compatibility documented in [`bin/fm-captain-hold.sh --help`](../bin/fm-captain-hold.sh).
 - Resolution records written by the old script are recognized wherever a record is read.
 
 ### Legacy ids on the Beads backend

@@ -4645,6 +4645,253 @@ test_historical_self_inventory_has_workable_repair
 test_inventory_compares_backend_identities
 test_origin_is_never_its_own_inventory_entry
 test_complete_refuses_an_entry_held_for_another_origin
+
+# Done retention prunes an answered captain call out of the live backlog into
+# the archive; the completion gate must still see its recorded answer there,
+# while an archived row with no recorded answer stays refused.
+test_verify_accepts_an_answered_call_pruned_to_the_archive() (
+  local home id call_id archive variant=${1:-default}
+  home=$(make_home "verify-archived-answer-$variant")
+  # shellcheck disable=SC2030 # HOME is intentionally isolated to this fixture's subshell.
+  export HOME="$home/user-home"
+  mkdir -p "$HOME/.tasks-axi"
+  archive="$home/data/done-archive.md"
+  if [ "$variant" != default ]; then
+    printf 'backend = "markdown"\n\n[markdown]\npath = "data/backlog.md"\ndone_keep = 10\n' > "$home/.tasks.toml"
+  fi
+  case "$variant" in
+    inline-comment|project-precedence)
+      archive="$home/data/history.md"
+      printf 'archive = "data/history.md" # retained answers\n' >> "$home/.tasks.toml"
+      if [ "$variant" = project-precedence ]; then
+        printf '[markdown]\narchive = "data/other-history.md"\n' > "$HOME/.tasks-axi/config.toml"
+      fi
+      ;;
+    single-quoted)
+      archive="$home/data/history # retained.md"
+      printf "  [ markdown ] # archive settings\n  archive = 'data/history # retained.md' # retained answers\n" >> "$home/.tasks.toml"
+      ;;
+    inherited)
+      archive="$home/data/home-history.md"
+      printf "[markdown]\n  archive = 'data/home-history.md' # retained answers\n" > "$HOME/.tasks-axi/config.toml"
+      ;;
+    absolute)
+      archive="$home/history.md"
+      printf 'archive = "%s" # retained answers\n' "$archive" >> "$home/.tasks.toml"
+      ;;
+    default|unset) ;;
+    *) fail "unknown archive fixture: $variant" ;;
+  esac
+  id=sample-archive-review
+  call_id="$id-decision-archived-call"
+  mkdir -p "$home/data/$id"
+  tasks_in "$home" add "$id" "Investigate archive" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the archive origin"
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  printf '# Archive review\n\nTwo captain choices remain.\n' > "$home/data/$id/report.md"
+  run_captain "$home" hold "$call_id" \
+    --title "Choose archived option" --reason "captain choice pending" --repo sample >/dev/null \
+    || fail "could not hold the archived call"
+  run_captain "$home" complete "$id" "$call_id" >/dev/null \
+    || fail "completion failed for the held inventory"
+  printf 'Captain chose the archived option.\n' > "$home/archived-decision.txt"
+  run_captain "$home" answer "$call_id" --decision-file "$home/archived-decision.txt" >/dev/null \
+    || fail "could not answer the archived call"
+  run_captain "$home" verify "$id" >/dev/null \
+    || fail "verification refused the answer retained in Done"
+  tasks_in "$home" prune --keep 0 >/dev/null || fail "could not prune the Done section"
+  assert_grep "$call_id" "$archive" "the answered call was not archived"
+  if tasks_in "$home" show "$call_id" >/dev/null 2>&1; then
+    fail "fixture left the answered call in the live backlog"
+  fi
+
+  run_captain "$home" verify "$id" >/dev/null 2> "$home/archived.err" \
+    || fail "an answered captain call pruned to the archive did not satisfy the gate: $(cat "$home/archived.err")"
+  run_captain "$home" complete "$id" "$call_id" >/dev/null \
+    || fail "completion refused the archived answer"
+  printf 'decision_keys=archived-call\n' >> "$home/state/$id.meta"
+  run_captain "$home" verify "$id" >/dev/null \
+    || fail "verification refused the archived legacy identity"
+  run_captain "$home" complete "$id" archived-call >/dev/null \
+    || fail "completion refused the archived legacy identity"
+
+  # An archived row carrying no recorded captain answer is still refused.
+  tasks_in "$home" add sample-unanswered-call "Unanswered" --kind captain --repo sample >/dev/null \
+    || fail "could not add the unanswered row"
+  tasks_in "$home" "done" sample-unanswered-call --keep 0 >/dev/null || fail "could not archive the unanswered row"
+  assert_grep "sample-unanswered-call" "$archive" "the unanswered row was not archived"
+  printf 'decision_keys=%s,sample-unanswered-call\n' "$call_id" >> "$home/state/$id.meta"
+  if run_captain "$home" verify "$id" > "$home/unanswered.out" 2> "$home/unanswered.err"; then
+    fail "an archived row with no recorded captain answer satisfied the gate"
+  fi
+  if run_captain "$home" complete "$id" sample-unanswered-call >/dev/null 2>&1; then
+    fail "completion accepted an archived row with no recorded captain answer"
+  fi
+  pass "archive gates accept answered calls and refuse unanswered ones ($variant)"
+)
+
+# A legacy inventory key must resolve to its current derived row before trying
+# that id's archive. An earlier answered lifecycle cannot satisfy a newer Done
+# row that carries captain-hold provenance but no recorded answer.
+test_verify_refuses_a_live_legacy_row_despite_an_old_archived_answer() (
+  local home id call_id
+  home=$(make_home verify-live-legacy-over-archive)
+  # shellcheck disable=SC2030,SC2031 # HOME is isolated here and reset independently in each fixture.
+  export HOME="$home/user-home"
+  mkdir -p "$HOME/.tasks-axi"
+  id=sample-reused-review
+  call_id="$id-decision-route"
+  tasks_in "$home" add "$id" "Review reused captain call" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the reused origin"
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  run_captain "$home" hold "$call_id" --title "Choose route" \
+    --reason "captain route choice pending" --repo sample >/dev/null \
+    || fail "could not hold the earlier lifecycle"
+  run_captain "$home" complete "$id" route >/dev/null \
+    || fail "could not attest the live legacy identity"
+  printf 'Choose route north.\n' > "$home/answer.txt"
+  run_captain "$home" answer "$call_id" --decision-file "$home/answer.txt" >/dev/null \
+    || fail "could not answer the earlier lifecycle"
+  tasks_in "$home" prune --keep 0 >/dev/null || fail "could not archive the earlier answer"
+  tasks_in "$home" add "$call_id" "Choose a new route" --kind captain --repo sample >/dev/null \
+    || fail "could not reuse the archived identity"
+  run_captain "$home" hold "$call_id" --reason "new captain choice pending" >/dev/null \
+    || fail "could not hold the new lifecycle"
+  tasks_in "$home" "done" "$call_id" --keep 10 >/dev/null \
+    || fail "could not close the newer row without an answer"
+
+  if run_captain "$home" verify "$id" > "$home/verify.out" 2> "$home/verify.err"; then
+    fail "legacy verification accepted an old archived answer over a current unanswered Done row"
+  fi
+  assert_grep "captain-held task $call_id is neither held for the captain nor closed with a recorded captain answer" \
+    "$home/verify.err" "verification did not reject the current unanswered call"
+  if run_captain "$home" complete "$id" route > "$home/complete.out" 2> "$home/complete.err"; then
+    fail "legacy completion accepted an old archived answer over a current unanswered Done row"
+  fi
+  assert_grep "captain-held task $call_id is neither held for the captain nor closed with a recorded captain answer" \
+    "$home/complete.err" "completion did not reject the current unanswered call"
+  pass "a live legacy row takes precedence over its earlier archived answer"
+)
+
+test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer() (
+  local variant=$1 home id call_id earlier_id HOME
+  local answer_args=()
+  home=$(make_home "verify-unanswered-archive-$variant")
+  # shellcheck disable=SC2030,SC2031 # HOME is isolated here and reset independently in each fixture.
+  export HOME="$home/user-home"
+  mkdir -p "$HOME/.tasks-axi"
+  id=sample-review
+  call_id=sample-route
+  earlier_id="$id-decision-$call_id"
+  [ "$variant" != reused-id ] || earlier_id=$call_id
+  tasks_in "$home" add "$id" "Review captain route" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the archive precedence origin"
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  run_captain "$home" hold "$earlier_id" --title "Choose earlier route" \
+    --reason "earlier captain choice pending" --repo sample --origin "$id" >/dev/null \
+    || fail "could not hold the earlier call"
+  printf 'Choose route north.\n' > "$home/answer.txt"
+  answer_args=(--decision-file "$home/answer.txt")
+  case "$variant" in live-legacy*) answer_args+=(--release) ;; esac
+  if [ "$variant" != live-legacy-held ]; then
+    run_captain "$home" answer "$earlier_id" "${answer_args[@]}" >/dev/null \
+      || fail "could not answer the earlier call"
+  fi
+  case "$variant" in
+    live-legacy*) ;;
+    *) tasks_in "$home" prune --keep 0 >/dev/null || fail "could not archive the earlier answer" ;;
+  esac
+
+  tasks_in "$home" add "$call_id" "Choose next route" --kind captain --repo sample >/dev/null \
+    || fail "could not create the unanswered exact row"
+  if [ "$variant" != empty-body ]; then
+    run_captain "$home" hold "$call_id" --reason "new captain choice pending" --origin "$id" >/dev/null \
+      || fail "could not hold the unanswered exact row"
+    run_captain "$home" complete "$id" "$call_id" >/dev/null \
+      || fail "could not attest the current held inventory"
+    run_captain "$home" verify "$id" >/dev/null \
+      || fail "verification refused the current held inventory"
+  else
+    printf 'decisions_reviewed=1\ndecision_keys=%s\n' "$call_id" >> "$home/state/$id.meta"
+  fi
+  tasks_in "$home" "done" "$call_id" --keep 0 >/dev/null \
+    || fail "could not archive the unanswered exact row"
+  if [ "$variant" = live-legacy-done ]; then
+    tasks_in "$home" "done" "$earlier_id" --keep 10 >/dev/null \
+      || fail "could not retain the answered legacy row in Done"
+  fi
+  if tasks_in "$home" show "$call_id" >/dev/null 2>&1; then
+    fail "fixture left $call_id in the live backlog"
+  fi
+  case "$variant" in
+    live-legacy*)
+      tasks_in "$home" show "$earlier_id" >/dev/null \
+        || fail "fixture did not retain the live legacy row"
+      ;;
+    *)
+      if tasks_in "$home" show "$earlier_id" >/dev/null 2>&1; then
+        fail "fixture left $earlier_id in the live backlog"
+      fi
+      ;;
+  esac
+
+  if run_captain "$home" verify "$id" > "$home/verify.out" 2> "$home/verify.err"; then
+    fail "verification accepted an earlier answer over an unanswered archived row ($variant)"
+  fi
+  assert_grep "captain-held task $call_id is neither held for the captain nor closed with a recorded captain answer" \
+    "$home/verify.err" "verification did not reject the unanswered archived row"
+  if run_captain "$home" complete "$id" "$call_id" > "$home/complete.out" 2> "$home/complete.err"; then
+    fail "completion accepted an earlier answer over an unanswered archived row ($variant)"
+  fi
+  assert_grep "captain-held task $call_id is neither held for the captain nor closed with a recorded captain answer" \
+    "$home/complete.err" "completion did not reject the unanswered archived row"
+  pass "an unanswered archived row takes precedence over an earlier answer ($variant)"
+)
+
+test_verify_accepts_an_exact_archived_answer_despite_a_live_legacy_row() (
+  local home id call_id legacy_id other HOME
+  home=$(make_home verify-exact-archive-over-live-legacy)
+  # shellcheck disable=SC2031 # This fixture sets its own HOME, independent of earlier subshells.
+  export HOME="$home/user-home"
+  mkdir -p "$HOME/.tasks-axi"
+  id=sample-review
+  other=sample-other-review
+  call_id=sample-route
+  legacy_id="$id-decision-$call_id"
+  tasks_in "$home" add "$id" "Review current route" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the current origin"
+  tasks_in "$home" add "$other" "Review earlier route" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the earlier origin"
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  printf 'Choose route north.\n' > "$home/answer.txt"
+  run_captain "$home" hold "$legacy_id" --title "Earlier route" \
+    --reason "earlier captain choice pending" --repo sample --origin "$other" >/dev/null \
+    || fail "could not hold the earlier legacy row"
+  run_captain "$home" answer "$legacy_id" --decision-file "$home/answer.txt" --release >/dev/null \
+    || fail "could not release the answered legacy row"
+  run_captain "$home" hold "$call_id" --title "Current route" \
+    --reason "current captain choice pending" --repo sample --origin "$id" >/dev/null \
+    || fail "could not hold the exact row"
+  run_captain "$home" complete "$id" "$call_id" >/dev/null \
+    || fail "completion refused the current exact hold"
+  run_captain "$home" answer "$call_id" --decision-file "$home/answer.txt" >/dev/null \
+    || fail "could not answer the exact row"
+  tasks_in "$home" prune --keep 0 >/dev/null || fail "could not archive the exact answer"
+  tasks_in "$home" show "$legacy_id" >/dev/null || fail "fixture lost the live legacy row"
+  if tasks_in "$home" show "$call_id" >/dev/null 2>&1; then
+    fail "fixture left the exact answer in the live backlog"
+  fi
+  run_captain "$home" verify "$id" >/dev/null \
+    || fail "verification selected the live legacy row over the exact archived answer"
+  run_captain "$home" complete "$id" "$call_id" >/dev/null \
+    || fail "completion selected the live legacy row over the exact archived answer"
+  pass "the exact archived answer takes precedence over a live legacy row for another origin"
+)
+
 test_uninventoried_report_decision_refuses_completion
 test_hold_decodes_a_bare_scalar_body_without_the_nonref_default
 test_retained_body_keeps_its_utf8_bytes
@@ -4701,3 +4948,11 @@ test_verify_names_the_unresolvable_legacy_id_once
 test_verify_resolves_a_pre_collapse_key_through_its_derived_marker
 test_captain_hold_mutations_address_the_beads_backend
 test_hold_creates_a_captain_row_when_beads_requires_due_without_custom_type
+for archive_variant in default unset inline-comment single-quoted inherited project-precedence absolute; do
+  test_verify_accepts_an_answered_call_pruned_to_the_archive "$archive_variant" || exit $?
+done
+test_verify_refuses_a_live_legacy_row_despite_an_old_archived_answer
+for archive_variant in held-body empty-body reused-id live-legacy live-legacy-held live-legacy-done; do
+  test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer "$archive_variant" || exit $?
+done
+test_verify_accepts_an_exact_archived_answer_despite_a_live_legacy_row
