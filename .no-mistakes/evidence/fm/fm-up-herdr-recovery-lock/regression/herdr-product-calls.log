@@ -1,0 +1,217 @@
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+session	list	--json	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+status	--json	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	create	--cwd	/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project	--label	└ primary-recover · p:1Q4qHfOPEBR5sNUtfpvrRg	--no-focus	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+tab	create	--workspace	w3	--cwd	/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project	--label	fm-primary-recover	--no-focus	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+pane	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w3:p1	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p1	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+terminal	title	clear	--session	fm-lab-lock6454-2121882-25108	
+pane	close	w3:p1	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p1	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+pane	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+api	schema	--json	--session	fm-lab-lock6454-2121882-25108	
+session	list	--json	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+pane	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p2	treehouse get	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p2	cd -- '/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/treehouse/.treehouse/project-708f13/1/project'	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	read	w3:p2	--source	recent	--lines	200	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	read	w3:p2	--source	recent	--lines	200	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p2	export GOTMPDIR=/tmp/fm-primary-recover/gotmp	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p2	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p2	export FM_TASK_ID=primary-recover	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	send-text	w3:p2	. '/tmp/fm-primary-recover+fa095377071e87968db810c971cf114f0ddefef3325d5feeed16050f787c8bf3/launch.s1791038401.2122774.12505.sh'	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	send-keys	w3:p2	enter	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+session	list	--json	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+status	--json	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	create	--cwd	/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project	--label	└ bravo-recover · p:V_YzeyYZrKlVpTTTncAMJA	--no-focus	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+tab	create	--workspace	w4	--cwd	/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project	--label	fm-bravo-recover	--no-focus	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w4	--session	fm-lab-lock6454-2121882-25108	
+pane	list	--workspace	w4	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w4:p1	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w4:p1	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w4	--session	fm-lab-lock6454-2121882-25108	
+terminal	title	clear	--session	fm-lab-lock6454-2121882-25108	
+pane	close	w4:p1	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w4:p1	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w4	--session	fm-lab-lock6454-2121882-25108	
+pane	list	--workspace	w4	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w4	--session	fm-lab-lock6454-2121882-25108	
+pane	list	--workspace	w4	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w4:p2	treehouse get	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w4:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w4:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w4:p2	cd -- '/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/treehouse/.treehouse/project-708f13/2/project'	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w4:p2	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w4:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	read	w4:p2	--source	recent	--lines	200	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	read	w4:p2	--source	recent	--lines	200	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w4:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w4:p2	export GOTMPDIR=/tmp/fm-bravo-recover/gotmp	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w4:p2	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w4:p2	export FM_TASK_ID=bravo-recover	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	send-text	w4:p2	. '/tmp/fm-bravo-recover+210c5e4dd947467d497ea40615089df8763345d1d6a7b8bf53b8b222f77e2d96/launch.s1791038410.2128735.30572.sh'	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	send-keys	w4:p2	enter	--session	fm-lab-lock6454-2121882-25108	
+session	list	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+session	list	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+session	list	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+pane	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+pane	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+tab	create	--workspace	w3	--cwd	/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project	--label	fm-primary-recover	--no-focus	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+session	list	--json	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+tab	get	w3:t3	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p3	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+terminal	title	clear	--session	fm-lab-lock6454-2121882-25108	
+pane	close	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w2	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p2	--session	fm-lab-lock6454-2121882-25108	
+workspace	list	--session	fm-lab-lock6454-2121882-25108	
+tab	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+pane	list	--workspace	w3	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p3	treehouse get	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p3	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p3	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p3	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p3	cd -- '/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/treehouse/.treehouse/project-708f13/1/project'	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p3	--session	fm-lab-lock6454-2121882-25108	
+pane	get	w3:p3	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	read	w3:p3	--source	recent	--lines	200	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	read	w3:p3	--source	recent	--lines	200	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+agent	get	w3:p3	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p3	export GOTMPDIR=/tmp/fm-primary-recover/gotmp	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p3	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	run	w3:p3	export FM_TASK_ID=primary-recover	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	send-text	w3:p3	. '/tmp/fm-primary-recover+fa095377071e87968db810c971cf114f0ddefef3325d5feeed16050f787c8bf3/launch.s1791038434.2144343.12862.sh'	--session	fm-lab-lock6454-2121882-25108	
+status	--json	--session	fm-lab-lock6454-2121882-25108	
+pane	send-keys	w3:p3	enter	--session	fm-lab-lock6454-2121882-25108	

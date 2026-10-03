@@ -1,0 +1,39 @@
+[
+  {
+    "name": "ordinary-spawn",
+    "pass": true,
+    "attempt_span": 4.523719072341919
+  },
+  {
+    "name": "stuck-holder",
+    "pass": true,
+    "elapsed_from_first_attempt": 119.66262598600588
+  },
+  {
+    "name": "concurrent-recovery",
+    "pass": true,
+    "attempts_while_held": 61,
+    "events": [
+      [
+        "fm-primary-recover",
+        "start",
+        "1791038297"
+      ],
+      [
+        "fm-primary-recover",
+        "end",
+        "1791038306"
+      ],
+      [
+        "fm-bravo-recover",
+        "start",
+        "1791038315"
+      ],
+      [
+        "fm-bravo-recover",
+        "end",
+        "1791038315"
+      ]
+    ]
+  }
+]

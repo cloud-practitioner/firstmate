@@ -1,0 +1,39 @@
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh name lock6454
+fm-lab-lock6454-1522614-7780
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh provision fm-lab-lock6454-1522614-7780
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh run fm-lab-lock6454-1522614-7780 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-lock6454-1522614-7780"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/proc/self/fd/9/herdr/sessions/fm-lab-lock6454-1522614-7780/herdr.sock","session":"fm-lab-lock6454-1522614-7780","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-bravo
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-bravo
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project init -q -b main
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project add README.md
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project -c user.name=Firstmate Tests -c user.email=tests@example.invalid commit -qm initial
+$ git clone --quiet --bare /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project.origin.git
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project remote add origin file:///home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project.origin.git
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh run fm-lab-lock6454-1522614-7780 workspace create --cwd /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project --label firstmate --no-focus
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65cf075fea0511","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh run fm-lab-lock6454-1522614-7780 workspace create --cwd /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project --label 2ndmate-bravo --focus
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project","pane_id":"w2:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w2:t1","terminal_id":"term_65cf07600723b2","workspace_id":"w2"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w2:t1","workspace_id":"w2"},"type":"workspace_created","workspace":{"active_tab_id":"w2:t1","agent_status":"unknown","focused":true,"label":"2ndmate-bravo","number":2,"pane_count":1,"tab_count":1,"workspace_id":"w2"}}}
+$ FM_HOME=/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary bin/fm-spawn.sh primary-recover <disposable-project> <idle-shell> --mode no-mistakes --yolo off --backend herdr
+primary-initial exit=1
+
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary/data/primary-recover/launch-brief.md records no ship branch; defaulting to legacy branch fm/primary-recover
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary/data/primary-recover/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+warning: herdr presentation workspace move failed or had an ambiguous response; leaving worker running without cleanup
+warning: herdr presentation could not publish an exact restart binding; this task will use flat fallback after a restart
+error: treehouse get did not enter an isolated worktree within 60s (last seen '/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project': it is the spawning project itself; spawning project '/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project'); inspect window fm-lab-lock6454-1522614-7780:w3:p2
+warning: herdr presentation cleanup could not verify the exact pane; refusing focus-unsafe pane close
+FAIL: AssertionError('primary-initial failed')
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh teardown fm-lab-lock6454-1522614-7780
+LAB TEARDOWN: status=0 (includes default-session tripwire verification)
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/live.py", line 147, in <module>
+    finish(launch('primary-recover',primary,'primary-initial'),'primary-initial')
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/live.py", line 76, in finish
+    if expected==0: assert rc==0, label+' failed'
+                           ^^^^^
+AssertionError: primary-initial failed

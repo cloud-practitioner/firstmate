@@ -1,0 +1,99 @@
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh name lock6454
+fm-lab-lock6454-1614455-32391
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh provision fm-lab-lock6454-1614455-32391
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh run fm-lab-lock6454-1614455-32391 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-lock6454-1614455-32391"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/proc/1614412/fd/9/herdr/sessions/fm-lab-lock6454-1614455-32391/herdr.sock","session":"fm-lab-lock6454-1614455-32391","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh stop fm-lab-lock6454-1614455-32391
+{"session":{"default":false,"name":"fm-lab-lock6454-1614455-32391","running":false,"session_dir":"/proc/1614412/fd/9/herdr/sessions/fm-lab-lock6454-1614455-32391","socket_path":"/proc/1614412/fd/9/herdr/sessions/fm-lab-lock6454-1614455-32391/herdr.sock"},"stopped":true}
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh provision fm-lab-lock6454-1614455-32391
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-bravo
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-bravo
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project init -q -b main
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project add README.md
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project -c user.name=Firstmate Tests -c user.email=tests@example.invalid commit -qm initial
+$ git clone --quiet --bare /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project.origin.git
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project remote add origin file:///home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project.origin.git
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh run fm-lab-lock6454-1614455-32391 workspace create --cwd /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project --label firstmate --no-focus
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65cf07d5ce3e21","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh run fm-lab-lock6454-1614455-32391 workspace create --cwd /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project --label 2ndmate-bravo --focus
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project","pane_id":"w2:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w2:t1","terminal_id":"term_65cf07d5d2ee82","workspace_id":"w2"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w2:t1","workspace_id":"w2"},"type":"workspace_created","workspace":{"active_tab_id":"w2:t1","agent_status":"unknown","focused":true,"label":"2ndmate-bravo","number":2,"pane_count":1,"tab_count":1,"workspace_id":"w2"}}}
+$ FM_HOME=/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary bin/fm-spawn.sh primary-recover <disposable-project> <idle-shell> --mode no-mistakes --yolo off --backend herdr
+primary-initial exit=0
+spawned primary-recover harness=sh kind=ship mode=no-mistakes yolo=off window=fm-lab-lock6454-1614455-32391:w3:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/treehouse/.treehouse/project-708f13/1/project
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary/data/primary-recover/launch-brief.md records no ship branch; defaulting to legacy branch fm/primary-recover
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary/data/primary-recover/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+$ FM_HOME=/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-bravo bin/fm-spawn.sh bravo-recover <disposable-project> <idle-shell> --mode no-mistakes --yolo off --backend herdr
+bravo-initial exit=1
+
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-bravo
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-bravo/data/bravo-recover/launch-brief.md records no ship branch; defaulting to legacy branch fm/bravo-recover
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-bravo/data/bravo-recover/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+error: treehouse get did not enter an isolated worktree within 60s (last seen '/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project': it is the spawning project itself; spawning project '/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project'); inspect window fm-lab-lock6454-1614455-32391:w4:p2
+warning: herdr presentation cleanup could not verify the exact pane; refusing focus-unsafe pane close
+FAIL: AssertionError('bravo-initial failed')
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh run fm-lab-lock6454-1614455-32391 workspace list
+{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[{"active_tab_id":"w1:t1","agent_status":"unknown","focused":false,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"},{"active_tab_id":"w3:t2","agent_status":"unknown","focused":false,"label":"└ primary-recover · p:qNDqu-jihbx2GN2Wfwmf1A","number":2,"pane_count":1,"tab_count":1,"workspace_id":"w3"},{"active_tab_id":"w2:t1","agent_status":"unknown","focused":true,"label":"2ndmate-bravo","number":3,"pane_count":1,"tab_count":1,"workspace_id":"w2"}]}}
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh run fm-lab-lock6454-1614455-32391 pane list --workspace w1
+{"id":"cli:pane:list","result":{"panes":[{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65cf07d5ce3e21","workspace_id":"w1"}],"type":"pane_list"}}
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh run fm-lab-lock6454-1614455-32391 pane capture w1:p1
+herdr pane commands:
+  herdr pane list [--workspace <workspace_id>]
+  herdr pane current [--pane ID|--current]
+  herdr pane get <pane_id>
+  herdr pane layout [--pane ID|--current]
+  herdr pane process-info [--pane ID|--current]
+  herdr pane neighbor --direction left|right|up|down [--pane ID|--current]
+  herdr pane edges [--pane ID|--current]
+  herdr pane focus --direction left|right|up|down [--pane ID|--current]
+  herdr pane resize --direction left|right|up|down [--amount FLOAT] [--pane ID|--current]
+  herdr pane zoom [<pane_id>|--pane ID|--current] [--toggle|--on|--off]
+  herdr pane rename <pane_id> <label>|--clear
+  herdr pane read <pane_id> [--source visible|recent|recent-unwrapped] [--lines N] [--format text|ansi] [--ansi]
+  herdr pane input [<pane_id>|--pane ID|--current] --right-click herdr|pane
+  herdr pane split [<pane_id>|--pane ID|--current] --direction right|down [--ratio FLOAT] [--cwd PATH] [--env KEY=VALUE] [--right-click herdr|pane] [--focus] [--no-focus]
+  herdr pane swap --direction left|right|up|down [--pane ID|--current]
+  herdr pane swap --source-pane ID --target-pane ID
+  herdr pane move <pane_id> --tab <tab_id> --split right|down [--target-pane ID] [--ratio FLOAT] [--focus|--no-focus]
+  herdr pane move <pane_id> --new-tab [--workspace ID] [--label TEXT] [--focus|--no-focus]
+  herdr pane move <pane_id> --new-workspace [--label TEXT] [--tab-label TEXT] [--focus|--no-focus]
+  herdr pane close <pane_id>
+  herdr pane send-text <pane_id> <text>
+  herdr pane send-keys <pane_id> <key> [key ...]
+  herdr pane wait-output <pane_id> (--match TEXT | --regex PATTERN) [--source visible|recent|recent-unwrapped] [--lines N] [--timeout MS] [--raw]
+  herdr pane report-agent <pane_id> --source ID --agent LABEL --state idle|working|blocked|unknown [--message TEXT] [--seq N] [--agent-session-id ID] [--agent-session-path PATH]
+  herdr pane report-agent-session <pane_id> --source ID --agent LABEL [--seq N] [--agent-session-id ID] [--agent-session-path PATH]
+  herdr pane release-agent <pane_id> --source ID --agent LABEL [--seq N]
+  herdr pane report-metadata <pane_id> --source ID [--agent LABEL] [--applies-to-source ID] [--title TEXT|--clear-title] [--display-agent TEXT|--clear-display-agent] [--state-label STATUS=TEXT] [--clear-state-labels] [--token NAME=VALUE] [--clear-token NAME] [--seq N] [--ttl-ms N]
+  herdr pane run <pane_id> <command>
+Failure capture: RuntimeError('Command failed: 2')
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-teardown.sh primary-recover --force
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Worktree returned to pool.
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/project: already current
+teardown primary-recover complete (window fm-lab-lock6454-1614455-32391:w3:p2, worktree /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/treehouse/.treehouse/project-708f13/1/project)
+Backlog: primary-recover just finished (this home keeps no markdown backlog at /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary/data/backlog.md). Update /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary/data/backlog.md - move primary-recover to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/home-primary
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 82s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for primary-recover: 1617187 1620467 1671039 1686088
+teardown: force-killing leaked worktree process(es) for primary-recover: 1617187
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/bin/fm-herdr-lab.sh teardown fm-lab-lock6454-1614455-32391
+LAB TEARDOWN: status=0 (includes default-session tripwire verification)
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/live.py", line 157, in <module>
+    finish(launch('bravo-recover',bravo,'bravo-initial'),'bravo-initial')
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.no-mistakes/worktrees/c98b859efde5/01M410E7F7G38F8N1PVBSA2B64/.gate6454/live.py", line 78, in finish
+    if expected==0: assert rc==0, label+' failed'
+                           ^^^^^
+AssertionError: bravo-initial failed

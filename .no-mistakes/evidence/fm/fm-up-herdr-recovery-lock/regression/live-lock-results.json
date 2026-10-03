@@ -1,0 +1,10 @@
+[
+  {
+    "name": "late-acquisition",
+    "pass": true
+  },
+  {
+    "name": "before-fix-reproduction",
+    "pass": true
+  }
+]
