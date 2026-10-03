@@ -154,11 +154,9 @@
 # docs/captain-hold-lifecycle.md, "Checking before scout teardown", owns the
 # shared durability lookup, including archive fallback.
 # Metadata compatibility: the attestation keeps the historical
-# `decisions_reviewed=1` and `decision_keys=` keys, and an inventory entry that
-# names no existing task resolves through the legacy `<origin>-decision-<entry>`
-# identity, so pre-collapse metadata written by fm-decision-hold.sh verifies
-# unchanged. An entry that exists as a task id is always that task. On the
-# Beads backend an attested legacy markdown id that resolves to no task is
+# `decisions_reviewed=1` and `decision_keys=` keys, so pre-collapse metadata
+# written by fm-decision-hold.sh verifies unchanged through the lookup above.
+# On the Beads backend an attested legacy markdown id that resolves to no task is
 # accepted through the migrated row fm-hold-migration produced, found by the
 # authoritative evidence first: a row whose notes carry the marker line
 # "migrated from data/backlog.md id <legacy id>", alone or followed by
@@ -549,7 +547,9 @@ verify_hold_durable() {  # <task-id>
 # inherited from ~/.tasks-axi/config.toml and overridden by the backlog root's
 # .tasks.toml; relative paths resolve from that root. Only an unset setting
 # falls back to done-archive.md in the configured data directory. Other
-# backends have no such file and report no archived answer.
+# backends are not consulted for archived answers. Exit 2 means the newest row
+# exists but lacks a resolution record: callers must not treat it as absence
+# and fall through to another identity.
 archived_answer_recorded() {  # <task-id>; prints the unindented answered body
   local id=$1 data root archive body
   data=$(fm_backlog_data_absolute "$DATA") || return 1
@@ -797,12 +797,12 @@ resolve_migrated_entry() {  # <origin-or-empty> <entry>
   return 2
 }
 
-# Resolve one inventory entry or channel key to the task that carries it: the
-# exact task id when it exists, else the legacy derived identity, else - on the
-# beads backend - the migrated row the markdown-to-beads hold migration wrote.
-# Prints "<resolved id> <how>", where <how> is exact, legacy, migrated-note or
-# migrated-prefix, so a caller can record which evidence carried the attestation.
-resolve_entry() {  # <origin-or-empty> <entry>; prints "<id> <how>" or fails
+# Resolve an inventory entry or channel key. Completion opts into the archive
+# lookup owned by docs/captain-hold-lifecycle.md, "Checking before scout teardown";
+# channel keys leave it disabled so a closed archived call cannot be answered again.
+# Prints "<resolved id> <how>", where <how> is exact, legacy, archived,
+# migrated-note or migrated-prefix, so callers can disclose attestation evidence.
+resolve_entry() {  # <origin-or-empty> <entry> [<archives-0-or-1>]; prints "<id> <how>" or fails
   local origin=$1 entry=$2 archives=${3:-0} legacy='' id how migrated rc
   if [ -n "$origin" ] && [ "$origin" != "$BINDING_ANY" ]; then
     legacy=$(legacy_hold_id "$origin" "$entry")

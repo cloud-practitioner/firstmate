@@ -126,8 +126,9 @@ Scout teardown calls the read-only `verify` subcommand after checking for the re
 - Every recorded inventory entry still passes the [completion inventory checks](#recording-a-reviewed-inventory-complete).
 - No keyed status decision opened after the last `complete`.
 
-The durability check shared by `complete` and `verify` resolves the exact identity before trying the legacy-derived identity.
-For each identity, it checks the current row, including retained Done records, then the configured Done archive on the markdown backend using the same resolution-record predicate.
+The durability check shared by `complete` and `verify` resolves the exact identity before trying the legacy-derived `<origin>-decision-<entry>` identity.
+For each identity, a current row, including retained Done records, takes precedence and must be a non-Done captain hold or carry a recorded resolution.
+Only when that row is absent does the markdown backend consult its configured Done archive using the same resolution-record predicate.
 Only the newest archived row for that identity is considered; a row without a recorded resolution is refused, and an earlier archived answer never overrides its current row.
 The legacy-derived identity is tried only when the exact identity is absent from both the current backlog and the archive.
 Archive lookup and current-row precedence have regression coverage in [`tests/fm-captain-hold-lifecycle.test.sh`](../tests/fm-captain-hold-lifecycle.test.sh).
@@ -469,8 +470,8 @@ Those rows are already plain task ids, so they render, answer, verify, and close
 
 Three legacy inputs are resolved in place:
 
-- A `decision_keys=` metadata entry that names no task resolves through `<origin>-decision-<entry>`.
-- A channel key that names no task resolves the same way when the source's binding carries a concrete legacy origin.
+- `decision_keys=` metadata entries use the [completion durability lookup](#checking-before-scout-teardown-verify).
+- Channel keys retain the legacy binding compatibility documented in [`bin/fm-captain-hold.sh --help`](../bin/fm-captain-hold.sh).
 - Resolution records written by the old script are recognized wherever a record is read.
 
 ### Legacy ids on the Beads backend
