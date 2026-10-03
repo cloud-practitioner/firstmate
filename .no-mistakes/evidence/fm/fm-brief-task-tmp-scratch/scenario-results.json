@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Scaffold a ship in each delivery mode and receive its task-specific scratch rule",
+    "result": "pass"
+  },
+  {
+    "name": "Scaffold a scout and receive the private scratch exception alongside report/status exceptions",
+    "result": "pass"
+  },
+  {
+    "name": "Choose no-mistakes delivery and receive the intent-file reminder on both ordinary and Gerrit briefs",
+    "result": "pass"
+  },
+  {
+    "name": "Scaffold the same task ID concurrently in two project homes without recommending a shared intent destination",
+    "result": "pass"
+  },
+  {
+    "name": "Use relative state/data overrides containing spaces and apostrophes and receive an unambiguous absolute scratch path",
+    "result": "pass"
+  },
+  {
+    "name": "Run the new generated-brief regression against base and target and reproduce the missing instruction only on base",
+    "result": "pass"
+  }
+]

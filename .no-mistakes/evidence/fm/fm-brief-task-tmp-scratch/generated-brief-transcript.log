@@ -1,0 +1,127 @@
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/bin/fm-brief.sh live-ship-no-mistakes disposable-project --mode no-mistakes
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/ship-home
+{}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/ship-home/data/live-ship-no-mistakes/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push to the default branch. Never merge a PR.
+2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.
+   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/ship-home/state/live-ship-no-mistakes.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.
+If you pass `--intent` through a file, write it under your task temp root named in the Rules, never at a fixed path in shared /tmp.
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/bin/fm-brief.sh live-ship-direct-PR disposable-project --mode direct-PR
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/ship-home
+{}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/ship-home/data/live-ship-direct-PR/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push to the default branch (push only your `fm/live-ship-direct-PR` branch). Never merge a PR.
+2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.
+   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/ship-home/state/live-ship-direct-PR.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/bin/fm-brief.sh live-ship-local-only disposable-project --mode local-only
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/ship-home
+{}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/ship-home/data/live-ship-local-only/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push to any remote and never open a PR. Work only on your `fm/live-ship-local-only` branch; firstmate handles the merge into local `main`.
+2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.
+   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/ship-home/state/live-ship-local-only.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/bin/fm-brief.sh live-scout disposable-project --scout
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/scout-home
+{}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/scout-home/data/live-scout/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push to any remote and never open a PR.
+2. Stay inside this worktree; the only files you may write outside it are the report, the status file below, and scratch files under your task temp root.
+   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/scout-home/state/live-scout.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/bin/fm-brief.sh live-ship-gerrit disposable-project --mode no-mistakes --forge gerrit
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/gerrit-home
+{}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/gerrit-home/data/live-ship-gerrit/brief.md (ship, mode=no-mistakes forge=gerrit shape=squash; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push with git and never create a change except through the one `gerrit-axi publish --squash` your Definition of done names. Never run `gerrit-axi submit`, never vote or review a change by any path, including `gerrit review` or a label option on a push, and never abandon one: a human reviewer approves and submits it on the server.
+2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.
+   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/gerrit-home/state/live-ship-gerrit.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.
+If you pass `--intent` through a file, write it under your task temp root named in the Rules, never at a fixed path in shared /tmp.
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/bin/fm-brief.sh same-intent-task disposable-project --mode no-mistakes
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/project-a-home
+{}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/project-a-home/data/same-intent-task/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push to the default branch. Never merge a PR.
+2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.
+   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/project-a-home/state/same-intent-task.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.
+If you pass `--intent` through a file, write it under your task temp root named in the Rules, never at a fixed path in shared /tmp.
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/bin/fm-brief.sh same-intent-task disposable-project --mode no-mistakes
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/project-b-home
+{}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/project-b-home/data/same-intent-task/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push to the default branch. Never merge a PR.
+2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.
+   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/project-b-home/state/same-intent-task.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.
+If you pass `--intent` through a file, write it under your task temp root named in the Rules, never at a fixed path in shared /tmp.
+Same task ID in concurrent projects; emitted intent destinations do not alias:
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/project-a-home/state/same-intent-task.tasktmp
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/project-b-home/state/same-intent-task.tasktmp
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/bin/fm-brief.sh quoted-ship disposable-project --mode no-mistakes
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/relative home with ' quote
+{"FM_HOME": ".nm-tasktmp-live/relative home with ' quote", "FM_STATE_OVERRIDE": ".nm-tasktmp-live/relative state with ' quote", "FM_DATA_OVERRIDE": ".nm-tasktmp-live/relative data with ' quote"}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/relative data with ' quote/quoted-ship/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push to the default branch. Never merge a PR.
+2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.
+   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/relative state with '\'' quote/quoted-ship.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.
+If you pass `--intent` through a file, write it under your task temp root named in the Rules, never at a fixed path in shared /tmp.
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/bin/fm-brief.sh quoted-scout disposable-project --scout
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/relative home with ' quote
+{"FM_HOME": ".nm-tasktmp-live/relative home with ' quote", "FM_STATE_OVERRIDE": ".nm-tasktmp-live/relative state with ' quote", "FM_DATA_OVERRIDE": ".nm-tasktmp-live/relative data with ' quote"}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/relative data with ' quote/quoted-scout/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push to any remote and never open a PR.
+2. Stay inside this worktree; the only files you may write outside it are the report, the status file below, and scratch files under your task temp root.
+   Put your scratch files, including any no-mistakes `--intent` file, under your task temp root '/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/relative state with '\'' quote/quoted-scout.tasktmp', which already exists; never write them to a fixed path in shared /tmp, which other workers share.
+Targeted regression: test_scaffolds_name_task_temp_root_for_scratch
+ok - fm-brief.sh: ship and scout scaffolds keep scratch and --intent files in the task temp root
+
+
+exit=0
+Same regression against base commit 2358151bc029052bb322d0ebbf8e039b273e463f:
+
+not ok - ship:no-mistakes brief did not name the task temp root
+
+exit=1
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/base/bin/fm-brief.sh base-proof disposable-project --mode no-mistakes
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/base-home
+{}
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M407KTFK6ZNF2EBV1QRSBVGD/.nm-tasktmp-live/base-home/data/base-proof/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})
+
+
+exit=0
+Emitted Rules 1-2:
+1. Never push to the default branch. Never merge a PR.
+2. Stay inside this worktree; modify nothing outside it.
