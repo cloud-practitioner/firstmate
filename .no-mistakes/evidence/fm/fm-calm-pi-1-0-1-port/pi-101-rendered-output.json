@@ -1,0 +1,21 @@
+{
+  "version": "101",
+  "browser": "153.0.8010.12",
+  "file": "/home/node/.no-mistakes/evidence/01M4255Z93913VQ2VRJNN7CD28/pi-101-calm-export.html",
+  "screenshot": "/home/node/.no-mistakes/evidence/01M4255Z93913VQ2VRJNN7CD28/pi-101-calm-export.png",
+  "renderedTools": {
+    "call_grep": {
+      "call": "grep /CALM_LIVE_GREP/ in .",
+      "result": "sample.txt:1:CALM_LIVE_GREP"
+    },
+    "call_find": {
+      "call": "find CALM_LIVE_FIND* in .",
+      "result": "CALM_LIVE_FIND.txt"
+    },
+    "call_fm_watch_arm_pi": {
+      "call": "fm_watch_arm_pi",
+      "result": "watcher: saved fixture arm result"
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,36 @@
+{
+  "version": "100",
+  "command": [
+    "node",
+    "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4255Z93913VQ2VRJNN7CD28/.test-calm-validation/pi-100-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/cli.js",
+    "--offline",
+    "--tui-mode",
+    "regular",
+    "--no-context-files",
+    "--no-skills",
+    "--no-prompt-templates",
+    "--no-themes",
+    "--no-extensions",
+    "--approve",
+    "-e",
+    "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4255Z93913VQ2VRJNN7CD28/.test-calm-validation/live-100/project/.pi/extensions/fm-calm.ts",
+    "-e",
+    "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4255Z93913VQ2VRJNN7CD28/.test-calm-validation/live-100/project/.pi/extensions/fm-primary-pi-watch.ts",
+    "--session",
+    "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4255Z93913VQ2VRJNN7CD28/.test-calm-validation/live-100/session.jsonl"
+  ],
+  "pty": {
+    "rows": 44,
+    "columns": 160
+  },
+  "steps": [
+    "Real /calm command toggled off then on and persisted each choice.",
+    "Enter with submit remapped to Alt+s did not create the HTML export.",
+    "Alt+s executed /export and real Pi confirmed its output path.",
+    "Original session bytes remained unchanged through toggles and export."
+  ],
+  "export": "/home/node/.no-mistakes/evidence/01M4255Z93913VQ2VRJNN7CD28/pi-100-calm-export.html",
+  "sessionSha256Before": "1a4deb2505be3b0644416df61a9bd2b59428458f5acfd24a57371e5a4e3ac062",
+  "sessionSha256After": "1a4deb2505be3b0644416df61a9bd2b59428458f5acfd24a57371e5a4e3ac062",
+  "exit": 0
+}
