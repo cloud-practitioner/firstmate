@@ -1,0 +1,248 @@
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh name legacy-temp
+fm-lab-legacy-temp-698607-10665
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh provision fm-lab-legacy-temp-698607-10665
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-project init -q -b main
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-project add README.md
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-project -c user.name=Test -c user.email=test@example.invalid commit -qm initial
+
+exit=0
+
+$ git clone --quiet --bare /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-project /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-project.origin.git
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-project remote add origin file:///home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-project.origin.git
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh legacy-ship-698553 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-project sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/legacy-ship-698553/launch-brief.md records no ship branch; defaulting to legacy branch fm/legacy-ship-698553
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/legacy-ship-698553/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: legacy-ship-698553 ships mode=local-only while the standing posture for legacy-project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned legacy-ship-698553 harness=sh kind=ship mode=local-only yolo=off window=fm-lab-legacy-temp-698607-10665:w1:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/treehouse/.treehouse/legacy-project-869986/1/legacy-project
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh legacy-ship-698553 --relaunch --harness sh -c 'printf "LEGACY_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/legacy-ship-698553/launch-brief.md records no ship branch; defaulting to legacy branch fm/legacy-ship-698553
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/legacy-ship-698553/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: legacy-ship-698553 ships mode=local-only while the standing posture for legacy-project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned legacy-ship-698553 harness=sh kind=ship mode=local-only yolo=off window=fm-lab-legacy-temp-698607-10665:w1:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/treehouse/.treehouse/legacy-project-869986/1/legacy-project
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh run fm-lab-legacy-temp-698607-10665 pane read w1:p2 --source recent --lines 200
+legacy-project on  main
+❯ treehouse get
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/treehouse
+/.treehouse/legacy-project-869986/1/legacy-project. Type 'exit' to return.
+legacy-project on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/treehouse/.tre
+ehouse/legacy-project-869986/1/legacy-project'
+legacy-project on  HEAD
+❯ export GOTMPDIR='/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/lega
+cy-parent/state/legacy-ship-698553.tasktmp/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+legacy-project on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+legacy-project on  HEAD
+❯ export FM_TASK_ID=legacy-ship-698553
+legacy-project on  HEAD
+❯ . '/tmp/fm-legacy-ship-698553+9c3af90ada5427e269a4f8b970d4eb8ba41431d347255354f599fa221aaaf8f3/launch.s1791215805.6988
+49.22439.sh'
+LIVE_GOTMPDIR=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-pa
+rent/state/legacy-ship-698553.tasktmp/gotmp
+legacy-project on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/treehouse/.tre
+ehouse/legacy-project-869986/1/legacy-project'
+legacy-project on  HEAD
+❯ export GOTMPDIR='/tmp/fm-legacy-ship-698553/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+legacy-project on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+legacy-project on  HEAD
+❯ export FM_TASK_ID=legacy-ship-698553
+legacy-project on  HEAD
+❯ . '/tmp/fm-legacy-ship-698553+9c3af90ada5427e269a4f8b970d4eb8ba41431d347255354f599fa221aaaf8f3/launch.s1791215809.7038
+84.6407.sh'
+LEGACY_GOTMPDIR=/tmp/fm-legacy-ship-698553/gotmp
+legacy-project on  HEAD
+❯
+
+exit=0
+PERSISTED LEGACY STATE {"tasktmp": "/tmp/fm-legacy-ship-698553", "scratch": "pre-upgrade scratch", "child_GOTMPDIR": "/tmp/fm-legacy-ship-698553/gotmp", "replacement_root_created": false}
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-teardown.sh legacy-ship-698553
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for legacy-ship-698553: 700334 707416
+teardown: force-killing leaked worktree process(es) for legacy-ship-698553: 700334
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Worktree returned to pool.
+teardown legacy-ship-698553 complete (window fm-lab-legacy-temp-698607-10665:w1:p2, worktree /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/treehouse/.treehouse/legacy-project-869986/1/legacy-project)
+Backlog: legacy-ship-698553 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/backlog.md - move legacy-ship-698553 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+
+exit=0
+SCENARIO PASS: stopped ship relaunch preserves recorded legacy root, and teardown removes it.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh rootless-ship-698553 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-project sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/rootless-ship-698553/launch-brief.md records no ship branch; defaulting to legacy branch fm/rootless-ship-698553
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/rootless-ship-698553/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: rootless-ship-698553 ships mode=local-only while the standing posture for legacy-project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned rootless-ship-698553 harness=sh kind=ship mode=local-only yolo=off window=fm-lab-legacy-temp-698607-10665:w2:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/treehouse/.treehouse/legacy-project-869986/1/legacy-project
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh rootless-ship-698553 --relaunch --harness sh -c 'printf "LEGACY_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/rootless-ship-698553/launch-brief.md records no ship branch; defaulting to legacy branch fm/rootless-ship-698553
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/rootless-ship-698553/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: rootless-ship-698553 ships mode=local-only while the standing posture for legacy-project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned rootless-ship-698553 harness=sh kind=ship mode=local-only yolo=off window=fm-lab-legacy-temp-698607-10665:w2:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/treehouse/.treehouse/legacy-project-869986/1/legacy-project
+
+exit=0
+OBSERVABLE STATE {"tasktmp": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/state/rootless-ship-698553.tasktmp", "mode": "0o700", "child_GOTMPDIR": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/state/rootless-ship-698553.tasktmp/gotmp", "legacy_root_created": false}
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-teardown.sh rootless-ship-698553
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for rootless-ship-698553: 712968
+teardown: force-killing leaked worktree process(es) for rootless-ship-698553: 712968
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Worktree returned to pool.
+teardown rootless-ship-698553 complete (window fm-lab-legacy-temp-698607-10665:w2:p2, worktree /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/treehouse/.treehouse/legacy-project-869986/1/legacy-project)
+Backlog: rootless-ship-698553 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent/data/backlog.md - move rootless-ship-698553 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+
+exit=0
+SCENARIO PASS: rootless old ship record receives a home-scoped root on relaunch.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-mate
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-mate
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-mate init -q -b main
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/code/bin/fm-spawn.sh legacy-mate-698553 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-mate sh -c 'printf "LEGACY_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --secondmate --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+spawned legacy-mate-698553 harness=sh kind=secondmate mode=secondmate yolo=off window=fm-lab-legacy-temp-698607-10665:w3:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-mate
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/code/bin/fm-spawn.sh legacy-mate-698553 --secondmate sh -c 'printf "LEGACY_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/code/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/code/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+spawned legacy-mate-698553 harness=sh kind=secondmate mode=secondmate yolo=off window=fm-lab-legacy-temp-698607-10665:w3:p3 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-mate
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh run fm-lab-legacy-temp-698607-10665 pane read w3:p3 --source recent --lines 200
+legacy-mate on  main [?]
+❯ export GOTMPDIR='/tmp/fm-legacy-mate-698553/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+legacy-mate on  main [?]
+❯ export COMPACT_ADVISER_DISABLE=1
+legacy-mate on  main [?]
+❯ . '/tmp/fm-legacy-mate-698553+9c3af90ada5427e269a4f8b970d4eb8ba41431d347255354f599fa221aaaf8f3/launch.s1791215845.7371
+80.4280.sh'
+LEGACY_GOTMPDIR=/tmp/fm-legacy-mate-698553/gotmp
+legacy-mate on  main [?]
+❯
+
+exit=0
+PERSISTED LEGACY STATE {"tasktmp": "/tmp/fm-legacy-mate-698553", "scratch": "pre-upgrade scratch", "child_GOTMPDIR": "/tmp/fm-legacy-mate-698553/gotmp", "replacement_root_created": false}
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/code/bin/fm-spawn.sh legacy-mate-698553 --relaunch --harness sh -c 'printf "LEGACY_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+spawned legacy-mate-698553 harness=sh kind=secondmate mode=secondmate yolo=off window=fm-lab-legacy-temp-698607-10665:w3:p3 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-mate
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh run fm-lab-legacy-temp-698607-10665 pane read w3:p3 --source recent --lines 200
+legacy-mate on  main [?]
+❯ export GOTMPDIR='/tmp/fm-legacy-mate-698553/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+legacy-mate on  main [?]
+❯ export COMPACT_ADVISER_DISABLE=1
+legacy-mate on  main [?]
+❯ . '/tmp/fm-legacy-mate-698553+9c3af90ada5427e269a4f8b970d4eb8ba41431d347255354f599fa221aaaf8f3/launch.s1791215845.7371
+80.4280.sh'
+LEGACY_GOTMPDIR=/tmp/fm-legacy-mate-698553/gotmp
+legacy-mate on  main [?]
+❯ export GOTMPDIR='/tmp/fm-legacy-mate-698553/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+legacy-mate on  main [?]
+❯ export COMPACT_ADVISER_DISABLE=1
+legacy-mate on  main [?]
+❯ . '/tmp/fm-legacy-mate-698553+9c3af90ada5427e269a4f8b970d4eb8ba41431d347255354f599fa221aaaf8f3/launch.s1791215847.7397
+59.7872.sh'
+LEGACY_GOTMPDIR=/tmp/fm-legacy-mate-698553/gotmp
+legacy-mate on  main [?]
+❯
+
+exit=0
+PERSISTED LEGACY STATE {"tasktmp": "/tmp/fm-legacy-mate-698553", "scratch": "pre-upgrade scratch", "child_GOTMPDIR": "/tmp/fm-legacy-mate-698553/gotmp", "replacement_root_created": false}
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/code/bin/fm-teardown.sh legacy-mate-698553
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-parent
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+teardown legacy-mate-698553 complete (window fm-lab-legacy-temp-698607-10665:w3:p3, worktree /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-698553/legacy-mate)
+
+exit=0
+SCENARIO PASS: ordinary secondmate recovery and explicit relaunch both retain legacy scratch; teardown removes the recorded root.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh teardown fm-lab-legacy-temp-698607-10665
+
+exit=0

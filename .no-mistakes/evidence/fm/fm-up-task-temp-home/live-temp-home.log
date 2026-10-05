@@ -1,0 +1,417 @@
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh provision fm-lab-temp-home-308913-16136
+fm-herdr-lab: tripwire already exists for 'fm-lab-temp-home-308913-16136'; refusing ambiguous ownership
+
+exit=1
+LIVE DRIVER FAILURE: RuntimeError("fm-herdr-lab: tripwire already exists for 'fm-lab-temp-home-308913-16136'; refusing ambiguous ownership\n")
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh teardown fm-lab-temp-home-308913-16136
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh name temp-home-a
+fm-lab-temp-home-a-386993-8939
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh provision fm-lab-temp-home-a-386993-8939
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh name temp-home-b
+fm-lab-temp-home-b-387096-24125
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh provision fm-lab-temp-home-b-387096-24125
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home A
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home A
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home B
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home B
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-a init -q -b main
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-a add README.md
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-a -c user.name=Test -c user.email=test@example.invalid commit -qm initial
+
+exit=0
+
+$ git clone --quiet --bare /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-a /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-a.origin.git
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-a remote add origin file:///home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-a.origin.git
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-b init -q -b main
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-b add README.md
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-b -c user.name=Test -c user.email=test@example.invalid commit -qm initial
+
+exit=0
+
+$ git clone --quiet --bare /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-b /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-b.origin.git
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-b remote add origin file:///home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-b.origin.git
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh live-temp-386961 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-a sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home A
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home A/data/live-temp-386961/launch-brief.md records no ship branch; defaulting to legacy branch fm/live-temp-386961
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home A/data/live-temp-386961/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: live-temp-386961 ships mode=local-only while the standing posture for project-a is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned live-temp-386961 harness=sh kind=ship mode=local-only yolo=off window=fm-lab-temp-home-a-386993-8939:w1:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/treehouse/.treehouse/project-a-0481d1/1/project-a
+
+exit=0
+OBSERVABLE STATE {"tasktmp": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home A/state/live-temp-386961.tasktmp", "mode": "0o700", "child_GOTMPDIR": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home A/state/live-temp-386961.tasktmp/gotmp", "legacy_root_created": false}
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh live-temp-386961 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/project-b sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home B
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home B/data/live-temp-386961/launch-brief.md records no ship branch; defaulting to legacy branch fm/live-temp-386961
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home B/data/live-temp-386961/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: live-temp-386961 ships mode=local-only while the standing posture for project-b is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned live-temp-386961 harness=sh kind=ship mode=local-only yolo=off window=fm-lab-temp-home-b-387096-24125:w1:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/treehouse/.treehouse/project-b-e27597/1/project-b
+
+exit=0
+OBSERVABLE STATE {"tasktmp": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home B/state/live-temp-386961.tasktmp", "mode": "0o700", "child_GOTMPDIR": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home B/state/live-temp-386961.tasktmp/gotmp", "legacy_root_created": false}
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh run fm-lab-temp-home-a-386993-8939 terminal capture w1:p2
+herdr terminal commands:
+  herdr terminal attach <terminal_id> [--takeover]
+  herdr terminal session control <target> [--takeover] [--cols N] [--rows N]
+  herdr terminal session observe <target> [--cols N] [--rows N]
+  herdr terminal title set <title>
+  herdr terminal title clear
+  detach from direct attach with ctrl+b q; send literal ctrl+b with ctrl+b ctrl+b
+
+exit=2
+LIVE DRIVER FAILURE: RuntimeError('herdr terminal commands:\n  herdr terminal attach <terminal_id> [--takeover]\n  herdr terminal session control <target> [--takeover] [--cols N] [--rows N]\n  herdr terminal session observe <target> [--cols N] [--rows N]\n  herdr terminal title set <title>\n  herdr terminal title clear\n  detach from direct attach with ctrl+b q; send literal ctrl+b with ctrl+b ctrl+b\n')
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-teardown.sh live-temp-386961
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home A
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for live-temp-386961: 388905 398068
+teardown: force-killing leaked worktree process(es) for live-temp-386961: 388905
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Worktree returned to pool.
+teardown live-temp-386961 complete (window fm-lab-temp-home-a-386993-8939:w1:p2, worktree /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/treehouse/.treehouse/project-a-0481d1/1/project-a)
+Backlog: live-temp-386961 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home A/data/backlog.md - move live-temp-386961 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-teardown.sh live-temp-386961
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home B
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for live-temp-386961: 393514 404005
+teardown: force-killing leaked worktree process(es) for live-temp-386961: 393514
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Worktree returned to pool.
+teardown live-temp-386961 complete (window fm-lab-temp-home-b-387096-24125:w1:p2, worktree /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/treehouse/.treehouse/project-b-e27597/1/project-b)
+Backlog: live-temp-386961 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/home B/data/backlog.md - move live-temp-386961 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh teardown fm-lab-temp-home-b-387096-24125
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh teardown fm-lab-temp-home-a-386993-8939
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh name temp-home-a
+fm-lab-temp-home-a-422315-16741
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh provision fm-lab-temp-home-a-422315-16741
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh name temp-home-b
+fm-lab-temp-home-b-422522-12234
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh provision fm-lab-temp-home-b-422522-12234
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a init -q -b main
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a add README.md
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a -c user.name=Test -c user.email=test@example.invalid commit -qm initial
+
+exit=0
+
+$ git clone --quiet --bare /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a.origin.git
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a remote add origin file:///home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a.origin.git
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-b init -q -b main
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-b add README.md
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-b -c user.name=Test -c user.email=test@example.invalid commit -qm initial
+
+exit=0
+
+$ git clone --quiet --bare /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-b /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-b.origin.git
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-b remote add origin file:///home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-b.origin.git
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh live-temp-422287 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/data/live-temp-422287/launch-brief.md records no ship branch; defaulting to legacy branch fm/live-temp-422287
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/data/live-temp-422287/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: live-temp-422287 ships mode=local-only while the standing posture for project-a is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned live-temp-422287 harness=sh kind=ship mode=local-only yolo=off window=fm-lab-temp-home-a-422315-16741:w1:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse/.treehouse/project-a-de96d8/1/project-a
+
+exit=0
+OBSERVABLE STATE {"tasktmp": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/state/live-temp-422287.tasktmp", "mode": "0o700", "child_GOTMPDIR": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/state/live-temp-422287.tasktmp/gotmp", "legacy_root_created": false}
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh live-temp-422287 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-b sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B/data/live-temp-422287/launch-brief.md records no ship branch; defaulting to legacy branch fm/live-temp-422287
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B/data/live-temp-422287/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: live-temp-422287 ships mode=local-only while the standing posture for project-b is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned live-temp-422287 harness=sh kind=ship mode=local-only yolo=off window=fm-lab-temp-home-b-422522-12234:w1:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse/.treehouse/project-b-2786bc/1/project-b
+
+exit=0
+OBSERVABLE STATE {"tasktmp": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B/state/live-temp-422287.tasktmp", "mode": "0o700", "child_GOTMPDIR": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B/state/live-temp-422287.tasktmp/gotmp", "legacy_root_created": false}
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh run fm-lab-temp-home-a-422315-16741 pane read w1:p2 --source recent --lines 200
+project-a on  main
+❯ treehouse get
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse
+/.treehouse/project-a-de96d8/1/project-a. Type 'exit' to return.
+project-a on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse/.tre
+ehouse/project-a-de96d8/1/project-a'
+project-a on  HEAD
+❯ export GOTMPDIR='/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home
+ A/state/live-temp-422287.tasktmp/gotmp'
+project-a on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+project-a on  HEAD
+❯ export FM_TASK_ID=live-temp-422287
+project-a on  HEAD
+❯ . '/tmp/fm-live-temp-422287+6aa173e36f8178b7f5c030999ce50be5be967f655b411bb82b9dde6b268c358f/launch.s1791215460.422718
+.6811.sh'
+LIVE_GOTMPDIR=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/st
+ate/live-temp-422287.tasktmp/gotmp
+project-a on  HEAD
+❯
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh run fm-lab-temp-home-b-422522-12234 pane read w1:p2 --source recent --lines 200
+treehouse get
+project-b on  main
+❯ treehouse get
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse
+/.treehouse/project-b-2786bc/1/project-b. Type 'exit' to return.
+project-b on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse/.tre
+ehouse/project-b-2786bc/1/project-b'
+project-b on  HEAD
+❯ export GOTMPDIR='/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home
+ B/state/live-temp-422287.tasktmp/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+project-b on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+project-b on  HEAD
+❯ export FM_TASK_ID=live-temp-422287
+project-b on  HEAD
+❯ . '/tmp/fm-live-temp-422287+573c6b283d9c13505aacbb868ba475ee31b5e0481d64d46f83b4eb765232dcfc/launch.s1791215472.431892
+.10412.sh'
+LIVE_GOTMPDIR=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B/st
+ate/live-temp-422287.tasktmp/gotmp
+project-b on  HEAD
+❯
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-teardown.sh live-temp-422287
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for live-temp-422287: 423915 445675
+teardown: force-killing leaked worktree process(es) for live-temp-422287: 423915
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Worktree returned to pool.
+teardown live-temp-422287 complete (window fm-lab-temp-home-a-422315-16741:w1:p2, worktree /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse/.treehouse/project-a-de96d8/1/project-a)
+Backlog: live-temp-422287 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/data/backlog.md - move live-temp-422287 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+
+exit=0
+TEARDOWN OBSERVATION: home A root removed; home B scratch, GOTMPDIR, metadata and pane retained.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh run fm-lab-temp-home-b-422522-12234 pane read w1:p2 --source recent --lines 200
+treehouse get
+project-b on  main
+❯ treehouse get
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse
+/.treehouse/project-b-2786bc/1/project-b. Type 'exit' to return.
+project-b on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse/.tre
+ehouse/project-b-2786bc/1/project-b'
+project-b on  HEAD
+❯ export GOTMPDIR='/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home
+ B/state/live-temp-422287.tasktmp/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+project-b on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+project-b on  HEAD
+❯ export FM_TASK_ID=live-temp-422287
+project-b on  HEAD
+❯ . '/tmp/fm-live-temp-422287+573c6b283d9c13505aacbb868ba475ee31b5e0481d64d46f83b4eb765232dcfc/launch.s1791215472.431892
+.10412.sh'
+LIVE_GOTMPDIR=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B/st
+ate/live-temp-422287.tasktmp/gotmp
+project-b on  HEAD
+❯
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-teardown.sh live-temp-422287
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for live-temp-422287: 437747 451977
+teardown: force-killing leaked worktree process(es) for live-temp-422287: 437747
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Worktree returned to pool.
+teardown live-temp-422287 complete (window fm-lab-temp-home-b-422522-12234:w1:p2, worktree /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/treehouse/.treehouse/project-b-2786bc/1/project-b)
+Backlog: live-temp-422287 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home B/data/backlog.md - move live-temp-422287 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+
+exit=0
+SCENARIO PASS: equal task ids in separate homes and home-specific teardown, including paths with spaces.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh unsafe-world-writable-422287 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/data/unsafe-world-writable-422287/launch-brief.md records no ship branch; defaulting to legacy branch fm/unsafe-world-writable-422287
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/data/unsafe-world-writable-422287/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: unsafe-world-writable-422287 ships mode=local-only while the standing posture for project-a is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+error: task temp root /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/state/unsafe-world-writable-422287.tasktmp already exists and is not a private directory owned by this user; refusing to use it; inspect and remove it, then retry
+
+exit=1
+SCENARIO PASS: world-writable root refused before launch/publication; existing contents untouched.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh unsafe-symlink-422287 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/data/unsafe-symlink-422287/launch-brief.md records no ship branch; defaulting to legacy branch fm/unsafe-symlink-422287
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/data/unsafe-symlink-422287/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: unsafe-symlink-422287 ships mode=local-only while the standing posture for project-a is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+error: task temp root /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/state/unsafe-symlink-422287.tasktmp already exists and is not a private directory owned by this user; refusing to use it; inspect and remove it, then retry
+
+exit=1
+SCENARIO PASS: symlink root refused before launch/publication; existing contents untouched.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh unsafe-file-422287 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/project-a sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/data/unsafe-file-422287/launch-brief.md records no ship branch; defaulting to legacy branch fm/unsafe-file-422287
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/data/unsafe-file-422287/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: unsafe-file-422287 ships mode=local-only while the standing posture for project-a is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+error: task temp root /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-422287/home A/state/unsafe-file-422287.tasktmp already exists and is not a private directory owned by this user; refusing to use it; inspect and remove it, then retry
+
+exit=1
+SCENARIO PASS: file root refused before launch/publication; existing contents untouched.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh teardown fm-lab-temp-home-b-422522-12234
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh teardown fm-lab-temp-home-a-422315-16741
+
+exit=0

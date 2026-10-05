@@ -1,0 +1,101 @@
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh name private-reuse
+fm-lab-private-reuse-790305-5669
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh provision fm-lab-private-reuse-790305-5669
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-home
+/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-home
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-project init -q -b main
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-project add README.md
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-project -c user.name=Test -c user.email=test@example.invalid commit -qm initial
+
+exit=0
+
+$ git clone --quiet --bare /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-project /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-project.origin.git
+
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-project remote add origin file:///home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-project.origin.git
+
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-spawn.sh reuse-790302 /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-project sh -c 'printf "LIVE_GOTMPDIR=%s\n" "$GOTMPDIR"; printf "%s\n" "$GOTMPDIR" > "$GOTMPDIR/observed-env"' --mode local-only --yolo off --backend herdr
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-home
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-home/data/reuse-790302/launch-brief.md records no ship branch; defaulting to legacy branch fm/reuse-790302
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-home/data/reuse-790302/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: reuse-790302 ships mode=local-only while the standing posture for reuse-project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned reuse-790302 harness=sh kind=ship mode=local-only yolo=off window=fm-lab-private-reuse-790305-5669:w1:p2 worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/treehouse/.treehouse/reuse-project-5c65d2/1/reuse-project
+
+exit=0
+OBSERVABLE STATE {"tasktmp": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-home/state/reuse-790302.tasktmp", "mode": "0o700", "child_GOTMPDIR": "/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-home/state/reuse-790302.tasktmp/gotmp", "legacy_root_created": false}
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh run fm-lab-private-reuse-790305-5669 pane read w1:p2 --source recent --lines 200
+reuse-project on  main
+❯ treehouse get
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/treehouse
+/.treehouse/reuse-project-5c65d2/1/reuse-project. Type 'exit' to return.
+reuse-project on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/treehouse/.tre
+ehouse/reuse-project-5c65d2/1/reuse-project'
+reuse-project on  HEAD
+❯ export GOTMPDIR='/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reus
+e-home/state/reuse-790302.tasktmp/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+export FM_TASK_ID=reuse-790302
+reuse-project on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+reuse-project on  HEAD
+❯ export FM_TASK_ID=reuse-790302
+reuse-project on  HEAD
+❯ . '/tmp/fm-reuse-790302+e4421bacea62ed9ea0ecef6ff44da8e602d5e0d3cca82a8d9fd0f7124db4c7bb/launch.s1791215931.790380.251
+9.sh'
+LIVE_GOTMPDIR=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-hom
+e/state/reuse-790302.tasktmp/gotmp
+reuse-project on  HEAD
+❯
+
+exit=0
+OBSERVED: user-owned non-writable-by-others root reused, permissions tightened from 0750 to 0700, and existing scratch retained.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-teardown.sh reuse-790302
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-home
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for reuse-790302: 791482 793079
+teardown: force-killing leaked worktree process(es) for reuse-790302: 791482
+A new version of treehouse is available: v3.1.1 → v3.1.2
+Run "treehouse update" to update
+
+🌳 Worktree returned to pool.
+teardown reuse-790302 complete (window fm-lab-private-reuse-790305-5669:w1:p2, worktree /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/treehouse/.treehouse/reuse-project-5c65d2/1/reuse-project)
+Backlog: reuse-790302 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/.test-phase/run-790302/reuse-home/data/backlog.md - move reuse-790302 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+
+exit=0
+SCENARIO PASS: private root reuse and eventual cleanup.
+
+$ /home/node/.no-mistakes/worktrees/c98b859efde5/01M46APVYA67J1DXJZ9Z5ZMJSJ/bin/fm-herdr-lab.sh teardown fm-lab-private-reuse-790305-5669
+
+exit=0
