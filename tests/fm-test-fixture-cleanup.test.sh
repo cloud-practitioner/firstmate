@@ -213,12 +213,13 @@ test_remote_worker_cleanup_with_spaced_root() (
   fm_test_stop_remote_job_workers "$root" \
     || fail "cleanup failed to stop the spaced-root worker tree"
   wait "${supervisors[0]}" 2>/dev/null || true
-  [ -z "$(ps -p "${supervisors[0]},$worker" -o stat= 2>/dev/null | grep -v '^[[:space:]]*Z')" ] \
+  ! ps -p "${supervisors[0]},$worker" -o stat= 2>/dev/null | grep -qv '^[[:space:]]*Z' \
     || fail "cleanup left a spaced-root worker process running"
   [ -z "$(fm_test_remote_job_worker_pids "$root")" ] \
     || fail "worker discovery still found a worker after cleanup"
-  kill -0 "${supervisors[1]}" && kill -0 "$sibling_worker" \
-    || fail "cleanup stopped another fixture's worker"
+  if ! kill -0 "${supervisors[1]}" || ! kill -0 "$sibling_worker"; then
+    fail "cleanup stopped another fixture's worker"
+  fi
   expected=$(printf '%s\n' "${supervisors[1]}" "$sibling_worker" | sort -n)
   [ "$(fm_test_remote_job_worker_pids "$sibling" | sort -n)" = "$expected" ] \
     || fail "cleanup disturbed the sibling worker tree"
