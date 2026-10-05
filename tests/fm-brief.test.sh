@@ -954,10 +954,9 @@ test_ship_and_scout_teach_validation_round_pause() {
 # Concurrent workers share /tmp, so every ship (all modes) and scout brief must
 # send scratch files and the no-mistakes intent file to the task's own temp root.
 test_scaffolds_name_task_temp_root_for_scratch() {
-  local home kind id brief root
+  local home kind id brief
   home="$TMP_ROOT/task-temp-root-home"
   mkdir -p "$home/data" "$home/config"
-  root="$(cd "$home" && pwd -P)/state"
   for kind in ship:no-mistakes ship:direct-PR ship:local-only scout; do
     id="brief-task-tmp-${kind/:/-}"
     case "$kind" in
@@ -965,7 +964,7 @@ test_scaffolds_name_task_temp_root_for_scratch() {
       *) FM_HOME="$home" "$ROOT/bin/fm-brief.sh" "$id" firstmate --mode "${kind#ship:}" >/dev/null 2>&1 ;;
     esac
     brief="$home/data/$id/brief.md"
-    assert_grep "your task temp root (the \`tasktmp=\` directory recorded in \`$root/$id.meta\`)" "$brief" \
+    assert_grep "your task temp root (the directory named by \`\$FM_TASK_TMP\`)" "$brief" \
       "$kind brief did not name the task temp root"
     assert_grep 'never write scratch to a fixed path in shared /tmp' "$brief" \
       "$kind brief did not forbid fixed shared /tmp scratch paths"

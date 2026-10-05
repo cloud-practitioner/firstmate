@@ -121,12 +121,9 @@ Project instructions still govern the work wherever they do not conflict with th
 EOF
 }
 
-# The task temp root ship/scout scaffolds and promotion contracts name for
-# scratch files. bin/fm-spawn.sh creates it before the worker starts and records its
-# path as tasktmp= in the task's meta, so naming that record stays correct
-# wherever fm-spawn places the root.
-fm_task_temp_root_phrase() {  # <state-dir> <task-id>
-  printf "your task temp root (the \`tasktmp=\` directory recorded in \`%s/%s.meta\`)" "$1" "$2"
+# Spawn exports the scratch root directly, so workers need no metadata access.
+fm_task_temp_root_phrase() {
+  printf '%s' "your task temp root (the directory named by \`\$FM_TASK_TMP\`)"
 }
 
 # Closed-set gate shared by every forge-aware renderer and bin/fm-brief.sh, so a
