@@ -203,6 +203,56 @@ fm_test_reap_watchers() {
   rm -f "$FM_TEST_WATCHER_REGISTRY"
 }
 
+# --- remote-job worker trees ---------------------------------------------------
+#
+# A remote fm-on call through the real entrypoint starts a detached Linux
+# remote-job worker tree from the route's code root: a restart supervisor that
+# leads its own process group and reparents to init, its serving child, and its
+# lanes. worker.pid names only the serving child that owns the queue lock, so
+# stopping that one tree misses any other tree a late caller, a lost ownership
+# race, or a restart left running, and a tree whose code root outlives the
+# fixture keeps serving forever. A suite whose route uses a code root private to
+# its fixture stops them all with fm_test_stop_remote_job_workers. It matches
+# the worker script's full path under that exact root, never a bare script name,
+# so it cannot reach another suite's worker, and it needs no fixture file, so it
+# still works after an interrupt removed the fixture first.
+
+# Echo the pid of every live worker process launched from <code-root>/bin.
+fm_test_remote_job_worker_pids() {  # <code-root>
+  local worker="$1/bin/fm-remote-job-worker.sh" pid command interpreter
+  ps -A -ww -o pid= -o command= 2>/dev/null | while read -r pid command; do
+    interpreter=${command%% *}
+    case "${interpreter##*/}" in bash|sh) ;; *) continue ;; esac
+    command=${command#* }
+    case "$command" in "$worker"|"$worker "*) printf '%s\n' "$pid" ;; esac
+  done
+}
+
+# Echo each distinct process group those worker processes belong to: one line
+# per worker tree, since a tree's supervisor, serving child, and lanes share it.
+fm_test_remote_job_worker_groups() {  # <code-root>
+  local pid
+  for pid in $(fm_test_remote_job_worker_pids "$1"); do
+    ps -o pgid= -p "$pid" 2>/dev/null | tr -d '[:space:]'
+    echo
+  done | grep . | sort -u
+}
+
+# Stop every worker tree launched from <code-root> through the worker library's
+# own tree stop. Non-zero when a worker process from that root survives.
+fm_test_stop_remote_job_workers() {  # <code-root>
+  local root=$1 pid attempts=0
+  if ! declare -F fm_remote_job_stop_worker_tree >/dev/null; then
+    # shellcheck source=bin/fm-remote-job-lib.sh
+    . "$ROOT/bin/fm-remote-job-lib.sh" || return 1
+  fi
+  while pid=$(fm_test_remote_job_worker_pids "$root" | head -n 1); [ -n "$pid" ]; do
+    attempts=$((attempts + 1))
+    [ "$attempts" -le 20 ] || return 1
+    fm_remote_job_stop_worker_tree "$pid" || true
+  done
+}
+
 # Ceiling on how long a fixture's blocking stub may keep polling. A stub that
 # waits for a trigger file by re-running `sleep` is a high-frequency source of
 # process spawns, and one that outlives its test - because the test was killed

@@ -11,28 +11,33 @@ mkdir -p "$TMP_ROOT"
 TMP_ROOT=$(cd "$TMP_ROOT" && pwd -P)
 PARENT="$TMP_ROOT/parent"
 REMOTE="$TMP_ROOT/remote"
+REMOTE_ROOT="$TMP_ROOT/remote-root"
 FAKEBIN=$(fm_fakebin "$TMP_ROOT/fake")
 CLAIMS="$TMP_ROOT/claims"
-mkdir -p "$PARENT/data" "$PARENT/state" "$REMOTE/state" "$REMOTE/data/reply" "$CLAIMS"
+mkdir -p "$PARENT/data" "$PARENT/state" "$REMOTE/state" "$REMOTE/data/reply" "$CLAIMS" "$REMOTE_ROOT"
 # shellcheck source=bin/fm-remote-job-lib.sh
 . "$ROOT/bin/fm-remote-job-lib.sh"
-# The recorded worker pid is the serving child, not its restart supervisor, so
-# stopping that pid alone leaves the supervisor to respawn - the leak
-# tests/fm-remote-job-orphan-reap.test.sh pins. Stop the whole worker tree.
+# The route's remote code root is a tracked copy private to this fixture, so
+# the cleanup can stop every worker tree launched from it, and a tree that
+# escapes stops itself once the root is removed instead of serving on from a
+# checkout that outlives the fixture.
 cleanup() {
-  local worker_pid=''
   FM_HOME="$PARENT" FM_PROCEVENT_CLAIM_ROOT="$CLAIMS" \
     "$ROOT/bin/fm-procevent.sh" sweep-home >/dev/null 2>&1 || true
-  if [ -f "$TMP_ROOT/remote-jobs/worker.pid" ]; then
-    worker_pid=$(cat "$TMP_ROOT/remote-jobs/worker.pid")
-    fm_remote_job_stop_worker_tree "$worker_pid" || true
-  fi
+  fm_test_stop_remote_job_workers "$REMOTE_ROOT" || true
   rm -rf -- "$TMP_ROOT"
 }
 trap cleanup EXIT
 
+(cd "$ROOT" && tar -cf - AGENTS.md bin) | (cd "$REMOTE_ROOT" && tar -xf -)
+git -C "$REMOTE_ROOT" init -q -b main
+git -C "$REMOTE_ROOT" config user.email test@example.com
+git -C "$REMOTE_ROOT" config user.name Test
+git -C "$REMOTE_ROOT" add .
+git -C "$REMOTE_ROOT" commit -qm 'remote fixture root'
+
 cat > "$PARENT/data/secondmates.md" <<EOF
-- ios - iOS delivery (host: remote-mac; root: $ROOT; home: $REMOTE; scope: iOS work; projects: alpha; added 2026-08-02)
+- ios - iOS delivery (host: remote-mac; root: $REMOTE_ROOT; home: $REMOTE; scope: iOS work; projects: alpha; added 2026-08-02)
 EOF
 printf '# Detailed remote answer\n\nThe build is green.\n' > "$REMOTE/data/reply/report.md"
 printf '# Mentioned but never offered\n' > "$REMOTE/data/reply/prose-only.md"
@@ -67,7 +72,7 @@ remote_env() {
   FM_ROOT_OVERRIDE="$ROOT" \
   FM_PROCEVENT_CLAIM_ROOT="$CLAIMS" \
   FM_SSH_BIN="$FAKEBIN/fake-ssh" \
-  FM_FAKE_REMOTE_ENTRYPOINT="$ROOT/bin/fm-remote-entrypoint.sh" \
+  FM_FAKE_REMOTE_ENTRYPOINT="$REMOTE_ROOT/bin/fm-remote-entrypoint.sh" \
   FM_REMOTE_JOB_PLATFORM_OVERRIDE=Linux \
   FM_REMOTE_JOB_STATE_ROOT="$TMP_ROOT/remote-jobs" \
   FM_REMOTE_REPLY_WAIT_SECONDS="${FM_REMOTE_REPLY_WAIT_SECONDS:-10}" \
@@ -1127,5 +1132,18 @@ assert_absent "$PARENT/state/remote-replies/ios.cursor" "adapter retirement left
 assert_absent "$PARENT/state/remote-replies/ios.caught-up" \
   "adapter retirement left a caught-up watermark a later route could inherit"
 pass "remote reply retirement quiesces and refuses unhandled captured results"
+
+# Every remote call above shares one worker tree. Another tree means an ensure
+# misread the live owner as gone and started a tree that can never take the
+# lock. The stop the EXIT cleanup runs must then leave no worker from the
+# fixture root.
+worker_groups=$(fm_test_remote_job_worker_groups "$REMOTE_ROOT")
+[ "$(printf '%s' "$worker_groups" | grep -c .)" -le 1 ] \
+  || fail "the suite's remote calls left more than one worker tree: $(printf '%s' "$worker_groups" | tr '\n' ' ')"
+FM_HOME="$PARENT" FM_PROCEVENT_CLAIM_ROOT="$CLAIMS" \
+  "$ROOT/bin/fm-procevent.sh" sweep-home >/dev/null 2>&1 || true
+fm_test_stop_remote_job_workers "$REMOTE_ROOT" \
+  || fail "the fixture cleanup left remote-job worker processes running"
+pass "the suite shares one remote-job worker tree and its cleanup stops every worker"
 
 echo "ALL TESTS PASSED"
