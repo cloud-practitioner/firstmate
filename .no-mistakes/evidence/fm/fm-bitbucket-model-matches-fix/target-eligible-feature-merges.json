@@ -1,0 +1,317 @@
+{
+  "scenario": "target-eligible-feature-merges",
+  "version": "target",
+  "command": "FM_HOME=<disposable marked lab> HTTPS_PROXY=<loopback TLS backend> CURL_CA_BUNDLE=<disposable cert> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/validation/disposable-repo/pull-requests/7",
+  "destination": "feature/login",
+  "model": {
+    "development": {
+      "name": "main",
+      "branch": {
+        "name": "main"
+      }
+    },
+    "production": {
+      "name": "production",
+      "branch": {
+        "name": "production"
+      }
+    },
+    "branch_types": [
+      {
+        "kind": "release",
+        "prefix": "release/"
+      },
+      {
+        "kind": "feature",
+        "prefix": "feature/"
+      }
+    ]
+  },
+  "restrictions": [
+    {
+      "kind": "require_passing_builds_to_merge",
+      "branch_match_kind": "branching_model",
+      "branch_type": "feature",
+      "value": 1
+    }
+  ],
+  "successful_builds": 1,
+  "exit_code": 0,
+  "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/validation/disposable-repo/pull-requests/7 is merged at the verified head 2969395e9b4bf3801f27f3d0e2f37d335e8bb63a\n",
+  "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M45H95PZP7DH9ZAFCYH5BZKJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M45H95PZP7DH9ZAFCYH5BZKJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/validation/disposable-repo/pull-requests/7 is open, with every unwaived build green and every merge check met at head 2969395e9b4bf3801f27f3d0e2f37d335e8bb63a\n",
+  "final_pr_state": "MERGED",
+  "merge_posts": [
+    {
+      "type": "pullrequest",
+      "close_source_branch": false
+    }
+  ],
+  "persisted_state": {
+    "task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M45H95PZP7DH9ZAFCYH5BZKJ/.fm-bitbucket-validation/fm-lab-target-eligible-feature-merges/projects/repo\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M45H95PZP7DH9ZAFCYH5BZKJ/.fm-bitbucket-validation/fm-lab-target-eligible-feature-merges/projects/repo\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/validation/disposable-repo/pull-requests/7\npr_head=2969395e9b4bf3801f27f3d0e2f37d335e8bb63a\n",
+    "task-x1.pr-poll-merge-notified": "fm-pr-poll-merge-notified-v1\nbitbucket\nbitbucket.org\nvalidation/disposable-repo\n7\n",
+    ".wake-queue": "1791187829\t1\tcheck\tmerged-task-x1-https://bitbucket.org/validation/disposable-repo/pull-requests/7\tcheck: merge landed: task-x1 https://bitbucket.org/validation/disposable-repo/pull-requests/7\n"
+  },
+  "http_events": [
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/pullrequests/7",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "type": "pullrequest",
+        "id": 7,
+        "state": "OPEN",
+        "draft": false,
+        "source": {
+          "branch": {
+            "name": "fm/task-x1"
+          },
+          "commit": {
+            "hash": "2969395e9b4b",
+            "type": "commit"
+          }
+        },
+        "destination": {
+          "branch": {
+            "name": "feature/login"
+          },
+          "commit": {
+            "hash": "2969395e9b4b"
+          }
+        },
+        "participants": [],
+        "close_source_branch": true
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/commit/2969395e9b4b?fields=hash",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "hash": "2969395e9b4bf3801f27f3d0e2f37d335e8bb63a"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/pullrequests/7",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "type": "pullrequest",
+        "id": 7,
+        "state": "OPEN",
+        "draft": false,
+        "source": {
+          "branch": {
+            "name": "fm/task-x1"
+          },
+          "commit": {
+            "hash": "2969395e9b4b",
+            "type": "commit"
+          }
+        },
+        "destination": {
+          "branch": {
+            "name": "feature/login"
+          },
+          "commit": {
+            "hash": "2969395e9b4b"
+          }
+        },
+        "participants": [],
+        "close_source_branch": true
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/commit/2969395e9b4b?fields=hash",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "hash": "2969395e9b4bf3801f27f3d0e2f37d335e8bb63a"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/commit/2969395e9b4bf3801f27f3d0e2f37d335e8bb63a/statuses?pagelen=100",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "values": [
+          {
+            "key": "pipeline",
+            "name": "Disposable Pipeline",
+            "state": "SUCCESSFUL"
+          }
+        ],
+        "pagelen": 100,
+        "page": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/branch-restrictions?pagelen=100",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "values": [
+          {
+            "kind": "require_passing_builds_to_merge",
+            "branch_match_kind": "branching_model",
+            "branch_type": "feature",
+            "value": 1
+          }
+        ],
+        "pagelen": 100,
+        "page": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/effective-branching-model",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "development": {
+          "name": "main",
+          "branch": {
+            "name": "main"
+          }
+        },
+        "production": {
+          "name": "production",
+          "branch": {
+            "name": "production"
+          }
+        },
+        "branch_types": [
+          {
+            "kind": "release",
+            "prefix": "release/"
+          },
+          {
+            "kind": "feature",
+            "prefix": "feature/"
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/pullrequests/7",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "type": "pullrequest",
+        "id": 7,
+        "state": "OPEN",
+        "draft": false,
+        "source": {
+          "branch": {
+            "name": "fm/task-x1"
+          },
+          "commit": {
+            "hash": "2969395e9b4b",
+            "type": "commit"
+          }
+        },
+        "destination": {
+          "branch": {
+            "name": "feature/login"
+          },
+          "commit": {
+            "hash": "2969395e9b4b"
+          }
+        },
+        "participants": [],
+        "close_source_branch": true
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/commit/2969395e9b4b?fields=hash",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "hash": "2969395e9b4bf3801f27f3d0e2f37d335e8bb63a"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/2.0/repositories/validation/disposable-repo/pullrequests/7/merge",
+      "authenticated": true,
+      "request_json": {
+        "type": "pullrequest",
+        "close_source_branch": false
+      },
+      "status": 200,
+      "response_json": {
+        "type": "pullrequest",
+        "id": 7,
+        "state": "MERGED",
+        "draft": false,
+        "source": {
+          "branch": {
+            "name": "fm/task-x1"
+          },
+          "commit": {
+            "hash": "2969395e9b4b",
+            "type": "commit"
+          }
+        },
+        "destination": {
+          "branch": {
+            "name": "feature/login"
+          },
+          "commit": {
+            "hash": "2969395e9b4b"
+          }
+        },
+        "participants": [],
+        "close_source_branch": true
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/2.0/repositories/validation/disposable-repo/pullrequests/7",
+      "authenticated": true,
+      "request_json": null,
+      "status": 200,
+      "response_json": {
+        "type": "pullrequest",
+        "id": 7,
+        "state": "MERGED",
+        "draft": false,
+        "source": {
+          "branch": {
+            "name": "fm/task-x1"
+          },
+          "commit": {
+            "hash": "2969395e9b4b",
+            "type": "commit"
+          }
+        },
+        "destination": {
+          "branch": {
+            "name": "feature/login"
+          },
+          "commit": {
+            "hash": "2969395e9b4b"
+          }
+        },
+        "participants": [],
+        "close_source_branch": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+SCENARIO: target-development-refuses (target)
+$ FM_HOME=<disposable marked lab> HTTPS_PROXY=<loopback TLS backend> CURL_CA_BUNDLE=<disposable cert> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/validation/disposable-repo/pull-requests/7
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M45H95PZP7DH9ZAFCYH5BZKJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M45H95PZP7DH9ZAFCYH5BZKJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/validation/disposable-repo/pull-requests/7
+  - base branch main requires 2 successful builds, and 1 reported at head 1c38c5b35e1b5b0519674268abd89d6ec7e68317
+Exit: 1
+Backend PR state: OPEN
+Merge POSTs: []
+Persisted product state:
+{
+  "task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M45H95PZP7DH9ZAFCYH5BZKJ/.fm-bitbucket-validation/fm-lab-target-development-refuses/projects/repo\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M45H95PZP7DH9ZAFCYH5BZKJ/.fm-bitbucket-validation/fm-lab-target-development-refuses/projects/repo\nkind=ship\nmode=no-mistakes\npr=https://bitbucket.org/validation/disposable-repo/pull-requests/7\npr_head=1c38c5b35e1b5b0519674268abd89d6ec7e68317\n"
+}

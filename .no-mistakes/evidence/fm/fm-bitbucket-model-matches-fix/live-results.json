@@ -1,0 +1,65 @@
+[
+  {
+    "scenario": "base-eligible-feature-refuses",
+    "version": "base",
+    "destination": "feature/login",
+    "exit_code": 1,
+    "final_pr_state": "OPEN",
+    "merge_posts": []
+  },
+  {
+    "scenario": "target-eligible-feature-merges",
+    "version": "target",
+    "destination": "feature/login",
+    "exit_code": 0,
+    "final_pr_state": "MERGED",
+    "merge_posts": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false
+      }
+    ]
+  },
+  {
+    "scenario": "target-unmet-feature-refuses",
+    "version": "target",
+    "destination": "feature/login",
+    "exit_code": 1,
+    "final_pr_state": "OPEN",
+    "merge_posts": []
+  },
+  {
+    "scenario": "target-other-type-merges",
+    "version": "target",
+    "destination": "release/2026",
+    "exit_code": 0,
+    "final_pr_state": "MERGED",
+    "merge_posts": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false
+      }
+    ]
+  },
+  {
+    "scenario": "target-prefix-lookalike-merges",
+    "version": "target",
+    "destination": "featureish/login",
+    "exit_code": 0,
+    "final_pr_state": "MERGED",
+    "merge_posts": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false
+      }
+    ]
+  },
+  {
+    "scenario": "target-development-refuses",
+    "version": "target",
+    "destination": "main",
+    "exit_code": 1,
+    "final_pr_state": "OPEN",
+    "merge_posts": []
+  }
+]
