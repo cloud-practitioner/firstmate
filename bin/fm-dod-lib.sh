@@ -121,6 +121,14 @@ Project instructions still govern the work wherever they do not conflict with th
 EOF
 }
 
+# The task temp root every scaffold and promotion contract names for scratch
+# files. bin/fm-spawn.sh creates it before the worker starts and records its
+# path as tasktmp= in the task's meta, so naming that record stays correct
+# wherever fm-spawn places the root.
+fm_task_temp_root_phrase() {  # <state-dir> <task-id>
+  printf "your task temp root (the \`tasktmp=\` directory recorded in \`%s/%s.meta\`)" "$1" "$2"
+}
+
 # Closed-set gate shared by every forge-aware renderer and bin/fm-brief.sh, so a
 # caller cannot reach a half-rendered contract. local-only is refused rather than
 # rendered with an inert annotation: it publishes nothing, and its landing
@@ -310,6 +318,7 @@ Preserve the actual words without adding speaker labels or direct address; the s
 For a legacy brief with no such subsection, include only words on lines marked \`[captain] \`, excluding that metadata prefix; never copy its mixed \`# Task\` wholesale.
 If it has no provenance-marked captain words, stop and ask firstmate instead of starting no-mistakes.
 Do not include \`## Firstmate spec\`, later Firstmate build constraints, or your own decisions and tradeoffs.
+If you pass \`--intent\` through a file, write it under your task temp root named in the Rules, never at a fixed path in shared /tmp.
 The \`--intent\` string you pass must be self-sufficient: that string plus the codebase must let a reader reconstruct roughly the same specification, without depending on a separate report, a PR, or context that lives only in this conversation.
 When the captain's intent refers to a report, decision, or PR ("do items 1, 2, 3, and 7 of the report"), write the substance of the referenced items into \`--intent\` in the captain's terms, not only the pointer; that substance is the captain's ask by reference, while Firstmate's build instructions and your own decisions still stay out.
 This replaces the no-mistakes skill's advice to enrich \`--intent\` with decisions and tradeoffs; that advice does not apply to Firstmate-dispatched work.
