@@ -121,8 +121,8 @@ Project instructions still govern the work wherever they do not conflict with th
 EOF
 }
 
-# The task temp root every scaffold and promotion contract names for scratch
-# files. bin/fm-spawn.sh creates it before the worker starts and records its
+# The task temp root ship/scout scaffolds and promotion contracts name for
+# scratch files. bin/fm-spawn.sh creates it before the worker starts and records its
 # path as tasktmp= in the task's meta, so naming that record stays correct
 # wherever fm-spawn places the root.
 fm_task_temp_root_phrase() {  # <state-dir> <task-id>
