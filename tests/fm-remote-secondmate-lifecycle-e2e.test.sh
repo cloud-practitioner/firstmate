@@ -31,7 +31,6 @@ PARENT_ROUTE_INBOX="$REMOTE_HOME/state/parent-route/ios.inbox"
 CLAIMS="$TMP_ROOT/claims"
 mkdir -p "$PARENT/data" "$PARENT/state" "$PARENT/config" "$PARENT/projects" "$REMOTE_ROOT" "$CLAIMS"
 cleanup() {
-  local worker_pid=''
   touch "$TMP_ROOT/provision.release" "$TMP_ROOT/seed.release" "$TMP_ROOT/handoff.release" \
     "$TMP_ROOT/inherit.release" "$TMP_ROOT/launch.release" "$TMP_ROOT/race-clone.release" 2>/dev/null || true
   # A watcher leg cut short by a failed assertion is still polling the root.
@@ -41,13 +40,9 @@ cleanup() {
   fi
   FM_HOME="$PARENT" FM_PROCEVENT_CLAIM_ROOT="$CLAIMS" \
     "$ROOT/bin/fm-procevent.sh" sweep-home >/dev/null 2>&1 || true
-  if [ -f "$TMP_ROOT/remote-jobs/worker.pid" ]; then
-    worker_pid=$(cat "$TMP_ROOT/remote-jobs/worker.pid")
-    # The published pid is the serving child; killing it alone lets its
-    # detached supervisor restart it while the fixture root is being removed.
-    . "$ROOT/bin/fm-remote-job-lib.sh"
-    fm_remote_job_stop_worker_tree "$worker_pid" || true
-  fi
+  # Stop every worker tree the fixture root launched, not only the one
+  # worker.pid names, before the root is removed under them.
+  fm_test_stop_remote_job_workers "$REMOTE_ROOT" || true
   rm -rf -- "$TMP_ROOT"
 }
 trap cleanup EXIT
@@ -1595,5 +1590,18 @@ jq -e --arg workspace "$SIBLING_WORKSPACE" --arg pane "$SIBLING_PANE" '
 assert_no_grep 'session stop' "$HERDR_LOG" "remote retirement stopped the shared fm-remote session"
 assert_no_grep 'server stop' "$HERDR_LOG" "remote retirement stopped the shared fm-remote server"
 pass "remote retirement refuses child work, then removes only its own endpoint while a shared-session sibling survives"
+
+# Every remote call above shares one worker tree. Another tree means an ensure
+# misread the live owner as gone and started a tree that can never take the
+# lock. The stop the EXIT cleanup runs must then leave no worker from the
+# fixture root.
+worker_groups=$(fm_test_remote_job_worker_groups "$REMOTE_ROOT")
+[ "$(printf '%s' "$worker_groups" | grep -c .)" -le 1 ] \
+  || fail "the suite's remote calls left more than one worker tree: $(printf '%s' "$worker_groups" | tr '\n' ' ')"
+FM_HOME="$PARENT" FM_PROCEVENT_CLAIM_ROOT="$CLAIMS" \
+  "$ROOT/bin/fm-procevent.sh" sweep-home >/dev/null 2>&1 || true
+fm_test_stop_remote_job_workers "$REMOTE_ROOT" \
+  || fail "the fixture cleanup left remote-job worker processes running"
+pass "the suite shares one remote-job worker tree and its cleanup stops every worker"
 
 echo "ALL TESTS PASSED"
