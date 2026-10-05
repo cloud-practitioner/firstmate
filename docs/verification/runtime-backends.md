@@ -1582,7 +1582,7 @@ Real captures verified these active distinctions:
 - Pi uses content between complete separator rows and requires exact native Pi identity.
 - Dim or faint suggestion text is ghost content, while normally styled text is pending input.
 - Grok dark truecolor placeholders are ghost content, while bright truecolor typed input remains pending.
-- A bare shell prompt has no safe agent-composer container and is unknown.
+- Bare prompts using the classifier's shell-glyph set are unknown; `bin/fm-composer-lib.sh` owns the glyph distinction.
 - Codex 0.154's idle braille starfield rows are composer furniture, with the dated Herdr evidence and refresh command in [Composer classification matrix](#composer-classification-matrix).
 
 `tests/fm-composer-ghost.test.sh`, `tests/fm-composer-lib.test.sh`, and the Herdr composer cases pin the exact captured ANSI bytes.
@@ -1636,7 +1636,7 @@ ok - real herdr: an agent that does not stop fails closed instead of being repor
 ```
 
 The registry read through `herdr pane report-agent` is the same source `fm_backend_herdr_agent_state` classifies, and since 2026-09-10 that registration counts as an agent only while `pane process-info` shows a harness process behind it, so the guard backs the registration with a real process named like a harness (a symlink to `sleep`) and then stops that process, with no real harness launched.
-On Herdr 0.9.2 and later the guard runs the agent process under a nested shell, because Herdr releases a registration over a pane whose only foreground job is its own idle shell within about a second, which would race the stale-registration case; the nested shell keeps the registration after the agent exits, as measured under "Stale agent registration" below.
+The guard runs the stand-in under a nested shell to preserve the stale-registration fixture; [Stale agent registration](#stale-agent-registration) owns the versioned retention behavior.
 That command is the guard that refreshes this record; run it after every Herdr upgrade rather than trusting the version above.
 
 For Pi on Herdr 0.9.0, `herdr agent get` reflects whether the agent process remains live; its registration does not persist merely because the pane and parent shell do.

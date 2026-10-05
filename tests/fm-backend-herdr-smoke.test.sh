@@ -135,12 +135,10 @@ pass "real herdr: create_task prunes the freshly-created workspace's seeded defa
 
 # 1. A genuinely LIVE duplicate (a real registered agent, via herdr's own
 #    `pane report-agent`) must still refuse exactly as before.
-#    The registration is backed by a running agent-named foreground process
-#    (a `claude` symlink to `sleep`, as tests/fm-control-herdr-smoke.test.sh
-#    does): Herdr 0.9.3 releases a report-agent registration within about a
-#    second once the pane's foreground is its own top shell, so a report on an
-#    idle shell pane is not a live agent and would race that release
-#    (docs/verification/runtime-backends.md "Stale agent registration").
+#    Back the registration with an agent-named foreground process so this
+#    tests a live duplicate, not an idle-shell record that may disappear.
+#    Versioned retention behavior: docs/verification/runtime-backends.md
+#    "Stale agent registration".
 LIVE_DUP_LABEL="fm-smoke-livedup"
 LIVE_DUP_IDS=$(fm_backend_herdr_create_task "$CONTAINER" "$LIVE_DUP_LABEL" /tmp) || fail "could not create the live-duplicate scenario's tab"
 read -r LIVE_DUP_TAB_ID LIVE_DUP_PANE_ID <<EOF

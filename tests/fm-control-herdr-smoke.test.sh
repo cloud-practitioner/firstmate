@@ -256,12 +256,11 @@ start_agent_process() {
     || version_fail "a real agent-named foreground process reads '$(fm_backend_herdr_pane_process_state "$SESSION" "$PANE_ID")' rather than 'agent' through pane process-info"
 }
 
-# Herdr keeps a registration after its agent exits only when a nested
-# interactive shell sits under the pane's top shell (issue #4115); an agent that
-# exits straight back to the top shell is released within about a second, which
-# would race the stale-registration case below. So the agent runs under a
-# nested shell, the crew shape `treehouse get` leaves behind. It inherits the
-# neutral PS1 and HISTFILE from the top shell's environment.
+# Keep a nested interactive shell in the foreground after the stand-in exits
+# so the stale-registration assertion below cannot race idle-shell cleanup.
+# Versioned retention behavior: docs/verification/runtime-backends.md
+# "Stale agent registration". The nested shell inherits the neutral PS1 and
+# HISTFILE from the top shell's environment.
 fm_backend_herdr_send_text_line "$SESSION:$PANE_ID" "$BASH_Q --noprofile --norc" \
   || fail "could not start a nested shell in the task pane"
 start_agent_process

@@ -163,12 +163,10 @@ pass "fixed: the workspace holds exactly the 2 replacement tabs after both respa
 # the freshly-respawned panes, then confirm a further same-labeled spawn
 # attempt refuses exactly as before - the husk fix must never touch a pane
 # that actually has something registered in it.
-# The registration is backed by a running agent-named foreground process
-# (a `claude` symlink to `sleep`, as tests/fm-backend-herdr-smoke.test.sh
-# does): Herdr 0.9.3 releases a report-agent registration within about a
-# second once the pane's foreground is its own top shell, so a report on an
-# idle shell pane is not a live agent and would race that release
-# (docs/verification/runtime-backends.md "Stale agent registration").
+# Back the registration with an agent-named foreground process so this
+# tests a live duplicate, not an idle-shell record that may disappear.
+# Versioned retention behavior: docs/verification/runtime-backends.md
+# "Stale agent registration".
 
 LIVE_SLEEP=$(command -v sleep) || fail "sleep not found"
 ln -s "$LIVE_SLEEP" "$SCRATCH/claude"
