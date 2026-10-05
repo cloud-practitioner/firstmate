@@ -1,0 +1,1 @@
+Production quota poller consumed disposable provider feeds: two transient failures recovered; a healthy read reset the failure streak; three consecutive failures surfaced an error.

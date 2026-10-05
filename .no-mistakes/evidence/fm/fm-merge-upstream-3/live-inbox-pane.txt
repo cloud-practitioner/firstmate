@@ -1,0 +1,40 @@
+
+ ▀▀█  v1.0.0
+ █▀ █ escape interrupt · ctrl+c/ctrl+d clear/exit · / commands · ! bash · ctrl+o more
+ Press ctrl+o to show full startup help and loaded resources.
+
+ Pi can explain its own features and look up its docs. Ask it how to use or extend Pi.
+
+[Extensions]
+  hold-provider.ts
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ Hold this provider turn open for the busy-inbox proof.
+
+
+── ⠴ Working ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86 (detached)
+11.8%/4.1k (auto)                                                                                                   hold
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+quota: quota-codex
+status: exhausted
+detail: {"provider":"codex","best":{"scope":"all_models","status":"known","effectivePercentRemaining":0,"boundedBy":["five_hour"],"limitingWindowIds":["five_hour"],"pace":{"status":"ahead","aheadWindowIds":["five_hour"],"worstReservePercentPoints":-19.9955,"worstReserveWindowId":"five_hour"},"runway":{"status":"exhausted_now","usableRunwaySeconds":0,"limitingWindowId":"five_hour","projectedExhaustedAt":"2026-10-05T15:31:58.603Z"},"selection":{"status":"known","spendPriority":-1.2499}}}
+condition_polls: 3

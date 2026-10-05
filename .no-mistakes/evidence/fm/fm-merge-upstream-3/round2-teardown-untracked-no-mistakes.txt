@@ -1,0 +1,19 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.3UZGZ0
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+REFUSED: worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.3UZGZ0/projects/no-mistakes-untracked/task has uncommitted changes.
+uncommitted changes present (untracked-only leftovers)
+untracked paths (up to 10):
+  "00 proof scratch/"
+  01-scratch.txt
+  02-scratch.txt
+  03-scratch.txt
+  04-scratch.txt
+  05-scratch.txt
+  06-scratch.txt
+  07-scratch.txt
+  08-scratch.txt
+  09-scratch.txt
+  ... additional untracked paths omitted
+Commit them (or get the captain's explicit OK to discard, then --force).
+
+Observed: exit=1; metadata and git status unchanged; private runtime endpoint still alive.

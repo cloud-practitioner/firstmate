@@ -1,0 +1,18 @@
+queue job=job-ZmlERH
+state=done
+exit=0
+elapsed_seconds=1
+side_effect=ran
+seeded_claims=17460
+expired_claims=8730
+ready_owner=3481912
+ensure_1_owner=3481912 repaired=0
+ensure_2_owner=3481912 repaired=0
+ensure_3_owner=3481912 repaired=0
+serving_paused_seconds=12
+recreated_ready_owner=3481912
+recreated_ready_mode=600
+retained_owner_after_pause=3481912
+remaining_claims=8731
+expired_first_exists=no
+fresh_boundary_exists=yes

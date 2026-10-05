@@ -1,0 +1,5 @@
+mode=optin primary_pid=3131499 predecessor_watcher=3132927
+Primary paused across predecessor exit; successor intentionally unavailable for 3 seconds.
+successor_watcher=3137573
+next_successor_watcher=3142479
+Opt-in diagnostic log exists and respects its 20-line bound.

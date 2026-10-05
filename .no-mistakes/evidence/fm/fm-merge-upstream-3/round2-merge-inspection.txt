@@ -1,0 +1,50 @@
+commit bdc969f0f6a5caba5f140af36ea6a5b822c1589b
+Merge: 72563c7 f470a01
+Author:     Vu Nguyen <cloud.practitioner@outlook.com>
+AuthorDate: Mon Oct 5 12:56:05 2026 +0000
+Commit:     Vu Nguyen <cloud.practitioner@outlook.com>
+CommitDate: Mon Oct 5 12:56:05 2026 +0000
+
+    Merge upstream firstmate main (f470a01c) into the fork
+    
+    # Conflicts:
+    #       bin/fm-brief.sh
+    #       tests/fm-calm-pi-extension.test.sh
+f470a01 fix: speed up remote-job sequence claim cleanup (#6575)
+9ea0c41 fix: prevent unnecessary remote worker turnover (#6431)
+42dd906 fix(bin): escalate inbox instructions blocked by busy workers (#6518)
+918a5bf fix(bin): clarify scratch guidance and dirty teardown refusals (#6505)
+2e659ff fix(bin): tolerate transient quota read failures (#6490)
+fede619 test(pi): accept Pi 1.0.1's renamed HTML export renderer lookup (#6530)
+1f3e769 fix(pi): hide duplicate assistant finals from hidden processing retries (#5863)
+e31bc6e fix(pi): restore watcher continuity across successor gaps and make extension log opt-in (#5489)
+
+Upstream Pi-test identity:
+Selected file exactly matches upstream parent.
+commit bdc969f0f6a5caba5f140af36ea6a5b822c1589b
+Merge: 72563c7 f470a01
+Author: Vu Nguyen <cloud.practitioner@outlook.com>
+Date:   Mon Oct 5 12:56:05 2026 +0000
+
+    Merge upstream firstmate main (f470a01c) into the fork
+    
+    # Conflicts:
+    #       bin/fm-brief.sh
+    #       tests/fm-calm-pi-extension.test.sh
+
+diff --cc bin/fm-brief.sh
+index a25efb3,871673d..99076ab
+--- a/bin/fm-brief.sh
++++ b/bin/fm-brief.sh
+@@@ -666,8 -661,9 +666,10 @@@ If the top-level path is the primary ch
+  
+  # Rules
+  $RULE1
+- 2. Stay inside this worktree; modify nothing outside it except the status file and scratch files under your task temp root.
++ 2. Keep project edits inside this worktree; keep proof and scratch output outside it, under \`$DATA/$ID/\` or a temporary directory.
++    Outside the worktree, write only that task material and the status and steering-inbox records authorized below.
++    Leave the worktree clean before reporting done.
+ +$TASK_TMP_RULE
+  3. Use gh-axi for GitHub operations and chrome-devtools-axi for browser operations.
+  4. Report status by appending one line:
+     \`$STATUS_APPEND\`

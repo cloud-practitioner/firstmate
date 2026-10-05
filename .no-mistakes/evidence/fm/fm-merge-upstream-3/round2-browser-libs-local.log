@@ -1,0 +1,16 @@
+Get:1 https://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 https://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+Get:3 https://deb.debian.org/debian bookworm/main Translation-en [6107 kB]
+Fetched 15.0 MB in 3s (4812 kB/s)
+Reading package lists...
+W: Unable to read /etc/apt/-/ - DirectoryExists (2: No such file or directory)
+Get:1 https://deb.debian.org/debian bookworm/main amd64 libasound2 amd64 1.2.8-1+b1 [362 kB]
+Get:2 https://deb.debian.org/debian bookworm/main amd64 libgbm1 amd64 22.3.6-1+deb12u2 [38.1 kB]
+Get:3 https://deb.debian.org/debian bookworm/main amd64 libnspr4 amd64 2:4.35-1 [113 kB]
+Get:4 https://deb.debian.org/debian bookworm/main amd64 libnss3 amd64 2:3.87.1-1+deb12u2 [1332 kB]
+Fetched 1845 kB in 1s (3191 kB/s)
+W: Unable to read /etc/apt/-/ - DirectoryExists (2: No such file or directory)
+Get:1 https://deb.debian.org/debian bookworm/main amd64 libdrm2 amd64 2.4.114-1+b1 [37.5 kB]
+Get:2 https://deb.debian.org/debian bookworm/main amd64 libwayland-server0 amd64 1.21.0-1 [35.9 kB]
+Fetched 73.3 kB in 0s (439 kB/s)
+W: Unable to read /etc/apt/-/ - DirectoryExists (2: No such file or directory)

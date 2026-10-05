@@ -1,0 +1,155 @@
+Rendered native Pi 1.0.1 export:
+Default
+No-tools
+User
+Labeled
+All
+•
+[system]
+•
+user: Run the disposable grep, find and watcher proof.
+•
+[grep: /alpha/ in ~/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.kpvrwc/projects/probe]
+•
+[find: *.txt in ~/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.kpvrwc/projects/probe]
+•
+[fm_watch_arm_pi: {}]
+•
+assistant: The real grep, find and watcher checks are complete.
+6 / 9 entries
+Session: 01a10ca8-334a-7421-9285-61e3a0a37542
+T toggle thinking · O toggle tools · H toggle hidden messages
+Toggle thinking
+Toggle tools
+Show hidden messages
+↓ JSONL
+Date:
+10/5/2026, 3:21:52 PM
+Models:
+export-proof/local
+Messages:
+1 user, 2 assistant, 3 tool results
+Tool Calls:
+3
+Tokens:
+0
+Cost:
+0.000
+System Prompt
+You are an expert coding assistant operating inside pi, a coding agent harness. You help users by reading files, executing commands, editing code, and writing new files.
+
+<tools>
+- grep: Search file contents for patterns (respects .gitignore)
+- find: Find files by glob pattern (respects .gitignore)
+- fm_watch_arm_pi: Start the first required Pi watcher cycle or repair a cycle reported missing, failed, or unhealthy; ordinary re-arming is automatic.
+
+In addition to the tools above, you may have access to other custom tools depending on the project.
+</tools>
+
+... (20 more lines, click to expand)
+Available Tools
+grep - Search file contents for a pattern. Returns matching lines with file paths and line numbers. Respects .gitignore. Output is truncated to 100 matches or 50KB (whichever is hit first). Long lines are truncated to 500 chars. 
+find - Search for files by glob pattern. Returns matching file paths relative to the search directory. Respects .gitignore. Output is truncated to 1000 results or 50KB (whichever is hit first). 
+fm_watch_arm_pi - Start the first required Pi watcher cycle, or repair one only after a notification says the cycle is missing, failed, or unhealthy. Do not call after ordinary work or ordinary notifications; the Pi extension re-arms automatically. Never run bin/fm-watch-arm.sh through bash.
+03:21:54 PM
+Switched to model: export-proof/local
+03:22:16 PM
+
+Run the disposable grep, find and watcher proof.
+
+03:22:16 PM
+grep /alpha/ in                                                                                     
+~/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.kpvrwc/projects/probe            
+fixture.txt:1: alpha from the live fixture                                                          
+find *.txt in                                                                                       
+~/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.kpvrwc/projects/probe            
+fixture.txt                                                                                         
+fm_watch_arm_pi                                                                                     
+watcher: unchanged - Pi extension already owns an arm child; no manual re-arm needed; call          
+fm_watch_arm_pi again only after a later notification says the cycle is missing, failed, or         
+unhealthy                                                                                           
+03:22:16 PM
+
+The real grep, find and watcher checks are complete.
+Clickable export controls: [
+  '',
+  'Default',
+  'No-tools',
+  'User',
+  'Labeled',
+  'All',
+  '✕',
+  'Toggle thinking',
+  'Toggle tools',
+  'Show hidden messages',
+  '↓ JSONL',
+  '\n          \n            \n            \n          \n        ',
+  '\n          \n            \n            \n          \n        ',
+  '\n          \n            \n            \n          \n        '
+]
+Rendered retry transcript:
+Default
+No-tools
+User
+Labeled
+All
+•
+[system]
+•
+user: Finish the requested work.
+•
+assistant: The requested result is complete and verified.
+•
+[fm-branch-process]: ⁣FIRSTMATE_OP: v1 branch-outcome: This is a supervision processing request delivered automatically b...
+•
+assistant: The example task needs a decision.
+•
+[fm-branch-process]: ⁣FIRSTMATE_OP: v1 branch-outcome: This is a supervision processing request delivered automatically b...
+•
+user: A new user question.
+•
+[fm-branch-process]: ⁣FIRSTMATE_OP: v1 branch-outcome: This is a supervision processing request delivered automatically b...
+•
+assistant: The new user answer.
+9 / 13 entries
+Session: 01a10ca8-bbda-7549-93c0-b1ee6aacefd1
+T toggle thinking · O toggle tools · H toggle hidden messages
+Toggle thinking
+Toggle tools
+Show hidden messages
+↓ JSONL
+Date:
+10/5/2026, 3:22:27 PM
+Models:
+fm-live-stream/fm-live-stream-model
+Messages:
+2 user, 4 assistant, 3 custom
+Tool Calls:
+0
+Tokens:
+0
+Cost:
+0.000
+03:22:27 PM
+Switched to model: fm-live-stream/fm-live-stream-model
+03:22:27 PM
+
+Finish the requested work.
+
+03:22:27 PM
+
+The requested result is complete and verified.
+
+03:22:27 PM
+
+The example task needs a decision.
+
+03:22:28 PM
+03:22:28 PM
+
+A new user question.
+
+03:22:28 PM
+
+The new user answer.
+Conversation assistant replies: ["The requested result is complete and verified.\n","The example task needs a decision.\n","The new user answer.\n"]

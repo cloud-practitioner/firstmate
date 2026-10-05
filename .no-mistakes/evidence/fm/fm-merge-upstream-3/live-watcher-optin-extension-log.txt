@@ -1,0 +1,4 @@
+2026-10-05T15:22:17.818Z pid=3131499 restore attempt=0 predecessor=3132782 start=ok pid=3137468
+2026-10-05T15:22:19.016Z pid=3131499 confirm generation=3132927.1791213736.mHnBpt watcherPid=3137573 result=confirmed
+2026-10-05T15:22:21.918Z pid=3131499 restore attempt=0 predecessor=3137468 start=ok pid=3142428
+2026-10-05T15:22:22.796Z pid=3131499 confirm generation=3132927.1791213736.mHnBpt watcherPid=3142479 result=confirmed

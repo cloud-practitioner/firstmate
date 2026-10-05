@@ -1,0 +1,5 @@
+mode=default primary_pid=3114428 predecessor_watcher=3115746
+Primary paused across predecessor exit; successor intentionally unavailable for 3 seconds.
+successor_watcher=3121656
+next_successor_watcher=3128657
+Diagnostic extension log absent without opt-in.

@@ -1,0 +1,7 @@
+ok - dirty worktree is refused even when its committed work has landed (dirty always wins)
+ok - untracked/no-mistakes: dirty refusal classifies leftovers and preserves work
+ok - untracked/local-only: dirty refusal classifies leftovers and preserves work
+ok - tracked/no-mistakes: dirty refusal classifies leftovers and preserves work
+ok - tracked/local-only: dirty refusal classifies leftovers and preserves work
+ok - mixed/no-mistakes: dirty refusal classifies leftovers and preserves work
+ok - mixed/local-only: dirty refusal classifies leftovers and preserves work

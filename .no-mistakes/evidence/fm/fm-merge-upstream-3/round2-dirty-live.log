@@ -1,0 +1,7 @@
+tracked/local-only: refused and preserved
+untracked/local-only: refused and preserved
+mixed/local-only: refused and preserved
+tracked/no-mistakes: refused and preserved
+untracked/no-mistakes: refused and preserved
+mixed/no-mistakes: refused and preserved
+Generated brief preserves upstream clean-worktree guidance and fork task-private scratch paths.

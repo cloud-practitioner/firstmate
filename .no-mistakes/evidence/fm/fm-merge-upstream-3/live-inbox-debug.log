@@ -1,0 +1,811 @@
++ set -eu
++ umask 022
++ ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86
++ E=/home/node/.no-mistakes/evidence/01M467Y2KVPY0ZYM8V5V6DQB86
++ export PATH=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/.validation/tools/usr/bin:/workspaces/wp/.pi/bin:/nix/store/2qafmzym21d6yvwxh3vd8r6088452fr4-nix-2.34.7/bin:/home/node/.local/bin:/home/node/.local/share/pnpm/bin:/home/node/.local/share/pnpm:/home/node/.nix-profile/bin:/home/node/.npm-global/bin:/usr/local/share/nvm/current/bin:/usr/local/share/npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/node/go/bin:/home/node/.cargo/bin:/home/node/bin:/opt/homebrew/bin:/opt/homebrew/sbin
++ PATH=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/.validation/tools/usr/bin:/workspaces/wp/.pi/bin:/nix/store/2qafmzym21d6yvwxh3vd8r6088452fr4-nix-2.34.7/bin:/home/node/.local/bin:/home/node/.local/share/pnpm/bin:/home/node/.local/share/pnpm:/home/node/.nix-profile/bin:/home/node/.npm-global/bin:/usr/local/share/nvm/current/bin:/usr/local/share/npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/node/go/bin:/home/node/.cargo/bin:/home/node/bin:/opt/homebrew/bin:/opt/homebrew/sbin
++ export LD_LIBRARY_PATH=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/.validation/tools/usr/lib/x86_64-linux-gnu
++ LD_LIBRARY_PATH=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/.validation/tools/usr/lib/x86_64-linux-gnu
++ unset FM_HOME FM_ROOT_OVERRIDE FM_STATE_OVERRIDE FM_DATA_OVERRIDE FM_CONFIG_OVERRIDE FM_PROJECTS_OVERRIDE FM_GATE_REFUSE_BYPASS
+++ mktemp -d /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.XXXXXX
++ LAB=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL
++ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL
++ mkdir -p /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/tmux /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/agent-dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/sessions
++ WATCHPID=
++ trap cleanup EXIT
+++ bin/fm-busy-event.sh arm /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state steer
++ GEN=g1791212595.2573153.9974
++ ln -s /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/.validation/pi101/node_modules /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/.validation/node_modules
++ env -u NO_MISTAKES_GATE -u FM_GATE_REFUSE_BYPASS -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE TMUX_TMPDIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/tmux PI_CODING_AGENT_DIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/agent-dir PROOF_BUSY_GEN=g1791212595.2573153.9974 tmux -L fm-lab -f /dev/null new-session -d -s primary -n fm-steer -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86 -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL 'pi --offline --approve --no-context-files --no-extensions --no-skills --no-prompt-templates --no-themes --no-builtin-tools --extension '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/.validation/hold-provider.ts'\'' --model merge-proof/hold --session-dir '\''/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/sessions'\'' --tui-mode regular'
++ export TMUX_TMPDIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/tmux
++ TMUX_TMPDIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/tmux
+++ tmux -L fm-lab display-message -p -t primary '#{socket_path},#{pid},0'
++ export TMUX=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/tmux/tmux-1000/fm-lab,2573225,0
++ TMUX=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/tmux/tmux-1000/fm-lab,2573225,0
++ export FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL
++ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL
+++ seq 1 100
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ for i in $(seq 1 100)
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q merge-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/screen.txt
++ sleep 0.1
++ tmux -L fm-lab send-keys -t primary -l 'Hold this provider turn open for the busy-inbox proof.'
++ tmux -L fm-lab send-keys -t primary Enter
+++ seq 1 100
++ for i in $(seq 1 100)
++ grep -q 'state=busy source=pi-ext' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.busy-state
++ sleep 0.1
++ for i in $(seq 1 100)
++ grep -q 'state=busy source=pi-ext' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.busy-state
++ break
++ grep -q 'state=busy source=pi-ext' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.busy-state
++ printf 'window=primary:fm-steer\nbackend=tmux\nkind=ship\nharness=pi\n'
++ . /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/fm-task-inbox-lib.sh
+++++ dirname /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/fm-task-inbox-lib.sh
++++ cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin
++++ pwd
+++ _FM_TASK_INBOX_LIB_DIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin
+++ . /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/fm-wake-lib.sh
+++++ d=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin
+++++ '[' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin '!=' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/fm-wake-lib.sh ']'
+++++ cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin
+++++ pwd
++++ FM_WAKE_LIB_DIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin
+++++ cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/..
+++++ pwd
++++ FM_WAKE_DEFAULT_ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86
++++ FM_ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86
++++ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL
++++ STATE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state
++++ FM_WAKE_QUEUE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/.wake-queue
++++ FM_WAKE_QUEUE_LOCK=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/.wake-queue.lock
++++ FM_LOCK_STALE_AFTER=2
++++ . /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/fm-path-lib.sh
+++++ uname
++++ _FM_UNAME=Linux
++++ mkdir -p /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state
++++ '[' 5 -gt 4 ']'
++++ FM_WATCHER_MATCHED_IDENTITY=
++++ FM_WATCHER_HEALTHY_PID=
++++ FM_WATCHER_HEALTHY_IDENTITY=
++++ FM_WATCHER_VERDICT_OK=false
++++ FM_WATCHER_VERDICT_REASON=stale-beacon
++++ FM_RECOVERY_MARKER_TOKEN=
++++ FM_RECOVERY_MARKER_ACTION=none
++++ FM_RECOVERY_MARKER_WRITTEN_TOKEN=
++++ FM_WAKE_APPEND_RECOVERY_PREVIOUS_TOKEN=
++++ FM_WAKE_APPEND_RECOVERY_PUBLISHED_TOKEN=
++++ FM_RECOVERY_HANDOVER_TOKEN=
++++ FM_RECOVERY_HANDOVER_SEQ=
++++ FM_WAKE_STATUS_KEY=
++++ FM_WAKE_STATUS_HISTORICAL=false
++++ FM_WAKE_EVENT_LINE=
++++ FM_WAKE_UNREAD_LINES=
+++ . /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/fm-backend.sh
++++ FM_BACKEND_SCRIPT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/fm-backend.sh
++++++ dirname /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/fm-backend.sh
+++++ cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin
+++++ pwd
++++ FM_BACKEND_LIB_DIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin
++++ unset FM_BACKEND_SCRIPT
+++++ cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/bin/..
+++++ pwd
++++ FM_BACKEND_DEFAULT_ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86
++++ FM_ROOT=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86
++++ FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL
++++ FM_BACKEND_CONFIG_DIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/config
++++ FM_BACKEND_KNOWN='tmux herdr zellij orca cmux'
++++ FM_BACKEND_SPAWN='tmux herdr zellij orca cmux'
++++ FM_BACKEND_CMUX_BUNDLE_ID=com.cmuxterm.app
++++ FM_BACKEND_VISIBLE_CAPTURE='tmux herdr zellij'
+++ FM_TASK_INBOX_SCHEMA=fm-task-inbox.v1
+++ FM_TASK_INBOX_GRACE_DEFAULT=90
+++ FM_TASK_INBOX_RING_MAX_DEFAULT=3
+++ FM_TASK_INBOX_BUSY_MAX_DEFAULT=2
+++ FM_TASK_INBOX_LOCK_WAIT_DEFAULT=5
+++ fm_task_inbox_write /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state steer 'Acknowledge this durable instruction at the next safe boundary.'
+++ local state=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state task=steer 'text=Acknowledge this durable instruction at the next safe boundary.' delivery_mode= dir lock rec status=0
++++ fm_task_inbox_dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state steer
++++ printf %s/%s.inbox /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state steer
+++ dir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox
+++ mkdir -p /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/handled
+++ lock=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ fm_task_inbox_lock_acquire /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ local lock=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock wait=5
+++ local deadline probe
+++ case "$wait" in
++++ mktemp /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.lock-probe.XXXXXX
+++ probe=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.lock-probe.XPbOBi
+++ rm -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.lock-probe.XPbOBi
+++ '[' '!' -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ']'
+++ '[' '!' -L /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ']'
+++ fm_lock_try_create /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ local lockdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock allowed_steal_owner= ownerdir
+++ FM_LOCK_OWNER_DIR=
++++ fm_lock_owner_dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
++++ local lockdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock lock_abs
+++++ fm_lock_abs_path /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++++ local path=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock dir base
+++++ fm_dirname_to dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++++ local fm_path=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++++ case "$fm_path" in
+++++ fm_path=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++++ case "$fm_path" in
+++++ fm_path=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox
+++++ fm_path=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox
+++++ '[' -n /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox ']'
+++++ '[' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox '!=' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox ']'
+++++ printf -v dir %s /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox
+++++ fm_basename_to base /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++++ local fm_path=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++++ case "$fm_path" in
+++++ fm_path=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++++ fm_path=.seq.lock
+++++ '[' .seq.lock '!=' .seq.lock ']'
+++++ printf -v base %s .seq.lock
++++++ cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox
++++++ pwd -P
+++++ dir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox
+++++ printf '%s/%s\n' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox .seq.lock
++++ lock_abs=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
++++ mktemp -d /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.XXXXXX
+++ ownerdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ '[' -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ']'
+++ '[' -L /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ']'
+++ fm_lock_prepare_owner /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ local ownerdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr mypid back
+++ fm_current_pid mypid
+++ local fm_pid
+++ fm_pid=2585108
+++ case "$fm_pid" in
+++ '[' 1 -gt 0 ']'
+++ printf -v mypid %s 2585108
+++ printf '%s\n' 2585108
++++ cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr/pid
+++ back=2585108
+++ '[' 2585108 = 2585108 ']'
+++ ln -s /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ fm_lock_points_to_owner /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ local lockdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ownerdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr actual
++++ readlink /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ actual=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ '[' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr = /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr ']'
+++ fm_lock_claim /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr ''
+++ local lockdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ownerdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr allowed_steal_owner= mypid back
+++ fm_current_pid mypid
+++ local fm_pid
+++ fm_pid=2585108
+++ case "$fm_pid" in
+++ '[' 1 -gt 0 ']'
+++ printf -v mypid %s 2585108
++++ cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr/pid
+++ back=2585108
+++ '[' 2585108 '!=' 2585108 ']'
+++ fm_lock_points_to_owner /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ local lockdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ownerdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr actual
++++ readlink /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ actual=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ '[' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr = /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr ']'
+++ fm_lock_claim_blocked_by_steal /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ''
+++ local lockdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock allowed_steal_owner= steal
+++ steal=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.steal
+++ '[' -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.steal ']'
+++ '[' -L /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.steal ']'
+++ return 1
+++ return 0
+++ FM_LOCK_OWNER_DIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ return 0
+++ return 0
++++ _fm_task_inbox_write_record_locked /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox 'Acknowledge this durable instruction at the next safe boundary.' ''
++++ local dir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox 'text=Acknowledge this durable instruction at the next safe boundary.' delivery_mode= seq tmp rec status=0
+++++ fm_task_inbox_next_seq /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox
+++++ local dir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox max=0 d f n
+++++ for d in "$dir" "$dir/handled"
+++++ for f in "$d"/*.msg
+++++ '[' -e '/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/*.msg' ']'
+++++ continue
+++++ for d in "$dir" "$dir/handled"
+++++ for f in "$d"/*.msg
+++++ '[' -e '/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/handled/*.msg' ']'
+++++ continue
+++++ printf %03d 1
++++ seq=001
++++ rec=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/001.msg
+++++ mktemp /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.staging.XXXXXX
++++ tmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.staging.7Ls9Ld
++++ printf 'schema=%s\n' fm-task-inbox.v1
+++++ date -u +%Y-%m-%dT%H:%M:%SZ
++++ printf 'at=%s\n' 2026-10-05T15:03:26Z
++++ '[' '' '!=' fire-and-forget ']'
++++ printf -- '--\n'
++++ printf %s 'Acknowledge this durable instruction at the next safe boundary.'
++++ mv /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.staging.7Ls9Ld /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/001.msg
++++ '[' 0 -eq 0 ']'
++++ printf %s /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/001.msg
+++ rec=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/001.msg
+++ fm_lock_release /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ local lockdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock pid current ownerdir
+++ fm_current_pid current
+++ local fm_pid
+++ fm_pid=2585108
+++ case "$fm_pid" in
+++ '[' 1 -gt 0 ']'
+++ printf -v current %s 2585108
+++ '[' -L /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ']'
++++ fm_lock_link_owner /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ ownerdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ '[' -n /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr ']'
++++ cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr/pid
+++ pid=2585108
+++ '[' 2585108 = 2585108 ']'
+++ fm_lock_points_to_owner /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ local lockdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock ownerdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr actual
++++ readlink /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ actual=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ '[' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr = /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr ']'
+++ rm -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock
+++ fm_lock_discard_owner /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ local ownerdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ '[' -n /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr ']'
+++ fm_lock_clean_known_files /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ local lockdir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ rm -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr/pid /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr/fm-home /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr/pid-identity /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr/role /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr/watcher-path
+++ rmdir /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/.seq.lock.owner.sizFLr
+++ return 0
+++ '[' 0 -eq 0 ']'
+++ printf %s /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/001.msg
++ REC=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/001.msg
++ export FM_POLL=1 FM_SIGNAL_GRACE=0 FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 FM_TASK_INBOX_GRACE_SECS=0 FM_TASK_INBOX_BUSY_MAX=2
++ FM_POLL=1
++ FM_SIGNAL_GRACE=0
++ FM_CHECK_INTERVAL=999999
++ FM_HEARTBEAT=999999
++ FM_TASK_INBOX_GRACE_SECS=0
++ FM_TASK_INBOX_BUSY_MAX=2
++ WATCHPID=2585217
++ bin/fm-watch.sh
+++ seq 1 300
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ kill -0 2585217
++ sleep 0.1
++ for i in $(seq 1 300)
++ grep -q stuck-busy /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ break
++ wait 2585217
++ WATCHPID=
++ grep -q 'stuck-busy after 2 consecutive busy-deferred due doorbells' /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out
++ '[' -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.inbox/001.msg ']'
++ cp /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/watch.out /home/node/.no-mistakes/evidence/01M467Y2KVPY0ZYM8V5V6DQB86/live-inbox-wake.txt
++ cp /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/.wake-queue /home/node/.no-mistakes/evidence/01M467Y2KVPY0ZYM8V5V6DQB86/live-inbox-queue.txt
++ cp /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/state/steer.busy-state /home/node/.no-mistakes/evidence/01M467Y2KVPY0ZYM8V5V6DQB86/live-inbox-busy-state.txt
++ tmux -L fm-lab capture-pane -p -t primary
++ grep -q 'Firstmate instruction waiting' /home/node/.no-mistakes/evidence/01M467Y2KVPY0ZYM8V5V6DQB86/live-inbox-pane.txt
+++ wc -l
++ FIRST=1
++ WATCHPID=2588942
++ sleep 3
++ bin/fm-watch.sh
+++ wc -l
++ '[' 1 -eq 1 ']'
++ '[' '!' -s /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/successor.out ']'
++ cleanup
++ '[' -z 2588942 ']'
++ kill 2588942
++ true
++ wait 2588942
++ TMUX_TMPDIR=/home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL/tmux
++ tmux -L fm-lab kill-server
++ rm -rf /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.GMbmtL

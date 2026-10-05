@@ -1,0 +1,1 @@
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M467Y2KVPY0ZYM8V5V6DQB86/l.3UZGZ0/data/scratch-proof/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})

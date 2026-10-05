@@ -1,0 +1,20 @@
+transient: real quota-axi consumed isolated snapshot; poller produced:
+quota: quota-codex
+status: exhausted
+detail: {"provider":"codex","best":{"scope":"all_models","status":"known","effectivePercentRemaining":0,"boundedBy":["five_hour"],"limitingWindowIds":["five_hour"],"pace":{"status":"ahead","aheadWindowIds":["five_hour"],"worstReservePercentPoints":-19.993,"worstReserveWindowId":"five_hour"},"runway":{"status":"exhausted_now","usableRunwaySeconds":0,"limitingWindowId":"five_hour","projectedExhaustedAt":"2026-10-05T15:31:42.737Z"},"selection":{"status":"known","spendPriority":-1.2499}}}
+condition_polls: 3
+reset: real quota-axi consumed isolated snapshot; poller produced:
+quota: quota-codex
+status: exhausted
+detail: {"provider":"codex","best":{"scope":"all_models","status":"known","effectivePercentRemaining":0,"boundedBy":["five_hour"],"limitingWindowIds":["five_hour"],"pace":{"status":"ahead","aheadWindowIds":["five_hour"],"worstReservePercentPoints":-19.9939,"worstReserveWindowId":"five_hour"},"runway":{"status":"exhausted_now","usableRunwaySeconds":0,"limitingWindowId":"five_hour","projectedExhaustedAt":"2026-10-05T15:31:48.935Z"},"selection":{"status":"known","spendPriority":-1.2499}}}
+condition_polls: 6
+persistent: real quota-axi consumed isolated snapshot; poller produced:
+quota: quota-codex
+status: error
+detail: 3 consecutive read failures; last quota-axi read failed
+condition_polls: 3
+timeout: real quota-axi consumed isolated snapshot; poller produced:
+quota: quota-codex
+status: exhausted
+detail: {"provider":"codex","best":{"scope":"all_models","status":"known","effectivePercentRemaining":0,"boundedBy":["five_hour"],"limitingWindowIds":["five_hour"],"pace":{"status":"ahead","aheadWindowIds":["five_hour"],"worstReservePercentPoints":-19.9955,"worstReserveWindowId":"five_hour"},"runway":{"status":"exhausted_now","usableRunwaySeconds":0,"limitingWindowId":"five_hour","projectedExhaustedAt":"2026-10-05T15:31:58.603Z"},"selection":{"status":"known","spendPriority":-1.2499}}}
+condition_polls: 3
