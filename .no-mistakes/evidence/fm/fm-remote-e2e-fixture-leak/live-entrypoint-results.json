@@ -1,0 +1,19 @@
+[
+  {
+    "name": "baseline timezone re-render reproduction",
+    "result": "expected-failure",
+    "trees": 5
+  },
+  {
+    "name": "target repeated shifted calls and legacy ownership",
+    "result": "pass",
+    "trees": 1,
+    "owner": "3729756"
+  },
+  {
+    "name": "cleanup stops all spaced-root trees without pid files and preserves serving neighbor",
+    "result": "pass",
+    "trees": 3,
+    "neighbor_requests": "neighbor-before\nneighbor-still-serves\n"
+  }
+]

@@ -1,0 +1,24 @@
+COMMAND: bash tests/.fm-remote-lifecycle-diagnostic.test.sh
+Isolation: TMPDIR/HOME in .local-validation; disposable account NSS mapping; TAR_OPTIONS excludes private validation scratch from lifecycle fixture copy.
+ok - overlapping remote home provisioning serializes through publication and rollback
+ok - competing cleanup of the public home cannot reach a live provisioning clone
+ok - a home that appears mid-provision makes the provision die without touching it
+ok - remote seed rollback preserves serialized competing routes
+ok - unknown readiness preserves its route and brief for reconciliation
+ok - remote seeding checks, repairs, and re-checks readiness, then stops on a remaining gap
+ok - remote seeding proceeds once the repair closes every gap
+ok - remote seeding provisions a supplied origin without touching the primary project tree
+ok - remote provisioning re-validates a supplied origin at the receiving host
+ok - seeding carries bitbucket, self-hosted, and scp-like origins through to the remote clone
+ok - remote seed registers the route and provisions the whole home and project clone on that host
+ok - remote inheritance rejects incomplete and superseded payload generations
+ok - mixed local and remote routes validate without migration
+error: refusing fleet lifecycle from inside a no-mistakes gate worktree (/home/node/.no-mistakes/repos/450411b3e67c.git)
+error: remote host-local secondmate launch failed
+DIAGNOSTIC SPAWN OUTPUT:
+
+not ok - remote spawn did not report separate host and backend dimensions (missing: 'remote=remote-mac backend=herdr')
+--- output ---
+
+
+PROCESS OBSERVATION: {"test": ".fm-remote-lifecycle-diagnostic.test.sh", "exit": 1, "elapsed": 79.46, "peak_workers": 5, "observed_worker_pids": [3781337, 3781394, 3782265, 3782434, 3782435, 3785833, 3785989, 3785990, 3787591, 3787998, 3787999, 3790833, 3790988, 3790989, 3793490, 3794111, 3794112, 3796474, 3797051, 3799481, 3799884, 3799885, 3801512, 3804763, 3805162, 3805163, 3807218, 3807859, 3807860, 3809812, 3810653, 3810804, 3810805, 3811460, 3813431, 3813589, 3813590, 3814253, 3814406, 3814407, 3815054, 3815861, 3816029, 3816030, 3816684, 3817494, 3817651, 3817652, 3818342, 3818706, 3818707, 3821208, 3823811, 3827195, 3827628, 3827629, 3829339, 3829806, 3829807], "immediate_survivors": [], "final_survivors": []}

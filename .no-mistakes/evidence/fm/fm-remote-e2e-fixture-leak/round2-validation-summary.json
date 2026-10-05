@@ -1,0 +1,145 @@
+{
+  "commit": "b9db57174152c5a95ecd951913f4e3306f2662ac",
+  "normal_exit": [
+    {
+      "test": "fm-test-fixture-cleanup.test.sh",
+      "exit": 0,
+      "elapsed_seconds": 8.87,
+      "peak_live_supervisors": 2,
+      "initial_supervisors": [
+        {
+          "pid": 751771,
+          "ppid": 751569,
+          "pgid": 751771,
+          "stat": "S",
+          "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/round2-tmp/fm-test-cleanup-remote-worker.h2OqE9/test runs [*]/remote-root/bin/fm-remote-job-worker.sh"
+        }
+      ],
+      "immediate_post_exit": [],
+      "post_exit_after_3s": []
+    },
+    {
+      "test": "fm-remote-job.test.sh",
+      "exit": 0,
+      "elapsed_seconds": 140.9,
+      "peak_live_supervisors": 2,
+      "initial_supervisors": [
+        {
+          "pid": 768506,
+          "ppid": 762463,
+          "pgid": 749253,
+          "stat": "S",
+          "command": "/usr/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/round2-tmp/fm-remote-job.XmB8Kh/remote-root/bin/fm-remote-job-worker.sh"
+        }
+      ],
+      "immediate_post_exit": [],
+      "post_exit_after_3s": []
+    },
+    {
+      "test": "fm-remote-reply.test.sh",
+      "exit": 0,
+      "elapsed_seconds": 256.31,
+      "peak_live_supervisors": 1,
+      "initial_supervisors": [
+        {
+          "pid": 887623,
+          "ppid": 887304,
+          "pgid": 887623,
+          "stat": "S",
+          "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/round2-tmp/fm-remote-reply.ChjOMT/remote-root/bin/fm-remote-job-worker.sh"
+        }
+      ],
+      "immediate_post_exit": [],
+      "post_exit_after_3s": []
+    },
+    {
+      "test": "fm-remote-secondmate-lifecycle-e2e.test.sh",
+      "exit": 0,
+      "elapsed_seconds": 728.71,
+      "peak_live_supervisors": 1,
+      "initial_supervisors": [
+        {
+          "pid": 852570,
+          "ppid": 852240,
+          "pgid": 852570,
+          "stat": "S",
+          "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/round2-lifecycle-tmp/fm-remote-secondmate-e2e.AxxWmx/remote-root/bin/fm-remote-job-worker.sh"
+        }
+      ],
+      "immediate_post_exit": [],
+      "post_exit_after_3s": []
+    }
+  ],
+  "entrypoint": [
+    {
+      "name": "baseline timezone re-render reproduction",
+      "result": "expected-failure",
+      "trees": 5
+    },
+    {
+      "name": "target repeated shifted calls and legacy ownership",
+      "result": "pass",
+      "trees": 1,
+      "owner": "780576"
+    },
+    {
+      "name": "cleanup stops all spaced-root trees without pid files and preserves serving neighbor",
+      "result": "pass",
+      "trees": 3,
+      "neighbor_requests": "neighbor-before\nneighbor-still-serves\n"
+    }
+  ],
+  "interruption": [
+    {
+      "test": "fm-remote-reply.test.sh",
+      "signal": "SIGTERM",
+      "exit": 143,
+      "workers_before": [
+        {
+          "pid": 761021,
+          "ppid": 760347,
+          "pgid": 761021,
+          "stat": "S",
+          "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/round2-interrupt/fm-remote-reply.test.sh/fm-remote-reply.6LCTfE/remote-root/bin/fm-remote-job-worker.sh"
+        },
+        {
+          "pid": 761313,
+          "ppid": 761021,
+          "pgid": 761021,
+          "stat": "S",
+          "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/round2-interrupt/fm-remote-reply.test.sh/fm-remote-reply.6LCTfE/remote-root/bin/fm-remote-job-worker.sh --serve"
+        }
+      ],
+      "immediate_survivors": [],
+      "after_3s_survivors": [],
+      "elapsed": 13.44
+    },
+    {
+      "test": "fm-remote-secondmate-lifecycle-e2e.test.sh",
+      "signal": "SIGTERM",
+      "exit": 143,
+      "workers_before": [
+        {
+          "pid": 790673,
+          "ppid": 789886,
+          "pgid": 790673,
+          "stat": "S",
+          "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/round2-interrupt/fm-remote-secondmate-lifecycle-e2e.test.sh/fm-remote-secondmate-e2e.QCH0OS/remote-root/bin/fm-remote-job-worker.sh"
+        },
+        {
+          "pid": 790936,
+          "ppid": 790673,
+          "pgid": 790673,
+          "stat": "R",
+          "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/round2-interrupt/fm-remote-secondmate-lifecycle-e2e.test.sh/fm-remote-secondmate-e2e.QCH0OS/remote-root/bin/fm-remote-job-worker.sh --serve"
+        }
+      ],
+      "immediate_survivors": [],
+      "after_3s_survivors": [],
+      "elapsed": 23.07
+    }
+  ],
+  "final_fixture_worker_census": [],
+  "final_fixture_worker_census_after_25s": [],
+  "note": "Only Firstmate remote-job workers are live here; synthetic SSH and terminal boundaries are not live SSH or Herdr validation. Short-lived lane processes can temporarily lead command groups; peak_live_supervisors counts actual restart supervisors, not such lane forks."
+}

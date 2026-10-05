@@ -1,0 +1,22 @@
+COMMAND: bash tests/fm-remote-secondmate-lifecycle-e2e.test.sh
+Isolation: TMPDIR/HOME in .local-validation; disposable account NSS mapping; TAR_OPTIONS excludes private validation scratch from lifecycle fixture copy.
+ok - overlapping remote home provisioning serializes through publication and rollback
+ok - competing cleanup of the public home cannot reach a live provisioning clone
+ok - a home that appears mid-provision makes the provision die without touching it
+ok - remote seed rollback preserves serialized competing routes
+ok - unknown readiness preserves its route and brief for reconciliation
+ok - remote seeding checks, repairs, and re-checks readiness, then stops on a remaining gap
+ok - remote seeding proceeds once the repair closes every gap
+ok - remote seeding provisions a supplied origin without touching the primary project tree
+ok - remote provisioning re-validates a supplied origin at the receiving host
+ok - seeding carries bitbucket, self-hosted, and scp-like origins through to the remote clone
+ok - remote seed registers the route and provisions the whole home and project clone on that host
+ok - remote inheritance rejects incomplete and superseded payload generations
+ok - mixed local and remote routes validate without migration
+error: refusing fleet lifecycle from inside a no-mistakes gate worktree (/home/node/.no-mistakes/repos/450411b3e67c.git)
+error: remote host-local secondmate launch failed
+not ok - remote spawn did not report separate host and backend dimensions (missing: 'remote=remote-mac backend=herdr')
+--- output ---
+
+
+PROCESS OBSERVATION: {"test": "fm-remote-secondmate-lifecycle-e2e.test.sh", "exit": 1, "elapsed": 80.08, "peak_workers": 5, "observed_worker_pids": [3673544, 3673633, 3674367, 3674734, 3674735, 3678074, 3678240, 3678241, 3679636, 3679804, 3679805, 3682044, 3682203, 3682204, 3684719, 3685120, 3685121, 3687946, 3688346, 3688347, 3689668, 3692176, 3692562, 3692563, 3694938, 3696552, 3697354, 3697507, 3697508, 3698180, 3698982, 3699141, 3699142, 3699820, 3699980, 3699981, 3701024, 3702854, 3703408, 3703409, 3705273, 3705639, 3705640, 3707390, 3708951, 3709104, 3709105, 3710589, 3712120, 3713304, 3713474, 3713475, 3714122, 3714983], "immediate_survivors": [], "final_survivors": []}

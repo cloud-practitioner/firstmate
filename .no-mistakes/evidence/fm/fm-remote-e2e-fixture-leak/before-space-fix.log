@@ -1,0 +1,11 @@
+Baseline: commit 829c4ea with target executable regression test (only tests/lib.sh worker-discovery behavior predates R1 fix).
+COMMAND: ['bash', '/home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/before-space-fix/tests/fm-test-fixture-cleanup.test.sh']
+ok - fm_test_tmproot cleans up its fixture root on normal exit
+ok - fm_test_tmproot cleans up its fixture root on SIGTERM
+ok - the cleanup registry cannot be injected through path precreation
+ok - failed fixture registration rolls back the new root
+ok - the orphan sweep reaps only old fixtures without a live owner
+ok - the orphan sweep reaps read-only package fixtures
+not ok - worker discovery missed the spaced-root supervisor or serving child, or included a sibling
+
+EXIT: 1

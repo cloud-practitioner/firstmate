@@ -1,0 +1,42 @@
+COMMAND: bash tests/fm-remote-reply.test.sh
+Isolation: TMPDIR/HOME in .local-validation; disposable account NSS mapping; TAR_OPTIONS excludes private validation scratch from lifecycle fixture copy.
+ok - default delta reader waits 0.5 seconds then delivers a non-destructive complete-line delta
+ok - override delta reader waits 0.07 seconds then delivers a non-destructive complete-line delta
+ok - remote reply ingest leaves no temporary path or lifecycle lock behind on any exit
+ok - a blocking non-destructive remote delta reaches durable process-event capture
+ok - a captured delta is applied, acknowledged, and re-armed without a handler
+ok - ingest appends one validated line, fetches its document, and advances the cursor
+ok - replayed capture has one deduplicated append and one durable handling identity
+ok - later generations cannot invalidate an unacknowledged ingested result
+ok - the remote status and decision model mirrors and the cursor advances
+ok - a remote mate's new decision folds open exactly as a local mate's does
+ok - a replayed mirrored delta is idempotent in both the stream and the cursor
+ok - transported control bytes are normalized in place and never stop the stream
+ok - payload protocol-field names cannot collide with transport metadata
+ok - NUL bytes are normalized in place before shell line processing
+ok - local document storage failures remain retryable until delivery succeeds
+ok - a structured pointer must end at its token boundary
+ok - adjacent pointers are fetched while malformed tokens remain unchanged
+ok - a rejected candidate never gives the following text a false leading boundary
+ok - nested remote reports relay while an undeliverable foreign pointer fails open
+ok - the reported incident raises no standing decision and still delivers the report
+ok - an undeliverable structured offer fails open with one note and never a decision
+ok - a remote refusal surfaces its own reason without opening a decision
+ok - a failed pointer extraction never commits a partial delta
+ok - a failed mirror write never drops status content or advances the cursor
+ok - source-line identity survives commit failure and cursor-loss recapture
+ok - a mirrored reserved-key line cannot squat or clear the parent's own decision
+ok - a reply that arrives after escalation resolves it and clears the open decision
+ok - a remote reply listener stays owned across empty waits and a delta
+ok - a failed remote read exits instead of relistening
+ok - persistent ingestion failure leaves exactly one durable capture
+ok - a preempted reply poll reports a closed window without publishing channel freshness
+ok - a preempted reply poll keeps its listener and reconcile launches nothing
+ok - a quiet reply window publishes the caught-up watermark the reply guard reads
+ok - a cursor-loss whole-log recapture is acknowledged quietly with no duplicate wake
+ok - truncation is detected, escalated once, and not silently rebased
+ok - remote reply retirement quiesces and refuses unhandled captured results
+ok - the suite shares one remote-job worker tree and its cleanup stops every worker
+ALL TESTS PASSED
+
+PROCESS OBSERVATION: {"test": "fm-remote-reply.test.sh", "exit": 0, "elapsed": 256.31, "peak_workers": 5, "observed_worker_pids": [887623, 887683, 888953, 889215, 889216, 891375, 897463, 897906, 897907, 900959, 905911, 906418, 906421, 909741, 913376, 914109, 914110, 917374, 922484, 922775, 922776, 925030, 928211, 928806, 928807, 937365, 938290, 938291, 945184, 946018, 946019, 949088, 952498, 952913, 952914, 956637, 959898, 960061, 960062, 961782, 963897, 967101, 967302, 967444, 967445, 971526, 976859, 979519, 979943, 979945, 983690, 986757, 987020, 987021, 989889, 990480, 990481, 992165, 996004, 996428, 996429, 998190, 1002414, 1003026, 1003027, 1006407, 1010563, 1010626, 1010964, 1010965, 1013816, 1017520, 1018240, 1018241, 1022351, 1022800, 1022801, 1025070, 1027209, 1027544, 1027545, 1030281, 1032498, 1032846, 1032847, 1034369, 1035084, 1035085, 1037107, 1039803, 1040307, 1040308, 1041873, 1043902, 1044347, 1044348, 1046550, 1048767, 1051675, 1052322, 1052323, 1054163, 1056252, 1058832, 1059538, 1059540, 1061549, 1062440, 1062441, 1067532, 1068236, 1068238, 1071976, 1076447, 1076901, 1076903, 1079020, 1088178, 1088814, 1088815, 1095150, 1095902, 1095903, 1097995, 1098687, 1098689, 1101454, 1101961, 1101962, 1103666, 1104219, 1104220, 1105290, 1105839, 1105842, 1106608, 1106832, 1106833, 1109624, 1111610, 1111963, 1111965, 1114501, 1117737, 1120375, 1120732, 1120733, 1122699, 1125587, 1126136, 1126137, 1128811, 1129192, 1129193, 1130977, 1131496, 1131788, 1131789, 1134153, 1134506, 1134507, 1136261, 1136613, 1138130, 1139832, 1140279, 1140280, 1142850, 1147786, 1148503, 1148504], "immediate_survivors": [], "final_survivors": []}

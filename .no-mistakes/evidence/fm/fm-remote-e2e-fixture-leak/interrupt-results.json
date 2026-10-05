@@ -1,0 +1,50 @@
+[
+  {
+    "test": "fm-remote-reply.test.sh",
+    "signal": "SIGTERM",
+    "exit": 143,
+    "workers_before": [
+      {
+        "pid": 3754494,
+        "ppid": 3754347,
+        "pgid": 3754494,
+        "stat": "S",
+        "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/interrupt/fm-remote-reply.test.sh/fm-remote-reply.wbQfrp/remote-root/bin/fm-remote-job-worker.sh"
+      },
+      {
+        "pid": 3754554,
+        "ppid": 3754494,
+        "pgid": 3754494,
+        "stat": "S",
+        "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/interrupt/fm-remote-reply.test.sh/fm-remote-reply.wbQfrp/remote-root/bin/fm-remote-job-worker.sh --serve"
+      }
+    ],
+    "immediate_survivors": [],
+    "after_3s_survivors": [],
+    "elapsed": 8.25
+  },
+  {
+    "test": "fm-remote-secondmate-lifecycle-e2e.test.sh",
+    "signal": "SIGTERM",
+    "exit": 143,
+    "workers_before": [
+      {
+        "pid": 3760308,
+        "ppid": 3760163,
+        "pgid": 3760308,
+        "stat": "S",
+        "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/interrupt/fm-remote-secondmate-lifecycle-e2e.test.sh/fm-remote-secondmate-e2e.jwYhaI/remote-root/bin/fm-remote-job-worker.sh"
+      },
+      {
+        "pid": 3760365,
+        "ppid": 3760308,
+        "pgid": 3760308,
+        "stat": "S",
+        "command": "/bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M46FFRXN50HQP2EX8YPDMPE4/.local-validation/interrupt/fm-remote-secondmate-lifecycle-e2e.test.sh/fm-remote-secondmate-e2e.jwYhaI/remote-root/bin/fm-remote-job-worker.sh --serve"
+      }
+    ],
+    "immediate_survivors": [],
+    "after_3s_survivors": [],
+    "elapsed": 13.08
+  }
+]

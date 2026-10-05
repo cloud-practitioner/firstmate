@@ -1,0 +1,11 @@
+COMMAND: bash tests/fm-test-fixture-cleanup.test.sh
+Isolation: TMPDIR/HOME in .local-validation; disposable account NSS mapping; TAR_OPTIONS excludes private validation scratch from lifecycle fixture copy.
+ok - fm_test_tmproot cleans up its fixture root on normal exit
+ok - fm_test_tmproot cleans up its fixture root on SIGTERM
+ok - the cleanup registry cannot be injected through path precreation
+ok - failed fixture registration rolls back the new root
+ok - the orphan sweep reaps only old fixtures without a live owner
+ok - the orphan sweep reaps read-only package fixtures
+ok - remote worker discovery and cleanup preserve spaced paths and exact fixture scope
+
+PROCESS OBSERVATION: {"test": "fm-test-fixture-cleanup.test.sh", "exit": 0, "elapsed": 8.87, "peak_workers": 5, "observed_worker_pids": [751771, 751946, 752771, 752935, 754305], "immediate_survivors": [], "final_survivors": []}

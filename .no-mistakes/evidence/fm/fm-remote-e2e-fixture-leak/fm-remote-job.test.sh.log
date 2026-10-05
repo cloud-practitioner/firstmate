@@ -1,0 +1,47 @@
+COMMAND: bash tests/fm-remote-job.test.sh
+Isolation: TMPDIR/HOME in .local-validation; disposable account NSS mapping; TAR_OPTIONS excludes private validation scratch from lifecycle fixture copy.
+ok - default: result and command samples use 0.25 seconds; dispatcher uses four 0.05-second waits then one second
+ok - legacy: result and command samples use 0.07 seconds; dispatcher uses four 0.07-second waits then one second
+ok - active: result and command samples use 0.12 seconds; dispatcher uses four 0.07-second waits then one second
+ok - default queue and execution bounds independently cover long polls
+ok - operator PATH excludes a symlinked local bin
+ok - operator PATH honors nvm defaults with a deterministic fallback
+ok - operator PATH resolves the authorized Nix profile bin link
+ok - operator PATH orders discovered tool installs deterministically
+ok - the worker preserves bounded argv and stdin in an empty environment
+ok - active jobs keep the worker ready for concurrent requests
+ok - ensure replaces a live worker after its code changes
+ok - worker identity binds the canonical configured code root
+ok - stale ownership is reclaimed without signaling a reused pid
+ok - ensure keeps one worker tree when the owner's rendered start moves
+ok - the worker enforces the job timeout and publishes its result
+ok - the worker expires queued jobs before they can mutate
+ok - queued jobs receive a fresh bounded execution window
+ok - a queued short command preempts a running long poll instead of waiting its window
+ok - a poll re-armed after preemption reads the same cursor with nothing lost
+ok - sibling polls never preempt each other into a re-arm churn loop
+ok - worker shutdown terminates the active command tree before replacement
+ok - Linux supervision recovers crashes and stops orphaned commands
+ok - pre-execution validation obeys the job timeout
+ok - the worker drains bounded output without changing command results
+ok - the worker refuses symlinked job fields before command execution
+ok - failed shutdown quarantines ownership against replacement workers
+ok - quarantine recovery refuses unverifiable supervisors and ignores reused pids
+ok - a repeatedly signalled shutdown still releases ownership for the next worker
+ok - TERM after ownership loss stops the serving worker
+ok - TERM after ownership loss still stops the active command tree
+ok - a lost owner terminates without stopping the replacement owner's work
+ok - an ousted worker in shutdown leaves the replacement quarantine untouched
+ok - an idle worker sleeps out a second between passes instead of busy-polling
+ok - an idle worker keeps its readiness heartbeat fresh between passes
+ok - an idle worker claims and publishes a staged job within a few seconds
+ok - an idle worker still repairs queue permissions and stops promptly on TERM
+ok - the fork-free state read keeps every malformed-record rejection
+ok - the builtin record reads bound bytes, not characters, in a UTF-8 locale
+ok - the lane scan reads staged records without execs and honors home isolation
+ok - a same-home queued command still preempts the poll through the builtin scan
+ok - the lane scan bounds argv in bytes, not characters, in a UTF-8 locale
+ok - barely healthy worker failures remain bounded by the restart guard
+ALL TESTS PASSED
+
+PROCESS OBSERVATION: {"test": "fm-remote-job.test.sh", "exit": 0, "elapsed": 127.68, "peak_workers": 5, "observed_worker_pids": [3425092, 3425523, 3425524, 3426277, 3426344, 3428701, 3429029, 3429030, 3429357, 3429395, 3431082, 3431422, 3431423, 3431787, 3431850, 3432390, 3432430, 3432680, 3432843, 3432844, 3433205, 3433480, 3433482, 3436003, 3436108, 3436895, 3436952, 3437762, 3438096, 3438097, 3438816, 3438902, 3439500, 3439592, 3441969, 3442598, 3442599, 3443679, 3444184, 3444186, 3445703, 3446093, 3446094, 3448103, 3448491, 3448492, 3448852, 3449748, 3450266, 3450454, 3450455, 3451036, 3451299, 3451300, 3451857, 3452032, 3452033, 3453740, 3454277, 3454279, 3455021, 3455081, 3457546, 3458025, 3458027, 3458828, 3460440, 3461468, 3462105, 3462162, 3462339, 3462943, 3463344, 3463345, 3465476, 3465537, 3470458, 3470799, 3472108, 3472328, 3472494, 3472495, 3472651, 3472769, 3472993, 3473159, 3473160, 3473358, 3473572, 3473745, 3473746, 3473914, 3474202, 3480577, 3481108, 3481110, 3482614, 3483085, 3483086, 3487057, 3487483, 3487484, 3488365, 3489038, 3489079], "immediate_survivors": [], "final_survivors": []}
