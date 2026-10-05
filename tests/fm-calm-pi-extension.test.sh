@@ -1659,18 +1659,23 @@ for (const { name, actual } of rows) {
     throw new Error(`${name} was not hidden before export rendering`);
   }
 }
-// Pi 1.0.1 reads getToolRenderers; older versions read getToolDefinition.
-// Both hooks resolve the same registered renderers in this fixture.
-const getToolRenderers = (name) => tools.find((tool) => tool.name === name);
-async function assertStockHtmlRendering(command, submitData) {
-  editorText = command;
-  terminalInputHandler(submitData);
-  const htmlRenderer = createToolHtmlRenderer({
-    getToolDefinition: getToolRenderers,
-    getToolRenderers,
+// Pi 1.0.0 resolves export HTML through getToolDefinition. Pi 1.0.1 renamed that
+// dependency to getToolRenderers and ignores the old key, so a fixture that
+// passes only the old key reports every tool as missing. Supply both; each
+// release reads the key it knows and renders the same wrapped definitions.
+function createInstalledToolHtmlRenderer() {
+  const lookup = (name) => tools.find((tool) => tool.name === name);
+  return createToolHtmlRenderer({
+    getToolDefinition: lookup,
+    getToolRenderers: lookup,
     theme,
     cwd: process.cwd(),
   });
+}
+async function assertStockHtmlRendering(command, submitData) {
+  editorText = command;
+  terminalInputHandler(submitData);
+  const htmlRenderer = createInstalledToolHtmlRenderer();
   const exportCases = [
     ...cases.filter(([toolName]) => toolName === "grep" || toolName === "find"),
     ["fm_watch_arm_pi", watchArgs, watchResult],
@@ -1697,12 +1702,7 @@ await assertStockHtmlRendering("/export calm.html", "\r");
 getKeybindings().setUserBindings({ "tui.input.submit": "alt+s" });
 editorText = "/export remapped.html";
 terminalInputHandler("\r");
-const unmatchedRenderer = createToolHtmlRenderer({
-  getToolDefinition: getToolRenderers,
-  getToolRenderers,
-  theme,
-  cwd: process.cwd(),
-});
+const unmatchedRenderer = createInstalledToolHtmlRenderer();
 if (unmatchedRenderer.renderCall("unmatched-submit", "grep", { pattern: "alpha", path: "." })) {
   throw new Error("ordinary non-submit input activated HTML export rendering");
 }
@@ -4183,10 +4183,7 @@ export default function (pi: ExtensionAPI): void {
 }
 TS
   printf '%s\n' '{"tui.input.submit":"alt+s"}' >"$config/keybindings.json"
-  # Pi 1.0.0 made fullscreen the default TUI mode, which has no terminal scrollback,
-  # so the restored transcript's first rows would sit above the 44-row viewport that
-  # every snapshot below reads with capture-pane -S. Regular mode keeps them reachable.
-  printf '%s\n' '{"hideThinkingBlock":true,"tuiMode":"regular"}' >"$config/settings.json"
+  printf '%s\n' '{"hideThinkingBlock":true}' >"$config/settings.json"
   now=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
   cat >"$session_file" <<JSON
 {"type":"session","version":3,"id":"11111111-1111-4111-8111-111111111111","timestamp":"$now","cwd":"$project"}
