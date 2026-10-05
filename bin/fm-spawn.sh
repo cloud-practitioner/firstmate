@@ -678,7 +678,6 @@ YOLO_SET=0
 BRANCH_PREFIX_SET=0
 TRACEPARENT_SET=0
 RELAUNCH=0
-RELAUNCH_TASK_TMP=
 POS=()
 want_value=
 for a in "$@"; do
@@ -1812,7 +1811,6 @@ if [ "$RELAUNCH" -eq 1 ]; then
       exit 1
     fi
   fi
-  RELAUNCH_TASK_TMP=$(fm_meta_get "$RELAUNCH_META" tasktmp)
   RELAUNCH_WT=$(fm_meta_get "$RELAUNCH_META" worktree)
   [ -n "$RELAUNCH_WT" ] && [ -d "$RELAUNCH_WT" ] || {
     echo "error: task $ID's recorded worktree '${RELAUNCH_WT:-none}' is missing; refusing to relaunch without the local copy its work lives in" >&2
@@ -4410,8 +4408,15 @@ STATE_REAL=$(cd "$STATE" && pwd -P)
 
 # Implement the task temp root contract in this script's header.
 TASK_TMP="$STATE_REAL/$ID.tasktmp"
-if [ "$RELAUNCH" -eq 1 ] && [ "$RELAUNCH_TASK_TMP" = "/tmp/fm-$ID" ]; then
-  TASK_TMP=$RELAUNCH_TASK_TMP
+if { [ "$RELAUNCH" -eq 1 ] || [ "$KIND" = secondmate ]; } &&
+  { [ -e "$STATE/$ID.meta" ] || [ -L "$STATE/$ID.meta" ]; }; then
+  fm_backlog_record_present "$STATE/$ID.meta" "task record" "$STATE" || {
+    echo "error: task record is unsafe: $FM_BACKLOG_TRANSITION_ERROR" >&2
+    exit 1
+  }
+  if [ "$RELAUNCH" -eq 1 ] || [ "$(fm_meta_get "$STATE/$ID.meta" kind)" = secondmate ]; then
+    [ "$(fm_meta_get "$STATE/$ID.meta" tasktmp)" != "/tmp/fm-$ID" ] || TASK_TMP="/tmp/fm-$ID"
+  fi
 fi
 if ! (umask 077 && mkdir "$TASK_TMP") 2>/dev/null; then
   if [ -L "$TASK_TMP" ] || [ ! -d "$TASK_TMP" ] || [ ! -O "$TASK_TMP" ] ||

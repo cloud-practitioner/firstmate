@@ -16,6 +16,7 @@ TMP_ROOT=$(fm_test_tmproot fm-live-lab)
 : > "$TMP_ROOT/tmux-dirs"
 LIVE_LAB="$ROOT/bin/fm-live-lab.sh"
 TRUST="$ROOT/bin/fm-claude-trust.sh"
+TASK_TMPS=()
 
 live_lab_cleanup() {
   local dir pid marker
@@ -28,7 +29,9 @@ live_lab_cleanup() {
     env -u TMUX TMUX_TMPDIR="$dir" tmux kill-server 2>/dev/null
     case "$dir" in /tmp/fml.*) rm -rf "$dir" ;; esac
   done < "$TMP_ROOT/tmux-dirs"
-  rm -rf "/tmp/fm-labt$$-other" /tmp/fm-labt"$$"-*+*
+  for dir in "${TASK_TMPS[@]:-}"; do
+    [ -n "$dir" ] && rm -rf "$dir"
+  done
   fm_test_cleanup
 }
 trap live_lab_cleanup EXIT
@@ -41,8 +44,9 @@ printf '{}\n' > "$FAKE_HOME/.pi/agent/trust.json"
 export HOME="$FAKE_HOME"
 unset CLAUDE_CONFIG_DIR TMUX
 
-MATE_ID="labt$$-mate"
-WORKER_ID="labt$$-worker"
+LAB_TEST_ID="labt$$-$RANDOM"
+MATE_ID="$LAB_TEST_ID-mate"
+WORKER_ID="$LAB_TEST_ID-worker"
 NONCE=abc12345
 
 digest() { shasum -a 256 "$1" | awk '{print $1}'; }
@@ -334,9 +338,14 @@ assert_present "$NOT_LAB/keep" "a refused down removes nothing"
 pass "down refuses anything up did not build"
 
 C_HASH=$(printf '%s' "$CH" | shasum -a 256 | awk '{print $1}')
-OTHER_ID="labt$$-other"
+OTHER_ID="$LAB_TEST_ID-other"
 fm_write_meta "$CH/state/$OTHER_ID.meta" "window=firstmate:fm-$OTHER_ID" "tasktmp=/tmp/fm-$OTHER_ID"
-mkdir -p "$CH/state/$WORKER_ID.tasktmp/gotmp" "$CH/state/$MATE_ID.tasktmp" "/tmp/fm-$WORKER_ID+$C_HASH" "/tmp/fm-$OTHER_ID+$C_HASH" "/tmp/fm-$OTHER_ID"
+mkdir -p "$CH/state/$WORKER_ID.tasktmp/gotmp" "$CH/state/$MATE_ID.tasktmp"
+for dir in "/tmp/fm-$MATE_ID" "/tmp/fm-$WORKER_ID" "/tmp/fm-$WORKER_ID+$C_HASH" "/tmp/fm-$OTHER_ID+$C_HASH" "/tmp/fm-$OTHER_ID"; do
+  (umask 077 && mkdir "$dir") || fail "cannot exclusively create lab temp fixture $dir"
+  TASK_TMPS+=("$dir")
+done
+fm_write_meta "$CH/state/$MATE_ID.meta" "window=firstmate:fm-$MATE_ID" "tasktmp=/tmp/fm-$MATE_ID"
 # An outsider opening a lab path is not owned by the lab.
 printf 'sleep 600\n' > "$C/stray.sh"
 bash "$C/stray.sh" >/dev/null 2>&1 &
@@ -374,6 +383,8 @@ kill -0 "$SIBLING" 2>/dev/null || fail "down leaves a sibling root's process run
 pkill -P "$SIBLING" 2>/dev/null
 kill "$SIBLING" 2>/dev/null
 assert_absent "$C_TMUX" "down removes the private tmux directory"
+assert_absent "/tmp/fm-$WORKER_ID" "down removes the worker's legacy temp root even without its meta"
+assert_absent "/tmp/fm-$MATE_ID" "down removes the mate's recorded legacy temp root"
 assert_absent "/tmp/fm-$WORKER_ID+$C_HASH" "down removes the worker's launch dir"
 assert_absent "/tmp/fm-$OTHER_ID+$C_HASH" "down removes a lab-spawned task's launch dir scoped to the lab home"
 assert_present "/tmp/fm-$OTHER_ID" "down keeps a legacy shared task temp dir another home could own"

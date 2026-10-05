@@ -494,30 +494,82 @@ test_relaunch_preserves_durable_task_metadata() {
 # stays valid and teardown removes the root the task actually used. A record
 # with no root gets the home-scoped one.
 test_relaunch_keeps_a_legacy_task_temp_root_and_scopes_a_missing_one() {
-  local dir out rc state_real
-  dir=$(new_case legacy-tasktmp rl91)
-  add_ship_task "$dir" rl91 claude
-  sed -i.bak 's|^tasktmp=.*|tasktmp=/tmp/fm-rl91|' "$dir/home/state/rl91.meta" && rm -f "$dir/home/state/rl91.meta.bak"
-  TASK_TMPS+=(/tmp/fm-rl91)
-  out=$(run_control "$dir" rl91 relaunch --note "continuing after relaunch"); rc=$?
+  local dir out rc state_real id legacy
+  id="rl91-$$-$RANDOM"
+  legacy="/tmp/fm-$id"
+  (umask 077 && mkdir "$legacy") || fail "cannot exclusively create the legacy fixture root"
+  TASK_TMPS+=("$legacy")
+  dir=$(new_case legacy-tasktmp "$id")
+  add_ship_task "$dir" "$id" claude
+  sed -i.bak "s|^tasktmp=.*|tasktmp=$legacy|" "$dir/home/state/$id.meta" && rm -f "$dir/home/state/$id.meta.bak"
+  out=$(run_control "$dir" "$id" relaunch --note "continuing after relaunch"); rc=$?
   expect_code 0 "$rc" "relaunch of a legacy temp root record should succeed"$'\n'"$out"
-  [ "$(meta_field "$dir" rl91 tasktmp)" = /tmp/fm-rl91 ] \
-    || fail "relaunch moved a live task off its recorded legacy temp root: $(meta_field "$dir" rl91 tasktmp)"
-  [ -d /tmp/fm-rl91/gotmp ] || fail "relaunch did not keep the recorded legacy root's Go temp directory"
-  assert_grep "export GOTMPDIR='/tmp/fm-rl91/gotmp'" "$dir/fake/keys" \
+  [ "$(meta_field "$dir" "$id" tasktmp)" = "$legacy" ] \
+    || fail "relaunch moved a live task off its recorded legacy temp root: $(meta_field "$dir" "$id" tasktmp)"
+  [ -d "$legacy/gotmp" ] || fail "relaunch did not keep the recorded legacy root's Go temp directory"
+  assert_grep "export GOTMPDIR='$legacy/gotmp'" "$dir/fake/keys" \
     "relaunch did not export the recorded legacy Go temp directory"
 
-  dir=$(new_case scoped-tasktmp rl92)
-  add_ship_task "$dir" rl92 claude
-  sed -i.bak '/^tasktmp=/d' "$dir/home/state/rl92.meta" && rm -f "$dir/home/state/rl92.meta.bak"
-  out=$(run_control "$dir" rl92 relaunch --note "continuing after relaunch"); rc=$?
+  id="rl92-$$-$RANDOM"
+  [ ! -e "/tmp/fm-$id" ] && [ ! -L "/tmp/fm-$id" ] || fail "rootless fixture id already has a legacy root"
+  dir=$(new_case scoped-tasktmp "$id")
+  add_ship_task "$dir" "$id" claude
+  sed -i.bak '/^tasktmp=/d' "$dir/home/state/$id.meta" && rm -f "$dir/home/state/$id.meta.bak"
+  out=$(run_control "$dir" "$id" relaunch --note "continuing after relaunch"); rc=$?
   expect_code 0 "$rc" "relaunch of a record without a temp root should succeed"$'\n'"$out"
   state_real=$(cd "$dir/home/state" && pwd -P)
-  [ "$(meta_field "$dir" rl92 tasktmp)" = "$state_real/rl92.tasktmp" ] \
-    || fail "relaunch did not give a rootless record the home-scoped temp root: $(meta_field "$dir" rl92 tasktmp)"
-  [ -d "$state_real/rl92.tasktmp/gotmp" ] || fail "relaunch did not create the home-scoped Go temp directory"
-  [ ! -e /tmp/fm-rl92 ] || fail "relaunch created the shared legacy temp root for a rootless record"
+  [ "$(meta_field "$dir" "$id" tasktmp)" = "$state_real/$id.tasktmp" ] \
+    || fail "relaunch did not give a rootless record the home-scoped temp root: $(meta_field "$dir" "$id" tasktmp)"
+  [ -d "$state_real/$id.tasktmp/gotmp" ] || fail "relaunch did not create the home-scoped Go temp directory"
+  [ ! -e "/tmp/fm-$id" ] && [ ! -L "/tmp/fm-$id" ] || fail "relaunch created the shared legacy temp root for a rootless record"
   pass "fm-control relaunch: a recorded legacy temp root is kept, and a missing one is scoped to the home"
+}
+
+test_secondmate_recovery_preserves_a_legacy_task_temp_root() {
+  local dir home id legacy out rc action
+  id="smtemp-$$-$RANDOM"
+  legacy="/tmp/fm-$id"
+  (umask 077 && mkdir "$legacy") || fail "cannot exclusively create the secondmate legacy fixture root"
+  TASK_TMPS+=("$legacy")
+  printf 'keep\n' > "$legacy/scratch"
+  dir=$(new_case secondmate-tasktmp "$id")
+  home="$dir/home"
+  mkdir -p "$home/data/$id"
+  printf '# secondmate brief\n' > "$home/data/$id/brief.md"
+  fm_git_worktree "$dir/proj" "$dir/smhome" sm-branch
+  mkdir -p "$dir/smhome/state" "$dir/smhome/data" "$dir/smhome/bin"
+  printf '%s\n' "$id" > "$dir/smhome/.fm-secondmate-home"
+  printf '# agents\n' > "$dir/smhome/AGENTS.md"
+  {
+    echo "window=fmses:fm-$id"
+    echo "endpoint_task_id=$id"
+    echo "worktree=$dir/smhome"
+    echo "project=$dir/smhome"
+    echo "harness=claude"
+    echo "kind=secondmate"
+    echo "mode=secondmate"
+    echo "yolo=off"
+    echo "home=$dir/smhome"
+    echo "tasktmp=$legacy"
+  } > "$home/state/$id.meta"
+  printf '%s' "$dir/smhome" > "$dir/fake/cwd"
+  : > "$dir/fake/windows"
+  printf 'zsh' > "$dir/fake/command"
+  for action in recovery relaunch; do
+    : > "$dir/fake/keys"
+    if [ "$action" = recovery ]; then
+      out=$(FM_SKIP_SECONDMATE_SYNC=1 FM_SKIP_SECONDMATE_INHERIT=1 run_spawn "$dir" "$id" --secondmate claude --backend tmux); rc=$?
+    else
+      out=$(FM_SKIP_SECONDMATE_SYNC=1 FM_SKIP_SECONDMATE_INHERIT=1 run_control "$dir" "$id" relaunch); rc=$?
+    fi
+    expect_code 0 "$rc" "secondmate $action should succeed"$'\n'"$out"
+    [ "$(meta_field "$dir" "$id" tasktmp)" = "$legacy" ] || fail "secondmate $action replaced its legacy root"
+    [ "$(<"$legacy/scratch")" = keep ] || fail "secondmate $action lost its scratch file"
+    [ -d "$legacy/gotmp" ] || fail "secondmate $action did not create the legacy Go temp directory"
+    [ ! -e "$home/state/$id.tasktmp" ] || fail "secondmate $action created a replacement temp root"
+    assert_grep "export GOTMPDIR='$legacy/gotmp'" "$dir/fake/keys" "secondmate $action did not export its legacy Go temp directory"
+  done
+  pass "secondmate recovery and relaunch retain the recorded legacy task temp root"
 }
 
 test_relaunch_serializes_concurrent_durable_metadata_publication() {
@@ -2418,6 +2470,7 @@ test_relaunch_refuses_before_exit_when_the_composer_state_is_unproven
 test_relaunch_from_linked_home_preserves_recorded_worktree
 test_relaunch_preserves_durable_task_metadata
 test_relaunch_keeps_a_legacy_task_temp_root_and_scopes_a_missing_one
+test_secondmate_recovery_preserves_a_legacy_task_temp_root
 test_relaunch_serializes_concurrent_durable_metadata_publication
 test_disabled_relaunch_clears_prior_trace_context
 test_relaunch_appends_the_progress_note_to_the_instructions
