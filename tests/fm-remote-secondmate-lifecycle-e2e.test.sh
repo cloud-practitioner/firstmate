@@ -52,7 +52,13 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# Poll budgets, all at the 20 ms cadence. Waits on remote provisioning, cloning,
+# inheritance, launch, and the watcher's auto-relaunch can stall for minutes on a
+# loaded runner, so they share the long budget. A local lock-holder fixture only
+# has to start a shell, so it gets a shorter one: a genuine hang there still
+# fails promptly while keeping twelve times the headroom it originally had.
 WAIT_BOUND_POLLS=15000
+LOCK_HOLDER_WAIT_BOUND_POLLS=3000
 
 # Materialize the current branch as the remote host's tracked code root. The
 # fixture is a real git repository because provisioning and guarded sync exercise
@@ -1512,7 +1518,7 @@ liveness_wait=0
 while [ ! -f "$TMP_ROOT/liveness.entered" ]; do
   kill -0 "$liveness_holder_pid" 2>/dev/null || fail "liveness lock holder exited before acquiring the lock"
   liveness_wait=$((liveness_wait + 1))
-  [ "$liveness_wait" -le "$WAIT_BOUND_POLLS" ] || fail "liveness lock holder never acquired the lock"
+  [ "$liveness_wait" -le "$LOCK_HOLDER_WAIT_BOUND_POLLS" ] || fail "liveness lock holder never acquired the lock"
   sleep 0.02
 done
 liveness_owner=$liveness_holder_pid
@@ -1544,7 +1550,7 @@ handoff_wait=0
 while [ ! -f "$TMP_ROOT/handoff.entered" ]; do
   kill -0 "$handoff_holder_pid" 2>/dev/null || fail "handoff lock holder exited before acquiring the route lock"
   handoff_wait=$((handoff_wait + 1))
-  [ "$handoff_wait" -le "$WAIT_BOUND_POLLS" ] || fail "handoff lock holder never acquired the route lock"
+  [ "$handoff_wait" -le "$LOCK_HOLDER_WAIT_BOUND_POLLS" ] || fail "handoff lock holder never acquired the route lock"
   sleep 0.02
 done
 rm -f "$TMUX_STATE" "$TMP_ROOT/launch.entered" "$TMP_ROOT/launch.release"
