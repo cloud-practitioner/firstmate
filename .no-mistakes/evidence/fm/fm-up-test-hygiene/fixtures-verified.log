@@ -1,0 +1,18 @@
+FM_TEST_BEGIN 2026-10-05T18:51:29Z tests/fm-test-fixtures.test.sh family=standalone expected_gate_skip=none
+ok - runner and shared helpers isolate host Git config and preserve explicit config and outside commits
+ok - suite exit cleanup removes an untorn spawn's read-only strip hooks and staged launch directory
+ok - a set -e suite with no staged launch directories finishes exit cleanup and exits 0
+ok - fm_test_remove_tree removes a tree holding read-only strip hooks and leaves outside targets alone
+ok - fm_touch_epoch preserves both epochs in the repeated DST hour
+ok - a fixture commit starts no background maintenance that a local clone could race
+ok - fake no-mistakes --version is the shared constant and overridable
+ok - init/doctor no-mistakes stub touches markers and refuses other verbs
+ok - fake gh authenticates and fake gh-axi reports the shared version
+ok - spawn fakebin answers pane path, logs -l payloads, and installs extra tools
+ok - send stubs log typed text and fake ssh records argv with a controllable exit
+ok - spawn-home layout writes harness pin, beat, and brief
+FM_TEST_END 2026-10-05T18:51:52Z tests/fm-test-fixtures.test.sh exit=0 duration_ms=22780 gate_skip=false
+FM_TEST_SUMMARY total=1 failed=0 skipped_gate=0 duration_ms=22944
+FM_TEST_SUMMARY_FAMILY family=standalone count=1 duration_ms=22780 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-test-fixtures.test.sh duration_ms=22780
+fm-test-run: wrote timing artifact: /home/node/.no-mistakes/evidence/01M46NVEJMXM471BS4H2VQ63TQ/fixtures-verified.json

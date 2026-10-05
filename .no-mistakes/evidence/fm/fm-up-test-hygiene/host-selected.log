@@ -1,0 +1,23 @@
+CASE test_attended_routine_wake_is_handled_on_the_engine_and_stays_off_main
+ok - host: an attended wake the branch may take is handled on the engine, and its routine outcome never wakes main
+fixture process 3084867 stopped (gone)
+fixture process 3086563 stopped (gone)
+fixture process 3091918 stopped (gone)
+fixture process 3091951 stopped (gone)
+CASE test_main_only_pass_through_leaves_the_successor_watcher_running
+ok - host: a main-only pass-through leaves the successor watcher running and the close undelivered for main
+fixture process 3084867 stopped (gone)
+fixture process 3086563 stopped (gone)
+fixture process 3091918 stopped (gone)
+fixture process 3091951 stopped (gone)
+fixture process 3107556 stopped (gone)
+fixture process 3112314 stopped (gone)
+CASE test_away_wake_is_handled_on_the_engine_and_never_reaches_main
+ok - host: an away wake is handled on the engine through the branch contract and never reaches main
+fixture process 3084867 stopped (gone)
+fixture process 3086563 stopped (gone)
+fixture process 3091918 stopped (gone)
+fixture process 3091951 stopped (gone)
+fixture process 3107556 stopped (gone)
+fixture process 3112314 stopped (gone)
+fixture process 3117925 stopped (gone)

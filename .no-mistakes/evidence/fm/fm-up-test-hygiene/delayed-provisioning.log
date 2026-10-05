@@ -1,0 +1,2 @@
+ok - overlapping remote home provisioning serializes through publication and rollback
+delayed provisioning passed after an injected 7-second delay at the original 20ms poll cadence

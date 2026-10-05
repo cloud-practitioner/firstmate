@@ -1,0 +1,11 @@
+FM_TEST_BEGIN 2026-10-05T18:48:13Z tests/fm-test-fixtures.test.sh family=standalone expected_gate_skip=none
+ok - runner and shared helpers isolate host Git config and preserve explicit config and outside commits
+not ok - fixture spawn failed: warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46NVEJMXM471BS4H2VQ63TQ/.test-validation/tmp/fm-test-fixture-spawn.qbPa90/home/data/fixtreespawn2960665/launch-brief.md records no ship branch; defaulting to legacy branch fm/fixtreespawn2960665
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46NVEJMXM471BS4H2VQ63TQ/.test-validation/tmp/fm-test-fixture-spawn.qbPa90/home/data/fixtreespawn2960665/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+error: treehouse get did not enter an isolated worktree within 60s (last seen '/home/node/.no-mistakes/worktrees/c98b859efde5/01M46NVEJMXM471BS4H2VQ63TQ/.test-validation/tmp/fm-test-fixture-spawn.qbPa90/wt': it is a subdirectory of worktree root '/tmp/fm-test-fixture-spawn.qbPa90/wt', not a worktree root; spawning project '/home/node/.no-mistakes/worktrees/c98b859efde5/01M46NVEJMXM471BS4H2VQ63TQ/.test-validation/tmp/fm-test-fixture-spawn.qbPa90/project'); inspect window firstmate:fm-fixtreespawn2960665
+not ok - child suite failed: 
+FM_TEST_END 2026-10-05T18:50:04Z tests/fm-test-fixtures.test.sh exit=1 duration_ms=110180 gate_skip=false
+FM_TEST_SUMMARY total=1 failed=1 skipped_gate=0 duration_ms=110695
+FM_TEST_SUMMARY_FAMILY family=standalone count=1 duration_ms=110180 failed=1
+FM_TEST_SLOWEST rank=1 script=tests/fm-test-fixtures.test.sh duration_ms=110180
+fm-test-run: wrote timing artifact: /home/node/.no-mistakes/evidence/01M46NVEJMXM471BS4H2VQ63TQ/fixtures-retry.json

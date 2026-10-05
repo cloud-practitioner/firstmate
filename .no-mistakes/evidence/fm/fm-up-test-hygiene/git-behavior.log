@@ -1,0 +1,3 @@
+fixture maintenance.auto=false
+commit produced 300 files without invoking background maintenance
+cloned fixture commit=fixture files=300

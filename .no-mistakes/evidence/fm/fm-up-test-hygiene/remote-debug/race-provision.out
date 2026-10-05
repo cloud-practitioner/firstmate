@@ -1,0 +1,3 @@
+[validation-probe] holding clone /tmp/fm-remote-secondmate-e2e.SnKbJt/.fm-home-provisioning.Eg1cBn
+[validation-probe] observed objects pid=3173130 state=Sl
+provisioned: /tmp/fm-remote-secondmate-e2e.SnKbJt/raced-home projects=0

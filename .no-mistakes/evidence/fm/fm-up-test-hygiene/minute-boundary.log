@@ -1,0 +1,6 @@
+PUBLIC PRESENT: {"seq":1,"epoch":1791227108,"task":"demo","wake":"","verdict":"captain","summary":"ready across the minute boundary","silent":false,"statusEndpoint":0,"statusIdent":"-","unread":true,"recordedAgo":"1m"}
+TEST NORMALIZED: [seq 1, recorded 0m ago] demo: ready across the minute boundary
+recorded 0m ago => recorded 0m ago
+recorded 59m ago => recorded 0m ago
+recorded 1h ago => recorded 1h ago
+recorded 2d ago => recorded 2d ago
