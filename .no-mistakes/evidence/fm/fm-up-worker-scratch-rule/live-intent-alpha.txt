@@ -1,0 +1,1 @@
+Provide the alpha-only goal: display temperature in Celsius.

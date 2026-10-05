@@ -1,0 +1,19 @@
+$ bash /home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline/bin/fm-brief.sh before-scout scratch-demo --scout
+scaffolded: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline-home/data/before-scout/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+Generated Rule 2: 2. Stay inside this worktree; the only files you may write outside it are the report and the status file below.
+The target emitted-interface checks correctly reject this base output.
+
+$ bash /home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline/bin/fm-brief.sh before-no-mistakes scratch-demo --mode no-mistakes
+scaffolded: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline-home/data/before-no-mistakes/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})
+Generated Rule 2: 2. Keep project edits inside this worktree; keep proof and scratch output outside it, under `/home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline-home/data/before-no-mistakes/` or a temporary directory.
+The target emitted-interface checks correctly reject this base output.
+
+$ bash /home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline/bin/fm-brief.sh before-direct-pr scratch-demo --mode direct-PR
+scaffolded: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline-home/data/before-direct-pr/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+Generated Rule 2: 2. Keep project edits inside this worktree; keep proof and scratch output outside it, under `/home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline-home/data/before-direct-pr/` or a temporary directory.
+The target emitted-interface checks correctly reject this base output.
+
+$ bash /home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline/bin/fm-brief.sh before-local-only scratch-demo --mode local-only
+scaffolded: /home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline-home/data/before-local-only/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+Generated Rule 2: 2. Keep project edits inside this worktree; keep proof and scratch output outside it, under `/home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/baseline-home/data/before-local-only/` or a temporary directory.
+The target emitted-interface checks correctly reject this base output.

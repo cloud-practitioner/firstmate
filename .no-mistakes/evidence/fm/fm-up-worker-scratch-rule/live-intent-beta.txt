@@ -1,0 +1,1 @@
+Provide the beta-only goal: display distance in kilometres.

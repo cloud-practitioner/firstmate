@@ -1,0 +1,4 @@
+window=lab-scout
+kind=scout
+worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/project
+tasktmp=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/worker-scout/state/same-task.tasktmp

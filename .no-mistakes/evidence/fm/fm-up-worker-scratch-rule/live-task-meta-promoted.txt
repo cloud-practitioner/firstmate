@@ -1,0 +1,7 @@
+window=lab-promoted
+worktree=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/project
+tasktmp=/home/node/.no-mistakes/worktrees/c98b859efde5/01M46G0PDZ4VFSXNWTR9GE0QEG/.scratch-validation/worker-promoted/relocated scratch/same-task.tasktmp
+kind=ship
+mode=no-mistakes
+yolo=off
+branch=fm/same-task
