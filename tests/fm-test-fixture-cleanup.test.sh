@@ -212,6 +212,16 @@ test_registries_avoid_git_worktree_root() {
 test_remote_worker_cleanup_with_spaced_root() (
   local harness root sibling candidate pid i expected actual group worker sibling_worker
   local -a supervisors=() workers=()
+  # A serving worker also runs its own readiness-heartbeat child, which carries
+  # the worker's command line. Expect the supervisor, the serving process, and
+  # exactly those of its direct children that discovery reports for this root.
+  expected_worker_tree() { # <supervisor> <serving-pid> <code-root>
+    local child
+    printf '%s\n' "$1" "$2"
+    for child in $(fm_test_remote_job_worker_pids "$3"); do
+      [ "$(ps -o ppid= -p "$child" 2>/dev/null | tr -d '[:space:]')" = "$2" ] && printf '%s\n' "$child"
+    done
+  }
   harness=$(fm_test_tmproot fm-test-cleanup-remote-worker)
   root="$harness/test runs [*]/remote-root"
   sibling="$root-neighbor"
@@ -248,7 +258,7 @@ test_remote_worker_cleanup_with_spaced_root() (
 
   worker=${workers[0]}
   sibling_worker=${workers[1]}
-  expected=$(printf '%s\n' "${supervisors[0]}" "$worker" | sort -n)
+  expected=$(expected_worker_tree "${supervisors[0]}" "$worker" "$root" | sort -n)
   actual=$(fm_test_remote_job_worker_pids "$root" | sort -n)
   [ "$actual" = "$expected" ] \
     || fail "worker discovery missed the spaced-root supervisor or serving child, or included a sibling"
@@ -265,7 +275,7 @@ test_remote_worker_cleanup_with_spaced_root() (
   if ! kill -0 "${supervisors[1]}" || ! kill -0 "$sibling_worker"; then
     fail "cleanup stopped another fixture's worker"
   fi
-  expected=$(printf '%s\n' "${supervisors[1]}" "$sibling_worker" | sort -n)
+  expected=$(expected_worker_tree "${supervisors[1]}" "$sibling_worker" "$sibling" | sort -n)
   [ "$(fm_test_remote_job_worker_pids "$sibling" | sort -n)" = "$expected" ] \
     || fail "cleanup disturbed the sibling worker tree"
   supervisors[0]=''
