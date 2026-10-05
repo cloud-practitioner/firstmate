@@ -952,6 +952,23 @@ caught_up=$(FM_STATE_OVERRIDE="$PARENT/state" bash -c '
   || fail "the caught-up watermark ($caught_up) is outside the quiet window"
 pass "a quiet reply window publishes the caught-up watermark the reply guard reads"
 
+# The whole-log recapture re-fetches every document the log offers, one remote
+# job at a time, so it needs far more than one await_reply_result budget on a
+# loaded runner. Each attempt is a full wait that re-checks ownership of the
+# source, so the recapture is bounded by RECAPTURE_WAIT_ATTEMPTS of them.
+RECAPTURE_WAIT_ATTEMPTS=3
+await_recapture_result() { # <result-path>
+  local attempt
+  for attempt in $(seq 1 "$RECAPTURE_WAIT_ATTEMPTS"); do
+    if [ "$attempt" -lt "$RECAPTURE_WAIT_ATTEMPTS" ]; then
+      await_reply_result "$1" 2>/dev/null && return 0
+    else
+      await_reply_result "$1" && return 0
+    fi
+  done
+  return 1
+}
+
 # The observed already-handled replay class: a lost cursor (an update or
 # convergence retire) makes the next armed source recapture the WHOLE remote
 # log from offset 0. Every line is already mirrored, so the at-most-once
@@ -967,7 +984,7 @@ mv "$PARENT/state/.wake-queue" "$TMP_ROOT/wake-queue-before-replay" 2>/dev/null 
 stop_reply_listener || fail "the reply listener did not stop before the whole-log recapture"
 rm -f "$PARENT/state/remote-replies/ios.cursor"
 GEN=$((GEN + 1))
-await_reply_result "$PARENT/state/procevent-inbox/$SID.$GEN.result" \
+await_recapture_result "$PARENT/state/procevent-inbox/$SID.$GEN.result" \
   || fail "the cursor-loss recapture was not captured"
 assert_present "$PARENT/state/procevent-inbox/$SID.$GEN.handled" \
   "the whole-log recapture was not acknowledged by the adapter"
