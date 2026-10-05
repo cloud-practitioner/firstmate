@@ -49,7 +49,7 @@ fm_test_home_hash() {
 # nothing behind. It is the same name fm-teardown.sh retires, and the home hash
 # keeps every other home's launch directories out of reach. The per-task
 # /tmp/fm-<id> root is not home-scoped, so it is not this helper's to remove;
-# fm-spawn.sh's own cleanup owns it.
+# bin/fm-teardown.sh owns its removal.
 # Call this before removing <fixture-root>, because the home paths must resolve.
 fm_test_remove_spawn_launch_dirs() {
   local root=$1 home hash dir
