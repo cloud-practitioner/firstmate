@@ -219,14 +219,13 @@ EOF
     echo "kind=ship"
     echo "mode=no-mistakes"
     echo "yolo=off"
-    echo "tasktmp=/tmp/fm-$id"
+    echo "tasktmp=$(cd "$home/state" && pwd -P)/$id.tasktmp"
     echo "model=default"
     echo "effort=default"
   } > "$home/state/$id.meta"
   printf '%s\n' "fm-$id" > "$dir/fake/windows"
   printf '%s' "$ses" > "$dir/fake/session-name"
   printf '%s' "$wt" > "$dir/fake/cwd"
-  TASK_TMPS+=("/tmp/fm-$id")
 }
 
 run_control() {  # <case-dir> <args...>
@@ -488,6 +487,37 @@ test_relaunch_preserves_durable_task_metadata() {
   [ "$(meta_field "$dir" rl19 decisions_reviewed)" = 1 ] \
     || fail "the task decision state must survive relaunch"
   pass "fm-control relaunch: durable task metadata survives replacement launch publication"
+}
+
+# A task spawned before the home-scoped temp root recorded the shared
+# /tmp/fm-<id>; relaunch keeps that recorded root so the live task's record
+# stays valid and teardown removes the root the task actually used. A record
+# with no root gets the home-scoped one.
+test_relaunch_keeps_a_legacy_task_temp_root_and_scopes_a_missing_one() {
+  local dir out rc state_real
+  dir=$(new_case legacy-tasktmp rl91)
+  add_ship_task "$dir" rl91 claude
+  sed -i.bak 's|^tasktmp=.*|tasktmp=/tmp/fm-rl91|' "$dir/home/state/rl91.meta" && rm -f "$dir/home/state/rl91.meta.bak"
+  TASK_TMPS+=(/tmp/fm-rl91)
+  out=$(run_control "$dir" rl91 relaunch --note "continuing after relaunch"); rc=$?
+  expect_code 0 "$rc" "relaunch of a legacy temp root record should succeed"$'\n'"$out"
+  [ "$(meta_field "$dir" rl91 tasktmp)" = /tmp/fm-rl91 ] \
+    || fail "relaunch moved a live task off its recorded legacy temp root: $(meta_field "$dir" rl91 tasktmp)"
+  [ -d /tmp/fm-rl91/gotmp ] || fail "relaunch did not keep the recorded legacy root's Go temp directory"
+  assert_grep "export GOTMPDIR='/tmp/fm-rl91/gotmp'" "$dir/fake/keys" \
+    "relaunch did not export the recorded legacy Go temp directory"
+
+  dir=$(new_case scoped-tasktmp rl92)
+  add_ship_task "$dir" rl92 claude
+  sed -i.bak '/^tasktmp=/d' "$dir/home/state/rl92.meta" && rm -f "$dir/home/state/rl92.meta.bak"
+  out=$(run_control "$dir" rl92 relaunch --note "continuing after relaunch"); rc=$?
+  expect_code 0 "$rc" "relaunch of a record without a temp root should succeed"$'\n'"$out"
+  state_real=$(cd "$dir/home/state" && pwd -P)
+  [ "$(meta_field "$dir" rl92 tasktmp)" = "$state_real/rl92.tasktmp" ] \
+    || fail "relaunch did not give a rootless record the home-scoped temp root: $(meta_field "$dir" rl92 tasktmp)"
+  [ -d "$state_real/rl92.tasktmp/gotmp" ] || fail "relaunch did not create the home-scoped Go temp directory"
+  [ ! -e /tmp/fm-rl92 ] || fail "relaunch created the shared legacy temp root for a rootless record"
+  pass "fm-control relaunch: a recorded legacy temp root is kept, and a missing one is scoped to the home"
 }
 
 test_relaunch_serializes_concurrent_durable_metadata_publication() {
@@ -1119,7 +1149,7 @@ test_promoted_scout_relaunch_receives_the_current_delivery_contract() {
       echo "project=$dir/proj"
       echo "harness=claude"
       echo "kind=scout"
-      echo "tasktmp=/tmp/fm-$id"
+      echo "tasktmp=$(cd "$home/state" && pwd -P)/$id.tasktmp"
       echo "model=default"
       echo "effort=default"
     } > "$home/state/$id.meta"
@@ -2085,7 +2115,7 @@ EOF
     echo "kind=ship"
     echo "mode=no-mistakes"
     echo "yolo=off"
-    echo "tasktmp=/tmp/fm-$id"
+    echo "tasktmp=$(cd "$home/state" && pwd -P)/$id.tasktmp"
     echo "model=default"
     echo "effort=default"
     echo "backend=herdr"
@@ -2098,14 +2128,10 @@ EOF
   printf '%s' "$survivor" > "$dir/fake/herdr-pane"
   : > "$dir/fake/herdr-log"
   : > "$dir/fake/herdr-stopped"
-  TASK_TMPS+=("/tmp/fm-$id")
 }
 
 # Sets HERDR_CASE_DIR rather than echoing it, so callers invoke it as a plain
-# statement. A `dir=$(herdr_case_or_skip ...)` would run add_herdr_ship_task in
-# a command-substitution subshell, where its TASK_TMPS registration would
-# mutate a discarded copy and the EXIT trap would never remove the
-# out-of-tmproot /tmp/fm-<id> root the spawn creates.
+# statement.
 HERDR_CASE_DIR=
 herdr_case_or_skip() {  # <name> <id> [session] [surviving-pane]
   HERDR_CASE_DIR=
@@ -2391,6 +2417,7 @@ test_relaunch_refuses_before_exit_when_the_composer_holds_pending_text
 test_relaunch_refuses_before_exit_when_the_composer_state_is_unproven
 test_relaunch_from_linked_home_preserves_recorded_worktree
 test_relaunch_preserves_durable_task_metadata
+test_relaunch_keeps_a_legacy_task_temp_root_and_scopes_a_missing_one
 test_relaunch_serializes_concurrent_durable_metadata_publication
 test_disabled_relaunch_clears_prior_trace_context
 test_relaunch_appends_the_progress_note_to_the_instructions

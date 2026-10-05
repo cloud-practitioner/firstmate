@@ -53,9 +53,9 @@
 #                    only, so the Pi trust store is never written and all of
 #                    .pi/extensions loads; sessions stay under
 #                    <lab-root>/pi-sessions.
-#   task ids         lab<nonce>-mate and lab<nonce>-worker, unique per lab,
-#                    because a spawn keeps a task temp dir at /tmp/fm-<id>
-#                    that a fixed id would share with other labs and tasks.
+#   task ids         lab<nonce>-mate and lab<nonce>-worker, unique per lab.
+#                    Their task temp roots live in the lab home's state/ and
+#                    go with the lab root; down removes their launch dirs.
 #   mate/            --mate: bin/fm-home-seed.sh <mate-id> <lab-root>/mate
 #                    --no-projects (an explicit path cloned from the git lab
 #                    home), launched by bin/fm-spawn.sh --secondmate.
@@ -789,9 +789,9 @@ cmd_down() {
     die "refusing to remove the lab: its processes did not exit (pid ppid pgid state command): $details"
   fi
   echo "stopped: lab tmux server and lab processes"
-  # A spawn keeps /tmp/fm-<id> and /tmp/fm-<id>+<sha256 of the spawning home>.
-  # The second is scoped to this lab home for any task it spawned; the first is
-  # removed only for the lab's own unique ids, since another home may share it.
+  # A spawn keeps its launch dir at /tmp/fm-<id>+<sha256 of the spawning home>,
+  # scoped to this lab home for any task it spawned; its task temp root lives
+  # in the home's own state/ and goes with the lab root (bin/fm-spawn.sh).
   home_hash=$(printf '%s' "$LAB" | shasum -a 256 | awk '{print $1}')
   ids=("$MATE_ID" "$WORKER_ID")
   for meta in "$LAB"/state/*.meta; do
@@ -799,12 +799,10 @@ cmd_down() {
   done
   for id in "${ids[@]}"; do
     [ -n "$id" ] || continue
-    for dir in "/tmp/fm-$id+$home_hash" "/tmp/fm-$id"; do
-      [ "$dir" != "/tmp/fm-$id" ] || [ "$id" = "$MATE_ID" ] || [ "$id" = "$WORKER_ID" ] || continue
-      if [ -d "$dir" ] && [ ! -L "$dir" ] && [ -O "$dir" ]; then
-        rm -rf "$dir" && echo "removed: task temp $dir"
-      fi
-    done
+    dir="/tmp/fm-$id+$home_hash"
+    if [ -d "$dir" ] && [ ! -L "$dir" ] && [ -O "$dir" ]; then
+      rm -rf "$dir" && echo "removed: task launch dir $dir"
+    fi
   done
   if [ -f "$LAB/.fm-lab-home" ]; then
     "$LAB_HOME_HELPER" teardown "$LAB" || die "cannot remove the private tmux directory"
