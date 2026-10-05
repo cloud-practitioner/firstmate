@@ -1,0 +1,182 @@
+
+$ herdr agent get w1:p1 --session fm-lab-control-smoke-2780825 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785917,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"claude","pid":2785917}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr pane report-agent w1:p2 --source fm-control-smoke --agent fm-control-smoke-agent --state idle --session fm-lab-control-smoke-2780825 [exit=0]
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785917,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"claude","pid":2785917}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785917,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"claude","pid":2785917}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785917,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"claude","pid":2785917}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785917,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"claude","pid":2785917}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785898,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"bash","pid":2785898}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785898,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"bash","pid":2785898}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785898,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"bash","pid":2785898}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785898,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"bash","pid":2785898}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2785898,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"bash","pid":2785898}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2791047,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"claude","pid":2791047}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr pane report-agent w1:p2 --source fm-control-smoke --agent fm-control-smoke-agent --state idle --session fm-lab-control-smoke-2780825 [exit=0]
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2791047,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","name":"claude","pid":2791047}],"pane_id":"w1:p2","shell_pid":2781077},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2780825 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.epMJ0Y/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d194d960af32","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr agent get w1:p1 --session fm-lab-control-smoke-2820154 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823527,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"claude","pid":2823527}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr pane report-agent w1:p2 --source fm-control-smoke --agent fm-control-smoke-agent --state idle --session fm-lab-control-smoke-2820154 [exit=0]
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823527,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"claude","pid":2823527}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823527,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"claude","pid":2823527}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823527,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"claude","pid":2823527}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823527,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"claude","pid":2823527}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823512,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"bash","pid":2823512}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823512,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"bash","pid":2823512}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823512,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"bash","pid":2823512}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823512,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"bash","pid":2823512}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2823512,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"bash","pid":2823512}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2827686,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"claude","pid":2827686}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr pane report-agent w1:p2 --source fm-control-smoke --agent fm-control-smoke-agent --state idle --session fm-lab-control-smoke-2820154 [exit=0]
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2827686,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","name":"claude","pid":2827686}],"pane_id":"w1:p2","shell_pid":2820996},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p2 --session fm-lab-control-smoke-2820154 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-control-smoke-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.WYUETu/wt","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65d19537bf6232","workspace_id":"w1"},"type":"agent_info"}}

@@ -1,0 +1,44 @@
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d196339bb921","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"probe","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+{"id":"cli:pane:list","result":{"panes":[{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d196339bb921","workspace_id":"w1"}],"type":"pane_list"}}
+
+$ herdr pane run w1:p1 exec\ env\ PS1=\'hsmoke\$\ \'\ HISTFILE=/dev/null\ /usr/bin/bash\ --noprofile\ --norc --session fm-lab-probe-2933933-16376
+
+$ herdr pane run w1:p1 clear --session fm-lab-probe-2933933-16376
+
+$ herdr pane process-info --pane w1:p1 --session fm-lab-probe-2933933-16376
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2934275,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","name":"bash","pid":2934275}],"pane_id":"w1:p1","shell_pid":2934275},"type":"pane_process_info"}}
+
+$ herdr pane report-agent w1:p1 --source fm-probe --agent probe-agent --state idle --session fm-lab-probe-2933933-16376
+
+Top-shell registration after two seconds (exit 1):
+{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}
+
+$ herdr pane run w1:p1 /usr/bin/bash\ --noprofile\ --norc --session fm-lab-probe-2933933-16376
+
+$ herdr pane process-info --pane w1:p1 --session fm-lab-probe-2933933-16376
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2935976,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","name":"bash","pid":2935976}],"pane_id":"w1:p1","shell_pid":2934275},"type":"pane_process_info"}}
+
+$ herdr pane report-agent w1:p1 --source fm-probe --agent probe-agent --state idle --session fm-lab-probe-2933933-16376
+
+$ herdr agent get w1:p1 --session fm-lab-probe-2933933-16376
+{"id":"cli:agent:get","result":{"agent":{"agent":"probe-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","pane_id":"w1:p1","revision":0,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d196339bb921","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane run w1:p1 /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/claude\ 900 --session fm-lab-probe-2933933-16376
+
+$ herdr pane report-agent w1:p1 --source fm-probe --agent probe-agent --state idle --session fm-lab-probe-2933933-16376
+
+$ herdr agent get w1:p1 --session fm-lab-probe-2933933-16376
+{"id":"cli:agent:get","result":{"agent":{"agent":"probe-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","pane_id":"w1:p1","revision":0,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d196339bb921","workspace_id":"w1"},"type":"agent_info"}}
+
+Live process:
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2936445,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","name":"claude","pid":2936445}],"pane_id":"w1:p1","shell_pid":2934275},"type":"pane_process_info"}}
+
+$ herdr pane process-info --pane w1:p1 --session fm-lab-probe-2933933-16376
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2935976,"foreground_processes":[{"argv":["/usr/bin/bash","--noprofile","--norc"],"cmdline":"/usr/bin/bash --noprofile --norc","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","name":"bash","pid":2935976}],"pane_id":"w1:p1","shell_pid":2934275},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p1 --session fm-lab-probe-2933933-16376
+{"id":"cli:agent:get","result":{"agent":{"agent":"probe-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp","pane_id":"w1:p1","revision":0,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d196339bb921","workspace_id":"w1"},"type":"agent_info"}}
+
+Classifier after process exit: pane=stale-agent recovery=dead
+
+Named lab deleted; default-session tripwire unchanged.

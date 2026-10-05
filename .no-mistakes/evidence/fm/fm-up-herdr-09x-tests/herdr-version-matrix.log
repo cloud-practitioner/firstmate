@@ -1,0 +1,131 @@
+=== 0.7.4: bash tests/fm-backend-herdr-smoke.test.sh (exit 0) ===
+ok - real herdr: version_check accepts the installed binary's protocol
+ok - real herdr: container_ensure starts the isolated session's server, creates the firstmate workspace (fm-lab-backend-smoke-2833109:w1), and reports its seeded default tab id (w1:t1)
+ok - real herdr: session status normalizes running and compatible
+ok - real herdr: container_ensure is idempotent (reuses/adopts the existing firstmate workspace, reports no seeded default tab on adoption)
+ok - real herdr: create_task prunes the freshly-created workspace's seeded default tab, leaving exactly one clean fm-<id> task tab
+ok - real herdr: create_task refuses a same-labeled tab whose pane hosts a genuinely live registered agent (unchanged behavior)
+ok - real herdr: create_task closes and replaces a same-labeled tab whose pane hosts no registered agent (the restored-husk shape), leaving the workspace intact
+ok - real herdr: a secondmate-shaped home (.fm-secondmate-home) gets its OWN herdr workspace, distinct from the primary's, in the SAME session
+ok - real herdr: the secondmate-shaped home's workspace is labeled 2ndmate-<secondmate-id> in herdr itself
+ok - real herdr: a task spawned into the secondmate-shaped home lands as a tab inside the secondmate's OWN workspace
+ok - real herdr: list_live stays scoped to each home's own workspace - neither home sees the other's tasks
+ok - real herdr: BOTH workspace ids/labels AND both tasks' pane ids survive a session stop + fresh server restart (multi-workspace shape)
+ok - real herdr: send_text_line runs a command atomically (pane run) and its output is capturable
+ok - real herdr: send_literal + send_key Enter submit as two separate steps (verified: send-text does NOT auto-submit)
+ok - real herdr: current_path reads the pane's live cwd
+note: FM_HERDR_SMOKE_REAL_CLAUDE=1 not set; skipping the real-agent busy_state check
+ok - real herdr: kill removes the pane and is idempotent/best-effort
+ok - real herdr: list_live discovers a live task tab by fm-<id> label
+
+=== 0.7.4: bash tests/fm-backend-herdr-respawn-idem-e2e.test.sh (exit 0) ===
+ok - repro setup: two real fm-<id> task tabs exist (crewmate-shaped and secondmate-shaped), neither with a registered agent
+ok - repro confirmed: after a real session restart, both task panes survive alive but with no registered agent - the restored-layout husk
+ok - fixed: create_task closes and replaces the crewmate-shaped restored husk instead of refusing - no manual pane close needed
+ok - fixed: create_task closes and replaces the secondmate-shaped restored husk instead of refusing - same fix, same function, both spawn shapes
+ok - fixed: the workspace holds exactly the 2 replacement tabs after both respawns - no leaked husk tabs, no destroyed workspace
+ok - fixed: a genuinely live duplicate (a real registered agent) still refuses exactly as before - the husk fix never closes a live pane
+
+=== 0.7.4: bash tests/fm-control-herdr-smoke.test.sh (exit 0) ===
+ok - real herdr: exit on a pane with no registered agent is idempotent success
+ok - real herdr 0.7.4: a gone session reads recoverable while a live pane and a malformed target do not
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.rcWgO9/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.rcWgO9/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a drifted agent-free shell returns to its worktree and reuses the same endpoint
+ok - real herdr: interrupt refuses when herdr's own agent registry reports no agent
+ok - real herdr: interrupt delivers the harness's key and proves the agent survived it
+ok - real herdr: no control verb removed the endpoint or the task's local copy
+ok - real herdr 0.7.4: a registration Herdr keeps after its agent exits reads stale-agent and recovers as dead
+ok - real herdr: exit on a pane with a stale registration is idempotent success
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.rcWgO9/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.rcWgO9/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a stale registration no longer blocks relaunch, and the endpoint and local copy survive
+ok - real herdr: an agent behind an unproven composer fails closed instead of typing an exit command into it
+
+=== 0.9.2: bash tests/fm-backend-herdr-smoke.test.sh (exit 0) ===
+ok - real herdr: version_check accepts the installed binary's protocol
+ok - real herdr: container_ensure starts the isolated session's server, creates the firstmate workspace (fm-lab-backend-smoke-2891165:w1), and reports its seeded default tab id (w1:t1)
+ok - real herdr: session status normalizes running and compatible
+ok - real herdr: container_ensure is idempotent (reuses/adopts the existing firstmate workspace, reports no seeded default tab on adoption)
+ok - real herdr: create_task prunes the freshly-created workspace's seeded default tab, leaving exactly one clean fm-<id> task tab
+ok - real herdr: create_task refuses a same-labeled tab whose pane hosts a genuinely live registered agent (unchanged behavior)
+ok - real herdr: create_task closes and replaces a same-labeled tab whose pane hosts no registered agent (the restored-husk shape), leaving the workspace intact
+ok - real herdr: a secondmate-shaped home (.fm-secondmate-home) gets its OWN herdr workspace, distinct from the primary's, in the SAME session
+ok - real herdr: the secondmate-shaped home's workspace is labeled 2ndmate-<secondmate-id> in herdr itself
+ok - real herdr: a task spawned into the secondmate-shaped home lands as a tab inside the secondmate's OWN workspace
+ok - real herdr: list_live stays scoped to each home's own workspace - neither home sees the other's tasks
+ok - real herdr: BOTH workspace ids/labels AND both tasks' pane ids survive a session stop + fresh server restart (multi-workspace shape)
+ok - real herdr: send_text_line runs a command atomically (pane run) and its output is capturable
+ok - real herdr: send_literal + send_key Enter submit as two separate steps (verified: send-text does NOT auto-submit)
+ok - real herdr: current_path reads the pane's live cwd
+note: FM_HERDR_SMOKE_REAL_CLAUDE=1 not set; skipping the real-agent busy_state check
+ok - real herdr: kill removes the pane and is idempotent/best-effort
+ok - real herdr: list_live discovers a live task tab by fm-<id> label
+
+=== 0.9.2: bash tests/fm-backend-herdr-respawn-idem-e2e.test.sh (exit 0) ===
+ok - repro setup: two real fm-<id> task tabs exist (crewmate-shaped and secondmate-shaped), neither with a registered agent
+ok - repro confirmed: after a real session restart, both task panes survive alive but with no registered agent - the restored-layout husk
+ok - fixed: create_task closes and replaces the crewmate-shaped restored husk instead of refusing - no manual pane close needed
+ok - fixed: create_task closes and replaces the secondmate-shaped restored husk instead of refusing - same fix, same function, both spawn shapes
+ok - fixed: the workspace holds exactly the 2 replacement tabs after both respawns - no leaked husk tabs, no destroyed workspace
+ok - fixed: a genuinely live duplicate (a real registered agent) still refuses exactly as before - the husk fix never closes a live pane
+
+=== 0.9.2: bash tests/fm-control-herdr-smoke.test.sh (exit 0) ===
+ok - real herdr: exit on a pane with no registered agent is idempotent success
+ok - real herdr 0.9.2: a gone session reads recoverable while a live pane and a malformed target do not
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.ZYsygi/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.ZYsygi/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a drifted agent-free shell returns to its worktree and reuses the same endpoint
+ok - real herdr: interrupt refuses when herdr's own agent registry reports no agent
+ok - real herdr: interrupt delivers the harness's key and proves the agent survived it
+ok - real herdr: no control verb removed the endpoint or the task's local copy
+ok - real herdr 0.9.2: a registration Herdr keeps after its agent exits reads stale-agent and recovers as dead
+ok - real herdr: exit on a pane with a stale registration is idempotent success
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.ZYsygi/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.ZYsygi/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a stale registration no longer blocks relaunch, and the endpoint and local copy survive
+ok - real herdr: an agent behind an unproven composer fails closed instead of typing an exit command into it
+
+=== 0.9.3: bash tests/fm-backend-herdr-smoke.test.sh (exit 0) ===
+ok - real herdr: version_check accepts the installed binary's protocol
+ok - real herdr: container_ensure starts the isolated session's server, creates the firstmate workspace (fm-lab-backend-smoke-2806601:w1), and reports its seeded default tab id (w1:t1)
+ok - real herdr: session status normalizes running and compatible
+ok - real herdr: container_ensure is idempotent (reuses/adopts the existing firstmate workspace, reports no seeded default tab on adoption)
+ok - real herdr: create_task prunes the freshly-created workspace's seeded default tab, leaving exactly one clean fm-<id> task tab
+ok - real herdr: create_task refuses a same-labeled tab whose pane hosts a genuinely live registered agent (unchanged behavior)
+ok - real herdr: create_task closes and replaces a same-labeled tab whose pane hosts no registered agent (the restored-husk shape), leaving the workspace intact
+ok - real herdr: a secondmate-shaped home (.fm-secondmate-home) gets its OWN herdr workspace, distinct from the primary's, in the SAME session
+ok - real herdr: the secondmate-shaped home's workspace is labeled 2ndmate-<secondmate-id> in herdr itself
+ok - real herdr: a task spawned into the secondmate-shaped home lands as a tab inside the secondmate's OWN workspace
+ok - real herdr: list_live stays scoped to each home's own workspace - neither home sees the other's tasks
+ok - real herdr: BOTH workspace ids/labels AND both tasks' pane ids survive a session stop + fresh server restart (multi-workspace shape)
+ok - real herdr: send_text_line runs a command atomically (pane run) and its output is capturable
+ok - real herdr: send_literal + send_key Enter submit as two separate steps (verified: send-text does NOT auto-submit)
+ok - real herdr: current_path reads the pane's live cwd
+note: FM_HERDR_SMOKE_REAL_CLAUDE=1 not set; skipping the real-agent busy_state check
+ok - real herdr: kill removes the pane and is idempotent/best-effort
+ok - real herdr: list_live discovers a live task tab by fm-<id> label
+
+=== 0.9.3: bash tests/fm-backend-herdr-respawn-idem-e2e.test.sh (exit 0) ===
+ok - repro setup: two real fm-<id> task tabs exist (crewmate-shaped and secondmate-shaped), neither with a registered agent
+ok - repro confirmed: after a real session restart, both task panes survive alive but with no registered agent - the restored-layout husk
+ok - fixed: create_task closes and replaces the crewmate-shaped restored husk instead of refusing - no manual pane close needed
+ok - fixed: create_task closes and replaces the secondmate-shaped restored husk instead of refusing - same fix, same function, both spawn shapes
+ok - fixed: the workspace holds exactly the 2 replacement tabs after both respawns - no leaked husk tabs, no destroyed workspace
+ok - fixed: a genuinely live duplicate (a real registered agent) still refuses exactly as before - the husk fix never closes a live pane
+
+=== 0.9.3: bash tests/fm-control-herdr-smoke.test.sh (exit 0) ===
+ok - real herdr: exit on a pane with no registered agent is idempotent success
+ok - real herdr 0.9.3: a gone session reads recoverable while a live pane and a malformed target do not
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.QLJcEs/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.QLJcEs/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a drifted agent-free shell returns to its worktree and reuses the same endpoint
+ok - real herdr: interrupt refuses when herdr's own agent registry reports no agent
+ok - real herdr: interrupt delivers the harness's key and proves the agent survived it
+ok - real herdr: no control verb removed the endpoint or the task's local copy
+ok - real herdr 0.9.3: a registration Herdr keeps after its agent exits reads stale-agent and recovers as dead
+ok - real herdr: exit on a pane with a stale registration is idempotent success
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.QLJcEs/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-control-herdr.QLJcEs/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a stale registration no longer blocks relaunch, and the endpoint and local copy survive
+ok - real herdr: an agent behind an unproven composer fails closed instead of typing an exit command into it

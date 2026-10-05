@@ -1,0 +1,3 @@
+
+$ herdr pane read w1:p1 --source visible --session fm-lab-probe-2929035-22895
+❯

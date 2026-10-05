@@ -1,0 +1,11 @@
+{
+  "sessions": [
+    {
+      "default": true,
+      "name": "default",
+      "running": true,
+      "session_dir": ".v/c/herdr",
+      "socket_path": ".v/c/herdr/herdr.sock"
+    }
+  ]
+}

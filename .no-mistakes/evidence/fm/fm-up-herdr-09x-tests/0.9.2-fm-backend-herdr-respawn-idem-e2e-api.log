@@ -1,0 +1,29 @@
+
+$ herdr agent get w1:p1 --session fm-lab-respawn-idem-e2e-2896594 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-respawn-idem-e2e-2896594 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p2 --session fm-lab-respawn-idem-e2e-2896594 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}
+
+$ herdr agent get w1:p3 --session fm-lab-respawn-idem-e2e-2896594 [exit=1]
+{"error":{"code":"agent_not_found","message":"agent target w1:p3 not found"},"id":"cli:agent:get"}
+
+$ herdr pane process-info --pane w1:p4 --session fm-lab-respawn-idem-e2e-2896594 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2899476,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-herdr-respawn-idem.ZdV8Hr/proj","name":"claude","pid":2899476}],"pane_id":"w1:p4","shell_pid":2899129},"type":"pane_process_info"}}
+
+$ herdr pane report-agent w1:p4 --source fm-respawn-e2e --agent fm-respawn-live-agent --state idle --session fm-lab-respawn-idem-e2e-2896594 [exit=0]
+
+$ herdr agent get w1:p4 --session fm-lab-respawn-idem-e2e-2896594 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-respawn-live-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-herdr-respawn-idem.ZdV8Hr/proj","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-herdr-respawn-idem.ZdV8Hr/proj","pane_id":"w1:p4","revision":0,"state_change_seq":1,"tab_id":"w1:t4","terminal_id":"term_65d195d66ebc43","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p4 --session fm-lab-respawn-idem-e2e-2896594 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2899476,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-herdr-respawn-idem.ZdV8Hr/proj","name":"claude","pid":2899476}],"pane_id":"w1:p4","shell_pid":2899129},"type":"pane_process_info"}}
+
+$ herdr agent get w1:p4 --session fm-lab-respawn-idem-e2e-2896594 [exit=0]
+{"id":"cli:agent:get","result":{"agent":{"agent":"fm-respawn-live-agent","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-herdr-respawn-idem.ZdV8Hr/proj","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-herdr-respawn-idem.ZdV8Hr/proj","pane_id":"w1:p4","revision":0,"state_change_seq":1,"tab_id":"w1:t4","terminal_id":"term_65d195d66ebc43","workspace_id":"w1"},"type":"agent_info"}}
+
+$ herdr pane process-info --pane w1:p4 --session fm-lab-respawn-idem-e2e-2896594 [exit=0]
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2899476,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/c98b859efde5/01M469KHGAXW3MXGQ83EVZD7E8/.v/tmp/fm-herdr-respawn-idem.ZdV8Hr/proj","name":"claude","pid":2899476}],"pane_id":"w1:p4","shell_pid":2899129},"type":"pane_process_info"}}
