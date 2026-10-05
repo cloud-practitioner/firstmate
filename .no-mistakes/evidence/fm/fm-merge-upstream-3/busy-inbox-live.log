@@ -1,0 +1,178 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-busy-event.sh arm /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/state inbox
+g1791240949.682615.4280
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab new-session -d -s primary -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l 'node /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/pi101/node_modules/@earendil-works/pi-coding-agent/dist/cli.js --offline --approve --no-extensions --no-context-files --no-skills --no-prompt-templates --no-builtin-tools --session-dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/sessions --provider lab-local --model lab-model --thinking off -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-branch-supervision.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-primary-pi-watch.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/probe.ts'
+[exit 0]
+
+PRIMARY LOCK: lock acquired: harness pid 682632
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab rename-window -t primary fm-inbox
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab display-message -p -t primary '#{socket_path},#{pid},0'
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/tmux/tmux-1000/fm-lab,682631,0
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab send-keys -t primary -l 'Keep working on the isolated inbox scenario.'
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab send-keys -t primary Enter
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab capture-pane -p -t primary -S -150
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR (detached)
+0.0%/8.2k (auto)                                                                                               lab-model
+[exit 0]
+
+$ bash -c '. "$1"; fm_task_inbox_write "$2" inbox "Preserve this instruction until handled."' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-task-inbox-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/state
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/state/inbox.inbox/001.msg[exit 0]
+
+WATCHER OUTPUT:
+stale: primary:fm-inbox (unread firstmate instruction: stuck-busy after 2 consecutive busy-deferred due doorbells; /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/state/inbox.inbox/001.msg stays unhandled and no doorbell was typed; inspect the worker)
+
+
+DURABLE BUSY STATE: 001.msg	2
+
+
+DURABLE WAKE QUEUE: 1791240957	1	stale	primary:fm-inbox	stale: primary:fm-inbox (unread firstmate instruction: stuck-busy after 2 consecutive busy-deferred due doorbells; /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/state/inbox.inbox/001.msg stays unhandled and no doorbell was typed; inspect the worker)
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab capture-pane -p -t primary -S -150
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ Keep working on the isolated inbox scenario.
+
+
+ Working on the isolated inbox scenario.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+── ⠏ Working ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR (detached)
+12.2%/8.2k (auto)                                                                                              lab-model
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab capture-pane -p -t primary
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ Keep working on the isolated inbox scenario.
+
+
+ Working on the isolated inbox scenario.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+── ⠏ Working ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR (detached)
+12.2%/8.2k (auto)                                                                                              lab-model
+[exit 0]
+
+RESTARTED WATCHER OUTPUT: check: rearm-resurface
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab kill-server
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-watch-arm.sh --stop
+watcher: none running
+[exit 0]

@@ -1,0 +1,48 @@
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/live-ui.py", line 96, in <module>
+    create('watch'); send('/fm-watch-arm-pi'); wait(lambda:(LAB/'state/.watch.lock/pid').exists(),'real watcher arm')
+                                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/live-ui.py", line 39, in wait
+    raise RuntimeError('timeout: '+label+'\n'+tm('capture-pane','-p','-t','primary',check=False).stdout)
+RuntimeError: timeout: real watcher arm
+
+ watcher: started Pi extension arm child 1; future ordinary re-arms are automatic; call fm_watch_arm_pi again only
+ after a later notification says the cycle is missing, failed, or unhealthy
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ ⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: watcher: FAILED - Pi extension could not restore watcher continuity
+ after 5 retries
+ watcher: FAILED - refusing to arm from a disposable validation checkout:
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin
+
+ Run bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned.
+
+
+ The watcher wake was observed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR (detached)
+13.3%/8.2k (auto)                                                                                              lab-model
+

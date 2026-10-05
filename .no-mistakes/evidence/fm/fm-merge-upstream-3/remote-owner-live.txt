@@ -1,0 +1,16 @@
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/remote-code init -q -b main
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/remote-code add .
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/remote-code -c user.name=Fixture -c user.email=fixture@example.invalid commit -qm fixture
+exit=0
+
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/worker.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/remote-code /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/account
+first_worker=593723 repaired=1
+after_missing_ready_worker=593723 repaired=0
+three further ensures preserved the same worker
+    PID    PPID    PGID STAT COMMAND
+ 593723  593666  593666 S    /bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/remote-code/bin/fm-remote-job-worker.sh --serve
+exit=0

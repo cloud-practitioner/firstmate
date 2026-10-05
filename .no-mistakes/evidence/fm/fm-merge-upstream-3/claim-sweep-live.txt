@@ -1,0 +1,5 @@
+job=job-EoJGK0 state=done elapsed=1s exit=0 side_effect=ran
+worker owner and serving job:
+    PID    PPID    PGID STAT COMMAND
+ 536907  532278  532274 S    /bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tmp/fm-remote-job-claim-reap.XzFieP/remote-root/bin/fm-remote-job-worker.sh --serve
+remaining=8731 expected_fresh=8730 expired_boundary_exists=no fresh_boundary_exists=yes

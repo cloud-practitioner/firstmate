@@ -1,0 +1,40 @@
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ Finish the requested work.
+
+
+ The requested result is complete and verified.
+
+ ⚓ [seq 1] example: A decision is needed
+
+ The example task needs a decision.
+
+
+ A new user question.
+
+
+ The new user answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR (detached)
+26.6%/8.2k (auto)                                                                                              lab-model

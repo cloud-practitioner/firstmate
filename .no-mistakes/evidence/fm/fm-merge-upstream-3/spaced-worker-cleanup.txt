@@ -1,0 +1,15 @@
+target root=/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tmp/fm-test-cleanup-remote-worker.bW7d2G/test runs [*]/remote-root
+discovered target pids=769413
+769462
+769599
+sibling serving pid=769808
+    PID    PPID    PGID STAT COMMAND
+ 769413  769346  769413 S    /bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tmp/fm-test-cleanup-remote-worker.bW7d2G/test runs [*]/remote-root/bin/fm-remote-job-worker.sh
+ 769462  769413  769413 S    /bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tmp/fm-test-cleanup-remote-worker.bW7d2G/test runs [*]/remote-root/bin/fm-remote-job-worker.sh --serve
+ 769759  769346  769759 S    /bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tmp/fm-test-cleanup-remote-worker.bW7d2G/test runs [*]/remote-root-neighbor/bin/fm-remote-job-worker.sh
+ 769808  769759  769759 S    /bin/bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tmp/fm-test-cleanup-remote-worker.bW7d2G/test runs [*]/remote-root-neighbor/bin/fm-remote-job-worker.sh --serve
+after target cleanup: target discovery= sibling discovery=769759
+769808
+769961
+771573
+771575

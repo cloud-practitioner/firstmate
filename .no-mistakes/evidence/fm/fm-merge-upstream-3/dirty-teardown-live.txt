@@ -1,0 +1,143 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-brief.sh scratch-task fixture-project --mode local-only
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/data/scratch-task/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/projects/demo init -q -b main
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/projects/demo add .
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/projects/demo -c user.name=Fixture -c user.email=fixture@example.invalid commit -qm landed
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/projects/demo worktree add -q -b fm/task /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree status --porcelain
+?? 00-scratch.txt
+?? 01-scratch.txt
+?? 02-scratch.txt
+?? 03-scratch.txt
+?? 04-scratch.txt
+?? 05-scratch.txt
+?? 06-scratch.txt
+?? 07-scratch.txt
+?? 08-scratch.txt
+?? 09-scratch.txt
+?? 10-scratch.txt
+?? 11-scratch.txt
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-teardown.sh task
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 1s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REFUSED: local-only worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree has work not yet merged into main and not on any remote.
+uncommitted changes present (untracked-only leftovers)
+untracked paths (up to 10):
+  00-scratch.txt
+  01-scratch.txt
+  02-scratch.txt
+  03-scratch.txt
+  04-scratch.txt
+  05-scratch.txt
+  06-scratch.txt
+  07-scratch.txt
+  08-scratch.txt
+  09-scratch.txt
+  ... additional untracked paths omitted
+Merge the branch into local main first (bin/fm-merge-local.sh after the captain approves), or push to a fork/remote, or get the captain's explicit OK to discard, then --force.
+exit=1
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree status --porcelain
+?? 00-scratch.txt
+?? 01-scratch.txt
+?? 02-scratch.txt
+?? 03-scratch.txt
+?? 04-scratch.txt
+?? 05-scratch.txt
+?? 06-scratch.txt
+?? 07-scratch.txt
+?? 08-scratch.txt
+?? 09-scratch.txt
+?? 10-scratch.txt
+?? 11-scratch.txt
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree status --porcelain
+ M tracked.txt
+?? 00-scratch.txt
+?? 01-scratch.txt
+?? 02-scratch.txt
+?? 03-scratch.txt
+?? 04-scratch.txt
+?? 05-scratch.txt
+?? 06-scratch.txt
+?? 07-scratch.txt
+?? 08-scratch.txt
+?? 09-scratch.txt
+?? 10-scratch.txt
+?? 11-scratch.txt
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-teardown.sh task
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home
+WARNING: watcher still down (same stale episode; last beat: 3s ago, grace 300s) - full banner already printed this episode.
+REFUSED: local-only worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree has work not yet merged into main and not on any remote.
+uncommitted changes present (includes tracked edits)
+untracked paths (up to 10):
+  00-scratch.txt
+  01-scratch.txt
+  02-scratch.txt
+  03-scratch.txt
+  04-scratch.txt
+  05-scratch.txt
+  06-scratch.txt
+  07-scratch.txt
+  08-scratch.txt
+  09-scratch.txt
+  ... additional untracked paths omitted
+Merge the branch into local main first (bin/fm-merge-local.sh after the captain approves), or push to a fork/remote, or get the captain's explicit OK to discard, then --force.
+exit=1
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree status --porcelain
+ M tracked.txt
+?? 00-scratch.txt
+?? 01-scratch.txt
+?? 02-scratch.txt
+?? 03-scratch.txt
+?? 04-scratch.txt
+?? 05-scratch.txt
+?? 06-scratch.txt
+?? 07-scratch.txt
+?? 08-scratch.txt
+?? 09-scratch.txt
+?? 10-scratch.txt
+?? 11-scratch.txt
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree status --porcelain
+ M tracked.txt
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-teardown.sh task
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home
+WARNING: watcher still down (same stale episode; last beat: 4s ago, grace 300s) - full banner already printed this episode.
+REFUSED: local-only worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree has work not yet merged into main and not on any remote.
+uncommitted changes present (includes tracked edits)
+Merge the branch into local main first (bin/fm-merge-local.sh after the captain approves), or push to a fork/remote, or get the captain's explicit OK to discard, then --force.
+exit=1
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/cli-lab/home/worktree status --porcelain
+ M tracked.txt
+exit=0

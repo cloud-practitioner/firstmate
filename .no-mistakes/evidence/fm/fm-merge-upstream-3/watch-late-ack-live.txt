@@ -1,0 +1,45 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab new-session -d -s primary -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l 'node /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/pi101/node_modules/@earendil-works/pi-coding-agent/dist/cli.js --offline --approve --no-extensions --no-context-files --no-skills --no-prompt-templates --no-builtin-tools --session-dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/sessions --provider lab-local --model lab-model --thinking off -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-branch-supervision.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-primary-pi-watch.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/probe.ts'
+[exit 0]
+
+PRIMARY LOCK: lock acquired: harness pid 795590
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab display-message -p -t primary '#{socket_path},#{pid},0'
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/tmux/tmux-1000/fm-lab,795575,0
+[exit 0]
+
+$ bash -c '. "$1"; fm_recovery_marker_publish "$STATE/.watcher-down" downtime; fm_recovery_marker_snapshot "$STATE/.watcher-down"; printf "%s" "${FM_RECOVERY_MARKER_TOKEN##*:}"' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-wake-lib.sh
+798240.1791241227.OtWJnR[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-watch-arm.sh --handling-delivered 798240.1791241227.OtWJnR --watcher-pid 797517
+[exit 0]
+
+$ bash -c '. "$1"; fm_recovery_marker_ack "$STATE/.watcher-down" "$2"' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-wake-lib.sh 798240.1791241227.OtWJnR
+[exit 0]
+
+BEFORE LATE CONFIRM: acked:handling:798240.1791241227.OtWJnR
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-watch-arm.sh --handling-delivered 798240.1791241227.OtWJnR --watcher-pid 797517
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-watch-arm.sh --handling-delivered superseded.0.example --watcher-pid 797517
+[exit 3]
+
+LATE CONFIRM LEFT LIVE WATCHER: 797517
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-watch-arm.sh --stop
+watcher: stopped pid=797517
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab kill-server
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-watch-arm.sh --stop
+watcher: none running
+[exit 0]

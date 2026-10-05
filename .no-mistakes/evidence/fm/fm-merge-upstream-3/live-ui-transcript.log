@@ -1,0 +1,186 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab new-session -d -s primary -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l 'node /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/pi101/node_modules/@earendil-works/pi-coding-agent/dist/cli.js --offline --approve --no-extensions --no-context-files --no-skills --no-prompt-templates --no-builtin-tools --session-dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/sessions --provider lab-local --model lab-model --thinking off -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-branch-supervision.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-primary-pi-watch.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/probe.ts'
+[exit 0]
+
+PRIMARY LOCK: lock acquired: harness pid 532465
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab send-keys -t primary -l /lab-retry
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab send-keys -t primary Enter
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab capture-pane -p -t primary -S -150
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ Finish the requested work.
+
+
+ The requested result is complete and verified.
+
+ ⚓ [seq 1] example: A decision is needed
+
+ The example task needs a decision.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR (detached)
+21.8%/8.2k (auto)                                                                                              lab-model
+[exit 0]
+
+PERSISTED ASSISTANT FINALS: ["The requested result is complete and verified.", "The example task needs a decision."]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab send-keys -t primary -l 'A new user question.'
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab send-keys -t primary Enter
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab capture-pane -p -t primary -S -150
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ Finish the requested work.
+
+
+ The requested result is complete and verified.
+
+ ⚓ [seq 1] example: A decision is needed
+
+ The example task needs a decision.
+
+
+ A new user question.
+
+
+ The new user answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR (detached)
+26.6%/8.2k (auto)                                                                                              lab-model
+[exit 0]
+
+$ node /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/pi101/node_modules/@earendil-works/pi-coding-agent/dist/cli.js --offline --export /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/sessions/2026-10-05T22-51-18-829Z_01a10e43-adac-72d3-884f-c3254a788350.jsonl /home/node/.no-mistakes/evidence/01M472X02W8XV0139WP154XWSR/pi-retry-export.html
+Exported to: /home/node/.no-mistakes/evidence/01M472X02W8XV0139WP154XWSR/pi-retry-export.html
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab kill-server
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-watch-arm.sh --stop
+watcher: none running
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab new-session -d -s primary -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l 'node /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/pi101/node_modules/@earendil-works/pi-coding-agent/dist/cli.js --offline --approve --no-extensions --no-context-files --no-skills --no-prompt-templates --no-builtin-tools --session-dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/sessions --provider lab-local --model lab-model --thinking off -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-branch-supervision.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.pi/extensions/fm-primary-pi-watch.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.l/probe.ts'
+[exit 0]
+
+PRIMARY LOCK: lock acquired: harness pid 538186
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab send-keys -t primary -l /fm-watch-arm-pi
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab send-keys -t primary Enter
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab capture-pane -p -t primary
+
+ watcher: started Pi extension arm child 1; future ordinary re-arms are automatic; call fm_watch_arm_pi again only
+ after a later notification says the cycle is missing, failed, or unhealthy
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ ⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: watcher: FAILED - Pi extension could not restore watcher continuity
+ after 5 retries
+ watcher: FAILED - refusing to arm from a disposable validation checkout:
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin
+
+ Run bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned.
+
+
+ The watcher wake was observed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR (detached)
+13.3%/8.2k (auto)                                                                                              lab-model
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/.validation/tools/tmux-pkg/usr/bin/tmux -L fm-lab kill-server
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M472X02W8XV0139WP154XWSR/bin/fm-watch-arm.sh --stop
+watcher: none running
+[exit 0]
