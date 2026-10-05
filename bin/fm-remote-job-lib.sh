@@ -96,16 +96,16 @@
 # orphaned that way.
 #
 # Every recorded process start (the worker lock owner, staging owners, job
-# claims, supervisors, and command groups) comes from
+# claims, lanes, supervisors, and command groups) comes from
 # fm_remote_job_process_start and is compared only through
-# fm_remote_job_process_start_matches. Where /proc exposes stat it is the
-# process's boot-relative start tick, because ps lstart re-renders the start
-# through the kernel's current boot-time estimate, which moves by a second when
-# the wall clock is stepped or slewed. A live owner whose recorded lstart moved
-# reads as gone, so every ensure would start another worker tree that can
-# never take the lock and churns in its restart loop. Elsewhere it stays the
-# ps lstart text, and an unprefixed record from an earlier build is still
-# compared as lstart so an upgrade can recognize and replace the old owner.
+# fm_remote_job_process_start_matches. Where /proc exposes stat, records use
+# proc-starttime=<ticks>, the process's boot-relative start tick. Unlike ps
+# lstart's wall-clock rendering, this identity is stable across wall-clock
+# and timezone changes, so ensures do not start extra worker trees beside a
+# live owner. Elsewhere records use ps lstart text. Unprefixed legacy records
+# are still compared as lstart so an upgrade can recognize and safely replace
+# an earlier build's owner. tests/fm-remote-job.test.sh covers rendered-start
+# stability and legacy-record compatibility.
 
 FM_REMOTE_JOB_LABEL=dev.firstmate.remote-job
 FM_REMOTE_JOB_MAX_BYTES=${FM_REMOTE_JOB_MAX_BYTES:-1048576}
@@ -957,8 +957,7 @@ fm_remote_job_worker_ready_path() { printf '%s\n' "$FM_REMOTE_JOB_STATE/worker.r
 fm_remote_job_worker_identity_path() { printf '%s\n' "$FM_REMOTE_JOB_STATE/worker.identity"; }
 fm_remote_job_worker_lock_path() { printf '%s\n' "$FM_REMOTE_JOB_STATE/worker.lock"; }
 
-# The header owns the start-identity contract. The /proc tick record is
-# prefixed so a comparison can tell it from an earlier build's lstart text.
+# The header owns the start-identity format and compatibility contract.
 fm_remote_job_process_start() { # <pid>
   local pid=$1 stat_line ticks
   local -a stat_fields
