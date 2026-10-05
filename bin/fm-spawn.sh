@@ -285,17 +285,20 @@
 #   Spawn refuses an unsafe pre-existing task temp root or launch namespace, and
 #   task teardown removes only the current home's launch namespace.
 # Task temp root:
-#   Each task gets a private 0700 temp root at state/<id>.tasktmp/ in the
-#   spawning home, recorded as tasktmp= in its meta, with Go's build temp at
-#   gotmp/ exported to the pane as GOTMPDIR (GOTMPDIR, not the far broader
-#   TMPDIR). Scoping it to the home keeps equal task ids in different Firstmate
-#   homes from sharing a root, and a disposable home that is never torn down
-#   takes its roots with it instead of stranding them in /tmp.
+#   New tasks get a private 0700 temp root at state/<id>.tasktmp/ in the
+#   spawning home, recorded as tasktmp= in its meta. Spawn creates gotmp/
+#   because Go does not create GOTMPDIR, then exports that subdirectory to the
+#   pane as GOTMPDIR (not the far broader TMPDIR). Scoping new roots to the
+#   home keeps equal task ids in different Firstmate homes from sharing a
+#   root; removing a disposable home also
+#   removes its roots instead of stranding them in /tmp.
 #   fm-teardown removes exactly the recorded tasktmp= root; a forced secondmate
-#   teardown's children lose theirs with the retired home. Tasks spawned before
-#   this contract recorded the legacy shared root /tmp/fm-<id>; a relaunch keeps
-#   that recorded root so the live task's record stays valid and teardown still
-#   removes the root the task used. Spawn reuses a pre-existing root only as a
+#   teardown's children lose their home-scoped roots with the retired home.
+#   When a validated existing task record has tasktmp= exactly /tmp/fm-<id>,
+#   an explicit --relaunch or recovery of an existing secondmate keeps that
+#   legacy shared root, so recovery cannot strand its scratch files and later
+#   teardown still removes the root the task used. A record without a temp
+#   root gets the home-scoped root. Spawn reuses a pre-existing root only as a
 #   real directory owned by this user and writable by nobody else, then
 #   tightens it.
 # Launch environment (config/launch-env-allowlist):

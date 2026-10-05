@@ -96,8 +96,10 @@
 #
 # down refuses any path without the lab record up writes. It kills only the
 # lab's recorded private tmux server and launch pane PIDs, and their descendants;
-# runs bin/fm-lab-home.sh teardown; removes the task temp and launch dirs the
-# lab's spawns kept under /tmp, including a failed spawn's; removes every
+# runs bin/fm-lab-home.sh teardown; removes lab-home-scoped launch dirs under
+# /tmp, including failed mate/worker spawns, and legacy task temp roots only
+# for the lab's unique mate and worker ids, preserving other shared legacy
+# roots. Home-scoped task temp roots leave with <lab-root>. It removes every
 # project entry at or under <lab-root> from the recorded Claude store, following
 # a symlinked store to its target (compare-and-swap atomic replace, unrelated
 # entries kept); reports a changed Pi trust store or a new
