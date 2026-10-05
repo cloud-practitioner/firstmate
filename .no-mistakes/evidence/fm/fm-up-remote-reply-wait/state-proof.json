@@ -1,0 +1,95 @@
+{
+  "target_commit": "e72d75ae7bd00a193d6e9116716a6c6edabc54bb",
+  "transport": "real OpenSSH client over loopback TCP to disposable SSH2 server with disposable public-key authentication",
+  "documents": [
+    {
+      "path": "data/reply/report-1.md",
+      "source_sha256": "97b562f1a25012ee0aa3846e9f8086a9020aead4fa882704cd4137782f147cef",
+      "mirror_sha256": "97b562f1a25012ee0aa3846e9f8086a9020aead4fa882704cd4137782f147cef"
+    },
+    {
+      "path": "data/reply/report-2.md",
+      "source_sha256": "dd54fac1946519df95913363cd42af4edf51a2bf47514da0d5b4b9458f68430c",
+      "mirror_sha256": "dd54fac1946519df95913363cd42af4edf51a2bf47514da0d5b4b9458f68430c"
+    },
+    {
+      "path": "data/reply/report-3.md",
+      "source_sha256": "678691745a04602ba98884aa3fb4b9b764d3d04e4b45371e57d609ee9ca0fef9",
+      "mirror_sha256": "678691745a04602ba98884aa3fb4b9b764d3d04e4b45371e57d609ee9ca0fef9"
+    },
+    {
+      "path": "data/reply/report-4.md",
+      "source_sha256": "e1fdb5d545faa19992393ac9d5959caadee747ae2bc36109722092a8c99df568",
+      "mirror_sha256": "e1fdb5d545faa19992393ac9d5959caadee747ae2bc36109722092a8c99df568"
+    },
+    {
+      "path": "data/reply/report-5.md",
+      "source_sha256": "b24b0f2049badcfaf093974c3e5a4b96353bcdd5efc4d29a878aef8dd965bdbf",
+      "mirror_sha256": "b24b0f2049badcfaf093974c3e5a4b96353bcdd5efc4d29a878aef8dd965bdbf"
+    },
+    {
+      "path": "data/reply/report-6.md",
+      "source_sha256": "ef870b079ae2b3246d609878dcb3e86143d20363bda4527968ecce241697a06c",
+      "mirror_sha256": "ef870b079ae2b3246d609878dcb3e86143d20363bda4527968ecce241697a06c"
+    },
+    {
+      "path": "data/reply/report-7.md",
+      "source_sha256": "63c8fd8aab476aef477982f483ac6faa5486b4860c8f154480964eebd5a5b202",
+      "mirror_sha256": "63c8fd8aab476aef477982f483ac6faa5486b4860c8f154480964eebd5a5b202"
+    },
+    {
+      "path": "data/reply/report-8.md",
+      "source_sha256": "7ddee474a73e184e342ded0a94d18a06e8eb63757a82d1d069cf9d0a51372365",
+      "mirror_sha256": "7ddee474a73e184e342ded0a94d18a06e8eb63757a82d1d069cf9d0a51372365"
+    },
+    {
+      "path": "data/reply/report-9.md",
+      "source_sha256": "b776a5bf5c4ddb0bb7de53ec53c090f714582cb63006beb455ce465f920d6988",
+      "mirror_sha256": "b776a5bf5c4ddb0bb7de53ec53c090f714582cb63006beb455ce465f920d6988"
+    },
+    {
+      "path": "data/reply/report-10.md",
+      "source_sha256": "4dadbd4746404987e8008c67116d9650feb7f258efa92ca38d4610ddf32cd715",
+      "mirror_sha256": "4dadbd4746404987e8008c67116d9650feb7f258efa92ca38d4610ddf32cd715"
+    },
+    {
+      "path": "data/reply/report-11.md",
+      "source_sha256": "aeae130701d551aab98c33e65fe356e64440dbab043c5e98d7f305e2ecc33ff3",
+      "mirror_sha256": "aeae130701d551aab98c33e65fe356e64440dbab043c5e98d7f305e2ecc33ff3"
+    },
+    {
+      "path": "data/reply/report-12.md",
+      "source_sha256": "092a8dc465189253378c65872b94b908a22763bb6f83a8f1d8db7dd0dc5c04f8",
+      "mirror_sha256": "092a8dc465189253378c65872b94b908a22763bb6f83a8f1d8db7dd0dc5c04f8"
+    },
+    {
+      "path": "data/reply/report-13.md",
+      "source_sha256": "71d80a8bd0673a6f71c34d83df6e744d312d7786552619652833b83c09f11b8f",
+      "mirror_sha256": "71d80a8bd0673a6f71c34d83df6e744d312d7786552619652833b83c09f11b8f"
+    }
+  ],
+  "recaptures": [
+    {
+      "scenario": "decision-recapture",
+      "generation": 2,
+      "handled": true,
+      "before_parent_sha256": "12fbc231c3c8cb3977642766099cd6db084ca4b55c8556b4a54f0872e88631ed",
+      "after_parent_sha256": "12fbc231c3c8cb3977642766099cd6db084ca4b55c8556b4a54f0872e88631ed",
+      "source_log_sha256": "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4",
+      "source_log_bytes": 816,
+      "restored_cursor": "schema=fm-remote-reply-cursor.v1\noffset=816\nprefix_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4\n",
+      "delta_result": "schema=fm-remote-delta.v1\nstatus=delta\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=816\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4\npayload_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4\npayload_bytes=816\nreason=\n\nneeds-decision [key=recapture-choice]: select report=data/reply/report-1.md\ndone [key=report-2]: available report=data/reply/report-2.md\ndone [key=report-3]: available report=data/reply/report-3.md\ndone [key=report-4]: available report=data/reply/report-4.md\ndone [key=report-5]: available report=data/reply/report-5.md\ndone [key=report-6]: available report=data/reply/report-6.md\ndone [key=report-7]: available report=data/reply/report-7.md\ndone [key=report-8]: available report=data/reply/report-8.md\ndone [key=report-9]: available report=data/reply/report-9.md\ndone [key=report-10]: available report=data/reply/report-10.md\ndone [key=report-11]: available report=data/reply/report-11.md\ndone [key=report-12]: available report=data/reply/report-12.md\ndone [key=report-13]: available report=data/reply/report-13.md\n"
+    },
+    {
+      "scenario": "quiet-recapture",
+      "generation": 3,
+      "handled": true,
+      "before_parent_sha256": "12fbc231c3c8cb3977642766099cd6db084ca4b55c8556b4a54f0872e88631ed",
+      "after_parent_sha256": "12fbc231c3c8cb3977642766099cd6db084ca4b55c8556b4a54f0872e88631ed",
+      "source_log_sha256": "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4",
+      "source_log_bytes": 816,
+      "restored_cursor": "schema=fm-remote-reply-cursor.v1\noffset=816\nprefix_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4\n",
+      "delta_result": "schema=fm-remote-delta.v1\nstatus=delta\npath=state/parent-replies.status\nfrom_offset=0\nto_offset=816\nfrom_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nto_prefix_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4\npayload_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4\npayload_bytes=816\nreason=\n\nneeds-decision [key=recapture-choice]: select report=data/reply/report-1.md\ndone [key=report-2]: available report=data/reply/report-2.md\ndone [key=report-3]: available report=data/reply/report-3.md\ndone [key=report-4]: available report=data/reply/report-4.md\ndone [key=report-5]: available report=data/reply/report-5.md\ndone [key=report-6]: available report=data/reply/report-6.md\ndone [key=report-7]: available report=data/reply/report-7.md\ndone [key=report-8]: available report=data/reply/report-8.md\ndone [key=report-9]: available report=data/reply/report-9.md\ndone [key=report-10]: available report=data/reply/report-10.md\ndone [key=report-11]: available report=data/reply/report-11.md\ndone [key=report-12]: available report=data/reply/report-12.md\ndone [key=report-13]: available report=data/reply/report-13.md\n"
+    }
+  ]
+}

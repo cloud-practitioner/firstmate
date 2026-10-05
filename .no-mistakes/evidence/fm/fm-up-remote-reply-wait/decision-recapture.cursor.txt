@@ -1,0 +1,3 @@
+schema=fm-remote-reply-cursor.v1
+offset=816
+prefix_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4

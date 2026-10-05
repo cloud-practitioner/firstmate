@@ -1,0 +1,24 @@
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=816
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4
+payload_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4
+payload_bytes=816
+reason=
+
+needs-decision [key=recapture-choice]: select report=data/reply/report-1.md
+done [key=report-2]: available report=data/reply/report-2.md
+done [key=report-3]: available report=data/reply/report-3.md
+done [key=report-4]: available report=data/reply/report-4.md
+done [key=report-5]: available report=data/reply/report-5.md
+done [key=report-6]: available report=data/reply/report-6.md
+done [key=report-7]: available report=data/reply/report-7.md
+done [key=report-8]: available report=data/reply/report-8.md
+done [key=report-9]: available report=data/reply/report-9.md
+done [key=report-10]: available report=data/reply/report-10.md
+done [key=report-11]: available report=data/reply/report-11.md
+done [key=report-12]: available report=data/reply/report-12.md
+done [key=report-13]: available report=data/reply/report-13.md

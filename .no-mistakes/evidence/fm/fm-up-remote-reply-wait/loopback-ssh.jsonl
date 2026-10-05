@@ -1,0 +1,137 @@
+{"at":"2026-10-05T15:25:44.678Z","event":"server-ready","host":"127.0.0.1","port":45003,"auth":"disposable-public-key"}
+{"at": 1791213950.373999, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "0", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "1"]}
+{"at": 1791213990.4004037, "event": "document-fetch", "path": "data/reply/report-1.md", "delay_seconds": 0.0}
+{"at":"2026-10-05T15:27:09.890Z","event":"server-ready","host":"127.0.0.1","port":45181,"auth":"disposable-public-key"}
+{"at": 1791214032.7908287, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "0", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "1"]}
+{"at": 1791214036.880787, "event": "document-fetch", "path": "data/reply/report-1.md", "delay_seconds": 0.0}
+{"at": 1791214039.7553585, "event": "document-fetch", "path": "data/reply/report-2.md", "delay_seconds": 0.0}
+{"at": 1791214042.2989194, "event": "document-fetch", "path": "data/reply/report-3.md", "delay_seconds": 0.0}
+{"at": 1791214045.575398, "event": "document-fetch", "path": "data/reply/report-4.md", "delay_seconds": 0.0}
+{"at": 1791214048.1051707, "event": "document-fetch", "path": "data/reply/report-5.md", "delay_seconds": 0.0}
+{"at": 1791214051.019113, "event": "document-fetch", "path": "data/reply/report-6.md", "delay_seconds": 0.0}
+{"at": 1791214054.0398514, "event": "document-fetch", "path": "data/reply/report-7.md", "delay_seconds": 0.0}
+{"at": 1791214056.1277237, "event": "document-fetch", "path": "data/reply/report-8.md", "delay_seconds": 0.0}
+{"at": 1791214058.6228821, "event": "document-fetch", "path": "data/reply/report-9.md", "delay_seconds": 0.0}
+{"at": 1791214061.5759733, "event": "document-fetch", "path": "data/reply/report-10.md", "delay_seconds": 0.0}
+{"at": 1791214064.27696, "event": "document-fetch", "path": "data/reply/report-11.md", "delay_seconds": 0.0}
+{"at": 1791214066.964273, "event": "document-fetch", "path": "data/reply/report-12.md", "delay_seconds": 0.0}
+{"at": 1791214071.920009, "event": "document-fetch", "path": "data/reply/report-13.md", "delay_seconds": 0.0}
+{"at": 1791214115.6813192, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "0", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "1"]}
+{"at": 1791214119.7990515, "event": "document-fetch", "path": "data/reply/report-1.md", "delay_seconds": 0.0}
+{"at": 1791214122.9782696, "event": "document-fetch", "path": "data/reply/report-2.md", "delay_seconds": 0.0}
+{"at": 1791214127.1643836, "event": "document-fetch", "path": "data/reply/report-3.md", "delay_seconds": 0.0}
+{"at": 1791214129.3745792, "event": "document-fetch", "path": "data/reply/report-4.md", "delay_seconds": 0.0}
+{"at": 1791214131.8577528, "event": "document-fetch", "path": "data/reply/report-5.md", "delay_seconds": 0.0}
+{"at": 1791214134.4346159, "event": "document-fetch", "path": "data/reply/report-6.md", "delay_seconds": 0.0}
+{"at": 1791214136.912442, "event": "document-fetch", "path": "data/reply/report-7.md", "delay_seconds": 0.0}
+{"at": 1791214139.564982, "event": "document-fetch", "path": "data/reply/report-8.md", "delay_seconds": 0.0}
+{"at": 1791214142.3255422, "event": "document-fetch", "path": "data/reply/report-9.md", "delay_seconds": 0.0}
+{"at": 1791214145.0670984, "event": "document-fetch", "path": "data/reply/report-10.md", "delay_seconds": 0.0}
+{"at": 1791214147.7156577, "event": "document-fetch", "path": "data/reply/report-11.md", "delay_seconds": 0.0}
+{"at": 1791214150.1920495, "event": "document-fetch", "path": "data/reply/report-12.md", "delay_seconds": 0.0}
+{"at": 1791214152.8657715, "event": "document-fetch", "path": "data/reply/report-13.md", "delay_seconds": 0.0}
+{"at": 1791214160.6155775, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "0", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "1"]}
+{"at": 1791214165.1499615, "event": "document-fetch", "path": "data/reply/report-1.md", "delay_seconds": 0.0}
+{"at": 1791214167.5543447, "event": "document-fetch", "path": "data/reply/report-2.md", "delay_seconds": 0.0}
+{"at": 1791214171.678387, "event": "document-fetch", "path": "data/reply/report-3.md", "delay_seconds": 0.0}
+{"at": 1791214176.951644, "event": "document-fetch", "path": "data/reply/report-4.md", "delay_seconds": 0.0}
+{"at": 1791214182.0757365, "event": "document-fetch", "path": "data/reply/report-5.md", "delay_seconds": 0.0}
+{"at": 1791214187.1159365, "event": "document-fetch", "path": "data/reply/report-6.md", "delay_seconds": 0.0}
+{"at": 1791214189.455808, "event": "document-fetch", "path": "data/reply/report-7.md", "delay_seconds": 0.0}
+{"at": 1791214192.15476, "event": "document-fetch", "path": "data/reply/report-8.md", "delay_seconds": 0.0}
+{"at": 1791214194.656081, "event": "document-fetch", "path": "data/reply/report-9.md", "delay_seconds": 0.0}
+{"at": 1791214197.1017854, "event": "document-fetch", "path": "data/reply/report-10.md", "delay_seconds": 0.0}
+{"at": 1791214199.8643246, "event": "document-fetch", "path": "data/reply/report-11.md", "delay_seconds": 0.0}
+{"at": 1791214202.5016518, "event": "document-fetch", "path": "data/reply/report-12.md", "delay_seconds": 0.0}
+{"at": 1791214204.9364977, "event": "document-fetch", "path": "data/reply/report-13.md", "delay_seconds": 0.0}
+{"at": 1791214209.8771534, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "0", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "1"]}
+{"at": 1791214212.733546, "event": "document-fetch", "path": "data/reply/report-1.md", "delay_seconds": 1.0}
+{"at": 1791214215.9448485, "event": "document-fetch", "path": "data/reply/report-2.md", "delay_seconds": 1.0}
+{"at": 1791214220.0621367, "event": "document-fetch", "path": "data/reply/report-3.md", "delay_seconds": 1.0}
+{"at": 1791214223.8890212, "event": "document-fetch", "path": "data/reply/report-4.md", "delay_seconds": 1.0}
+{"at": 1791214227.2384322, "event": "document-fetch", "path": "data/reply/report-5.md", "delay_seconds": 1.0}
+{"at": 1791214230.426117, "event": "document-fetch", "path": "data/reply/report-6.md", "delay_seconds": 1.0}
+{"at": 1791214233.613939, "event": "document-fetch", "path": "data/reply/report-7.md", "delay_seconds": 1.0}
+{"at": 1791214236.5275424, "event": "document-fetch", "path": "data/reply/report-8.md", "delay_seconds": 1.0}
+{"at": 1791214242.2359326, "event": "document-fetch", "path": "data/reply/report-9.md", "delay_seconds": 1.0}
+{"at": 1791214250.1117783, "event": "document-fetch", "path": "data/reply/report-10.md", "delay_seconds": 1.0}
+{"at": 1791214256.5038648, "event": "document-fetch", "path": "data/reply/report-11.md", "delay_seconds": 1.0}
+{"at": 1791214262.9208746, "event": "document-fetch", "path": "data/reply/report-12.md", "delay_seconds": 1.0}
+{"at": 1791214268.4108498, "event": "document-fetch", "path": "data/reply/report-13.md", "delay_seconds": 1.0}
+{"at": 1791214400.1339788, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "0", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "1"]}
+{"at": 1791214402.4222445, "event": "document-fetch", "path": "data/reply/report-1.md", "delay_seconds": 0.0}
+{"at": 1791214404.6058373, "event": "document-fetch", "path": "data/reply/report-2.md", "delay_seconds": 0.0}
+{"at": 1791214407.1050012, "event": "document-fetch", "path": "data/reply/report-3.md", "delay_seconds": 0.0}
+{"at": 1791214409.6502345, "event": "document-fetch", "path": "data/reply/report-4.md", "delay_seconds": 0.0}
+{"at": 1791214412.3868804, "event": "document-fetch", "path": "data/reply/report-5.md", "delay_seconds": 0.0}
+{"at": 1791214416.3698752, "event": "document-fetch", "path": "data/reply/report-6.md", "delay_seconds": 0.0}
+{"at": 1791214419.3832145, "event": "document-fetch", "path": "data/reply/report-7.md", "delay_seconds": 0.0}
+{"at": 1791214421.7879887, "event": "document-fetch", "path": "data/reply/report-8.md", "delay_seconds": 0.0}
+{"at": 1791214424.9906788, "event": "document-fetch", "path": "data/reply/report-9.md", "delay_seconds": 0.0}
+{"at": 1791214429.1131701, "event": "document-fetch", "path": "data/reply/report-10.md", "delay_seconds": 0.0}
+{"at": 1791214431.7304053, "event": "document-fetch", "path": "data/reply/report-11.md", "delay_seconds": 0.0}
+{"at": 1791214434.67425, "event": "document-fetch", "path": "data/reply/report-12.md", "delay_seconds": 0.0}
+{"at": 1791214438.6358118, "event": "document-fetch", "path": "data/reply/report-13.md", "delay_seconds": 0.0}
+{"at": 1791214444.9756753, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "0", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "1"]}
+{"at": 1791214452.0519526, "event": "document-fetch", "path": "data/reply/report-1.md", "delay_seconds": 1.0}
+{"at": 1791214458.0424533, "event": "document-fetch", "path": "data/reply/report-2.md", "delay_seconds": 1.0}
+{"at": 1791214461.7463243, "event": "document-fetch", "path": "data/reply/report-3.md", "delay_seconds": 1.0}
+{"at": 1791214465.2727296, "event": "document-fetch", "path": "data/reply/report-4.md", "delay_seconds": 1.0}
+{"at": 1791214468.805796, "event": "document-fetch", "path": "data/reply/report-5.md", "delay_seconds": 1.0}
+{"at": 1791214472.4809077, "event": "document-fetch", "path": "data/reply/report-6.md", "delay_seconds": 1.0}
+{"at": 1791214476.1575747, "event": "document-fetch", "path": "data/reply/report-7.md", "delay_seconds": 1.0}
+{"at": 1791214479.6150813, "event": "document-fetch", "path": "data/reply/report-8.md", "delay_seconds": 1.0}
+{"at": 1791214483.197136, "event": "document-fetch", "path": "data/reply/report-9.md", "delay_seconds": 1.0}
+{"at": 1791214486.68515, "event": "document-fetch", "path": "data/reply/report-10.md", "delay_seconds": 1.0}
+{"at": 1791214489.1602938, "event": "document-fetch", "path": "data/reply/report-11.md", "delay_seconds": 1.0}
+{"at": 1791214491.9048953, "event": "document-fetch", "path": "data/reply/report-12.md", "delay_seconds": 1.0}
+{"at": 1791214495.4791026, "event": "document-fetch", "path": "data/reply/report-13.md", "delay_seconds": 1.0}
+{"at": 1791214500.8815727, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "0", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "1"]}
+{"at": 1791214503.9028609, "event": "document-fetch", "path": "data/reply/report-1.md", "delay_seconds": 3.0}
+{"at": 1791214510.8567832, "event": "document-fetch", "path": "data/reply/report-2.md", "delay_seconds": 3.0}
+{"at": 1791214517.6331332, "event": "document-fetch", "path": "data/reply/report-3.md", "delay_seconds": 3.0}
+{"at": 1791214522.8543925, "event": "document-fetch", "path": "data/reply/report-4.md", "delay_seconds": 3.0}
+{"at": 1791214528.3545, "event": "document-fetch", "path": "data/reply/report-5.md", "delay_seconds": 3.0}
+{"at": 1791214533.1887636, "event": "document-fetch", "path": "data/reply/report-6.md", "delay_seconds": 3.0}
+{"at": 1791214538.6510825, "event": "document-fetch", "path": "data/reply/report-7.md", "delay_seconds": 3.0}
+{"at": 1791214544.23824, "event": "document-fetch", "path": "data/reply/report-8.md", "delay_seconds": 3.0}
+{"at": 1791214549.7943704, "event": "document-fetch", "path": "data/reply/report-9.md", "delay_seconds": 3.0}
+{"at": 1791214555.345681, "event": "document-fetch", "path": "data/reply/report-10.md", "delay_seconds": 3.0}
+{"at": 1791214560.808483, "event": "document-fetch", "path": "data/reply/report-11.md", "delay_seconds": 3.0}
+{"at": 1791214566.4583354, "event": "document-fetch", "path": "data/reply/report-12.md", "delay_seconds": 3.0}
+{"at": 1791214573.2926652, "event": "document-fetch", "path": "data/reply/report-13.md", "delay_seconds": 3.0}
+{"at": 1791214579.6825671, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214583.0518556, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214586.121449, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214589.214374, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214593.8602524, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214600.9913454, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214604.2710385, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214612.0369997, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214621.3576412, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214625.124146, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214628.9554682, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214632.3996346, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214635.775708, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214638.9902127, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214642.1402488, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214645.3324523, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214648.7425344, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214653.4013677, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214657.011255, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214660.9883163, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214663.9689426, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214667.220704, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214670.123659, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214672.6269102, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214676.007665, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214679.036847, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214682.1367674, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214685.1411371, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214688.264852, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214691.084357, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214696.3338006, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214700.0789242, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214703.00513, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214706.121359, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}
+{"at": 1791214709.10601, "event": "remote-command", "command": ["fm-remote-delta-read.sh", "state/parent-replies.status", "816", "87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4", "1"]}

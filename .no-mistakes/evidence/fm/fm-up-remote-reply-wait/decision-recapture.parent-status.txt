@@ -1,0 +1,14 @@
+needs-decision [key=recapture-choice]: select report=data/remote-secondmates/ios/data/reply/report-1.md
+done [key=report-2]: available report=data/remote-secondmates/ios/data/reply/report-2.md
+done [key=report-3]: available report=data/remote-secondmates/ios/data/reply/report-3.md
+done [key=report-4]: available report=data/remote-secondmates/ios/data/reply/report-4.md
+done [key=report-5]: available report=data/remote-secondmates/ios/data/reply/report-5.md
+done [key=report-6]: available report=data/remote-secondmates/ios/data/reply/report-6.md
+done [key=report-7]: available report=data/remote-secondmates/ios/data/reply/report-7.md
+done [key=report-8]: available report=data/remote-secondmates/ios/data/reply/report-8.md
+done [key=report-9]: available report=data/remote-secondmates/ios/data/reply/report-9.md
+done [key=report-10]: available report=data/remote-secondmates/ios/data/reply/report-10.md
+done [key=report-11]: available report=data/remote-secondmates/ios/data/reply/report-11.md
+done [key=report-12]: available report=data/remote-secondmates/ios/data/reply/report-12.md
+done [key=report-13]: available report=data/remote-secondmates/ios/data/reply/report-13.md
+resolved [key=recapture-choice]: selected

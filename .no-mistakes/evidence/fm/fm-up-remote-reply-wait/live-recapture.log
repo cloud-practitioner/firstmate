@@ -1,0 +1,36 @@
+registered: remote-reply-ios (remote-reply)
+armed: remote-reply-ios offset=0
+wait attempt=1 rc=1 elapsed=44s owner_before=none owner_after=live claim_pid=3908132
+wait attempt=2 rc=0 elapsed=1s owner_before=live owner_after=live claim_pid=3908132
+
+SCENARIO decision-recapture: delete cursor; replay 13 documents with 1s added latency per real SSH fetch
+old single-budget wait: rc=1 elapsed=44s handled=no
+wait attempt=1 rc=1 elapsed=44s owner_before=live owner_after=live claim_pid=3945540
+wait attempt=2 rc=0 elapsed=11s owner_before=live owner_after=live claim_pid=3945540
+extended recapture wait: rc=0 elapsed=55s attempts=2
+offset=816
+Observable outcome: generation 2 acknowledged; all 13 documents byte-identical; parent status unchanged; resolved decision stays closed; no duplicate wake; listener pid=3945540 unchanged.
+Restored cursor:
+schema=fm-remote-reply-cursor.v1
+offset=816
+prefix_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4
+
+SCENARIO quiet-recapture: delete cursor; replay 13 documents with 3s added latency per real SSH fetch
+old single-budget wait: rc=1 elapsed=43s handled=no
+wait attempt=1 rc=1 elapsed=44s owner_before=live owner_after=live claim_pid=3975636
+wait attempt=2 rc=0 elapsed=35s owner_before=live owner_after=live claim_pid=3975636
+extended recapture wait: rc=0 elapsed=79s attempts=2
+offset=816
+Observable outcome: generation 3 acknowledged; all 13 documents byte-identical; parent status unchanged; resolved decision stays closed; no duplicate wake; listener pid=3975636 unchanged.
+Restored cursor:
+schema=fm-remote-reply-cursor.v1
+offset=816
+prefix_sha256=87d4ae4d5dc0cfb32fd0351d7ad0b712730f5dfb735efc6299ed9a3a0401e4d4
+
+SCENARIO bounded-missing-capture: wait for a generation with no new remote replies
+wait attempt=1 rc=1 elapsed=46s owner_before=live owner_after=live claim_pid=3975636
+wait attempt=2 rc=1 elapsed=43s owner_before=live owner_after=live claim_pid=3975636
+wait attempt=3 rc=1 elapsed=43s owner_before=live owner_after=live claim_pid=3975636
+bounded wait: rc=1 elapsed=132s attempts=3 owner=live result_exists=no
+
+Both delayed recaptures reproduced the former timeout and passed the extended wait; an absent capture exhausted exactly three attempts.
