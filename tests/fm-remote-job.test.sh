@@ -413,6 +413,52 @@ wait "$OTHER_PID" 2>/dev/null || true
 OTHER_PID=
 pass "stale ownership is reclaimed without signaling a reused pid"
 
+# A live owner must stay recognized when only its rendered wall-clock start
+# moves. ps lstart renders a start through the kernel's current boot-time
+# estimate, which a stepped or slewed clock moves by a second; another TZ
+# re-renders it the same way, deterministically. An ensure that misread the
+# owner as gone started another worker tree that could never take the lock, so
+# every remote call added one more tree churning in its restart loop.
+if [ -r /proc/self/stat ]; then
+  # The crash case above leaves its old supervisor briefly restarting a child
+  # that exits once it sees the replacement owner; start from one settled tree.
+  for _ in $(seq 1 150); do
+    OWNER_GROUP=$(fm_test_remote_job_worker_groups "$REMOTE_ROOT")
+    [ "$(printf '%s' "$OWNER_GROUP" | grep -c .)" -eq 1 ] && break
+    sleep 0.1
+  done
+  [ "$(printf '%s' "$OWNER_GROUP" | grep -c .)" -eq 1 ] \
+    || fail "the rendered-start fixture did not settle to exactly one worker tree: $OWNER_GROUP"
+  OWNER_PID=$(cat "$STATE_ROOT/worker.pid")
+  AMBIENT_LSTART=$(ps -p "$OWNER_PID" -o lstart=)
+  SHIFTED_TZ=UTC0
+  [ "$(TZ=$SHIFTED_TZ ps -p "$OWNER_PID" -o lstart=)" != "$AMBIENT_LSTART" ] || SHIFTED_TZ=EST5
+  [ "$(TZ=$SHIFTED_TZ ps -p "$OWNER_PID" -o lstart=)" != "$AMBIENT_LSTART" ] \
+    || fail "no TZ re-rendered the owner's start, so the moved-start case would prove nothing"
+  (
+    export TZ=$SHIFTED_TZ
+    fm_remote_job_ensure_worker "$REMOTE_ROOT" "$ACCOUNT_HOME"
+  ) || fail "ensure failed after the owner's rendered start moved"
+  [ "$(cat "$STATE_ROOT/worker.pid")" = "$OWNER_PID" ] \
+    || fail "ensure replaced a healthy worker whose rendered start moved"
+  [ "$(fm_test_remote_job_worker_groups "$REMOTE_ROOT")" = "$OWNER_GROUP" ] \
+    || fail "ensure started another worker tree beside a live owner whose rendered start moved"
+  # An owner recorded by an earlier build holds the ambient lstart text. It
+  # must still read as the live owner, so an upgrade replaces it instead of
+  # starting a tree beside it.
+  CURRENT_LOCK_START=$(cat "$STATE_ROOT/worker.lock/start")
+  printf '%s\n' "$AMBIENT_LSTART" > "$STATE_ROOT/worker.lock/start"
+  fm_remote_job_ensure_worker "$REMOTE_ROOT" "$ACCOUNT_HOME" \
+    || fail "ensure failed against an owner recorded by an earlier build"
+  [ "$(cat "$STATE_ROOT/worker.pid")" = "$OWNER_PID" ] \
+    && [ "$(fm_test_remote_job_worker_groups "$REMOTE_ROOT")" = "$OWNER_GROUP" ] \
+    || fail "ensure did not recognize an owner recorded by an earlier build"
+  printf '%s\n' "$CURRENT_LOCK_START" > "$STATE_ROOT/worker.lock/start"
+  pass "ensure keeps one worker tree when the owner's rendered start moves"
+else
+  echo "skip: no /proc start ticks on this host, so the moved-start case cannot run"
+fi
+
 FM_REMOTE_JOB_TIMEOUT=1
 fm_remote_job_stage "$ACCOUNT_HOME" "$REMOTE_ROOT" "$REMOTE_HOME" fm-timeout-job.sh < /dev/null > /dev/null
 JOB_ID=$FM_REMOTE_JOB_ID

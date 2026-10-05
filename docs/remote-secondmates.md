@@ -73,7 +73,7 @@ The entrypoint authorizes that bootstrap in one of two ways:
 After setup, every other command goes through Firstmate's account-owned remote job worker.
 Each such command takes these steps:
 
-1. It verifies the worker.
+1. It verifies worker ownership and code identity under the [`fm-remote-job-lib.sh` header's identity and upgrade contract](../bin/fm-remote-job-lib.sh).
 2. It stages the encoded argv and stdin bytes.
 3. It waits for its result.
 4. It relays stdout, stderr, and the exit status separately.
