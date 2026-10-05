@@ -164,9 +164,76 @@ test_orphan_sweep_reaps_read_only_package_tree() {
   pass "the orphan sweep reaps read-only package fixtures"
 }
 
+test_remote_worker_cleanup_with_spaced_root() (
+  local harness root sibling candidate pid i expected actual group worker sibling_worker
+  local -a supervisors=() workers=()
+  harness=$(fm_test_tmproot fm-test-cleanup-remote-worker)
+  root="$harness/test runs [*]/remote-root"
+  sibling="$root-neighbor"
+  # shellcheck source=bin/fm-remote-job-lib.sh
+  . "$ROOT/bin/fm-remote-job-lib.sh"
+  trap 'for pid in "${supervisors[@]:-}"; do
+    [ -n "$pid" ] || continue
+    fm_remote_job_stop_worker_tree "$pid" || true
+    wait "$pid" 2>/dev/null || true
+  done' EXIT
+  export FM_REMOTE_JOB_PLATFORM_OVERRIDE=Linux
+
+  for candidate in "$root" "$sibling"; do
+    mkdir -p "$candidate/bin" "$candidate/account"
+    cp "$ROOT/bin/fm-remote-job-lib.sh" "$ROOT/bin/fm-remote-job-worker.sh" "$candidate/bin/"
+    printf 'fixture\n' > "$candidate/AGENTS.md"
+    git -C "$candidate" init -q -b main
+    git -C "$candidate" config user.email test@example.com
+    git -C "$candidate" config user.name Test
+    git -C "$candidate" add AGENTS.md bin
+    git -C "$candidate" commit -qm 'remote worker cleanup fixture'
+    export FM_REMOTE_JOB_STATE_ROOT="$candidate/remote-jobs"
+    fm_remote_job_start_linux_worker "$candidate" "$candidate/account" \
+      || fail "could not start the remote worker cleanup fixture"
+    supervisors+=("$!")
+    for ((i=0; i<100; i++)); do
+      [ -s "$candidate/remote-jobs/worker.pid" ] && break
+      sleep 0.05
+    done
+    [ -s "$candidate/remote-jobs/worker.pid" ] \
+      || fail "the remote worker cleanup fixture never published its serving pid"
+    workers+=("$(cat "$candidate/remote-jobs/worker.pid")")
+  done
+
+  worker=${workers[0]}
+  sibling_worker=${workers[1]}
+  expected=$(printf '%s\n' "${supervisors[0]}" "$worker" | sort -n)
+  actual=$(fm_test_remote_job_worker_pids "$root" | sort -n)
+  [ "$actual" = "$expected" ] \
+    || fail "worker discovery missed the spaced-root supervisor or serving child, or included a sibling"
+  group=$(fm_test_remote_job_worker_groups "$root")
+  [ "$group" = "${supervisors[0]}" ] \
+    || fail "worker group discovery missed the spaced-root tree"
+  fm_test_stop_remote_job_workers "$root" \
+    || fail "cleanup failed to stop the spaced-root worker tree"
+  wait "${supervisors[0]}" 2>/dev/null || true
+  [ -z "$(ps -p "${supervisors[0]},$worker" -o stat= 2>/dev/null | grep -v '^[[:space:]]*Z')" ] \
+    || fail "cleanup left a spaced-root worker process running"
+  [ -z "$(fm_test_remote_job_worker_pids "$root")" ] \
+    || fail "worker discovery still found a worker after cleanup"
+  kill -0 "${supervisors[1]}" && kill -0 "$sibling_worker" \
+    || fail "cleanup stopped another fixture's worker"
+  expected=$(printf '%s\n' "${supervisors[1]}" "$sibling_worker" | sort -n)
+  [ "$(fm_test_remote_job_worker_pids "$sibling" | sort -n)" = "$expected" ] \
+    || fail "cleanup disturbed the sibling worker tree"
+  supervisors[0]=''
+  fm_test_stop_remote_job_workers "$sibling" \
+    || fail "cleanup failed to stop the sibling worker tree"
+  wait "${supervisors[1]}" 2>/dev/null || true
+  supervisors[1]=''
+  pass "remote worker discovery and cleanup preserve spaced paths and exact fixture scope"
+)
+
 test_fixture_root_gone_after_normal_exit
 test_fixture_root_gone_after_sigterm
 test_cleanup_registry_resists_precreation
 test_fixture_registration_failure_rolls_back_root
 test_orphan_sweep_respects_fixture_ownership
 test_orphan_sweep_reaps_read_only_package_tree
+test_remote_worker_cleanup_with_spaced_root || exit 1

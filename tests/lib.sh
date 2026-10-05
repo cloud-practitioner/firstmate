@@ -219,10 +219,12 @@ fm_test_reap_watchers() {
 
 # Echo the pid of every live worker process launched from <code-root>/bin.
 fm_test_remote_job_worker_pids() {  # <code-root>
-  local worker="$1/bin/fm-remote-job-worker.sh" pid interpreter script _
-  ps -A -ww -o pid= -o command= 2>/dev/null | while read -r pid interpreter script _; do
-    [ "$script" = "$worker" ] || continue
-    case "${interpreter##*/}" in bash|sh) printf '%s\n' "$pid" ;; esac
+  local worker="$1/bin/fm-remote-job-worker.sh" pid command interpreter
+  ps -A -ww -o pid= -o command= 2>/dev/null | while read -r pid command; do
+    interpreter=${command%% *}
+    case "${interpreter##*/}" in bash|sh) ;; *) continue ;; esac
+    command=${command#* }
+    case "$command" in "$worker"|"$worker "*) printf '%s\n' "$pid" ;; esac
   done
 }
 
