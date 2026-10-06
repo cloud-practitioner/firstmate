@@ -5227,9 +5227,6 @@ fi
 # kill switch below it is an export statement, so it survives a compound raw
 # launch and the launch-env-allowlist `env -i` wrapper.
 LAUNCH="export FM_TASK_INBOX=$(shell_quote "$STATE_REAL/$ID.inbox"); $LAUNCH"
-# A pane started by a server that inherited snapshot-scoped variables carries
-# them too, so the launch command clears them for the agent itself.
-LAUNCH="$(fm_snapshot_env_unset_command); $LAUNCH"
 LAUNCH="export COMPACT_ADVISER_DISABLE=1; $LAUNCH"
 # When the live-harness gate has exported DISABLE_AUTOUPDATER into this spawn's
 # own environment, carry it into the launch command text so Claude Code's
@@ -5340,6 +5337,9 @@ if [ "$LAUNCH_ENV_ENABLED" = 1 ]; then
   fi
   LAUNCH="$LAUNCH_ENV_PREFIX /bin/sh -c $(shell_quote "$LAUNCH")"
 fi
+# A contaminated pane must clear marked paths before filtering can discard
+# their scope marker, even when an allowlist explicitly retains those paths.
+LAUNCH="$(fm_snapshot_env_unset_command); $LAUNCH"
 # Implement the launch-delivery contract in this script's header. The full
 # home-identity hash isolates equal task ids across homes, and the spawn token in
 # the final filename keeps a buffered source line bound to this incarnation.

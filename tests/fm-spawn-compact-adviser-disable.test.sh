@@ -390,33 +390,42 @@ SH
 # must clear them whether they arrive in the spawn's own environment or in the
 # pane's. The probe prints every scoped value the agent started with.
 LEAK_NAMES='FM_SNAPSHOT_SCOPED_ENV FM_CREW_STATE_META_OVERRIDE FM_CREW_STATE_STATUS_OVERRIDE FM_HOME_SUMMARY_IF_IDLE FM_HOME_SUMMARY_WORKER_BEST_EFFORT'
+SNAPSHOT_PATH_NAMES='FM_ROOT_OVERRIDE FM_STATE_OVERRIDE FM_DATA_OVERRIDE FM_PROJECTS_OVERRIDE FM_CONFIG_OVERRIDE'
 
 install_leak_probe() {  # <fakebin> <harness>
   local name body=
   for name in $LEAK_NAMES; do body="$body\${$name-unset}|"; done
+  # Secondmate launches deliberately set these to empty rather than unsetting.
+  for name in $SNAPSHOT_PATH_NAMES; do body="$body\${$name:-unset}|"; done
   # shellcheck disable=SC2016
   printf '#!/bin/sh\nprintf "%%s\\n" "%s"\n' "$(printf '%s' "$body" | sed 's/\\//g')" > "$1/$2"
   chmod +x "$1/$2"
 }
 
 # The pane shell of a server that inherited the leak: every scoped name is set.
-leaky_pane_launch() {  # <fakebin> <launch> [<preamble>]
+leaky_pane_launch() {  # <fakebin> <launch> [<preamble>] [<scope-marker>]
   env -i HOME="$TMP_ROOT/pane-home" PATH="$1:$PATH" TERM=xterm TMUX=synthetic-pane \
-    FM_SNAPSHOT_SCOPED_ENV=1 FM_CREW_STATE_META_OVERRIDE=/tmp/leak.meta \
+    FM_SNAPSHOT_SCOPED_ENV="${4-1}" FM_CREW_STATE_META_OVERRIDE=/tmp/leak.meta \
     FM_CREW_STATE_STATUS_OVERRIDE=/tmp/leak.status FM_HOME_SUMMARY_IF_IDLE=0 \
     FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1 \
+    FM_ROOT_OVERRIDE=/snapshot/root FM_STATE_OVERRIDE=/snapshot/state \
+    FM_DATA_OVERRIDE=/snapshot/data FM_PROJECTS_OVERRIDE=/snapshot/projects \
+    FM_CONFIG_OVERRIDE=/snapshot/config \
     /bin/sh -c "${3:-}
 $2"
 }
 
 test_snapshot_scoped_variables_are_cleared_from_the_launch() {
-  local setting rec sm id out status seen kind want='unset|unset|unset|unset|unset|'
+  local setting rec sm id out status seen kind want='unset|unset|unset|unset|unset|unset|unset|unset|unset|unset|'
   for kind in ship secondmate; do
-    for setting in absent enabled; do
+    for setting in absent enabled paths-only; do
       id="leak-$kind-$setting-a1"
       rec=$(make_case "leak-$kind-$setting" codex "$id")
       read_case "$rec"
-      [ "$setting" = absent ] || printf '%s\n' "$LEAK_NAMES" | tr ' ' '\n' > "$HOME_DIR/config/launch-env-allowlist"
+      case "$setting" in
+        enabled) printf '%s\n' "$LEAK_NAMES $SNAPSHOT_PATH_NAMES" | tr ' ' '\n' > "$HOME_DIR/config/launch-env-allowlist" ;;
+        paths-only) printf '%s\n' "$SNAPSHOT_PATH_NAMES" | tr ' ' '\n' > "$HOME_DIR/config/launch-env-allowlist" ;;
+      esac
       if [ "$kind" = ship ]; then
         out=$(run_case_spawn "$id" "$PROJ_DIR" --mode no-mistakes --yolo off)
       else
@@ -439,6 +448,28 @@ test_snapshot_scoped_variables_are_cleared_from_the_launch() {
     done
   done
   pass "ship and secondmate launches start their agent without snapshot-scoped variables a pane carries"
+}
+
+test_launch_preserves_unmarked_path_overrides() {
+  local setting rec out status seen marker preamble
+  for setting in absent enabled; do
+    rec=$(make_case "unmarked-$setting" codex "unmarked-$setting-a1")
+    read_case "$rec"
+    [ "$setting" = absent ] || printf '%s\n' "$SNAPSHOT_PATH_NAMES" | tr ' ' '\n' > "$HOME_DIR/config/launch-env-allowlist"
+    out=$(run_case_spawn "unmarked-$setting-a1" "$PROJ_DIR" --mode no-mistakes --yolo off)
+    status=$?
+    expect_code 0 "$status" "unmarked spawn with allowlist=$setting should succeed: $out"
+    install_leak_probe "$FAKEBIN_DIR" codex
+    for marker in unset '' 0; do
+      preamble=$(grep '^export ' "$PANE_LOG")
+      [ "$marker" != unset ] || preamble="unset FM_SNAPSHOT_SCOPED_ENV; $preamble"
+      seen=$(leaky_pane_launch "$FAKEBIN_DIR" "$(cat "$LAUNCH_LOG")" "$preamble" "$marker") \
+        || fail "unmarked launch with allowlist=$setting failed to run"
+      assert_equals 'unset|unset|unset|unset|unset|/snapshot/root|/snapshot/state|/snapshot/data|/snapshot/projects|/snapshot/config|' "$seen" \
+        "a launch must preserve unmarked path overrides (allowlist=$setting, marker=$marker)"
+    done
+  done
+  pass "launches preserve legitimate unmarked path overrides in both allowlist postures"
 }
 
 # The spawn's own process is where a backend command can start a long-lived
@@ -478,6 +509,8 @@ test_relaunch_clears_snapshot_scoped_variables() {
   dir="$TMP_ROOT/relaunch-leak"
   home="$dir/home"; proj="$dir/proj"; wt="$dir/wt"
   mkdir -p "$home/state" "$home/data" "$home/config" "$home/projects" "$dir/fake" "$dir/user-home"
+  # Retain paths but not their marker: cleanup must precede the env filter.
+  printf '%s\n' "$SNAPSHOT_PATH_NAMES" | tr ' ' '\n' > "$home/config/launch-env-allowlist"
   touch "$home/state/.last-watcher-beat"
   make_relaunch_stub "$dir"
   fm_git_worktree "$proj" "$wt" "wt-relaunch-leak"
@@ -504,7 +537,7 @@ test_relaunch_clears_snapshot_scoped_variables() {
   preamble=$(grep '^export ' "$dir/fake/keys")
   seen=$(leaky_pane_launch "$dir/fakebin" "$launch" "$preamble") \
     || fail "the replacement launch failed to run"
-  assert_equals 'unset|unset|unset|unset|unset|' "$seen" \
+  assert_equals 'unset|unset|unset|unset|unset|unset|unset|unset|unset|unset|' "$seen" \
     "a relaunched agent in a pane carrying snapshot-scoped variables must start without them"
   pass "relaunch starts the replacement agent without snapshot-scoped variables a pane carries"
 }
@@ -517,5 +550,6 @@ test_launch_exports_task_inbox
 test_relaunch_rebuilds_the_switch
 test_raw_compound_launch_command_carries_the_switch
 test_snapshot_scoped_variables_are_cleared_from_the_launch
+test_launch_preserves_unmarked_path_overrides
 test_spawn_process_clears_snapshot_scoped_variables_before_backend_calls
 test_relaunch_clears_snapshot_scoped_variables

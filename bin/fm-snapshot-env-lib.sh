@@ -63,8 +63,9 @@ fm_snapshot_env_clear() {
   for var in "${FM_SNAPSHOT_ONLY_ENV_NAMES[@]}"; do unset "$var"; done
 }
 
-# fm_snapshot_env_unset_command: a shell command that unsets the always-scoped
-# names, for a pane or launch command that starts an agent.
+# fm_snapshot_env_unset_command: a portable shell command that clears marked
+# paths before the marker and always-scoped names, matching fm_snapshot_env_clear.
 fm_snapshot_env_unset_command() {
-  printf 'unset %s' "${FM_SNAPSHOT_ONLY_ENV_NAMES[*]}"
+  printf 'if [ "${FM_SNAPSHOT_SCOPED_ENV:-}" = 1 ]; then unset %s; fi; unset %s' \
+    "${FM_SNAPSHOT_PATH_ENV_NAMES[*]}" "${FM_SNAPSHOT_ONLY_ENV_NAMES[*]}"
 }
