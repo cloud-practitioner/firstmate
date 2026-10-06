@@ -7,13 +7,13 @@
 # FM_CREW_STATE_STATUS_OVERRIDE, and the home-summary refresh passes its worker
 # flags down the same chain. That read can reach the herdr CLI, and `herdr`
 # auto-starts a server when none is listening; every pane that server later
-# starts inherits its environment. A leaked override made every unmodified
-# fm-crew-state read the same stale copy and report "no metadata" for each task.
+# starts inherits its environment. Allowing a captured-record override to
+# escape would pin later fm-crew-state reads to that stale copy.
 #
 # Two guards use this list:
 #   - the herdr client boundary (bin/backends/herdr.sh fm_backend_herdr_exec)
-#     strips the variables from the child it runs, so the leak path is closed
-#     at the one place a server can be started;
+#     strips the variables from the child it runs before that client can
+#     auto-start a server;
 #   - worker, second-mate, and relaunch spawns (bin/fm-spawn.sh) and watcher arm
 #     (bin/fm-watch-arm.sh) clear them defensively, so a value already present
 #     in an inherited environment does not reach an agent or a watcher.
@@ -22,6 +22,11 @@
 # environment. FM_SNAPSHOT_PATH_ENV_NAMES (FM_STATE_OVERRIDE and friends) are
 # test seams elsewhere, so they are scoped only when FM_SNAPSHOT_SCOPED_ENV=1
 # marks the environment as a snapshot read.
+#
+# Regression coverage: tests/fm-backend-herdr.test.sh and
+# tests/fm-crew-state.test.sh exercise the read/client boundary;
+# tests/fm-spawn-compact-adviser-disable.test.sh and tests/fm-watch-arm.test.sh
+# exercise defensive launch and watcher cleanup.
 #
 # Sourced, not executed. Bash 3.2 compatible.
 

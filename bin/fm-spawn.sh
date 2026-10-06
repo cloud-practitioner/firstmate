@@ -299,9 +299,11 @@
 #   real directory owned by this user and writable by nobody else, then
 #   tightens it.
 # Launch environment (config/launch-env-allowlist):
-#   Absent means unchanged ambient inheritance. A present readable regular file
-#   opts every launch (ship, scout, secondmate, raw command, and relaunch) into
-#   /usr/bin/env -i followed by /bin/sh -c of the existing launch command.
+#   Absent means no allowlist filter; bin/fm-snapshot-env-lib.sh owns the
+#   snapshot cleanup applied before either launch path. A present readable
+#   regular file opts every launch (ship, scout, secondmate, raw command, and
+#   relaunch) into /usr/bin/env -i followed by /bin/sh -c of the existing launch
+#   command.
 #   Each line is one POSIX environment name, never a value or shell expression;
 #   blank lines and lines beginning with # are ignored. Invalid input refuses
 #   before launch, as do path inspection errors such as inaccessible config
@@ -321,8 +323,8 @@
 #   An enabled task trace also retains TRACEPARENT. Explicit Firstmate launch
 #   assignments still apply inside the filtered environment, including the
 #   FM_TASK_INBOX export every launch carries (the absolute state/<id>.inbox
-#   path the steering doorbell names). Raw commands must
-#   be POSIX sh compatible under this opt-in; the absent-file path is unchanged.
+#   path the steering doorbell names). Raw commands must be POSIX sh compatible
+#   under this opt-in; without it they retain the destination shell's syntax.
 #   This is an exec environment boundary, not a sandbox for the pane's startup
 #   shell, credential files, same-user processes, or later shell initialization.
 #   See docs/configuration.md for provider/Git setup and supported limits.
