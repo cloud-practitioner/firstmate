@@ -2395,6 +2395,80 @@ fm_backend_herdr_server_running_state() {  # <session>
   ' 2>/dev/null || printf 'unknown'
 }
 
+# fm_backend_herdr_meta_value: one `key=value` field of a task record, last
+# occurrence wins (the same rule fm_meta_get applies), or nothing.
+fm_backend_herdr_meta_value() {  # <meta-file> <key>
+  local line value=''
+  [ -f "$1" ] || return 0
+  while IFS= read -r line || [ -n "$line" ]; do
+    case "$line" in
+      "$2="*) value=${line#*=} ;;
+    esac
+  done < "$1" 2>/dev/null || true
+  printf '%s' "$value"
+}
+
+# fm_backend_herdr_endpoint_foreign: succeeds (0) ONLY on positive proof that
+# the pane at <session>:<pane> is not the endpoint a task record names, so a
+# recorded id that now belongs to an unrelated pane is never treated as that
+# task's agent. Every other read - no record, an unreadable pane, a matching
+# label or worktree - is "not proven foreign" (1), so an old record whose pane
+# really is the task's keeps working and nothing is mass-marked dead.
+#
+# Why this exists: pane and workspace ids are per-server counters, and a
+# recorded endpoint can outlive its herdr server (a rebuilt devcontainer starts
+# a fresh session whose ids restart from w1). The recorded id then names
+# whatever the new session put there - another lane's live agent, or the
+# captain's plain shell - and the liveness classifier alone would read that
+# pane as this task's own (docs/herdr-backend.md "Endpoints from a previous
+# session").
+#
+# The task is named by <expected-label> (`fm-<id>`, the label every task tab
+# carries) when the caller has it, otherwise by every herdr record in the
+# state directory that claims this exact target. Two independent facts must
+# both disagree with a candidate record before it is foreign: the pane's
+# foreground cwd is outside the recorded worktree AND its tab is not labeled
+# `fm-<id>`. A restored husk keeps its label, a renamed tab keeps its cwd, and
+# a live agent has both, so neither a server restart nor a rename can read as
+# foreign. With several claimants the pane is foreign only when it is foreign
+# to every one of them.
+fm_backend_herdr_endpoint_foreign() {  # <session> <pane> [expected-label]
+  local session=$1 pane=$2 want=${3:-} state meta id ids='' wt window cwd tab_id label info checked=0
+  [ -n "$session" ] && [ -n "$pane" ] || return 1
+  state=${FM_STATE_OVERRIDE:-$FM_HOME/state}
+  if [ -n "$want" ]; then
+    case "$want" in fm-?*) ids=${want#fm-} ;; *) return 1 ;; esac
+  else
+    for meta in "$state"/*.meta; do
+      [ -f "$meta" ] || continue
+      [ "$(fm_backend_herdr_meta_value "$meta" window)" = "$session:$pane" ] || continue
+      id=${meta##*/}
+      ids="$ids ${id%.meta}"
+    done
+  fi
+  info=
+  for id in $ids; do
+    meta="$state/$id.meta"
+    [ "$(fm_backend_herdr_meta_value "$meta" backend)" = herdr ] || return 1
+    window=$(fm_backend_herdr_meta_value "$meta" window)
+    [ "$window" = "$session:$pane" ] || continue
+    wt=$(fm_backend_herdr_meta_value "$meta" worktree)
+    [ -n "$wt" ] || return 1
+    if [ -z "$info" ]; then
+      info=$(fm_backend_herdr_cli "$session" pane get "$pane" 2>/dev/null) || return 1
+      cwd=$(printf '%s' "$info" | jq -r '.result.pane.foreground_cwd // .result.pane.cwd // empty' 2>/dev/null)
+      tab_id=$(printf '%s' "$info" | jq -r '.result.pane.tab_id // empty' 2>/dev/null)
+      [ -n "$cwd" ] && [ -n "$tab_id" ] || return 1
+    fi
+    case "$cwd/" in "${wt%/}/"*) return 1 ;; esac
+    label=$(fm_backend_herdr_cli "$session" tab get "$tab_id" 2>/dev/null | jq -r '.result.tab.label // empty' 2>/dev/null)
+    [ -n "$label" ] || return 1
+    [ "$label" != "fm-$id" ] || return 1
+    checked=1
+  done
+  [ "$checked" = 1 ]
+}
+
 # fm_backend_herdr_agent_state: recovery-grade state for the same session-start
 # sweep as the tmux classifier. It reuses the husk classifier rather than
 # creating a second Herdr state machine: a structurally gone pane is `missing`,
@@ -2416,9 +2490,15 @@ fm_backend_herdr_server_running_state() {  # <session>
 # on exactly the reads they refused on before. A server that is running, or
 # whose state cannot itself be read, still yields `unreadable` here too: absence
 # is claimed only from positive evidence of it.
-fm_backend_herdr_agent_state() {  # <target>
+fm_backend_herdr_agent_state() {  # <target> [expected-label]
   local target=$1
   fm_backend_herdr_parse_target "$target" || { printf 'unreadable'; return 0; }
+  # A pane that is provably not this task's (a recorded id reused by a later
+  # herdr session) is no endpoint of the task at all, whatever lives in it.
+  if fm_backend_herdr_endpoint_foreign "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" "${2:-}"; then
+    printf 'missing'
+    return 0
+  fi
   case "$(fm_backend_herdr_pane_agent_state "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE")" in
     dead) printf 'missing' ;;
     no-agent|stale-agent) printf 'dead' ;;
@@ -2450,18 +2530,18 @@ fm_backend_herdr_agent_state() {  # <target>
 # pane classifies `dead` (adoptable), a genuinely destroyed pane still reads
 # `missing`, a returning agent reads `alive`, and a server that will not start
 # is `unreadable` - unreachable, which refuses, rather than absence.
-fm_backend_herdr_endpoint_absence_recheck() {  # <target>
+fm_backend_herdr_endpoint_absence_recheck() {  # <target> [expected-label]
   local target=$1
   fm_backend_herdr_parse_target "$target" || { printf 'unreadable'; return 0; }
   fm_backend_herdr_server_ensure "$FM_BACKEND_HERDR_SESSION" >/dev/null 2>&1 \
     || { printf 'unreadable'; return 0; }
-  fm_backend_herdr_agent_state "$target"
+  fm_backend_herdr_agent_state "$target" "${2:-}"
 }
 
 # Backward-compatible three-state view for callers that only need a yes/no
 # agent verdict. The detailed state contract is owned by fm_backend_agent_state.
-fm_backend_herdr_agent_alive() {  # <target>
-  case "$(fm_backend_herdr_agent_state "$1")" in
+fm_backend_herdr_agent_alive() {  # <target> [expected-label]
+  case "$(fm_backend_herdr_agent_state "$@")" in
     alive) printf 'alive' ;;
     dead|missing) printf 'dead' ;;
     *) printf 'unknown' ;;
@@ -3551,8 +3631,12 @@ fm_backend_herdr_send_text_submit() {  # <target> <text> <retries> <enter-sleep>
 # restore as the backstop. A close that empties the FOCUSED workspace moves
 # focus legitimately, and every in-lock planning ambiguity or failure falls
 # back to the plain close, matching the pre-hardening contract.
-fm_backend_herdr_kill_serialized() {  # <session> <pane>
+fm_backend_herdr_kill_serialized() {  # <session> <pane> [expected-label]
   local session=$1 pane=$2
+  # Never close a pane that is provably another task's or the captain's.
+  if fm_backend_herdr_endpoint_foreign "$session" "$pane" "${3:-}"; then
+    return 0
+  fi
   local before active_tab info target_pane target_tab target_ws plan shell_pid plan_move_record close_failed workspace_presence
   before=$(fm_backend_herdr_projection_focus_snapshot "$session") || before=
   if [ -n "$before" ]; then
@@ -3600,7 +3684,7 @@ fm_backend_herdr_kill_serialized() {  # <session> <pane>
   fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane" || true
 }
 
-fm_backend_herdr_kill() {  # <target>
+fm_backend_herdr_kill() {  # <target> [<unused> [expected-label]]
   fm_backend_herdr_target_ready "$1" || return 0
   local session=$FM_BACKEND_HERDR_SESSION pane=$FM_BACKEND_HERDR_PANE
   local lock_path attempt=0 lock_held=0
@@ -3619,7 +3703,7 @@ fm_backend_herdr_kill() {  # <target>
     done
   fi
   if [ "$lock_held" = 1 ]; then
-    fm_backend_herdr_kill_serialized "$session" "$pane"
+    fm_backend_herdr_kill_serialized "$session" "$pane" "${3:-}"
     fm_lock_release "$lock_path" || true
   else
     echo "warning: herdr task kill could not acquire its session presentation lock; refusing an unlocked pane close" >&2
@@ -3633,9 +3717,14 @@ fm_backend_herdr_kill() {  # <target>
 # Only a structured pane_not_found proves the endpoint gone; present and
 # unknown presence refuse after every close path, and a missing or malformed
 # target identity is ambiguity that also refuses, never proof of a gone pane.
-fm_backend_herdr_endpoint_confirmed_gone() {  # <target>
+fm_backend_herdr_endpoint_confirmed_gone() {  # <target> [expected-label]
   local presence
   fm_backend_herdr_parse_target "$1" || return 1
+  # A recorded id now held by a provably different pane means the task's own
+  # endpoint is gone, and that pane is not ours to keep the record for.
+  if fm_backend_herdr_endpoint_foreign "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" "${2:-}"; then
+    return 0
+  fi
   presence=$(fm_backend_herdr_pane_presence_state "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE")
   [ "$presence" = dead ]
 }

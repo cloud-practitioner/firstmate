@@ -511,6 +511,7 @@ herdr_pane_id=<pane-id>
 A Herdr pane id contains a colon, so the adapter splits `window=` on the first colon only.
 The recorded pane is the operational fast path.
 Workspace and tab ids support verification and cleanup but are not inferred from mutable labels during normal operation.
+A recorded id that a later Herdr session reused is recognized as foreign through [Endpoints from a previous session](#endpoints-from-a-previous-session).
 
 ## Current transport behavior
 
@@ -727,6 +728,22 @@ The process-level proof only decides whether that registration is backed by a ru
 The session-start sweep and the watcher's dedicated secondmate liveness tick use this probe.
 Idle secondmates remain exempt from stale-pane escalation.
 [Secondmate endpoint recovery](architecture.md) owns the shared supervision mechanism.
+
+### Endpoints from a previous session
+
+Pane ids are per-server counters, so a recorded id can outlive the Herdr server that issued it.
+A rebuilt devcontainer starts a fresh session whose ids restart from `w1`, and the surviving task records then name ids that now belong to whatever that session created: another lane's live agent or a plain shell.
+The pane classifier alone would read the first as this task's live agent and the second as its adoptable dead pane.
+
+`fm_backend_herdr_endpoint_foreign` therefore proves ownership before any verdict is trusted.
+A pane is foreign to a task record only when its foreground cwd is outside the recorded worktree and its tab is not labeled `fm-<id>`; either fact alone is not proof.
+A restart husk keeps its label and a renamed tab keeps its cwd, so neither reads as foreign.
+When the caller has no label, every record in the state directory that claims the exact target is consulted and the pane is foreign only to all of them.
+Anything unreadable, or a record without a worktree, is not proof, so a record written before this check keeps working.
+
+A foreign pane reads `missing` in the recovery-grade view, so the existing relaunch path rebinds the task to a fresh endpoint in the recorded session instead of adopting or refusing the pane.
+Every data-plane dispatcher (`bin/fm-backend.sh`) treats it as absent: no read, key, text, or composer probe reaches it, and a close and a record-removal check never touch it.
+`tests/fm-backend-herdr.test.sh` pins the foreign live agent, the foreign shell, the restart husk, a renamed tab, and an unclaimed target.
 
 ## Agent status authority and relaunch
 
