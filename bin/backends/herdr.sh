@@ -2414,26 +2414,18 @@ fm_backend_herdr_meta_value() {  # <meta-file> <key>
 }
 
 fm_backend_herdr_pane_process_identity() {
-  local session=$1 pane=$2 info pid proc_root boot namespace stat_line starttime
-  local -a stat_fields
+  local session=$1 pane=$2 info pid starttime
   info=$(fm_backend_herdr_cli "$session" pane process-info --pane "$pane" 2>/dev/null) || return 1
   pid=$(printf '%s' "$info" | jq -er --arg pane "$pane" '
     select(.result.type == "pane_process_info" and .result.process_info.pane_id == $pane)
     | .result.process_info.shell_pid
     | select(type == "number" and . > 1 and . == floor)
   ' 2>/dev/null) || return 1
-  proc_root=${FM_PROC_ROOT_OVERRIDE:-/proc}
-  IFS= read -r boot < "$proc_root/sys/kernel/random/boot_id" || return 1
-  namespace=$(readlink "$proc_root/$pid/ns/pid" 2>/dev/null) || return 1
-  IFS= read -r stat_line < "$proc_root/$pid/stat" || return 1
-  read -r -a stat_fields <<< "${stat_line##*)}"
-  [ "${#stat_fields[@]}" -ge 20 ] || return 1
-  case "${stat_fields[0]}" in Z|X|x) return 1 ;; esac
-  starttime=${stat_fields[19]}
-  case "$starttime" in ''|*[!0-9]*) return 1 ;; esac
-  case "$boot" in ''|*[!0-9a-f-]*) return 1 ;; esac
-  case "$namespace" in pid:\[[0-9]*\]) ;; *) return 1 ;; esac
-  printf 'proc:%s:%s:%s:%s\n' "$boot" "$namespace" "$pid" "$starttime"
+  starttime=$(LC_ALL=C TZ=UTC0 ps -o lstart= -p "$pid" 2>/dev/null) || return 1
+  starttime=${starttime#"${starttime%%[![:space:]]*}"}
+  starttime=${starttime%"${starttime##*[![:space:]]}"}
+  case "$starttime" in ''|*$'\n'*|*$'\r'*) return 1 ;; esac
+  printf 'ps:%s:%s\n' "$pid" "$starttime"
 }
 
 fm_backend_herdr_endpoint_foreign() {  # <session> <pane> [expected-label]
