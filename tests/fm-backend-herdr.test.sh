@@ -5335,10 +5335,8 @@ test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
     export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$state" FM_HOME="$dir"
     . "$ROOT/bin/fm-backend.sh"
     fm_backend_source herdr
+    # shellcheck disable=SC2329 # Adapter callback invoked by the sourced backend.
     fm_backend_herdr_pane_process_state() { printf agent; }
-    fm_backend_herdr_projection_focus_snapshot() { printf 'w9\tw9:t1'; }
-    fm_backend_herdr_projection_focus_restore() { return 0; }
-    fm_backend_herdr_projection_target_tab_mutation_allowed() { return 0; }
 
     printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":%s}}}\n' "$old_pid" > "$world/process-w1_p1.json"
     identity=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "cannot read the original pane process identity"
@@ -5622,6 +5620,7 @@ test_active_operations_check_ownership_after_server_restore() {
     export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$state" FM_HOME="$dir"
     . "$ROOT/bin/fm-backend.sh"
     fm_backend_source herdr
+    # shellcheck disable=SC2329 # Adapter callback invoked by the sourced backend.
     fm_backend_herdr_pane_process_state() { printf agent; }
     for operation in capture visible key text busy composer; do
       : > "$world/stopped"; : > "$world/typed.log"; : > "$world/read.log"
@@ -5664,6 +5663,7 @@ test_secondmate_probe_cannot_borrow_another_tasks_binding() {
     export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$state" FM_HOME="$dir"
     . "$ROOT/bin/fm-secondmate-liveness-lib.sh"
     fm_backend_source herdr
+    # shellcheck disable=SC2329 # Adapter callback invoked by the sourced backend.
     fm_backend_herdr_pane_process_state() { printf agent; }
     fm_secondmate_liveness_probe "$state/b.meta" b full
     [ "$FM_SM_LIVE_STATE" = missing ] && [ "$FM_SM_LIVE_STATUS" = relaunchable ] || fail "bootstrap-style recovery borrowed task A's live binding for B"
