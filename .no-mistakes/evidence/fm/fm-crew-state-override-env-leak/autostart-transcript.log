@@ -1,0 +1,19 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh prepare fm-lab-e
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline/bin/fm-crew-state.sh autostart-task
+state: unknown · source: none · backend target gone: fm-lab-e:w1:p1
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh run fm-lab-e status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-e"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":".v/herdr/sessions/fm-lab-e/herdr.sock","session":"fm-lab-e","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh teardown fm-lab-e
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh prepare fm-lab-e
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-crew-state.sh autostart-task
+state: unknown · source: none · backend target gone: fm-lab-e:w1:p1
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh run fm-lab-e status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-e"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":".v/herdr/sessions/fm-lab-e/herdr.sock","session":"fm-lab-e","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh teardown fm-lab-e

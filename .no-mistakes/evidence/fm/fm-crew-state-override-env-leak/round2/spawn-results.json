@@ -1,0 +1,171 @@
+{
+  "ship-absent": {
+    "pid": 1218081,
+    "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project",
+    "environment": {
+      "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home",
+      "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/ship-absent.inbox"
+    },
+    "current_state_with_inherited_environment": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    },
+    "current_state_without_snapshot_paths": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    }
+  },
+  "ship-all": {
+    "pid": 1220911,
+    "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/2/spawn-project",
+    "environment": {
+      "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home",
+      "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/ship-all.inbox"
+    },
+    "current_state_with_inherited_environment": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    },
+    "current_state_without_snapshot_paths": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    }
+  },
+  "ship-paths-only": {
+    "pid": 1223278,
+    "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/3/spawn-project",
+    "environment": {
+      "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home",
+      "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/ship-paths-only.inbox"
+    },
+    "current_state_with_inherited_environment": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    },
+    "current_state_without_snapshot_paths": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    }
+  },
+  "relaunch": {
+    "pid": 1225023,
+    "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project",
+    "environment": {
+      "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home",
+      "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/ship-absent.inbox"
+    },
+    "current_state_with_inherited_environment": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    },
+    "current_state_without_snapshot_paths": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    }
+  },
+  "unmarked-absent": {
+    "pid": 1228930,
+    "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project",
+    "environment": {
+      "FM_ROOT_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime",
+      "FM_STATE_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state",
+      "FM_DATA_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data",
+      "FM_PROJECTS_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects",
+      "FM_CONFIG_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config",
+      "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home",
+      "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/ship-absent.inbox"
+    },
+    "current_state_with_inherited_environment": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    },
+    "current_state_without_snapshot_paths": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    }
+  },
+  "unmarked-enabled": {
+    "pid": 1230922,
+    "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project",
+    "environment": {
+      "FM_ROOT_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime",
+      "FM_STATE_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state",
+      "FM_DATA_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data",
+      "FM_PROJECTS_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects",
+      "FM_CONFIG_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config",
+      "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home",
+      "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/ship-absent.inbox"
+    },
+    "current_state_with_inherited_environment": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    },
+    "current_state_without_snapshot_paths": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    }
+  },
+  "secondmate-absent": {
+    "pid": 1233096,
+    "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate",
+    "environment": {
+      "FM_ROOT_OVERRIDE": "",
+      "FM_STATE_OVERRIDE": "",
+      "FM_DATA_OVERRIDE": "",
+      "FM_PROJECTS_OVERRIDE": "",
+      "FM_CONFIG_OVERRIDE": "",
+      "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate",
+      "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/secondmate.inbox"
+    },
+    "current_state_with_inherited_environment": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    },
+    "current_state_without_snapshot_paths": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    }
+  },
+  "secondmate-all": {
+    "pid": 1235040,
+    "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate",
+    "environment": {
+      "FM_ROOT_OVERRIDE": "",
+      "FM_STATE_OVERRIDE": "",
+      "FM_DATA_OVERRIDE": "",
+      "FM_PROJECTS_OVERRIDE": "",
+      "FM_CONFIG_OVERRIDE": "",
+      "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate",
+      "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/secondmate.inbox"
+    },
+    "current_state_with_inherited_environment": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    },
+    "current_state_without_snapshot_paths": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    }
+  },
+  "secondmate-paths-only": {
+    "pid": 1236938,
+    "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate",
+    "environment": {
+      "FM_ROOT_OVERRIDE": "",
+      "FM_STATE_OVERRIDE": "",
+      "FM_DATA_OVERRIDE": "",
+      "FM_PROJECTS_OVERRIDE": "",
+      "FM_CONFIG_OVERRIDE": "",
+      "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate",
+      "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/secondmate.inbox"
+    },
+    "current_state_with_inherited_environment": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    },
+    "current_state_without_snapshot_paths": {
+      "exit": 0,
+      "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+    }
+  }
+}

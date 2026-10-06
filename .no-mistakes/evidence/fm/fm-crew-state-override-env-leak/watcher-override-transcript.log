@@ -1,0 +1,10 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-overrides
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-overrides
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh provision fm-lab-e
+
+Unmodified watcher process after inherited record and summary overrides: {"FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-overrides"}
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-watch-arm.sh --stop
+watcher: stopped pid=740031
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh teardown fm-lab-e

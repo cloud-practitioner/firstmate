@@ -1,0 +1,19 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh provision fm-lab-e2
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline
+
+$ bash -c '. tests/lib.sh; exec /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline/bin/fm-watch-arm.sh'
+Real watcher: {"version": "baseline", "watcher_pid": 1111126, "environment": {"FM_PROJECTS_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline/projects", "FM_ROOT_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ", "FM_HOME_SUMMARY_PARENT_ERROR": "watcher-FM_HOME_SUMMARY_PARENT_ERROR", "FM_DATA_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline/data", "FM_CREW_STATE_META_OVERRIDE": "watcher-FM_CREW_STATE_META_OVERRIDE", "FM_HOME_SUMMARY_IF_IDLE": "watcher-FM_HOME_SUMMARY_IF_IDLE", "FM_CREW_STATE_STATUS_OVERRIDE": "watcher-FM_CREW_STATE_STATUS_OVERRIDE", "FM_CONFIG_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline/config", "FM_STATE_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline/state", "FM_SNAPSHOT_SCOPED_ENV": "1", "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline", "FM_HOME_SUMMARY_PARENT_STAMP": "watcher-FM_HOME_SUMMARY_PARENT_STAMP", "FM_HOME_SUMMARY_WORKER_BEST_EFFORT": "watcher-FM_HOME_SUMMARY_WORKER_BEST_EFFORT"}, "beacon": "", "alive": true}
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline/bin/fm-watch-arm.sh --stop
+watcher: stopped pid=1111126
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-current
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-current
+
+$ bash -c '. tests/lib.sh; exec /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-watch-arm.sh'
+Real watcher: {"version": "current", "watcher_pid": 1112246, "environment": {"FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-current"}, "beacon": "", "alive": true}
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-watch-arm.sh --stop
+watcher: stopped pid=1112246
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh teardown fm-lab-e2

@@ -1,0 +1,2233 @@
+HERDR command: server --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ --label clean-start --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane process-info w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: server --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ --label clean-start --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane process-info --pane w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: server --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ --label clean-start --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane process-info --pane w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: server --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ --label clean-start --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane process-info --pane w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: server --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: server --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label firstmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-ship --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane close w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ FM_TASK_ID=live-ship --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 .\ \'/tmp/fm-live-ship+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281711.612247.5285.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-filtered --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/2/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-filtered.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ FM_TASK_ID=live-filtered --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p3 .\ \'/tmp/fm-live-filtered+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281717.614115.4542.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p3 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 export\ FM_SNAPSHOT_SCOPED_ENV=1\ FM_CREW_STATE_META_OVERRIDE=poison.meta\ FM_CREW_STATE_STATUS_OVERRIDE=poison.status\ FM_HOME_SUMMARY_IF_IDLE=poison-idle\ FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-worker\ FM_HOME_SUMMARY_PARENT_ERROR=poison-error\ FM_HOME_SUMMARY_PARENT_STAMP=poison-stamp --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: server --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label firstmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-ship --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane close w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ FM_TASK_ID=live-ship --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 .\ \'/tmp/fm-live-ship+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281771.631339.1674.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-filtered --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/2/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-filtered.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ FM_TASK_ID=live-filtered --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p3 .\ \'/tmp/fm-live-filtered+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281776.634987.12249.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p3 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 export\ FM_SNAPSHOT_SCOPED_ENV=1\ FM_CREW_STATE_META_OVERRIDE=poison.meta\ FM_CREW_STATE_STATUS_OVERRIDE=poison.status\ FM_HOME_SUMMARY_IF_IDLE=poison-idle\ FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-worker\ FM_HOME_SUMMARY_PARENT_ERROR=poison-error\ FM_HOME_SUMMARY_PARENT_STAMP=poison-stamp --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ FM_TASK_ID=live-ship --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 .\ \'/tmp/fm-live-ship+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281779.637483.31255.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: server --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label firstmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-ship --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane close w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ FM_TASK_ID=live-ship --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 .\ \'/tmp/fm-live-ship+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281797.646875.11591.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-filtered --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/2/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-filtered.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ FM_TASK_ID=live-filtered --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p3 .\ \'/tmp/fm-live-filtered+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281802.648274.17407.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p3 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 export\ FM_SNAPSHOT_SCOPED_ENV=1\ FM_CREW_STATE_META_OVERRIDE=poison.meta\ FM_CREW_STATE_STATUS_OVERRIDE=poison.status\ FM_HOME_SUMMARY_IF_IDLE=poison-idle\ FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-worker\ FM_HOME_SUMMARY_PARENT_ERROR=poison-error\ FM_HOME_SUMMARY_PARENT_STAMP=poison-stamp --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ FM_TASK_ID=live-ship --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 .\ \'/tmp/fm-live-ship+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281805.650659.25609.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate --label 2ndmate-live-secondmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: tab list --workspace w2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: tab create --workspace w2 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate --label fm-live-secondmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: tab list --workspace w2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: pane list --workspace w2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: agent get w2:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: pane close w2:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: pane get w2:p2 --session fm-lab-e
+HERDR command: pane get w1:p3 --session fm-lab-eFM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w2:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w2:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w2:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w2:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-secondmate.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w2:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w2:p2 .\ \'/tmp/fm-live-secondmate+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281808.652050.14323.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w2:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: server --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=before-fix-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=before-fix-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=before-fix-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=before-fix-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=before-fix-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=before-fix-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=before-fix-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=before-fix-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=before-fix-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=before-fix-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=before-fix-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=before-fix-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=before-fix-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=before-fix-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=before-fix-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=before-fix-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=before-fix-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=before-fix-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=before-fix-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=before-fix-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=before-fix-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=before-fix-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ --label before-fix --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane process-info --pane w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: server --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label firstmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-ship --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane close w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ FM_TASK_ID=live-ship --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 .\ \'/tmp/fm-live-ship+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281932.680343.15432.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-filtered --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/2/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+HERDR command:FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+ pane get w1:p3 --session fm-lab-e
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-filtered.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ FM_TASK_ID=live-filtered --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p3 .\ \'/tmp/fm-live-filtered+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281938.683943.15832.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p3 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 export\ FM_SNAPSHOT_SCOPED_ENV=1\ FM_CREW_STATE_META_OVERRIDE=poison.meta\ FM_CREW_STATE_STATUS_OVERRIDE=poison.status\ FM_HOME_SUMMARY_IF_IDLE=poison-idle\ FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-worker\ FM_HOME_SUMMARY_PARENT_ERROR=poison-error\ FM_HOME_SUMMARY_PARENT_STAMP=poison-stamp --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ FM_TASK_ID=live-ship --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 .\ \'/tmp/fm-live-ship+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281941.687384.30149.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate --label 2ndmate-live-secondmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: tab list --workspace w2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: tab create --workspace w2 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate --label fm-live-secondmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: tab list --workspace w2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: pane list --workspace w2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: agent get w2:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: pane close w2:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w2:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w2:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w2:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w2:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w2:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-secondmate.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w2:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w2:p2 .\ \'/tmp/fm-live-secondmate+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791281944.688842.2144.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w2:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane get w1:p1 --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.meta
+FM_CREW_STATE_STATUS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/autostart/task.status
+FM_HOME_SUMMARY_IF_IDLE=0
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/baseline
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm/state
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: pane get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/fm
+HERDR command: server --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-overrides
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-overrides
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-overrides
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-overrides
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-overrides
+HERDR command: server --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_SNAPSHOT_SCOPED_ENV=1
+FM_CREW_STATE_META_OVERRIDE=poison-FM_CREW_STATE_META_OVERRIDE
+FM_CREW_STATE_STATUS_OVERRIDE=poison-FM_CREW_STATE_STATUS_OVERRIDE
+FM_HOME_SUMMARY_IF_IDLE=poison-FM_HOME_SUMMARY_IF_IDLE
+FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-FM_HOME_SUMMARY_WORKER_BEST_EFFORT
+FM_HOME_SUMMARY_PARENT_ERROR=poison-FM_HOME_SUMMARY_PARENT_ERROR
+FM_HOME_SUMMARY_PARENT_STAMP=poison-FM_HOME_SUMMARY_PARENT_STAMP
+FM_ROOT_OVERRIDE=poison-FM_ROOT_OVERRIDE
+FM_STATE_OVERRIDE=poison-FM_STATE_OVERRIDE
+FM_DATA_OVERRIDE=poison-FM_DATA_OVERRIDE
+FM_PROJECTS_OVERRIDE=poison-FM_PROJECTS_OVERRIDE
+FM_CONFIG_OVERRIDE=poison-FM_CONFIG_OVERRIDE
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label firstmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-ship --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane close w1:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ FM_TASK_ID=live-ship --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 .\ \'/tmp/fm-live-ship+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791282142.744722.21242.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab list --workspace w1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --label fm-live-filtered --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 treehouse\ get --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/2/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-filtered.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p3 export\ FM_TASK_ID=live-filtered --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p3 .\ \'/tmp/fm-live-filtered+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791282148.746375.19973.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p3 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 export\ FM_SNAPSHOT_SCOPED_ENV=1\ FM_CREW_STATE_META_OVERRIDE=poison.meta\ FM_CREW_STATE_STATUS_OVERRIDE=poison.status\ FM_HOME_SUMMARY_IF_IDLE=poison-idle\ FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-worker\ FM_HOME_SUMMARY_PARENT_ERROR=poison-error\ FM_HOME_SUMMARY_PARENT_STAMP=poison-stamp --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 cd\ --\ \'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w1:p2 export\ FM_TASK_ID=live-ship --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w1:p2 .\ \'/tmp/fm-live-ship+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791282151.750812.10674.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w1:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: workspace list --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate --label 2ndmate-live-secondmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: tab list --workspace w2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: tab create --workspace w2 --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate --label fm-live-secondmate --no-focus --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: tab list --workspace w2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: pane list --workspace w2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: agent get w2:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: pane close w2:p1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+HERDR command: pane get w1:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w1:p3 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w2:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane get w2:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w2:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w2:p2 --session fm-lab-e
+FM_ROOT_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime
+FM_STATE_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state
+FM_DATA_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data
+FM_PROJECTS_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects
+FM_CONFIG_OVERRIDE=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p2 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p2 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane read w1:p3 --source recent --lines 200 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: agent get w1:p3 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w2:p2 export\ GOTMPDIR=\'/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-secondmate.tasktmp/gotmp\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane run w2:p2 export\ COMPACT_ADVISER_DISABLE=1 --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-text w2:p2 .\ \'/tmp/fm-live-secondmate+225fc10db929241398488ecab5bc7b61357da0454bee5e18db2b2720920a857b/launch.s1791282153.752403.914.sh\' --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: status --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: pane send-keys w2:p2 enter --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session stop fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+HERDR command: session delete fm-lab-e --json --session fm-lab-e
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home

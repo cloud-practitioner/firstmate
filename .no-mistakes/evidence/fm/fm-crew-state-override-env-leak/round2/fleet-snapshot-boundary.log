@@ -1,0 +1,14 @@
+HERDR command: pane get w1:p1 --session fm-lab-e2
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home
+HERDR command: status --json --session fm-lab-e2
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e2
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home
+HERDR command: status --json --session fm-lab-e2
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home
+HERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e2
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home
+HERDR command: status --json --session fm-lab-e2
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home
+HERDR command: agent get w1:p1 --session fm-lab-e2
+FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home

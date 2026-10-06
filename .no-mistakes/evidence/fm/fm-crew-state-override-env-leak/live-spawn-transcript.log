@@ -1,0 +1,58 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh provision fm-lab-e
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project init -q -b main
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project -c user.name=Lab -c user.email=lab@example.invalid commit --allow-empty -qm fixture
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-brief.sh live-ship fixture --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data/live-ship/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-spawn.sh live-ship /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --mode local-only --yolo off 'python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/probe.py /home/node/.no-mistakes/evidence/01M48AGCET15Z951PCQ4YNDYRJ/live-ship.json /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-crew-state.sh live-ship'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+notice: live-ship ships mode=local-only while the standing posture for spawn-project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+warning: herdr presentation focus lock unavailable; using the ordinary flat layout without projection
+spawned live-ship harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-e:w1:p2 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project
+
+live-ship launched workload environment: {"pid": 746182, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project", "environment": {"FM_ROOT_OVERRIDE": "poison-FM_ROOT_OVERRIDE", "FM_STATE_OVERRIDE": "poison-FM_STATE_OVERRIDE", "FM_DATA_OVERRIDE": "poison-FM_DATA_OVERRIDE", "FM_PROJECTS_OVERRIDE": "poison-FM_PROJECTS_OVERRIDE", "FM_CONFIG_OVERRIDE": "poison-FM_CONFIG_OVERRIDE", "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home", "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-ship.inbox"}, "current_state_with_inherited_environment": {"exit": 0, "output": "state: unknown \u00b7 source: none \u00b7 no metadata for live-ship\n"}, "current_state_without_snapshot_paths": {"exit": 0, "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"}}
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-brief.sh live-filtered fixture --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data/live-filtered/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-spawn.sh live-filtered /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-project --mode local-only --yolo off 'python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/probe.py /home/node/.no-mistakes/evidence/01M48AGCET15Z951PCQ4YNDYRJ/live-filtered.json /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-crew-state.sh live-filtered'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+notice: live-filtered ships mode=local-only while the standing posture for spawn-project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+warning: herdr presentation focus lock unavailable; using the ordinary flat layout without projection
+spawned live-filtered harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-e:w1:p3 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/2/spawn-project
+
+live-filtered launched workload environment: {"pid": 750256, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/2/spawn-project", "environment": {"FM_ROOT_OVERRIDE": "poison-FM_ROOT_OVERRIDE", "FM_STATE_OVERRIDE": "poison-FM_STATE_OVERRIDE", "FM_DATA_OVERRIDE": "poison-FM_DATA_OVERRIDE", "FM_PROJECTS_OVERRIDE": "poison-FM_PROJECTS_OVERRIDE", "FM_CONFIG_OVERRIDE": "poison-FM_CONFIG_OVERRIDE", "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/live-filtered.inbox"}, "current_state_with_inherited_environment": {"exit": 0, "output": "state: unknown \u00b7 source: none \u00b7 no metadata for live-filtered\n"}, "current_state_without_snapshot_paths": {"exit": 0, "output": "state: unknown \u00b7 source: none \u00b7 no metadata for live-filtered\n"}}
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh run fm-lab-e pane send-text w1:p2 'export FM_SNAPSHOT_SCOPED_ENV=1 FM_CREW_STATE_META_OVERRIDE=poison.meta FM_CREW_STATE_STATUS_OVERRIDE=poison.status FM_HOME_SUMMARY_IF_IDLE=poison-idle FM_HOME_SUMMARY_WORKER_BEST_EFFORT=poison-worker FM_HOME_SUMMARY_PARENT_ERROR=poison-error FM_HOME_SUMMARY_PARENT_STAMP=poison-stamp'
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh run fm-lab-e pane send-keys w1:p2 enter
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-spawn.sh live-ship --relaunch --harness 'python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/probe.py /home/node/.no-mistakes/evidence/01M48AGCET15Z951PCQ4YNDYRJ/live-relaunch.json /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-crew-state.sh live-ship'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+notice: live-ship ships mode=local-only while the standing posture for spawn-project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned live-ship harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-e:w1:p2 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate init -q -b main
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate -c user.name=Lab -c user.email=lab@example.invalid commit --allow-empty -qm fixture
+
+$ cp /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/AGENTS.md /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate/AGENTS.md
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-spawn.sh live-secondmate /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate --secondmate 'python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/probe.py /home/node/.no-mistakes/evidence/01M48AGCET15Z951PCQ4YNDYRJ/live-secondmate.json /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime/bin/fm-crew-state.sh live-secondmate'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home
+warning: secondmate live-secondmate sync skipped before launch: primary default-branch commit cannot be resolved
+spawned live-secondmate harness=python3 kind=secondmate mode=secondmate yolo=off window=fm-lab-e:w2:p2 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate
+
+Snapshot path inheritance live-ship: {"FM_ROOT_OVERRIDE": "poison-FM_ROOT_OVERRIDE", "FM_STATE_OVERRIDE": "poison-FM_STATE_OVERRIDE", "FM_DATA_OVERRIDE": "poison-FM_DATA_OVERRIDE", "FM_PROJECTS_OVERRIDE": "poison-FM_PROJECTS_OVERRIDE", "FM_CONFIG_OVERRIDE": "poison-FM_CONFIG_OVERRIDE"}
+Snapshot path inheritance live-filtered: {"FM_ROOT_OVERRIDE": "poison-FM_ROOT_OVERRIDE", "FM_STATE_OVERRIDE": "poison-FM_STATE_OVERRIDE", "FM_DATA_OVERRIDE": "poison-FM_DATA_OVERRIDE", "FM_PROJECTS_OVERRIDE": "poison-FM_PROJECTS_OVERRIDE", "FM_CONFIG_OVERRIDE": "poison-FM_CONFIG_OVERRIDE"}
+Snapshot path inheritance live-relaunch: {"FM_ROOT_OVERRIDE": "poison-FM_ROOT_OVERRIDE", "FM_STATE_OVERRIDE": "poison-FM_STATE_OVERRIDE", "FM_DATA_OVERRIDE": "poison-FM_DATA_OVERRIDE", "FM_PROJECTS_OVERRIDE": "poison-FM_PROJECTS_OVERRIDE", "FM_CONFIG_OVERRIDE": "poison-FM_CONFIG_OVERRIDE"}
+Snapshot path inheritance live-secondmate: {"FM_ROOT_OVERRIDE": "", "FM_STATE_OVERRIDE": "", "FM_DATA_OVERRIDE": "", "FM_PROJECTS_OVERRIDE": "", "FM_CONFIG_OVERRIDE": ""}
+FAIL: AssertionError('Marked snapshot-only path overrides survived launches: {"live-ship": {"FM_ROOT_OVERRIDE": "poison-FM_ROOT_OVERRIDE", "FM_STATE_OVERRIDE": "poison-FM_STATE_OVERRIDE", "FM_DATA_OVERRIDE": "poison-FM_DATA_OVERRIDE", "FM_PROJECTS_OVERRIDE": "poison-FM_PROJECTS_OVERRIDE", "FM_CONFIG_OVERRIDE": "poison-FM_CONFIG_OVERRIDE"}, "live-filtered": {"FM_ROOT_OVERRIDE": "poison-FM_ROOT_OVERRIDE", "FM_STATE_OVERRIDE": "poison-FM_STATE_OVERRIDE", "FM_DATA_OVERRIDE": "poison-FM_DATA_OVERRIDE", "FM_PROJECTS_OVERRIDE": "poison-FM_PROJECTS_OVERRIDE", "FM_CONFIG_OVERRIDE": "poison-FM_CONFIG_OVERRIDE"}, "live-relaunch": {"FM_ROOT_OVERRIDE": "poison-FM_ROOT_OVERRIDE", "FM_STATE_OVERRIDE": "poison-FM_STATE_OVERRIDE", "FM_DATA_OVERRIDE": "poison-FM_DATA_OVERRIDE", "FM_PROJECTS_OVERRIDE": "poison-FM_PROJECTS_OVERRIDE", "FM_CONFIG_OVERRIDE": "poison-FM_CONFIG_OVERRIDE"}}')
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh teardown fm-lab-e

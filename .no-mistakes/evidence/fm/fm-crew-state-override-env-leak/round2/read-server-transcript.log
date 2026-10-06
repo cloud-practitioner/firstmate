@@ -1,0 +1,194 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home
+
+$ bash -c '. .v/baseline/bin/fm-backend.sh; fm_backend_source herdr; fm_backend_herdr_cli "$HERDR_SESSION" server'
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh run fm-lab-e2 workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ --label baseline --no-focus
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d298b3b2bdf1","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"baseline","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh run fm-lab-e2 pane process-info --pane w1:p1
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":953533,"foreground_processes":[{"argv":["/bin/bash"],"cmdline":"/bin/bash","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","name":"bash","pid":953533},{"argv":["/bin/bash"],"cmdline":"/bin/bash","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","name":"bash","pid":953555},{"argv":["dirname","/usr/local/bin/node"],"cmdline":"dirname /usr/local/bin/node","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","name":"dirname","pid":953567}],"pane_id":"w1:p1","shell_pid":953533},"type":"pane_process_info"}}
+
+REPRODUCED: baseline server pane retained snapshot overrides {"pane": "w1:p1", "shell_pid": 953533, "environment": {"FM_CONFIG_OVERRIDE": "planted-FM_CONFIG_OVERRIDE", "FM_CREW_STATE_META_OVERRIDE": "planted-FM_CREW_STATE_META_OVERRIDE", "FM_CREW_STATE_STATUS_OVERRIDE": "planted-FM_CREW_STATE_STATUS_OVERRIDE", "FM_DATA_OVERRIDE": "planted-FM_DATA_OVERRIDE", "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home", "FM_HOME_SUMMARY_IF_IDLE": "planted-FM_HOME_SUMMARY_IF_IDLE", "FM_HOME_SUMMARY_PARENT_ERROR": "planted-FM_HOME_SUMMARY_PARENT_ERROR", "FM_HOME_SUMMARY_PARENT_STAMP": "planted-FM_HOME_SUMMARY_PARENT_STAMP", "FM_HOME_SUMMARY_WORKER_BEST_EFFORT": "planted-FM_HOME_SUMMARY_WORKER_BEST_EFFORT", "FM_PROJECTS_OVERRIDE": "planted-FM_PROJECTS_OVERRIDE", "FM_ROOT_OVERRIDE": "planted-FM_ROOT_OVERRIDE", "FM_SNAPSHOT_SCOPED_ENV": "1", "FM_STATE_OVERRIDE": "planted-FM_STATE_OVERRIDE"}}
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh teardown fm-lab-e2
+
+$ bash -c '. bin/fm-backend.sh; fm_backend_source herdr; fm_backend_herdr_cli "$HERDR_SESSION" server'
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh run fm-lab-e2 workspace create --cwd /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ --label clean --no-focus
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d298b4dc6ea1","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"clean","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh run fm-lab-e2 pane process-info --pane w1:p1
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":954924,"foreground_processes":[{"argv":["/bin/bash"],"cmdline":"/bin/bash","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","name":"bash","pid":954924},{"argv":["/bin/bash"],"cmdline":"/bin/bash","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","name":"bash","pid":954942},{"argv":["/bin/bash"],"cmdline":"/bin/bash","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ","name":"bash","pid":954944}],"pane_id":"w1:p1","shell_pid":954924},"type":"pane_process_info"}}
+
+CURRENT: server descendant has no snapshot overrides {"pane": "w1:p1", "shell_pid": 954924, "environment": {"FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home"}}
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-project init -q -b main
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-project -c user.name=Lab -c user.email=lab@example.invalid commit --allow-empty -qm fixture
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-crew-state.sh captured-task
+state: unknown · source: pane · harness state unavailable (unknown missing)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-crew-state.sh captured-task
+state: unknown · source: pane · harness state unavailable (unknown missing)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-fleet-snapshot.sh --json
+{
+  "schema": "fm-fleet-snapshot.v1",
+  "generated": "2026-10-06T10:34:33Z",
+  "fm_home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home",
+  "roots": {
+    "fm_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ",
+    "state": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home/state",
+    "data": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home/data",
+    "config": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home/config",
+    "projects": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home/projects"
+  },
+  "backlog": {
+    "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home/data/backlog.md",
+    "present": false,
+    "records": []
+  },
+  "tasks": [
+    {
+      "id": "snapshot-task",
+      "kind": "scout",
+      "harness": "claude",
+      "mode": "",
+      "yolo": "",
+      "branch": null,
+      "project": "",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home/state/snapshot-task.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home/state/snapshot-task.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "",
+            "note": "",
+            "raw": "",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-project",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home/data/snapshot-task/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "unknown",
+        "source": "pane",
+        "detail": "harness state unavailable (unknown missing)",
+        "raw": "state: unknown · source: pane · harness state unavailable (unknown missing)",
+        "observed_at": "2026-10-06T10:34:33Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-e2:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-06T10:34:33Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": ""
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-snapshot-task",
+        "steer": "bin/fm-send.sh fm-snapshot-task '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": null
+    }
+  ],
+  "main_inventory": {
+    "valid": true,
+    "reason": null,
+    "orphan_in_flight": [],
+    "unstructured_current_count": 0
+  },
+  "contributions": {
+    "known": 0,
+    "checked": 0,
+    "counts": {
+      "captain": 0,
+      "fleet": 0,
+      "maintainer": 0,
+      "nobody": 0
+    },
+    "unmeasured": 0,
+    "complete": false,
+    "proven_clear": false,
+    "stale_verdicts": 0,
+    "missing_verdicts": 0,
+    "unreadable_records": 1,
+    "valid_until": 900,
+    "captain": [],
+    "captain_omitted": 0
+  },
+  "scout_reports": [],
+  "secondmate_current": {
+    "registry": {
+      "present": false,
+      "available": true,
+      "complete": true,
+      "reason": null,
+      "provenance": "registered-table",
+      "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/read-home/data/secondmates.md",
+      "freshness": {
+        "status": "fresh",
+        "observed_at": "2026-10-06T10:34:33Z"
+      },
+      "records": [],
+      "input_truncated": false,
+      "records_truncated": false,
+      "reasons": [],
+      "lines_in_window": 0,
+      "records_in_window": 0
+    },
+    "records": [],
+    "total_registered": 0,
+    "total": 0,
+    "shown": 0,
+    "truncated": 0
+  },
+  "secondmate_landed": {
+    "records": [],
+    "truncated": [],
+    "unreadable": [],
+    "partial": []
+  },
+  "secondmate_guidance": {
+    "note": "For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority."
+  }
+}
+
+$ bash -c '. bin/fm-backend.sh; fm_backend_source herdr; fm_backend_herdr_cli "$HERDR_SESSION" workspace list'
+{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"clean","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}]}}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh teardown fm-lab-e2

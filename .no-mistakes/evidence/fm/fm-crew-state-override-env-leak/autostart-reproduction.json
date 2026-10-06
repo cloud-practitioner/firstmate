@@ -1,0 +1,10 @@
+{
+  "before": {
+    "crew_state": "state: unknown \u00b7 source: none \u00b7 backend target gone: fm-lab-e:w1:p1\n",
+    "server_running_after_read": false
+  },
+  "after": {
+    "crew_state": "state: unknown \u00b7 source: none \u00b7 backend target gone: fm-lab-e:w1:p1\n",
+    "server_running_after_read": false
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "pid": 1228930,
+  "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/spawn-project-acaec3/1/spawn-project",
+  "environment": {
+    "FM_ROOT_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/runtime",
+    "FM_STATE_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state",
+    "FM_DATA_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/data",
+    "FM_PROJECTS_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/projects",
+    "FM_CONFIG_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/config",
+    "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home",
+    "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/ship-absent.inbox"
+  },
+  "current_state_with_inherited_environment": {
+    "exit": 0,
+    "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+  },
+  "current_state_without_snapshot_paths": {
+    "exit": 0,
+    "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+  }
+}

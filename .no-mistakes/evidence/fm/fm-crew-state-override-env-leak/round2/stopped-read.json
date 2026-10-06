@@ -1,0 +1,45 @@
+{
+  "crew_state": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n",
+  "status_after_read": {
+    "client": {
+      "version": "0.9.3",
+      "channel": "stable",
+      "protocol": 22,
+      "endpoint_protocol_generation": 1,
+      "endpoint_capabilities": [
+        "surface_interest",
+        "presentation_effects_fence",
+        "health_check"
+      ],
+      "remote_host_bridge": true,
+      "remote_bridge_idle_timeout": true,
+      "binary": "/home/node/.local/bin/herdr",
+      "session": "fm-lab-e2"
+    },
+    "server": {
+      "status": "running",
+      "running": true,
+      "version": "0.9.3",
+      "protocol": 22,
+      "capabilities": {
+        "live_handoff": true,
+        "detached_server_daemon": false,
+        "endpoint_protocol_generation": 1,
+        "surface_interest": true,
+        "health_check": true,
+        "ssh_agent_registration": true
+      },
+      "compatible": true,
+      "endpoint_compatible": true,
+      "socket": ".v/herdr/sessions/fm-lab-e2/herdr.sock",
+      "session": "fm-lab-e2",
+      "restart_needed": false,
+      "server_binary_stale": false
+    },
+    "update": {
+      "restart_needed": false,
+      "server_binary_stale": false
+    }
+  },
+  "cli_environment_log": "HERDR command: status --json --session fm-lab-e2\nFM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/stopped-home\nHERDR command: status --json --session fm-lab-e2\nFM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/stopped-home\nHERDR command: server --session fm-lab-e2\nHERDR command: status --json --session fm-lab-e2\nHERDR command: status --json --session fm-lab-e2\nFM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/stopped-home\nHERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e2\nFM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/stopped-home\nHERDR command: status --json --session fm-lab-e2\nFM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/stopped-home\nHERDR command: pane read w1:p1 --source recent --lines 200 --session fm-lab-e2\nFM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/stopped-home\nHERDR command: status --json --session fm-lab-e2\nFM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/stopped-home\nHERDR command: agent get w1:p1 --session fm-lab-e2\nFM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/stopped-home\n"
+}

@@ -1,0 +1,20 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior-home
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh provision fm-lab-e2
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior-project init -q -b main
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior-project -c user.name=Lab -c user.email=lab@example.invalid commit --allow-empty -qm fixture
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior/bin/fm-brief.sh prior-ship fixture --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior-home/data/prior-ship/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior/bin/fm-spawn.sh prior-ship /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior-project --mode local-only --yolo off 'python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/probe.py /home/node/.no-mistakes/evidence/01M48AGCET15Z951PCQ4YNDYRJ/round2/prior-ship.json /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior/bin/fm-crew-state.sh prior-ship'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior-home
+notice: prior-ship ships mode=local-only while the standing posture for prior-project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+warning: herdr presentation focus lock unavailable; using the ordinary flat layout without projection
+spawned prior-ship harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-e2:w1:p2 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/prior-project-9afc4f/1/prior-project
+
+Prior revision actual workload: {"pid": 1246385, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/home/.treehouse/prior-project-9afc4f/1/prior-project", "environment": {"FM_ROOT_OVERRIDE": "prior-poison-FM_ROOT_OVERRIDE", "FM_STATE_OVERRIDE": "prior-poison-FM_STATE_OVERRIDE", "FM_DATA_OVERRIDE": "prior-poison-FM_DATA_OVERRIDE", "FM_PROJECTS_OVERRIDE": "prior-poison-FM_PROJECTS_OVERRIDE", "FM_CONFIG_OVERRIDE": "prior-poison-FM_CONFIG_OVERRIDE", "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior-home", "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/prior-home/state/prior-ship.inbox"}, "current_state_with_inherited_environment": {"exit": 0, "output": "state: unknown \u00b7 source: none \u00b7 no metadata for prior-ship\n"}, "current_state_without_snapshot_paths": {"exit": 0, "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"}}
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/bin/fm-herdr-lab.sh teardown fm-lab-e2

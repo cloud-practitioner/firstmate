@@ -1,0 +1,21 @@
+{
+  "version": "baseline",
+  "watcher_pid": 1111126,
+  "environment": {
+    "FM_PROJECTS_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline/projects",
+    "FM_ROOT_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ",
+    "FM_HOME_SUMMARY_PARENT_ERROR": "watcher-FM_HOME_SUMMARY_PARENT_ERROR",
+    "FM_DATA_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline/data",
+    "FM_CREW_STATE_META_OVERRIDE": "watcher-FM_CREW_STATE_META_OVERRIDE",
+    "FM_HOME_SUMMARY_IF_IDLE": "watcher-FM_HOME_SUMMARY_IF_IDLE",
+    "FM_CREW_STATE_STATUS_OVERRIDE": "watcher-FM_CREW_STATE_STATUS_OVERRIDE",
+    "FM_CONFIG_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline/config",
+    "FM_STATE_OVERRIDE": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline/state",
+    "FM_SNAPSHOT_SCOPED_ENV": "1",
+    "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-baseline",
+    "FM_HOME_SUMMARY_PARENT_STAMP": "watcher-FM_HOME_SUMMARY_PARENT_STAMP",
+    "FM_HOME_SUMMARY_WORKER_BEST_EFFORT": "watcher-FM_HOME_SUMMARY_WORKER_BEST_EFFORT"
+  },
+  "beacon": "",
+  "alive": true
+}

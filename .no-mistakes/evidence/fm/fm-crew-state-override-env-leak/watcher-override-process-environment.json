@@ -1,0 +1,15 @@
+{
+  "watcher_pid": 740031,
+  "environment": {
+    "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/watch-overrides"
+  },
+  "injected_snapshot_names": [
+    "FM_SNAPSHOT_SCOPED_ENV",
+    "FM_CREW_STATE_META_OVERRIDE",
+    "FM_CREW_STATE_STATUS_OVERRIDE",
+    "FM_HOME_SUMMARY_IF_IDLE",
+    "FM_HOME_SUMMARY_WORKER_BEST_EFFORT",
+    "FM_HOME_SUMMARY_PARENT_ERROR",
+    "FM_HOME_SUMMARY_PARENT_STAMP"
+  ]
+}

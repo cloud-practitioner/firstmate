@@ -1,0 +1,21 @@
+{
+  "pid": 1236938,
+  "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate",
+  "environment": {
+    "FM_ROOT_OVERRIDE": "",
+    "FM_STATE_OVERRIDE": "",
+    "FM_DATA_OVERRIDE": "",
+    "FM_PROJECTS_OVERRIDE": "",
+    "FM_CONFIG_OVERRIDE": "",
+    "FM_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/secondmate",
+    "FM_TASK_INBOX": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M48AGCET15Z951PCQ4YNDYRJ/.v/spawn-home/state/secondmate.inbox"
+  },
+  "current_state_with_inherited_environment": {
+    "exit": 0,
+    "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+  },
+  "current_state_without_snapshot_paths": {
+    "exit": 0,
+    "output": "state: unknown \u00b7 source: pane \u00b7 harness state unavailable (unknown missing)\n"
+  }
+}
