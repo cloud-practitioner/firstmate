@@ -299,9 +299,11 @@
 #   real directory owned by this user and writable by nobody else, then
 #   tightens it.
 # Launch environment (config/launch-env-allowlist):
-#   Absent means unchanged ambient inheritance. A present readable regular file
-#   opts every launch (ship, scout, secondmate, raw command, and relaunch) into
-#   /usr/bin/env -i followed by /bin/sh -c of the existing launch command.
+#   Absent means no allowlist filter; bin/fm-snapshot-env-lib.sh owns the
+#   snapshot cleanup applied before either launch path. A present readable
+#   regular file opts every launch (ship, scout, secondmate, raw command, and
+#   relaunch) into /usr/bin/env -i followed by /bin/sh -c of the existing launch
+#   command.
 #   Each line is one POSIX environment name, never a value or shell expression;
 #   blank lines and lines beginning with # are ignored. Invalid input refuses
 #   before launch, as do path inspection errors such as inaccessible config
@@ -321,8 +323,8 @@
 #   An enabled task trace also retains TRACEPARENT. Explicit Firstmate launch
 #   assignments still apply inside the filtered environment, including the
 #   FM_TASK_INBOX export every launch carries (the absolute state/<id>.inbox
-#   path the steering doorbell names). Raw commands must
-#   be POSIX sh compatible under this opt-in; the absent-file path is unchanged.
+#   path the steering doorbell names). Raw commands must be POSIX sh compatible
+#   under this opt-in; without it they retain the destination shell's syntax.
 #   This is an exec environment boundary, not a sandbox for the pane's startup
 #   shell, credential files, same-user processes, or later shell initialization.
 #   See docs/configuration.md for provider/Git setup and supported limits.
@@ -633,6 +635,14 @@ fm_backlog_directory_present "$STATE" "state directory" || {
 . "$SCRIPT_DIR/fm-secondmate-nudge-lib.sh"
 # shellcheck source=bin/fm-backend.sh
 . "$SCRIPT_DIR/fm-backend.sh"
+# shellcheck source=bin/fm-snapshot-env-lib.sh
+. "$SCRIPT_DIR/fm-snapshot-env-lib.sh"
+# Snapshot-scoped variables (FM_CREW_STATE_*_OVERRIDE and friends) are never
+# legitimate for a launched agent, and a backend command here can start a
+# long-lived server that keeps this environment, so a leaked value is cleared
+# before any backend call; the launch command below clears it again for a pane
+# whose own environment already carries one.
+fm_snapshot_env_clear
 # shellcheck source=bin/fm-control-lib.sh
 . "$SCRIPT_DIR/fm-control-lib.sh"
 # shellcheck source=bin/fm-gate-refuse-lib.sh
@@ -5329,6 +5339,9 @@ if [ "$LAUNCH_ENV_ENABLED" = 1 ]; then
   fi
   LAUNCH="$LAUNCH_ENV_PREFIX /bin/sh -c $(shell_quote "$LAUNCH")"
 fi
+# A contaminated pane must clear marked paths before filtering can discard
+# their scope marker, even when an allowlist explicitly retains those paths.
+LAUNCH="$(fm_snapshot_env_unset_command); $LAUNCH"
 # Implement the launch-delivery contract in this script's header. The full
 # home-identity hash isolates equal task ids across homes, and the spawn token in
 # the final filename keeps a buffered source line bound to this incarnation.

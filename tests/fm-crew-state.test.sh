@@ -226,6 +226,9 @@ SH
   cat > "$fb/herdr" <<'SH'
 #!/usr/bin/env bash
 set -u
+# FM_FAKE_HERDR_ENV_LOG records the environment of every herdr invocation, so a
+# test can prove which variables reached the client (and so a server it starts).
+[ -z "${FM_FAKE_HERDR_ENV_LOG:-}" ] || { printf 'CALL %s\n' "$*"; env; } >> "$FM_FAKE_HERDR_ENV_LOG"
 case "${1:-}" in
   status)
     [ "${2:-}" = --json ] && {
@@ -2616,6 +2619,47 @@ test_no_run_herdr_unknown_uses_backend_capture() {
   assert_contains "$out" "source: pane" "herdr native busy -> pane source"
   assert_contains "$out" "herdr-native" "the herdr verdict names its native source"
   pass "herdr's native busy verdict reads working with no record present"
+}
+
+# Regression: fm-fleet-snapshot reads each task through fm-crew-state with its
+# captured records in FM_CREW_STATE_*_OVERRIDE. A herdr call made during that
+# read auto-starts a server when none listens, and that server (and every pane
+# it starts) kept the override, so every later unmodified fm-crew-state read the
+# same stale copy and reported "no metadata". The read must still honor the
+# overrides while no herdr child receives them.
+test_snapshot_override_read_never_reaches_herdr() {
+  command -v jq >/dev/null 2>&1 || { pass "snapshot override herdr strip skipped without jq"; return; }
+  reset_fakes
+  local d; d=$(new_case snapshot-env-leak)
+  make_repo_on_branch "$d/wt" fm/feat-leak
+  make_fakebin "$d" >/dev/null
+  mkdir -p "$d/captured"
+  fm_write_meta "$d/captured/feat-leak.meta" "window=default:w1:p2" "worktree=$d/wt" "kind=ship" \
+    "backend=herdr" "harness=claude"
+  : > "$d/captured/feat-leak.status"
+  FM_FAKE_AXI_STATUS=""
+  FM_FAKE_RUNS_LIST=""
+  FM_FAKE_TMUX_MISSING=1
+  FM_FAKE_HERDR_BUSY=1
+  FM_FAKE_HERDR_AGENT_STATUS=working
+  local envlog="$d/herdr-env.log" out var
+  : > "$envlog"
+  out=$(PATH="$d/fakebin:$PATH" FM_FAKE_HERDR_ENV_LOG="$envlog" \
+    FM_ROOT_OVERRIDE="$ROOT" FM_HOME="$d" FM_SNAPSHOT_SCOPED_ENV=1 \
+    FM_STATE_OVERRIDE="$d/state" FM_DATA_OVERRIDE="$d/data" FM_PROJECTS_OVERRIDE="$d/projects" \
+    FM_CONFIG_OVERRIDE="$d/config" FM_HOME_SUMMARY_IF_IDLE=0 FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1 \
+    FM_CREW_STATE_META_OVERRIDE="$d/captured/feat-leak.meta" \
+    FM_CREW_STATE_STATUS_OVERRIDE="$d/captured/feat-leak.status" \
+    "$CREW_STATE" feat-leak)
+  assert_contains "$out" "state: working" "the snapshot read still honors its captured meta"
+  [ -s "$envlog" ] || fail "the read never reached herdr, so the test proves nothing"
+  for var in FM_SNAPSHOT_SCOPED_ENV FM_CREW_STATE_META_OVERRIDE FM_CREW_STATE_STATUS_OVERRIDE \
+    FM_HOME_SUMMARY_IF_IDLE FM_HOME_SUMMARY_WORKER_BEST_EFFORT FM_ROOT_OVERRIDE FM_STATE_OVERRIDE \
+    FM_DATA_OVERRIDE FM_PROJECTS_OVERRIDE FM_CONFIG_OVERRIDE; do
+    ! grep -q "^$var=" "$envlog" || fail "herdr child received snapshot-scoped $var during the crew-state read"
+  done
+  grep -q "^FM_HOME=$d\$" "$envlog" || fail "the herdr child must keep the legitimate FM_HOME"
+  pass "a snapshot crew-state read honors its overrides but passes none of them to herdr"
 }
 
 # Regression (2026-09 G7 stale-claim incident): a herdr CLI that errors or
@@ -5641,6 +5685,7 @@ test_no_run_launch_prompt_parked_is_not_working
 test_no_run_footer_text_alone_is_not_working
 test_no_run_grok_uses_isolated_fallback
 test_no_run_herdr_unknown_uses_backend_capture
+test_snapshot_override_read_never_reaches_herdr
 test_no_run_herdr_cli_failure_reads_unreachable_not_gone
 test_no_run_herdr_alive_with_failed_read_stays_live
 test_no_run_herdr_husk_dead_still_reads_gone

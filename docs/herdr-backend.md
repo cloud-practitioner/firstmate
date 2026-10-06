@@ -517,14 +517,17 @@ Workspace and tab ids support verification and cleanup but are not inferred from
 ### Named server and session routing
 
 The adapter starts and polls a named server before workspace, tab, pane, or agent calls.
-Every Herdr invocation goes through `fm_backend_herdr_cli`, which sets the environment and passes an explicit trailing `--session <name>`.
+For named-session operations, `fm_backend_herdr_cli` sets `HERDR_SESSION` and passes an explicit trailing `--session <name>`.
 An environment variable alone is not reliable when another Herdr server is running.
+Session discovery and client capability probes bypass that session wrapper, but all adapter Herdr invocations pass through `fm_backend_herdr_exec`.
+[`fm-snapshot-env-lib.sh`](../bin/fm-snapshot-env-lib.sh) owns its snapshot environment isolation contract.
 
 When the selected named server is not running, the adapter launches it without these inherited values:
 
 - Firstmate home and directory overrides.
 - Harness identity markers.
 - The supervision-model override.
+- Snapshot-scoped variables under the [isolation contract](../bin/fm-snapshot-env-lib.sh).
 
 Herdr passes its server startup environment to every later pane, so retaining those values could misroute panes for another Firstmate home or harness.
 An already-running server is reused without restart or environment changes.
