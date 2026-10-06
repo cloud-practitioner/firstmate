@@ -749,13 +749,6 @@ fm_backend_resolve_selector() {  # <raw-target> <state-dir>
 # changing call sites.
 
 # fm_backend_capture: bounded plain-text session capture.
-# fm_backend_endpoint_foreign: succeeds only on positive proof that <target> on
-# <backend> is a pane some other agent or the captain owns, because a recorded
-# herdr id outlived the server that issued it. Only herdr recycles ids this way
-# (docs/herdr-backend.md "Endpoints from a previous session"); every other
-# backend, and every read it cannot prove, answers "not foreign", so this never
-# narrows what a legitimate record may do. The data-plane dispatchers below
-# refuse such a target as absent instead of reading or typing into it.
 fm_backend_endpoint_foreign() {  # <backend> <target> [expected-label]
   local target=$2 session pane
   [ "$1" = herdr ] || return 1
@@ -763,7 +756,11 @@ fm_backend_endpoint_foreign() {  # <backend> <target> [expected-label]
   session=${target%%:*}
   pane=${target#*:}
   [ -n "$session" ] && [ -n "$pane" ] && [ "$pane" != "$target" ] || return 1
-  fm_backend_herdr_endpoint_foreign "$session" "$pane" "${3:-}"
+  if fm_backend_herdr_endpoint_foreign "$session" "$pane" "${3:-}"; then
+    return 0
+  else
+    [ "$?" -ne 1 ]
+  fi
 }
 
 fm_backend_capture() {  # <backend> <target> <lines> [expected-label]
@@ -961,7 +958,7 @@ fm_backend_target_exists() {  # <backend> <target> [expected-label]
       session=${target%%:*}
       pane=${target#*:}
       [ -n "$session" ] && [ -n "$pane" ] && [ "$pane" != "$target" ] || return 1
-      ! fm_backend_herdr_endpoint_foreign "$session" "$pane" "$expected_label" || return 1
+      ! fm_backend_endpoint_foreign herdr "$target" "$expected_label" || return 1
       # fm_backend_herdr_cli (not a raw HERDR_SESSION-only call): verified
       # empirically (docs/herdr-backend.md "Session targeting") that the bare
       # env var alone is NOT reliably honored once another herdr server is
