@@ -3289,8 +3289,8 @@ cleanup_firstmate_home_children() {
           echo "error: herdr session presentation lock is not held for child $child_id; retaining that child's durable identity records and stopping forced cleanup" >&2
           return 1
         fi
-        fm_backend_herdr_kill_serialized "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" "fm-$child_id" 2>/dev/null || true
-        if ! fm_backend_herdr_endpoint_confirmed_gone "$child_t" "fm-$child_id"; then
+        FM_STATE_OVERRIDE="$sub_state" fm_backend_herdr_kill_serialized "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" "fm-$child_id" 2>/dev/null || true
+        if ! FM_STATE_OVERRIDE="$sub_state" fm_backend_herdr_endpoint_confirmed_gone "$child_t" "fm-$child_id"; then
           echo "error: herdr pane $child_t for child $child_id is not confirmed gone; retaining that child's durable identity records and stopping forced cleanup" >&2
           return 1
         fi

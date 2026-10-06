@@ -749,6 +749,13 @@ fm_backend_resolve_selector() {  # <raw-target> <state-dir>
 # changing call sites.
 
 # fm_backend_capture: bounded plain-text session capture.
+fm_backend_endpoint_ready() {
+  if [ "$1" = herdr ]; then
+    fm_backend_herdr_target_ready "$2" || return 1
+  fi
+  ! fm_backend_endpoint_foreign "$@"
+}
+
 fm_backend_endpoint_foreign() {  # <backend> <target> [expected-label]
   local target=$2 session pane
   [ "$1" = herdr ] || return 1
@@ -767,7 +774,7 @@ fm_backend_capture() {  # <backend> <target> <lines> [expected-label]
   local backend=$1
   shift
   fm_backend_source "$backend" || return 1
-  ! fm_backend_endpoint_foreign "$backend" "$1" "${3:-}" || return 1
+  fm_backend_endpoint_ready "$backend" "$1" "${3:-}" || return 1
   case "$backend" in
     tmux) fm_backend_tmux_capture "$@" ;;
     herdr) fm_backend_herdr_capture "$@" ;;
@@ -805,7 +812,7 @@ fm_backend_visible_capture() {  # <backend> <target> [expected-label]
     return 1
   }
   fm_backend_source "$backend" || return 1
-  ! fm_backend_endpoint_foreign "$backend" "$1" "${2:-}" || return 1
+  fm_backend_endpoint_ready "$backend" "$1" "${2:-}" || return 1
   "fm_backend_${backend}_visible_capture" "$@"
 }
 
@@ -814,7 +821,7 @@ fm_backend_send_key() {  # <backend> <target> <key> [expected-label]
   local backend=$1
   shift
   fm_backend_source "$backend" || return 1
-  ! fm_backend_endpoint_foreign "$backend" "$1" "${3:-}" || return 1
+  fm_backend_endpoint_ready "$backend" "$1" "${3:-}" || return 1
   case "$backend" in
     tmux) fm_backend_tmux_send_key "$@" ;;
     herdr) fm_backend_herdr_send_key "$@" ;;
@@ -832,7 +839,7 @@ fm_backend_send_text_submit() {  # <backend> <target> <text> <retries> <enter-sl
   local backend=$1
   shift
   fm_backend_source "$backend" || return 1
-  ! fm_backend_endpoint_foreign "$backend" "$1" "${6:-}" || return 1
+  fm_backend_endpoint_ready "$backend" "$1" "${6:-}" || return 1
   case "$backend" in
     tmux) fm_backend_tmux_send_text_submit "$@" ;;
     herdr) fm_backend_herdr_send_text_submit "$@" ;;
@@ -901,7 +908,7 @@ fm_backend_busy_state() {  # <backend> <target>
   local backend=$1
   shift
   fm_backend_source "$backend" || { printf 'unknown'; return 0; }
-  ! fm_backend_endpoint_foreign "$backend" "$1" || { printf 'unknown'; return 0; }
+  fm_backend_endpoint_ready "$backend" "$1" || { printf 'unknown'; return 0; }
   case "$backend" in
     herdr) fm_backend_herdr_busy_state "$@" ;;
     *) printf 'unknown' ;;
@@ -924,7 +931,7 @@ fm_backend_composer_state() {  # <backend> <target> [expected-label] -> empty|pe
   local backend=$1
   shift
   fm_backend_source "$backend" || { printf 'unknown'; return 0; }
-  ! fm_backend_endpoint_foreign "$backend" "$1" "${2:-}" || { printf 'unknown'; return 0; }
+  fm_backend_endpoint_ready "$backend" "$1" "${2:-}" || { printf 'unknown'; return 0; }
   case "$backend" in
     tmux) fm_tmux_composer_state "$@" ;;
     herdr) fm_backend_herdr_composer_state "$@" ;;

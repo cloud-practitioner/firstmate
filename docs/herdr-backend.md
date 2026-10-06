@@ -747,10 +747,16 @@ A relaunch replaces any previously recorded identity with the newly read value, 
 
 `fm_backend_herdr_endpoint_foreign`, also used by the data-plane dispatcher guard, compares the current process identity whenever a claiming record carries it.
 A mismatch is treated as foreign, regardless of matching cwd or `fm-<id>` label.
-An unreadable identity blocks active operations and closure but reports `unreadable` for liveness unless the pane or server is independently proven gone; it does not authorize a duplicate launch or removal of the task record.
+An unreadable identity blocks active operations and closure but reports `unreadable` for liveness unless the pane or server is independently proven gone; it does not authorize a duplicate launch.
+Removal confirmation still accepts structured `pane_not_found` when process identity cannot be read after a successful close; present or ambiguous panes retain their records.
 A server restart that replaces the pane shell therefore invalidates the binding; a live-handoff that preserves it does not.
 A foreign pane reads `missing` in the recovery-grade view, so the relaunch path can bind a fresh endpoint in the recorded session.
-The guarded capture, key, text, classifier, close, and removal-confirmation paths treat it as absent, and replacement creation does not close a same-label foreign pane as a husk.
+Active capture, key, text, and classifier dispatchers establish server readiness before checking ownership, so restoring a stopped server cannot bypass the check.
+Passive liveness and existence probes do not start the server.
+Task-specific liveness callers pass `fm-<id>` so another task claiming the same address cannot supply their ownership verdict.
+The guarded close and removal-confirmation paths treat a foreign endpoint as absent, and recursive cleanup checks each child in the state directory that owns its record.
+Replacement creation preserves both foreign and unclaimed same-label panes when the task has an identity-bearing record, including on repeated rebinds.
+Spawn passes the owning state directory separately from the home used to label a secondmate's workspace.
 
 **Records without `herdr_process_identity`, whether legacy or newly launched after a failed identity read, use only a best-effort check, not an ownership guarantee.**
 For these records a pane is foreign only when its foreground cwd is outside the recorded worktree and its tab is not labeled `fm-<id>`.

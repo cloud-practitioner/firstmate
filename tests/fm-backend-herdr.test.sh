@@ -5261,8 +5261,16 @@ make_stateful_herdr() {  # <dir> -> echoes fakebin dir
 #!/usr/bin/env bash
 W="${FM_FAKE_WORLD:?}"
 id=${3:-}; key=${id//:/_}
+if [ -e "$W/stopped" ] && [ "${1:-}" != status ] && [ "${1:-}" != server ]; then
+  exit 1
+fi
 case "${1:-} ${2:-}" in
-  "status --json") printf '{"client":{"version":"0.9.3","protocol":22},"server":{"running":true}}\n' ;;
+  "status --json")
+    running=true; [ ! -e "$W/stopped" ] || running=false
+    printf '{"client":{"version":"0.9.3","protocol":22},"server":{"running":%s}}\n' "$running"
+    ;;
+  "server "*) rm -f "$W/stopped" ;;
+  "session list") printf '{"sessions":[{"name":"fmtest","running":true,"socket_path":"%s/fmtest.sock"}]}\n' "$W" ;;
   "pane get") [ -f "$W/pane-$key.json" ] && cat "$W/pane-$key.json" \
     || { printf '{"error":{"code":"pane_not_found"}}\n'; exit 1; } ;;
   "pane process-info") key=${4//:/_}; cat "$W/process-$key.json" ;;
@@ -5273,8 +5281,13 @@ case "${1:-} ${2:-}" in
     || { printf '{"error":{"code":"tab_not_found"}}\n'; exit 1; } ;;
   "agent get") [ -f "$W/agent-$key.json" ] && cat "$W/agent-$key.json" \
     || { printf '{"error":{"code":"agent_not_found"}}\n'; exit 1; } ;;
-  "pane send-text" | "pane send-keys" | "pane run" | "pane close" | "tab close") printf '%s\n' "$*" >> "$W/typed.log" ;;
-  "pane read") printf 'FOREIGN-SCREEN\n' ;;
+  "pane send-text" | "pane send-keys" | "pane run" | "pane close" | "tab close")
+    printf '%s\n' "$*" >> "$W/typed.log"
+    if [ "${FM_FAKE_CLOSE_REMOVES:-0}" = 1 ] && [ "$2" = close ]; then
+      rm -f "$W/pane-$key.json" "$W/process-$key.json" "$W/agent-$key.json"
+    fi
+    ;;
+  "pane read") printf '%s\n' "$*" >> "$W/read.log"; printf 'FOREIGN-SCREEN\n' ;;
 esac
 exit 0
 SH
@@ -5419,6 +5432,12 @@ test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
     identity=$(fm_backend_herdr_pane_process_identity fmtest w1:p2) || fail "cannot bind the replacement process"
     printf 'backend=herdr\nwindow=fmtest:w1:p2\nherdr_process_identity=%s\n' "$identity" > "$state/mine.meta"
     ! fm_backend_herdr_endpoint_foreign fmtest w1:p2 fm-mine || fail "the new binding must authorize the replacement without a label or cwd"
+    printf '{"result":{"tab":{"tab_id":"w1:t3"},"root_pane":{"pane_id":"w1:p3"}}}\n' > "$world/created.json"
+    for label_home in "$dir" "$dir/child-home"; do
+      out=$(FM_HOME="$label_home" FM_STATE_OVERRIDE="$state" fm_backend_herdr_create_task fmtest:w1 fm-mine "$wt") || fail "a later replacement must preserve the unclaimed same-label shell"
+      [ "$out" = 'w1:t3 w1:p3' ] || fail "later recovery did not return its new endpoint"
+      [ ! -s "$world/typed.log" ] || fail "later recovery closed the surviving unclaimed shell"
+    done
     printf '{"result":{"pane":{"pane_id":"w1:p2","tab_id":"w1:t2"}}}\n' > "$world/pane-w1_p2.json"
     rm -f "$world/process-w1_p2.json"
     out=0
@@ -5432,6 +5451,7 @@ test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
     ! fm_backend_herdr_endpoint_confirmed_gone fmtest:w1:p2 fm-mine || fail "an unreadable identity must not authorize record removal"
     rm "$world/pane-w1_p2.json"
     [ "$(fm_backend_agent_state herdr fmtest:w1:p2 fm-mine)" = missing ] || fail "a genuinely absent bound pane must still be missing"
+    fm_backend_herdr_endpoint_confirmed_gone fmtest:w1:p2 fm-mine || fail "structured pane absence must permit removal of an identity-bearing record"
   ) || fail "process-bound endpoint regression failed"
   pass "process-bound endpoints reject same-label other-home agents and same-worktree shells while preserving live processes and replacement bindings"
 }
@@ -5546,6 +5566,135 @@ SH
   pass "Herdr spawn and relaunch deliver their agent launch with legacy ownership fallback when ps fails"
 }
 
+write_ownership_pane() {
+  local world=$1 pane=$2 tab=$3 cwd=$4 label=$5 key=${2//:/_} tab_key=${3//:/_}
+  jq -n --arg pane "$pane" --arg tab "$tab" --arg cwd "$cwd" \
+    '{result:{pane:{pane_id:$pane,tab_id:$tab,foreground_cwd:$cwd,cwd:$cwd}}}' > "$world/pane-$key.json"
+  jq -n --arg tab "$tab" --arg label "$label" \
+    '{result:{tab:{tab_id:$tab,label:$label}}}' > "$world/tab-$tab_key.json"
+  jq -n --arg pane "$pane" \
+    '{result:{type:"pane_process_info",process_info:{pane_id:$pane,shell_pid:42}}}' > "$world/process-$key.json"
+  printf '{"result":{"agent":{"agent":"pi","agent_status":"idle"}}}\n' > "$world/agent-$key.json"
+}
+
+test_active_operations_check_ownership_after_server_restore() {
+  (
+    local dir="$TMP_ROOT/restored-foreign-endpoint" fb world state operation out
+    fb=$(make_stateful_herdr "$dir"); world="$dir/world"; state="$dir/state"
+    mkdir -p "$state"
+    printf 'backend=herdr\nwindow=fmtest:w1:p1\nworktree=%s\n' "$dir/owned" > "$state/mine.meta"
+    write_ownership_pane "$world" w1:p1 w1:t1 "$dir/unrelated" fm-other
+    export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$state" FM_HOME="$dir"
+    . "$ROOT/bin/fm-backend.sh"
+    fm_backend_source herdr
+    fm_backend_herdr_pane_process_state() { printf agent; }
+    for operation in capture visible key text busy composer; do
+      : > "$world/stopped"; : > "$world/typed.log"; : > "$world/read.log"
+      case "$operation" in
+        capture) ! fm_backend_capture herdr fmtest:w1:p1 5 fm-mine || fail "capture reached a restored foreign pane" ;;
+        visible) ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail "visible capture reached a restored foreign pane" ;;
+        key) ! fm_backend_send_key herdr fmtest:w1:p1 C-c fm-mine || fail "interrupt reached a restored foreign pane" ;;
+        text) ! fm_backend_send_text_submit herdr fmtest:w1:p1 exit 1 0 0 fm-mine || fail "text reached a restored foreign pane" ;;
+        busy) out=$(fm_backend_busy_state herdr fmtest:w1:p1); [ "$out" = unknown ] || fail "busy classification trusted a restored foreign pane" ;;
+        composer) out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine); [ "$out" = unknown ] || fail "composer classification trusted a restored foreign pane" ;;
+      esac
+      [ ! -e "$world/stopped" ] || fail "$operation did not establish server readiness before checking ownership"
+      [ ! -s "$world/typed.log" ] && [ ! -s "$world/read.log" ] || fail "$operation used the unrelated restored pane"
+    done
+    write_ownership_pane "$world" w1:p1 w1:t1 "$dir/owned" fm-mine
+    : > "$world/stopped"
+    fm_backend_send_key herdr fmtest:w1:p1 Enter fm-mine || fail "restoring an owned endpoint must still permit input"
+    [ -s "$world/typed.log" ] || fail "owned input was not delivered after restore"
+    : > "$world/stopped"
+    [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = missing ] || fail "passive stopped-server liveness changed"
+    [ -e "$world/stopped" ] || fail "passive liveness started the server"
+  ) || fail "restored endpoint ownership regression failed"
+  pass "every active dispatcher checks restored ownership while passive liveness stays read-only"
+}
+
+test_secondmate_probe_cannot_borrow_another_tasks_binding() {
+  (
+    local dir="$TMP_ROOT/secondmate-claimants" fb world state
+    fb=$(make_stateful_herdr "$dir"); world="$dir/world"; state="$dir/state"
+    mkdir -p "$state"
+    export FM_TEST_REAL_PS="$(command -v ps)"
+    make_process_identity_ps "$fb"
+    write_ownership_pane "$world" w1:p1 w1:t1 "$dir/a" fm-a
+    for id in a b; do
+      printf 'backend=herdr\nwindow=fmtest:w1:p1\nharness=pi\nkind=secondmate\nworktree=%s\n' "$dir/$id" > "$state/$id.meta"
+    done
+    printf 'herdr_process_identity=ps:42:Wed Mar 19 10:11:12 2025\n' >> "$state/a.meta"
+    printf 'herdr_process_identity=ps:42:Tue Mar 19 10:11:12 2024\n' >> "$state/b.meta"
+    export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$state" FM_HOME="$dir"
+    . "$ROOT/bin/fm-secondmate-liveness-lib.sh"
+    fm_backend_source herdr
+    fm_backend_herdr_pane_process_state() { printf agent; }
+    fm_secondmate_liveness_probe "$state/b.meta" b full
+    [ "$FM_SM_LIVE_STATE" = missing ] && [ "$FM_SM_LIVE_STATUS" = relaunchable ] || fail "bootstrap-style recovery borrowed task A's live binding for B"
+    fm_secondmate_liveness_probe "$state/b.meta" b poll
+    [ "$FM_SM_LIVE_STATE" = missing ] && [ "$FM_SM_LIVE_STATUS" = relaunchable ] || fail "watcher-style recovery borrowed task A's live binding for B"
+    fm_secondmate_liveness_probe "$state/a.meta" a full
+    [ "$FM_SM_LIVE_STATE" = alive ] && [ "$FM_SM_LIVE_STATUS" = alive ] || fail "the recovered owner's binding must remain alive"
+    [ "$(fm_backend_agent_alive herdr fmtest:w1:p1 fm-b)" = dead ] || fail "compatibility liveness lost the selected task identity"
+  ) || fail "task-specific secondmate liveness regression failed"
+  pass "bootstrap and watcher secondmate probes cannot borrow another task's live endpoint binding"
+}
+
+test_teardown_uses_descendant_state_and_confirms_closed_bound_panes() {
+  (
+    . "$ROOT/tests/fixtures.sh"
+    local dir fb world home mate nested out scenario
+    for scenario in flat descendants; do
+      dir="$TMP_ROOT/bound-teardown-$scenario"; home="$dir/home"
+      fb=$(make_stateful_herdr "$dir"); world="$dir/world"
+      export FM_TEST_REAL_PS="$(command -v ps)"
+      make_process_identity_ps "$fb"
+      fm_fake_exit0 "$fb" lsof treehouse
+      mkdir -p "$home/state" "$home/data" "$home/config" "$dir/user-home"
+      : > "$world/typed.log"
+      if [ "$scenario" = flat ]; then
+        fm_write_meta "$home/state/mine.meta" backend=herdr window=fmtest:w1:p1 endpoint_task_id=mine \
+          "worktree=$dir/missing-worktree" "project=$dir/missing-project" kind=scout harness=pi \
+          herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t1 herdr_pane_id=w1:p1 \
+          'herdr_process_identity=ps:42:Wed Mar 19 10:11:12 2025'
+        write_ownership_pane "$world" w1:p1 w1:t1 "$dir/missing-worktree" fm-mine
+      else
+        mate="$dir/mate"; nested="$dir/nested"
+        mkdir -p "$mate/state" "$mate/data" "$mate/config" "$nested/state" "$nested/data" "$nested/config"
+        printf 'mine\n' > "$mate/.fm-secondmate-home"
+        printf 'branch\n' > "$nested/.fm-secondmate-home"
+        fm_write_meta "$home/state/mine.meta" backend=herdr window=fmtest:w1:p1 endpoint_task_id=mine \
+          "worktree=$mate" "project=$mate" "home=$mate" kind=secondmate harness=pi mode=secondmate yolo=off \
+          herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t1 herdr_pane_id=w1:p1 \
+          'herdr_process_identity=ps:42:Tue Mar 19 10:11:12 2024'
+        fm_write_meta "$mate/state/branch.meta" backend=herdr window=fmtest:w1:p2 endpoint_task_id=branch \
+          "worktree=$nested" "project=$nested" "home=$nested" kind=secondmate harness=pi mode=secondmate yolo=off \
+          herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t2 herdr_pane_id=w1:p2 \
+          'herdr_process_identity=ps:42:Tue Mar 19 10:11:12 2024'
+        fm_write_meta "$nested/state/leaf.meta" backend=herdr window=fmtest:w1:p3 endpoint_task_id=leaf \
+          "worktree=$dir/missing-worktree" "project=$dir/missing-project" kind=scout harness=pi \
+          herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t3 herdr_pane_id=w1:p3 \
+          'herdr_process_identity=ps:42:Tue Mar 19 10:11:12 2024'
+        for number in 1 2 3; do
+          write_ownership_pane "$world" "w1:p$number" "w1:t$number" "$dir/unrelated" fm-unrelated
+        done
+      fi
+      out=$(FM_HOME="$home" FM_ROOT_OVERRIDE="$home" FM_STATE_OVERRIDE="$home/state" HOME="$dir/user-home" \
+        FM_FAKE_WORLD="$world" FM_FAKE_CLOSE_REMOVES=1 PATH="$fb:$PATH" \
+        "$ROOT/bin/fm-teardown.sh" mine --force 2>&1) || fail "$scenario teardown failed: $out"
+      [ ! -e "$home/state/mine.meta" ] || fail "$scenario teardown retained its completed task record"
+      if [ "$scenario" = flat ]; then
+        [ -s "$world/typed.log" ] && [ ! -e "$world/pane-w1_p1.json" ] || fail "owned teardown never closed its pane"
+      else
+        [ ! -s "$world/typed.log" ] || fail "recursive cleanup closed a foreign pane using the parent's state"
+        [ ! -e "$mate" ] && [ ! -e "$nested" ] || fail "recursive stale records did not finish cleanup"
+        [ -f "$world/pane-w1_p2.json" ] && [ -f "$world/pane-w1_p3.json" ] || fail "recursive cleanup removed unrelated descendants' addresses"
+      fi
+    done
+  ) || fail "bound endpoint teardown regression failed"
+  pass "owned pane closure permits record removal and recursive cleanup respects each descendant's state"
+}
+
 test_dispatch_composer_state_routes_by_backend() {
   # fm_backend_composer_state (the generic per-backend composer/pending-input
   # classifier the away-mode daemon dispatches through - bin/fm-supervise-daemon.sh's
@@ -5563,6 +5712,7 @@ test_dispatch_composer_state_routes_by_backend() {
     _FM_BACKEND_ORCA_SOURCED=1
     _FM_BACKEND_ZELLIJ_SOURCED=1
     fm_tmux_composer_state() { [ "$1" = "sess:win" ] || fail "tmux composer_state got wrong target: $1"; printf 'pending'; }
+    fm_backend_herdr_target_ready() { return 0; }
     fm_backend_herdr_composer_state() { [ "$1" = "default:w1:p2" ] || fail "herdr composer_state got wrong target: $1"; printf 'empty'; }
     fm_backend_orca_composer_state() { [ "$1" = "term-1" ] || fail "orca composer_state got wrong target: $1"; printf 'empty'; }
     fm_backend_zellij_composer_state() { [ "$1" = "sess:7" ] || fail "zellij composer_state got wrong target: $1"; printf 'empty'; }
@@ -6349,6 +6499,9 @@ test_recorded_endpoint_from_a_previous_session_is_never_the_tasks_agent
 test_process_bound_endpoint_rejects_matching_labels_and_worktrees
 test_process_identity_is_portable_and_distinguishes_pid_reuse
 test_spawn_and_relaunch_continue_without_process_identity
+test_active_operations_check_ownership_after_server_restore
+test_secondmate_probe_cannot_borrow_another_tasks_binding
+test_teardown_uses_descendant_state_and_confirms_closed_bound_panes
 test_scripts_route_explicit_target_through_meta_backend
 test_normalize_event_leaves_from_empty
 test_escalation_marker_keys_like_watcher
