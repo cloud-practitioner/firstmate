@@ -313,13 +313,13 @@ fm_control_backend_state_verified() {  # <backend>
 # assignment made here could never reach them.
 #
 # The verdicts:
-#   gone     - absence is PROVEN. There is no endpoint and therefore no agent.
+#   gone     - the task's endpoint is PROVEN absent at its recorded address.
 #   dead     - the endpoint is there after all and holds no agent.
 #   alive    - the endpoint is there and an agent is running in it.
 #   unproven - neither could be established; the caller must refuse.
 #
-# fm_backend_agent_state's `missing` conflates "the endpoint was DESTROYED"
-# with "the endpoint is UNREACHABLE from here right now". An unreachable
+# fm_backend_agent_state's `missing` covers both task-endpoint absence and
+# "the endpoint is UNREACHABLE from here right now". An unreachable
 # endpoint can still hold a live agent on the task's worktree, so every caller
 # that would act on absence - `exit` claiming the agent stopped, `relaunch`
 # re-creating the endpoint - must come through here rather than trusting the
@@ -350,9 +350,8 @@ fm_control_endpoint_absence_verdict() {  # <backend> <target> [expected-label]
       printf 'unproven\ttmux absence cannot be proven from a task record: the record does not carry the endpoint'"'"'s socket identity, and a server-wide window inventory only describes the tmux server this process addresses, so a window absent from it may still be alive on another'
       ;;
     herdr)
-      # Start the RECORDED session's server (only the server - nothing is
-      # created) and re-read the recorded pane. A pane that comes back with the
-      # server was never destroyed.
+      # Start only the RECORDED session's server, then re-read the endpoint
+      # with the task's label so another claimant cannot legitimize its address.
       case "$(fm_backend_herdr_endpoint_absence_recheck "$target" "$label")" in
         dead) printf 'dead\t' ;;
         alive) printf 'alive\t' ;;

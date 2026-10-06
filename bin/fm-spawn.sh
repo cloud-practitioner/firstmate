@@ -62,9 +62,10 @@
 #   worktree and the republished record rebinds the task to it. That proof is
 #   its own step, because a backend's `missing` also covers an endpoint that is
 #   merely unreachable from here - and it is only available on HERDR, which must
-#   still read the recorded pane as gone once that session's server is running
-#   again. A tmux `missing` always refuses: a task record carries no socket
-#   identity for its endpoint, so no read here can tell a destroyed window from
+#   still prove the task's endpoint absent once that session's server is
+#   running again (docs/herdr-backend.md "Endpoints from a previous session").
+#   A tmux `missing` always refuses: a task record carries no socket identity
+#   for its endpoint, so no read here can tell a destroyed window from
 #   one on a tmux server this process cannot address. An endpoint that turns out
 #   to have survived refuses too. The worktree is reused untouched either way; a
 #   rebind is a recovery, never a teardown. Only a crewmate or scout rebinds: a
@@ -1747,35 +1748,11 @@ if [ "$RELAUNCH" -eq 1 ]; then
     echo "error: backend '$BACKEND' has no recovery-grade agent-state classifier, so a relaunch cannot prove the previous agent exited; refusing rather than risking two agents in one endpoint" >&2
     exit 1
   }
-  # Two states are agent-free, and both license a relaunch:
-  #   dead    - the endpoint exists and confidently holds no agent. The
-  #             endpoint is ADOPTED, so the task keeps its exact address.
-  #   missing - the endpoint itself is gone. There is no endpoint AND therefore
-  #             no agent, so a relaunch cannot adopt it: it CREATES a fresh
-  #             endpoint in the recorded worktree and the published record
-  #             rebinds to it.
-  # `missing` is NOT one state, and that is what the duplicate-agent argument
-  # turns on. fm_backend_agent_state's per-backend `missing` conflates "the
-  # endpoint was DESTROYED" with "the endpoint is UNREACHABLE from here right
-  # now", and an unreachable endpoint can still hold the live agent this
-  # relaunch would duplicate. So absence is PROVEN before it may rebind, never
-  # inferred from a failed read - and only HERDR can prove it:
-  #   herdr - the recorded session's server is started, and the recorded pane is
-  #           RE-READ through that session's own socket. `dead` means the pane
-  #           survived the restart and is adopted after all; `alive` means the
-  #           agent came back and refuses; only a second `missing` proves the
-  #           pane itself did not survive.
-  #   tmux  - REFUSES, always. A task record carries no socket identity for its
-  #           endpoint, and a server-wide inventory describes only the server
-  #           this process addresses, so no read available here can tell "gone"
-  #           from "on a server I cannot see". A tmux `missing` therefore stays
-  #           as deadlocked as it was before this change - deliberately, and
-  #           with the reason stated rather than guessed past.
-  # Every transient or self-contradicting read stays `unreadable`/`ambiguous`
-  # and refuses as it always did (bin/fm-backend.sh's fm_backend_agent_state
-  # owns that vocabulary). The proof itself lives in one place for the whole
-  # control plane - fm_control_endpoint_absence_verdict - so `exit` and
-  # `relaunch` cannot reach two different answers about one endpoint.
+  # A failed read is not absence proof: rebinding an unreachable endpoint
+  # could duplicate its live agent. fm_control_endpoint_absence_verdict owns
+  # the shared proof for `exit` and `relaunch`; fm_backend_agent_state owns the
+  # state vocabulary. Keep the task label through both reads so another task
+  # claiming this address cannot authorize adoption.
   RELAUNCH_STATE=$(fm_backend_agent_state "$BACKEND" "$RELAUNCH_TARGET" "fm-$ID")
   if [ "$RELAUNCH_STATE" = missing ]; then
     RELAUNCH_ABSENCE=$(fm_control_endpoint_absence_verdict "$BACKEND" "$RELAUNCH_TARGET" "fm-$ID")

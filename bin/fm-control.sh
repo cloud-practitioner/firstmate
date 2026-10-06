@@ -56,7 +56,8 @@
 #              still exists - on the same or a newly chosen
 #              harness/model/effort - so switching harness is one ordinary use
 #              of this verb. When the recorded endpoint is instead proven gone -
-#              a Herdr pane or workspace destroyed in churn - the launch owner
+#              under Herdr's recorded-endpoint ownership and absence policy
+#              (docs/herdr-backend.md) - the launch owner
 #              re-creates one in that worktree, in the herdr session the record
 #              names, and the task's record rebinds to it; that is how a task
 #              whose terminal was destroyed is reclaimed by the home that owns
