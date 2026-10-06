@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Fixture exports intentionally stay in their subshells; later tests use the
+# unchanged parent environment, not assignments from earlier fixtures.
+# shellcheck disable=SC2030,SC2031
 # tests/fm-backend-herdr.test.sh - fake-herdr-CLI unit tests for the herdr
 # session-provider adapter (bin/backends/herdr.sh), P2 of
 # data/fm-backend-design-d7 (herdr-addendum.md). Mirrors tests/fm-backend.test.sh's
@@ -5428,7 +5431,8 @@ test_process_identity_is_portable_and_distinguishes_pid_reuse() {
     local dir="$TMP_ROOT/process-incarnations" fb world identity changed out
     mkdir -p "$dir"
     fb=$(make_stateful_herdr "$dir"); world="$dir/world"
-    export FM_TEST_REAL_PS="$(command -v ps)"
+    FM_TEST_REAL_PS=$(command -v ps)
+    export FM_TEST_REAL_PS
     make_process_identity_ps "$fb"
     export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_PROC_ROOT_OVERRIDE="$dir/no-proc"
     export FM_FAKE_PROCESS_LSTART='  Wed Mar 19 10:11:12 2025  '
@@ -5462,7 +5466,8 @@ test_spawn_and_relaunch_continue_without_process_identity() {
     fb=$(fm_test_make_spawn_fakebin "$dir/fake" codex)
     layout=$(make_herdr_statefake "$dir/layout")
     cp "$layout/herdr" "$fb/herdr-layout"
-    export FM_TEST_REAL_PS="$(command -v ps)"
+    FM_TEST_REAL_PS=$(command -v ps)
+    export FM_TEST_REAL_PS
     make_process_identity_ps "$fb"
     fm_test_fake_sleep_noop "$fb"
     fm_test_spawn_home "$home" codex
@@ -5537,7 +5542,8 @@ test_projection_abort_cleans_response_owned_pane_despite_stale_record() {
     fb=$(fm_test_make_spawn_fakebin "$dir/fake" codex)
     layout=$(make_herdr_statefake "$dir/layout")
     cp "$layout/herdr" "$fb/herdr-layout"
-    export FM_TEST_REAL_PS="$(command -v ps)"
+    FM_TEST_REAL_PS=$(command -v ps)
+    export FM_TEST_REAL_PS
     make_process_identity_ps "$fb"
     fm_test_fake_sleep_noop "$fb"
     fm_test_spawn_home "$home" codex
@@ -5646,7 +5652,8 @@ test_secondmate_probe_cannot_borrow_another_tasks_binding() {
     local dir="$TMP_ROOT/secondmate-claimants" fb world state
     fb=$(make_stateful_herdr "$dir"); world="$dir/world"; state="$dir/state"
     mkdir -p "$state"
-    export FM_TEST_REAL_PS="$(command -v ps)"
+    FM_TEST_REAL_PS=$(command -v ps)
+    export FM_TEST_REAL_PS
     make_process_identity_ps "$fb"
     write_ownership_pane "$world" w1:p1 w1:t1 "$dir/a" fm-a
     for id in a b; do
@@ -5676,7 +5683,8 @@ test_teardown_uses_descendant_state_and_confirms_closed_bound_panes() {
     for scenario in flat descendants; do
       dir="$TMP_ROOT/bound-teardown-$scenario"; home="$dir/home"
       fb=$(make_stateful_herdr "$dir"); world="$dir/world"
-      export FM_TEST_REAL_PS="$(command -v ps)"
+      FM_TEST_REAL_PS=$(command -v ps)
+      export FM_TEST_REAL_PS
       make_process_identity_ps "$fb"
       fm_fake_exit0 "$fb" lsof treehouse
       mkdir -p "$home/state" "$home/data" "$home/config" "$dir/user-home"
