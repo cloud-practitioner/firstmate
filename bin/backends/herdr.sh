@@ -2582,7 +2582,9 @@ fm_backend_herdr_agent_alive() {  # <target> [expected-label]
 # 4th arg, so this function never even queries for a prune candidate in that
 # case. Echoes "<tab_id> <pane_id>" on success.
 fm_backend_herdr_create_task() {  # <container> <label> <cwd> <seeded_default_tab_id>
-  local container=$1 label=$2 cwd=$3 seeded_tab_id=${4:-} session wsid list dup_tabs dup dup_pane dup_tab_ids out tab_id pane_id remaining_dup_tabs
+  local container=$1 label=$2 cwd=$3 seeded_tab_id=${4:-} session wsid list dup_tabs dup dup_pane dup_tab_ids out tab_id pane_id remaining_dup_tabs task_meta
+  task_meta=
+  case "$label" in fm-?*) task_meta="${FM_STATE_OVERRIDE:-$FM_HOME/state}/${label#fm-}.meta" ;; esac
   session=${container%%:*}
   wsid=${container#*:}
   list=$(fm_backend_herdr_cli "$session" tab list --workspace "$wsid" 2>/dev/null) || return 1
@@ -2595,6 +2597,12 @@ fm_backend_herdr_create_task() {  # <container> <label> <cwd> <seeded_default_ta
     while IFS= read -r dup; do
       [ -n "$dup" ] || continue
       dup_pane=$(fm_backend_herdr_pane_for_tab "$session" "$wsid" "$dup")
+      if [ -n "$dup_pane" ] \
+        && [ "$(fm_backend_herdr_meta_value "$task_meta" backend)" = herdr ] \
+        && [ -n "$(fm_backend_herdr_meta_value "$task_meta" herdr_process_identity)" ] \
+        && [ "$(fm_backend_herdr_meta_value "$task_meta" window)" != "$session:$dup_pane" ]; then
+        continue
+      fi
       if fm_backend_herdr_endpoint_foreign "$session" "$dup_pane" "$label"; then
         continue
       else
@@ -3723,8 +3731,6 @@ fm_backend_herdr_endpoint_confirmed_gone() {  # <target> [expected-label]
   # endpoint is gone, and that pane is not ours to keep the record for.
   if fm_backend_herdr_endpoint_foreign "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" "${2:-}"; then
     return 0
-  else
-    [ "$?" -eq 1 ] || return 1
   fi
   presence=$(fm_backend_herdr_pane_presence_state "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE")
   [ "$presence" = dead ]
