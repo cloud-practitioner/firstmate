@@ -5307,10 +5307,6 @@ test_recorded_endpoint_from_a_previous_session_is_never_the_tasks_agent() {
 }
 
 test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
-  if [ ! -r /proc/sys/kernel/random/boot_id ]; then
-    pass "skip: real process-bound endpoint checks require Linux /proc"
-    return 0
-  fi
   (
     local dir="$TMP_ROOT/process-bound-endpoint" fb world state wt old_pid new_pid identity out
     mkdir -p "$dir"
@@ -5389,38 +5385,114 @@ test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
   pass "process-bound endpoints reject same-label other-home agents and same-worktree shells while preserving live processes and replacement bindings"
 }
 
-test_process_identity_distinguishes_pid_reuse_and_container_incarnations() {
+make_process_identity_ps() {
+  cat > "$1/ps" <<'SH'
+#!/usr/bin/env bash
+case "$*" in
+  '-o lstart= -p '*)
+    [ "${LC_ALL:-}" = C ] && [ "${TZ:-}" = UTC0 ] || exit 1
+    [ "${FM_FAKE_PROCESS_PS_FAIL:-0}" != 1 ] || exit 1
+    printf '%s\n' "${FM_FAKE_PROCESS_LSTART-Wed Mar 19 10:11:12 2025}"
+    ;;
+  *) exec "$FM_TEST_REAL_PS" "$@" ;;
+esac
+SH
+  chmod +x "$1/ps"
+}
+
+test_process_identity_is_portable_and_distinguishes_pid_reuse() {
   (
-    local dir="$TMP_ROOT/process-incarnations" fb world proc identity changed axis
+    local dir="$TMP_ROOT/process-incarnations" fb world identity changed out
     mkdir -p "$dir"
-    fb=$(make_stateful_herdr "$dir"); world="$dir/world"; proc="$dir/proc"
-    mkdir -p "$proc/sys/kernel/random" "$proc/42/ns"
-    export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_PROC_ROOT_OVERRIDE="$proc"
+    fb=$(make_stateful_herdr "$dir"); world="$dir/world"
+    export FM_TEST_REAL_PS="$(command -v ps)"
+    make_process_identity_ps "$fb"
+    export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_PROC_ROOT_OVERRIDE="$dir/no-proc"
+    export FM_FAKE_PROCESS_LSTART='  Wed Mar 19 10:11:12 2025  '
     . "$ROOT/bin/backends/herdr.sh"
     printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":42}}}\n' > "$world/process-w1_p1.json"
-    write_stat() {
-      { printf '42 (%s) S' "$1"; printf ' 1%.0s' {1..18}; printf ' %s\n' "$2"; } > "$proc/42/stat"
-    }
-    for axis in starttime boot namespace; do
-      printf '11111111-1111-1111-1111-111111111111\n' > "$proc/sys/kernel/random/boot_id"
-      ln -s 'pid:[123]' "$proc/42/ns/pid"
-      write_stat 'shell with ) spaces' 100
-      identity=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "could not read kernel identity fixture"
-      write_stat 'execed agent' 100
-      [ "$(fm_backend_herdr_pane_process_identity fmtest w1:p1)" = "$identity" ] || fail "exec must preserve the process identity"
-      case "$axis" in
-        starttime) write_stat 'shell with ) spaces' 200 ;;
-        boot) printf '22222222-2222-2222-2222-222222222222\n' > "$proc/sys/kernel/random/boot_id" ;;
-        namespace) rm "$proc/42/ns/pid"; ln -s 'pid:[456]' "$proc/42/ns/pid" ;;
-      esac
-      changed=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "could not read changed kernel identity fixture"
-      [ "$identity" != "$changed" ] || fail "$axis reuse matched the old process identity"
-      rm "$proc/42/ns/pid"
-    done
+    identity=$(TZ=Pacific/Honolulu fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "portable ps identity read failed without /proc"
+    [ "$identity" = 'ps:42:Wed Mar 19 10:11:12 2025' ] || fail "portable identity did not normalize the ps output"
+    export FM_FAKE_PROCESS_LSTART='Wed Mar 19 10:11:12 2025'
+    [ "$(TZ=Europe/London fm_backend_herdr_pane_process_identity fmtest w1:p1)" = "$identity" ] || fail "timezone or padding changed a live process identity"
+    export FM_FAKE_PROCESS_LSTART='Thu Mar 20 10:11:12 2025'
+    changed=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "could not read changed process start time"
+    [ "$identity" != "$changed" ] || fail "a recycled PID matched its old process start time"
+    export FM_FAKE_PROCESS_LSTART='Wed Mar 19 10:11:12 2025'
+    printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":43}}}\n' > "$world/process-w1_p1.json"
+    changed=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "could not read changed process PID"
+    [ "$identity" != "$changed" ] || fail "different PIDs with the same start time matched"
+    out=$(FM_FAKE_PROCESS_PS_FAIL=1 fm_backend_herdr_pane_process_identity fmtest w1:p1) && fail "a failed ps read must not produce an identity"
+    [ -z "$out" ] || fail "a failed ps read produced partial identity output"
+    ! FM_FAKE_PROCESS_LSTART='' fm_backend_herdr_pane_process_identity fmtest w1:p1 || fail "an empty ps read must not produce an identity"
     printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w9:p9","shell_pid":42}}}\n' > "$world/process-w1_p1.json"
     ! fm_backend_herdr_pane_process_identity fmtest w1:p1 || fail "a response for another pane must not bind"
-  ) || fail "process incarnation regression failed"
-  pass "process identities distinguish recycled PIDs, boots and container PID namespaces"
+  ) || fail "portable process identity regression failed"
+  pass "portable ps identities work without /proc and distinguish process PIDs and start times"
+}
+
+test_spawn_and_relaunch_continue_without_process_identity() {
+  (
+    . "$ROOT/tests/fixtures.sh"
+    local dir="$TMP_ROOT/optional-process-identity" home proj wt fb layout out identity target generation
+    home="$dir/home"; proj="$dir/project"; wt="$dir/wt"
+    fb=$(fm_test_make_spawn_fakebin "$dir/fake" codex)
+    layout=$(make_herdr_statefake "$dir/layout")
+    cp "$layout/herdr" "$fb/herdr-layout"
+    export FM_TEST_REAL_PS="$(command -v ps)"
+    make_process_identity_ps "$fb"
+    fm_test_fake_sleep_noop "$fb"
+    fm_test_spawn_home "$home" codex
+    printf 'off\n' > "$home/config/herdr-presentation-spaces"
+    fm_git_worktree "$proj" "$wt" optional-identity
+    fm_test_spawn_brief "$home" optional-identity
+    export FM_FAKE_HERDR_STATE="$dir/layout/state.json" FM_HERDR_LOG="$dir/herdr.log"
+    export FM_FAKE_LAUNCH_LOG="$dir/launch.log" FM_FAKE_PROCESS_PS_FAIL=1 FM_PROC_ROOT_OVERRIDE="$dir/no-proc"
+    : > "$FM_HERDR_LOG"
+    cat > "$fb/herdr" <<'SH'
+#!/usr/bin/env bash
+case "${1:-} ${2:-}" in
+  'pane get')
+    jq --arg pane "$3" --arg cwd "$FM_FAKE_PANE_PATH" '
+      .tabs[] | select(.pane_id == $pane)
+      | {result:{pane:{pane_id,tab_id,workspace_id,foreground_cwd:$cwd,cwd:$cwd}}}
+    ' "$FM_FAKE_HERDR_STATE"
+    ;;
+  'pane process-info')
+    printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"%s","shell_pid":42}}}\n' "$4"
+    ;;
+  'pane send-text')
+    case "$4" in
+      ". '"*"'")
+        staged=${4#". '"}; staged=${staged%"'"}
+        cat "$staged" > "$FM_FAKE_LAUNCH_LOG"
+        ;;
+    esac
+    ;;
+  'pane run' | 'pane send-keys') exit 0 ;;
+  *) exec "${0%/*}/herdr-layout" "$@" ;;
+esac
+SH
+    chmod +x "$fb/herdr"
+    out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$home" "$wt" "$fb" optional-identity "$proj" --backend herdr --mode no-mistakes --yolo off) || fail "an unavailable identity aborted spawn: $out"
+    [ -s "$FM_FAKE_LAUNCH_LOG" ] || fail "spawn never delivered the staged agent launch"
+    export FM_HOME="$home" FM_STATE_OVERRIDE="$home/state" FM_FAKE_PANE_PATH="$wt" PATH="$fb:$PATH"
+    . "$ROOT/bin/fm-backend.sh"
+    fm_backend_source herdr
+    identity=$(fm_backend_herdr_meta_value "$home/state/optional-identity.meta" herdr_process_identity)
+    [ -z "$identity" ] || fail "spawn must omit an unavailable identity"
+    target=$(fm_backend_target_of_meta "$home/state/optional-identity.meta")
+    generation=$(fm_backend_herdr_meta_value "$home/state/optional-identity.meta" spawn_gen)
+    [ "$(fm_backend_agent_state herdr "$target" fm-optional-identity)" = dead ] || fail "the no-identity record did not retain legacy liveness"
+    fm_backend_send_key herdr "$target" Enter fm-optional-identity || fail "the no-identity record did not retain legacy input"
+    : > "$FM_FAKE_LAUNCH_LOG"
+    out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$home" "$wt" "$fb" optional-identity --relaunch) || fail "an unavailable identity aborted relaunch: $out"
+    [ -s "$FM_FAKE_LAUNCH_LOG" ] || fail "relaunch never delivered the staged agent launch"
+    [ "$(fm_backend_herdr_meta_value "$home/state/optional-identity.meta" herdr_process_identity)" = '' ] || fail "relaunch must omit an unavailable identity"
+    [ "$(fm_backend_target_of_meta "$home/state/optional-identity.meta")" = "$target" ] || fail "legacy relaunch unexpectedly rebound the owned endpoint"
+    [ "$(fm_backend_herdr_meta_value "$home/state/optional-identity.meta" spawn_gen)" != "$generation" ] || fail "relaunch did not republish the task record"
+  ) || fail "optional process identity launch regression failed"
+  pass "Herdr spawn and relaunch deliver their agent launch with legacy ownership fallback when ps fails"
 }
 
 test_dispatch_composer_state_routes_by_backend() {
@@ -6223,7 +6295,8 @@ test_dispatch_busy_state_unknown_for_tmux
 test_dispatch_composer_state_routes_by_backend
 test_recorded_endpoint_from_a_previous_session_is_never_the_tasks_agent
 test_process_bound_endpoint_rejects_matching_labels_and_worktrees
-test_process_identity_distinguishes_pid_reuse_and_container_incarnations
+test_process_identity_is_portable_and_distinguishes_pid_reuse
+test_spawn_and_relaunch_continue_without_process_identity
 test_scripts_route_explicit_target_through_meta_backend
 test_normalize_event_leaves_from_empty
 test_escalation_marker_keys_like_watcher

@@ -732,13 +732,15 @@ Pane ids are per-server counters, so a recorded id can outlive the Herdr server 
 A rebuilt devcontainer starts a fresh session whose ids restart from `w1`, and the surviving task records then name ids that now belong to whatever that session created: another lane's live agent or a plain shell.
 The pane classifier alone would read the first as this task's live agent and the second as its adoptable dead pane.
 
-New Herdr task records carry `herdr_process_identity=proc:<boot-id>:<pid-namespace>:<shell-pid>:<starttime>`.
+Herdr task records carry `herdr_process_identity=ps:<shell-pid>:<start-time>` when the process identity can be read.
 Spawn records it at the shared metadata-publication boundary, including flat and projected spawns, relaunches that adopt a pane, and relaunches that bind a new pane.
-`pane process-info` exposes the pane's persistent `shell_pid`; Linux `/proc/<pid>/stat` field 22 supplies its kernel start time in clock ticks, `/proc/<pid>/ns/pid` identifies its PID namespace, and `/proc/sys/kernel/random/boot_id` distinguishes boots.
+`pane process-info` exposes the pane's persistent `shell_pid`; `ps -o lstart= -p <pid>` supplies its full start date and time on both Linux and macOS/BSD, without requiring `/proc`.
+The read pins `LC_ALL=C` and `TZ=UTC0` and trims surrounding whitespace so the serialized identity has the same meaning regardless of the caller's locale or timezone.
 This binds the pane's root process rather than its changing foreground child: the shell stays alive while its agent runs, including while the agent runs tools, and an exec preserves the process start time.
 A Herdr live-handoff preserves that process and therefore this identity even if Herdr's internal terminal IDs change.
-A container rebuild destroys the old process and creates a new PID namespace and process start time; a reboot also changes the boot ID.
-New bindings require readable Linux `/proc` and refuse when this identity cannot be obtained, rather than silently writing a heuristic-only record on unsupported hosts.
+A container rebuild destroys the old process; a newly launched process has its own PID/start-time pair rather than inheriting ownership from a recycled pane id.
+If the identity cannot be obtained during spawn or relaunch, publication omits the field and launch continues using the same best-effort label-plus-cwd fallback as a legacy record.
+A relaunch replaces any previously recorded identity with the newly read value, or removes it when the new read is unavailable.
 
 `fm_backend_herdr_endpoint_foreign`, also used by the data-plane dispatcher guard, compares the current process identity whenever a claiming record carries it.
 A mismatch is treated as foreign, regardless of matching cwd or `fm-<id>` label.
@@ -747,7 +749,7 @@ A server restart that replaces the pane shell therefore invalidates the binding;
 A foreign pane reads `missing` in the recovery-grade view, so the relaunch path can bind a fresh endpoint in the recorded session.
 The guarded capture, key, text, classifier, close, and removal-confirmation paths treat it as absent, and replacement creation does not close a same-label foreign pane as a husk.
 
-**Legacy records without `herdr_process_identity` retain only a best-effort check, not an ownership guarantee.**
+**Records without `herdr_process_identity`, whether legacy or newly launched after a failed identity read, use only a best-effort check, not an ownership guarantee.**
 For these records a pane is foreign only when its foreground cwd is outside the recorded worktree and its tab is not labeled `fm-<id>`.
 A restart husk keeps its label and a renamed tab keeps its cwd, so neither reads as foreign under that fallback.
 An unrelated task with the same id in another home, or an unrelated shell in the surviving worktree, can pass this legacy check.
@@ -755,7 +757,7 @@ Unreadable legacy panes and records without a worktree are not proof of foreign 
 When the caller has no label, every record in the state directory claiming the exact target is consulted; any matching claimant can allow the operation.
 The guarantee is therefore scoped to the task record selected by the caller and its owning state directory, not ambient or other-home records.
 
-`tests/fm-backend-herdr.test.sh` exercises identity mismatches despite matching labels and worktrees, process-preserving handoffs, fresh process bindings, and the unchanged legacy-record fallback.
+`tests/fm-backend-herdr.test.sh` exercises portable identity reads without `/proc`, identity mismatches despite matching labels and worktrees, process-preserving handoffs, fresh process bindings, and successful spawn/relaunch with the legacy-record fallback when the identity read fails.
 
 ## Agent status authority and relaunch
 

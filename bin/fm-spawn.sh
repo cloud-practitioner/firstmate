@@ -4889,10 +4889,7 @@ fi
 
 HERDR_PROCESS_IDENTITY=
 if [ "$BACKEND" = herdr ]; then
-  HERDR_PROCESS_IDENTITY=$(fm_backend_herdr_pane_process_identity "$HERDR_SES" "$HERDR_PANE_ID") || {
-    echo "error: cannot bind task $ID to its herdr pane process identity; readable Linux /proc is required" >&2
-    exit 1
-  }
+  HERDR_PROCESS_IDENTITY=$(fm_backend_herdr_pane_process_identity "$HERDR_SES" "$HERDR_PANE_ID") || HERDR_PROCESS_IDENTITY=
 fi
 META_WINDOW=$T
 [ "$BACKEND" = orca ] && META_WINDOW=$W
@@ -4948,7 +4945,7 @@ preserve_relaunch_meta() {
     echo "herdr_workspace_id=$HERDR_WORKSPACE_ID"
     echo "herdr_tab_id=$HERDR_TAB_ID"
     echo "herdr_pane_id=$HERDR_PANE_ID"
-    echo "herdr_process_identity=$HERDR_PROCESS_IDENTITY"
+    [ -z "$HERDR_PROCESS_IDENTITY" ] || echo "herdr_process_identity=$HERDR_PROCESS_IDENTITY"
   fi
   if [ "$BACKEND" = zellij ]; then
     echo "zellij_session=$ZELLIJ_SES"
