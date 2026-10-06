@@ -339,6 +339,20 @@
 #   worktree, or record exists and names the accepted values. The file is read
 #   on every spawn and relaunch, so a change reaches the next launch without a
 #   restart, and it is inherited into secondmate homes (bin/fm-config-inherit-lib.sh).
+# Pi tool exclusions (config/crew-pi-exclude-tools):
+#   Opt-in, per home. One Pi tool name or * pattern per line, blank lines and
+#   lines beginning with # ignored, for example mcp__server__writeTool. Every Pi
+#   and pi-signed ship, scout, and relaunch launch from this home then carries
+#   one --exclude-tools '<comma-joined names>', so those tools are hidden from
+#   the worker (MCP tools included). The file is read from this home's config
+#   directory, is never inherited into secondmate homes, and does not apply to
+#   a --secondmate launch, a raw launch command, or any other harness. Absent
+#   means no exclusions. Entries are validated for shape only (letters, digits,
+#   _ . - and *; surrounding whitespace is trimmed; a bare * is refused because
+#   it would hide every tool); Pi cannot list tool names at spawn time, so a
+#   well-formed name Pi does not know is passed through unchecked. A malformed
+#   entry or an unreadable file refuses the spawn before any endpoint, worktree,
+#   or record exists. See docs/configuration.md.
 # Worker account pin (config/claude-account, config/pi-account):
 #   Opt-in. With no file, a Claude or Pi launch is unchanged: Claude still
 #   receives this process's own CLAUDE_CONFIG_DIR when it is set, and Pi the
@@ -365,6 +379,9 @@
 #     __PIAPPROVE__ optional --approve on a seeded Pi/pi-signed secondmate when
 #                  that executable advertises the flag (empty otherwise; session
 #                  trust for the launch cwd only, never a trust.json rewrite)
+#     __PIEXCLUDE__ optional ` --exclude-tools '<names>'` from
+#                  config/crew-pi-exclude-tools on Pi/pi-signed ship and scout
+#                  launches (supplies its own leading space, empty otherwise)
 #     __PIRESUME__ optional relaunch-only `--session <reference>` that keeps a
 #                  Pi replacement on the session the endpoint's runtime already
 #                  reports (relaunch_resume_args below owns it; it supplies its
@@ -1889,6 +1906,33 @@ shell_quote() {
   printf "'"
 }
 
+# pi_exclude_tools_flag <file>: the ` --exclude-tools '<names>'` launch argument
+# for config/crew-pi-exclude-tools (header above), empty when the file is
+# absent or lists nothing. Refuses (non-zero, reason on stderr) on an
+# unreadable file or any malformed entry rather than returning a partial list.
+pi_exclude_tools_flag() {
+  local file=$1 present line names=
+  present=$(fm_config_source_present "$file") || return 1
+  [ "$present" = 1 ] || return 0
+  if [ ! -f "$file" ] || [ ! -r "$file" ]; then
+    echo "error: config/crew-pi-exclude-tools must be a readable regular file" >&2
+    return 1
+  fi
+  while IFS= read -r line || [ -n "$line" ]; do
+    line=${line#"${line%%[![:space:]]*}"}
+    line=${line%"${line##*[![:space:]]}"}
+    case "$line" in
+    '' | '#'*) continue ;;
+    esac
+    if [ -n "${line//[A-Za-z0-9_.*-]/}" ] || [ -z "${line//\*/}" ]; then
+      echo "error: config/crew-pi-exclude-tools has a malformed entry '$line'; expected one tool name or * pattern per line using only letters, digits, _ . - and * (blank lines and # comment lines are allowed), and not a bare *" >&2
+      return 1
+    fi
+    names="${names:+$names,}$line"
+  done <"$file"
+  [ -z "$names" ] || printf ' --exclude-tools %s' "$(shell_quote "$names")"
+}
+
 resolve_pi_executable() {
   local candidate dir
   candidate=$(type -P -- "$1" 2>/dev/null) || return 1
@@ -2074,7 +2118,7 @@ launch_template() {
     ;;
   opencode) printf '%s' 'OPENCODE_CONFIG_CONTENT='\''{"permission":{"*":"allow"}__EFFORTFLAG__}'\'' opencode __MODELFLAG__--prompt "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;
   pi | pi-signed)
-    printf '%s' '__PIBIN____PITUIMODE____PIAPPROVE____PIRESUME__'
+    printf '%s' '__PIBIN____PITUIMODE____PIAPPROVE____PIEXCLUDE____PIRESUME__'
     if [ "$kind" = secondmate ]; then
       printf '%s' ' __MODELFLAG____EFFORTFLAG__-e __PITURNEND__ -e __PIWATCH__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"'
     else
@@ -2349,6 +2393,11 @@ pi | pi-signed)
     PI_APPROVE=' --approve'
   fi
   LAUNCH=${LAUNCH//__PIAPPROVE__/$PI_APPROVE}
+  PI_EXCLUDE=
+  if [ "$KIND" != secondmate ] && [ "$RAW_LAUNCH" = 0 ]; then
+    PI_EXCLUDE=$(pi_exclude_tools_flag "$CONFIG/crew-pi-exclude-tools") || exit 1
+  fi
+  LAUNCH=${LAUNCH//__PIEXCLUDE__/$PI_EXCLUDE}
   LAUNCH="FM_PI_HARNESS=$HARNESS $LAUNCH"
   ;;
 cursor)

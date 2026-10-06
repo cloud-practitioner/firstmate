@@ -847,6 +847,30 @@ test_worker_account_pin_follows_the_relaunch() {
   pass "fm-control relaunch: the replacement follows the home's current worker account pin"
 }
 
+test_pi_exclude_tools_follow_the_relaunch() {
+  local dir out rc id=rl-pi-excl
+  dir=$(new_case pi-exclude "$id")
+  add_ship_task "$dir" "$id" pi
+  printf pi > "$dir/fake/command"
+  printf pi > "$dir/fake/becomes"
+  printf '#!/usr/bin/env bash\nprintf "Options: --tui-mode\\n"\n' > "$dir/fakebin/pi"
+  chmod +x "$dir/fakebin/pi"
+  mkdir -p "$dir/home/config"
+  printf '%s\n' '# hide writes' 'mcp__srv__writeTool' 'mcp__srv__*Admin' > "$dir/home/config/crew-pi-exclude-tools"
+  out=$(run_control "$dir" "$id" relaunch --note "keep exclusions"); rc=$?
+  expect_code 0 "$rc" "a Pi relaunch with exclusions should succeed"$'\n'"$out"
+  assert_contains "$(cat "$dir/fake/literal")" "--exclude-tools 'mcp__srv__writeTool,mcp__srv__*Admin'" \
+    "the relaunched Pi worker must keep the home's tool exclusions"
+  rm "$dir/home/config/crew-pi-exclude-tools"
+  : > "$dir/fake/literal"
+  printf pi > "$dir/fake/command"
+  out=$(run_control "$dir" "$id" relaunch --note "exclusions removed"); rc=$?
+  expect_code 0 "$rc" "a Pi relaunch after the file is removed should succeed"$'\n'"$out"
+  assert_not_contains "$(cat "$dir/fake/literal")" "--exclude-tools" \
+    "a relaunch without the file must launch with no exclusions"
+  pass "fm-control relaunch: a Pi replacement keeps the home's tool exclusions"
+}
+
 test_explicit_model_wins_over_the_recorded_one() {
   local dir out rc
   dir=$(new_case explicit rl7)
@@ -2433,6 +2457,7 @@ test_same_harness_relaunch_keeps_the_profile_axes
 test_native_ultra_relaunch_preserves_profile_and_rejects_before_stop
 test_signed_out_worker_account_pin_refuses_before_stop
 test_worker_account_pin_follows_the_relaunch
+test_pi_exclude_tools_follow_the_relaunch
 test_explicit_model_wins_over_the_recorded_one
 test_relaunch_onto_an_unverified_harness_is_refused
 test_prior_harness_turnend_registry_entry_is_cleared

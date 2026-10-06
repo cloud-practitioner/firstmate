@@ -1116,6 +1116,121 @@ test_pi_approve_probe_omits_unsupported_flag() {
   pass "Pi approve probing omits --approve when help does not advertise it"
 }
 
+# config/crew-pi-exclude-tools: per-home Pi tool exclusions (fm-spawn header).
+write_pi_exclude_file() {  # <home> <line>...
+  local home=$1
+  shift
+  printf '%s\n' "$@" > "$home/config/crew-pi-exclude-tools"
+}
+
+test_pi_exclude_tools_reach_ship_and_scout_launches() {
+  local harness rec id out status launch kindflag
+  for harness in pi pi-signed; do
+    for kindflag in --ship --scout; do
+      id="excl-${harness}-${kindflag#--}-z9a"
+      rec=$(make_spawn_case "excl-${harness}-${kindflag#--}" "$harness" "$id")
+      read_case_record "$rec"
+      write_pi_exclude_file "$HOME_DIR" '# hide the write tools' '' \
+        '  mcp__iqx_jira__editJiraIssue  ' 'mcp__iqx_jira__*Confluence*' 'mcp__other-srv__tool.v2'
+      if [ "$kindflag" = --scout ]; then
+        out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --scout)
+      else
+        out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+      fi
+      status=$?
+      expect_code 0 "$status" "$harness $kindflag spawn with exclusions should succeed"$'\n'"$out"
+      launch=$(cat "$LAUNCH_LOG")
+      assert_contains "$launch" "--exclude-tools 'mcp__iqx_jira__editJiraIssue,mcp__iqx_jira__*Confluence*,mcp__other-srv__tool.v2' " \
+        "$harness $kindflag launch must carry the comma-joined, quoted exclusion list"
+    done
+  done
+  pass "Pi and pi-signed ship and scout launches carry the configured tool exclusions"
+}
+
+test_pi_exclude_tools_absent_empty_and_non_pi() {
+  local rec id out status launch
+  id=excl-absent-z9b
+  rec=$(make_spawn_case excl-absent pi "$id")
+  read_case_record "$rec"
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+  expect_code 0 "$?" "Pi spawn without the file should succeed"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--exclude-tools" "an absent file must add no exclusions"
+
+  id=excl-empty-z9c
+  rec=$(make_spawn_case excl-empty pi "$id")
+  read_case_record "$rec"
+  write_pi_exclude_file "$HOME_DIR" '# nothing yet' ''
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+  expect_code 0 "$?" "Pi spawn with a comment-only file should succeed"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--exclude-tools" "a file with no entries must add no exclusions"
+
+  id=excl-claude-z9d
+  rec=$(make_spawn_case excl-claude claude "$id")
+  read_case_record "$rec"
+  write_pi_exclude_file "$HOME_DIR" 'mcp__srv__writeTool'
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+  status=$?
+  expect_code 0 "$status" "claude spawn with a Pi exclusion file should succeed"$'\n'"$out"
+  launch=$(cat "$LAUNCH_LOG")
+  assert_not_contains "$launch" "--exclude-tools" "non-Pi launches must not receive Pi's exclusion flag"
+  pass "no exclusion flag for an absent or empty file or a non-Pi harness"
+}
+
+test_pi_exclude_tools_malformed_entry_refuses_before_endpoint() {
+  local rec id out status bad n=0
+  for bad in 'two words' 'a,b' 'mcp__srv__tool;rm' '*' '**' 'quote'"'"'d' "mcp__srv__\$X"; do
+    n=$((n + 1))
+    id="excl-bad-$n-z9e"
+    rec=$(make_spawn_case "excl-bad-$n" pi "$id")
+    read_case_record "$rec"
+    write_pi_exclude_file "$HOME_DIR" 'mcp__srv__good' "$bad"
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+    status=$?
+    expect_code 1 "$status" "malformed entry '$bad' must refuse the spawn"
+    assert_contains "$out" "config/crew-pi-exclude-tools has a malformed entry '$bad'" \
+      "the refusal must name the malformed entry '$bad'"
+    [ ! -s "$LAUNCH_LOG" ] || fail "a malformed exclusion entry '$bad' still launched a worker"
+    [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "a malformed exclusion entry '$bad' still wrote a task record"
+  done
+  pass "a malformed exclusion entry refuses the spawn before any launch or record"
+}
+
+test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates() {
+  local rec_a rec_b id_a id_b launch sm out status
+  id_a=excl-home-a-z9f
+  id_b=excl-home-b-z9g
+  rec_a=$(make_spawn_case excl-home-a pi "$id_a")
+  read_case_record "$rec_a"
+  write_pi_exclude_file "$HOME_DIR" 'mcp__srv__writeTool'
+  run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_a" "$PROJ_DIR" >/dev/null
+  expect_code 0 "$?" "home A spawn should succeed"
+  assert_contains "$(cat "$LAUNCH_LOG")" "--exclude-tools 'mcp__srv__writeTool'" "home A lost its own exclusions"
+
+  # A second home running the same code, with no file of its own, inherits nothing.
+  rec_b=$(make_spawn_case excl-home-b pi "$id_b")
+  read_case_record "$rec_b"
+  run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_b" "$PROJ_DIR" >/dev/null
+  expect_code 0 "$?" "home B spawn should succeed"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--exclude-tools" "home B must not inherit home A's exclusions"
+
+  # A seeded secondmate agent is unaffected even in the home that has the file.
+  id_a=excl-sm-z9h
+  rec_a=$(make_spawn_case excl-sm codex "$id_a")
+  read_case_record "$rec_a"
+  printf '%s\n' pi > "$HOME_DIR/config/secondmate-harness"
+  write_pi_exclude_file "$HOME_DIR" 'mcp__srv__writeTool'
+  sm="$CASE_DIR/secondmate-home"
+  make_seeded_secondmate_home "$sm" "$id_a"
+  sm=$(cd "$sm" && pwd -P)
+  out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_a" "$sm" --secondmate)
+  status=$?
+  expect_code 0 "$status" "Pi secondmate spawn should succeed"$'\n'"$out"
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" "fm-primary-turnend-guard.ts" "secondmate launch was not the Pi secondmate shape"
+  assert_not_contains "$launch" "--exclude-tools" "a secondmate's own agent must not receive the worker exclusions"
+  pass "exclusions stay in the home that configured them and skip secondmate agents"
+}
+
 test_batch_forwards_shared_profile_flags() {
   local rec id1 id2 out status
   id1=profile-batch-a-z9
@@ -1931,6 +2046,10 @@ test_pi_signed_persistent_secondmate_uses_pi_extensions_and_identity
 test_pi_seeded_secondmate_preapproves_project_trust
 test_pi_worker_launch_omits_seeded_home_approve
 test_pi_approve_probe_omits_unsupported_flag
+test_pi_exclude_tools_reach_ship_and_scout_launches
+test_pi_exclude_tools_absent_empty_and_non_pi
+test_pi_exclude_tools_malformed_entry_refuses_before_endpoint
+test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates
 test_batch_forwards_shared_profile_flags
 test_claude_forwards_firstmate_config_dir_when_set
 test_lavish_server_address_is_exported_to_worker_launch

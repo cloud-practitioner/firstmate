@@ -9,7 +9,7 @@ Start with the directory layout, then use the setting reference for the behavior
 | --- | --- |
 | Firstmate's code, private files, or project location | [FM_HOME](#fm_home) and [operational home layout](#operational-home-layout-and-state) |
 | Task windows and worker tools | [Runtime backend](#runtime-backend-configbackend--fm_backend) and [harness support](#harness-support) |
-| Worker permissions, accounts, or environment | [Claude permission mode](#claude-permission-mode-configclaude-permission-mode), [worker account pin](#worker-account-pin-configclaude-account-configpi-account), and [worker launch environment](#worker-launch-environment-configlaunch-env-allowlist) |
+| Worker permissions, accounts, or environment | [Claude permission mode](#claude-permission-mode-configclaude-permission-mode), [worker account pin](#worker-account-pin-configclaude-account-configpi-account), [Pi tool exclusions](#pi-tool-exclusions-configcrew-pi-exclude-tools), and [worker launch environment](#worker-launch-environment-configlaunch-env-allowlist) |
 | Backlog, preferences, and memory | [Backlog backend](#backlog-backend-taskstoml--configbacklog-backend), [captain preferences](#captain-preferences-datacaptainmd--datacaptain-sharedmd), and [startup memory budget](#startup-memory-budget-configstartup-memory-budget) |
 | Supervision and presentation | [Pi supervision branch](#pi-supervision-branch), [supervision host](#supervision-host-configsupervision-host), and [Calm preference](#calm-preference-configcalm) |
 | Persistent secondmates | [Secondmate routes](#secondmate-routes-datasecondmatesmd) |
@@ -842,6 +842,28 @@ The diagnostic names the accepted values; Firstmate never falls back to a permis
 The file is a captain-wide safety preference, so it is inherited into secondmate homes under the [`secondmate-provisioning`](../.agents/skills/secondmate-provisioning/SKILL.md) inherited-local-material contract; a secondmate's own Claude crewmates then launch on the same posture.
 
 The [Claude adapter reference](../.agents/skills/harness-adapters/references/harness/claude.md) records the permission-mode observations and the distinct startup dialogs.
+
+## Pi tool exclusions (config/crew-pi-exclude-tools)
+
+The optional local, gitignored `config/crew-pi-exclude-tools` hides named tools from this home's Pi workers, for example to keep an MCP server's write tools out of reach while its read tools stay available.
+With no file, every launch is unchanged.
+
+Create the file with one Pi tool name or `*` pattern per line, such as `mcp__<server>__<tool>` for an MCP tool.
+Blank lines and lines beginning with `#` are allowed, and surrounding whitespace on a line is trimmed; a trailing comment on an entry line is not allowed.
+`bin/fm-spawn.sh` joins the entries into one `--exclude-tools '<name>,<name>'` argument, which Pi applies to every tool it loads, MCP tools included.
+
+The file is read from this home's own configuration directory on every launch, so a change reaches the next worker or relaunch without a restart.
+It applies to every `pi` and `pi-signed` ship and scout spawn and to `fm-control.sh relaunch`, so a relaunched worker keeps its exclusions.
+It is not in the inherited configuration set, so no other home, including a secondmate home, receives it; create the file in each home that wants it.
+It does not apply to a secondmate's own agent, to a raw launch command, or to any other harness, whose tool filters are out of scope.
+
+### Validation
+
+An entry may use only letters, digits, `_`, `.`, `-`, and `*`, and a bare `*` is refused because it would hide every tool.
+An entry with any other character, including interior whitespace or a comma, or an unreadable or nonregular file, refuses the spawn before any worker endpoint, local copy, or task record exists, and names the offending entry; Firstmate never launches with a partial list.
+Pi cannot list its tool names at spawn time, so validation checks the shape of each name only: a well-formed name Pi does not know is passed through and simply matches nothing, which makes a misspelled name a silent no-op worth confirming in a launched worker.
+
+[`bin/fm-spawn.sh`](../bin/fm-spawn.sh)'s header owns the launch mechanics.
 
 ## Worker account pin (config/claude-account, config/pi-account)
 
