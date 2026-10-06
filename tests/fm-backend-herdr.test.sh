@@ -5193,6 +5193,115 @@ test_dispatch_busy_state_unknown_for_tmux() {
   pass "fm_backend_busy_state: tmux (no native primitive) always reports unknown, preserving the P1 regex-only path"
 }
 
+# --- recorded endpoints that outlive their herdr session ---------------------
+#
+# Herdr pane ids are per-server counters, so after a devcontainer rebuild a
+# fresh session reuses w1, w2, ... while surviving task records still name the
+# old ids. The recorded id then belongs to whatever the new session put there:
+# another lane's live agent, or a plain shell. The classifier used to read the
+# pane alone, so a foreign live agent read `alive` (steered, never relaunched)
+# and a foreign shell read `dead` (adopted, so a relaunch typed into it).
+# This stateful fake serves each pane, tab and agent from fixture files, so one
+# world can hold the task's own pane and an alias at the recorded id.
+make_stateful_herdr() {  # <dir> -> echoes fakebin dir
+  local dir=$1 fb="$1/fakebin"
+  mkdir -p "$fb" "$dir/world"
+  cat > "$fb/herdr" <<'SH'
+#!/usr/bin/env bash
+W="${FM_FAKE_WORLD:?}"
+id=${3:-}; key=${id//:/_}
+case "${1:-} ${2:-}" in
+  "status --json") printf '{"client":{"version":"0.9.3","protocol":22},"server":{"running":true}}\n' ;;
+  "pane get") [ -f "$W/pane-$key.json" ] && cat "$W/pane-$key.json" \
+    || { printf '{"error":{"code":"pane_not_found"}}\n'; exit 1; } ;;
+  "tab get") [ -f "$W/tab-$key.json" ] && cat "$W/tab-$key.json" \
+    || { printf '{"error":{"code":"tab_not_found"}}\n'; exit 1; } ;;
+  "agent get") [ -f "$W/agent-$key.json" ] && cat "$W/agent-$key.json" \
+    || { printf '{"error":{"code":"agent_not_found"}}\n'; exit 1; } ;;
+  "pane send-text" | "pane send-keys" | "pane run" | "pane close") printf '%s\n' "$*" >> "$W/typed.log" ;;
+  "pane read") printf 'FOREIGN-SCREEN\n' ;;
+esac
+exit 0
+SH
+  chmod +x "$fb/herdr"
+  printf '%s\n' "$fb"
+}
+
+test_recorded_endpoint_from_a_previous_session_is_never_the_tasks_agent() {
+  local dir="$TMP_ROOT/foreign-endpoint" fb world state out wt
+  mkdir -p "$dir"
+  fb=$(make_stateful_herdr "$dir")
+  world="$dir/world"; state="$dir/state"; wt="$dir/wt/mine"
+  mkdir -p "$state" "$wt"
+  # Task `mine` recorded w1:p1 in the previous session.
+  printf 'backend=herdr\nwindow=fmtest:w1:p1\nworktree=%s\n' "$wt" > "$state/mine.meta"
+  # A second record that names a different pane must never influence w1:p1.
+  printf 'backend=herdr\nwindow=fmtest:w2:p1\nworktree=%s\n' "$wt" > "$state/other.meta"
+
+  alias_world() {  # <cwd> <tab-label> <agent-json|->
+    printf '{"result":{"pane":{"pane_id":"w1:p1","tab_id":"w1:t1","foreground_cwd":"%s","cwd":"%s"}}}\n' "$1" "$1" > "$world/pane-w1_p1.json"
+    printf '{"result":{"tab":{"tab_id":"w1:t1","label":"%s"}}}\n' "$2" > "$world/tab-w1_t1.json"
+    rm -f "$world/agent-w1_p1.json"
+    [ "$3" = - ] || printf '%s\n' "$3" > "$world/agent-w1_p1.json"
+    : > "$world/typed.log"
+  }
+  probe() {  # <expected-label|-> -> "<agent_state> <backend agent_state> <target_exists> <capture> <send>"
+    local label=$1
+    [ "$label" != - ] || label=
+    PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$state" FM_HOME="$dir" \
+      FM_BACKEND_HERDR_IDLE_SHELL_PROOF_POLLS=1 bash -c '
+        . "$0/bin/fm-backend.sh"
+        fm_backend_source herdr
+        fm_backend_herdr_pane_process_state() { printf agent; }
+        label=$1
+        printf "%s " "$(fm_backend_agent_state herdr fmtest:w1:p1 "$label")"
+        fm_backend_target_exists herdr fmtest:w1:p1 "$label" && printf "exists " || printf "gone "
+        [ -z "$(fm_backend_capture herdr fmtest:w1:p1 5 "$label")" ] && printf "no-read " || printf "READ "
+        fm_backend_send_key herdr fmtest:w1:p1 Enter "$label" && printf "SENT" || printf "refused"
+        fm_backend_herdr_kill_serialized fmtest w1:p1 "$label"
+        fm_backend_herdr_endpoint_confirmed_gone fmtest:w1:p1 "$label" && printf " confirmed-gone" || printf " present"
+      ' "$ROOT" "$label"
+  }
+  local live='{"result":{"agent":{"agent":"pi","agent_status":"idle"}}}'
+
+  # 1. A pane in another workspace running another lane's live Pi.
+  alias_world "$dir/wt/other" "fm-other" "$live"
+  out=$(probe fm-mine)
+  [ "$out" = "missing gone no-read refused confirmed-gone" ] \
+    || fail "a foreign live agent at the recorded id must read missing, absent, unread and unsteered; got '$out'"
+  [ ! -s "$world/typed.log" ] || fail "nothing may be typed into or closed on a foreign pane: $(cat "$world/typed.log")"
+  out=$(probe -)
+  case "$out" in "missing gone no-read refused"*) ;; *) fail "the same must hold when the caller supplies no label (record lookup), got '$out'" ;; esac
+
+  # 2. A captain's plain shell at the recorded id: agent-free, but still not the task's.
+  alias_world "$dir/elsewhere" "1" -
+  out=$(probe fm-mine)
+  case "$out" in "missing gone no-read refused"*) ;; *) fail "a foreign agent-less shell must read missing (so recovery rebinds instead of adopting it), got '$out'" ;; esac
+  [ ! -s "$world/typed.log" ] || fail "nothing may be typed into or closed on a foreign shell: $(cat "$world/typed.log")"
+
+  # 3. The task's own pane is untouched by the check: cwd in the worktree.
+  alias_world "$wt" "fm-mine" "$live"
+  out=$(probe fm-mine)
+  case "$out" in "alive exists READ"*) ;; *) fail "the task's own live pane must still read alive and readable, got '$out'" ;; esac
+
+  # 4. Old record, restored husk after a server restart: label survives, cwd differs.
+  alias_world "$dir/saved-cwd" "fm-mine" -
+  out=$(probe fm-mine)
+  case "$out" in "dead exists"*) ;; *) fail "a restart husk (same label) must stay an adoptable dead pane, got '$out'" ;; esac
+
+  # 5. A renamed tab whose agent still runs in the worktree is not foreign.
+  alias_world "$wt" "renamed" "$live"
+  out=$(probe fm-mine)
+  case "$out" in "alive exists"*) ;; *) fail "a renamed tab still running in the worktree must stay alive, got '$out'" ;; esac
+
+  # 6. A record with no worktree or no matching claim proves nothing: unchanged behavior.
+  alias_world "$dir/wt/other" "fm-other" "$live"
+  rm -f "$state/mine.meta"
+  out=$(probe -)
+  case "$out" in "alive exists READ"*) ;; *) fail "with no record claiming the target nothing may be judged foreign, got '$out'" ;; esac
+  pass "herdr recorded endpoint from a previous session: a foreign live agent or shell at the id is missing, unread, unsteered and unclosed; the task's own, restored, and renamed panes are unchanged"
+}
+
 test_dispatch_composer_state_routes_by_backend() {
   # fm_backend_composer_state (the generic per-backend composer/pending-input
   # classifier the away-mode daemon dispatches through - bin/fm-supervise-daemon.sh's
@@ -5991,6 +6100,7 @@ test_send_text_submit_non_claude_skips_the_payload_proof
 test_dispatch_routes_herdr_backend
 test_dispatch_busy_state_unknown_for_tmux
 test_dispatch_composer_state_routes_by_backend
+test_recorded_endpoint_from_a_previous_session_is_never_the_tasks_agent
 test_scripts_route_explicit_target_through_meta_backend
 test_normalize_event_leaves_from_empty
 test_escalation_marker_keys_like_watcher
