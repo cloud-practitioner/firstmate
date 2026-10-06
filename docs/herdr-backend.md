@@ -366,7 +366,7 @@ Before any recovery mutation, Firstmate holds both the task spawn lock and the n
 A concurrent recovery on the same session holds that lock through its whole relaunch, so recovery waits up to 120 seconds for it instead of the ordinary five-second spawn wait.
 A holder that keeps the lock past that bound counts as stuck, and recovery refuses the resume before any Herdr mutation.
 
-A same-identity version 2 binding may replace one exact agent-free restart husk in place.
+A same-identity version 2 binding may replace one exact agent-free restart husk in place only when the [recorded-endpoint ownership policy](#endpoints-from-a-previous-session) permits closing that pane.
 A husk is a restored same-labeled tab with a missing pane or no registered agent, as [Restart and liveness behavior](#restart-and-liveness-behavior) describes.
 The replacement is allowed only when all of these agree:
 
@@ -474,7 +474,7 @@ Any of these preserves the candidate and lets session startup continue with at m
 
 | Test | What it covers |
 | --- | --- |
-| `tests/fm-backend-herdr-presentation-e2e.test.sh` | Multi-home ordering, concurrency, lock contention, legacy coexistence, focus preservation, exact same-identity restart replacement, ambiguous bindings and tokens, and exact-pane cleanup through the guarded lab path. |
+| `tests/fm-backend-herdr-presentation-e2e.test.sh` | Multi-home ordering, concurrency, lock contention, legacy coexistence, focus preservation, process-bound restart refusal, exact restart replacement for legacy records, ambiguous bindings and tokens, and exact-pane cleanup through the guarded lab path. |
 | `tests/fm-herdr-session-cleanup.test.sh` | Every discovery, ownership, topology, process, locking, revalidation, focus, retirement, and continue-on-error boundary. |
 | `tests/fm-herdr-session-cleanup-e2e.test.sh` | The restored-shell cleanup in a guarded non-default named lab. |
 | `tests/fm-backend-herdr-focus-flash-e2e.test.sh` | Reproduces the raw explicit-close focus steal on the installed release, and proves the focus-safe emptying-close plan removes a doomed workspace with no wrong-focus interval. |
@@ -735,7 +735,7 @@ Idle secondmates remain exempt from stale-pane escalation.
 ### Endpoints from a previous session
 
 Pane ids are per-server counters, so a recorded id can outlive the Herdr server that issued it.
-A rebuilt devcontainer starts a fresh session whose ids restart from `w1`, and the surviving task records then name ids that now belong to whatever that session created: another lane's live agent or a plain shell.
+When a devcontainer rebuild drops Herdr's session state, the fresh session's ids restart from `w1`, and surviving task records can name ids now belonging to another lane's live agent or a plain shell.
 The pane classifier alone would read the first as this task's live agent and the second as its adoptable dead pane.
 
 Herdr task records carry `herdr_process_identity=ps:<shell-pid>:<start-time>` when the process identity can be read.

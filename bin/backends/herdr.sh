@@ -21,9 +21,8 @@
 # workspace is a non-authoritative visual projection containing only the normal
 # task pane. Its random token and mutable label never authorize lookup,
 # adoption, reuse, closure, deletion, task ownership, or endpoint selection.
-# A version 2 journal can participate in replacing only its exact same-identity
-# endpoint after metadata, home, session, workspace, tab, pane, parent, shape,
-# focus, and agent-absence checks all agree under the session lock.
+# docs/herdr-backend.md "Restart recovery" owns the checks that permit a
+# version 2 journal to participate in exact endpoint replacement.
 # Every ambiguous recovered launch uses the default flat home workspace when
 # duplicate-agent risk is independently absent.
 # Target resolution stays parallel to the tmux adapter in both layouts.
@@ -144,8 +143,8 @@ FM_BACKEND_HERDR_SECONDMATE_MARKER=".fm-secondmate-home"
 # A per-task journal lives under state/ as <id>.herdr-presentation.
 # Version 1 records only the attempted projection's random correlator.
 # Version 2 additionally binds the successful projection's exact home,
-# session, workspace, tab, pane, parent, and presentation labels so a resumed
-# spawn can replace one verified agent-free husk under the session lock.
+# session, workspace, tab, pane, parent, and presentation labels; replacement
+# eligibility is owned by docs/herdr-backend.md "Restart recovery".
 # No send, capture, Treehouse, or general task-ownership path reads it.
 FM_BACKEND_HERDR_PRESENTATION_JOURNAL_SUFFIX=".herdr-presentation"
 

@@ -1379,7 +1379,7 @@ HERDR_LAB_HELPER=bin/fm-herdr-lab.sh \
   tests/fm-backend-herdr-presentation-e2e.test.sh
 ```
 
-Observed restart-reclaim guarantees:
+Observed restart-reclaim guarantees for records without a process binding (see the current [recorded-endpoint ownership policy](../herdr-backend.md#endpoints-from-a-previous-session)):
 
 ```text
 ok - real Herdr lab: Hi Bit and Wheelhouse-style same-identity restarts reclaim one nested space with exact focus and idempotence
