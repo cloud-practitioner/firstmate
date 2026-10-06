@@ -5384,6 +5384,9 @@ test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
     . "$ROOT/bin/fm-backend.sh"
     fm_backend_source herdr
     fm_backend_herdr_pane_process_state() { printf agent; }
+    fm_backend_herdr_projection_focus_snapshot() { printf 'w9\tw9:t1'; }
+    fm_backend_herdr_projection_focus_restore() { return 0; }
+    fm_backend_herdr_projection_target_tab_mutation_allowed() { return 0; }
 
     printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":%s}}}\n' "$old_pid" > "$world/process-w1_p1.json"
     identity=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "cannot read the original pane process identity"
@@ -5416,7 +5419,7 @@ test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
         [ "$(fm_backend_composer_state herdr fmtest:w1:p1 "$label")" = unknown ] || fail "composer classification must not read another process"
         fm_backend_herdr_kill_serialized fmtest w1:p1 "$label"
         fm_backend_herdr_endpoint_confirmed_gone fmtest:w1:p1 "$label" || fail "the foreign endpoint must count as gone for the task"
-        ! fm_backend_herdr_projection_close_pane_focus_preserving fmtest w1:p1 || fail "projection cleanup must not close a foreign endpoint"
+        ! fm_backend_herdr_projection_close_pane_focus_preserving fmtest w1:p1 "" fm-mine || fail "recorded projection cleanup must not close a foreign endpoint"
       done
       [ ! -s "$world/typed.log" ] || fail "input or closure reached an unrelated process"
     done
@@ -5575,6 +5578,83 @@ write_ownership_pane() {
   jq -n --arg pane "$pane" \
     '{result:{type:"pane_process_info",process_info:{pane_id:$pane,shell_pid:42}}}' > "$world/process-$key.json"
   printf '{"result":{"agent":{"agent":"pi","agent_status":"idle"}}}\n' > "$world/agent-$key.json"
+}
+
+test_projection_abort_cleans_response_owned_pane_despite_stale_record() {
+  (
+    . "$ROOT/tests/fixtures.sh"
+    local dir="$TMP_ROOT/response-owned-projection" home proj fb layout out
+    home="$dir/home"; proj="$dir/project"
+    fb=$(fm_test_make_spawn_fakebin "$dir/fake" codex)
+    layout=$(make_herdr_statefake "$dir/layout")
+    cp "$layout/herdr" "$fb/herdr-layout"
+    export FM_TEST_REAL_PS="$(command -v ps)"
+    make_process_identity_ps "$fb"
+    fm_test_fake_sleep_noop "$fb"
+    fm_test_spawn_home "$home" codex
+    printf 'on\n' > "$home/config/herdr-presentation-spaces"
+    fm_git_init_commit "$proj"
+    fm_test_spawn_brief "$home" b
+    fm_write_meta "$home/state/a.meta" backend=herdr window=fmtest:w3:p2 \
+      "worktree=$proj" 'herdr_process_identity=ps:42:Tue Mar 19 10:11:12 2024'
+    export FM_FAKE_HERDR_STATE="$dir/layout/state.json" FM_HERDR_LOG="$dir/herdr.log"
+    : > "$FM_HERDR_LOG"
+    jq '.workspaces=[{workspace_id:"w1",label:"firstmate",focused:true,active_tab_id:"w1:t1"}]
+        | .tabs=[{workspace_id:"w1",tab_id:"w1:t1",pane_id:"w1:p1",label:"1",focused:true}]' \
+      "$FM_FAKE_HERDR_STATE" > "$dir/initial.json"
+    mv "$dir/initial.json" "$FM_FAKE_HERDR_STATE"
+    cat > "$fb/herdr" <<'SH'
+#!/usr/bin/env bash
+state=$FM_FAKE_HERDR_STATE
+ws= label=
+args=("$@")
+for ((i=0; i<${#args[@]}; i++)); do
+  case "${args[$i]}" in
+    --workspace) ws=${args[$((i+1))]} ;;
+    --label) label=${args[$((i+1))]} ;;
+  esac
+done
+save() { local tmp="$state.tmp.$$"; cat > "$tmp" && mv "$tmp" "$state"; }
+case "${1:-} ${2:-}" in
+  'status --json') printf '{"client":{"version":"0.9.3","protocol":22},"server":{"version":"0.9.3","protocol":22,"compatible":true,"running":true}}\n' ;;
+  'session list') printf '{"sessions":[{"name":"fmtest","running":true,"socket_path":"%s/fmtest.sock"}]}\n' "${state%/*}" ;;
+  'workspace create')
+    jq --arg label "$label" '.workspaces += [{workspace_id:"w3",label:$label,focused:false,active_tab_id:"w3:t1"}]
+      | .tabs += [{workspace_id:"w3",tab_id:"w3:t1",pane_id:"w3:p1",label:"1",focused:false}]' "$state" | save
+    printf '{"result":{"workspace":{"workspace_id":"w3"},"tab":{"tab_id":"w3:t1"},"root_pane":{"pane_id":"w3:p1"}}}\n'
+    ;;
+  'tab create')
+    jq --arg label "$label" --arg ws "$ws" '.tabs += [{workspace_id:$ws,tab_id:"w3:t2",pane_id:"w3:p2",label:$label,focused:false}]' "$state" | save
+    printf '{"result":{"tab":{"tab_id":"w3:t2"},"root_pane":{"pane_id":"w3:p2"}}}\n'
+    ;;
+  'pane get')
+    pane=$3
+    if jq -e --arg pane "$pane" 'any(.tabs[]; .pane_id == $pane)' "$state" >/dev/null; then
+      jq --arg pane "$pane" --arg cwd "$FM_FAKE_PANE_PATH" '.tabs[] | select(.pane_id==$pane)
+        | {result:{pane:{pane_id,tab_id,workspace_id,foreground_cwd:$cwd,cwd:$cwd}}}' "$state"
+    else
+      printf '{"error":{"code":"pane_not_found"}}\n'; exit 1
+    fi
+    ;;
+  'pane process-info') printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"%s","shell_pid":42}}}\n' "$4" ;;
+  'pane close')
+    jq --arg pane "$3" '.tabs |= [.[] | select(.pane_id != $pane)]
+      | .tabs as $tabs | .workspaces |= [.[] | select(.workspace_id as $ws | any($tabs[]; .workspace_id==$ws))]' "$state" | save
+    ;;
+  'pane run' | 'pane send-text' | 'pane send-keys') exit 0 ;;
+  *) exec "${0%/*}/herdr-layout" "$@" ;;
+esac
+SH
+    chmod +x "$fb/herdr"
+    out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$home" "$proj" "$fb" b "$proj" --backend herdr --mode no-mistakes --yolo off) \
+      && fail "spawn unexpectedly acquired an isolated worktree"
+    assert_contains "$out" 'did not enter an isolated worktree' "spawn did not abort at worktree acquisition"
+    [ ! -e "$home/state/b.meta" ] || fail "failed spawn published B's task record"
+    [ -f "$home/state/a.meta" ] || fail "abort cleanup removed stale task A's record"
+    jq -e '[.workspaces[].workspace_id]==["w1"] and [.tabs[].pane_id]==["w1:p1"]' "$FM_FAKE_HERDR_STATE" >/dev/null \
+      || fail "response-owned abort cleanup left B's pane or disposable workspace behind"
+  ) || fail "response-owned projection cleanup regression failed"
+  pass "a stale task record cannot block cleanup of a fresh projected spawn that aborts before publication"
 }
 
 test_active_operations_check_ownership_after_server_restore() {
@@ -6499,6 +6579,7 @@ test_recorded_endpoint_from_a_previous_session_is_never_the_tasks_agent
 test_process_bound_endpoint_rejects_matching_labels_and_worktrees
 test_process_identity_is_portable_and_distinguishes_pid_reuse
 test_spawn_and_relaunch_continue_without_process_identity
+test_projection_abort_cleans_response_owned_pane_despite_stale_record
 test_active_operations_check_ownership_after_server_restore
 test_secondmate_probe_cannot_borrow_another_tasks_binding
 test_teardown_uses_descendant_state_and_confirms_closed_bound_panes
