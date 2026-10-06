@@ -1,0 +1,3 @@
+ok - owned remote state, launch, capture, observation, key and doorbell use parent-route records
+ok - stale remote endpoints remain missing, unread and unsteered despite a matching ordinary-home record
+ok - close, recovery, relaunch and retirement retain route state while code-root update uses root state

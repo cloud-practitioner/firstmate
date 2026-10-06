@@ -1,0 +1,126 @@
+/tmp/fm-task.7sb9rql8/main
+/tmp/fm-task.7sb9rql8/child
+scaffolded: /tmp/fm-task.7sb9rql8/main/data/mine/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+$ fm-spawn mine --scout --backend herdr (raw shell workload)
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-task.7sb9rql8/main
+spawned mine harness=sh kind=scout window=fm-lab-stale-1977627:w1:p2 worktree=/tmp/fm-task.7sb9rql8/pools/.treehouse/project-b94f27/1/project
+PUBLISHED target=fm-lab-stale-1977627:w1:p2 identity=ps:1978266:Tue Oct  6 23:42:18 2026 worktree=/tmp/fm-task.7sb9rql8/pools/.treehouse/project-b94f27/1/project
+
+$ lab run pane send-keys w1:p2 C-c
+
+$ lab run pane run w1:p2 exec bash --noprofile --norc
+VERIFIED exec preserves the root process binding: ps:1978266:Tue Oct  6 23:42:18 2026
+VERIFIED fresh session actually reuses the recorded pane address: w1:p2
+RECREATED same-label/same-cwd target=fm-lab-stale-1977627:w1:p2 old=ps:1978266:Tue Oct  6 23:42:18 2026 new=ps:1987321:Tue Oct  6 23:42:28 2026
+
+$ lab run pane run w1:p2 printf 'UNRELATED-PANE-DO-NOT-STEER\n'
+VERIFIED main-home stale liveness: missing
+🌳 Setting up worktree...
+🌳 Leased worktree at /tmp/fm-task.7sb9rql8/child-pools/.treehouse/project-b94f27/1/project. Run 'treehouse return /tmp/fm-task.7sb9rql8/child-pools/.treehouse/project-b94f27/1/project' to release it.
+VERIFIED secondmate-home stale liveness: missing
+REFUSED stale capture
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-task.7sb9rql8/main
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 13s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the requested message WILL still be sent.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: key 'C-c' not sent to fm-lab-stale-1977627:w1:p2 (herdr send failed; tried meta=/tmp/fm-task.7sb9rql8/main/state/mine.meta; backend=from-meta)
+REFUSED stale key
+REFUSED stale text
+VERIFIED stale close left the unrelated pane present (/tmp/fm-task.7sb9rql8/main)
+REFUSED stale capture
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-task.7sb9rql8/child
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 15s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the requested message WILL still be sent.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: key 'C-c' not sent to fm-lab-stale-1977627:w1:p2 (herdr send failed; tried meta=/tmp/fm-task.7sb9rql8/child/state/mine.meta; backend=from-meta)
+REFUSED stale key
+REFUSED stale text
+VERIFIED stale close left the unrelated pane present (/tmp/fm-task.7sb9rql8/child)
+
+$ lab run pane read w1:p2 --source recent --lines 12 --format text
+printf 'UNRELATED-PANE-DO-NOT-STEER\n'
+project on  HEAD [?]
+❯ printf 'UNRELATED-PANE-DO-NOT-STEER\n'
+UNRELATED-PANE-DO-NOT-STEER
+project on  HEAD [?]
+❯
+
+$ fm-spawn mine --relaunch --harness claude
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-task.7sb9rql8/main
+spawned mine harness=claude kind=scout window=fm-lab-stale-1977627:w1:p3 worktree=/tmp/fm-task.7sb9rql8/pools/.treehouse/project-b94f27/1/project
+VERIFIED relaunch preserves the recorded worktree: /tmp/fm-task.7sb9rql8/pools/.treehouse/project-b94f27/1/project
+VERIFIED relaunch preserves unlanded user data: unlanded sentinel
+VERIFIED relaunch publishes the new process binding: ps:1996096:Tue Oct  6 23:42:36 2026
+VERIFIED rebind selected fm-lab-stale-1977627:w1:p3 and retained unrelated fm-lab-stale-1977627:w1:p2
+
+$ lab run pane read w1:p3 --source recent --lines 30 --format text
+   ░░░░░░░░░░░░░░░░░░░    *                ██▓░░      ▓
+                                             ░▓▓███▓▓░
+ *                                 ░░░░
+                                 ░░░░░░░░
+                               ░░░░░░░░░░░░░░░░
+       █████████                                        *
+      ██▄█████▄██                        *
+       █████████      *
+.......█ █   █ █..........................................
+
+ Let's get started.
+
+ Choose the text style that looks best with your terminal
+ To change this later, run /theme
+
+     Auto (match terminal)
+ ❯ ✔ Dark mode
+     Light mode
+     Dark mode (colorblind-friendly)
+     Light mode (colorblind-friendly)
+     Dark mode (ANSI colors only)
+     Light mode (ANSI colors only)
+
+ ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+  1  function greet() {
+  2 -  console.log("Hello, World!");
+  2 +  console.log("Hello, Claude!");
+  3  }
+ ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+  Syntax theme: Monokai Extended (ctrl+t to disable)
+
+$ lab run pane process-info --pane w1:p3
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":1998765,"foreground_processes":[{"cwd":"/tmp/fm-task.7sb9rql8/pools/.treehouse/project-b94f27/1/project","name":"claude","pid":1998765}],"pane_id":"w1:p3","shell_pid":1996096},"type":"pane_process_info"}}
+
+$ lab run pane report-agent w1:p3 --source live-validation --agent claude --state idle
+VERIFIED the new owned record recognizes the real running CLI: alive
+VERIFIED stale identity rejects a real live CLI despite matching label and cwd: missing
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-task.7sb9rql8/child
+WARNING: watcher still down (same stale episode; last beat: 27s ago, grace 300s) - full banner already printed this episode.
+🌳 Worktree returned to pool.
+teardown mine complete (window fm-lab-stale-1977627:w1:p2, worktree /tmp/fm-task.7sb9rql8/child-pools/.treehouse/project-b94f27/1/project)
+Backlog: mine just finished (this home keeps no markdown backlog at /tmp/fm-task.7sb9rql8/child/data/backlog.md). Update /tmp/fm-task.7sb9rql8/child/data/backlog.md - move mine to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+VERIFIED stale child teardown removed its record, not the unrelated pane
+scaffolded: /tmp/fm-task.7sb9rql8/main/data/b/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-task.7sb9rql8/main
+error: treehouse get did not enter an isolated worktree within 60s (last seen '/tmp/fm-task.7sb9rql8/project': it is the spawning project itself; spawning project '/tmp/fm-task.7sb9rql8/project'); inspect window fm-lab-stale-1977627:w2:p2
+warning: herdr presentation cleanup could not verify the exact pane; refusing focus-unsafe pane close
+VERIFIED response-owned abort removes the disposable workspace: ["w1"]
+{"error":{"code":"pane_not_found","message":"pane w2:p2 not found"},"id":"cli:pane:get"}
+VERIFIED stale ambient A did not prevent cleanup of newly created B at w2:p2
+
+$ lab run pane run w1:p2 cd '/tmp/fm-task.7sb9rql8/unrelated'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /tmp/fm-task.7sb9rql8/main
+WARNING: watcher still down (same stale episode; last beat: 101s ago, grace 300s) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for mine: 1987278 1996096 1998765
+teardown: force-killing leaked worktree process(es) for mine: 1987278 1996096
+🌳 Worktree returned to pool.
+teardown mine complete (window fm-lab-stale-1977627:w1:p3, worktree /tmp/fm-task.7sb9rql8/pools/.treehouse/project-b94f27/1/project)
+Backlog: mine just finished (this home keeps no markdown backlog at /tmp/fm-task.7sb9rql8/main/data/backlog.md). Update /tmp/fm-task.7sb9rql8/main/data/backlog.md - move mine to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+{"error":{"code":"pane_not_found","message":"pane w1:p3 not found"},"id":"cli:pane:get"}
+VERIFIED owned teardown removed endpoint and record, retained unrelated pane

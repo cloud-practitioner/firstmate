@@ -1,0 +1,16 @@
+window=fm-lab-stale-1977627:w1:p2
+endpoint_task_id=mine
+worktree=/tmp/fm-task.7sb9rql8/pools/.treehouse/project-b94f27/1/project
+project=/tmp/fm-task.7sb9rql8/project
+harness=sh
+kind=scout
+tasktmp=/tmp/fm-task.7sb9rql8/main/state/mine.tasktmp
+model=default
+effort=default
+spawn_gen=s1791330144.1977948.30339
+backend=herdr
+herdr_session=fm-lab-stale-1977627
+herdr_workspace_id=w1
+herdr_tab_id=w1:t2
+herdr_pane_id=w1:p2
+herdr_process_identity=ps:1978266:Tue Oct  6 23:42:18 2026

@@ -1,0 +1,3 @@
+$ bin/fm-herdr-lab.sh provision fm-remote
+fm-herdr-lab: session name must start with 'fm-lab-' and contain only letters, digits, underscores, or dashes: fm-remote
+exit=1

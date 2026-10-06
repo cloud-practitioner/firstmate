@@ -1,0 +1,161 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/main
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/child
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/main/data/mine/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/child/data/kid/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+
+SCENARIO: fresh primary and secondmate-home spawns publish portable process identities
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/main
+notice: mine ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned mine harness=sh kind=ship mode=local-only yolo=off window=fm-lab-x:w1:p2 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/child
+notice: kid ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned kid harness=sh kind=ship mode=local-only yolo=off window=fm-lab-x:w2:p2 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project
+PRIMARY endpoint=fm-lab-x:w1:p2 identity=ps:1079038:Tue Oct  6 23:17:02 2026
+CHILD endpoint=fm-lab-x:w2:p2 identity=ps:1087586:Tue Oct  6 23:17:13 2026
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/project$ tr
+eehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.
+treehouse/project-997b52/1/project. Type 'exit' to return.
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-va
+lidation/pool/.treehouse/project-997b52/1/project'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190J
+H/.live-validation/main/state/mine.tasktmp/gotmp'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ export COMPACT_ADVISER_DISABLE=1
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ export FM_TASK_ID=mine
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ . '/tmp/fm-mine+10ad743f3268ccec6a92a1845ca9f2b0b8d54bd437d1f2164ebcf43a1329702f/launch.s
+1791328627.1076964.17510.sh'
+LIVE_WORKER_mine
+SCENARIO: same-process relabeling remains readable
+{"id":"cli:tab:rename","result":{"tab":{"agent_status":"unknown","focused":true,"label":"renamed-worker","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"},"type":"tab_info"}}
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/project$ tr
+eehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.
+treehouse/project-997b52/1/project. Type 'exit' to return.
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-va
+lidation/pool/.treehouse/project-997b52/1/project'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190J
+H/.live-validation/main/state/mine.tasktmp/gotmp'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ export COMPACT_ADVISER_DISABLE=1
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ export FM_TASK_ID=mine
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ . '/tmp/fm-mine+10ad743f3268ccec6a92a1845ca9f2b0b8d54bd437d1f2164ebcf43a1329702f/launch.s
+1791328627.1076964.17510.sh'
+LIVE_WORKER_mine{"id":"cli:tab:rename","result":{"tab":{"agent_status":"unknown","focused":true,"label":"fm-mine","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"},"type":"tab_info"}}
+PASS: same process remains usable despite a changed label and unavailable /proc fixture.
+
+SCENARIO: fresh session reuses exact addresses with matching task labels and worktrees
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d343357c67b1","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+{"id":"cli:tab:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d34335811962","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":false,"label":"fm-mine","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"},"type":"tab_created"}}
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","pane_id":"w2:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w2:t1","terminal_id":"term_65d343358481e3","workspace_id":"w2"},"tab":{"agent_status":"unknown","focused":false,"label":"1","number":1,"pane_count":1,"tab_id":"w2:t1","workspace_id":"w2"},"type":"workspace_created","workspace":{"active_tab_id":"w2:t1","agent_status":"unknown","focused":false,"label":"2ndmate-mate","number":2,"pane_count":1,"tab_count":1,"workspace_id":"w2"}}}
+{"id":"cli:tab:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","pane_id":"w2:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w2:t2","terminal_id":"term_65d3433588d034","workspace_id":"w2"},"tab":{"agent_status":"unknown","focused":false,"label":"fm-kid","number":2,"pane_count":1,"tab_id":"w2:t2","workspace_id":"w2"},"type":"tab_created"}}
+Base-commit recycled endpoint liveness=dead (adoptable); fixed adapter must report missing.
+mine recorded=ps:1079038:Tue Oct  6 23:17:02 2026 actual=ps:1093160:Tue Oct  6 23:17:20 2026 liveness=missing
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d34335811962","workspace_id":"w1"},"type":"pane_info"}}
+PASS: mine missing; capture, keys and text refused; foreign pane preserved.
+kid recorded=ps:1087586:Tue Oct  6 23:17:13 2026 actual=ps:1093198:Tue Oct  6 23:17:20 2026 liveness=missing
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","pane_id":"w2:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w2:t2","terminal_id":"term_65d3433588d034","workspace_id":"w2"},"type":"pane_info"}}
+PASS: kid missing; capture, keys and text refused; foreign pane preserved.
+
+SCENARIO: bootstrap and watcher probes cannot borrow another claimant at the same address
+Probe mode=full state=missing disposition=relaunchable kill=0
+Probe mode=poll state=missing disposition=relaunchable kill=0
+PASS: both recovery probes select their own task and refuse adoption/kill of the recycled endpoint.
+
+SCENARIO: legacy records retain their documented best-effort compatibility
+printf 'FOREIGN_PRIMARY_SENTINEL\n'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ printf 'FOREIGN_PRIMARY_SENTINEL\n'
+FOREIGN_PRIMARY_SENTINEL
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$PASS: a no-identity record is not blanket-rejected when its worktree matches.
+
+SCENARIO: remote parent-route state does not borrow ambient worker ownership
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/remote
+Remote state: missing
+Remote capture: <empty>
+unknown
+notice: doorbell not typed because the agent in fm-remote:w1:p2 has exited; the steer is durably recorded at /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/remote/state/parent-route/remote.inbox/001.msg for recovery
+printf 'FOREIGN_PRIMARY_SENTINEL\n'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ printf 'FOREIGN_PRIMARY_SENTINEL\n'
+FOREIGN_PRIMARY_SENTINEL
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$
+PASS: remote state and capture use parent-route; the durable doorbell is not typed into the recycled pane.
+
+SCENARIO: recovery creates a new binding without adopting or closing matching foreign shells
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/main
+notice: mine ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned mine harness=sh kind=ship mode=local-only yolo=off window=fm-lab-x:w1:p3 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-va
+lidation/pool/.treehouse/project-997b52/1/project'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190J
+H/.live-validation/main/state/mine.tasktmp/gotmp'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ export COMPACT_ADVISER_DISABLE=1
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ export FM_TASK_ID=mine
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/1/project$ . '/tmp/fm-mine+10ad743f3268ccec6a92a1845ca9f2b0b8d54bd437d1f2164ebcf43a1329702f/launch.s
+1791328649.1096722.24892.sh'
+LIVE_RECOVERED_mine{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d34335811962","workspace_id":"w1"},"type":"pane_info"}}
+PASS: mine rebound from fm-lab-x:w1:p2 to fm-lab-x:w1:p3 and kept worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/child
+notice: kid ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned kid harness=sh kind=ship mode=local-only yolo=off window=fm-lab-x:w2:p3 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/2/project$ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-va
+lidation/pool/.treehouse/project-997b52/2/project'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/2/project$ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190J
+H/.live-validation/child/state/kid.tasktmp/gotmp'
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/2/project$ export COMPACT_ADVISER_DISABLE=1
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/2/project$ export FM_TASK_ID=kid
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treeh
+ouse/project-997b52/2/project$ . '/tmp/fm-kid+3b31baf3acdd0ddc6a9114977185c50abfffaf1c19b20a31ef7686db2b2dd3b2/launch.s1
+791328656.1102883.11031.sh'
+LIVE_RECOVERED_kid{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","pane_id":"w2:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w2:t2","terminal_id":"term_65d3433588d034","workspace_id":"w2"},"type":"pane_info"}}
+PASS: kid rebound from fm-lab-x:w2:p2 to fm-lab-x:w2:p3 and kept worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project.
+
+SCENARIO: passive stopped-server probe stays read-only; active capture checks ownership after restoration
+{"session":{"default":false,"name":"fm-lab-x","running":false,"session_dir":"./herdr/sessions/fm-lab-x","socket_path":"./herdr/sessions/fm-lab-x/herdr.sock"},"stopped":true}
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-x"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":"./herdr/sessions/fm-lab-x/herdr.sock","session":"fm-lab-x","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+PASS: passive probe did not start server; active capture restored it but refused the changed process.
+
+SCENARIO: repeated recovery preserves unclaimed same-label panes after another restart
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/main
+notice: mine ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned mine harness=sh kind=ship mode=local-only yolo=off window=fm-lab-x:w1:p4 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":24},"tab_id":"w1:t2","terminal_id":"term_65d34347e96202","workspace_id":"w1"},"type":"pane_info"}}
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/1/project","pane_id":"w1:p3","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":24},"tab_id":"w1:t3","terminal_id":"term_65d34347eb0d73","workspace_id":"w1"},"type":"pane_info"}}
+{"id":"cli:tab:list","result":{"tabs":[{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},{"agent_status":"unknown","focused":false,"label":"fm-mine","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"},{"agent_status":"unknown","focused":false,"label":"fm-mine","number":3,"pane_count":1,"tab_id":"w1:t3","workspace_id":"w1"},{"agent_status":"unknown","focused":false,"label":"fm-mine","number":4,"pane_count":1,"tab_id":"w1:t4","workspace_id":"w1"}],"type":"tab_list"}}
+PASS: repeated mine recovery kept both fm-lab-x:w1:p2 and fm-lab-x:w1:p3 and rebound to fm-lab-x:w1:p4.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/child
+notice: kid ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned kid harness=sh kind=ship mode=local-only yolo=off window=fm-lab-x:w2:p4 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","pane_id":"w2:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":24},"tab_id":"w2:t2","terminal_id":"term_65d34347f08ef5","workspace_id":"w2"},"type":"pane_info"}}
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-997b52/2/project","pane_id":"w2:p3","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":24},"tab_id":"w2:t3","terminal_id":"term_65d34347f4e906","workspace_id":"w2"},"type":"pane_info"}}
+{"id":"cli:tab:list","result":{"tabs":[{"agent_status":"unknown","focused":false,"label":"1","number":1,"pane_count":1,"tab_id":"w2:t1","workspace_id":"w2"},{"agent_status":"unknown","focused":false,"label":"fm-kid","number":2,"pane_count":1,"tab_id":"w2:t2","workspace_id":"w2"},{"agent_status":"unknown","focused":false,"label":"fm-kid","number":3,"pane_count":1,"tab_id":"w2:t3","workspace_id":"w2"},{"agent_status":"unknown","focused":false,"label":"fm-kid","number":4,"pane_count":1,"tab_id":"w2:t4","workspace_id":"w2"}],"type":"tab_list"}}
+PASS: repeated kid recovery kept both fm-lab-x:w2:p2 and fm-lab-x:w2:p3 and rebound to fm-lab-x:w2:p4.
+
+SCENARIO: response-owned projected abort ignores an ambient stale address claim
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/main/data/abort-b/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/main
+notice: abort-b ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+warning: herdr presentation workspace move failed or had an ambiguous response; leaving worker running without cleanup
+warning: herdr presentation could not publish an exact restart binding; this task will use flat fallback after a restart

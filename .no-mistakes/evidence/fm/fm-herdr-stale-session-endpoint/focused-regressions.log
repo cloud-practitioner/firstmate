@@ -1,0 +1,20 @@
+Selected executable regressions:
+test_recorded_endpoint_from_a_previous_session_is_never_the_tasks_agent
+test_process_bound_endpoint_rejects_matching_labels_and_worktrees
+test_process_identity_is_portable_and_distinguishes_pid_reuse
+test_spawn_and_relaunch_continue_without_process_identity
+test_projection_abort_cleans_response_owned_pane_despite_stale_record
+test_active_operations_check_ownership_after_server_restore
+test_secondmate_probe_cannot_borrow_another_tasks_binding
+test_teardown_uses_descendant_state_and_confirms_closed_bound_panes
+ok - herdr recorded endpoint from a previous session: a foreign live agent or shell at the id is missing, unread, unsteered and unclosed; the task's own, restored, and renamed panes are unchanged
+ok - process-bound endpoints reject same-label other-home agents and same-worktree shells while preserving live processes and replacement bindings
+ok - portable ps identities work without /proc and distinguish process PIDs and start times
+ok - Herdr spawn and relaunch deliver their agent launch with legacy ownership fallback when ps fails
+ok - a stale task record cannot block cleanup of a fresh projected spawn that aborts before publication
+ok - every active dispatcher checks restored ownership while passive liveness stays read-only
+ok - bootstrap and watcher secondmate probes cannot borrow another task's live endpoint binding
+ok - owned pane closure permits record removal and recursive cleanup respects each descendant's state
+ok - owned remote state, launch, capture, observation, key and doorbell use parent-route records
+ok - stale remote endpoints remain missing, unread and unsteered despite a matching ordinary-home record
+ok - close, recovery, relaunch and retirement retain route state while code-root update uses root state

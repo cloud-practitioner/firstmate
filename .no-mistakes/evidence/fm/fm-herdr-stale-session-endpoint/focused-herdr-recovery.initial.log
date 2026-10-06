@@ -1,0 +1,5 @@
+{"command": "bash /home/node/.no-mistakes/evidence/01M47HX8Y8BQRSDDHWXNW190JH/focused-herdr-recovery.sh", "exit": 1, "elapsed_seconds": 121.7, "artifact": "/home/node/.no-mistakes/evidence/01M47HX8Y8BQRSDDHWXNW190JH/focused-herdr-recovery.log"}
+ok - real Herdr lab: process-bound restarts reject replacement shells; legacy Hi Bit and Wheelhouse records reclaim one nested space with exact focus and idempotence
+grep: /tmp/fm-task.1mbkffq1/fm-herdr-presentation.tPq4xB/home-2ndmate-alpha/state/wheel-child-resume.herdr-presentation: No such file or directory
+not ok - cross-home restart journal did not bind the secondmate's exact home
+Disposable task scratch removed; default-session tripwire unchanged.

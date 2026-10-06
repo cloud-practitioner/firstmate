@@ -1,0 +1,1023 @@
+status	--json
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	create	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/project	--label	firstmate	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w1	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/project	--label	fm-anchor	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w1:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w1:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w1:p2	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w1:p2	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/project-e8e106/1/project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w1:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w1:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w1:p2	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home/state/anchor.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w1:p2	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w1:p2	export FM_TASK_ID=anchor	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w1:p2	. '/tmp/fm-anchor+46276dd1f5fec03eb015304b45b2bdbdf4209e75d25c3da16a36410c921a7e2c/launch.s1791329861.1818559.9846.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w1:p2	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	create	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	└ hibit-resume-r1 · p:h-FWaql0KWP5esNwV4db6A	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w4	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-fm-hibit-resume-r1	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w4:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+api	schema	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p2	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p2	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/1/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w1:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w4:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w1:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w1:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w4:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p2	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home/state/fm-hibit-resume-r1.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p2	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p2	export FM_TASK_ID=fm-hibit-resume-r1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w4:p2	. '/tmp/fm-fm-hibit-resume-r1+46276dd1f5fec03eb015304b45b2bdbdf4209e75d25c3da16a36410c921a7e2c/launch.s1791329873.1822054.13799.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w4:p2	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w4	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-fm-hibit-resume-r1	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w4:t3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w4:t2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p3	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p3	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/1/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w4:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w4:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p3	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home/state/fm-hibit-resume-r1.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p3	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p3	export FM_TASK_ID=fm-hibit-resume-r1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w4:p3	. '/tmp/fm-fm-hibit-resume-r1+46276dd1f5fec03eb015304b45b2bdbdf4209e75d25c3da16a36410c921a7e2c/launch.s1791329886.1832396.7620.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w4:p3	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w4	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-fm-hibit-resume-r1	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w4:t4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w4:t3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p4	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p4	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/1/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w4:p4	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w4:p4	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p4	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home/state/fm-hibit-resume-r1.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p4	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w4:p4	export FM_TASK_ID=fm-hibit-resume-r1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w4:p4	. '/tmp/fm-fm-hibit-resume-r1+46276dd1f5fec03eb015304b45b2bdbdf4209e75d25c3da16a36410c921a7e2c/launch.s1791329900.1842058.12542.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w4:p4	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w4	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w4:p4	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	create	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	└ wheelhouse-healing-r1 · p:GtjBCXf3bJAcC2zqP3GtiA	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w5	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-wheelhouse-healing-r1	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w5:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w5:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+api	schema	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p2	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p2	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/1/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w5:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w5:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p2	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home/state/wheelhouse-healing-r1.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p2	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p2	export FM_TASK_ID=wheelhouse-healing-r1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w5:p2	. '/tmp/fm-wheelhouse-healing-r1+46276dd1f5fec03eb015304b45b2bdbdf4209e75d25c3da16a36410c921a7e2c/launch.s1791329916.1854196.14203.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w5:p2	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w5	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-wheelhouse-healing-r1	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w5:t3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w5:t2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p3	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p3	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/1/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w5:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w5:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p3	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home/state/wheelhouse-healing-r1.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p3	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w5:p3	export FM_TASK_ID=wheelhouse-healing-r1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w5:p3	. '/tmp/fm-wheelhouse-healing-r1+46276dd1f5fec03eb015304b45b2bdbdf4209e75d25c3da16a36410c921a7e2c/launch.s1791329926.1860966.13144.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w5:p3	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w5	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w5:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	create	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	└ wheel-child-resume · p:G9O_OTkuyCK7KPSWQBXH5w	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w6	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-wheel-child-resume	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w6:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w6:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+api	schema	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p2	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p2	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/1/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w6:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w6:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p2	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home-2ndmate-alpha/state/wheel-child-resume.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p2	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p2	export FM_TASK_ID=wheel-child-resume	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w6:p2	. '/tmp/fm-wheel-child-resume+5c2ac4fdfc88fc0321cf45f02bbccc5cd7a1b3f36c4be04f4f0197064c9e1f31/launch.s1791329948.1872339.19132.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w6:p2	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w6	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-wheel-child-resume	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w6:t3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w6:t2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p3	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p3	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/1/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w6:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w6:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p3	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home-2ndmate-alpha/state/wheel-child-resume.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p3	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w6:p3	export FM_TASK_ID=wheel-child-resume	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w6:p3	. '/tmp/fm-wheel-child-resume+5c2ac4fdfc88fc0321cf45f02bbccc5cd7a1b3f36c4be04f4f0197064c9e1f31/launch.s1791329961.1878453.29314.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w6:p3	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w6	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w6:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	create	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	└ resume-wave-primary · p:-Yl5hV8zOn0m4fIbnDQyHA	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w7	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-resume-wave-primary	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w7:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w7:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+api	schema	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p2	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p2	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/1/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w7:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w7:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p2	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home/state/resume-wave-primary.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p2	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p2	export FM_TASK_ID=resume-wave-primary	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w7:p2	. '/tmp/fm-resume-wave-primary+46276dd1f5fec03eb015304b45b2bdbdf4209e75d25c3da16a36410c921a7e2c/launch.s1791329985.1894539.26231.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w7:p2	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	create	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	└ resume-wave-bravo · p:vq2xO8As79OaXZQ6Qtb8rw	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w8	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-resume-wave-bravo	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w8:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w8:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p2	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p2	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/2/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w8:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w8:p2	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p2	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home-2ndmate-bravo/state/resume-wave-bravo.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p2	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p2	export FM_TASK_ID=resume-wave-bravo	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w8:p2	. '/tmp/fm-resume-wave-bravo+31f5020a52eea87d152bd02a9b6f52acb47c2cdb73913453b8e2375a557def61/launch.s1791329994.1904314.6226.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w8:p2	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w8	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-resume-wave-bravo	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w8:t3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w8:t2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p3	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p3	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/1/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w8:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w8:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p3	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home-2ndmate-bravo/state/resume-wave-bravo.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p3	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w8:p3	export FM_TASK_ID=resume-wave-bravo	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w8:p3	. '/tmp/fm-resume-wave-bravo+31f5020a52eea87d152bd02a9b6f52acb47c2cdb73913453b8e2375a557def61/launch.s1791330018.1915130.3173.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w8:p3	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	create	--workspace	w7	--cwd	/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/recovery-project	--label	fm-resume-wave-primary	--no-focus	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w7:t3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	get	w7:t2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	close	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p2	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p3	treehouse get	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p3	cd -- '/tmp/fm-task.shwn0_iq/pools/.treehouse/recovery-project-8e0b87/2/recovery-project'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w7:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	read	w7:p3	--source	recent	--lines	200	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+agent	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p3	export GOTMPDIR='/tmp/fm-task.shwn0_iq/fm-herdr-presentation.llxtUh/home/state/resume-wave-primary.tasktmp/gotmp'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p3	export COMPACT_ADVISER_DISABLE=1	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	run	w7:p3	export FM_TASK_ID=resume-wave-primary	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-text	w7:p3	. '/tmp/fm-resume-wave-primary+46276dd1f5fec03eb015304b45b2bdbdf4209e75d25c3da16a36410c921a7e2c/launch.s1791330036.1915129.11713.sh'	--session	fm-lab-fm-herdr-present-1818121-9944
+status	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	send-keys	w7:p3	enter	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w7	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w7:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+session	list	--json	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	list	--workspace	w8	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+terminal	title	clear	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+workspace	list	--session	fm-lab-fm-herdr-present-1818121-9944
+tab	list	--workspace	w1	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	process-info	--pane	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
+pane	get	w8:p3	--session	fm-lab-fm-herdr-present-1818121-9944
