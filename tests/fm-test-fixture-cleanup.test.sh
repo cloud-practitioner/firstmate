@@ -119,10 +119,10 @@ test_orphan_sweep_respects_fixture_ownership() {
   active_dir=$(cat "$dirfile")
   touch -t 202001010000 "$active_dir/.fm-test-fixture"
 
-  stale_dir=$(mktemp -d "${TMPDIR:-/tmp}/fm-test-cleanup-stale.XXXXXX")
+  stale_dir=$(mktemp -d "$FM_TEST_TMPDIR/fm-test-cleanup-stale.XXXXXX")
   printf '%s\n%s\n' "$$" reused-process-identity > "$stale_dir/.fm-test-fixture"
   touch -t 202001010000 "$stale_dir/.fm-test-fixture"
-  fresh_dir=$(mktemp -d "${TMPDIR:-/tmp}/fm-test-cleanup-fresh.XXXXXX")
+  fresh_dir=$(mktemp -d "$FM_TEST_TMPDIR/fm-test-cleanup-fresh.XXXXXX")
   : > "$fresh_dir/.fm-test-fixture"
 
   bash -c '
@@ -146,7 +146,7 @@ test_orphan_sweep_respects_fixture_ownership() {
 
 test_orphan_sweep_reaps_read_only_package_tree() {
   local stale_dir package_dir
-  stale_dir=$(mktemp -d "${TMPDIR:-/tmp}/fm-test-cleanup-read-only.XXXXXX")
+  stale_dir=$(mktemp -d "$FM_TEST_TMPDIR/fm-test-cleanup-read-only.XXXXXX")
   package_dir="$stale_dir/packages/extension"
   mkdir -p "$package_dir"
   printf '%s\n%s\n' "$$" reused-process-identity > "$stale_dir/.fm-test-fixture"
@@ -164,9 +164,64 @@ test_orphan_sweep_reaps_read_only_package_tree() {
   pass "the orphan sweep reaps read-only package fixtures"
 }
 
+test_registries_avoid_git_worktree_root() {
+  # A TMPDIR pointed at a repository root used to place live `.fm-test-*`
+  # registries beside tracked files. A concurrent git add during a suite then
+  # committed them (observed on the claim-walk CI fix round). The helper must
+  # keep registries and fixture roots outside that root for the whole run.
+  local harness repo dirfile child_dir pid tries entry
+  harness=$(fm_test_tmproot fm-test-cleanup-gitroot-harness)
+  repo="$harness/repo"
+  dirfile="$harness/child-dir"
+  mkdir -p "$repo"
+  git -C "$repo" init -q
+  bash -c '
+    export TMPDIR="$1"
+    # shellcheck source=tests/lib.sh
+    . "$2"
+    d=$(fm_test_tmproot fm-test-cleanup-gitroot)
+    printf "%s\n" "$d" > "$3"
+    # Hold the suite open so a concurrent add would see any root-side leak.
+    while :; do sleep 0.1; done
+  ' _ "$repo" "$LIB" "$dirfile" &
+  pid=$!
+  tries=0
+  while [ "$tries" -lt 100 ]; do
+    [ -s "$dirfile" ] && break
+    sleep 0.05
+    tries=$((tries + 1))
+  done
+  [ -s "$dirfile" ] || fail "the git-root TMPDIR child never published its fixture root"
+  child_dir=$(cat "$dirfile")
+  assert_present "$child_dir" "the git-root TMPDIR child did not create a fixture root"
+  case "$child_dir" in
+    "$repo"|"$repo"/*)
+      fail "fm_test_tmproot placed a fixture root inside the git worktree root: $child_dir"
+      ;;
+  esac
+  for entry in "$repo"/.fm-test-cleanup.* "$repo"/.fm-test-procevent.* "$repo"/.fm-test-watcher.*; do
+    [ ! -e "$entry" ] || fail "a live test registry landed in the git worktree root: $entry"
+  done
+  kill -TERM "$pid"
+  wait "$pid" 2>/dev/null || true
+  assert_absent "$child_dir" \
+    "the git-root TMPDIR child's fixture root survived SIGTERM"
+  pass "test registries and fixture roots stay out of a git worktree TMPDIR"
+}
+
 test_remote_worker_cleanup_with_spaced_root() (
   local harness root sibling candidate pid i expected actual group worker sibling_worker
   local -a supervisors=() workers=()
+  # A serving worker also runs its own readiness-heartbeat child, which carries
+  # the worker's command line. Expect the supervisor, the serving process, and
+  # exactly those of its direct children that discovery reports for this root.
+  expected_worker_tree() { # <supervisor> <serving-pid> <code-root>
+    local child
+    printf '%s\n' "$1" "$2"
+    for child in $(fm_test_remote_job_worker_pids "$3"); do
+      [ "$(ps -o ppid= -p "$child" 2>/dev/null | tr -d '[:space:]')" = "$2" ] && printf '%s\n' "$child"
+    done
+  }
   harness=$(fm_test_tmproot fm-test-cleanup-remote-worker)
   root="$harness/test runs [*]/remote-root"
   sibling="$root-neighbor"
@@ -203,7 +258,7 @@ test_remote_worker_cleanup_with_spaced_root() (
 
   worker=${workers[0]}
   sibling_worker=${workers[1]}
-  expected=$(printf '%s\n' "${supervisors[0]}" "$worker" | sort -n)
+  expected=$(expected_worker_tree "${supervisors[0]}" "$worker" "$root" | sort -n)
   actual=$(fm_test_remote_job_worker_pids "$root" | sort -n)
   [ "$actual" = "$expected" ] \
     || fail "worker discovery missed the spaced-root supervisor or serving child, or included a sibling"
@@ -220,7 +275,7 @@ test_remote_worker_cleanup_with_spaced_root() (
   if ! kill -0 "${supervisors[1]}" || ! kill -0 "$sibling_worker"; then
     fail "cleanup stopped another fixture's worker"
   fi
-  expected=$(printf '%s\n' "${supervisors[1]}" "$sibling_worker" | sort -n)
+  expected=$(expected_worker_tree "${supervisors[1]}" "$sibling_worker" "$sibling" | sort -n)
   [ "$(fm_test_remote_job_worker_pids "$sibling" | sort -n)" = "$expected" ] \
     || fail "cleanup disturbed the sibling worker tree"
   supervisors[0]=''
@@ -237,4 +292,5 @@ test_cleanup_registry_resists_precreation
 test_fixture_registration_failure_rolls_back_root
 test_orphan_sweep_respects_fixture_ownership
 test_orphan_sweep_reaps_read_only_package_tree
+test_registries_avoid_git_worktree_root
 test_remote_worker_cleanup_with_spaced_root || exit 1
