@@ -5353,10 +5353,19 @@ test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
     [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = alive ] || fail "a process-preserving handoff or rename must keep the agent alive"
 
     printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":%s}}}\n' "$new_pid" > "$world/process-w1_p1.json"
-    printf '{"result":{"tab":{"tab_id":"w1:t1","label":"fm-mine"}}}\n' > "$world/tab-w1_t1.json"
-    for cwd in "$dir/another-home/mine" "$wt"; do
+    # Each case is a different process at the recorded address that is NOT the
+    # task's dead husk: another home's live agent with a matching label, a
+    # fresh shell in the surviving worktree under another label, and a live
+    # agent that is not the recorded process even with label and worktree.
+    for case in "$dir/another-home/mine|fm-mine|live" "$wt|1|none" "$wt|fm-mine|live"; do
+      cwd=${case%%|*}; case=${case#*|}; tab=${case%%|*}; agent=${case#*|}
+      printf '{"result":{"tab":{"tab_id":"w1:t1","label":"%s"}}}\n' "$tab" > "$world/tab-w1_t1.json"
       printf '{"result":{"pane":{"pane_id":"w1:p1","tab_id":"w1:t1","foreground_cwd":"%s"}}}\n' "$cwd" > "$world/pane-w1_p1.json"
-      [ "$cwd" != "$wt" ] || rm -f "$world/agent-w1_p1.json"
+      if [ "$agent" = live ]; then
+        printf '{"result":{"agent":{"agent":"pi","agent_status":"idle"}}}\n' > "$world/agent-w1_p1.json"
+      else
+        rm -f "$world/agent-w1_p1.json"
+      fi
       : > "$world/typed.log"
       for label in fm-mine ''; do
         [ "$(fm_backend_agent_state herdr fmtest:w1:p1 "$label")" = missing ] || fail "a new process with a matching label or worktree must be missing"
@@ -5373,6 +5382,23 @@ test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
       done
       [ ! -s "$world/typed.log" ] || fail "input or closure reached an unrelated process"
     done
+
+    # The task's own restart husk: the recorded process is gone, but the pane
+    # still carries the fm-<task> label and the task's worktree and runs no
+    # agent. It stays an adoptable dead pane, reclaimed in place.
+    printf '{"result":{"tab":{"tab_id":"w1:t1","label":"fm-mine"}}}\n' > "$world/tab-w1_t1.json"
+    printf '{"result":{"pane":{"pane_id":"w1:p1","tab_id":"w1:t1","foreground_cwd":"%s"}}}\n' "$wt" > "$world/pane-w1_p1.json"
+    rm -f "$world/agent-w1_p1.json"
+    for label in fm-mine ''; do
+      [ "$(fm_backend_agent_state herdr fmtest:w1:p1 "$label")" = dead ] || fail "the task's own restart husk must stay an adoptable dead pane"
+    done
+    # The same pane with a live agent is no husk.
+    printf '{"result":{"agent":{"agent":"pi","agent_status":"idle"}}}\n' > "$world/agent-w1_p1.json"
+    [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = missing ] || fail "a live agent in a pane with a different process is not the task's husk"
+    # Back to a foreign same-label shell outside the worktree for recovery.
+    rm -f "$world/agent-w1_p1.json"
+    printf '{"result":{"pane":{"pane_id":"w1:p1","tab_id":"w1:t1","foreground_cwd":"%s"}}}\n' "$dir/another-home/mine" > "$world/pane-w1_p1.json"
+    : > "$world/typed.log"
 
     printf '{"result":{"tabs":[{"tab_id":"w1:t1","label":"fm-mine"}]}}\n' > "$world/tabs.json"
     printf '{"result":{"panes":[{"pane_id":"w1:p1","tab_id":"w1:t1"}]}}\n' > "$world/panes.json"
@@ -5406,7 +5432,7 @@ test_process_bound_endpoint_rejects_matching_labels_and_worktrees() {
     [ "$(fm_backend_agent_state herdr fmtest:w1:p2 fm-mine)" = missing ] || fail "a genuinely absent bound pane must still be missing"
     fm_backend_herdr_endpoint_confirmed_gone fmtest:w1:p2 fm-mine || fail "structured pane absence must permit removal of an identity-bearing record"
   ) || fail "process-bound endpoint regression failed"
-  pass "process-bound endpoints reject same-label other-home agents and same-worktree shells while preserving live processes and replacement bindings"
+  pass "process-bound endpoints reject other-home agents, relabeled worktree shells and live agents while keeping live processes, restart husks and replacement bindings"
 }
 
 make_process_identity_ps() {

@@ -471,17 +471,6 @@ finish_concurrent_teardown() {  # <id> <status> <stdout> <stderr>
     || fail "projected teardown $id retry failed after presentation cleanup completed: $(cat "$err")"
 }
 
-# In-place husk reclaim is the compatibility path for records without a
-# process binding. A restart replaces the shell, so identity-bearing records
-# intentionally cannot authorize reclaim of the restored pane.
-use_legacy_restart_record() {  # <meta>
-  local meta=$1
-  if ! awk -F= '$1 != "herdr_process_identity"' "$meta" > "$meta.legacy" \
-    || ! mv "$meta.legacy" "$meta"; then
-    fail "could not prepare legacy restart record $meta"
-  fi
-}
-
 normalize_meta() {  # <meta>
   sed -E \
     -e 's|^window=.*$|window=<herdr-container-id>|' \
@@ -1199,11 +1188,9 @@ teardown_task aflat "$SECOND_HOME_A" > "$TMP_ROOT/aflat-teardown.out" 2> "$TMP_R
   || fail "flat cross-home contention fixture teardown failed"
 pass "real Herdr lab: session lock contention from a secondmate home falls back flat with no journal"
 
-# Legacy-record recovery replaces only one exact agent-free husk in its
-# original projected workspace. Identity-bearing records reject that restored
-# shell first; only the legacy fallback authorizes in-place reclaim.
-# These full-session restarts also stop the earlier multi-home workers whose
-# restored panes are retained for the final
+# Same-identity recovery replaces only one exact agent-free husk in its
+# original projected workspace. These full-session restarts also stop the
+# earlier multi-home workers whose restored panes are retained for the final
 # exact-pane cleanup assertions. Keep the recovery fixtures in their own
 # Treehouse pool so those intentionally retained records cannot claim a slot
 # that a recovery fixture legitimately acquires after their processes stop.
@@ -1239,13 +1226,6 @@ for RESTART_ID in fm-hibit-resume-r1 wheelhouse-healing-r1; do
   if lab agent get "$OLD_RESTART_PANE" >/dev/null 2>&1; then
     fail "$RESTART_ID restart fixture unexpectedly retained a registered agent"
   fi
-  BOUND_RESTART_STATE=$(FM_HOME="$HOME_DIR" FM_ROOT_OVERRIDE="$ROOT" bash -c '
-    . "$1/bin/fm-backend.sh"
-    fm_backend_agent_state herdr "$2" "fm-$3"
-  ' bash "$ROOT" "$(grep '^window=' "$RESTART_META" | cut -d= -f2-)" "$RESTART_ID")
-  [ "$BOUND_RESTART_STATE" = missing ] \
-    || fail "$RESTART_ID process-bound record accepted a replacement shell: $BOUND_RESTART_STATE"
-  use_legacy_restart_record "$RESTART_META"
   RECLAIM_FOCUS=$(focus_snapshot)
   spawn_task "$RESTART_ID" "$HOME_DIR" "$RECOVERY_PROJECT_DIR" > "$TMP_ROOT/$RESTART_ID-reclaim.out" 2> "$TMP_ROOT/$RESTART_ID-reclaim.err" \
     || fail "$RESTART_ID same-identity reclaim failed: $(cat "$TMP_ROOT/$RESTART_ID-reclaim.err")"
@@ -1272,7 +1252,6 @@ for RESTART_ID in fm-hibit-resume-r1 wheelhouse-healing-r1; do
       || fail "could not reprovision the isolated session for idempotent reclaim"
     PRIOR_RESTART_WT=$NEW_RESTART_WT
     PRIOR_RESTART_PANE=$NEW_RESTART_PANE
-    use_legacy_restart_record "$RESTART_META"
     spawn_task "$RESTART_ID" "$HOME_DIR" "$RECOVERY_PROJECT_DIR" > "$TMP_ROOT/$RESTART_ID-idempotent.out" 2> "$TMP_ROOT/$RESTART_ID-idempotent.err" \
       || fail "$RESTART_ID repeated reclaim failed: $(cat "$TMP_ROOT/$RESTART_ID-idempotent.err")"
     NEW_RESTART_WT=$(remember_meta_worktree "$RESTART_META")
@@ -1294,9 +1273,9 @@ for RESTART_ID in fm-hibit-resume-r1 wheelhouse-healing-r1; do
   "$REAL_TREEHOUSE" return --force "$OLD_RESTART_WT" >/dev/null 2>&1 || true
   "$REAL_TREEHOUSE" return --force "$NEW_RESTART_WT" >/dev/null 2>&1 || true
 done
-pass "real Herdr lab: process-bound restarts reject replacement shells; legacy Hi Bit and Wheelhouse records reclaim one nested space with exact focus and idempotence"
+pass "real Herdr lab: Hi Bit and Wheelhouse-style same-identity restarts reclaim one nested space with exact focus and idempotence"
 
-# A legacy secondmate child binds and reclaims only inside its own home and parent.
+# A secondmate child binds and reclaims only inside its own home and parent.
 CROSS_RESTART_ID=wheel-child-resume
 mkdir -p "$SECOND_HOME_A/data/$CROSS_RESTART_ID"
 write_ship_brief "$SECOND_HOME_A" "$CROSS_RESTART_ID" 'Cross-home restart fixture.'
@@ -1316,7 +1295,6 @@ PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" stop "$HERDR_LAB_SESSION" >/dev/
   || fail "could not stop the isolated session for cross-home restart"
 PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" provision "$HERDR_LAB_SESSION" \
   || fail "could not reprovision the isolated session for cross-home restart"
-use_legacy_restart_record "$CROSS_RESTART_META"
 spawn_task "$CROSS_RESTART_ID" "$SECOND_HOME_A" "$RECOVERY_PROJECT_DIR" > "$TMP_ROOT/cross-restart-resume.out" 2> "$TMP_ROOT/cross-restart-resume.err" \
   || fail "cross-home same-identity reclaim failed: $(cat "$TMP_ROOT/cross-restart-resume.err")"
 CROSS_NEW_WT=$(remember_meta_worktree "$CROSS_RESTART_META")
@@ -1332,8 +1310,8 @@ teardown_task "$CROSS_RESTART_ID" "$SECOND_HOME_A" > "$TMP_ROOT/cross-restart-te
 "$REAL_TREEHOUSE" return --force "$CROSS_NEW_WT" >/dev/null 2>&1 || true
 pass "real Herdr lab: secondmate restart binding and reclaim stay isolated to the exact child home and parent"
 
-# Two legacy homes recovering concurrently serialize on the named session
-# lock and each replace only their own exact husk.
+# Two homes recovering concurrently serialize on the named session lock and
+# each replace only their own exact husk.
 PRIMARY_WAVE_ID=resume-wave-primary
 BRAVO_WAVE_ID=resume-wave-bravo
 mkdir -p "$HOME_DIR/data/$PRIMARY_WAVE_ID" "$SECOND_HOME_B/data/$BRAVO_WAVE_ID"
@@ -1355,8 +1333,6 @@ PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" stop "$HERDR_LAB_SESSION" >/dev/
   || fail "could not stop the isolated session for concurrent recovery"
 PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" provision "$HERDR_LAB_SESSION" \
   || fail "could not reprovision the isolated session for concurrent recovery"
-use_legacy_restart_record "$PRIMARY_WAVE_META"
-use_legacy_restart_record "$BRAVO_WAVE_META"
 CONCURRENT_RECOVERY_FOCUS=$(focus_snapshot)
 # A live holder that keeps the session lock past the recovery wait is stuck:
 # recovery refuses clearly before any Herdr mutation.

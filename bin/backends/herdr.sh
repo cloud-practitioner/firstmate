@@ -2410,6 +2410,35 @@ fm_backend_herdr_pane_process_identity() {
   printf 'ps:%s:%s\n' "$pid" "$starttime"
 }
 
+# fm_backend_herdr_pane_is_own_husk: succeeds only when ALL hold for the pane
+# at the recorded address: its tab label is fm-<id>, its foreground working
+# folder is inside the record's worktree or project folder, and no live agent
+# runs in it. Any unreadable fact fails, so an unprovable pane stays foreign.
+fm_backend_herdr_pane_is_own_husk() {  # <session> <pane> <id> <meta>
+  local session=$1 pane=$2 id=$3 meta=$4 wt proj info cwd tab_id label inside
+  wt=$(fm_backend_herdr_meta_value "$meta" worktree)
+  [ -n "$wt" ] || return 1
+  proj=$(fm_backend_herdr_meta_value "$meta" project)
+  info=$(fm_backend_herdr_cli "$session" pane get "$pane" 2>/dev/null) || return 1
+  cwd=$(printf '%s' "$info" | jq -r '.result.pane.foreground_cwd // .result.pane.cwd // empty' 2>/dev/null)
+  tab_id=$(printf '%s' "$info" | jq -r '.result.pane.tab_id // empty' 2>/dev/null)
+  [ -n "$cwd" ] && [ -n "$tab_id" ] || return 1
+  # Spawn creates the tab in the project folder and the agent enters the
+  # worktree afterwards, so a restored shell sits in either of the task's
+  # own folders.
+  case "$cwd/" in "${wt%/}/"*) inside=1 ;; *) inside=0 ;; esac
+  if [ "$inside" = 0 ] && [ -n "$proj" ]; then
+    case "$cwd/" in "${proj%/}/"*) inside=1 ;; esac
+  fi
+  [ "$inside" = 1 ] || return 1
+  label=$(fm_backend_herdr_cli "$session" tab get "$tab_id" 2>/dev/null | jq -r '.result.tab.label // empty' 2>/dev/null)
+  [ "$label" = "fm-$id" ] || return 1
+  case "$(fm_backend_herdr_pane_agent_state "$session" "$pane")" in
+    no-agent|stale-agent) return 0 ;;
+  esac
+  return 1
+}
+
 fm_backend_herdr_endpoint_foreign() {  # <session> <pane> [expected-label]
   local session=$1 pane=$2 want=${3:-} state meta id ids='' wt window cwd tab_id label info checked=0 identity actual
   [ -n "$session" ] && [ -n "$pane" ] || return 1
@@ -2434,6 +2463,10 @@ fm_backend_herdr_endpoint_foreign() {  # <session> <pane> [expected-label]
     if [ -n "$identity" ]; then
       actual=$(fm_backend_herdr_pane_process_identity "$session" "$pane") || return 2
       [ "$actual" != "$identity" ] || return 1
+      # A different process is the task's own dead husk (a server restart
+      # replaces the shell at the same address) only when the pane still
+      # carries the task's label and worktree and runs no live agent.
+      fm_backend_herdr_pane_is_own_husk "$session" "$pane" "$id" "$meta" && return 1
       checked=1
       continue
     fi

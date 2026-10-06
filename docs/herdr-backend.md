@@ -746,9 +746,10 @@ If the identity cannot be obtained during spawn or relaunch, publication omits t
 A relaunch replaces any previously recorded identity with the newly read value, or removes it when the new read is unavailable.
 
 `fm_backend_herdr_endpoint_foreign`, also used by the data-plane dispatcher guard, compares the current process identity whenever a claiming record carries it.
-A mismatch is treated as foreign, regardless of matching cwd or `fm-<id>` label.
+A mismatch is treated as foreign, regardless of matching cwd or `fm-<id>` label, except for the task's own dead husk: a server restart replaces the shell at the same address, so a mismatched pane is still reclaimed in place when all three hold - its tab label is `fm-<id>`, its foreground working folder is inside the recorded worktree or project folder (spawn creates the tab in the project folder before the agent enters the worktree), and no live agent runs in it.
+Any other mismatched pane, including a live agent with the matching label and worktree, is foreign.
 An unreadable identity blocks active operations and closure but reports `unreadable` for liveness unless the pane or server is independently proven gone; it does not authorize a duplicate launch.
-A server restart that replaces the pane shell therefore invalidates the binding; a live-handoff that preserves it does not.
+A server restart that replaces the pane shell therefore changes the process but leaves the husk reclaimable in place as above ([Husks after a server restart](#husks-after-a-server-restart) is unchanged); a live-handoff that preserves the process does not even change the identity.
 A foreign pane reads `missing` in the recovery-grade view, so the relaunch path can bind a fresh endpoint in the recorded session.
 Active capture, key, text, and classifier dispatchers establish server readiness before checking ownership, so restoring a stopped server cannot bypass the check.
 Passive liveness and existence probes do not start the server.
@@ -767,7 +768,7 @@ Unreadable legacy panes and records without a worktree are not proof of foreign 
 When the caller has no label, every record in the state directory claiming the exact target is consulted; any matching claimant can allow the operation.
 The guarantee is therefore scoped to the task record selected by the caller and its owning state directory, not ambient or other-home records.
 
-`tests/fm-backend-herdr.test.sh` exercises portable identity reads without `/proc`, identity mismatches despite matching labels and worktrees, process-preserving handoffs, fresh process bindings, and successful spawn/relaunch with the legacy-record fallback when the identity read fails.
+`tests/fm-backend-herdr.test.sh` exercises portable identity reads without `/proc`, identity mismatches despite matching labels or worktrees, the in-place reclaim of the task's own restart husk, process-preserving handoffs, fresh process bindings, and successful spawn/relaunch with the legacy-record fallback when the identity read fails.
 
 ## Agent status authority and relaunch
 
