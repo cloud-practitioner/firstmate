@@ -748,7 +748,6 @@ fm_backend_resolve_selector() {  # <raw-target> <state-dir>
 # at every call site. Each verified backend adds its own arm here, without
 # changing call sites.
 
-# fm_backend_capture: bounded plain-text session capture.
 fm_backend_endpoint_ready() {
   if [ "$1" = herdr ]; then
     fm_backend_herdr_target_ready "$2" || return 1
@@ -770,6 +769,7 @@ fm_backend_endpoint_foreign() {  # <backend> <target> [expected-label]
   fi
 }
 
+# fm_backend_capture: bounded plain-text session capture.
 fm_backend_capture() {  # <backend> <target> <lines> [expected-label]
   local backend=$1
   shift
@@ -1007,7 +1007,12 @@ fm_backend_target_exists() {  # <backend> <target> [expected-label]
 # process level through the shared classifier in bin/fm-agent-process-lib.sh,
 # never from a registration or a rendered title alone. The tmux adapter
 # requires a successful session inventory and returns `missing` only when it
-# omits the exact window; the Herdr adapter reuses its strict husk classifier -
+# omits the exact window; Herdr first applies recorded-endpoint ownership
+# (docs/herdr-backend.md "Endpoints from a previous session"), treating a proven
+# foreign pane as `missing` and an unreadable bound identity as `unreadable`
+# unless pane/server absence is independently proven. A caller's `fm-<id>`
+# selects its task record in the owning state directory. If ownership permits
+# classification, the Herdr adapter reuses its strict husk classifier -
 # which verifies a registered agent against `pane process-info` and the real
 # process table, so a registration Herdr kept over a shell-only pane reads
 # `dead` here (issue #4115) - then maps a positively stopped session server to

@@ -2455,26 +2455,22 @@ fm_backend_herdr_endpoint_foreign() {  # <session> <pane> [expected-label]
 }
 
 # fm_backend_herdr_agent_state: recovery-grade state for the same session-start
-# sweep as the tmux classifier. It reuses the husk classifier rather than
-# creating a second Herdr state machine: a structurally gone pane is `missing`,
-# a confirmed agent-less pane is `dead` - whether nothing is registered or a
-# registration lingers over a shell-only pane (stale-agent, issue #4115) - a
-# registered agent with a live process is `alive`, and an unexpected or failed
-# API read is `unreadable`.
+# sweep as the tmux classifier. bin/fm-backend.sh's fm_backend_agent_state
+# owns the state contract; docs/herdr-backend.md "Endpoints from a previous
+# session" owns the recorded-endpoint ownership policy applied before the
+# husk classifier.
 #
-# One exception to that last case, and it is deliberately made HERE rather than
+# A stopped-server exception is deliberately made HERE rather than
 # in the husk classifier: a read can fail because the recorded session's server
 # is not running at all, which is authoritative absence for every pane in that
 # session rather than an ambiguous answer about one of them. Treating it as
 # `unreadable` stranded tasks with no sanctioned recovery (issue #4091), so a
 # positively stopped server reads `missing` instead.
 #
-# Only this recovery-grade read is widened. fm_backend_herdr_pane_agent_state
-# and the presence classifier under it stay strict, so husk detection, duplicate
-# prevention, rollback, and teardown - which can DESTROY things - keep refusing
-# on exactly the reads they refused on before. A server that is running, or
-# whose state cannot itself be read, still yields `unreadable` here too: absence
-# is claimed only from positive evidence of it.
+# This stopped-server exception does not widen the low-level pane or presence
+# classifiers: an API failure alone still grants no destructive authority.
+# After ownership permits classification, a failed pane read with a running
+# or unreadable server still yields `unreadable`, never inferred absence.
 fm_backend_herdr_agent_state() {  # <target> [expected-label]
   local target=$1 ownership=0
   fm_backend_herdr_parse_target "$target" || { printf 'unreadable'; return 0; }
@@ -2517,11 +2513,10 @@ fm_backend_herdr_agent_state() {  # <target> [expected-label]
 # registrations die. So `missing` there means unreachable right now, and a
 # caller that rebound on it would abandon a pane that was about to come back.
 #
-# Only the RECORDED session's server is ensured, never a workspace or tab, so
-# this creates nothing: a merely-stopped server comes back and the recorded
-# pane classifies `dead` (adoptable), a genuinely destroyed pane still reads
-# `missing`, a returning agent reads `alive`, and a server that will not start
-# is `unreadable` - unreachable, which refuses, rather than absence.
+# Only the RECORDED session's server is ensured, never a workspace or tab.
+# The restored address must still pass the recorded-endpoint ownership check
+# before it can be adopted: restoring a layout does not restore a process
+# binding. A server that will not start is `unreadable`, not proof of absence.
 fm_backend_herdr_endpoint_absence_recheck() {  # <target> [expected-label]
   local target=$1
   fm_backend_herdr_parse_target "$target" || { printf 'unreadable'; return 0; }
@@ -2545,18 +2540,10 @@ fm_backend_herdr_agent_alive() {  # <target> [expected-label]
 # uniqueness itself (verified: two tabs can share a label), so the duplicate
 # check is ours, mirroring tmux's manual check.
 #
-# A same-labeled tab already existing no longer means an automatic refusal:
-# herdr persists and restores its whole session layout (workspaces/tabs/
-# panes) across a server restart, including a reboot, and a restored fm-<id>
-# task tab comes back a HUSK - a dead pane, or (today, and unconditionally
-# once a future `resume_agents_on_restore = false` config ships) a plain
-# agent-less shell sitting in the saved cwd, never the crewmate that used to
-# be there. Before this fix, every fleet respawn after such a restart needed
-# the operator to manually close each husk pane first before firstmate could
-# spawn into it again. fm_backend_herdr_tab_is_husk classifies the existing
-# tab's pane conservatively (dead or no-agent only; anything live or
-# ambiguous refuses exactly as before) and, when it is a confirmed husk,
-# this function CLOSES AND REPLACES it instead of refusing.
+# A same-labeled tab is not ownership proof. The recorded-endpoint policy in
+# docs/herdr-backend.md "Endpoints from a previous session" decides which
+# candidates may reach fm_backend_herdr_tab_is_husk; only its conservative
+# dead/no-agent proof permits replacement.
 #
 # Ordering is deliberate: the REPLACEMENT tab is created FIRST, and the husk
 # is closed only AFTER that succeeds - never the reverse. Closing a
@@ -3719,13 +3706,11 @@ fm_backend_herdr_kill() {  # <target> [<unused> [expected-label]]
   fi
 }
 
-# fm_backend_herdr_endpoint_confirmed_gone: gate durable-record removal on
-# the exact recorded pane's structured presence
-# (fm_backend_herdr_pane_presence_state), read-only, so a refused, skipped,
-# or failed close never erases a live task's endpoint identity.
-# Only a structured pane_not_found proves the endpoint gone; present and
-# unknown presence refuse after every close path, and a missing or malformed
-# target identity is ambiguity that also refuses, never proof of a gone pane.
+# fm_backend_herdr_endpoint_confirmed_gone: read-only durable-record removal
+# gate; docs/herdr-backend.md "When task records are erased" owns the policy.
+# A failed process-identity read after an owned close must not prevent the
+# structured presence check from proving absence. Without foreign ownership
+# proof, present/unknown presence and malformed target identity still refuse.
 fm_backend_herdr_endpoint_confirmed_gone() {  # <target> [expected-label]
   local presence
   fm_backend_herdr_parse_target "$1" || return 1

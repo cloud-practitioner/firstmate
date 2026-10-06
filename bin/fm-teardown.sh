@@ -3755,11 +3755,10 @@ elif [ "$BACKEND" = herdr ] \
   echo "warning: herdr presentation journal for $ID was not retired by its close; no workspace cleanup was attempted" >&2
 fi
 # A refused, skipped, or failed Herdr close must never erase a live task's
-# durable endpoint identity: unless the exact pane is confirmed gone, retain
-# every record and stop before any removal below so a later rerun can retry
-# the locked close. Only a structured not-found proves the pane gone; unknown
-# presence, missing or malformed endpoint identity, and missing confirmation
-# machinery all refuse.
+# durable endpoint identity: require fm_backend_herdr_endpoint_confirmed_gone
+# to prove the task's endpoint absent before any removal below, so a later
+# rerun can retry the locked close. docs/herdr-backend.md "When task records
+# are erased" owns the proof policy; missing confirmation machinery refuses.
 if [ "$BACKEND" = herdr ]; then
   fm_backend_source herdr || true
   if ! declare -F fm_backend_herdr_endpoint_confirmed_gone >/dev/null 2>&1; then
