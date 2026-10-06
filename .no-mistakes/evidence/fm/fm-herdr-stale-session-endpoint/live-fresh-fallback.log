@@ -1,0 +1,9 @@
+SCENARIO: fresh spawn succeeds when the portable identity read fails
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/fresh-home
+notice: fresh ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned fresh harness=claude kind=ship mode=local-only yolo=off window=fm-lab-fresh-91224-21752:w1:p2 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-9be9ae/1/project
+fresh spawn target=fm-lab-fresh-91224-21752:w1:p2; identity omitted; real isolated worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-9be9ae/1/project
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":96774,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-9be9ae/1/project","name":"claude","pid":96774}],"pane_id":"w1:p2","shell_pid":93915},"type":"pane_process_info"}}
+{"id":"cli:pane:get","result":{"pane":{"agent":"claude","agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/project","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/pool/.treehouse/project-9be9ae/1/project","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":11,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d24afa4563c2","workspace_id":"w1"},"type":"pane_info"}}
+fresh fallback endpoint removed and absence confirmed
+TEARDOWN: lab absent; default-session tripwire unchanged

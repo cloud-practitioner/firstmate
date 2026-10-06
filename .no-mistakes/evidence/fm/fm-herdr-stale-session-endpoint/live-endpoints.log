@@ -1,0 +1,154 @@
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-stale-4147188-29595"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":".live-validation/user/.config/herdr/sessions/fm-lab-stale-4147188-29595/herdr.sock","session":"fm-lab-stale-4147188-29595","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+SCENARIO: owned process, exec, rename and cwd drift retain ownership
+owned-shell-state => dead
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree$ p
+rintf 'OWNED_ENDPOINT_SENTINEL\n'
+OWNED_ENDPOINT_SENTINEL
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree$exec-preserves-identity => ps:4148227:Tue Oct  6 04:40:07 2026
+identity-allows-label-and-cwd-drift => dead
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree$ p
+rintf 'OWNED_ENDPOINT_SENTINEL\n'
+OWNED_ENDPOINT_SENTINEL
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree$ e
+xec env HISTFILE=/dev/null PS1='lab$ ' bash --noprofile --norc
+lab$ cd '/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/project'
+lab$
+SCENARIO: fresh session recycles same cwd, label and address but is missing
+recycled-pane-id => w1:p2
+recycled-tab-id => w1:t2
+recorded identity=ps:4148227:Tue Oct  6 04:40:07 2026; fresh identity=ps:4154094:Tue Oct  6 04:40:29 2026
+recycled-same-label-and-cwd => missing
+recycled-alive-probe => dead
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+REFUSED: bin/fm-peek.sh mine 20
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+error: key 'C-c' not sent to fm-lab-stale-4147188-29595:w1:p2 (herdr send failed; tried meta=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/home/state/mine.meta; backend=from-meta)
+REFUSED: bin/fm-send.sh mine --key C-c
+REFUSED: fm_backend_send_text_submit herdr fm-lab-stale-4147188-29595:w1:p2 touch SHOULD_NOT_EXIST 1 0 0 fm-mine
+foreign-busy => unknown
+foreign-composer => unknown
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d2499260a692","workspace_id":"w1"},"type":"pane_info"}}
+foreign-removal-verdict => absent
+
+SCENARIO: secondmate home and task-specific claimant cannot borrow ownership
+child-home-stale-task => missing
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  2 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REFUSED: env FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/child-home bin/fm-peek.sh mine 20
+child-home-owned-other => dead
+secondmate-full-recovery-probe => missing:relaunchable
+secondmate-poll-recovery-probe => missing:relaunchable
+
+SCENARIO: stopped server cannot bypass active-operation ownership guard
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+error: key 'C-c' not sent to fm-lab-stale-4147188-29595:w1:p2 (herdr send failed; tried meta=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/home/state/mine.meta; backend=from-meta)
+REFUSED: bin/fm-send.sh mine --key C-c
+active-call-restored-server => running
+restored-server-stale-binding => missing
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d249a83c1f52","workspace_id":"w1"},"type":"pane_info"}}
+
+SCENARIO: real relaunch binds new endpoint and preserves work and foreign pane
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+notice: mine ships mode=direct-PR while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned mine harness=claude kind=ship mode=direct-PR yolo=off window=fm-lab-stale-4147188-29595:w1:p3 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree
+relaunch target=fm-lab-stale-4147188-29595:w1:p3; old foreign target=fm-lab-stale-4147188-29595:w1:p2
+published-new-identity => ps:4170307:Tue Oct  6 04:41:01 2026
+preserved-uncommitted-work => uncommitted work to preserve
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":4175311,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","name":"claude","pid":4175311}],"pane_id":"w1:p3","shell_pid":4170307},"type":"pane_process_info"}}
+xport FM_TASK_ID=mine
+node@afd4c13fc509:/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree$ .
+ '/tmp/fm-mine+351de00b048cc9df03e22d65896807ae6b3584ff3f41886da34bb3c41976bcc9/launch.s1791261665.4166905.22029.sh'
+Welcome to Claude Code v2.1.290
+..........................................................
+
+     *                                       █████▓▓░
+                                 *         ███▓░     ░░
+            ░░░░░░                        ███▓░
+    ░░░   ░░░░░░░░░░                      ███▓░
+   ░░░░░░░░░░░░░░░░░░░    *                ██▓░░      ▓
+                                             ░▓▓███▓▓░
+ *                                 ░░░░
+                                 ░░░░░░░░
+                               ░░░░░░░░░░░░░░░░
+       █████████                                        *
+      ██▄█████▄██                        *
+       █████████      *
+.......█ █   █ █..........................................
+
+ Let's get started.
+
+ Choose the text style that looks best with your terminal
+ To change this later, run /theme
+
+     Auto (match terminal)
+ ❯ ✔ Dark mode
+     Light mode
+     Dark mode (colorblind-friendly)
+     Light mode (colorblind-friendly)
+     Dark mode (ANSI colors only)
+     Light mode (ANSI colors only)
+
+ ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+  1  function greet() {
+  2 -  console.log("Hello, World!");
+  2 +  console.log("Hello, Claude!");
+  3  }
+ ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+  Syntax theme: Monokai Extended (ctrl+t to disable)
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d249a83c1f52","workspace_id":"w1"},"type":"pane_info"}}
+
+SCENARIO: owned endpoint removal confirms absence after process disappears
+owned-removal-confirmed => absent
+
+SCENARIO: legacy records retain best-effort cwd-or-label compatibility
+legacy-owned-shell => dead
+legacy-cwd-match => dead
+legacy-both-label-and-cwd-mismatch => missing
+
+SCENARIO: failed portable ps read still launches legacy relaunch without identity
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+notice: fallback ships mode=direct-PR while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+notice: fallback ships branch=fm/mine while project registers the ship-branch prefix 'fm/' (branch fm/fallback) - the task's branch and PR will read as firstmate-authored; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned fallback harness=claude kind=ship mode=direct-PR yolo=off window=fm-lab-stale-4147188-29595:w1:p5 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree
+failed-ps-identity-omitted => 
+legacy-relaunch-adopts-owned-endpoint => fm-lab-stale-4147188-29595:w1:p5
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":4183498,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","name":"claude","pid":4183498}],"pane_id":"w1:p5","shell_pid":4177146},"type":"pane_process_info"}}
+fallback-removal => absent
+
+SCENARIO: abort before publication removes response-owned projection despite stale address claimant
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+notice: b ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+error: treehouse get did not enter an isolated worktree within 60s (last seen '/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/project': it is the spawning project itself; spawning project '/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/project'); inspect window fm-lab-stale-4147188-29595:w2:p2
+warning: herdr presentation cleanup could not verify the exact pane; refusing focus-unsafe pane close
+{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":3,"tab_count":3,"workspace_id":"w1"}]}}
+response-owned-abort-removed-workspace => ["w1"]
+
+SCENARIO: host-local remote control uses parent-route, not ordinary home records
+remote-owning-route-stale => missing
+remote-foreign-capture-empty => 
+remote-foreign-observe => unknown
+error: no-mistakes gate agent must not drive the fleet (NO_MISTAKES_GATE set)
+REFUSED: env FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/remote-home bin/fm-remote-secondmate-control.sh key ios C-c
+notice: doorbell not typed because the agent in fm-remote:w1:p2 has exited; the steer is durably recorded at /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/remote-home/state/parent-route/ios.inbox/001.msg for recovery
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d249a83c1f52","workspace_id":"w1"},"type":"pane_info"}}
+ALL LIVE ENDPOINT SCENARIOS PASSED
+TEARDOWN: named lab fm-lab-stale-4147188-29595
+TEARDOWN: default-session tripwire unchanged and lab absent

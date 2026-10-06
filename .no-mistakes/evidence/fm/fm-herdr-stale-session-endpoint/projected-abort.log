@@ -1,0 +1,5 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+notice: b ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+error: treehouse get did not enter an isolated worktree within 60s (last seen '/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/project': it is the spawning project itself; spawning project '/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/project'); inspect window fm-lab-stale-4147188-29595:w2:p2
+warning: herdr presentation cleanup could not verify the exact pane; refusing focus-unsafe pane close

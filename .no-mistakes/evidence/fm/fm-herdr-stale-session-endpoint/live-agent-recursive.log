@@ -1,0 +1,30 @@
+
+SCENARIO: live Claude process is alive only for its bound owner
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":151440,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","name":"claude","pid":151440}],"pane_id":"w1:p1","shell_pid":151397},"type":"pane_process_info"}}
+bound-live-claude => alive
+
+SCENARIO: unreadable recorded identity refuses capture, keys and close
+identity-unavailable-not-missing => unreadable
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":151440,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","name":"claude","pid":151440}],"pane_id":"w1:p1","shell_pid":151397},"type":"pane_process_info"}}
+unreadable-probe-left-agent-intact => alive
+baseline-misattributed-live-agent => alive
+recycled-live-claude-is-not-stale-task => missing
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":151440,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","name":"claude","pid":151440}],"pane_id":"w1:p1","shell_pid":151397},"type":"pane_process_info"}}
+live foreign Claude remains present and unsteered
+
+SCENARIO: forced recursive stale secondmate cleanup preserves all foreign panes
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/more-home
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  3 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/code/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/code/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown parent complete (window fm-lab-ownership-151249-13956:w1:p1, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/more-mate)
+{"id":"cli:pane:get","result":{"pane":{"agent":"claude","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":5,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d24b88e48321","workspace_id":"w1"},"type":"pane_info"}}
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d24b8c46a472","workspace_id":"w1"},"type":"pane_info"}}
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","pane_id":"w1:p3","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t3","terminal_id":"term_65d24b8c4ab623","workspace_id":"w1"},"type":"pane_info"}}
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":151440,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M47HX8Y8BQRSDDHWXNW190JH/.live-validation/worktree","name":"claude","pid":151440}],"pane_id":"w1:p1","shell_pid":151397},"type":"pane_process_info"}}
+recursive records/homes removed; every unrelated endpoint survived
+TEARDOWN: lab absent; default-session tripwire unchanged
