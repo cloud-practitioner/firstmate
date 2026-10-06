@@ -1006,16 +1006,18 @@ fm_backend_herdr_projection_target_tab_mutation_allowed() {  # <session> <tab-id
 # pane-death path. The exact-tab restore below remains the backstop, and any
 # ambiguity falls back to the plain explicit close, which the backstop masks
 # exactly as before this hardening.
-fm_backend_herdr_projection_close_pane_focus_preserving() {  # <session> <pane-id> [required-agent-state]
-  local session=$1 pane_id=$2 required_agent_state=${3:-}
+fm_backend_herdr_projection_close_pane_focus_preserving() {  # <session> <pane-id> [required-agent-state] [expected-label]
+  local session=$1 pane_id=$2 required_agent_state=${3:-} expected_label=${4:-}
   local before active_tab info target_pane target_tab target_ws close_status state plan plan_shell_pid plan_move_record workspace_presence
   local skip_restore=0
   FM_BACKEND_HERDR_PROJECTION_CLOSE_AGENT_STATE=""
   [ -n "$pane_id" ] || return 0
-  if fm_backend_herdr_endpoint_foreign "$session" "$pane_id"; then
-    return 1
-  else
-    [ "$?" -eq 1 ] || return 1
+  if [ -n "$expected_label" ]; then
+    if fm_backend_herdr_endpoint_foreign "$session" "$pane_id" "$expected_label"; then
+      return 1
+    else
+      [ "$?" -eq 1 ] || return 1
+    fi
   fi
   before=$(fm_backend_herdr_projection_focus_snapshot "$session") || {
     echo "warning: herdr presentation cleanup could not capture exact active workspace and tab; refusing focus-unsafe pane close" >&2
@@ -2982,7 +2984,7 @@ fm_backend_herdr_projection_reclaim_task() {  # <session> <journal> <task-id> <h
       return 2
       ;;
   esac
-  if fm_backend_herdr_projection_close_pane_focus_preserving "$session" "$meta_pane" no-agent; then
+  if fm_backend_herdr_projection_close_pane_focus_preserving "$session" "$meta_pane" no-agent "$task_label"; then
     close_status=0
   else
     close_status=$?
