@@ -71,6 +71,7 @@ fm_snapshot_env_clear() {
 # fm_snapshot_env_unset_command: a portable shell command that clears marked
 # paths before the marker and always-scoped names, matching fm_snapshot_env_clear.
 fm_snapshot_env_unset_command() {
+  # shellcheck disable=SC2016  # Expand the marker when the generated command runs.
   printf 'if [ "${FM_SNAPSHOT_SCOPED_ENV:-}" = 1 ]; then unset %s; fi; unset %s' \
     "${FM_SNAPSHOT_PATH_ENV_NAMES[*]}" "${FM_SNAPSHOT_ONLY_ENV_NAMES[*]}"
 }
