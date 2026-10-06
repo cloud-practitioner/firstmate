@@ -393,6 +393,57 @@ test_cli_helper_sets_env_and_appends_trailing_session_flag() {
   pass "fm_backend_herdr_cli: sets HERDR_SESSION AND appends a trailing --session flag on every call"
 }
 
+# Regression: fm-fleet-snapshot hands fm-crew-state captured records through
+# FM_CREW_STATE_*_OVERRIDE, and a herdr call made during that read auto-starts a
+# server that keeps the caller's environment, so every later pane inherited the
+# stale override. No herdr child may receive the snapshot-scoped variables, on
+# the cli path, the server-launch path, and the direct status/session reads.
+test_herdr_client_calls_never_receive_snapshot_scoped_env() {
+  local dir fb envlog name var out
+  dir="$TMP_ROOT/snapshot-env-strip"; mkdir -p "$dir/fakebin"; fb="$dir/fakebin"; envlog="$dir/env.log"
+  cat > "$fb/herdr" <<'SH'
+#!/usr/bin/env bash
+{ printf 'CALL'; for a in "$@"; do printf ' %s' "$a"; done; printf '\n'; env; } >> "${FM_FAKE_HERDR_ENV_LOG:?}"
+case "${1:-}" in
+  status) printf '{"client":{"version":"0.7.1","protocol":14},"server":{"running":true}}\n' ;;
+  session) printf '{"sessions":[{"name":"fmtest","running":true,"socket_path":"/tmp/x.sock"}]}\n' ;;
+esac
+exit 0
+SH
+  chmod +x "$fb/herdr"
+  : > "$envlog"
+  out=$(PATH="$fb:$PATH" FM_FAKE_HERDR_ENV_LOG="$envlog" \
+    FM_SNAPSHOT_SCOPED_ENV=1 \
+    FM_CREW_STATE_META_OVERRIDE=/tmp/leak.meta FM_CREW_STATE_STATUS_OVERRIDE=/tmp/leak.status \
+    FM_HOME_SUMMARY_IF_IDLE=0 FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1 \
+    FM_ROOT_OVERRIDE=/tmp/leak-root FM_STATE_OVERRIDE=/tmp/leak-state FM_DATA_OVERRIDE=/tmp/leak-data \
+    FM_PROJECTS_OVERRIDE=/tmp/leak-projects FM_CONFIG_OVERRIDE=/tmp/leak-config \
+    bash -c '. "$0/bin/backends/herdr.sh"
+      fm_backend_herdr_cli fmtest workspace list >/dev/null
+      fm_backend_herdr_cli fmtest server >/dev/null
+      fm_backend_herdr_version_check >/dev/null
+      fm_backend_herdr_socket_path fmtest >/dev/null
+      fm_backend_herdr_client_status herdr fmtest >/dev/null
+      printf "%s %s" "$FM_CREW_STATE_META_OVERRIDE" "$FM_STATE_OVERRIDE"' "$ROOT")
+  [ "$(grep -c '^CALL' "$envlog")" -ge 5 ] || fail "the fake herdr did not see every client call"
+  for var in FM_SNAPSHOT_SCOPED_ENV FM_CREW_STATE_META_OVERRIDE FM_CREW_STATE_STATUS_OVERRIDE \
+    FM_HOME_SUMMARY_IF_IDLE FM_HOME_SUMMARY_WORKER_BEST_EFFORT FM_ROOT_OVERRIDE FM_STATE_OVERRIDE \
+    FM_DATA_OVERRIDE FM_PROJECTS_OVERRIDE FM_CONFIG_OVERRIDE; do
+    ! grep -q "^$var=" "$envlog" || fail "herdr child received snapshot-scoped $var"
+  done
+  assert_contains "$(grep '^HERDR_SESSION=' "$envlog" | head -1)" "HERDR_SESSION=fmtest" \
+    "the herdr child must keep the session scoping"
+  assert_equals "/tmp/leak.meta /tmp/leak-state" "$out" "the calling shell must keep its own values"
+  # Without the snapshot marker the wider path overrides are test seams and pass through.
+  : > "$envlog"
+  PATH="$fb:$PATH" FM_FAKE_HERDR_ENV_LOG="$envlog" FM_STATE_OVERRIDE=/tmp/seam-state \
+    FM_CREW_STATE_META_OVERRIDE=/tmp/leak.meta \
+    bash -c '. "$0/bin/backends/herdr.sh"; fm_backend_herdr_cli fmtest workspace list >/dev/null' "$ROOT"
+  grep -q '^FM_STATE_OVERRIDE=/tmp/seam-state$' "$envlog" || fail "an unmarked FM_STATE_OVERRIDE test seam must pass through"
+  ! grep -q '^FM_CREW_STATE_META_OVERRIDE=' "$envlog" || fail "the crew-state override leaked without the marker"
+  pass "herdr client boundary strips snapshot-scoped variables from every herdr child and keeps the caller's own"
+}
+
 # --- client selection: a stale client shadowing a compatible one -------------
 #
 # Two herdr clients on PATH is a real host shape (a self-updated ~/.local/bin
@@ -5789,6 +5840,7 @@ test_workspace_label_secondmate_marker_trims_whitespace
 test_workspace_label_empty_marker_falls_back_to_primary
 test_workspace_label_different_secondmates_get_different_labels
 test_cli_helper_sets_env_and_appends_trailing_session_flag
+test_herdr_client_calls_never_receive_snapshot_scoped_env
 test_agent_state_bypasses_a_stale_client_shadowing_a_compatible_one
 test_recovery_grade_read_widens_only_at_its_own_boundary
 test_stale_registration_over_a_shell_only_pane_is_agent_free

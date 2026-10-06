@@ -633,6 +633,14 @@ fm_backlog_directory_present "$STATE" "state directory" || {
 . "$SCRIPT_DIR/fm-secondmate-nudge-lib.sh"
 # shellcheck source=bin/fm-backend.sh
 . "$SCRIPT_DIR/fm-backend.sh"
+# shellcheck source=bin/fm-snapshot-env-lib.sh
+. "$SCRIPT_DIR/fm-snapshot-env-lib.sh"
+# Snapshot-scoped variables (FM_CREW_STATE_*_OVERRIDE and friends) are never
+# legitimate for a launched agent, and a backend command here can start a
+# long-lived server that keeps this environment, so a leaked value is cleared
+# before any backend call; the launch command below clears it again for a pane
+# whose own environment already carries one.
+fm_snapshot_env_clear
 # shellcheck source=bin/fm-control-lib.sh
 . "$SCRIPT_DIR/fm-control-lib.sh"
 # shellcheck source=bin/fm-gate-refuse-lib.sh
@@ -5219,6 +5227,9 @@ fi
 # kill switch below it is an export statement, so it survives a compound raw
 # launch and the launch-env-allowlist `env -i` wrapper.
 LAUNCH="export FM_TASK_INBOX=$(shell_quote "$STATE_REAL/$ID.inbox"); $LAUNCH"
+# A pane started by a server that inherited snapshot-scoped variables carries
+# them too, so the launch command clears them for the agent itself.
+LAUNCH="$(fm_snapshot_env_unset_command); $LAUNCH"
 LAUNCH="export COMPACT_ADVISER_DISABLE=1; $LAUNCH"
 # When the live-harness gate has exported DISABLE_AUTOUPDATER into this spawn's
 # own environment, carry it into the launch command text so Claude Code's

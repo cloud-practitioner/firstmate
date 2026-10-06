@@ -1114,6 +1114,43 @@ test_stop_ends_the_home_watcher_and_publishes_downtime() {
 # --take-over stops only a watcher that the named arm itself owns. The seed
 # watcher here is this shell's child, so naming any other process leaves it
 # running and the arm attaches to it exactly as a plain arm does.
+# A watcher is long-lived and runs fm-crew-state reads, so a snapshot-scoped
+# override (FM_CREW_STATE_*_OVERRIDE) leaked into the arm's environment - for
+# example from a herdr server that inherited it - would pin every read in that
+# watcher to one stale copy. The arm must clear it before it forks the watcher.
+# The arm runs from a copy of bin/ whose watcher is a stub that records the
+# environment it was started with.
+test_arm_clears_snapshot_scoped_variables_before_forking_the_watcher() {
+  local dir state fakebin root envlog name armout
+  dir=$(make_case arm-snapshot-env)
+  state="$dir/state"
+  fakebin="$dir/fakebin"
+  root="$dir/root"
+  envlog="$dir/watcher-env.log"
+  armout="$dir/arm.out"
+  mkdir -p "$root"
+  cp -R "$ROOT/bin" "$root/bin"
+  cat > "$root/bin/fm-watch.sh" <<SH
+#!/usr/bin/env bash
+env > "$envlog"
+exit 0
+SH
+  chmod +x "$root/bin/fm-watch.sh"
+  : > "$envlog"
+  PATH="$fakebin:$PATH" FM_STATE_OVERRIDE="$state" FM_ARM_CONFIRM_TIMEOUT=2 \
+    FM_SNAPSHOT_SCOPED_ENV=leak-marker FM_CREW_STATE_META_OVERRIDE=/tmp/leak.meta \
+    FM_CREW_STATE_STATUS_OVERRIDE=/tmp/leak.status FM_HOME_SUMMARY_IF_IDLE=leak-idle \
+    FM_HOME_SUMMARY_WORKER_BEST_EFFORT=leak-best-effort \
+    "$root/bin/fm-watch-arm.sh" > "$armout" 2>&1 < /dev/null
+  [ -s "$envlog" ] || fail "the arm never started the watcher, so the case proves nothing: $(cat "$armout")"
+  for name in FM_SNAPSHOT_SCOPED_ENV FM_CREW_STATE_META_OVERRIDE FM_CREW_STATE_STATUS_OVERRIDE \
+    FM_HOME_SUMMARY_IF_IDLE FM_HOME_SUMMARY_WORKER_BEST_EFFORT; do
+    ! grep -q "^$name=" "$envlog" || fail "the watcher inherited snapshot-scoped $name from the arm"
+  done
+  grep -q '^FM_STATE_OVERRIDE=' "$envlog" || fail "the watcher must keep the legitimate FM_STATE_OVERRIDE"
+  pass "watch-arm: snapshot-scoped variables in the arm's environment never reach the watcher it forks"
+}
+
 test_take_over_attaches_to_a_cycle_the_named_arm_does_not_own() {
   local dir state fakebin armout other status
   dir=$(make_case take-over-not-owner)
@@ -1614,3 +1651,4 @@ test_handling_delivered_rejects_a_superseded_generation
 test_take_over_attaches_to_a_cycle_the_named_arm_does_not_own
 test_take_over_owns_a_fresh_cycle_and_keeps_queued_work_surfacing
 test_take_over_preserves_downtime_from_watcher_self_exit
+test_arm_clears_snapshot_scoped_variables_before_forking_the_watcher

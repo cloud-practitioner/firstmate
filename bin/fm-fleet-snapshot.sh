@@ -328,6 +328,7 @@ crew_state_json() {  # <id> [<captured-meta>] [<captured-status>]
     fm_run_timed "$FM_SNAPSHOT_CREW_STATE_TIMEOUT" \
       env FM_ROOT_OVERRIDE="$FM_ROOT" \
       FM_HOME="$FM_HOME" \
+      FM_SNAPSHOT_SCOPED_ENV=1 \
       FM_STATE_OVERRIDE="$STATE" \
       FM_CREW_STATE_META_OVERRIDE="$captured_meta" \
       FM_CREW_STATE_STATUS_OVERRIDE="$captured_status" \

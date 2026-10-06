@@ -121,6 +121,13 @@ if [ "${FM_GATE_REFUSE_BYPASS:-}" != 1 ]; then
 fi
 # shellcheck source=bin/fm-wake-lib.sh
 . "$SCRIPT_DIR/fm-wake-lib.sh"
+# shellcheck source=bin/fm-snapshot-env-lib.sh
+. "$SCRIPT_DIR/fm-snapshot-env-lib.sh"
+# The watcher is long-lived and runs fm-crew-state reads, so a snapshot-scoped
+# override leaked into this environment (for example from a herdr server that
+# inherited it) would pin every read to one stale copy; clear it before the
+# watcher forks.
+fm_snapshot_env_clear
 
 WATCH="$SCRIPT_DIR/fm-watch.sh"
 WATCH_LOCK="$STATE/.watch.lock"

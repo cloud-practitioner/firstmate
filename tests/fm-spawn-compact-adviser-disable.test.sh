@@ -382,6 +382,133 @@ SH
   pass "a compound raw launch-command still starts its agent with the compact-adviser switch on"
 }
 
+# --- snapshot-scoped variables ---------------------------------------------
+#
+# fm-fleet-snapshot scopes FM_CREW_STATE_*_OVERRIDE to one crew-state read, but
+# a herdr call during that read once started a server that kept them, so every
+# pane after it carried a stale override into its agent and watcher. A launch
+# must clear them whether they arrive in the spawn's own environment or in the
+# pane's. The probe prints every scoped value the agent started with.
+LEAK_NAMES='FM_SNAPSHOT_SCOPED_ENV FM_CREW_STATE_META_OVERRIDE FM_CREW_STATE_STATUS_OVERRIDE FM_HOME_SUMMARY_IF_IDLE FM_HOME_SUMMARY_WORKER_BEST_EFFORT'
+
+install_leak_probe() {  # <fakebin> <harness>
+  local name body=
+  for name in $LEAK_NAMES; do body="$body\${$name-unset}|"; done
+  # shellcheck disable=SC2016
+  printf '#!/bin/sh\nprintf "%%s\\n" "%s"\n' "$(printf '%s' "$body" | sed 's/\\//g')" > "$1/$2"
+  chmod +x "$1/$2"
+}
+
+# The pane shell of a server that inherited the leak: every scoped name is set.
+leaky_pane_launch() {  # <fakebin> <launch> [<preamble>]
+  env -i HOME="$TMP_ROOT/pane-home" PATH="$1:$PATH" TERM=xterm TMUX=synthetic-pane \
+    FM_SNAPSHOT_SCOPED_ENV=1 FM_CREW_STATE_META_OVERRIDE=/tmp/leak.meta \
+    FM_CREW_STATE_STATUS_OVERRIDE=/tmp/leak.status FM_HOME_SUMMARY_IF_IDLE=0 \
+    FM_HOME_SUMMARY_WORKER_BEST_EFFORT=1 \
+    /bin/sh -c "${3:-}
+$2"
+}
+
+test_snapshot_scoped_variables_are_cleared_from_the_launch() {
+  local setting rec sm id out status seen kind want='unset|unset|unset|unset|unset|'
+  for kind in ship secondmate; do
+    for setting in absent enabled; do
+      id="leak-$kind-$setting-a1"
+      rec=$(make_case "leak-$kind-$setting" codex "$id")
+      read_case "$rec"
+      [ "$setting" = absent ] || printf '%s\n' "$LEAK_NAMES" | tr ' ' '\n' > "$HOME_DIR/config/launch-env-allowlist"
+      if [ "$kind" = ship ]; then
+        out=$(run_case_spawn "$id" "$PROJ_DIR" --mode no-mistakes --yolo off)
+      else
+        sm="$CASE_DIR/secondmate-home"
+        mkdir -p "$sm/bin" "$sm/data"
+        printf '# Firstmate\n' > "$sm/AGENTS.md"
+        printf '%s\n' "$id" > "$sm/.fm-secondmate-home"
+        printf 'charter for %s\n' "$id" > "$sm/data/charter.md"
+        printf '%s\n' 'projects/' 'state/' 'data/' 'config/' '.no-mistakes/' > "$sm/.gitignore"
+        git -C "$sm" init -q -b main
+        out=$(run_case_spawn "$id" "$sm" --secondmate)
+      fi
+      status=$?
+      expect_code 0 "$status" "$kind spawn with allowlist=$setting should succeed: $out"
+      install_leak_probe "$FAKEBIN_DIR" codex
+      seen=$(leaky_pane_launch "$FAKEBIN_DIR" "$(cat "$LAUNCH_LOG")" "$(grep '^export ' "$PANE_LOG")") \
+        || fail "$kind, allowlist $setting: the emitted launch failed to run"
+      assert_equals "$want" "$seen" \
+        "a $kind agent launched into a pane carrying snapshot-scoped variables (allowlist=$setting) must start without them"
+    done
+  done
+  pass "ship and secondmate launches start their agent without snapshot-scoped variables a pane carries"
+}
+
+# The spawn's own process is where a backend command can start a long-lived
+# server, so a leaked value must be gone before the first backend call.
+test_spawn_process_clears_snapshot_scoped_variables_before_backend_calls() {
+  local rec out status envlog real
+  rec=$(make_case leak-spawn-env codex leak-spawn-env-a1)
+  read_case "$rec"
+  envlog="$CASE_DIR/tmux-env.log"
+  : > "$envlog"
+  real="$FAKEBIN_DIR/tmux.real"
+  mv "$FAKEBIN_DIR/tmux" "$real"
+  cat > "$FAKEBIN_DIR/tmux" <<SH
+#!/usr/bin/env bash
+env >> "$envlog"
+exec "$real" "\$@"
+SH
+  chmod +x "$FAKEBIN_DIR/tmux"
+  out=$(FM_SNAPSHOT_SCOPED_ENV=leak-marker FM_CREW_STATE_META_OVERRIDE=/tmp/leak.meta \
+    FM_CREW_STATE_STATUS_OVERRIDE=/tmp/leak.status FM_HOME_SUMMARY_IF_IDLE=leak-idle \
+    FM_HOME_SUMMARY_WORKER_BEST_EFFORT=leak-best-effort \
+    run_case_spawn leak-spawn-env-a1 "$PROJ_DIR" --mode no-mistakes --yolo off)
+  status=$?
+  expect_code 0 "$status" "spawn with leaked variables should succeed: $out"
+  [ -s "$envlog" ] || fail "the spawn made no backend call, so the test proves nothing"
+  # Spawn's own fleet reads may legitimately scope these names to one crew-state
+  # read with their own values, so only the planted sentinel values count.
+  ! grep -Eq '^FM_[A-Z_]+=(/tmp/leak\.|leak-)' "$envlog" \
+    || fail "a backend call made by spawn received a leaked snapshot-scoped variable: $(grep -E '^FM_[A-Z_]+=(/tmp/leak\.|leak-)' "$envlog" | head -1)"
+  grep -q '^FM_HOME=' "$envlog" || fail "the backend call must keep the legitimate FM_HOME"
+  pass "spawn clears snapshot-scoped variables from its own environment before any backend call"
+}
+
+test_relaunch_clears_snapshot_scoped_variables() {
+  local dir home proj wt id out status seen launch preamble
+  id="relaunch-leak-a1"
+  dir="$TMP_ROOT/relaunch-leak"
+  home="$dir/home"; proj="$dir/proj"; wt="$dir/wt"
+  mkdir -p "$home/state" "$home/data" "$home/config" "$home/projects" "$dir/fake" "$dir/user-home"
+  touch "$home/state/.last-watcher-beat"
+  make_relaunch_stub "$dir"
+  fm_git_worktree "$proj" "$wt" "wt-relaunch-leak"
+  fm_test_spawn_brief "$home" "$id"
+  : > "$dir/fake/literal"; : > "$dir/fake/keys"
+  printf 'codex' > "$dir/fake/command"
+  printf '%s\n' "fm-$id" > "$dir/fake/windows"
+  printf '%s' "$wt" > "$dir/fake/cwd"
+  {
+    echo "window=fmses:fm-$id"; echo "endpoint_task_id=$id"; echo "worktree=$wt"
+    echo "project=$proj"; echo "harness=codex"; echo "kind=ship"
+    echo "mode=no-mistakes"; echo "yolo=off"; echo "tasktmp=$dir/tasktmp"
+    echo "model=default"; echo "effort=default"
+  } > "$home/state/$id.meta"
+  out=$(env PATH="$dir/fakebin:$PATH" FM_HOME="$home" FM_FAKE_DIR="$dir/fake" \
+    HOME="$dir/user-home" CLAUDE_CONFIG_DIR='' FM_SPAWN_NO_GUARD=1 \
+    FM_CONTROL_POLL=0.01 FM_CONTROL_EXIT_WAIT=0.05 FM_CONTROL_LAUNCH_WAIT=0.05 \
+    "$CONTROL" "$id" relaunch --note 'replacement continues the same task' 2>&1)
+  status=$?
+  expect_code 0 "$status" "relaunch should succeed: $out"
+  launch=$(grep 'encode launch-brief' "$dir/fake/literal" | tail -1)
+  [ -n "$launch" ] || fail "relaunch sent no replacement launch command"
+  install_leak_probe "$dir/fakebin" codex
+  preamble=$(grep '^export ' "$dir/fake/keys")
+  seen=$(leaky_pane_launch "$dir/fakebin" "$launch" "$preamble") \
+    || fail "the replacement launch failed to run"
+  assert_equals 'unset|unset|unset|unset|unset|' "$seen" \
+    "a relaunched agent in a pane carrying snapshot-scoped variables must start without them"
+  pass "relaunch starts the replacement agent without snapshot-scoped variables a pane carries"
+}
+
 test_ship_allowlist_absent
 test_ship_allowlist_enabled
 test_launch_command_carries_the_switch_without_the_pane_export
@@ -389,3 +516,6 @@ test_secondmate_launch
 test_launch_exports_task_inbox
 test_relaunch_rebuilds_the_switch
 test_raw_compound_launch_command_carries_the_switch
+test_snapshot_scoped_variables_are_cleared_from_the_launch
+test_spawn_process_clears_snapshot_scoped_variables_before_backend_calls
+test_relaunch_clears_snapshot_scoped_variables
