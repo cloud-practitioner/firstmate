@@ -757,6 +757,15 @@ SH
   chmod +x "$fakebin/claude"
 }
 
+# The emitted launch command clears snapshot-scoped variables before the
+# ordinary exports. Launch-shape parsers skip exactly this prefix; defensive
+# environment cleanup is exercised by fm-spawn-compact-adviser-disable.test.sh.
+snapshot_env_unset_prefix() {
+  # shellcheck source=bin/fm-snapshot-env-lib.sh
+  . "$ROOT/bin/fm-snapshot-env-lib.sh"
+  printf '%s; ' "$(fm_snapshot_env_unset_command)"
+}
+
 # fm_eval_launch <launch-command> <pane-path> <fakebin> [VAR=val ...]
 # Runs a captured launch command the way the destination pane would: from the
 # pane's cwd with the fakebin on PATH and any extra environment assignments.

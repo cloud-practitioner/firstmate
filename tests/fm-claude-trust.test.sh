@@ -628,6 +628,7 @@ test_refused_spawn_leaves_no_task_state() {
 # pane sees after the leading export statements.
 claude_launch_doorbell() {  # <launch command>
   local command=$1
+  command=${command#"$(snapshot_env_unset_prefix)"}
   while [[ "$command" == export\ *\;* ]]; do
     command=${command#*; }
   done
