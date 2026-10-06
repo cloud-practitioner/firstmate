@@ -757,6 +757,7 @@ Task-specific liveness callers pass `fm-<id>` so another task claiming the same 
 The guarded close and removal-confirmation paths treat a foreign endpoint as absent, and recursive cleanup checks each child in the state directory that owns its record.
 Replacement creation preserves both foreign and unclaimed same-label panes when the task has an identity-bearing record, including on repeated rebinds.
 Spawn passes the owning state directory separately from the home used to label a secondmate's workspace.
+Host-local remote control binds endpoint reads, input, observations, and lifecycle operations to `state/parent-route`, including the key subprocess; code-root updates keep the code root's own state directory.
 Projection teardown and recorded reclaim explicitly select their task record for the ownership check; same-process seeded-pane pruning, abort cleanup, and replacement rollback use their creation-response ownership and do not consult ambient records claiming recycled addresses.
 
 **Records without `herdr_process_identity`, whether legacy or newly launched after a failed identity read, use only a best-effort check, not an ownership guarantee.**
