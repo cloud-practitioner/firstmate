@@ -1,0 +1,40 @@
+
+ ▀▀█  v1.0.4
+ █▀ █ escape interrupt · ctrl+c/ctrl+d clear/exit · / commands · ! bash · ctrl+o more
+ Press ctrl+o to show full startup help and loaded resources.
+
+ Pi can explain its own features and look up its docs. Ask it how to use or extend Pi.
+
+
+[Context]
+  ~/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/AGENTS.md, AGENTS.md
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/mate (main)
+$0.000 (sub) 0.0%/1.0M (auto)                                                                  claude-fable-5.1 • medium

@@ -1,0 +1,41 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/live/tmp/fm-lab.ZwvsYI
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d372ebd7d2c1","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"identity-lab","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":3079617,"foreground_processes":[{"argv":["/bin/zsh"],"cmdline":"/bin/zsh","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/live/tmp/fm-lab.ZwvsYI","name":"zsh","pid":3079617}],"pane_id":"w1:p1","shell_pid":3079617},"type":"pane_process_info"}}
+Real pane root identity: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 01: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 02: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 03: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 04: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 05: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 06: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 07: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 08: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 09: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 10: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 11: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Read 12: proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:44084072
+Starting the real Pi CLI in the real Herdr pane.
+{"id":"cli:agent:get","result":{"agent":{"agent":"pi","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/live/tmp/fm-lab.ZwvsYI","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/live/tmp/fm-lab.ZwvsYI","pane_id":"w1:p1","revision":0,"state_change_seq":1,"tab_id":"w1:t1","terminal_id":"term_65d372ebd7d2c1","workspace_id":"w1"},"type":"agent_info"}}
+Real Pi process liveness: alive
+Legacy -1 second record: ps:3079617:Wed Oct  7 02:50:47 2026 -> agent_state=alive
+Legacy +0 second record: ps:3079617:Wed Oct  7 02:50:48 2026 -> agent_state=alive
+Legacy +1 second record: ps:3079617:Wed Oct  7 02:50:49 2026 -> agent_state=alive
+Pre-fix liveness against the SAME real pane and +1-second legacy record: missing
+Secondmate sweep: status=alive state=alive kill=0
+No-/proc fallback identity from real ps: ps:3079617:Wed Oct  7 02:50:48 2026
+Real ps fallback, legacy -1 second record -> alive
+Real ps fallback, legacy +0 second record -> alive
+Real ps fallback, legacy +1 second record -> alive
+Both identity readers unavailable (no proc root, ps absent from PATH): unreadable
+Unreadable identity refused active Ctrl+C; duplicate recovery is not authorized.
+Adversarial identity ps:3079617:Wed Oct  7 02:03:32 2020 -> missing
+Foreign ownership refused active Ctrl+C.
+Unrelated real agent retained: pi on fm-lab-identity-3079362-29979:w1:p1
+Adversarial identity proc:3079617:df641d85-7c77-431d-8f5f-c3a804278bd8:0 -> missing
+Foreign ownership refused active Ctrl+C.
+Unrelated real agent retained: pi on fm-lab-identity-3079362-29979:w1:p1
+Adversarial identity proc:2:bad-boot:0 -> missing
+Foreign ownership refused active Ctrl+C.
+Unrelated real agent retained: pi on fm-lab-identity-3079362-29979:w1:p1
+Final real pane liveness: alive
+Lab removed; default-session fleet tripwire unchanged.

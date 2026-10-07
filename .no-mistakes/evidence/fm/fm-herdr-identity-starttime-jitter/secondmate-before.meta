@@ -1,0 +1,17 @@
+window=fm-lab-recovery-2971997-3994:w2:p1
+endpoint_task_id=identity-mate
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/mate
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/mate
+home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/mate
+harness=pi
+kind=secondmate
+mode=secondmate
+yolo=off
+model=default
+effort=default
+backend=herdr
+herdr_session=fm-lab-recovery-2971997-3994
+herdr_workspace_id=w2
+herdr_tab_id=w2:t1
+herdr_pane_id=w2:p1
+herdr_process_identity=ps:2998471:Wed Oct  7 02:49:10 2026

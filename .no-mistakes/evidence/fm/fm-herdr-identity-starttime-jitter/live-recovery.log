@@ -1,0 +1,24 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/tmp/fm-lab.V6zxr2
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/tmp/fm-lab.V6zxr2/data/identity-worker/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+Public worker recovery: fm-control.sh identity-worker relaunch (legacy record, agent-free real pane)
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/tmp/fm-lab.V6zxr2
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/tmp/fm-lab.V6zxr2
+notice: identity-worker ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched identity-worker harness=pi from=pi model=default effort=default backend=herdr endpoint=fm-lab-recovery-2971997-3994:w1:p1 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/worker
+Worker identity refresh: ps:2973522:Wed Oct  7 02:48:46 2026 -> proc:2973522:df641d85-7c77-431d-8f5f-c3a804278bd8:44071834; observed root=proc:2973522:df641d85-7c77-431d-8f5f-c3a804278bd8:44071834
+{"session":{"default":false,"name":"fm-lab-recovery-2971997-3994","running":false,"session_dir":"/home/node/.config/herdr/sessions/fm-lab-recovery-2971997-3994","socket_path":"/home/node/.config/herdr/sessions/fm-lab-recovery-2971997-3994/herdr.sock"},"stopped":true}
+After real lab restart: recorded=proc:2973522:df641d85-7c77-431d-8f5f-c3a804278bd8:44071834 current=proc:2986547:df641d85-7c77-431d-8f5f-c3a804278bd8:44073058
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/tmp/fm-lab.V6zxr2
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/tmp/fm-lab.V6zxr2
+notice: identity-worker ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched identity-worker harness=pi from=pi model=default effort=default backend=herdr endpoint=fm-lab-recovery-2971997-3994:w1:p2 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/worker
+Worker rebind: old_endpoint=fm-lab-recovery-2971997-3994:w1:p1 new_endpoint=fm-lab-recovery-2971997-3994:w1:p2 identity=proc:2989582:df641d85-7c77-431d-8f5f-c3a804278bd8:44073352 observed=proc:2989582:df641d85-7c77-431d-8f5f-c3a804278bd8:44073352
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/tmp/fm-lab.V6zxr2/data/identity-mate/brief.md (secondmate charter)
+home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/mate
+Public secondmate restart: real fm-secondmate-restart.sh; manually acknowledge the empty fixture through the public parent-report protocol.
+Fixture acknowledgement: corr=66524289fb9d7ce5; no open records exist in this empty secondmate.
+restarted: identity-mate (pi)
+summary: 1 of 1 restarted, 0 nudged, 0 unreached
+Secondmate restart identity refresh: ps:2998471:Wed Oct  7 02:49:10 2026 -> proc:2998471:df641d85-7c77-431d-8f5f-c3a804278bd8:44074226; actual=proc:2998471:df641d85-7c77-431d-8f5f-c3a804278bd8:44074226
+All public recovery identity postconditions verified against real pane roots.
+Recovery lab removed; default-session fleet tripwire unchanged.

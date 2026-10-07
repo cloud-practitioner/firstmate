@@ -1,0 +1,40 @@
+
+ ▀▀█  v1.0.4
+ █▀ █ escape interrupt · ctrl+c/ctrl+d clear/exit · / commands · ! bash · ctrl+o more
+ Press ctrl+o to show full startup help and loaded resources.
+
+ Pi can explain its own features and look up its docs. Ask it how to use or extend Pi.
+
+
+[Context]
+  ~/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/AGENTS.md, AGENTS.md
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ $
+ FM_HOME='/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/tmp/f
+ m-lab.V6zxr2' FM_SPAWN_NO_GUARD=1 FM_CONTROL_POLL=0.3 FM_CONTROL_LAUNCH_WAIT=30 FM_CONTROL_EXIT_WAIT=15
+ FM_SECONDMATE_PERSIST_WAIT=60 FM_SECONDMATE_PERSIST_POLL=1
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/code/bin/fm-s
+ econdmate-restart.sh' identity-mate >
+ '/home/node/.no-mistakes/evidence/01M4A3BG1QYX4E134JQ4C4GJSF/secondmate-restart-output.log' 2>&1; rc=$?; printf '%s'
+ "$rc" >
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/restart-exit'
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/code (main)
+$0.000 (sub) 0.0%/1.0M (auto)                                                                  claude-fable-5.1 • medium

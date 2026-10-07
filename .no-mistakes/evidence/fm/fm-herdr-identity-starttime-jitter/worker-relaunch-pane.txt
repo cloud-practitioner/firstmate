@@ -1,0 +1,32 @@
+worker on  fm/identity-worker
+❯ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/worker
+'
+worker on  fm/identity-worker
+❯ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recov
+ery/tmp/fm-lab.V6zxr2/state/identity-worker.tasktmp/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+worker on  fm/identity-worker
+❯ export COMPACT_ADVISER_DISABLE=1
+export FM_TASK_ID=identity-worker
+worker on  fm/identity-worker
+❯ export FM_TASK_ID=identity-worker
+worker on  fm/identity-worker
+❯ . '/tmp/fm-identity-worker+496e5814277ef19c5721f41d2113627bec3890e9604202c91c0fe7b07cdc0049/launch.s1791341331.297486
+5.29596.sh'
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ Trust project folder?
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery/worker
+
+ This allows pi to load .pi settings and resources, install missing project packages, and execute project extensions.
+
+ → Trust
+   Trust parent folder
+ (/home/node/.no-mistakes/worktrees/450411b3e67c/01M4A3BG1QYX4E134JQ4C4GJSF/.identity-validation/recovery)
+   Trust (this session only)
+   Do not trust
+   Do not trust (this session only)
+
+ ↑↓ navigate  enter select  escape/ctrl+c cancel
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
