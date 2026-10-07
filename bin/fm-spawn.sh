@@ -4697,8 +4697,8 @@ EOF
 import { execFile } from "node:child_process";
 import { appendFileSync } from "node:fs";
 const excludeTools = "$EXCLUDE_TOOLS".split(",").filter(Boolean);
-const excludeFile = $(perl -MJSON::PP -e 'print encode_json($ARGV[0])' -- "$CONFIG/crew-exclude-tools");
-const statusFile = $(perl -MJSON::PP -e 'print encode_json($ARGV[0])' -- "$STATE/$ID.status");
+const excludeFile = $(perl -MJSON::PP -MEncode=decode_utf8 -e 'print encode_json(decode_utf8($ARGV[0]))' -- "$CONFIG/crew-exclude-tools");
+const statusFile = $(perl -MJSON::PP -MEncode=decode_utf8 -e 'print encode_json(decode_utf8($ARGV[0]))' -- "$STATE/$ID.status");
 const busyEvent = (state: string, event: string) =>
   new Promise<void>((resolve) => {
     execFile("$FM_ROOT/bin/fm-busy-event.sh", [
