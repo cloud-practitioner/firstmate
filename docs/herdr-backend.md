@@ -453,7 +453,7 @@ Any of these preserves the candidate and lets session startup continue with at m
 
 ### Operational compromises
 
-- Grouping is best-effort; only an exact same-identity version 2 binding survives a Herdr restart in place.
+- Grouping is best-effort; [Restart recovery](#restart-recovery) owns the conditions for retaining a projection in place.
 - A failed journal publication or projected workspace create stops that spawn instead of falling back flat.
   So a Herdr create failure surfaces as a spawn failure in every Herdr home, rather than only in homes that opted in.
   Every earlier degradation on the fresh projected-create path (no session server, contended presentation lock, absent or ambiguous parent) still warns and continues flat.
@@ -477,7 +477,7 @@ Any of these preserves the candidate and lets session startup continue with at m
 
 | Test | What it covers |
 | --- | --- |
-| `tests/fm-backend-herdr-presentation-e2e.test.sh` | Multi-home ordering, concurrency, lock contention, legacy coexistence, focus preservation, process-bound restart refusal, exact restart replacement for legacy records, ambiguous bindings and tokens, and exact-pane cleanup through the guarded lab path. |
+| `tests/fm-backend-herdr-presentation-e2e.test.sh` | Multi-home ordering, concurrency, lock contention, legacy coexistence, focus preservation, process-bound restored-pane rejection, exact restart replacement for legacy records, ambiguous bindings and tokens, and exact-pane cleanup through the guarded lab path. |
 | `tests/fm-herdr-session-cleanup.test.sh` | Every discovery, ownership, topology, process, locking, revalidation, focus, retirement, and continue-on-error boundary. |
 | `tests/fm-herdr-session-cleanup-e2e.test.sh` | The restored-shell cleanup in a guarded non-default named lab. |
 | `tests/fm-backend-herdr-focus-flash-e2e.test.sh` | Reproduces the raw explicit-close focus steal on the installed release, and proves the focus-safe emptying-close plan removes a doomed workspace with no wrong-focus interval. |
@@ -521,7 +521,7 @@ Workspace and tab ids support verification and cleanup but are not inferred from
 
 ### Named server and session routing
 
-The adapter starts and polls a named server before workspace, tab, pane, or agent calls.
+Active operations start and poll the named server before workspace, tab, pane, or agent calls.
 [Restart and liveness behavior](#restart-and-liveness-behavior) owns passive probe semantics.
 Every Herdr invocation goes through `fm_backend_herdr_cli`, which sets the environment and passes an explicit trailing `--session <name>`.
 An environment variable alone is not reliable when another Herdr server is running.
@@ -669,7 +669,7 @@ No Herdr-specific copy of that protocol exists.
 
 ### Husks after a server restart
 
-Stopping and restarting a named Herdr server preserves workspace, tab, pane, and label ids.
+Stopping and restarting a named Herdr server with its saved session state intact preserves workspace, tab, pane, and label ids.
 The underlying harness processes and live agent registrations do not survive.
 A restored same-labeled tab with a missing pane or no registered agent is a husk.
 
@@ -736,7 +736,7 @@ Idle secondmates remain exempt from stale-pane escalation.
 ### Endpoints from a previous session
 
 Pane ids are per-server counters, so a recorded id can outlive the Herdr server that issued it.
-After a Herdr server restart, or a container rebuild that does not persist Herdr's session state, the fresh session's ids restart from `w1`, and surviving task records can name ids now belonging to another task's live agent or a plain shell.
+When a Herdr server restart or container rebuild loses the saved session state, the fresh session's workspace and pane ids restart from `w1` and `p1`, and surviving task records can name ids now belonging to another task's live agent or a plain shell.
 The pane classifier alone would read the first as this task's live agent and the second as its adoptable dead pane.
 
 Herdr task records carry `herdr_process_identity=proc:<shell-pid>:<boot-id>:<start-ticks>` when both `/proc/<pid>/stat` start ticks and the kernel boot id are readable, or `ps:<shell-pid>:<start-time>` otherwise.
@@ -783,7 +783,7 @@ Unreadable legacy panes and records without a worktree are not proof of foreign 
 When the caller has no label, every record in the state directory claiming the exact target is consulted; any matching claimant can allow the operation.
 The guarantee is therefore scoped to the task record selected by the caller and its owning state directory, not ambient or other-home records.
 
-`tests/fm-backend-herdr.test.sh` exercises stable `/proc` identities under `ps` drift, legacy one-second `lstart` tolerance, portable identity reads without `/proc`, relaunch identity refresh, identity mismatches despite matching labels and worktrees, process-preserving handoffs, fresh process bindings, and successful spawn/relaunch with the legacy-record fallback when the identity read fails.
+`tests/fm-backend-herdr.test.sh` exercises stable `/proc` identities under `ps` drift, portable one-second `lstart` tolerance, portable identity reads without `/proc`, relaunch identity refresh, identity mismatches despite matching labels and worktrees, process-preserving handoffs, fresh process bindings, and successful spawn/relaunch with the legacy-record fallback when the identity read fails.
 
 ## Agent status authority and relaunch
 
@@ -898,6 +898,8 @@ Tests use thin compatibility wrappers in `tests/herdr-test-safety.sh` and never 
 
 ```sh
 tests/fm-backend-herdr.test.sh
+tests/fm-herdr-endpoint-boundaries.test.sh
+tests/fm-remote-secondmate-control.test.sh
 tests/fm-composer-lib.test.sh
 tests/fm-herdr-submit-confirm-live-e2e.test.sh
 tests/fm-backend-herdr-smoke.test.sh

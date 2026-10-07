@@ -5,8 +5,8 @@
 # scout tasks before reporting success (a secondmate teardown transitions none,
 # since secondmates are not backlog items), then refresh/prune the project's
 # clone for PR-based ship tasks.
-# An endpoint whose close could not do its job REFUSES before any record naming
-# it is removed: those records are the only thing that names what survived, so
+# An owned endpoint whose close could not do its job REFUSES before any record
+# naming it is removed: those records are the only thing that names what survived, so
 # reporting such a close as a completed cleanup strands the endpoint instead of
 # merely leaving it behind. endpoint_close_refusal below owns that refusal and
 # the one site where --force overrides it, and bin/fm-backend.sh's
@@ -134,9 +134,10 @@
 # claim comment.
 # The recorded endpoint's exact task identity and the record's spawn incarnation
 # are validated separately
-# before cleanup. Its current working directory is only incidental process
-# state: the same worker remains the owner after changing directory, so cwd can
-# never veto teardown of that exact recorded endpoint.
+# before cleanup. For an endpoint that still belongs to this task, its current
+# working directory is only incidental process state: changing directory does
+# not transfer ownership. Herdr's recorded-endpoint ownership policy
+# (docs/herdr-backend.md) governs whether that premise holds.
 # The scan and destructive return hold a project-identity lock in the local root
 # Firstmate home's state directory, as resolved by bin/fm-wake-lib.sh's
 # fm_firstmate_root_home; a home seeded from another machine is its own local

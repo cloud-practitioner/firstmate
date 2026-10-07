@@ -23,8 +23,8 @@
 # adoption, reuse, closure, deletion, task ownership, or endpoint selection.
 # A version 2 journal can participate in replacing only its exact same-identity
 # endpoint after metadata, home, session, workspace, tab, pane, parent, shape,
-# focus, and agent-absence checks all agree under the session lock, and only
-# when the task's recorded process binding does not show the pane is not its own.
+# focus, and agent-absence checks all agree under the session lock, and the
+# recorded-endpoint ownership policy permits it (docs/herdr-backend.md).
 # Every ambiguous recovered launch uses the default flat home workspace when
 # duplicate-agent risk is independently absent.
 # Target resolution stays parallel to the tmux adapter in both layouts.
@@ -2651,21 +2651,11 @@ fm_backend_herdr_agent_state() {  # <target> [expected-label]
 # verdict. For a recovery that is about to RE-CREATE an endpoint, this is the
 # read that decides whether there is anything to re-create at all.
 #
-# fm_backend_herdr_agent_state maps a positively STOPPED session server to
-# `missing` (issue #4091), which is correct for "no agent is running" but is
-# NOT evidence the endpoint was destroyed: stopping and restarting a named
-# Herdr server preserves workspace, tab, pane, and label ids (docs/herdr-backend.md
-# "Restart and liveness behavior") - only the harness processes and their
-# registrations die. So `missing` there means unreachable right now, and a
-# caller that rebound on it would abandon a pane that was about to come back.
-#
-# Only the RECORDED session's server is ensured, never a workspace or tab, so
-# this creates nothing: a merely-stopped server comes back and the recorded
-# pane classifies `dead` (adoptable), a genuinely destroyed pane still reads
-# `missing`, a returning agent reads `alive`, and a server that will not start
-# is `unreadable` - unreachable, which refuses, rather than absence.
-# The restored address must still pass the recorded-endpoint ownership check
-# before it can be adopted: restoring a layout does not restore a process binding.
+# A stopped-server `missing` is not absence proof: the saved layout may
+# restore the address, but restoring a layout does not restore process ownership.
+# Only the RECORDED session's server is ensured here, never a workspace or tab.
+# docs/agent-control.md "Reclaiming a task whose endpoint is gone" owns the
+# resulting verdicts and recovery path.
 fm_backend_herdr_endpoint_absence_recheck() {  # <target> [expected-label]
   local target=$1
   fm_backend_herdr_parse_target "$target" || { printf 'unreadable'; return 0; }
@@ -3928,13 +3918,10 @@ fm_backend_herdr_kill() {  # <target> [<unused> [expected-label]]
   fi
 }
 
-# fm_backend_herdr_endpoint_confirmed_gone: gate durable-record removal on
-# the exact recorded pane's structured presence
-# (fm_backend_herdr_pane_presence_state), read-only, so a refused, skipped,
-# or failed close never erases a live task's endpoint identity.
-# Only a structured pane_not_found proves the endpoint gone; present and
-# unknown presence refuse after every close path, and a missing or malformed
-# target identity is ambiguity that also refuses, never proof of a gone pane.
+# fm_backend_herdr_endpoint_confirmed_gone: read-only gate for durable-record
+# removal, so a refused, skipped, or failed close never erases an owned live
+# endpoint's identity. docs/herdr-backend.md "When task records are erased"
+# owns the absence proofs; a malformed target remains ambiguity, not absence.
 fm_backend_herdr_endpoint_confirmed_gone() {  # <target> [expected-label]
   local presence
   fm_backend_herdr_parse_target "$1" || return 1

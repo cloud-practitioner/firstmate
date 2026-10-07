@@ -646,27 +646,19 @@ do_exit() {
       ;;
     alive) ;;
     missing)
-      # `missing` on its own is not a finding about the endpoint: it conflates
-      # "destroyed" with "unreachable from this seat". Route it through the
-      # control plane's one absence proof - the same one the relaunch gate uses
-      # - and report what that proof actually established, never more.
+      # A raw `missing` is not absence proof. Use the same proof as relaunch
+      # and report only what it establishes (docs/agent-control.md
+      # "Reclaiming a task whose endpoint is gone").
       absence=$(fm_control_endpoint_absence_verdict "$BACKEND" "$T" "$LABEL")
       case "${absence%%$'\t'*}" in
         gone)
-          # Proven gone, so the agent that lived in it went with it: exit's
-          # postcondition already holds and there is nothing to send. Its own
-          # outcome rather than `already-stopped`, because the endpoint this
-          # verb normally preserves did not survive. The worktree and every
-          # uncommitted change are untouched, and `relaunch` re-creates the
-          # endpoint from here.
+          # The task's endpoint is absent, so never send to its old address.
+          # Preserve the worktree and report the distinct endpoint-gone outcome.
           printf 'endpoint-gone'
           return 0
           ;;
         dead)
-          # The endpoint was only unreachable and is there after all, holding
-          # no agent - a herdr pane whose session server was merely stopped is
-          # the common case. Nothing is gone, so this is the ordinary
-          # already-stopped outcome.
+          # The recheck found an eligible agent-free endpoint, not absence.
           printf 'already-stopped'
           return 0
           ;;
