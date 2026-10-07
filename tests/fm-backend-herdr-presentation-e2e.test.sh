@@ -1419,6 +1419,7 @@ PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" stop "$HERDR_LAB_SESSION" >/dev/
   || fail "could not stop the isolated session for resume lock-refuse"
 PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" provision "$HERDR_LAB_SESSION" \
   || fail "could not reprovision the isolated session for resume lock-refuse"
+use_legacy_restart_record "$LOCK_REFUSE_META"
 
 LOCK_REFUSE_READY="$TMP_ROOT/lock-refuse-ready"
 LOCK_REFUSE_HOLD_SECONDS=15
@@ -1475,6 +1476,7 @@ PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" stop "$HERDR_LAB_SESSION" >/dev/
   || fail "could not stop the isolated session for resume lock-wait"
 PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" provision "$HERDR_LAB_SESSION" \
   || fail "could not reprovision the isolated session for resume lock-wait"
+use_legacy_restart_record "$LOCK_WAIT_META"
 
 LOCK_WAIT_READY="$TMP_ROOT/lock-wait-ready"
 LOCK_WAIT_HOLD_SECONDS=30
