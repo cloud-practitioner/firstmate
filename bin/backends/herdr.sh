@@ -2427,8 +2427,8 @@ fm_backend_herdr_pane_shell_pid() {  # <session> <pane>
 }
 
 # fm_backend_herdr_ps_lstart: `ps -o lstart=` for a pid, trimmed, with the
-# locale and timezone pinned. It is derived from boot time plus starttime/HZ
-# and can drift by one second between reads of the same live process.
+# locale and timezone pinned. On Linux it is derived from boot time plus
+# starttime/HZ and can drift by one second between reads of the same process.
 fm_backend_herdr_ps_lstart() {  # <pid>
   local starttime
   starttime=$(LC_ALL=C TZ=UTC0 ps -o lstart= -p "$1" 2>/dev/null) || return 1
@@ -2453,13 +2453,8 @@ fm_backend_herdr_proc_starttime() {  # <pid>
   printf '%s' "$starttime"
 }
 
-# fm_backend_herdr_pane_process_identity: the identity recorded as
-# herdr_process_identity. Where /proc exists it is
-# `proc:<pid>:<boot-id>:<starttime-ticks>`, stable across repeated reads; the
-# boot id (or `-` when unreadable) keeps a pid and tick count from matching
-# across a reboot. Without /proc (macOS/BSD) it is `ps:<pid>:<lstart>`, which
-# fm_backend_herdr_identity_matches compares with a one-second tolerance.
-# docs/herdr-backend.md "Endpoints from a previous session" owns the contract.
+# docs/herdr-backend.md "Endpoints from a previous session" owns the recorded
+# process-identity format and its fallback guarantees.
 fm_backend_herdr_pane_process_identity() {
   local session=$1 pane=$2 pid ticks boot starttime
   pid=$(fm_backend_herdr_pane_shell_pid "$session" "$pane") || return 1
@@ -2501,13 +2496,8 @@ fm_backend_herdr_lstart_epoch() {  # <lstart>
   printf '%s' $((days * 86400 + h * 3600 + m * 60 + s))
 }
 
-# fm_backend_herdr_identity_matches: does the pane's current root process match
-# a recorded herdr_process_identity? Returns 0 for the same process, 1 for a
-# different one, and 2 when the current process cannot be read.
-# A `proc:` record must match exactly. A `ps:<pid>:<lstart>` record (legacy, or
-# written where /proc is unavailable) names the same process when the pid
-# matches and the lstart is within one second of the current reading, because
-# ps derives lstart from boot time plus ticks/HZ and drifts across calls.
+# Return 0 for a match, 1 for a mismatch, and 2 for an unreadable current identity.
+# docs/herdr-backend.md "Endpoints from a previous session" owns the matching policy.
 fm_backend_herdr_identity_matches() {  # <session> <pane> <recorded>
   local session=$1 pane=$2 recorded=$3 actual pid pid_now rest lstart cur want have
   case "$recorded" in
