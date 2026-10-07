@@ -13,29 +13,27 @@
 # neither the token nor the authorization header is ever printed.
 #
 # Usage:
-#   fm-pr-open.sh open   [--title <t>] [--description <d>] [--dest <branch>] [common]
-#   fm-pr-open.sh verify [<pr-url>] [--dest <branch>] [common]
-#   fm-pr-open.sh ready  <pr-url> [common]
-# Common options:
-#   --worktree <dir>   the git work tree the branch lives in (default: here)
-#   --source <branch>  the source branch (default: the work tree's current branch)
-#   --repo <w>/<r>     the Bitbucket repository (default: parsed from origin)
+#   fm-pr-open.sh open
+#   fm-pr-open.sh verify <pr-url>
+#   fm-pr-open.sh ready  <pr-url>
 #
-# open creates a non-draft pull request from the source branch, which must
-# already be pushed, to --dest (default: the repository's main branch). The title
-# defaults to the HEAD commit's subject and the description to its body. An open
-# pull request for the same source branch is reused rather than duplicated, and
-# an existing one that targets another branch than an explicit --dest, or that
-# is a draft, is refused, because opening never changes a pull request it did not
-# create; "ready" is the explicit step that takes a draft out of draft. open
+# All commands operate on the current git work tree, its Bitbucket Cloud origin
+# repository, and its current branch; a missing or non-Bitbucket origin and a
+# detached HEAD are refused. A PR URL must name that origin repository.
+# open creates a non-draft pull request from the current branch, which must
+# already be pushed, to the repository's default destination. The title is the
+# HEAD commit's subject and the description is its body. An open pull request
+# for the same source repository and branch is reused rather than duplicated.
+# An existing draft is refused, because opening never changes a pull request it
+# did not create; "ready" is the explicit step that takes a draft out of draft. open
 # always finishes with the same read-back verify performs, prints the pull
 # request's https URL as its last line, and exits nonzero when the read-back
 # fails.
 #
 # verify reads the pull request back and exits 0 only when it is open, not a
-# draft, from the source branch, and carries this work tree's HEAD, so a commit
-# that was never pushed is refused. It finds the pull request by <pr-url> or, with
-# none, by the source branch. It prints "state:", "draft:", "source:", "head:",
+# draft, from the origin repository's current branch, and carries this work
+# tree's HEAD, so a commit that was never pushed is refused. The <pr-url> is
+# required. It prints "state:", "draft:", "source:", "head:",
 # and "url:" lines, with "draft: no" on success mirroring `gh-axi pr view`.
 #
 # ready takes a pull request out of draft, then verifies it.
@@ -59,7 +57,7 @@ die() {
 
 usage_error() {
   printf 'fm-pr-open: %s\n' "$*" >&2
-  printf 'usage: fm-pr-open.sh open|verify|ready [options] (see --help)\n' >&2
+  printf 'usage: fm-pr-open.sh open | verify <pr-url> | ready <pr-url> (see --help)\n' >&2
   exit 2
 }
 
@@ -70,27 +68,9 @@ case "${1:-}" in
   *) usage_error "unknown command '$1'" ;;
 esac
 
-WORKTREE=.
-SOURCE=
-REPO_PATH=
-DEST=
-TITLE=
-DESCRIPTION=
-DESCRIPTION_SET=0
 PR_ARG=
 while [ "$#" -gt 0 ]; do
   case "$1" in
-    --worktree|--source|--repo|--dest|--title|--description)
-      [ "$#" -ge 2 ] || usage_error "$1 requires a value"
-      case "$1" in
-        --worktree) WORKTREE=$2 ;;
-        --source) SOURCE=$2 ;;
-        --repo) REPO_PATH=$2 ;;
-        --dest) DEST=$2 ;;
-        --title) TITLE=$2 ;;
-        --description) DESCRIPTION=$2; DESCRIPTION_SET=1 ;;
-      esac
-      shift 2 ;;
     --help|-h) usage; exit 0 ;;
     -*) usage_error "unknown option '$1'" ;;
     *)
@@ -104,51 +84,32 @@ case "$CMD" in
   open)
     [ -z "$PR_ARG" ] || usage_error "open takes no pull request URL; it finds or creates one"
     ;;
-  verify)
-    [ -z "$TITLE" ] && [ "$DESCRIPTION_SET" -eq 0 ] || usage_error "--title and --description apply only to open"
-    ;;
-  ready)
-    [ -n "$PR_ARG" ] || usage_error "ready requires the pull request URL"
-    [ -z "$TITLE" ] && [ "$DESCRIPTION_SET" -eq 0 ] && [ -z "$DEST" ] \
-      || usage_error "ready takes only a pull request URL and the common options"
+  verify|ready)
+    [ -n "$PR_ARG" ] || usage_error "$CMD requires the pull request URL"
     ;;
 esac
 
-git -C "$WORKTREE" rev-parse --is-inside-work-tree >/dev/null 2>&1 \
-  || die "$WORKTREE is not a git work tree"
+[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ] \
+  || die "the current directory is not a git work tree"
 
-MISSING=$(fm_pr_bitbucket_missing_requirements)
-[ -z "$MISSING" ] || die "talking to Bitbucket requires $MISSING"
-
-# The pull request, when named, fixes the repository; otherwise --repo or the
-# origin remote does. The remote's URL is never printed, because it can carry
-# userinfo.
+ORIGIN_URL=$(git remote get-url origin 2>/dev/null) \
+  || die "this work tree has no origin remote"
+REPO_PATH=$(fm_pr_bitbucket_remote_path "$ORIGIN_URL") \
+  || die "the origin remote is not a Bitbucket Cloud repository"
 if [ -n "$PR_ARG" ]; then
   fm_pr_url_parse "$PR_ARG" && [ "$FM_PR_PROVIDER" = bitbucket ] \
     || die "expected a Bitbucket Cloud pull request URL (https://bitbucket.org/<workspace>/<repository>/pull-requests/<number>)"
-  if [ -n "$REPO_PATH" ] && [ "$REPO_PATH" != "$FM_PR_PATH" ]; then
-    die "--repo disagrees with the repository in the pull request URL"
-  fi
-  REPO_PATH=$FM_PR_PATH
-elif [ -z "$REPO_PATH" ]; then
-  ORIGIN_URL=$(git -C "$WORKTREE" remote get-url origin 2>/dev/null) \
-    || die "this work tree has no origin remote; pass --repo <workspace>/<repository>"
-  REPO_PATH=$(fm_pr_bitbucket_remote_path "$ORIGIN_URL") \
-    || die "the origin remote is not a Bitbucket Cloud repository; pass --repo <workspace>/<repository> to name one"
+  [ "$REPO_PATH" = "$FM_PR_PATH" ] \
+    || die "the pull request URL does not name this work tree's origin repository"
 fi
-fm_pr_bitbucket_path_valid "$REPO_PATH" \
-  || die "the repository must be <workspace>/<repository> in Bitbucket's lowercase spelling"
 
-if [ -z "$SOURCE" ]; then
-  SOURCE=$(git -C "$WORKTREE" symbolic-ref --quiet --short HEAD 2>/dev/null) \
-    || die "this work tree is on a detached HEAD; check out the branch or pass --source"
-fi
-git check-ref-format --branch "$SOURCE" >/dev/null 2>&1 || die "'$SOURCE' is not a valid branch name"
-if [ -n "$DEST" ]; then
-  git check-ref-format --branch "$DEST" >/dev/null 2>&1 || die "'$DEST' is not a valid branch name"
-fi
-LOCAL_HEAD=$(git -C "$WORKTREE" rev-parse --verify --quiet "HEAD^{commit}") \
+SOURCE=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) \
+  || die "this work tree is on a detached HEAD; check out the branch"
+LOCAL_HEAD=$(git rev-parse --verify --quiet "HEAD^{commit}") \
   || die "this work tree has no commit to open a pull request for"
+
+MISSING=$(fm_pr_bitbucket_missing_requirements)
+[ -z "$MISSING" ] || die "talking to Bitbucket requires $MISSING"
 
 # Say why a Bitbucket request failed without ever quoting the credential: only
 # the HTTP status and Bitbucket's own error message are used.
@@ -170,18 +131,27 @@ pr_url() {  # <number>
 # The lowest-numbered open pull request from the source branch, or nothing.
 find_open_pr() {
   local query encoded
-  query="source.branch.name=\"$SOURCE\" AND state=\"OPEN\""
+  query=$(jq -rn --arg b "$SOURCE" --arg r "$REPO_PATH" '
+    "source.branch.name=" + ($b | tojson) + " AND source.repository.full_name=" + ($r | tojson) + " AND state=\"OPEN\""')
   encoded=$(jq -rn --arg q "$query" '$q | @uri')
   fm_pr_bitbucket_get_all "repositories/$REPO_PATH/pullrequests?state=OPEN&pagelen=50&q=$encoded" \
     || api_failure "listing the open pull requests for $SOURCE"
-  printf '%s' "$FM_PR_BITBUCKET_VALUES" | jq -r --arg b "$SOURCE" '
-    [.[] | select(.state == "OPEN" and .source.branch.name == $b and (.id | type) == "number") | .id]
+  printf '%s' "$FM_PR_BITBUCKET_VALUES" | jq -r --arg b "$SOURCE" --arg r "$REPO_PATH" '
+    [.[] | select(.state == "OPEN" and .source.branch.name == $b
+       and .source.repository.full_name == $r and (.id | type) == "number") | .id]
     | sort | (.[0] // "")' 2>/dev/null \
     || die "Bitbucket returned an unreadable pull request list"
 }
 
 read_pr() {  # <number>
-  fm_pr_bitbucket_read_pull_request "$REPO_PATH" "$1" && return 0
+  if fm_pr_bitbucket_read_pull_request "$REPO_PATH" "$1"; then
+    printf '%s' "$FM_PR_BITBUCKET_JSON" | jq -e --arg r "$REPO_PATH" \
+      '.source.repository.full_name == $r' >/dev/null 2>&1 \
+      || die "$(pr_url "$1") does not come from this work tree's origin repository"
+    [ "$FM_PR_BITBUCKET_SOURCE_BRANCH" = "$SOURCE" ] \
+      || die "$(pr_url "$1") has source branch $FM_PR_BITBUCKET_SOURCE_BRANCH, not $SOURCE"
+    return 0
+  fi
   case "${FM_PR_BITBUCKET_STATUS:-}" in
     ''|2??) die "could not read $(pr_url "$1") back from Bitbucket (an unreadable or incomplete record)" ;;
   esac
@@ -211,29 +181,14 @@ verify_pr() {  # <number>
     true) problems="${problems}the pull request is a draft, so it cannot be merged; run fm-pr-open.sh ready $url; " ;;
     *) problems="${problems}Bitbucket reported no draft state; " ;;
   esac
-  [ "$FM_PR_BITBUCKET_SOURCE_BRANCH" = "$SOURCE" ] \
-    || problems="${problems}its source branch is $FM_PR_BITBUCKET_SOURCE_BRANCH, not $SOURCE; "
   [ "$FM_PR_BITBUCKET_HEAD" = "$LOCAL_HEAD" ] \
     || problems="${problems}its head is $FM_PR_BITBUCKET_HEAD but this work tree's HEAD is $LOCAL_HEAD, so push your latest commit; "
-  if [ -n "$DEST" ] && [ "$FM_PR_BITBUCKET_DEST_BRANCH" != "$DEST" ]; then
-    problems="${problems}it targets $FM_PR_BITBUCKET_DEST_BRANCH, not $DEST; "
-  fi
   [ -z "$problems" ] || die "read-back of $url failed: ${problems%; }"
-}
-
-number_for_command() {
-  if [ -n "$PR_ARG" ]; then
-    printf '%s' "$FM_PR_NUMBER"
-  else
-    find_open_pr
-  fi
 }
 
 case "$CMD" in
   verify)
-    NUMBER=$(number_for_command)
-    [ -n "$NUMBER" ] || die "no open pull request from $SOURCE in $REPO_PATH; run fm-pr-open.sh open"
-    verify_pr "$NUMBER"
+    verify_pr "$FM_PR_NUMBER"
     ;;
   ready)
     read_pr "$FM_PR_NUMBER"
@@ -247,26 +202,22 @@ case "$CMD" in
     NUMBER=$(find_open_pr)
     if [ -n "$NUMBER" ]; then
       read_pr "$NUMBER"
-      if [ -n "$DEST" ] && [ "$FM_PR_BITBUCKET_DEST_BRANCH" != "$DEST" ]; then
-        die "$(pr_url "$NUMBER") is already open from $SOURCE but targets $FM_PR_BITBUCKET_DEST_BRANCH, not $DEST; opening never retargets a pull request"
-      fi
       [ "$FM_PR_BITBUCKET_DRAFT" != true ] \
         || die "$(pr_url "$NUMBER") is already open from $SOURCE but is a draft; opening never changes a pull request it did not create, so run fm-pr-open.sh ready $(pr_url "$NUMBER") to take it out of draft"
       printf 'reusing the open pull request from %s\n' "$SOURCE" >&2
     else
-      [ -n "$TITLE" ] || TITLE=$(git -C "$WORKTREE" log -1 --format=%s HEAD)
-      [ "$DESCRIPTION_SET" -eq 1 ] || DESCRIPTION=$(git -C "$WORKTREE" log -1 --format=%b HEAD)
-      BODY=$(jq -cn --arg title "$TITLE" --arg description "$DESCRIPTION" --arg source "$SOURCE" --arg dest "$DEST" '
+      TITLE=$(git log -1 --format=%s HEAD)
+      DESCRIPTION=$(git log -1 --format=%b HEAD)
+      BODY=$(jq -cn --arg title "$TITLE" --arg description "$DESCRIPTION" --arg source "$SOURCE" '
         {title: $title, description: $description, draft: false,
-         source: {branch: {name: $source}}}
-        + (if $dest == "" then {} else {destination: {branch: {name: $dest}}} end)')
+         source: {branch: {name: $source}}}')
       fm_pr_bitbucket_request POST "repositories/$REPO_PATH/pullrequests" "$BODY" \
         || api_failure "creating the pull request from $SOURCE"
       NUMBER=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -r '
         if type == "object" and (.id | type) == "number" and .id > 0 then (.id | floor | tostring) else "" end' 2>/dev/null) \
         || NUMBER=
       case "$NUMBER" in
-        ''|0*|*[!0-9]*) die "Bitbucket accepted the pull request but returned no usable id; look for it from $SOURCE with fm-pr-open.sh verify" ;;
+        ''|0*|*[!0-9]*) die "Bitbucket accepted the pull request but returned no usable id; run fm-pr-open.sh open again to find it from $SOURCE" ;;
       esac
     fi
     verify_pr "$NUMBER" >&2

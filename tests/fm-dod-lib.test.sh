@@ -433,6 +433,42 @@ test_direct_pr_dod_is_forge_aware() {
   pass "direct-PR DoD names gh-axi for GitHub and fm-pr-open.sh for Bitbucket, and nothing else changes"
 }
 
+test_bitbucket_dod_commands_preserve_shell_arguments() {
+  local install output branch snippet command_log commands=0
+  install="$TMP_ROOT/first mate's files"
+  output="$TMP_ROOT/dod-shell-arguments.md"
+  command_log="$TMP_ROOT/dod-command-arguments.log"
+  branch="feature/\$USER/o'brien"
+  mkdir -p "$install"
+  cp -R "$ROOT/bin" "$install/bin"
+  bash -c '. "$1"; fm_dod_block direct-PR dod-shell-task "$2" none bitbucket' \
+    _ "$install/bin/fm-dod-lib.sh" "$branch" > "$output" || fail "the Bitbucket DoD did not render from a path containing spaces and an apostrophe"
+  cat > "$install/bin/fm-pr-open.sh" <<'SH'
+#!/usr/bin/env bash
+{ printf 'helper\n'; printf '%s\n' "$@"; } >> "$FM_TEST_COMMAND_LOG"
+SH
+  cat > "$install/bin/git" <<'SH'
+#!/usr/bin/env bash
+{ printf 'git\n'; printf '%s\n' "$@"; } >> "$FM_TEST_COMMAND_LOG"
+SH
+  chmod +x "$install/bin/fm-pr-open.sh" "$install/bin/git"
+  while IFS= read -r snippet; do
+    case "$snippet" in
+      git\ push\ -u\ origin\ *|*" open"|*" verify <pr-url>"|*" ready <pr-url>") ;;
+      *) continue ;;
+    esac
+    snippet=${snippet//<pr-url>/https:\/\/bitbucket.org\/ws\/repo\/pull-requests\/7}
+    FM_TEST_COMMAND_LOG="$command_log" PATH="$install/bin:$PATH" bash -c "$snippet" \
+      || fail "a generated Bitbucket command did not execute: $snippet"
+    commands=$((commands + 1))
+  done < <(awk -F '`' '{for (i = 2; i <= NF; i += 2) print $i}' "$output")
+  assert_equals 4 "$commands" "the generated DoD must emit push, open, verify, and ready commands"
+  assert_equals "$(printf 'git\npush\n-u\norigin\n%s\nhelper\nopen\nhelper\nverify\n%s\nhelper\nready\n%s' \
+    "$branch" 'https://bitbucket.org/ws/repo/pull-requests/7' 'https://bitbucket.org/ws/repo/pull-requests/7')" \
+    "$(cat "$command_log")" "generated commands must preserve every branch and helper argument"
+  pass "the Bitbucket DoD commands execute with literal branch names and helper paths containing spaces and apostrophes"
+}
+
 test_scout_done_is_not_gated
 test_unpushed_ship_done_is_refused
 test_no_mistakes_prevalidation_done_is_not_gated
@@ -452,5 +488,6 @@ test_non_done_lines_are_not_gated
 test_fenced_and_indented_captain_lines_are_not_intent
 test_pr_based_dod_draft_check_uses_gh_axi
 test_direct_pr_dod_is_forge_aware
+test_bitbucket_dod_commands_preserve_shell_arguments
 
 echo "all fm-dod-lib tests passed"

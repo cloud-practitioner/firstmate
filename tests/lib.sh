@@ -663,6 +663,7 @@ case "$method $path" in
     respond pr
     ;;
   "GET "*/pullrequests/*)
+    [ ! -f "$dir/pr-${path##*/}.json" ] || respond "pr-${path##*/}"
     if [ -e "$dir/ready-called" ] && [ -f "$dir/pr-ready.json" ]; then respond pr-ready; fi
     if [ -e "$dir/merge-called" ] && [ -f "$dir/pr-post.json" ]; then respond pr-post; fi
     reads=$(( $(cat "$dir/pr-reads" 2>/dev/null || echo 0) + 1 ))
@@ -695,7 +696,7 @@ SH
 fm_bitbucket_pr_json() {
   local id=$1 state=$2 head=$3 draft=${4:-false} dest=${5:-main} participants=${6:-[]}
   printf '{"type":"pullrequest","id":%s,"state":"%s","draft":%s,' "$id" "$state" "$draft"
-  printf '"source":{"branch":{"name":"fm/task-x1"},"commit":{"hash":"%s","type":"commit"}},' "$head"
+  printf '"source":{"repository":{"full_name":"iqxbusiness/supplier_online_orchestration_api"},"branch":{"name":"fm/task-x1"},"commit":{"hash":"%s","type":"commit"}},' "$head"
   printf '"destination":{"branch":{"name":"%s"},"commit":{"hash":"0123456789ab"}},' "$dest"
   printf '"participants":%s,"close_source_branch":true}\n' "$participants"
 }

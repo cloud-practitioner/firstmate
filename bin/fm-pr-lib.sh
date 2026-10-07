@@ -1200,9 +1200,10 @@ fm_pr_bitbucket_missing_requirements() {
 # lowercase in the canonical spelling every other helper here uses, and nothing
 # for any other host, a malformed path, or a Bitbucket Data Center address. It
 # accepts the three shapes git stores: https://[userinfo@]bitbucket.org/<w>/<r>,
-# ssh://[user@]bitbucket.org/<w>/<r>, and [user@]bitbucket.org:<w>/<r>, each
-# with an optional ".git" suffix. Only the path is ever printed, so a remote
-# whose userinfo carries a credential never reaches output through this.
+# ssh://[user@]bitbucket.org[:port]/<w>/<r>,
+# ssh://[user@]altssh.bitbucket.org:443/<w>/<r>, and
+# [user@]bitbucket.org:<w>/<r>, each with an optional ".git" suffix. Only the
+# path is ever printed, so userinfo never reaches output through this.
 fm_pr_bitbucket_remote_path() {  # <remote-url>
   local url=${1-} rest authority host path
   local LC_ALL=C
@@ -1226,6 +1227,10 @@ fm_pr_bitbucket_remote_path() {  # <remote-url>
     *) return 1 ;;
   esac
   host=$(printf '%s' "$host" | tr '[:upper:]' '[:lower:]')
+  if [[ "$url" = ssh://* ]]; then
+    [[ "$host" =~ ^bitbucket\.org(:[0-9]+)?$ ]] || [ "$host" = altssh.bitbucket.org:443 ] || return 1
+    host=bitbucket.org
+  fi
   [ "$host" = bitbucket.org ] || return 1
   path=${path%/}
   path=${path%.git}

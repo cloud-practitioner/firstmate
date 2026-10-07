@@ -424,15 +424,19 @@ EOF
       ;;
     direct-PR:*)
       if [ "$pr_host" = bitbucket ]; then
+        local helper_command branch_arg
+        printf -v helper_command '%q' "$FM_DOD_PR_OPEN"
+        printf -v branch_arg '%q' "$branch"
         cat <<EOF
 # Definition of done
 Delivery contract: mode=direct-PR
 Ship branch: $branch
 This task ships **direct-PR**: you raise the PR yourself, without the no-mistakes pipeline.
-This project's origin is Bitbucket Cloud, which \`gh-axi\` cannot reach, so you open and check the PR with firstmate's helper, \`$FM_DOD_PR_OPEN\`.
+This project's origin is Bitbucket Cloud, which \`gh-axi\` cannot reach, so you open and check the PR with firstmate's helper, \`$helper_command\`.
 The task is complete only when committed on your branch.
-When it is implemented and committed, push your branch with \`git push -u origin $branch\`, then run \`$FM_DOD_PR_OPEN open\` from this copy, which opens a PR that is ready for review, not a draft, and prints its https URL (it reuses a PR already open from your branch rather than creating a second one).
-Before you report done, read the PR back from Bitbucket with \`$FM_DOD_PR_OPEN verify <pr-url>\`: it must exit 0 and print \`draft: no\`, which also confirms the PR is open, comes from your branch, and carries this copy's HEAD; if it reports a draft, run \`$FM_DOD_PR_OPEN ready <pr-url>\`, and if it reports a different head, push your latest commit and verify again.
+When it is implemented and committed, push your branch with \`git push -u origin $branch_arg\`, then run \`$helper_command open\` from this copy, which opens a PR that is ready for review, not a draft, using the repository's default destination and your HEAD commit's subject and body, and prints its https URL (it reuses a PR already open from your origin repository and branch rather than creating a second one).
+The helper works only on this copy, its Bitbucket origin, and its current branch; it refuses a missing or non-Bitbucket origin and a detached HEAD.
+Before you report done, read the PR back from Bitbucket with \`$helper_command verify <pr-url>\` using the URL that open returned: it must exit 0 and print \`draft: no\`, which also confirms the PR is open, comes from your origin repository and current branch, and carries this copy's HEAD; if it reports a draft, run \`$helper_command ready <pr-url>\`, and if it reports a different head, push your latest commit and verify again.
 The helper takes its credential from the NO_MISTAKES_BITBUCKET_EMAIL and NO_MISTAKES_BITBUCKET_API_TOKEN environment variables and never prints them; never print, echo, or write either one anywhere yourself, and if the helper names one as missing, append \`blocked [at=<epoch>]: {the missing variable}\` and stop.
 A draft cannot be merged, so a done report on one leaves the merge unasked.
 Then append \`done [at=<epoch>]: PR {url}\` to the status file and stop.
