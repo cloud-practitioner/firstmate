@@ -1,0 +1,17 @@
+Original suite fixture: exit=1 output=
+1: tab list --workspace w1 --session fmtest 
+2: pane list --workspace w1 --session fmtest 
+3: pane get w1:p2 --session fmtest 
+4: tab create --workspace w1 --cwd /tmp/proj --label fm-husk1 --no-focus --session fmtest 
+5: pane list --workspace w1 --session fmtest 
+
+Read-complete diagnostic fixture: exit=0 output=w1:t3 w1:p3
+1: tab list --workspace w1 --session fmtest 
+2: pane list --workspace w1 --session fmtest 
+3: pane get w1:p2 --session fmtest 
+4: tab create --workspace w1 --cwd /tmp/proj --label fm-husk1 --no-focus --session fmtest 
+5: pane list --workspace w1 --session fmtest 
+6: pane get w1:p2 --session fmtest 
+7: tab close w1:t2 --session fmtest 
+8: tab list --workspace w1 --session fmtest 
+

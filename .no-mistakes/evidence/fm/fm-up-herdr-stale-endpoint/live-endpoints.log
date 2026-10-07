@@ -1,0 +1,30 @@
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home/data/mine/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home
+spawned mine harness=sleep kind=scout window=fm-lab-stale-live-3197687-7548:w1:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/pool/.treehouse/project-a53402/1/project
+spawn metadata: target=fm-lab-stale-live-3197687-7548:w1:p2 identity=proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/pool/.treehouse/project-a53402/1/project
+unchanged process sample 1: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
+unchanged process sample 2: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
+unchanged process sample 3: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
+unchanged process sample 4: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
+unchanged process sample 5: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: task mine's endpoint reads 'alive'; a relaunch requires a positively agent-free endpoint (stop the agent first with bin/fm-control.sh mine exit)
+refused: bin/fm-spawn.sh mine --relaunch --harness sleep 600
+portable ps binding delta=-1: alive
+portable ps binding delta=0: alive
+portable ps binding delta=1: alive
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+spawned mine harness=sleep kind=scout window=fm-lab-stale-live-3197687-7548:w1:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/pool/.treehouse/project-a53402/1/project
+adopted relaunch refreshed legacy binding: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112
+real reset recycled fm-lab-stale-live-3197687-7548:w1:p2; old=proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 new=proc:3287656:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1444127
+home=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home stale liveness=missing
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.

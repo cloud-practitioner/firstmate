@@ -1,0 +1,16 @@
+window=fm-lab-stale-live-3197687-7548:w1:p2
+endpoint_task_id=mine
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/pool/.treehouse/project-a53402/1/project
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/project
+harness=sleep
+kind=scout
+tasktmp=/tmp/fm-mine
+model=default
+effort=default
+spawn_gen=s1791360586.3198708.13233
+backend=herdr
+herdr_session=fm-lab-stale-live-3197687-7548
+herdr_workspace_id=w1
+herdr_tab_id=w1:t2
+herdr_pane_id=w1:p2
+herdr_process_identity=proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112

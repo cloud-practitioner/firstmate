@@ -1,0 +1,16 @@
+ok - dispatchers revalidate the selected binding at their internal boundary
+ok - submit settlement and confirmation resets neither read nor modify foreign drafts
+ok - missing boot identity uses drift-tolerant ps, never partial proc
+ok - flat, projected, and recursive cleanup preserve foreign pane processes
+warning: quarantined herdr presentation for mine is dead or agent-free; exact bound reclaim may proceed, otherwise spawning flat
+error: quarantined herdr presentation for mine has a live pane; refusing duplicate launch
+ok - presentation recovery distinguishes foreign recorded panes from unbound live candidates
+ok - ordinary cleanup still completes and projected restart recovers flat after a reset
+ok - adopted relaunch refuses recycled panes at cwd, launch text, and Enter boundaries
+ok - ordinary and projected death-close fallbacks preserve recycled panes in the selected home
+ok - main and descendant Treehouse retries retain the selected ownership context
+ok - deferred husk cleanup preserves ownership changes while ordinary replacement completes
+ok - published fresh and rebound launches guard text, Enter, and native session reads
+ok - proc component loss is unreadable unless another recorded component proves a mismatch
+ok - native reconnect levels and stream edges validate the selected home before wakes or marker changes
+ok - secondmate recovery cannot borrow a competing binding after a reset during lock acquisition

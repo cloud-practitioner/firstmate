@@ -1,0 +1,29 @@
+/tmp/fm-lab.c9NNqe/home
+LAB SESSION: fm-lab-stale-endpoint-3415513-32618
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-stale-endpoint-3415513-32618"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/node/.config/herdr/sessions/fm-lab-stale-endpoint-3415513-32618/herdr.sock","session":"fm-lab-stale-endpoint-3415513-32618","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+WORKSPACE CREATE: {"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/tmp/fm-lab.c9NNqe/home","focused":true,"foreground_cwd":"/tmp/fm-lab.c9NNqe/home","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d3bc79af8cb1","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"fm-live-check","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+PANES: {"id":"cli:pane:list","result":{"panes":[{"agent_status":"unknown","cwd":"/tmp/fm-lab.c9NNqe/home","focused":true,"foreground_cwd":"/tmp/fm-lab.c9NNqe/home","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d3bc79af8cb1","workspace_id":"w1"}],"type":"pane_list"}}
+INITIAL BINDING: target=fm-lab-stale-endpoint-3415513-32618:w1:p1 identity=proc:3415623:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1484472
+STABLE READ 1: proc:3415623:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1484472
+STABLE READ 2: proc:3415623:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1484472
+STABLE READ 3: proc:3415623:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1484472
+/tmp/fm-lab.c9NNqe/home
+❯DRIFT OFFSET -1: recorded=Wed Oct 07 08:19:51 2026 state=dead exists=yes capture=allowed
+/tmp/fm-lab.c9NNqe/home
+❯DRIFT OFFSET 1: recorded=Wed Oct 07 08:19:53 2026 state=dead exists=yes capture=allowed
+RESTART: stopping only the named lab
+{"session":{"default":false,"name":"fm-lab-stale-endpoint-3415513-32618","running":false,"session_dir":"/home/node/.config/herdr/sessions/fm-lab-stale-endpoint-3415513-32618","socket_path":"/home/node/.config/herdr/sessions/fm-lab-stale-endpoint-3415513-32618/herdr.sock"},"stopped":true}
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/tmp/fm-lab.c9NNqe/home","focused":true,"foreground_cwd":"/tmp/fm-lab.c9NNqe/home","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d3bc7bae87e1","workspace_id":"w1"},"type":"pane_info"}}
+RECYCLED ADDRESS: target=fm-lab-stale-endpoint-3415513-32618:w1:p1 before=proc:3415623:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1484472 after=proc:3416381:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1484681
+FOREIGN PANE BEFORE:
+/tmp/fm-lab.c9NNqe/home
+❯ FOREIGN_DRAFT_DO_NOT_SEND
+STALE LIVENESS: missing
+STALE CAPTURE: refused
+STALE INPUT: refused
+FOREIGN PANE AFTER GUARDED CLEANUP:
+/tmp/fm-lab.c9NNqe/home
+❯ FOREIGN_DRAFT_DO_NOT_SEND
+PASS: recycled address reads missing; capture/input refused; foreign draft and shell preserved
+PASS: stable proc identity and both one-second portable start-time offsets accepted
+TEARDOWN: named lab removed; default-session tripwire unchanged
