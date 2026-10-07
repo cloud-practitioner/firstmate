@@ -1074,7 +1074,7 @@ fm_backend_herdr_projection_close_pane_focus_preserving() {  # <session> <pane-i
   # checkpoints bound but cannot eliminate the checkpoint-to-mutation race;
   # a durable atomic close remains deferred until Herdr exposes one.
   if [ "$plan" = death ]; then
-    if fm_backend_herdr_death_close_pane "$session" "$pane_id" "$plan_shell_pid" "$target_tab"; then
+    if fm_backend_herdr_death_close_pane "$session" "$pane_id" "$plan_shell_pid" "$target_tab" ${expected_label:+"$expected_label"}; then
       if [ -n "${FM_BACKEND_HERDR_PROJECTION_MUTATION_FOCUS:-}" ]; then
         before=$FM_BACKEND_HERDR_PROJECTION_MUTATION_FOCUS
         skip_restore=0
@@ -1085,7 +1085,7 @@ fm_backend_herdr_projection_close_pane_focus_preserving() {  # <session> <pane-i
         before=$FM_BACKEND_HERDR_PROJECTION_MUTATION_FOCUS
         skip_restore=0
       fi
-      if fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane_id"; then
+      if fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane_id" ${expected_label:+"$expected_label"}; then
         close_status=0
       else
         close_status=1
@@ -1098,7 +1098,7 @@ fm_backend_herdr_projection_close_pane_focus_preserving() {  # <session> <pane-i
       before=$FM_BACKEND_HERDR_PROJECTION_MUTATION_FOCUS
       skip_restore=0
     fi
-    if fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane_id"; then
+    if fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane_id" ${expected_label:+"$expected_label"}; then
       close_status=0
     else
       close_status=1
@@ -1340,7 +1340,7 @@ FMEOF
 # unless the same pid is still the pane's strict bare idle shell, so an
 # exited or reused pid is never signaled.
 # Returns 0 only when the pane is confirmed gone.
-fm_backend_herdr_death_close_pane() {  # <session> <pane-id> <shell-pid> [guard-tab-id]
+fm_backend_herdr_death_close_pane() {  # <session> <pane-id> <shell-pid> [guard-tab-id] [expected-label]
   local session=$1 pane_id=$2 shell_pid=$3 guard_tab=${4:-} ps_bin attempt max_attempts presence resampled_pid
   ps_bin=${FM_HERDR_PS_BIN:-ps}
   case "$shell_pid" in
@@ -1350,6 +1350,10 @@ fm_backend_herdr_death_close_pane() {  # <session> <pane-id> <shell-pid> [guard-
   max_attempts=${FM_BACKEND_HERDR_DEATH_CLOSE_POLLS:-40}
   fm_backend_herdr_pid_is_bare_shell "$ps_bin" "$shell_pid" || return 1
   [ -z "$guard_tab" ] || fm_backend_herdr_projection_target_tab_mutation_allowed "$session" "$guard_tab" || return 1
+  if [ "${5+x}" = x ]; then
+    local FM_BACKEND_HERDR_EXPECTED_LABEL=$5
+    fm_backend_herdr_target_ready "$session:$pane_id" || return 1
+  fi
   kill -HUP "$shell_pid" 2>/dev/null || true
   attempt=0
   while [ "$attempt" -lt "$max_attempts" ]; do
@@ -1365,6 +1369,9 @@ fm_backend_herdr_death_close_pane() {  # <session> <pane-id> <shell-pid> [guard-
   [ "$resampled_pid" = "$shell_pid" ] || return 1
   fm_backend_herdr_pid_is_bare_shell "$ps_bin" "$shell_pid" || return 1
   [ -z "$guard_tab" ] || fm_backend_herdr_projection_target_tab_mutation_allowed "$session" "$guard_tab" || return 1
+  if [ "${5+x}" = x ]; then
+    fm_backend_herdr_target_ready "$session:$pane_id" || return 1
+  fi
   kill -KILL "$shell_pid" 2>/dev/null || true
   attempt=0
   while [ "$attempt" -lt "$max_attempts" ]; do
@@ -2079,8 +2086,15 @@ fm_backend_herdr_workspace_presence_state() {  # <session> <workspace_id>
 
 # fm_backend_herdr_explicit_close_pane_confirmed: issue one explicit close and
 # succeed only when a structured follow-up proves the exact pane is gone.
-fm_backend_herdr_explicit_close_pane_confirmed() {  # <session> <pane_id>
+fm_backend_herdr_explicit_close_pane_confirmed() {  # <session> <pane_id> [expected-label]
   local session=$1 pane_id=$2 presence
+  if [ "${3+x}" = x ]; then
+    local FM_BACKEND_HERDR_EXPECTED_LABEL=$3
+    fm_backend_herdr_target_ready "$session:$pane_id" || {
+      FM_BACKEND_HERDR_PROJECTION_CLOSE_AGENT_STATE=unknown
+      return 1
+    }
+  fi
   fm_backend_herdr_cli "$session" pane close "$pane_id" >/dev/null 2>&1 || return 1
   presence=$(fm_backend_herdr_pane_presence_state "$session" "$pane_id")
   [ "$presence" = dead ]
@@ -2743,6 +2757,27 @@ EOF
   if [ -n "$dup_tab_ids" ]; then
     while IFS= read -r dup; do
       [ -n "$dup" ] || continue
+      dup_pane=$(fm_backend_herdr_pane_for_tab "$session" "$wsid" "$dup")
+      [ -n "$dup_pane" ] || return 1
+      if [ "$(fm_backend_herdr_meta_value "$task_meta" backend)" = herdr ] \
+        && [ -n "$(fm_backend_herdr_meta_value "$task_meta" herdr_process_identity)" ] \
+        && [ "$(fm_backend_herdr_meta_value "$task_meta" window)" != "$session:$dup_pane" ]; then
+        dup_tab_ids=${dup_tab_ids/"$dup"$'\n'/}
+        continue
+      fi
+      if fm_backend_herdr_endpoint_foreign "$session" "$dup_pane" "$label"; then
+        dup_tab_ids=${dup_tab_ids/"$dup"$'\n'/}
+        continue
+      else
+        [ "$?" -eq 1 ] || return 1
+      fi
+      fm_backend_herdr_tab_is_husk "$session" "$dup_pane" || return 1
+      if fm_backend_herdr_endpoint_foreign "$session" "$dup_pane" "$label"; then
+        dup_tab_ids=${dup_tab_ids/"$dup"$'\n'/}
+        continue
+      else
+        [ "$?" -eq 1 ] || return 1
+      fi
       fm_backend_herdr_cli "$session" tab close "$dup" >/dev/null 2>&1 || true
     done <<EOF
 $dup_tab_ids
@@ -3818,13 +3853,13 @@ fm_backend_herdr_kill_serialized() {  # <session> <pane> [expected-label]
       case "$plan" in
         death\ *)
           shell_pid=${plan#death }
-          if ! fm_backend_herdr_death_close_pane "$session" "$pane" "$shell_pid" \
-            && ! fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane"; then
+          if ! fm_backend_herdr_death_close_pane "$session" "$pane" "$shell_pid" "" "${3:-}" \
+            && ! fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane" "${3:-}"; then
             close_failed=1
           fi
           ;;
         *)
-          fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane" || close_failed=1
+          fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane" "${3:-}" || close_failed=1
           ;;
       esac
       if [ "$close_failed" = 0 ] && [ -n "$plan_move_record" ]; then
@@ -3841,7 +3876,7 @@ fm_backend_herdr_kill_serialized() {  # <session> <pane> [expected-label]
       return 0
     fi
   fi
-  fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane" || true
+  fm_backend_herdr_explicit_close_pane_confirmed "$session" "$pane" "${3:-}" || true
 }
 
 fm_backend_herdr_kill() {  # <target> [<unused> [expected-label]]

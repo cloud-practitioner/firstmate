@@ -3980,6 +3980,10 @@ fi
 # worktree-detection steps below must never reference an unbound WT_TARGET under set -u.
 : "${WT_TARGET:=$T}"
 spawn_send_text_line() { # <target> <text>
+  local FM_STATE_OVERRIDE=$STATE
+  if [ "$BACKEND" = herdr ] && [ "$RELAUNCH" -eq 1 ] && [ "$RELAUNCH_REBIND" -eq 0 ]; then
+    local FM_BACKEND_HERDR_EXPECTED_LABEL=$W
+  fi
   case "$BACKEND" in
   tmux) fm_backend_tmux_send_text_line "$1" "$2" ;;
   herdr) fm_backend_herdr_send_text_line "$1" "$2" ;;
@@ -3989,6 +3993,10 @@ spawn_send_text_line() { # <target> <text>
   esac
 }
 spawn_current_path() { # <target>
+  local FM_STATE_OVERRIDE=$STATE
+  if [ "$BACKEND" = herdr ] && [ "$RELAUNCH" -eq 1 ] && [ "$RELAUNCH_REBIND" -eq 0 ]; then
+    local FM_BACKEND_HERDR_EXPECTED_LABEL=$W
+  fi
   case "$BACKEND" in
   tmux) fm_backend_tmux_current_path "$1" ;;
   herdr) fm_backend_herdr_current_path "$1" ;;
@@ -3997,6 +4005,10 @@ spawn_current_path() { # <target>
   esac
 }
 spawn_send_literal() { # <target> <text>
+  local FM_STATE_OVERRIDE=$STATE
+  if [ "$BACKEND" = herdr ] && [ "$RELAUNCH" -eq 1 ] && [ "$RELAUNCH_REBIND" -eq 0 ]; then
+    local FM_BACKEND_HERDR_EXPECTED_LABEL=$W
+  fi
   case "$BACKEND" in
   tmux) fm_backend_tmux_send_literal "$1" "$2" ;;
   herdr) fm_backend_herdr_send_literal "$1" "$2" ;;
@@ -4006,6 +4018,10 @@ spawn_send_literal() { # <target> <text>
   esac
 }
 spawn_send_key() { # <target> <key>
+  local FM_STATE_OVERRIDE=$STATE
+  if [ "$BACKEND" = herdr ] && [ "$RELAUNCH" -eq 1 ] && [ "$RELAUNCH_REBIND" -eq 0 ]; then
+    local FM_BACKEND_HERDR_EXPECTED_LABEL=$W
+  fi
   case "$BACKEND" in
   tmux) fm_backend_tmux_send_key "$1" "$2" ;;
   herdr) fm_backend_herdr_send_key "$1" "$2" ;;
@@ -5020,6 +5036,12 @@ fi
 
 HERDR_PROCESS_IDENTITY=
 if [ "$BACKEND" = herdr ]; then
+  if [ "$RELAUNCH" -eq 1 ] && [ "$RELAUNCH_REBIND" -eq 0 ]; then
+    FM_STATE_OVERRIDE="$STATE" fm_backend_endpoint_ready herdr "$T" "$W" || {
+      echo "error: task $ID's adopted herdr endpoint no longer matches its previous binding; refusing to refresh its identity" >&2
+      exit 1
+    }
+  fi
   HERDR_PROCESS_IDENTITY=$(fm_backend_herdr_pane_process_identity "$HERDR_SES" "$HERDR_PANE_ID") || HERDR_PROCESS_IDENTITY=
 fi
 META_WINDOW=$T
@@ -5163,6 +5185,12 @@ spawn_report_preserved_state() {
 }
 
 if [ "$RELAUNCH" -eq 1 ]; then
+  if [ "$BACKEND" = herdr ] && [ "$RELAUNCH_REBIND" -eq 0 ]; then
+    FM_STATE_OVERRIDE="$STATE" fm_backend_endpoint_ready herdr "$T" "$W" || {
+      echo "error: task $ID's adopted herdr endpoint no longer matches its previous binding; refusing replacement publication" >&2
+      exit 1
+    }
+  fi
   SPAWN_META_PUBLISH_STARTED=1
   if ! fm_backlog_atomic_transition publish "$SPAWN_META_TMP" "$STATE/$ID.meta" "task record" "$STATE"; then
     echo "error: replacement task record for $ID could not be published ($FM_BACKLOG_TRANSITION_ERROR)" >&2

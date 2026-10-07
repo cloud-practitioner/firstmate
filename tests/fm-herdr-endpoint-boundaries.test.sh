@@ -40,13 +40,27 @@ case "${1:-} ${2:-}" in
   'session list') printf '{"sessions":[{"name":"fmtest","running":true,"socket_path":"%s/fmtest.sock"}]}\n' "$w" ;;
   'workspace list') cat "$w/workspaces.json" ;;
   'workspace get') printf '{"result":{"workspace":{"workspace_id":"w1","label":"firstmate"}}}\n' ;;
-  'pane get') cat "$w/pane-$key.json" 2>/dev/null || { printf '{"error":{"code":"pane_not_found"}}\n'; exit 1; } ;;
+  'pane get')
+    if [ "${FM_RESET_STAGE:-}" = cwd ]; then
+      n=0; [ ! -f "$w/pane-reads" ] || read -r n < "$w/pane-reads"
+      n=$((n + 1)); printf '%s\n' "$n" > "$w/pane-reads"
+      [ "$n" -ne 2 ] || "$w/reset"
+    fi
+    cat "$w/pane-$key.json" 2>/dev/null || { printf '{"error":{"code":"pane_not_found"}}\n'; exit 1; }
+    ;;
   'pane process-info') key=${4//:/_}; cat "$w/process-$key.json" ;;
   'agent get') cat "$w/agent-$key.json" ;;
   'pane list') cat "$w/panes.json" ;;
-  'tab list') printf '{"result":{"tabs":[]}}\n' ;;
+  'tab list')
+    if [ "${FM_HUSK_DUP:-0}" = 1 ] && [ ! -f "$w/closed-tab" ]; then
+      printf '{"result":{"tabs":[{"tab_id":"w1:t1","label":"fm-mine"}]}}\n'
+    else
+      printf '{"result":{"tabs":[]}}\n'
+    fi
+    ;;
   'tab get') printf '{"result":{"tab":{"tab_id":"%s","workspace_id":"%s","label":"fm-mine"}}}\n' "$pane" "${pane%%:*}" ;;
   'tab create')
+    [ "${FM_RESET_STAGE:-}" != husk ] || "$w/reset"
     printf '{"result":{"tab":{"tab_id":"w1:t3","workspace_id":"w1"},"root_pane":{"pane_id":"w1:p3"}}}\n'
     ;;
   'pane read')
@@ -60,6 +74,7 @@ case "${1:-} ${2:-}" in
     ;;
   'pane send-keys'|'pane run'|'pane close'|'tab close')
     printf '%s %s %s\n' "$pane" "$2" "${4:-}" >> "$w/inputs"
+    [ "$1 $2" != 'tab close' ] || : > "$w/closed-tab"
     if [ "$2" = close ] && [ "${FM_CLOSE_REMOVES:-0}" = 1 ]; then
       rm -f "$w/pane-$key.json" "$w/process-$key.json" "$w/agent-$key.json"
     fi
@@ -311,9 +326,214 @@ test_ordinary_teardown_and_projected_restart() {
   pass 'ordinary cleanup still completes and projected restart recovers flat after a reset'
 }
 
+prepare_reset() {
+  local pane=${1:-w1:p1} key=${1//:/_}
+  export FM_RESET_PANE=$pane
+  cp "$FM_FAKE_WORLD/pane-$key.json" "$FM_FAKE_WORLD/reset-pane.json"
+  cp "$FM_FAKE_WORLD/process-$key.json" "$FM_FAKE_WORLD/reset-process.json"
+  cat > "$FM_FAKE_WORLD/reset" <<'SH'
+#!/usr/bin/env bash
+w=$FM_FAKE_WORLD
+[ ! -f "$w/reset-done" ] || exit 0
+key=${FM_RESET_PANE//:/_}
+cp "$w/inputs" "$w/inputs-at-reset"
+jq '.result.process_info.shell_pid = 43' "$w/reset-process.json" > "$w/process-$key.json"
+jq --arg cwd "${FM_RESET_CWD:-$FM_HOME}" '.result.pane.foreground_cwd = $cwd | .result.pane.cwd = $cwd' "$w/reset-pane.json" > "$w/pane-$key.json"
+printf 'foreign draft' > "$w/composer-$key"
+: > "$w/reset-done"
+SH
+  chmod +x "$FM_FAKE_WORLD/reset"
+}
+
+test_adopted_relaunch_keeps_its_previous_binding() {
+  local stage
+  for stage in ordinary cwd literal key; do
+    (
+      local dir="$TMP_ROOT/adopted-$stage" wt proj out
+      setup_world "$dir"
+      wt="$dir/wt"; proj="$dir/project"
+      fm_test_spawn_home "$FM_HOME" codex
+      fm_test_spawn_brief "$FM_HOME" mine
+      fm_git_worktree "$proj" "$wt" adopted-mine
+      fm_fake_exit0 "$dir/fakebin" codex treehouse gh-axi
+      fm_test_fake_tmux_spawn "$dir/fakebin"
+      printf 'off\n' > "$FM_HOME/config/herdr-presentation-spaces"
+      write_pane w1:p1 42 "$wt" codex
+      printf '{"error":{"code":"agent_not_found"}}\n' > "$FM_FAKE_WORLD/agent-w1_p1.json"
+      fm_write_meta "$FM_STATE_OVERRIDE/mine.meta" backend=herdr window=fmtest:w1:p1 endpoint_task_id=mine \
+        "worktree=$wt" "project=$proj" kind=ship harness=codex mode=no-mistakes yolo=off \
+        herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t1 herdr_pane_id=w1:p1 \
+        'herdr_process_identity=proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000'
+      cp "$FM_STATE_OVERRIDE/mine.meta" "$dir/prior.meta"
+      prepare_reset w1:p1
+      cat > "$dir/fakebin/sleep" <<'SH'
+#!/usr/bin/env bash
+case "${FM_RESET_STAGE:-}" in
+  literal)
+    if grep -q '^spawn_gen=' "$FM_STATE_OVERRIDE/mine.meta"; then "$FM_FAKE_WORLD/reset"; fi
+    ;;
+  key) [ ! -f "$FM_FAKE_WORLD/typed" ] || "$FM_FAKE_WORLD/reset" ;;
+esac
+exit 0
+SH
+      chmod +x "$dir/fakebin/sleep"
+      export FM_RESET_STAGE=$stage
+      if out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$FM_HOME" "$wt" "$dir/fakebin" mine --relaunch 2>&1); then
+        [ "$stage" = ordinary ] || fail "$stage relaunch adopted a recycled pane: $out"
+      else
+        [ "$stage" != ordinary ] || fail "ordinary adopted relaunch regressed: $out"
+      fi
+      if [ "$stage" = ordinary ]; then
+        [ "$(fm_backend_target_of_meta "$FM_STATE_OVERRIDE/mine.meta")" = fmtest:w1:p1 ] || fail 'ordinary adoption changed the endpoint'
+        grep -q 'w1:p1 send-keys enter' "$FM_FAKE_WORLD/inputs" || fail 'ordinary adopted relaunch did not deliver Enter'
+      else
+        [ -f "$FM_FAKE_WORLD/reset-done" ] || fail "$stage relaunch did not exercise a reset"
+        cmp -s "$FM_FAKE_WORLD/inputs" "$FM_FAKE_WORLD/inputs-at-reset" || fail "$stage relaunch sent input to the recycled pane"
+        [ "$(cat "$FM_FAKE_WORLD/composer-w1_p1")" = 'foreign draft' ] || fail "$stage relaunch changed a foreign draft"
+        [ "$(fm_backend_herdr_meta_value "$FM_STATE_OVERRIDE/mine.meta" herdr_process_identity)" = 'proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000' ] || fail "$stage relaunch published foreign ownership"
+        [ "$stage" != cwd ] || cmp -s "$dir/prior.meta" "$FM_STATE_OVERRIDE/mine.meta" || fail 'cwd refusal replaced the previous record'
+      fi
+    ) || fail "$stage adopted relaunch regression"
+  done
+  pass 'adopted relaunch refuses recycled panes at cwd, launch text, and Enter boundaries'
+}
+
+test_close_fallback_rechecks_the_selected_binding() {
+  local path scope
+  for path in ordinary projected; do
+    for scope in parent child; do
+      (
+        local dir="$TMP_ROOT/close-$path-$scope" rc=0
+        setup_world "$dir"
+        write_pane w1:p1 42 "$FM_HOME"
+        bind_mine
+        if [ "$scope" = child ]; then
+          mkdir -p "$dir/child/state"
+          cp "$FM_STATE_OVERRIDE/mine.meta" "$dir/child/state/mine.meta"
+          cp "$FM_STATE_OVERRIDE/other.meta" "$FM_STATE_OVERRIDE/mine.meta"
+          export FM_STATE_OVERRIDE="$dir/child/state"
+        fi
+        prepare_reset w1:p1
+        export FM_CLOSE_REMOVES=1 FM_BACKEND_HERDR_DEATH_CLOSE_POLLS=1
+        fm_backend_herdr_projection_focus_snapshot() { printf 'w2\tw2:t2'; }
+        fm_backend_herdr_projection_focus_restore() { return 0; }
+        fm_backend_herdr_projection_target_tab_mutation_allowed() { return 0; }
+        fm_backend_herdr_emptying_close_plan() { printf 'death 42'; }
+        fm_backend_herdr_pid_is_bare_shell() { return 0; }
+        fm_backend_herdr_pane_idle_shell_sample() { fm_backend_herdr_pane_shell_pid "$@"; }
+        kill() { printf '%s\n' "$*" >> "$FM_FAKE_WORLD/signals"; }
+        sleep() { "$FM_FAKE_WORLD/reset"; }
+        if [ "$path" = ordinary ]; then
+          fm_backend_herdr_kill_serialized fmtest w1:p1 fm-mine || rc=$?
+        else
+          fm_backend_herdr_projection_close_pane_focus_preserving fmtest w1:p1 '' fm-mine || rc=$?
+          [ "$rc" != 0 ] || fail 'projected close claimed removal of a foreign endpoint'
+        fi
+        [ -f "$FM_FAKE_WORLD/reset-done" ] || fail 'close did not cross the death-poll reset'
+        [ "$(cat "$FM_FAKE_WORLD/signals")" = '-HUP 42' ] || fail 'close escalated against a replacement process'
+        [ -f "$FM_FAKE_WORLD/pane-w1_p1.json" ] && [ ! -s "$FM_FAKE_WORLD/inputs" ] || fail "$path fallback explicitly closed a foreign pane"
+      ) || fail "$path/$scope close fallback regression"
+    done
+  done
+  (
+    setup_world "$TMP_ROOT/creation-close"
+    write_pane w1:p1 43 "$FM_HOME"
+    bind_mine
+    export FM_CLOSE_REMOVES=1
+    fm_backend_herdr_projection_focus_snapshot() { printf 'w2\tw2:t2'; }
+    fm_backend_herdr_projection_focus_restore() { return 0; }
+    fm_backend_herdr_projection_target_tab_mutation_allowed() { return 0; }
+    fm_backend_herdr_emptying_close_plan() { printf plain; }
+    fm_backend_herdr_projection_close_pane_focus_preserving fmtest w1:p1 || fail 'creation-response cleanup was blocked by a stale record'
+    [ ! -f "$FM_FAKE_WORLD/pane-w1_p1.json" ] || fail 'creation-response cleanup did not remove its pane'
+  ) || fail 'creation-response close regression'
+  pass 'ordinary and projected death-close fallbacks preserve recycled panes in the selected home'
+}
+
+test_treehouse_return_retry_rechecks_ownership() {
+  local path
+  for path in main descendant; do
+    (
+      local dir="$TMP_ROOT/return-$path" wt proj state mate out task=mine
+      setup_world "$dir"
+      wt="$dir/wt"; proj="$dir/project"; state="$FM_STATE_OVERRIDE"
+      fm_git_worktree "$proj" "$wt" return-mine
+      mkdir -p "$FM_HOME/data" "$FM_HOME/config" "$dir/user-home"
+      write_pane w1:p1 42 "$wt"
+      if [ "$path" = descendant ]; then
+        mate="$dir/mate"; mkdir -p "$mate/state" "$mate/data" "$mate/config"
+        printf 'mine\n' > "$mate/.fm-secondmate-home"
+        write_pane w1:p2 43 "$mate"
+        fm_write_meta "$state/mine.meta" backend=herdr window=fmtest:w1:p2 endpoint_task_id=mine \
+          "worktree=$mate" "project=$mate" "home=$mate" kind=secondmate harness=pi mode=secondmate yolo=off \
+          herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t2 herdr_pane_id=w1:p2 \
+          'herdr_process_identity=proc:43:3f2a9c1e-0000-4000-8000-0123456789ab:7100'
+        state="$mate/state"; task=leaf
+      fi
+      fm_write_meta "$state/$task.meta" backend=herdr window=fmtest:w1:p1 "endpoint_task_id=$task" \
+        "worktree=$wt" "project=$proj" kind=scout harness=pi \
+        herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t1 herdr_pane_id=w1:p1 \
+        'herdr_process_identity=proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000'
+      prepare_reset w1:p1
+      fm_fake_exit0 "$dir/fakebin" lsof
+      cat > "$dir/fakebin/treehouse" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' "$*" >> "$FM_FAKE_WORLD/returns"
+if [ "$(wc -l < "$FM_FAKE_WORLD/returns")" -eq 1 ]; then
+  printf "fatal: Unable to create '%s/.git/index.lock': File exists.\n" "$FM_RESET_CWD" >&2
+  exit 1
+fi
+printf '%s\n' destructive-retry > "$FM_FAKE_WORLD/destructive-retry"
+SH
+      cat > "$dir/fakebin/sleep" <<'SH'
+#!/usr/bin/env bash
+[ ! -f "$FM_FAKE_WORLD/returns" ] || "$FM_FAKE_WORLD/reset"
+exit 0
+SH
+      chmod +x "$dir/fakebin/treehouse" "$dir/fakebin/sleep"
+      out=$(FM_RESET_CWD="$wt" FM_CLOSE_REMOVES=1 FM_TREEHOUSE_RETURN_LOCK_RETRIES=1 FM_TREEHOUSE_RETURN_LOCK_RETRY_WAIT_SECS=0 \
+        HOME="$dir/user-home" FM_ROOT_OVERRIDE="$FM_HOME" "$ROOT/bin/fm-teardown.sh" mine --force 2>&1) && fail "$path cleanup accepted a foreign retry"
+      assert_contains "$out" 'foreign herdr' "$path retry did not identify foreign ownership"
+      [ -f "$FM_FAKE_WORLD/reset-done" ] || fail "$path return never reached its retry wait"
+      [ ! -f "$FM_FAKE_WORLD/destructive-retry" ] && [ "$(wc -l < "$FM_FAKE_WORLD/returns")" -eq 1 ] || fail "$path return retried against foreign ownership"
+      [ -f "$state/$task.meta" ] && [ -d "$wt" ] && [ -f "$FM_FAKE_WORLD/pane-w1_p1.json" ] || fail "$path retry removed durable state, worktree, or foreign pane"
+      cmp -s "$FM_FAKE_WORLD/inputs" "$FM_FAKE_WORLD/inputs-at-reset" || fail "$path retry closed the foreign pane"
+    ) || fail "$path Treehouse retry regression"
+  done
+  pass 'main and descendant Treehouse retries retain the selected ownership context'
+}
+
+test_deferred_husk_close_rechecks_ownership() {
+  local stage
+  for stage in ordinary husk; do
+    (
+      local dir="$TMP_ROOT/husk-$stage" out
+      setup_world "$dir"
+      write_pane w1:p1 42 "$FM_HOME"
+      printf '{"error":{"code":"agent_not_found"}}\n' > "$FM_FAKE_WORLD/agent-w1_p1.json"
+      bind_mine
+      prepare_reset w1:p1
+      printf '{"result":{"panes":[{"pane_id":"w1:p1","tab_id":"w1:t1"}]}}\n' > "$FM_FAKE_WORLD/panes.json"
+      export FM_RESET_STAGE=$stage FM_HUSK_DUP=1
+      out=$(fm_backend_herdr_create_task fmtest:w1 fm-mine "$FM_HOME" '') || fail "$stage husk replacement failed"
+      [ "$out" = 'w1:t3 w1:p3' ] || fail "$stage replacement returned an unexpected endpoint: $out"
+      if [ "$stage" = husk ]; then
+        [ -f "$FM_FAKE_WORLD/reset-done" ] && [ ! -s "$FM_FAKE_WORLD/inputs" ] && [ ! -f "$FM_FAKE_WORLD/closed-tab" ] || fail 'deferred tab close reached a recycled pane'
+      else
+        [ -f "$FM_FAKE_WORLD/closed-tab" ] || fail 'ordinary replacement did not close its owned husk'
+      fi
+    ) || fail "$stage deferred husk close regression"
+  done
+  pass 'deferred husk cleanup preserves ownership changes while ordinary replacement completes'
+}
+
 test_dispatch_boundaries
 test_submit_boundaries
 test_identity_requires_boot_and_ticks
 test_teardown_preserves_foreign_processes
 test_projection_recovery_ignores_only_bound_foreign_panes
 test_ordinary_teardown_and_projected_restart
+test_adopted_relaunch_keeps_its_previous_binding
+test_close_fallback_rechecks_the_selected_binding
+test_treehouse_return_retry_rechecks_ownership
+test_deferred_husk_close_rechecks_ownership

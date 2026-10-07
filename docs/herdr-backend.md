@@ -751,6 +751,7 @@ A Herdr live-handoff preserves that process and therefore this identity even if 
 A container rebuild destroys the old process; a newly launched process has its own PID/start-time pair rather than inheriting ownership from a recycled pane id.
 If the identity cannot be obtained during spawn or relaunch, publication omits the field and launch continues using the same best-effort label-plus-cwd fallback as a legacy record.
 A relaunch replaces any previously recorded identity with the newly read value, or removes it when the new read is unavailable; `fm-control relaunch` and `fm-secondmate-restart` both launch through that path, so a replaced pane process is re-recorded.
+An adopted relaunch revalidates its previous binding before identity refresh and metadata publication, and at each spawn read or input boundary; a process change refuses the launch rather than publishing ownership of the replacement.
 
 `fm_backend_herdr_endpoint_foreign`, also used by the data-plane dispatcher guard, compares the current process identity whenever a claiming record carries it.
 A `proc:` record must match exactly; a `ps:` record (written where start ticks or boot id cannot be read) matches when the pid is equal and the current `ps` start time is within one second of the recorded one, even if `/proc` is now readable.
@@ -763,7 +764,9 @@ Active capture, key, text, and classifier operations check ownership after serve
 Passive liveness and existence probes do not start the server.
 Task-specific liveness callers pass `fm-<id>` so another task claiming the same address cannot supply their ownership verdict.
 Teardown refuses destructive process or worktree cleanup when a proven foreign pane has processes in the directories being cleaned, retaining the task records for reconciliation.
-Guarded closes leave foreign panes untouched; [When task records are erased](#when-task-records-are-erased) owns removal confirmation, including when identity cannot be read after a successful close.
+Guarded closes recheck ownership before each signal and explicit-close fallback, and Treehouse returns recheck before every attempt, including retries for an index lock.
+Cleanup of panes obtained directly from a creation response remains creation-owned rather than adopting a stale task record.
+[When task records are erased](#when-task-records-are-erased) owns removal confirmation, including when identity cannot be read after a successful close.
 Replacement creation preserves both foreign and unclaimed same-label panes when the task has an identity-bearing record, including on repeated rebinds.
 Spawn passes the owning state directory separately from the home used to label a secondmate's workspace.
 Host-local remote control binds endpoint reads, input, observations, and lifecycle operations to `state/parent-route`, including the key subprocess; code-root updates keep the code root's own state directory.

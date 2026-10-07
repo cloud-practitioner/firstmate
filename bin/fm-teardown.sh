@@ -1800,10 +1800,14 @@ cleanup_stale_lock_for_safety_check() {
 # stale git index.lock left by a killed crew process. See the script header.
 teardown_treehouse_return() {
   local dir=$1 cd_dir=$2 label=$3 post_cleanup_check=${4:-}
+  local backend=${5:-$BACKEND} target=${6:-$T} task_id=${7:-$ID}
   local out lock attempt=0 max_retries lock_desc
 
   # Capture stdout+stderr so non-lock failures stay visible and lock failures can
   # be matched by signature even when the lock file is already gone mid-check.
+  if [ "$backend" = herdr ]; then
+    teardown_herdr_cleanup_preflight "$target" "$task_id" "$dir" || return "$TEARDOWN_TREEHOUSE_LOCK_REFUSED"
+  fi
   if out=$( ( cd "$cd_dir" && treehouse return --force "$dir" ) 2>&1 ); then
     [ -n "$out" ] && printf '%s\n' "$out"
     return 0
@@ -1829,6 +1833,9 @@ teardown_treehouse_return() {
     echo "teardown: $label return failed with transient git lock ($lock_desc); waiting ${TREEHOUSE_RETURN_LOCK_RETRY_WAIT_SECS}s and retrying ($attempt/${max_retries})" >&2
     sleep "$TREEHOUSE_RETURN_LOCK_RETRY_WAIT_SECS"
 
+    if [ "$backend" = herdr ]; then
+      teardown_herdr_cleanup_preflight "$target" "$task_id" "$dir" || return "$TEARDOWN_TREEHOUSE_LOCK_REFUSED"
+    fi
     if out=$( ( cd "$cd_dir" && treehouse return --force "$dir" ) 2>&1 ); then
       [ -n "$out" ] && printf '%s\n' "$out"
       echo "teardown: $label return succeeded on retry; lock cleared on its own" >&2
@@ -1848,6 +1855,9 @@ teardown_treehouse_return() {
   if [ -n "$lock" ] && [ -e "$lock" ]; then
     lock_desc=$lock
     if fm_lock_is_provably_stale "$lock" "$dir" "$STALE_WORKTREE_LOCK_AGE_SECS"; then
+      if [ "$backend" = herdr ]; then
+        teardown_herdr_cleanup_preflight "$target" "$task_id" "$dir" || return "$TEARDOWN_TREEHOUSE_LOCK_REFUSED"
+      fi
       rm -f "$lock"
       echo "teardown: removed provably-stale git lock $lock (age >= ${STALE_WORKTREE_LOCK_AGE_SECS}s, no live holder) and retrying $label return" >&2
       if [ -n "$post_cleanup_check" ]; then
@@ -1855,6 +1865,9 @@ teardown_treehouse_return() {
           echo "teardown: $label return aborted after stale-lock cleanup because safety checks failed" >&2
           return 1
         fi
+      fi
+      if [ "$backend" = herdr ]; then
+        teardown_herdr_cleanup_preflight "$target" "$task_id" "$dir" || return "$TEARDOWN_TREEHOUSE_LOCK_REFUSED"
       fi
       if out=$( ( cd "$cd_dir" && treehouse return --force "$dir" ) 2>&1 ); then
         [ -n "$out" ] && printf '%s\n' "$out"
@@ -2250,15 +2263,15 @@ EOF
       return 1
     fi
     current_pids=$TASK_PIDS
-    if [ "$BACKEND" = herdr ]; then
-      teardown_herdr_cleanup_preflight "$T" "$ID" "$@" || return 1
-    fi
     echo "teardown: reaping leaked $label process(es) for $ID: $(printf '%s' "$pids" | tr '\n' ' ')" >&2
     for i in "${!tracked_pids[@]}"; do
       pid=${tracked_pids[$i]}
       identity=${tracked_identities[$i]}
       if task_pid_list_contains "$current_pids" "$pid" \
          && task_process_identity_matches "$pid" "$identity"; then
+        if [ "$BACKEND" = herdr ]; then
+          teardown_herdr_cleanup_preflight "$T" "$ID" "$@" || return 1
+        fi
         kill -TERM "$pid" 2>/dev/null || true
       fi
     done
@@ -2286,14 +2299,14 @@ EOF
         return 1
       fi
       current_pids=$TASK_PIDS
-      if [ "$BACKEND" = herdr ]; then
-        teardown_herdr_cleanup_preflight "$T" "$ID" "$@" || return 1
-      fi
       for i in "${!remaining_pids[@]}"; do
         pid=${remaining_pids[$i]}
         identity=${remaining_identities[$i]}
         if task_pid_list_contains "$current_pids" "$pid" \
            && task_process_identity_matches "$pid" "$identity"; then
+          if [ "$BACKEND" = herdr ]; then
+            teardown_herdr_cleanup_preflight "$T" "$ID" "$@" || return 1
+          fi
           kill -KILL "$pid" 2>/dev/null || true
         fi
       done
@@ -2688,6 +2701,7 @@ EOF
 
 remove_firstmate_home() {
   local home=$1 label=$2 expected_id=${3:-} abs_home_path process_event_backup
+  local backend=${4:-$BACKEND} target=${5:-$T} state=${6:-$STATE}
   [ -n "$home" ] || return 0
   [ -e "$home" ] || return 0
   abs_home_path=$(validate_firstmate_home_for_removal "$home" "$label" "$expected_id") || return 1
@@ -2706,13 +2720,16 @@ remove_firstmate_home() {
       restore_firstmate_home_process_events "$abs_home_path" "$label" "$process_event_backup" || return $?
       return 1
     }
-    teardown_treehouse_return "$abs_home_path" "$FM_ROOT" "$label" || {
+    FM_STATE_OVERRIDE="$state" teardown_treehouse_return "$abs_home_path" "$FM_ROOT" "$label" "" "$backend" "$target" "${expected_id:-$ID}" || {
       echo "error: treehouse return failed for $label $abs_home_path; lease may still be held" >&2
       restore_firstmate_home_process_events "$abs_home_path" "$label" "$process_event_backup" || return $?
       return 1
     }
     [ -z "$process_event_backup" ] || rm -rf -- "$process_event_backup"
     return 0
+  fi
+  if [ "$backend" = herdr ]; then
+    FM_STATE_OVERRIDE="$state" teardown_herdr_cleanup_preflight "$target" "${expected_id:-$ID}" "$abs_home_path" || return 1
   fi
   if safe_rm_rf "$abs_home_path" "$label"; then
     [ -z "$process_event_backup" ] || rm -rf -- "$process_event_backup"
@@ -3350,7 +3367,7 @@ cleanup_firstmate_home_children() {
         if [ "$child_backend" = herdr ]; then
           FM_STATE_OVERRIDE="$sub_state" teardown_herdr_cleanup_preflight "$child_t" "$child_id" "$child_home" || return 1
         fi
-        remove_firstmate_home "$child_home" "child firstmate home" "$child_id" || return $?
+        remove_firstmate_home "$child_home" "child firstmate home" "$child_id" "$child_backend" "$child_t" "$sub_state" || return $?
       fi
     elif [ "$child_backend" = orca ]; then
       if [ -n "$child_wt" ] && [ -d "$child_wt" ]; then
@@ -3381,7 +3398,7 @@ cleanup_firstmate_home_children() {
           if [ "$child_backend" = herdr ]; then
             FM_STATE_OVERRIDE="$sub_state" teardown_herdr_cleanup_preflight "$child_t" "$child_id" "$child_wt" || return 1
           fi
-          if teardown_treehouse_return "$child_wt" "$child_proj" "child worktree"; then
+          if FM_STATE_OVERRIDE="$sub_state" teardown_treehouse_return "$child_wt" "$child_proj" "child worktree" "" "$child_backend" "$child_t" "$child_id"; then
             fm_treehouse_slot_owner_release "$child_wt" "$child_id"
           else
             child_return_rc=$?
