@@ -378,6 +378,7 @@ esac
 exit 0
 SH
       chmod +x "$dir/fakebin/sleep"
+      # shellcheck disable=SC2030 # Reset stage is intentionally confined to this fixture's subshell.
       export FM_RESET_STAGE=$stage
       if out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$FM_HOME" "$wt" "$dir/fakebin" mine --relaunch 2>&1); then
         [ "$stage" = ordinary ] || fail "$stage relaunch adopted a recycled pane: $out"
@@ -412,9 +413,11 @@ test_close_fallback_rechecks_the_selected_binding() {
           mkdir -p "$dir/child/state"
           cp "$FM_STATE_OVERRIDE/mine.meta" "$dir/child/state/mine.meta"
           cp "$FM_STATE_OVERRIDE/other.meta" "$FM_STATE_OVERRIDE/mine.meta"
+          # shellcheck disable=SC2030 # Child state is intentionally confined to this fixture's subshell.
           export FM_STATE_OVERRIDE="$dir/child/state"
         fi
         prepare_reset w1:p1
+        # shellcheck disable=SC2030 # Close settings are intentionally confined to this fixture's subshell.
         export FM_CLOSE_REMOVES=1 FM_BACKEND_HERDR_DEATH_CLOSE_POLLS=1
         fm_backend_herdr_projection_focus_snapshot() { printf 'w2\tw2:t2'; }
         fm_backend_herdr_projection_focus_restore() { return 0; }
@@ -440,6 +443,7 @@ test_close_fallback_rechecks_the_selected_binding() {
     setup_world "$TMP_ROOT/creation-close"
     write_pane w1:p1 43 "$FM_HOME"
     bind_mine
+    # shellcheck disable=SC2030,SC2031 # This fixture sets its own close behavior, independent of earlier subshells.
     export FM_CLOSE_REMOVES=1
     fm_backend_herdr_projection_focus_snapshot() { printf 'w2\tw2:t2'; }
     fm_backend_herdr_projection_focus_restore() { return 0; }
@@ -457,7 +461,9 @@ test_treehouse_return_retry_rechecks_ownership() {
     (
       local dir="$TMP_ROOT/return-$path" wt proj state mate out task=mine
       setup_world "$dir"
-      wt="$dir/wt"; proj="$dir/project"; state="$FM_STATE_OVERRIDE"
+      wt="$dir/wt"; proj="$dir/project"
+      # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
+      state="$FM_STATE_OVERRIDE"
       fm_git_worktree "$proj" "$wt" return-mine
       mkdir -p "$FM_HOME/data" "$FM_HOME/config" "$dir/user-home"
       write_pane w1:p1 42 "$wt"
@@ -515,6 +521,7 @@ test_deferred_husk_close_rechecks_ownership() {
       bind_mine
       prepare_reset w1:p1
       printf '{"result":{"panes":[{"pane_id":"w1:p1","tab_id":"w1:t1"}]}}\n' > "$FM_FAKE_WORLD/panes.json"
+      # shellcheck disable=SC2030,SC2031 # This fixture sets its own reset stage, independent of earlier subshells.
       export FM_RESET_STAGE=$stage FM_HUSK_DUP=1
       out=$(fm_backend_herdr_create_task fmtest:w1 fm-mine "$FM_HOME" '') || fail "$stage husk replacement failed"
       [ "$out" = 'w1:t3 w1:p3' ] || fail "$stage replacement returned an unexpected endpoint: $out"
@@ -546,6 +553,7 @@ test_published_fresh_and_rebound_launches_keep_their_binding() {
         printf '{"error":{"code":"agent_not_found"}}\n' > "$FM_FAKE_WORLD/agent-w1_p3.json"
         if [ "$path" = rebound ]; then
           write_pane w2:p2 42 "$dir/unrelated" codex
+          # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
           fm_write_meta "$FM_STATE_OVERRIDE/mine.meta" backend=herdr window=fmtest:w2:p2 endpoint_task_id=mine \
             "worktree=$wt" "project=$proj" kind=ship harness=codex mode=no-mistakes yolo=off \
             herdr_session=fmtest herdr_workspace_id=w2 herdr_tab_id=w2:t2 herdr_pane_id=w2:p2 \
@@ -563,6 +571,7 @@ esac
 exit 0
 SH
         chmod +x "$dir/fakebin/sleep"
+        # shellcheck disable=SC2031 # This fixture sets its own reset stage, independent of earlier subshells.
         export FM_RESET_STAGE=$stage
         if [ "$path" = fresh ]; then
           out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$FM_HOME" "$wt" "$dir/fakebin" mine "$proj" \
@@ -579,6 +588,7 @@ SH
           cmp -s "$FM_FAKE_WORLD/inputs" "$FM_FAKE_WORLD/inputs-at-reset" || fail "$path/$stage launch sent input to a foreign pane"
           [ "$(cat "$FM_FAKE_WORLD/composer-w1_p3")" = 'foreign draft' ] || fail "$path/$stage launch changed a foreign draft"
         fi
+        # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
         meta="$FM_STATE_OVERRIDE/mine.meta"
         [ "$stage" = ordinary ] || meta="$FM_FAKE_WORLD/meta-at-reset"
         [ "$(fm_backend_target_of_meta "$meta")" = fmtest:w1:p3 ] || fail "$path did not publish its created endpoint"
@@ -621,6 +631,7 @@ test_proc_binding_component_loss_is_unreadable() {
 printf 'Wed Oct  7 02:03:32 2026\n'
 SH
       chmod +x "$dir/fakebin/ps"
+      # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
       identity=$(fm_backend_herdr_meta_value "$FM_STATE_OVERRIDE/mine.meta" herdr_process_identity)
       [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = alive ] || fail 'proc-bound agent was not initially alive'
       case "$loss" in
@@ -671,10 +682,13 @@ test_native_push_validates_selected_task_ownership() {
           write_pane w1:p1 42 "$FM_HOME"
           bind_mine
           state="$dir/child/state"; mkdir -p "$state"
+          # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
           cp "$FM_STATE_OVERRIDE/mine.meta" "$state/a.meta"
+          # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
           cp "$FM_STATE_OVERRIDE/other.meta" "$state/b.meta"
           if [ "$ownership" = foreign ]; then
             write_pane w1:p1 43 "$FM_HOME"
+            # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
             cp "$FM_STATE_OVERRIDE/other.meta" "$FM_STATE_OVERRIDE/mine.meta"
           elif [ "$ownership" = unreadable ]; then
             rm -f "$FM_PROC_ROOT_OVERRIDE/sys/kernel/random/boot_id"
@@ -723,6 +737,7 @@ test_secondmate_recovery_keeps_task_selection_across_lock_wait() {
     setup_world "$dir"
     . "$ROOT/bin/fm-env-lib.sh"
     . "$ROOT/bin/fm-secondmate-liveness-lib.sh"
+    # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
     STATE=$FM_STATE_OVERRIDE
     write_pane w1:p1 42 "$FM_HOME"
     printf '{"error":{"code":"agent_not_found"}}\n' > "$FM_FAKE_WORLD/agent-w1_p1.json"
@@ -737,6 +752,7 @@ test_secondmate_recovery_keeps_task_selection_across_lock_wait() {
 printf '%s\n' "$*" > "$FM_FAKE_WORLD/relaunch"
 SH
     chmod +x "$FM_ROOT/bin/fm-spawn.sh"
+    # shellcheck disable=SC2031 # This fixture sets its own close behavior, independent of earlier subshells.
     export FM_CLOSE_REMOVES=1
     fm_backend_herdr_presentation_session_lock_path() { printf '%s/lock' "$FM_FAKE_WORLD"; }
     fm_lock_try_acquire() {
