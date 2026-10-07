@@ -739,12 +739,11 @@ Pane ids are per-server counters, so a recorded id can outlive the Herdr server 
 After a Herdr server restart, or a container rebuild that does not persist Herdr's session state, the fresh session's ids restart from `w1`, and surviving task records can name ids now belonging to another task's live agent or a plain shell.
 The pane classifier alone would read the first as this task's live agent and the second as its adoptable dead pane.
 
-Herdr task records carry `herdr_process_identity=proc:<shell-pid>:<boot-id>:<start-ticks>` when `/proc/<pid>/stat` supplies readable start ticks, or `ps:<shell-pid>:<start-time>` otherwise.
+Herdr task records carry `herdr_process_identity=proc:<shell-pid>:<boot-id>:<start-ticks>` when both `/proc/<pid>/stat` start ticks and the kernel boot id are readable, or `ps:<shell-pid>:<start-time>` otherwise.
 Spawn records it at the shared metadata-publication boundary, including flat and projected spawns, relaunches that adopt a pane, and relaunches that bind a new pane.
 `pane process-info` exposes the pane's persistent `shell_pid`.
 The `proc:` identity uses field 22 of `/proc/<pid>/stat` (the start time in clock ticks) and the kernel boot id: start ticks stay fixed for a live process, and the boot id distinguishes the same PID and tick count across boots.
-The boot-id component is `-` when the boot id is unreadable, empty, or contains characters outside hexadecimal digits and dashes; that fallback lacks boot-id protection against a repeated PID and tick count after reboot.
-When start ticks cannot be read or parsed, including on macOS/BSD without `/proc`, it falls back to `ps -o lstart= -p <pid>`, which gives the full start date and time.
+When either start ticks or the boot id cannot be read or parsed, including on macOS/BSD without `/proc`, it falls back to `ps -o lstart= -p <pid>`, which gives the full start date and time.
 On Linux, `ps` derives `lstart` from boot time plus ticks divided by the clock rate, so it can read one second apart across calls for the same live process; strict equality alone is therefore not a reliable ownership check.
 The `ps` read pins `LC_ALL=C` and `TZ=UTC0` and trims surrounding whitespace so the serialized value has the same meaning regardless of the caller's locale or timezone.
 This binds the pane's root process rather than its changing foreground child: the shell stays alive while its agent runs, including while the agent runs tools, and an exec preserves the process start time.
@@ -754,15 +753,16 @@ If the identity cannot be obtained during spawn or relaunch, publication omits t
 A relaunch replaces any previously recorded identity with the newly read value, or removes it when the new read is unavailable; `fm-control relaunch` and `fm-secondmate-restart` both launch through that path, so a replaced pane process is re-recorded.
 
 `fm_backend_herdr_endpoint_foreign`, also used by the data-plane dispatcher guard, compares the current process identity whenever a claiming record carries it.
-A `proc:` record must match exactly; a `ps:` record (written where start ticks cannot be read) matches when the pid is equal and the current `ps` start time is within one second of the recorded one, even if `/proc` is now readable.
+A `proc:` record must match exactly; a `ps:` record (written where start ticks or boot id cannot be read) matches when the pid is equal and the current `ps` start time is within one second of the recorded one, even if `/proc` is now readable.
 The `ps:` tolerance cannot distinguish PID reuse with a start time within that window.
 A mismatch is treated as foreign, regardless of matching cwd or `fm-<id>` label.
 An unreadable identity blocks active operations and closure but reports `unreadable` for liveness unless the pane or server is independently proven gone; it does not authorize a duplicate launch.
 A server restart that changes this identity invalidates the binding; a live-handoff that preserves it does not.
 A foreign pane reads `missing` in the recovery-grade view, so the relaunch path can bind a fresh endpoint in the recorded session.
-Active capture, key, text, and classifier dispatchers establish server readiness before checking ownership, so restoring a stopped server cannot bypass the check.
+Active capture, key, text, and classifier operations check ownership after server readiness at each internal read or input boundary, including submit verification, clearing, and retries, so restoring a stopped server cannot bypass the check.
 Passive liveness and existence probes do not start the server.
 Task-specific liveness callers pass `fm-<id>` so another task claiming the same address cannot supply their ownership verdict.
+Teardown refuses destructive process or worktree cleanup when a proven foreign pane has processes in the directories being cleaned, retaining the task records for reconciliation.
 Guarded closes leave foreign panes untouched; [When task records are erased](#when-task-records-are-erased) owns removal confirmation, including when identity cannot be read after a successful close.
 Replacement creation preserves both foreign and unclaimed same-label panes when the task has an identity-bearing record, including on repeated rebinds.
 Spawn passes the owning state directory separately from the home used to label a secondmate's workspace.

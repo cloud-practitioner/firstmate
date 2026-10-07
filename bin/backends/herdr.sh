@@ -1015,9 +1015,13 @@ fm_backend_herdr_projection_close_pane_focus_preserving() {  # <session> <pane-i
   [ -n "$pane_id" ] || return 0
   if [ -n "$expected_label" ]; then
     if fm_backend_herdr_endpoint_foreign "$session" "$pane_id" "$expected_label"; then
+      FM_BACKEND_HERDR_PROJECTION_CLOSE_AGENT_STATE=dead
       return 1
     else
-      [ "$?" -eq 1 ] || return 1
+      if [ "$?" -ne 1 ]; then
+        FM_BACKEND_HERDR_PROJECTION_CLOSE_AGENT_STATE=unknown
+        return 1
+      fi
     fi
   fi
   before=$(fm_backend_herdr_projection_focus_snapshot "$session") || {
@@ -2444,9 +2448,10 @@ fm_backend_herdr_pane_process_identity() {
     boot=
     [ ! -r "${FM_PROC_ROOT_OVERRIDE:-/proc}/sys/kernel/random/boot_id" ] \
       || IFS= read -r boot < "${FM_PROC_ROOT_OVERRIDE:-/proc}/sys/kernel/random/boot_id" 2>/dev/null || boot=
-    case "$boot" in ''|*[!0-9a-fA-F-]*) boot=- ;; esac
-    printf 'proc:%s:%s:%s\n' "$pid" "$boot" "$ticks"
-    return 0
+    if [[ "$boot" =~ ^[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12}$ ]]; then
+      printf 'proc:%s:%s:%s\n' "$pid" "$boot" "$ticks"
+      return 0
+    fi
   fi
   starttime=$(fm_backend_herdr_ps_lstart "$pid") || return 1
   printf 'ps:%s:%s\n' "$pid" "$starttime"
@@ -3025,6 +3030,11 @@ fm_backend_herdr_projection_reclaim_task() {  # <session> <journal> <task-id> <h
     echo "warning: herdr presentation binding for $id has an ambiguous, renamed, foreign, or non-nested live shape; spawning flat" >&2
     return 2
   fi
+  if fm_backend_herdr_endpoint_foreign "$session" "$meta_pane" "$task_label"; then
+    return 2
+  else
+    [ "$?" -eq 1 ] || return 1
+  fi
   state=$(fm_backend_herdr_pane_agent_state "$session" "$meta_pane")
   case "$state" in
     no-agent) ;;
@@ -3077,6 +3087,15 @@ fm_backend_herdr_projection_reclaim_task() {  # <session> <journal> <task-id> <h
     fm_backend_herdr_projection_reclaim_rollback "$session" "$new_pane" || return 1
     echo "warning: herdr presentation reclaim for $id could not verify its replacement pane; spawning flat" >&2
     return 2
+  fi
+  if fm_backend_herdr_endpoint_foreign "$session" "$meta_pane" "$task_label"; then
+    fm_backend_herdr_projection_reclaim_rollback "$session" "$new_pane" || return 1
+    return 2
+  else
+    if [ "$?" -ne 1 ]; then
+      fm_backend_herdr_projection_reclaim_rollback "$session" "$new_pane" || return 1
+      return 1
+    fi
   fi
   state=$(fm_backend_herdr_pane_agent_state "$session" "$meta_pane")
   case "$state" in
@@ -3183,6 +3202,11 @@ fm_backend_herdr_projection_recovery_allows_flat() {  # <session> <journal> <tas
     pane_ids=$(printf '%s' "$panes" | jq -r '.result.panes[]? | .pane_id' 2>/dev/null)
     while IFS= read -r pane; do
       [ -n "$pane" ] || continue
+      if fm_backend_herdr_endpoint_foreign "$session" "$pane" "fm-$id"; then
+        continue
+      else
+        [ "$?" -eq 1 ] || return 1
+      fi
       state=$(fm_backend_herdr_pane_agent_state "$session" "$pane")
       case "$state" in
         dead|no-agent) : ;;
@@ -3253,6 +3277,13 @@ fm_backend_herdr_parse_target() {  # <target>
 fm_backend_herdr_target_ready() {  # <target>
   fm_backend_herdr_parse_target "$1" || return 1
   fm_backend_herdr_server_ensure "$FM_BACKEND_HERDR_SESSION" || return 1
+  if [ "${FM_BACKEND_HERDR_EXPECTED_LABEL+x}" = x ]; then
+    if fm_backend_herdr_endpoint_foreign "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" "$FM_BACKEND_HERDR_EXPECTED_LABEL"; then
+      return 1
+    else
+      [ "$?" -eq 1 ] || return 1
+    fi
+  fi
 }
 
 # fm_backend_herdr_current_path: the live FOREGROUND process's cwd, or empty on
@@ -3377,6 +3408,9 @@ fm_backend_herdr_visible_capture_ansi() {  # <target>
 
 fm_backend_herdr_agent_identity_raw() {  # <session> <pane> -> <agent>\t<status>
   local out
+  if [ "${FM_BACKEND_HERDR_EXPECTED_LABEL+x}" = x ]; then
+    fm_backend_herdr_target_ready "$1:$2" || return 1
+  fi
   out=$(fm_backend_herdr_cli "$1" agent get "$2" 2>/dev/null) || return 1
   printf '%s' "$out" | jq -r '[.result.agent.agent // "", .result.agent.agent_status // ""] | @tsv' 2>/dev/null
 }
@@ -3881,15 +3915,12 @@ fm_backend_herdr_classify_submit_agent_status() {  # <raw-agent_status>
 
 # fm_backend_herdr_agent_status_raw: one `agent get` read, echoing the raw
 # agent_status string (working/idle/done/blocked/...), or empty on any
-# failure. Deliberately skips fm_backend_herdr_target_ready's server-ensure
-# round trip (an extra `status --json` call) that fm_backend_herdr_busy_state
-# pays on every call: fm_backend_herdr_wait_for_working polls this in a tight
-# loop right after a caller has already parsed the target and confirmed the
-# server is live (e.g. fm_backend_herdr_send_text_submit, immediately after a
-# successful send-text), so re-checking server liveness on every poll would
-# only add latency without adding safety.
+# failure.
 fm_backend_herdr_agent_status_raw() {  # <session> <pane_id>
   local session=$1 pane_id=$2 out
+  if [ "${FM_BACKEND_HERDR_EXPECTED_LABEL+x}" = x ]; then
+    fm_backend_herdr_target_ready "$session:$pane_id" || return 0
+  fi
   out=$(fm_backend_herdr_cli "$session" agent get "$pane_id" 2>/dev/null) || { printf ''; return 0; }
   printf '%s' "$out" | jq -r '.result.agent.agent_status // empty' 2>/dev/null
 }
@@ -3969,6 +4000,9 @@ fm_backend_herdr_wait_for_working() {  # <session> <pane_id> <budget-seconds> <p
   for ((i = 0; i < polls; i++)); do
     if [ "$polls" -eq 1 ] || [ "$i" -gt 0 ]; then
       sleep "$interval"
+    fi
+    if [ "${FM_BACKEND_HERDR_EXPECTED_LABEL+x}" = x ]; then
+      fm_backend_herdr_target_ready "$session:$pane_id" || { printf 'unknown'; return 0; }
     fi
     raw=$(fm_backend_herdr_agent_status_raw "$session" "$pane_id")
     bs=$(fm_backend_herdr_classify_submit_agent_status "$raw")

@@ -771,7 +771,7 @@ fm_backend_endpoint_foreign() {  # <backend> <target> [expected-label]
 
 # fm_backend_capture: bounded plain-text session capture.
 fm_backend_capture() {  # <backend> <target> <lines> [expected-label]
-  local backend=$1
+  local backend=$1 FM_BACKEND_HERDR_EXPECTED_LABEL=${4:-}
   shift
   fm_backend_source "$backend" || return 1
   fm_backend_endpoint_ready "$backend" "$1" "${3:-}" || return 1
@@ -805,7 +805,7 @@ fm_backend_visible_capture_supported() {  # <backend>
 # outside FM_BACKEND_VISIBLE_CAPTURE declines here rather than answering with a
 # history-backed capture the caller would read as the live screen.
 fm_backend_visible_capture() {  # <backend> <target> [expected-label]
-  local backend=$1
+  local backend=$1 FM_BACKEND_HERDR_EXPECTED_LABEL=${3:-}
   shift
   fm_backend_visible_capture_supported "$backend" || {
     echo "error: backend '$backend' has no verified viewport-bounded capture primitive" >&2
@@ -818,7 +818,7 @@ fm_backend_visible_capture() {  # <backend> <target> [expected-label]
 
 # fm_backend_send_key: one backend-supported named special key.
 fm_backend_send_key() {  # <backend> <target> <key> [expected-label]
-  local backend=$1
+  local backend=$1 FM_BACKEND_HERDR_EXPECTED_LABEL=${4:-}
   shift
   fm_backend_source "$backend" || return 1
   fm_backend_endpoint_ready "$backend" "$1" "${3:-}" || return 1
@@ -838,7 +838,7 @@ fm_backend_send_key() {  # <backend> <target> <key> [expected-label]
 # A pane that already shows the recognised dialog is refused before any
 # adapter types, so that submit neither types the text nor sends Enter.
 fm_backend_send_text_submit() {  # <backend> <target> <text> <retries> <enter-sleep> <settle> [expected-label]
-  local backend=$1 rc=0 target label dialog
+  local backend=$1 rc=0 target label dialog FM_BACKEND_HERDR_EXPECTED_LABEL=${7:-}
   shift
   target=$1
   label=${6:-}
@@ -929,11 +929,11 @@ fm_backend_worktree_path() {  # <backend> <worktree-id>
 # uses unknown as the cue for harness-scoped pane-tail detection, while
 # fm-crew-state.sh also corroborates native idle verdicts with the recorded
 # harness's signature before treating a no-run crew as not busy.
-fm_backend_busy_state() {  # <backend> <target>
-  local backend=$1
+fm_backend_busy_state() {  # <backend> <target> [expected-label]
+  local backend=$1 FM_BACKEND_HERDR_EXPECTED_LABEL=${3:-}
   shift
   fm_backend_source "$backend" || { printf 'unknown'; return 0; }
-  fm_backend_endpoint_ready "$backend" "$1" || { printf 'unknown'; return 0; }
+  fm_backend_endpoint_ready "$backend" "$1" "${2:-}" || { printf 'unknown'; return 0; }
   case "$backend" in
     herdr) fm_backend_herdr_busy_state "$@" ;;
     *) printf 'unknown' ;;
@@ -953,7 +953,7 @@ fm_backend_busy_state() {  # <backend> <target>
 # assumption; zellij's classifier reads `dump-screen --ansi`, which replaced
 # its old no-classifier content-diff reporting.
 fm_backend_composer_state() {  # <backend> <target> [expected-label] -> empty|pending|pending-unproven|unknown
-  local backend=$1
+  local backend=$1 FM_BACKEND_HERDR_EXPECTED_LABEL=${3:-}
   shift
   fm_backend_source "$backend" || { printf 'unknown'; return 0; }
   fm_backend_endpoint_ready "$backend" "$1" "${2:-}" || { printf 'unknown'; return 0; }

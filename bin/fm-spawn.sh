@@ -3558,6 +3558,14 @@ herdr_projection_existing_meta_allows_flat() { # <meta>
       echo "error: existing herdr endpoint for $ID could not be inspected; refusing duplicate launch" >&2
       return 1
     }
+    old_state=$(fm_backend_herdr_agent_state "$old_target" "fm-$ID")
+    case "$old_state" in
+      missing) return 0 ;;
+      unreadable)
+        echo "error: existing herdr endpoint for $ID is unreadable; refusing duplicate launch" >&2
+        return 1
+        ;;
+    esac
     old_state=$(fm_backend_herdr_pane_agent_state "$old_session" "$old_pane")
     case "$old_state" in
     # A stale registration over a shell-only pane is agent-free for RECOVERY

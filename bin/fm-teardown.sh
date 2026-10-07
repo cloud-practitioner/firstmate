@@ -2207,6 +2207,9 @@ reap_task_worktree_processes() {  # <label> <dir>...
   local label=$1 pids pid identity current_pids i pass=1 max_passes=3
   local -a tracked_pids tracked_identities remaining_pids remaining_identities
   shift
+  if [ "$BACKEND" = herdr ]; then
+    teardown_herdr_cleanup_preflight "$T" "$ID" "$@" || return 1
+  fi
   if ! command -v lsof >/dev/null 2>&1; then
     reap_task_backend_process_group "$label"
     return 0
@@ -2247,6 +2250,9 @@ EOF
       return 1
     fi
     current_pids=$TASK_PIDS
+    if [ "$BACKEND" = herdr ]; then
+      teardown_herdr_cleanup_preflight "$T" "$ID" "$@" || return 1
+    fi
     echo "teardown: reaping leaked $label process(es) for $ID: $(printf '%s' "$pids" | tr '\n' ' ')" >&2
     for i in "${!tracked_pids[@]}"; do
       pid=${tracked_pids[$i]}
@@ -2280,6 +2286,9 @@ EOF
         return 1
       fi
       current_pids=$TASK_PIDS
+      if [ "$BACKEND" = herdr ]; then
+        teardown_herdr_cleanup_preflight "$T" "$ID" "$@" || return 1
+      fi
       for i in "${!remaining_pids[@]}"; do
         pid=${remaining_pids[$i]}
         identity=${remaining_identities[$i]}
@@ -3102,6 +3111,60 @@ teardown_herdr_require_prerequisites() {  # <task-id>
   fi
 }
 
+teardown_herdr_cleanup_preflight() {
+  local target=$1 task_id=$2 ownership=0 session pane info cwd dir shell_pid table pane_pids pid roots=0
+  shift 2
+  fm_backend_herdr_parse_target "$target" || return 1
+  session=$FM_BACKEND_HERDR_SESSION pane=$FM_BACKEND_HERDR_PANE
+  fm_backend_herdr_endpoint_foreign "$session" "$pane" "fm-$task_id" || ownership=$?
+  case "$ownership" in
+    1) return 0 ;;
+    2)
+      [ "$(fm_backend_herdr_pane_presence_state "$session" "$pane")" = dead ] && return 0
+      echo "REFUSED: cannot verify herdr process ownership for $task_id; preserving its worktree and records." >&2
+      return 1
+      ;;
+  esac
+  info=$(fm_backend_herdr_cli "$session" pane get "$pane" 2>/dev/null) || return 1
+  for dir in "$@"; do
+    [ -n "$dir" ] || continue
+    [ ! -d "$dir" ] || roots=1
+    while IFS= read -r cwd; do
+      [ -n "$cwd" ] || continue
+      case "$cwd/" in
+        "${dir%/}/"*)
+          echo "REFUSED: foreign herdr pane $target has a process in $dir; preserving its processes, worktree, and task $task_id records." >&2
+          return 1
+          ;;
+      esac
+    done < <(printf '%s' "$info" | jq -r '.result.pane.foreground_cwd // empty' 2>/dev/null)
+  done
+  [ "$roots" -ne 0 ] || return 0
+  if ! command -v lsof >/dev/null 2>&1 || ! task_pids_under_roots "$@"; then
+    echo "REFUSED: cannot exclude foreign herdr processes from cleanup for $task_id; preserving its worktree and records." >&2
+    return 1
+  fi
+  [ -n "$TASK_PIDS" ] || return 0
+  shell_pid=$(fm_backend_herdr_pane_shell_pid "$session" "$pane") || return 1
+  table=$(ps -eo pid=,ppid= 2>/dev/null) || return 1
+  pane_pids=$(printf '%s\n' "$table" | awk -v root="$shell_pid" '
+    { parent[$1] = $2 }
+    END {
+      owned[root] = 1
+      do {
+        changed = 0
+        for (pid in parent) if (!owned[pid] && owned[parent[pid]]) { owned[pid] = 1; changed = 1 }
+      } while (changed)
+      for (pid in owned) if (owned[pid]) print pid
+    }')
+  for pid in $TASK_PIDS; do
+    if task_pid_list_contains "$pane_pids" "$pid"; then
+      echo "REFUSED: cleanup would signal process $pid of foreign herdr pane $target; preserving its worktree and task $task_id records." >&2
+      return 1
+    fi
+  done
+}
+
 teardown_herdr_preflight_target() {  # <target> <task-id>
   local target=$1 task_id=$2 session pane presence lock_path verified_lock_path lock_session held_path attempt
   teardown_herdr_require_prerequisites "$task_id" || return 1
@@ -3111,6 +3174,10 @@ teardown_herdr_preflight_target() {  # <target> <task-id>
   fi
   session=$FM_BACKEND_HERDR_SESSION
   pane=$FM_BACKEND_HERDR_PANE
+  teardown_herdr_cleanup_preflight "$target" "$task_id" \
+    "$(meta_value "${FM_STATE_OVERRIDE:-$STATE}/$task_id.meta" worktree)" \
+    "$(meta_value "${FM_STATE_OVERRIDE:-$STATE}/$task_id.meta" tasktmp)" \
+    "$(meta_value "${FM_STATE_OVERRIDE:-$STATE}/$task_id.meta" home)" || return 1
   presence=$(fm_backend_herdr_pane_presence_state "$session" "$pane")
   case "$presence" in
     dead|present) ;;
@@ -3171,7 +3238,7 @@ preflight_firstmate_home_herdr_children() {  # <home>
     child_backend=$FM_BACKEND_VALIDATED_BACKEND
     child_target=$FM_BACKEND_VALIDATED_TARGET
     if [ "$child_backend" = herdr ]; then
-      teardown_herdr_preflight_target "$child_target" "$child_id" || return 1
+      FM_STATE_OVERRIDE="$sub_state" teardown_herdr_preflight_target "$child_target" "$child_id" || return 1
     fi
     child_kind=$(meta_value "$child_meta" kind)
     [ -n "$child_kind" ] || child_kind=ship
@@ -3258,7 +3325,9 @@ cleanup_firstmate_home_children() {
           echo "error: herdr session presentation lock is not held for child $child_id; retaining that child's durable identity records and stopping forced cleanup" >&2
           return 1
         fi
+        FM_STATE_OVERRIDE="$sub_state" teardown_herdr_cleanup_preflight "$child_t" "$child_id" "$child_wt" "$(meta_value "$child_meta" tasktmp)" "$(meta_value "$child_meta" home)" || return 1
         FM_STATE_OVERRIDE="$sub_state" fm_backend_herdr_kill_serialized "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" "fm-$child_id" 2>/dev/null || true
+        FM_STATE_OVERRIDE="$sub_state" teardown_herdr_cleanup_preflight "$child_t" "$child_id" "$child_wt" "$(meta_value "$child_meta" tasktmp)" "$(meta_value "$child_meta" home)" || return 1
         if ! FM_STATE_OVERRIDE="$sub_state" fm_backend_herdr_endpoint_confirmed_gone "$child_t" "fm-$child_id"; then
           echo "error: herdr pane $child_t for child $child_id is not confirmed gone; retaining that child's durable identity records and stopping forced cleanup" >&2
           return 1
@@ -3278,6 +3347,9 @@ cleanup_firstmate_home_children() {
       [ -n "$child_home" ] || child_home=$child_wt
       if [ -n "$child_home" ] && [ -d "$child_home" ]; then
         cleanup_firstmate_home_children "$child_home" || return $?
+        if [ "$child_backend" = herdr ]; then
+          FM_STATE_OVERRIDE="$sub_state" teardown_herdr_cleanup_preflight "$child_t" "$child_id" "$child_home" || return 1
+        fi
         remove_firstmate_home "$child_home" "child firstmate home" "$child_id" || return $?
       fi
     elif [ "$child_backend" = orca ]; then
@@ -3306,6 +3378,9 @@ cleanup_firstmate_home_children() {
           "$child_wt/.opencode/plugins/fm-busy-state.js" \
           "$child_wt/.fm-grok-turnend" "$child_wt/.fm-kimi-turnend"
         if [ -n "$child_proj" ] && [ -d "$child_proj" ] && command -v treehouse >/dev/null 2>&1; then
+          if [ "$child_backend" = herdr ]; then
+            FM_STATE_OVERRIDE="$sub_state" teardown_herdr_cleanup_preflight "$child_t" "$child_id" "$child_wt" || return 1
+          fi
           if teardown_treehouse_return "$child_wt" "$child_proj" "child worktree"; then
             fm_treehouse_slot_owner_release "$child_wt" "$child_id"
           else
@@ -3586,6 +3661,9 @@ fi
 # dedicated process-event and firstmate-home removal machinery further below,
 # not by task-worktree cleanup.
 if [ "$KIND" != secondmate ] && teardown_owns_worktree; then
+  if [ "$BACKEND" = herdr ]; then
+    teardown_herdr_cleanup_preflight "$T" "$ID" "$WT" "$TASK_TMP" || exit 1
+  fi
   conclude_task_no_mistakes_run "$WT"
   reap_task_worktree_processes worktree "$WT" "$TASK_TMP"
 elif [ "$KIND" != secondmate ]; then
@@ -3643,6 +3721,9 @@ elif [ -d "$WT" ] && [ "$KIND" != secondmate ]; then
   if [ "$FORCE" != "--force" ] && [ "$KIND" != scout ] && [ "$KIND" != secondmate ]; then
     post_lock_cleanup_check=validate_worktree_teardown_safety
   fi
+  if [ "$BACKEND" = herdr ]; then
+    teardown_herdr_cleanup_preflight "$T" "$ID" "$WT" || exit 1
+  fi
   teardown_treehouse_return "$WT" "$PROJ" "worktree" "$post_lock_cleanup_check" || {
     echo "error: treehouse return failed for worktree $WT; teardown aborted" >&2
     exit 1
@@ -3691,6 +3772,9 @@ if [ "$BACKEND" = herdr ] \
   fi
 fi
 
+if [ "$BACKEND" = herdr ]; then
+  teardown_herdr_cleanup_preflight "$T" "$ID" "$WT" "$TASK_TMP" "$HOME_PATH" || exit 1
+fi
 if [ "$HERDR_PRESENTATION_RETIRE_CANDIDATE" = 1 ]; then
   # The presentation lock was acquired before the worktree return above; a
   # contended lock already refused this teardown while everything was intact.
@@ -3739,6 +3823,7 @@ if [ "$BACKEND" = herdr ]; then
     echo "error: herdr endpoint confirmation is unavailable for $ID; retaining every durable task record" >&2
     exit 1
   fi
+  teardown_herdr_cleanup_preflight "$T" "$ID" "$WT" "$TASK_TMP" "$HOME_PATH" || exit 1
   if ! fm_backend_herdr_endpoint_confirmed_gone "$T" "fm-$ID"; then
     echo "error: herdr pane $T for $ID is not confirmed gone after its close was refused, skipped, or failed; retaining every durable task record - rerun teardown once the close can run under the session lock" >&2
     exit 1
@@ -3757,6 +3842,9 @@ if [ "$KIND" = secondmate ]; then
     || { echo "error: receiver wake cleanup could not be staged; preserving the secondmate home and route" >&2; exit 1; }
   pending_replies_recovery_validate recheck \
     || { echo "error: local pending-reply recovery paths changed; preserving the secondmate home and route" >&2; exit 1; }
+  if [ "$BACKEND" = herdr ]; then
+    teardown_herdr_cleanup_preflight "$T" "$ID" "$HOME_PATH" || exit 1
+  fi
   if remove_firstmate_home "$HOME_PATH" "secondmate home" "$ID"; then
     :
   else
