@@ -1,0 +1,229 @@
+FM_TEST_BEGIN 2026-10-07T07:50:11Z tests/fm-review-diff.test.sh family=pr-forge expected_gate_skip=none
+ok - fm-review-diff falls back to recorded pr_head when pull head cannot be fetched
+ok - fm-review-diff fetches refs/pull/<n>/head when pr_head= is absent
+ok - fm-review-diff prefers freshly fetched PR head over a stale recorded pr_head=
+ok - fm-review-diff without pr= keeps the worktree-branch diff
+ok - fm-review-diff falls back to local branch with a warning when PR head is unreachable
+ok - fm-review-diff reviews the meta-recorded ship branch even when the worktree HEAD moved off it
+ok - fm-review-diff refuses a corrupt recorded ship branch instead of reviewing the wrong content
+ok - fm-review-diff reviews a Bitbucket pull request's live head over a stale recorded pr_head=
+ok - fm-review-diff falls back to a Bitbucket task's recorded pr_head= only with a warning
+ok - fm-review-diff claims a Bitbucket recorded-head fallback only when it uses that head
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 0s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ok - fm-review-diff compares a task against its recorded base branch
+FM_TEST_END 2026-10-07T07:50:25Z tests/fm-review-diff.test.sh exit=0 duration_ms=14148 gate_skip=false
+FM_TEST_BEGIN 2026-10-07T07:50:25Z tests/fm-spawn-pool-base-freshen.test.sh family=standalone expected_gate_skip=none
+FM_TEST_BEGIN 2026-10-07T07:50:25Z tests/fm-pending-reply.test.sh family=standalone expected_gate_skip=none
+ok - normal correlated reply resolves once (idempotent)
+ok - completed turn with no report triggers exactly one recovery
+ok - recovery never pokes a mate waiting on its own decision, and runs once it closes
+ok - recovery sends during an open decision when config/wait-no-turns is absent
+ok - recovery grace is measured from the request turn's completion, not delivery
+ok - one fresh status read immediately before firing catches a just-landed reply, any verb
+ok - a resolve that fails after committing resolved still blocks repost and escalation
+ok - missed-report escalation grace is measured from the recovery turn's completion
+ok - recovery attempts reconcile without reinjection
+ok - recovery reply resolves the original expectation
+ok - second missed turn escalates once and remains durable
+ok - escalations and replies wake; the home's own escalation close stays quiet
+ok - failed escalation publication remains retryable and publishes once
+ok - legacy escalation closes under the shared default key
+ok - legacy escalation cannot close an unrelated default-key decision
+ok - foreign correlated blocker cannot impersonate a pending-reply escalation
+ok - concurrent resolution closes one keyed escalation exactly once
+ok - concurrent escalation yields to a late correlated reply
+ok - transport success cannot masquerade as reply success
+ok - undelivered records remain immutable across scan paths
+ok - delivery confirmation fallback reconciles durably
+ok - delivery confirmation serializes with reconciliation
+ok - unrelated events and stale correlation ids cannot resolve
+ok - restart preserves expectation and exact parent destination
+ok - wrong-home reports are detected but do not silently acknowledge
+ok - direct unmarked captain input creates no expectation
+ok - fm-send marked secondmate path creates pending and embeds corr
+ok - status-pointed document resolves the expectation
+ok - optional helper report resolves without being required for correctness
+ok - backend busy/idle observation covers Pi/Claude paths without conversation scrape
+ok - tmux and zellij unknown states use bounded capture fallback
+ok - pending replies scope Kimi capture fallback by recorded harness
+ok - tick skips terminal records and reuses target observations
+ok - the tick leaves settled records alone and still does the selected records' work
+ok - correlations are reused only for matching open task records
+ok - tick end-to-end: miss -> one recovery -> escalate -> durable
+ok - failed transport discards undelivered expectation only
+ok - a remote repost waits for the reply channel and still fires on a real miss
+ok - a mirrored correlated remote reply resolves without any repost
+ok - same-basename self-home corr= is restated onto the parent channel and resolves
+ok - same-basename reply resolves at the recovery failure boundary
+ok - a child-file mate-home sighting is not copied and still escalates
+ok - mechanical helper writes the parent channel from verb, corr, and note
+ok - remote parent-replies.status is not classified as wrong-home
+ok - local parent-replies.status remains wrong-home evidence
+ok - an escalated correlation stays retryable only while undelivered
+ok - a same-kind escalation after an operator close opens the decision again
+ok - all pending-reply tests passed
+FM_TEST_END 2026-10-07T07:51:47Z tests/fm-pending-reply.test.sh exit=0 duration_ms=81840 gate_skip=false
+# remote-seeded Treehouse spawn command
+$ FM_HOME=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/remote-seeded/home bin/fm-spawn.sh pool-remote-seeded-r13 /tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/remote-seeded/project --scout
+spawned pool-remote-seeded-r13 harness=codex kind=scout window=firstmate:fm-pool-remote-seeded-r13 worktree=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/remote-seeded/pool
+exit=0
+published worktree=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/remote-seeded/pool
+resolved project lock=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/remote-seeded/home/state/.treehouse-project-038e0021d39a55495b905fcdbc146ddcf1c57373.lock
+ok - a remote-seeded secondmate home allocates and launches from its Treehouse pool
+ok - a Treehouse slot claim names the launched task, refuses when unclaimable, and is dropped by a locked abort
+# evidence begin: linked-home spawn, returned=primary
+$ bin/fm-spawn.sh pool-linked-primary-r12 /tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-primary/secondmate --scout
+error: treehouse get did not enter an isolated worktree within 60s (last seen '/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-primary/project': it is the repository's primary checkout (its git dir is the spawning project's common git dir); spawning project '/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-primary/secondmate'); inspect window firstmate:fm-pool-linked-primary-r12
+exit=1
+primary HEAD before=5045d2a8c96be4c4e3d0f54a6ab697a53678233d after=5045d2a8c96be4c4e3d0f54a6ab697a53678233d
+primary reflog before:
+5045d2a HEAD@{0}: commit (initial): initial
+primary reflog after:
+5045d2a HEAD@{0}: commit (initial): initial
+FETCH_HEAD absent
+task metadata absent
+# evidence end
+ok - linked spawning home: primary preserves the primary before any refresh
+# evidence begin: linked-home spawn, returned=primary-alias
+$ bin/fm-spawn.sh pool-linked-primary-alias-r12 /tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-primary-alias/secondmate --scout
+error: treehouse get did not enter an isolated worktree within 60s (last seen '/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-primary-alias/primary-alias': it is the repository's primary checkout (its git dir is the spawning project's common git dir); spawning project '/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-primary-alias/secondmate'); inspect window firstmate:fm-pool-linked-primary-alias-r12
+exit=1
+primary HEAD before=6f2162680ed1b7747f9712e2c9095afa4db123ec after=6f2162680ed1b7747f9712e2c9095afa4db123ec
+primary reflog before:
+6f21626 HEAD@{0}: commit (initial): initial
+primary reflog after:
+6f21626 HEAD@{0}: commit (initial): initial
+FETCH_HEAD absent
+task metadata absent
+# evidence end
+ok - linked spawning home: primary-alias preserves the primary before any refresh
+# evidence begin: linked-home spawn, returned=spawning
+$ bin/fm-spawn.sh pool-linked-spawning-r12 /tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-spawning/secondmate --scout
+error: treehouse get did not enter an isolated worktree within 60s (last seen '/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-spawning/secondmate': it is the spawning project itself; spawning project '/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-spawning/secondmate'); inspect window firstmate:fm-pool-linked-spawning-r12
+exit=1
+primary HEAD before=28a6d183d1f887152bdf85384345cde84995cbde after=28a6d183d1f887152bdf85384345cde84995cbde
+primary reflog before:
+28a6d18 HEAD@{0}: commit (initial): initial
+primary reflog after:
+28a6d18 HEAD@{0}: commit (initial): initial
+FETCH_HEAD absent
+task metadata absent
+# evidence end
+ok - linked spawning home: spawning preserves the primary before any refresh
+# evidence begin: linked-home spawn, returned=scout
+$ bin/fm-spawn.sh pool-linked-scout-r12 /tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-scout/secondmate --scout
+spawned pool-linked-scout-r12 harness=codex kind=scout window=firstmate:fm-pool-linked-scout-r12 worktree=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-scout/pool
+exit=0
+primary HEAD before=ac04a75806bdf3f0067ed5f34e71ee2afcbbac73 after=ac04a75806bdf3f0067ed5f34e71ee2afcbbac73
+primary reflog before:
+ac04a75 HEAD@{0}: commit (initial): initial
+primary reflog after:
+ac04a75 HEAD@{0}: commit (initial): initial
+FETCH_HEAD absent
+saved task metadata:
+window=firstmate:fm-pool-linked-scout-r12
+endpoint_task_id=pool-linked-scout-r12
+worktree=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-scout/pool
+project=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-scout/secondmate
+harness=codex
+kind=scout
+tasktmp=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/linked-scout/home/state/pool-linked-scout-r12.tasktmp
+model=default
+effort=default
+spawn_gen=s1791359446.2681937.8106
+worker HEAD=e253e8690861d21e74c9370f30be91db91893bc4 origin/main=e253e8690861d21e74c9370f30be91db91893bc4
+# evidence end
+ok - linked spawning home: scout preserves the primary before any refresh
+# observed spawn: spawned pool-current-base-r1 harness=codex kind=ship mode=no-mistakes yolo=off window=firstmate:fm-pool-current-base-r1 worktree=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/current-base/pool
+# observed base: HEAD=52be94ff54ae4314dd4ecf0123f07b8a0207e191 origin/main=52be94ff54ae4314dd4ecf0123f07b8a0207e191 advanced-main=must survive a newly spawned branch
+ok - a stale pooled worktree refreshes to current origin/main before a crew branch is created
+ok - --base-branch picks the copy's starting point and is recorded; a missing or local-only base refuses
+ok - a spawn refuses when --base-branch and the brief's Base branch lines disagree
+ok - a Base branch line in the captain's intent neither blocks nor redirects a spawn
+ok - a based scout on a forge=gerrit project is refused at spawn
+ok - a stale pooled worktree resolves and refreshes a non-main default branch
+# observed direct-pr spawn: spawned pool-direct-pr-r3 harness=codex kind=ship mode=direct-PR yolo=off window=firstmate:fm-pool-direct-pr-r3 worktree=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/direct-pr/pool
+# observed scout spawn: spawned pool-scout-r3 harness=codex kind=scout window=firstmate:fm-pool-scout-r3 worktree=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/scout/pool
+ok - direct-PR ships and scouts both refresh stale pooled worktrees before launch
+# observed dirty refusal: error: pooled worktree '/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/dirty-refusal/pool' is not clean; refusing to discard uncommitted work while refreshing its base; preserved=keep this local work
+ok - a dirty pooled worktree is refused without discarding its local work
+# observed unresolved-default refusal: error: could not resolve origin's current default branch for pooled worktree '/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/unresolved-default/pool'; refusing to launch from a potentially stale base
+ok - an unresolved remote default branch refuses the pooled worktree
+# observed unreachable-origin refusal: error: could not fetch origin for pooled worktree '/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/unreachable-origin/pool'; refusing to launch from a potentially stale base
+ok - an unreachable origin refuses a potentially stale pooled worktree
+# observed origin-less launch: spawned pool-originless-r6 harness=codex kind=ship mode=no-mistakes yolo=off window=firstmate:fm-pool-originless-r6 worktree=/tmp/fm-merge-checks.MBIQal/fm-test-run.N0fy4c/w2/tmp/fm-spawn-pool-base-freshen.SpkTA7/originless/pool
+ok - an origin-less pooled worktree launches as-is, skipping the freshness gate
+ok - a dirty origin-less pooled worktree is refused without discarding its local work
+ok - an origin configuration without a URL refuses the pooled worktree
+ok - an empty origin configuration section refuses the pooled worktree
+ok - an empty-only included origin section documents the accepted detection boundary
+ok - an inactive conditional origin include leaves the pooled worktree origin-less
+# observed stale-pin refusal: error: submodule 'ui' is checked out at a7e45cd5ebafe166cd4b96bc2e2acff43d253ae1, but this base records a2ba0ffea7ff1515c7f86813918b8434bf8edefc
+ok - an origin-less pool with a stale submodule pin refuses while naming both pins and no remedy
+ok - an unpushed submodule commit keeps the uncommitted-work refusal and survives it
+ok - work inside a submodule is still refused as uncommitted work, not called stale
+ok - a stale pin carrying real work is refused conservatively, never called stale
+ok - a stale pin beside other dirt yields the conservative refusal alone, with no stale-pin line
+# all fm-spawn-pool-base-freshen tests passed
+FM_TEST_END 2026-10-07T07:52:22Z tests/fm-spawn-pool-base-freshen.test.sh exit=0 duration_ms=116537 gate_skip=false
+FM_TEST_BEGIN 2026-10-07T07:52:22Z tests/fm-control.test.sh family=backend-dispatch expected_gate_skip=none
+ok - fm-control exit: every verified harness gets its own verified exit command
+ok - fm-control interrupt: every verified harness gets its own verified key and repeat count
+ok - fm-control Devin interrupt: second press only after the armed hint, then busy invalidated without fabricating idle
+ok - fm-control Devin interrupt: an idle agent gets one Escape and reports not-running
+ok - fm-control Devin exit: a busy record whose turn already ended never opens the revert picker
+ok - fm-control Devin interrupt: a revert picker a press opened is closed with Escape, never Enter
+ok - fm-control Devin: an open revert picker refuses every typed command
+ok - fm-control interrupt: opencode needs a double Escape, claude a single one
+ok - fm-control: a harness with no verified control mechanics is refused, not guessed at
+ok - fm-control-lib: a recorded harness resolves to its verified adapter without guessing
+ok - fm-control-lib: only a runtime's own recorded session has a relaunch resume form
+ok - fm-control: prefixed recorded harnesses reach interrupt and exit mechanics
+ok - fm-control-lib: the backend key matrix matches each adapter's real send-key surface
+ok - fm-control-lib: adapter capability is per task kind, not per adapter alone
+ok - fm-control interrupt: a backend that cannot deliver the harness's key refuses instead of sending another
+ok - fm-control: a backend that cannot prove an agent stopped refuses exit and relaunch
+ok - fm-control-lib: stop-proving verbs are gated on the backends that really classify agent state
+ok - fm-control: a legacy window label is refused and the exact task id is named
+ok - fm-control: an explicit backend endpoint is never a control target
+ok - fm-control: an unrecorded task id is refused
+ok - fm-control: a record whose endpoint identity names another task is refused
+ok - fm-control: a remotely placed secondmate is refused by placement, not by a metadata complaint
+ok - fm-control: interrupt and exit lock before task-state resolution
+ok - fm-control: the verb list is closed - no raw keys, arbitrary text, or clear verb
+ok - fm-control: resume is refused with the determinism reason and the alternative
+ok - fm-control: profile and note flags belong to relaunch only
+ok - fm-control exit: an already-stopped agent is idempotent success with no bytes sent
+ok - fm-control exit: an unprovable tmux endpoint refuses instead of claiming the agent stopped
+ok - fm-control interrupt: refuses when no agent is running rather than keying a shell
+ok - fm-control exit: an endpoint whose process cannot be attributed refuses
+ok - fm-control exit: a busy agent receives interrupt delivery before the exit command
+ok - fm-control exit: an idle agent goes straight to its exit command
+ok - fm-control exit: retiring a codex incarnation drops busy_gen with the sidecar
+ok - fm-control exit: an already-open background-task picker is not typed into
+ok - fm-control exit: the Enter that opens the background-task picker is not followed by a confirming Enter
+ok - fm-control exit: a picker that renders after the submit returned is named when the stop wait times out
+ok - fm-control interrupt: unconfirmed delivery preserves observed busy state
+ok - fm-control interrupt: muse confirms cancellation from its session log
+ok - fm-control interrupt: postconditions are revalidated after acknowledgement polling
+ok - fm-control exit: an interrupt-stopped agent satisfies the gone-state postcondition
+ok - fm-control exit: a stubborn agent reports delivered input and an unconfirmed exit
+ok - fm-control interrupt: grok reports delivery without claiming cancellation
+ok - fm-control interrupt: grok's idle footer does not confirm cancellation
+ok - fm-control: a lifecycle command to a secondmate is unmarked and opens no reply expectation
+ok - fm-control's arrival leaves fm-send's from-firstmate marking untouched
+FM_TEST_END 2026-10-07T07:53:40Z tests/fm-control.test.sh exit=0 duration_ms=77991 gate_skip=false
+FM_TEST_SUMMARY total=4 failed=0 skipped_gate=0 duration_ms=208965
+FM_TEST_SUMMARY_FAMILY family=backend-dispatch count=1 duration_ms=77991 failed=0
+FM_TEST_SUMMARY_FAMILY family=pr-forge count=1 duration_ms=14148 failed=0
+FM_TEST_SUMMARY_FAMILY family=standalone count=2 duration_ms=198377 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-spawn-pool-base-freshen.test.sh duration_ms=116537
+FM_TEST_SLOWEST rank=2 script=tests/fm-pending-reply.test.sh duration_ms=81840
+FM_TEST_SLOWEST rank=3 script=tests/fm-control.test.sh duration_ms=77991
+FM_TEST_SLOWEST rank=4 script=tests/fm-review-diff.test.sh duration_ms=14148

@@ -1,0 +1,11 @@
+diff base: origin/release/1.2
+ ship.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/ship.txt b/ship.txt
+new file mode 100644
+index 0000000..3988c2d
+--- /dev/null
++++ b/ship.txt
+@@ -0,0 +1 @@
++ship delta

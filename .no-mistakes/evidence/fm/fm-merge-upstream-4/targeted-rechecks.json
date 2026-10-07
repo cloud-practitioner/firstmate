@@ -1,0 +1,76 @@
+{
+  "families": [
+    {
+      "count": 1,
+      "duration_ms": 145969,
+      "failed": 0,
+      "name": "backend-dispatch"
+    },
+    {
+      "count": 1,
+      "duration_ms": 15479,
+      "failed": 1,
+      "name": "pure-contract-unit"
+    },
+    {
+      "count": 1,
+      "duration_ms": 156482,
+      "failed": 0,
+      "name": "snapshot-bearings"
+    },
+    {
+      "count": 1,
+      "duration_ms": 94253,
+      "failed": 0,
+      "name": "standalone"
+    }
+  ],
+  "finished_at": "2026-10-07T07:37:21Z",
+  "run_id": "fm-test-run-1791358229215-2114354",
+  "scripts": [
+    {
+      "duration_ms": 145969,
+      "exit": 0,
+      "expected_gate_skip": "none",
+      "family": "backend-dispatch",
+      "gate_skip": false,
+      "gate_skip_reason": "",
+      "path": "tests/fm-control-relaunch.test.sh"
+    },
+    {
+      "duration_ms": 94253,
+      "exit": 0,
+      "expected_gate_skip": "none",
+      "family": "standalone",
+      "gate_skip": false,
+      "gate_skip_reason": "",
+      "path": "tests/fm-spawn-pool-base-freshen.test.sh"
+    },
+    {
+      "duration_ms": 15479,
+      "exit": 1,
+      "expected_gate_skip": "none",
+      "family": "pure-contract-unit",
+      "gate_skip": false,
+      "gate_skip_reason": "",
+      "path": "tests/fm-brief.test.sh"
+    },
+    {
+      "duration_ms": 156482,
+      "exit": 0,
+      "expected_gate_skip": "optional-binary",
+      "family": "snapshot-bearings",
+      "gate_skip": false,
+      "gate_skip_reason": "",
+      "path": "tests/fm-contributions.test.sh"
+    }
+  ],
+  "selection": "scripts;jobs=1",
+  "started_at": "2026-10-07T07:30:29Z",
+  "summary": {
+    "duration_ms": 412331,
+    "failed": 1,
+    "skipped_gate": 0,
+    "total": 4
+  }
+}

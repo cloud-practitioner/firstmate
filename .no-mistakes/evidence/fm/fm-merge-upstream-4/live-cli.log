@@ -1,0 +1,122 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4/.test-phase/cli-world/home
+
+=== Named-base brief and review against a real local Git origin ===
+$ named-base local-only brief (must refuse)
+error: fm-brief.sh --base-branch: a base branch cannot ship mode=local-only, whose landing fast-forwards local main; ship no-mistakes or direct-PR, which open a pull request against the base
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4/.test-phase/cli-world/home/data/review/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+$ bin/fm-review-diff.sh review
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+diff base: origin/release/1.2
+ ship.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/ship.txt b/ship.txt
+new file mode 100644
+index 0000000..3988c2d
+--- /dev/null
++++ b/ship.txt
+@@ -0,0 +1 @@
++ship delta
+$ bin/fm-brief.sh invalid project --mode direct-PR --base-branch ../bad
+error: fm-brief.sh --base-branch: base branch '../bad' is not a valid git branch name
+$ bin/fm-spawn.sh review --relaunch --base-branch missing
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4/.test-phase/cli-world/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+error: --relaunch reuses the task's recorded base branch; --base-branch cannot override it
+
+=== Opt-in pipeline spend, unavailable-source semantics and retry ===
+$ bin/fm-pipeline-spend.sh record no-record (opt-out)
+recorded gone live-gone
+already recorded gone live-gone
+{
+  "task": "gone",
+  "spawn_gen": "live-gone",
+  "recorded_at": "2026-10-07T07:32:54Z",
+  "source": "unavailable",
+  "reason": "the task copy /home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4/.test-phase/cli-world/no-longer-present is gone",
+  "repo": null,
+  "branch": null,
+  "since": null,
+  "total": null,
+  "runs": [],
+  "purposes": []
+}
+
+=== Opt-in daily startup memory growth, silent repeated polls ===
+armed: state/startup-growth.check.sh
+$ next daily bin/fm-startup-growth-check.sh check
+startup-growth: memory growth data/learnings.md +300 estimated_tokens (+900 bytes, total 921 bytes)
+disarmed: state/startup-growth.check.sh
+
+=== Retire a disappeared contribution with authority and pending-signal guards ===
+$ retire contrib URL fleet reason
+fm-contributions: invalid retire actor 'fleet'; expected: captain
+$ retire contrib URL captain blank-reason
+fm-contributions: retire needs a non-empty reason
+$ retire contrib URL captain reason (pending signal)
+fm-contributions: acknowledge pending signals before retiring this contribution
+contributions: already retired https://github.com/disposable/deleted/pull/7 for contrib
+{
+  "known": 0,
+  "checked": 0,
+  "counts": {
+    "captain": 0,
+    "fleet": 0,
+    "maintainer": 0,
+    "nobody": 0
+  },
+  "unmeasured": 0,
+  "complete": true,
+  "proven_clear": true,
+  "stale_verdicts": 0,
+  "missing_verdicts": 0,
+  "unreadable_records": 0,
+  "valid_until": 900,
+  "captain": [],
+  "captain_omitted": 0
+}
+{
+  "schema": "fm-contributions.v1",
+  "task": "contrib",
+  "records": [
+    {
+      "url": "https://github.com/disposable/deleted/pull/7",
+      "kind": "pr",
+      "checked_at": null,
+      "error": "repository deleted",
+      "observation": null,
+      "verdict": null,
+      "seen": [],
+      "pending": [],
+      "notified": [],
+      "retired": {
+        "actor": "captain",
+        "reason": "repository deleted with approval",
+        "at": "2026-10-07T07:32:55Z"
+      }
+    }
+  ]
+}
+
+=== Real remote delta reader and ingest: close, replay and later break ===
+ingested: ios appended=1 offset=28
+continuity-broken: ios (truncated)
+continuity-broken: ios (truncated)
+ingested: ios appended=1 offset=54
+continuity-broken: ios (truncated)
+Current open decisions after later break:
+remote-reply-continuity-ios	blocked	remote reply continuity broke for ios (truncated) at offset 54 prefix 827a9f810783 retirements 0
+
+=== Real timeout watchdog without BASHPID ===
+watchdog-started
+watchdog exit=124 (timeout expected 124)
+intentional-exit-7
+watchdog exit=7 (original command expected 7)
+
+All isolated CLI scenarios completed; disposable world removed on exit.

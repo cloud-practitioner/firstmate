@@ -1,0 +1,22 @@
+{
+  "schema": "fm-contributions.v1",
+  "task": "contrib",
+  "records": [
+    {
+      "url": "https://github.com/disposable/deleted/pull/7",
+      "kind": "pr",
+      "checked_at": null,
+      "error": "repository deleted",
+      "observation": null,
+      "verdict": null,
+      "seen": [],
+      "pending": [],
+      "notified": [],
+      "retired": {
+        "actor": "captain",
+        "reason": "repository deleted with approval",
+        "at": "2026-10-07T07:32:55Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+window=fm-lab-merge-2390792-26638:w1:p1
+endpoint_task_id=dialog
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4AK0KYBPP2H30CZ1HR0HKJ4
+harness=claude
+kind=scout
+backend=herdr
+herdr_session=fm-lab-merge-2390792-26638
+herdr_workspace_id=w1
+herdr_tab_id=w1:t1
+herdr_pane_id=w1:p1
+spawn_gen=live-dialog
+herdr_process_identity=proc:2390967:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1247789

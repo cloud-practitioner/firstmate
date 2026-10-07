@@ -1,0 +1,11 @@
+schema=fm-remote-delta.v1
+status=continuity-broken
+path=state/parent-replies.status
+from_offset=54
+to_offset=0
+from_prefix_sha256=827a9f810783354a546cf04d446fcde18a5f788f86f193524d052e97cf70e67f
+to_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+payload_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+payload_bytes=0
+reason=truncated
+
