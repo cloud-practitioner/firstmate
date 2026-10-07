@@ -1,0 +1,55 @@
+{
+  "families": [
+    {
+      "count": 1,
+      "duration_ms": 91016,
+      "failed": 0,
+      "name": "backend-dispatch"
+    },
+    {
+      "count": 2,
+      "duration_ms": 61108,
+      "failed": 0,
+      "name": "unclassified"
+    }
+  ],
+  "finished_at": "2026-10-07T11:02:08Z",
+  "run_id": "fm-test-run-1791370776131-1780822",
+  "scripts": [
+    {
+      "duration_ms": 91016,
+      "exit": 0,
+      "expected_gate_skip": "none",
+      "family": "backend-dispatch",
+      "gate_skip": false,
+      "gate_skip_reason": "",
+      "path": "tests/fm-backend-herdr.test.sh"
+    },
+    {
+      "duration_ms": 52695,
+      "exit": 0,
+      "expected_gate_skip": "none",
+      "family": "unclassified",
+      "gate_skip": false,
+      "gate_skip_reason": "",
+      "path": "tests/fm-herdr-endpoint-boundaries.test.sh"
+    },
+    {
+      "duration_ms": 8413,
+      "exit": 0,
+      "expected_gate_skip": "none",
+      "family": "unclassified",
+      "gate_skip": false,
+      "gate_skip_reason": "",
+      "path": "tests/fm-remote-secondmate-control.test.sh"
+    }
+  ],
+  "selection": "scripts;jobs=1",
+  "started_at": "2026-10-07T10:59:36Z",
+  "summary": {
+    "duration_ms": 152263,
+    "failed": 0,
+    "skipped_gate": 0,
+    "total": 3
+  }
+}
