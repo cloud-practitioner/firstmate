@@ -801,6 +801,7 @@ test_push_event_accepts_the_bound_record_behind_a_stale_one() {
         esac
         printf 'paused: waiting on an upstream release\n' > "$state/$stale_task.status"
         [ -z "$bound_task" ] || printf 'blocked: approval needed\n' > "$state/$bound_task.status"
+        # shellcheck disable=SC2030,SC2031 # Each subshell fixture intentionally selects its own state directory.
         export FM_STATE_OVERRIDE="$state"
         . "$ROOT/bin/fm-push-transition-lib.sh"
         wake() { printf '%s\n' "$1" >> "$STATE/wakes"; }
