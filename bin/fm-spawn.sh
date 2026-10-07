@@ -339,22 +339,10 @@
 #   worktree, or record exists and names the accepted values. The file is read
 #   on every spawn and relaunch, so a change reaches the next launch without a
 #   restart, and it is inherited into secondmate homes (bin/fm-config-inherit-lib.sh).
-# Worker tool exclusions (config/crew-exclude-tools):
-#   Opt-in, per home, runtime-neutral; bin/fm-exclude-tools-lib.sh owns the
-#   format and validation. One tool name per line (blank lines and # comments
-#   allowed) that this home's ship and scout workers must not be able to use,
-#   for example MCP write tools. Pi and pi-signed hide them with one
-#   --exclude-tools '<comma-joined names>' on every spawn and relaunch. A
-#   runtime that cannot hide tools, and a raw launch command, refuses the
-#   launch naming the file while the list is non-empty rather than ignoring
-#   it. Absent or empty means no exclusions and no effect on any runtime. A
-#   malformed entry or unreadable file refuses before any endpoint, worktree,
-#   or record exists. The worker extension reports registry-unmatched entries
-#   as unverified in its task status file when its first agent run starts; no
-#   server connections are made by Firstmate to validate names.
-#   Read from this home's config directory on every launch,
-#   never inherited into secondmate homes, and not applied to --secondmate
-#   launches. See docs/configuration.md.
+# Worker tool exclusions:
+#   docs/configuration.md "Worker tool exclusions" owns config/crew-exclude-tools
+#   and its operator contract. Resolve it with bin/fm-exclude-tools-lib.sh
+#   before provisioning; __PIEXCLUDE__ below owns the Pi launch substitution.
 # Worker account pin (config/claude-account, config/pi-account):
 #   Opt-in. With no file, a Claude or Pi launch is unchanged: Claude still
 #   receives this process's own CLAUDE_CONFIG_DIR when it is set, and Pi the
@@ -4690,6 +4678,8 @@ export default function (pi: any) {
   let checkedExclusions = false;
   pi.on("agent_start", async () => {
     await busyEvent("busy", "agent-start");
+    // Verify only this worker's registry, never connect servers from Firstmate.
+    // Check before actions so the warning cannot supersede this turn's terminal status.
     if (!checkedExclusions && excludeTools.length) {
       const loaded = new Set(pi.getAllTools().map((tool: any) => tool.name));
       const unmatched = excludeTools.filter((name) => !loaded.has(name));

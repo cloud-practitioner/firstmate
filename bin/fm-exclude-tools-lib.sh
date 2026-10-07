@@ -1,25 +1,11 @@
 #!/usr/bin/env bash
-# fm-exclude-tools-lib.sh - the single owner of the opt-in per-home worker tool
-# exclusion list, config/crew-exclude-tools.
+# fm-exclude-tools-lib.sh - shared parsing and runtime-support checks for
+# config/crew-exclude-tools, sourced by bin/fm-spawn.sh and bin/fm-control.sh.
 #
-# docs/configuration.md "Worker tool exclusions" owns the operator-facing
-# contract. Sourced by bin/fm-spawn.sh and bin/fm-control.sh.
-#
-# The list names tools a home's ship and scout workers must not be able to use,
-# for example MCP write tools. It is runtime-neutral: every runtime either
-# hides the listed tools or the launch refuses, so a non-empty list is never
-# silently ignored. Runtimes that can hide tools, and how:
-#   pi, pi-signed   --exclude-tools '<comma-joined names>'
-# Every other runtime, and a raw launch command, refuses a non-empty list.
-# Secondmate agents are not covered and neither read nor refuse on the file.
-#
-# One tool name per line; blank lines and lines beginning with # are ignored
-# and surrounding whitespace is trimmed. A name may use only letters, digits,
-# _ . and -. Shape is checked here; the Pi worker extension checks its own
-# loaded-tool registry and reports unmatched entries as unverified in task
-# status. Firstmate never connects to servers to validate the list.
-# An absent file is an empty list; an unreadable or nonregular file, or any
-# malformed entry, is an error rather than a partial list.
+# docs/configuration.md "Worker tool exclusions" owns the file format and
+# operator contract; bin/fm-spawn.sh's header owns launch-flag mechanics.
+# Name verification belongs inside the worker's loaded-tool registry, never
+# in an out-of-band server connection from these launch-time checks.
 
 # fm_exclude_tools_names <config-dir>: print the comma-joined names, empty when
 # the file is absent or lists nothing. Non-zero with the reason on stderr when

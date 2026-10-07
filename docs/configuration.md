@@ -846,7 +846,7 @@ The [Claude adapter reference](../.agents/skills/harness-adapters/references/har
 ## Worker tool exclusions (config/crew-exclude-tools)
 
 The optional local, gitignored `config/crew-exclude-tools` hides named tools from this home's ship and scout workers, for example to keep an MCP server's write tools out of reach while its read tools stay available.
-The contract is runtime-neutral: a launch either hides every listed tool or refuses, and a non-empty list is never silently ignored.
+The contract is runtime-neutral: a runtime must support hiding the listed tool names or refuse the launch, and a non-empty list is never silently ignored.
 With no file, or a file with no entries, every launch on every runtime is unchanged.
 
 Create the file with one tool name per line, such as `mcp__<server>__<tool>` for an MCP tool.
@@ -859,24 +859,26 @@ It does not apply to a secondmate's own agent, which neither reads nor refuses o
 
 | Runtime | With a non-empty list |
 | --- | --- |
-| `pi`, `pi-signed` | Every ship and scout spawn and every `fm-control.sh relaunch` adds one `--exclude-tools '<name>,<name>'`, which Pi applies to every tool it loads, MCP tools included. |
+| `pi`, `pi-signed` | Hides listed tool names, MCP tools included, on every ship and scout spawn and relaunch. |
 | Every other runtime, and a raw launch command | The launch refuses with an error naming `config/crew-exclude-tools`, because that runtime has no verified way to hide tools. |
 
-A relaunch applies the same rule to the replacement runtime and refuses before the running worker is stopped, so a changed file or a switch to a runtime that cannot hide tools never leaves a task without an agent.
+A relaunch validates the list and the replacement runtime's support before stopping the running worker, so an exclusion-list refusal preserves the running agent.
 
 ### Validation
 
 An entry may use only letters, digits, `_`, `.`, and `-`.
-An entry with any other character, including whitespace, a comma, or a `*`, or an unreadable or nonregular file, refuses the launch before any worker endpoint, local copy, or task record exists, and names the offending entry; Firstmate never launches with a partial list.
+An entry with any other character, including internal whitespace, a comma, or a `*`, refuses the launch and names the offending entry.
+An unreadable or nonregular file, or a path inspection error, also refuses and names the configuration file.
+These checks run before any worker endpoint, local copy, or task record exists; Firstmate never launches with a partial list.
 Only exact tool names are accepted, not wildcard patterns.
 Firstmate checks syntax and runtime support before launch but never runs `pi mcp list` or otherwise connects to servers to validate names.
-When its first agent run starts, after Pi's startup tool-loading boundary, the worker extension compares the launch's exclusion list with its own loaded-tool registry and appends a timestamped `note:` warning to `state/<task-id>.status` naming the configuration file and every unmatched entry for the supervisor.
+When its first agent run starts, after Pi's startup tool-loading boundary, the worker extension compares the launch's exclusion list with its own loaded-tool registry and appends a timestamped warning note to `state/<task-id>.status` naming the configuration file and every unmatched entry for the supervisor.
 The check runs before worker actions so it cannot supersede a terminal status emitted during the turn.
 An unmatched entry is reported as **unverified**, not valid: Pi versions that omit excluded tools from the registry cannot distinguish a correct exclusion from a typo, and a server that has not connected cannot verify its tools either.
 Names present in the registry produce no report; unknown or unverified names do not refuse the launch.
 Each relaunch installs a fresh worker extension with the home's current list, so the replacement performs the same check.
 
-[`bin/fm-exclude-tools-lib.sh`](../bin/fm-exclude-tools-lib.sh) owns the format and validation, and [`bin/fm-spawn.sh`](../bin/fm-spawn.sh)'s header owns the launch mechanics.
+[`bin/fm-exclude-tools-lib.sh`](../bin/fm-exclude-tools-lib.sh) implements parsing and pre-launch validation for this contract; [`bin/fm-spawn.sh`](../bin/fm-spawn.sh)'s header owns the launch-flag mechanics.
 
 ## Worker account pin (config/claude-account, config/pi-account)
 
