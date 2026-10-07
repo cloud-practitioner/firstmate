@@ -868,7 +868,13 @@ A relaunch applies the same rule to the replacement runtime and refuses before t
 
 An entry may use only letters, digits, `_`, `.`, and `-`.
 An entry with any other character, including whitespace, a comma, or a `*`, or an unreadable or nonregular file, refuses the launch before any worker endpoint, local copy, or task record exists, and names the offending entry; Firstmate never launches with a partial list.
-No runtime can list its tool names at spawn time, so validation checks the shape of each name only: a well-formed name that matches no tool is passed through and hides nothing, which makes a misspelled name a silent no-op worth confirming in a launched worker.
+Only exact tool names are accepted, not wildcard patterns.
+Firstmate checks syntax and runtime support before launch but never runs `pi mcp list` or otherwise connects to servers to validate names.
+When its first agent run starts, after Pi's startup tool-loading boundary, the worker extension compares the launch's exclusion list with its own loaded-tool registry and appends a timestamped `note:` warning to `state/<task-id>.status` naming the configuration file and every unmatched entry for the supervisor.
+The check runs before worker actions so it cannot supersede a terminal status emitted during the turn.
+An unmatched entry is reported as **unverified**, not valid: Pi versions that omit excluded tools from the registry cannot distinguish a correct exclusion from a typo, and a server that has not connected cannot verify its tools either.
+Names present in the registry produce no report; unknown or unverified names do not refuse the launch.
+Each relaunch installs a fresh worker extension with the home's current list, so the replacement performs the same check.
 
 [`bin/fm-exclude-tools-lib.sh`](../bin/fm-exclude-tools-lib.sh) owns the format and validation, and [`bin/fm-spawn.sh`](../bin/fm-spawn.sh)'s header owns the launch mechanics.
 

@@ -15,8 +15,9 @@
 #
 # One tool name per line; blank lines and lines beginning with # are ignored
 # and surrounding whitespace is trimmed. A name may use only letters, digits,
-# _ . and -. Names are validated for shape only: no runtime can list its tools
-# at spawn time, so a well-formed name that matches no tool is passed through.
+# _ . and -. Shape is checked here; the Pi worker extension checks its own
+# loaded-tool registry and reports unmatched entries as unverified in task
+# status. Firstmate never connects to servers to validate the list.
 # An absent file is an empty list; an unreadable or nonregular file, or any
 # malformed entry, is an error rather than a partial list.
 

@@ -349,7 +349,10 @@
 #   launch naming the file while the list is non-empty rather than ignoring
 #   it. Absent or empty means no exclusions and no effect on any runtime. A
 #   malformed entry or unreadable file refuses before any endpoint, worktree,
-#   or record exists. Read from this home's config directory on every launch,
+#   or record exists. The worker extension reports registry-unmatched entries
+#   as unverified in its task status file when its first agent run starts; no
+#   server connections are made by Firstmate to validate names.
+#   Read from this home's config directory on every launch,
 #   never inherited into secondmate homes, and not applied to --secondmate
 #   launches. See docs/configuration.md.
 # Worker account pin (config/claude-account, config/pi-account):
@@ -4672,6 +4675,10 @@ EOF
 // tool calls) and stays a wake NOTIFICATION touch for the watcher, never
 // current-state truth.
 import { execFile } from "node:child_process";
+import { appendFileSync } from "node:fs";
+const excludeTools = "$EXCLUDE_TOOLS".split(",").filter(Boolean);
+const excludeFile = $(perl -MJSON::PP -e 'print encode_json($ARGV[0])' -- "$CONFIG/crew-exclude-tools");
+const statusFile = $(perl -MJSON::PP -e 'print encode_json($ARGV[0])' -- "$STATE/$ID.status");
 const busyEvent = (state: string, event: string) =>
   new Promise<void>((resolve) => {
     execFile("$FM_ROOT/bin/fm-busy-event.sh", [
@@ -4680,7 +4687,20 @@ const busyEvent = (state: string, event: string) =>
     ], () => resolve());
   });
 export default function (pi: any) {
-  pi.on("agent_start", () => busyEvent("busy", "agent-start"));
+  let checkedExclusions = false;
+  pi.on("agent_start", async () => {
+    await busyEvent("busy", "agent-start");
+    if (!checkedExclusions && excludeTools.length) {
+      const loaded = new Set(pi.getAllTools().map((tool: any) => tool.name));
+      const unmatched = excludeTools.filter((name) => !loaded.has(name));
+      if (unmatched.length) {
+        appendFileSync(statusFile, "note [at=" + Math.floor(Date.now() / 1000) + "]: warning: " + excludeFile
+          + " unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): "
+          + unmatched.join(", ") + "\n");
+      }
+      checkedExclusions = true;
+    }
+  });
   pi.on("agent_settled", (_event: any, ctx: any) => {
     if (ctx && typeof ctx.isIdle === "function" && !ctx.isIdle()) return;
     return busyEvent("idle", "agent-settled");
