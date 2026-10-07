@@ -2349,6 +2349,9 @@ fm_backend_herdr_pane_agent_state() {  # <session> <pane_id>
 fm_backend_herdr_pane_agent_session_ref() {  # <session> <pane_id>
   local session=$1 pane_id=$2 out agent kind value
   [ -n "$session" ] && [ -n "$pane_id" ] || return 1
+  if [ "${FM_BACKEND_HERDR_EXPECTED_LABEL+x}" = x ]; then
+    fm_backend_herdr_target_ready "$session:$pane_id" || return 1
+  fi
   out=$(fm_backend_herdr_cli "$session" agent get "$pane_id" 2>&1) || return 1
   agent=$(printf '%s' "$out" | jq -r '.result.agent.agent // empty' 2>/dev/null)
   kind=$(printf '%s' "$out" | jq -r '.result.agent.agent_session.kind // empty' 2>/dev/null)
@@ -2500,8 +2503,29 @@ fm_backend_herdr_lstart_epoch() {  # <lstart>
 # Return 0 for a match, 1 for a mismatch, and 2 for an unreadable current identity.
 # docs/herdr-backend.md "Endpoints from a previous session" owns the matching policy.
 fm_backend_herdr_identity_matches() {  # <session> <pane> <recorded>
-  local session=$1 pane=$2 recorded=$3 actual pid pid_now rest lstart cur want have
+  local session=$1 pane=$2 recorded=$3 pid pid_now rest lstart cur want have
+  local boot ticks current_boot current_ticks unreadable=0
   case "$recorded" in
+    proc:?*:?*:?*)
+      IFS=: read -r _ pid boot ticks <<< "$recorded"
+      pid_now=$(fm_backend_herdr_pane_shell_pid "$session" "$pane") || return 2
+      [ "$pid_now" = "$pid" ] || return 1
+      if current_ticks=$(fm_backend_herdr_proc_starttime "$pid"); then
+        [ "$current_ticks" = "$ticks" ] || return 1
+      else
+        unreadable=1
+      fi
+      current_boot=
+      [ ! -r "${FM_PROC_ROOT_OVERRIDE:-/proc}/sys/kernel/random/boot_id" ] \
+        || IFS= read -r current_boot < "${FM_PROC_ROOT_OVERRIDE:-/proc}/sys/kernel/random/boot_id" 2>/dev/null || current_boot=
+      if [[ "$current_boot" =~ ^[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12}$ ]]; then
+        [ "$current_boot" = "$boot" ] || return 1
+      else
+        unreadable=1
+      fi
+      [ "$unreadable" -eq 0 ] || return 2
+      return 0
+      ;;
     ps:?*:?*)
       rest=${recorded#ps:}
       pid=${rest%%:*}
@@ -2516,8 +2540,7 @@ fm_backend_herdr_identity_matches() {  # <session> <pane> <recorded>
       return
       ;;
   esac
-  actual=$(fm_backend_herdr_pane_process_identity "$session" "$pane") || return 2
-  [ "$actual" = "$recorded" ]
+  return 2
 }
 
 fm_backend_herdr_endpoint_foreign() {  # <session> <pane> [expected-label]
@@ -4213,12 +4236,21 @@ fm_backend_herdr_escalation_marker() {  # <state_dir> <window>
 # with no output. <session> reconstructs the window ("<session>:<pane_id>") for
 # the marker key, matching the watcher's own key scheme.
 fm_backend_herdr_apply_transition() {  # <state_dir> <session> <record>
-  local state=$1 session=$2 record=$3 pane_id to action window marker
+  local state=$1 session=$2 record=$3 pane_id to action window marker meta task ownership=0
   pane_id=$(fm_transition_pane_id "$record")
   [ -n "$pane_id" ] || return 1
+  window="$session:$pane_id"
+  for meta in "$state"/*.meta; do
+    [ -f "$meta" ] || continue
+    [ "$(fm_backend_herdr_meta_value "$meta" window)" = "$window" ] || continue
+    task=${meta##*/}
+    task=${task%.meta}
+    FM_STATE_OVERRIDE="$state" fm_backend_herdr_endpoint_foreign "$session" "$pane_id" "fm-$task" || ownership=$?
+    [ "$ownership" -eq 1 ] || return 1
+    break
+  done
   to=$(fm_transition_to_status "$record")
   action=$(fm_transition_policy "$to")
-  window="$session:$pane_id"
   marker=$(fm_backend_herdr_escalation_marker "$state" "$window")
   case "$action" in
     actionable)

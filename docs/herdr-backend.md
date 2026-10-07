@@ -752,9 +752,11 @@ A container rebuild destroys the old process; a newly launched process has its o
 If the identity cannot be obtained during spawn or relaunch, publication omits the field and launch continues using the same best-effort label-plus-cwd fallback as a legacy record.
 A relaunch replaces any previously recorded identity with the newly read value, or removes it when the new read is unavailable; `fm-control relaunch` and `fm-secondmate-restart` both launch through that path, so a replaced pane process is re-recorded.
 An adopted relaunch revalidates its previous binding before identity refresh and metadata publication, and at each spawn read or input boundary; a process change refuses the launch rather than publishing ownership of the replacement.
+After publication, fresh and rebound launches also use the published binding for all subsequent reads and input, including exports, session-reference reads, launch text, and Enter.
 
 `fm_backend_herdr_endpoint_foreign`, also used by the data-plane dispatcher guard, compares the current process identity whenever a claiming record carries it.
-A `proc:` record must match exactly; a `ps:` record (written where start ticks or boot id cannot be read) matches when the pid is equal and the current `ps` start time is within one second of the recorded one, even if `/proc` is now readable.
+A `proc:` record compares its PID, boot id, and start ticks directly: a readable component mismatch proves foreign ownership, while an unavailable component without a proven mismatch is unreadable, even when `ps` can still serialize a new identity.
+A `ps:` record (written where start ticks or boot id cannot be read) matches when the pid is equal and the current `ps` start time is within one second of the recorded one, even if `/proc` is now readable.
 The `ps:` tolerance cannot distinguish PID reuse with a start time within that window.
 A mismatch is treated as foreign, regardless of matching cwd or `fm-<id>` label.
 An unreadable identity blocks active operations and closure but reports `unreadable` for liveness unless the pane or server is independently proven gone; it does not authorize a duplicate launch.
@@ -762,6 +764,7 @@ A server restart that changes this identity invalidates the binding; a live-hand
 A foreign pane reads `missing` in the recovery-grade view, so the relaunch path can bind a fresh endpoint in the recorded session.
 Active capture, key, text, and classifier operations check ownership after server readiness at each internal read or input boundary, including submit verification, clearing, and retries, so restoring a stopped server cannot bypass the check.
 Passive liveness and existence probes do not start the server.
+Native push transitions check the selected task's ownership in the supplied state directory before surfacing a blocked edge or clearing its dedupe marker, both on reconnect and for streamed events.
 Task-specific liveness callers pass `fm-<id>` so another task claiming the same address cannot supply their ownership verdict.
 Teardown refuses destructive process or worktree cleanup when a proven foreign pane has processes in the directories being cleaned, retaining the task records for reconciliation.
 Guarded closes recheck ownership before each signal and explicit-close fallback, and Treehouse returns recheck before every attempt, including retries for an index lock.

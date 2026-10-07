@@ -49,7 +49,7 @@ case "${1:-} ${2:-}" in
     cat "$w/pane-$key.json" 2>/dev/null || { printf '{"error":{"code":"pane_not_found"}}\n'; exit 1; }
     ;;
   'pane process-info') key=${4//:/_}; cat "$w/process-$key.json" ;;
-  'agent get') cat "$w/agent-$key.json" ;;
+  'agent get') printf '%s\n' "$pane" >> "$w/agent-reads"; cat "$w/agent-$key.json" ;;
   'pane list') cat "$w/panes.json" ;;
   'tab list')
     if [ "${FM_HUSK_DUP:-0}" = 1 ] && [ ! -f "$w/closed-tab" ]; then
@@ -336,6 +336,7 @@ prepare_reset() {
 w=$FM_FAKE_WORLD
 [ ! -f "$w/reset-done" ] || exit 0
 key=${FM_RESET_PANE//:/_}
+if [ -f "$FM_STATE_OVERRIDE/mine.meta" ]; then cp "$FM_STATE_OVERRIDE/mine.meta" "$w/meta-at-reset"; fi
 cp "$w/inputs" "$w/inputs-at-reset"
 jq '.result.process_info.shell_pid = 43' "$w/reset-process.json" > "$w/process-$key.json"
 jq --arg cwd "${FM_RESET_CWD:-$FM_HOME}" '.result.pane.foreground_cwd = $cwd | .result.pane.cwd = $cwd' "$w/reset-pane.json" > "$w/pane-$key.json"
@@ -527,6 +528,195 @@ test_deferred_husk_close_rechecks_ownership() {
   pass 'deferred husk cleanup preserves ownership changes while ordinary replacement completes'
 }
 
+test_published_fresh_and_rebound_launches_keep_their_binding() {
+  local path stage
+  for path in fresh rebound; do
+    for stage in ordinary literal key; do
+      (
+        local dir="$TMP_ROOT/published-$path-$stage" wt proj out meta rc=0
+        setup_world "$dir"
+        wt="$dir/wt"; proj="$dir/project"
+        fm_test_spawn_home "$FM_HOME" codex
+        fm_test_spawn_brief "$FM_HOME" mine
+        fm_git_worktree "$proj" "$wt" published-mine
+        fm_fake_exit0 "$dir/fakebin" codex treehouse gh-axi
+        fm_test_fake_tmux_spawn "$dir/fakebin"
+        printf 'off\n' > "$FM_HOME/config/herdr-presentation-spaces"
+        write_pane w1:p3 42 "$wt" codex
+        printf '{"error":{"code":"agent_not_found"}}\n' > "$FM_FAKE_WORLD/agent-w1_p3.json"
+        if [ "$path" = rebound ]; then
+          write_pane w2:p2 42 "$dir/unrelated" codex
+          fm_write_meta "$FM_STATE_OVERRIDE/mine.meta" backend=herdr window=fmtest:w2:p2 endpoint_task_id=mine \
+            "worktree=$wt" "project=$proj" kind=ship harness=codex mode=no-mistakes yolo=off \
+            herdr_session=fmtest herdr_workspace_id=w2 herdr_tab_id=w2:t2 herdr_pane_id=w2:p2 \
+            'herdr_process_identity=proc:43:3f2a9c1e-0000-4000-8000-0123456789ab:7100'
+        fi
+        prepare_reset w1:p3
+        cat > "$dir/fakebin/sleep" <<'SH'
+#!/usr/bin/env bash
+case "${FM_RESET_STAGE:-}" in
+  literal)
+    if grep -q '^spawn_gen=' "$FM_STATE_OVERRIDE/mine.meta" 2>/dev/null; then "$FM_FAKE_WORLD/reset"; fi
+    ;;
+  key) [ ! -f "$FM_FAKE_WORLD/typed" ] || "$FM_FAKE_WORLD/reset" ;;
+esac
+exit 0
+SH
+        chmod +x "$dir/fakebin/sleep"
+        export FM_RESET_STAGE=$stage
+        if [ "$path" = fresh ]; then
+          out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$FM_HOME" "$wt" "$dir/fakebin" mine "$proj" \
+            --backend herdr --mode no-mistakes --yolo off 2>&1); rc=$?
+        else
+          out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$FM_HOME" "$wt" "$dir/fakebin" mine --relaunch 2>&1); rc=$?
+        fi
+        if [ "$stage" = ordinary ]; then
+          [ "$rc" = 0 ] || fail "$path launch regressed: $out"
+          grep -q 'w1:p3 send-keys enter' "$FM_FAKE_WORLD/inputs" || fail "$path launch did not deliver Enter"
+        else
+          [ "$rc" != 0 ] || fail "$path/$stage launch accepted a recycled pane"
+          [ -f "$FM_FAKE_WORLD/reset-done" ] || fail "$path/$stage launch did not cross a reset"
+          cmp -s "$FM_FAKE_WORLD/inputs" "$FM_FAKE_WORLD/inputs-at-reset" || fail "$path/$stage launch sent input to a foreign pane"
+          [ "$(cat "$FM_FAKE_WORLD/composer-w1_p3")" = 'foreign draft' ] || fail "$path/$stage launch changed a foreign draft"
+        fi
+        meta="$FM_STATE_OVERRIDE/mine.meta"
+        [ "$stage" = ordinary ] || meta="$FM_FAKE_WORLD/meta-at-reset"
+        [ "$(fm_backend_target_of_meta "$meta")" = fmtest:w1:p3 ] || fail "$path did not publish its created endpoint"
+        [ "$(fm_backend_herdr_meta_value "$meta" herdr_process_identity)" = 'proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000' ] || fail "$path published a foreign process binding"
+      ) || fail "$path/$stage publication regression"
+    done
+  done
+  for stage in owned foreign unreadable; do
+    (
+      setup_world "$TMP_ROOT/session-ref-$stage"
+      write_pane w1:p1 42 "$FM_HOME" codex
+      bind_mine
+      [ "$stage" != foreign ] || write_pane w1:p1 43 "$FM_HOME" codex
+      [ "$stage" != unreadable ] || rm -f "$FM_PROC_ROOT_OVERRIDE/sys/kernel/random/boot_id"
+      printf '{"result":{"agent":{"agent":"codex","agent_session":{"kind":"id","value":"session-one"}}}}\n' > "$FM_FAKE_WORLD/agent-w1_p1.json"
+      local out
+      export FM_BACKEND_HERDR_EXPECTED_LABEL=fm-mine
+      if out=$(fm_backend_herdr_pane_agent_session_ref fmtest w1:p1); then
+        [ "$stage" = owned ] && [ "$out" = $'codex\tsession-one' ] || fail "$stage session reference was trusted"
+      else
+        [ "$stage" != owned ] || fail 'owned session-reference read regressed'
+        [ -z "$out" ] && [ ! -s "$FM_FAKE_WORLD/agent-reads" ] || fail "$stage session-reference read reached the foreign or unreadable pane"
+      fi
+    ) || fail "$stage session-reference regression"
+  done
+  pass 'published fresh and rebound launches guard text, Enter, and native session reads'
+}
+
+test_proc_binding_component_loss_is_unreadable() {
+  local loss
+  for loss in boot stat malformed-boot malformed-stat both; do
+    (
+      local dir="$TMP_ROOT/component-loss-$loss" identity rc
+      setup_world "$dir"
+      write_pane w1:p1 42 "$FM_HOME"
+      bind_mine
+      fm_backend_herdr_pane_process_state() { printf agent; }
+      cat > "$dir/fakebin/ps" <<'SH'
+#!/usr/bin/env bash
+printf 'Wed Oct  7 02:03:32 2026\n'
+SH
+      chmod +x "$dir/fakebin/ps"
+      identity=$(fm_backend_herdr_meta_value "$FM_STATE_OVERRIDE/mine.meta" herdr_process_identity)
+      [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = alive ] || fail 'proc-bound agent was not initially alive'
+      case "$loss" in
+        boot) rm -f "$FM_PROC_ROOT_OVERRIDE/sys/kernel/random/boot_id" ;;
+        stat) rm -f "$FM_PROC_ROOT_OVERRIDE/42/stat" ;;
+        malformed-boot) printf 'not-a-boot-id\n' > "$FM_PROC_ROOT_OVERRIDE/sys/kernel/random/boot_id" ;;
+        malformed-stat) printf 'unreadable stat\n' > "$FM_PROC_ROOT_OVERRIDE/42/stat" ;;
+        both) rm -f "$FM_PROC_ROOT_OVERRIDE/42/stat" "$FM_PROC_ROOT_OVERRIDE/sys/kernel/random/boot_id" ;;
+      esac
+      [ "$(fm_backend_herdr_pane_process_identity fmtest w1:p1)" = 'ps:42:Wed Oct  7 02:03:32 2026' ] || fail "$loss did not exercise a serialization fallback"
+      rc=0; fm_backend_herdr_identity_matches fmtest w1:p1 "$identity" || rc=$?
+      [ "$rc" = 2 ] || fail "$loss component loss was treated as a proven mismatch"
+      rc=0; fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-mine || rc=$?
+      [ "$rc" = 2 ] || fail "$loss component loss declared a foreign endpoint"
+      [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = unreadable ] || fail "$loss component loss authorized duplicate recovery"
+      [ "$(fm_backend_herdr_endpoint_absence_recheck fmtest:w1:p1 fm-mine)" = unreadable ] || fail "$loss absence recheck declared the live endpoint missing"
+      ! fm_backend_send_key herdr fmtest:w1:p1 Enter fm-mine || fail "$loss component loss authorized input"
+      ! fm_backend_capture herdr fmtest:w1:p1 5 fm-mine || fail "$loss component loss authorized capture"
+      [ ! -s "$FM_FAKE_WORLD/inputs" ] && [ ! -s "$FM_FAKE_WORLD/reads" ] || fail "$loss component loss reached an unreadable endpoint"
+      write_proc "$FM_PROC_ROOT_OVERRIDE" 42 7000
+      [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = alive ] || fail "$loss recovery of stable reads did not restore liveness"
+      write_proc "$FM_PROC_ROOT_OVERRIDE" 42 7001
+      rm -f "$FM_PROC_ROOT_OVERRIDE/sys/kernel/random/boot_id"
+      rc=0; fm_backend_herdr_identity_matches fmtest w1:p1 "$identity" || rc=$?
+      [ "$rc" = 1 ] || fail 'a readable tick mismatch was hidden by missing boot identity'
+      write_proc "$FM_PROC_ROOT_OVERRIDE" 42 7000
+      printf 'aaaaaaaa-0000-4000-8000-0123456789ab\n' > "$FM_PROC_ROOT_OVERRIDE/sys/kernel/random/boot_id"
+      rm -f "$FM_PROC_ROOT_OVERRIDE/42/stat"
+      rc=0; fm_backend_herdr_identity_matches fmtest w1:p1 "$identity" || rc=$?
+      [ "$rc" = 1 ] || fail 'a readable boot mismatch was hidden by missing start ticks'
+      write_pane w1:p1 43 "$FM_HOME"
+      rm -f "$FM_PROC_ROOT_OVERRIDE/sys/kernel/random/boot_id"
+      rc=0; fm_backend_herdr_identity_matches fmtest w1:p1 "$identity" || rc=$?
+      [ "$rc" = 1 ] || fail 'a readable PID mismatch was hidden by missing stable components'
+    ) || fail "$loss stable-component regression"
+  done
+  pass 'proc component loss is unreadable unless another recorded component proves a mismatch'
+}
+
+test_native_push_validates_selected_task_ownership() {
+  local path ownership status
+  for path in level stream; do
+    for ownership in owned foreign unreadable; do
+      for status in blocked working; do
+        (
+          local dir="$TMP_ROOT/push-$path-$ownership-$status" state marker out rc=0 level
+          setup_world "$dir"
+          write_pane w1:p1 42 "$FM_HOME"
+          bind_mine
+          state="$dir/child/state"; mkdir -p "$state"
+          cp "$FM_STATE_OVERRIDE/mine.meta" "$state/a.meta"
+          cp "$FM_STATE_OVERRIDE/other.meta" "$state/b.meta"
+          if [ "$ownership" = foreign ]; then
+            write_pane w1:p1 43 "$FM_HOME"
+            cp "$FM_STATE_OVERRIDE/other.meta" "$FM_STATE_OVERRIDE/mine.meta"
+          elif [ "$ownership" = unreadable ]; then
+            rm -f "$FM_PROC_ROOT_OVERRIDE/sys/kernel/random/boot_id"
+          fi
+          marker=$(fm_backend_herdr_escalation_marker "$state" fmtest:w1:p1)
+          if [ "$status" = working ]; then printf 'retained-marker\n' > "$marker"; fi
+          level=$status; [ "$path" != stream ] || level=idle
+          jq -n --arg status "$level" '{result:{agent:{agent:"pi",agent_status:$status}}}' > "$FM_FAKE_WORLD/agent-w1_p1.json"
+          : > "$dir/edges"
+          [ "$path" != stream ] || printf 'w1:p1\tw1\t%s\tpi\n' "$status" > "$dir/edges"
+          cat > "$dir/reader" <<'SH'
+#!/usr/bin/env bash
+printf '@subscribed\n'
+cat "$FM_STREAM_EDGES"
+SH
+          chmod +x "$dir/reader"
+          export FM_BACKEND_HERDR_EVENT_READER="$dir/reader" FM_BACKEND_EVENTS_CAPABILITY_CONFIRMED=1 FM_STREAM_EDGES="$dir/edges"
+          out=$(fm_backend_herdr_wait_transition fmtest 0 "$state" fmtest:w1:p1) || rc=$?
+          if [ "$ownership" = owned ] && [ "$status" = blocked ]; then
+            [ "$rc" = 0 ] && [ "$(fm_transition_to_status "$out")" = blocked ] || fail "$path owned push did not surface blocked"
+            [ ! -e "$marker" ] || fail 'detection prematurely committed the marker'
+            fm_backend_herdr_commit_transition "$state" fmtest "$out"
+            [ -e "$marker" ] || fail 'ordinary handled push could not commit its marker'
+          else
+            [ "$rc" = 1 ] && [ -z "$out" ] || fail "$path/$ownership/$status produced an unauthorized transition: $out"
+            if [ "$status" = working ]; then
+              if [ "$ownership" = owned ]; then
+                [ ! -e "$marker" ] || fail "$path owned working transition did not clear its marker"
+              else
+                [ "$(cat "$marker")" = retained-marker ] || fail "$path/$ownership transition changed the selected task's marker"
+              fi
+            else
+              [ ! -e "$marker" ] || fail "$path/$ownership transition wrote a dedupe marker"
+            fi
+          fi
+        ) || fail "$path/$ownership/$status native push regression"
+      done
+    done
+  done
+  pass 'native reconnect levels and stream edges validate the selected home before wakes or marker changes'
+}
+
 test_dispatch_boundaries
 test_submit_boundaries
 test_identity_requires_boot_and_ticks
@@ -537,3 +727,6 @@ test_adopted_relaunch_keeps_its_previous_binding
 test_close_fallback_rechecks_the_selected_binding
 test_treehouse_return_retry_rechecks_ownership
 test_deferred_husk_close_rechecks_ownership
+test_published_fresh_and_rebound_launches_keep_their_binding
+test_proc_binding_component_loss_is_unreadable
+test_native_push_validates_selected_task_ownership

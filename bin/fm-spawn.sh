@@ -2649,6 +2649,7 @@ muse_credential_present() {
 relaunch_resume_args() {  # <harness> <backend> <target>
   local harness=${1-} backend=${2-} target=${3-} identity agent ref flag
   [ "$backend" = herdr ] || return 0
+  local FM_STATE_OVERRIDE=$STATE
   [ -n "$target" ] || return 0
   fm_backend_herdr_parse_target "$target" || return 0
   identity=$(fm_backend_herdr_pane_agent_session_ref "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE") || return 0
@@ -5199,6 +5200,9 @@ if [ "$RELAUNCH" -eq 1 ]; then
   RELAUNCH_REPLACEMENT_PENDING=0
   SPAWN_META_PUBLISH_STARTED=0
   SPAWN_META_TMP=
+fi
+if [ "$BACKEND" = herdr ]; then
+  FM_BACKEND_HERDR_EXPECTED_LABEL=$W
 fi
 # A dispatch or relaunch keeps the per-task meta lock through launch delivery.
 # The backlog mutation is deliberately the final fallible commit below, so
