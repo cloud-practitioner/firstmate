@@ -1223,8 +1223,8 @@ pass "real Herdr lab: session lock contention from a secondmate home falls back 
 # original projected workspace. Identity-bearing records reject that restored
 # shell first; only the legacy fallback authorizes in-place reclaim.
 # These full-session restarts also stop the earlier multi-home workers whose
-# restored panes are retained for the final
-# exact-pane cleanup assertions. Keep the recovery fixtures in their own
+# restored panes are retained for the final legacy-record exact-pane cleanup
+# assertions. Keep the recovery fixtures in their own
 # Treehouse pool so those intentionally retained records cannot claim a slot
 # that a recovery fixture legitimately acquires after their processes stop.
 # Exercise both the leading fm- identity style seen in Hi Bit work and the
@@ -1546,7 +1546,10 @@ lab tab get "$FLAT_TAB_ID" >/dev/null 2>&1 \
   || fail "correction removed the seeded flat secondmate child tab"
 pass "real Herdr lab: legacy projection labels and flat secondmate tabs are left unmigrated"
 
-# Teardown multi-home projected tasks by exact pane only.
+# Teardown restored multi-home tasks through legacy compatibility, by exact
+# pane only. The restarts invalidated their process bindings, so first prove
+# those endpoints read missing; a bound record must not authorize husk cleanup.
+# post-legacy was spawned after the last restart and retains its fresh binding.
 for META_HOME_PAIR in \
   "p1:$HOME_DIR" "p2:$HOME_DIR" "pcw:$HOME_DIR" "post-legacy:$HOME_DIR" \
   "a1:$SECOND_HOME_A" "a2:$SECOND_HOME_A" "acw:$SECOND_HOME_A" \
@@ -1555,8 +1558,22 @@ for META_HOME_PAIR in \
 do
   TASK_ID=${META_HOME_PAIR%%:*}
   TASK_HOME=${META_HOME_PAIR#*:}
+  TASK_META="$TASK_HOME/state/$TASK_ID.meta"
+  TASK_PANE=$(grep '^herdr_pane_id=' "$TASK_META" | cut -d= -f2-)
+  if [ "$TASK_ID" != post-legacy ]; then
+    BOUND_STATE=$(FM_HOME="$TASK_HOME" FM_ROOT_OVERRIDE="$ROOT" bash -c '
+      . "$1/bin/fm-backend.sh"
+      fm_backend_agent_state herdr "$2" "fm-$3"
+    ' bash "$ROOT" "$(grep '^window=' "$TASK_META" | cut -d= -f2-)" "$TASK_ID")
+    [ "$BOUND_STATE" = missing ] \
+      || fail "restored multi-home task $TASK_ID accepted a stale process binding: $BOUND_STATE"
+    use_legacy_restart_record "$TASK_META"
+  fi
   teardown_task "$TASK_ID" "$TASK_HOME" > "$TMP_ROOT/td-$TASK_ID.out" 2> "$TMP_ROOT/td-$TASK_ID.err" \
     || fail "multi-home teardown of $TASK_ID failed: $(cat "$TMP_ROOT/td-$TASK_ID.err")"
+  if lab pane get "$TASK_PANE" >/dev/null 2>&1; then
+    fail "multi-home teardown of $TASK_ID left its exact pane alive"
+  fi
 done
 assert_focus_is "$CAPTAIN_FOCUS" "multi-home teardown"
 pass "real Herdr lab: multi-home exact-pane teardowns restore captain focus without workspace close authority"
