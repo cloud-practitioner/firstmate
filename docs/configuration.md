@@ -892,10 +892,10 @@ A relaunch validates the list and the replacement runtime's support before stopp
 
 ### Validation
 
-An entry may use only letters, digits, `_`, `.`, and `-`.
+An entry may use only `A-Z`, `a-z`, `0-9`, `_`, `.`, and `-`.
 An entry with any other character, including internal whitespace, a comma, or a `*`, refuses the launch and names the offending entry.
 An unreadable or nonregular file, or a path inspection error, also refuses and names the configuration file.
-These checks run before any worker endpoint, local copy, or task record exists; Firstmate never launches with a partial list.
+For a new worker, these checks run before its endpoint, local copy, or task record is created; Firstmate never launches with a partial list.
 Only exact tool names are accepted, not wildcard patterns.
 Firstmate checks syntax and runtime support before launch but never runs `pi mcp list` or otherwise connects to servers to validate names.
 When its first agent run starts, after Pi's startup tool-loading boundary, the worker extension compares the launch's exclusion list with its own loaded-tool registry and appends a timestamped warning note to `state/<task-id>.status` naming the configuration file and every unmatched entry for the supervisor.

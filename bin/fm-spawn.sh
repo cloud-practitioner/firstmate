@@ -363,7 +363,7 @@
 #     __PIAPPROVE__ optional --approve on a seeded Pi/pi-signed secondmate when
 #                  that executable advertises the flag (empty otherwise; session
 #                  trust for the launch cwd only, never a trust.json rewrite)
-#     __PIEXCLUDE__ optional ` --exclude-tools '<names>'` from
+#     __PIEXCLUDE__ optional ` --exclude-tools '<comma-joined names>'` from
 #                  config/crew-exclude-tools on Pi/pi-signed ship and scout
 #                  launches (supplies its own leading space, empty otherwise)
 #     __PIRESUME__ optional relaunch-only `--session <reference>` that keeps a
@@ -2338,9 +2338,8 @@ if [ "$KIND" = secondmate ] && [ "$HARNESS" = rovo ]; then
   exit 1
 fi
 
-# config/crew-exclude-tools (header above): a non-empty list must be honored by
-# this launch or the spawn refuses, before any mutation. Secondmate agents are
-# not covered.
+# config/crew-exclude-tools (header above): refuse before worker provisioning
+# if this launch cannot honor the list. Secondmate agents are not covered.
 EXCLUDE_TOOLS=
 if [ "$KIND" != secondmate ]; then
   EXCLUDE_TOOLS=$(fm_exclude_tools_check "$HARNESS" "$RAW_LAUNCH" "$CONFIG") || exit 1
