@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Successful reassociation and new answer verify only for the new origin",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "active: interrupt before backend hold retains A and refuses B",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "active: refuse before backend hold retains A and refuses B",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "expired: interrupt before backend hold retains A and refuses B",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "expired: refuse before backend hold retains A and refuses B",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "released-replay: interrupt before backend hold retains A and refuses B",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "released-replay: refuse before backend hold retains A and refuses B",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "released-done: interrupt before backend hold retains A and refuses B",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "released-done: refuse before backend hold retains A and refuses B",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Secondmate new hold: origin-write failure still delivers one parent decision and retry deduplicates",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Secondmate active hold: origin-write failure still delivers one parent decision and retry deduplicates",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Secondmate released hold: origin-write failure still delivers one parent decision and retry deduplicates",
+    "result": "pass",
+    "live": true
+  }
+]

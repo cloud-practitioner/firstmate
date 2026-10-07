@@ -1,0 +1,93 @@
+Real CLI validation. No fake backend, terminal, harness, login, or FM_GATE_REFUSE_BYPASS.
+Faults occur immediately before real tasks-axi execution; read-only filesystem denies actual backend writes.
+No runtime terminal is needed for the hold/answer/complete/verify public CLI surface.
+
+$ (home=live-released-interrupt) /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
+ok: added origin-a (scout, repo sample) -> Queued
+task:
+  id: origin-a
+  title: Review origin-a
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-07
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-a` to move it to in flight
+  - Run `tasks-axi block origin-a --by <other>` to record a dependency
+exit=0
+
+$ (home=live-released-interrupt) /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
+ok: added origin-b (scout, repo sample) -> Queued
+task:
+  id: origin-b
+  title: Review origin-b
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-07
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-b` to move it to in flight
+  - Run `tasks-axi block origin-b --by <other>` to record a dependency
+exit=0
+
+$ (home=live-released-interrupt) /home/node/.no-mistakes/worktrees/5e28e613310e/01M4B5GBJ9SPZSFZEVT47MEJ31/bin/fm-captain-hold.sh hold call --title Separate captain call --reason Choose for A --origin origin-a
+call
+exit=0
+
+$ (home=live-released-interrupt) /home/node/.no-mistakes/worktrees/5e28e613310e/01M4B5GBJ9SPZSFZEVT47MEJ31/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M4B5GBJ9SPZSFZEVT47MEJ31/.local-test-tmp/live-released-interrupt/answer-a.txt
+released: call
+exit=0
+
+$ (home=live-released-interrupt) /home/node/.no-mistakes/worktrees/5e28e613310e/01M4B5GBJ9SPZSFZEVT47MEJ31/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+
+$ (home=live-released-interrupt) /home/node/.no-mistakes/worktrees/5e28e613310e/01M4B5GBJ9SPZSFZEVT47MEJ31/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b [OS fault: interrupt]
+exit=-15
+OS fault marker: fault=interrupt pid=1994440 backend-command=hold call --reason fm-hold-v1:Q2hvb3NlIGZvciBC --kind captain
+
+
+$ (home=live-released-interrupt) /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Separate captain call
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: yes
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGZvciBC"
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-07
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-07T13:46:31Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+exit=0
+VALIDATION ERROR: AssertionError: 
+All disposable scenario homes removed.

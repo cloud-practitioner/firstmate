@@ -1,0 +1,98 @@
+$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.fcmkm4g8
+exit=0
+/tmp/fm-lab.fcmkm4g8
+
+$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
+exit=0
+ok: added origin-a (scout, repo sample) -> Queued
+task:
+  id: origin-a
+  title: Review origin-a
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-07
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-a` to move it to in flight
+  - Run `tasks-axi block origin-a --by <other>` to record a dependency
+
+$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
+exit=0
+ok: added origin-b (scout, repo sample) -> Queued
+task:
+  id: origin-b
+  title: Review origin-b
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-07
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-b` to move it to in flight
+  - Run `tasks-axi block origin-b --by <other>` to record a dependency
+
+$ FM_HOME=<disposable-lab> before-fix-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
+exit=0
+call
+
+$ FM_HOME=<disposable-lab> before-fix-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.fcmkm4g8/answer.txt
+exit=0
+released: call
+
+$ FM_HOME=<disposable-lab> before-fix-captain-hold.sh hold call --reason Choose for B --origin origin-b
+exit=1
+FAULT: remove write permission from disposable backlog and data dir before backend hold
+fm-captain-hold: could not record the hold origin on call
+
+$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
+exit=0
+task:
+  id: call
+  title: Decision call
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: firstmate
+  priority: "-"
+  created: 2026-10-07
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-07T14:10:23Z\nCaptain hold origin: origin-b\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\n\nOrigin: origin-a"
+
+$ FM_HOME=<disposable-lab> before-fix-captain-hold.sh complete origin-b call
+exit=0
+complete: origin-b captain-call inventory reviewed (call)
+
+$ FM_HOME=<disposable-lab> before-fix-captain-hold.sh verify origin-b
+exit=0
+verified: origin-b captain-call inventory
+
+REPRODUCED: base incorrectly certifies B using A's answer after the real backend hold and rollback both fail.
+Disposable baseline home removed.
