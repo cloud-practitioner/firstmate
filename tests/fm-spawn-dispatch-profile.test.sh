@@ -1339,6 +1339,45 @@ test_pi_exclude_tools_malformed_entry_refuses_before_endpoint() {
   pass "a malformed exclusion entry refuses the spawn before any launch or record"
 }
 
+test_pi_exclude_tools_read_failure_refuses_before_launch() {
+  local harness kind rec id out status bash_env
+  for harness in pi pi-signed; do
+    for kind in ship scout; do
+      id="excl-read-failure-${harness}-${kind}"
+      rec=$(make_spawn_case "$id" "$harness" "$id")
+      read_case_record "$rec"
+      write_exclude_file "$HOME_DIR" 'mcp__srv__writeTool'
+      bash_env="$CASE_DIR/remove-exclusions.bash"
+      # Make the file disappear immediately after its readability check, without
+      # sleeps or permission assumptions (chmod alone would not fail as root).
+      cat > "$bash_env" <<'SH'
+function [ {
+  local status=0
+  builtin test "${@:1:$#-1}" || status=$?
+  if builtin [ "$#" -eq 4 ] && builtin [ "$1" = '!' ] &&
+    builtin [ "$2" = -r ] &&
+    builtin [ "$3" = "${FM_CONFIG_OVERRIDE:-}/crew-exclude-tools" ]; then
+    rm -f -- "$3"
+  fi
+  return "$status"
+}
+SH
+      if [ "$kind" = scout ]; then
+        out=$(BASH_ENV="$bash_env" run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --scout)
+      else
+        out=$(BASH_ENV="$bash_env" run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+      fi
+      status=$?
+      [ ! -e "$HOME_DIR/config/crew-exclude-tools" ] || fail "the read-failure injection did not remove the list"
+      expect_code 1 "$status" "$harness $kind must refuse when the checked exclusion file cannot be opened"
+      assert_contains "$out" "error: cannot read config/crew-exclude-tools" "the refusal must explain the read failure"
+      [ ! -s "$LAUNCH_LOG" ] || fail "$harness $kind launched despite the unreadable exclusion list"
+      [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "$harness $kind read failure still wrote a task record"
+    done
+  done
+  pass "Pi and pi-signed ship and scout launches refuse when the exclusion file disappears after its checks"
+}
+
 test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates() {
   local rec_a rec_b id_a id_b launch sm out status
   id_a=excl-home-a-z9f
@@ -2195,6 +2234,7 @@ test_pi_exclude_tools_worker_registry_reports
 test_pi_exclude_tools_absent_and_empty_lists
 test_exclude_tools_non_pi_runtime_refuses_non_empty_list
 test_pi_exclude_tools_malformed_entry_refuses_before_endpoint
+test_pi_exclude_tools_read_failure_refuses_before_launch
 test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates
 test_batch_forwards_shared_profile_flags
 test_claude_forwards_firstmate_config_dir_when_set

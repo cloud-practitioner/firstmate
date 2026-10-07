@@ -34,7 +34,10 @@ fm_exclude_tools_names() {
       return 1
     fi
     names="${names:+$names,}$line"
-  done <"$file"
+  done <"$file" || {
+    echo "error: cannot read config/crew-exclude-tools" >&2
+    return 1
+  }
   printf '%s' "$names"
 }
 
