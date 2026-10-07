@@ -11,7 +11,7 @@
 # the file is absent or lists nothing. Non-zero with the reason on stderr when
 # the file or an entry is invalid.
 fm_exclude_tools_names() {
-  local config=$1 file line names= present
+  local config=$1 file line names='' present
   file=$config/crew-exclude-tools
   present=$(perl -MErrno=ENOENT -e '
     if (lstat $ARGV[0]) { print 1 }
