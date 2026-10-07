@@ -5178,6 +5178,7 @@ if [ "$RELAUNCH" -eq 1 ]; then
   SPAWN_META_TMP=
 fi
 if [ "$BACKEND" = herdr ]; then
+  # shellcheck disable=SC2034 # Consumed by the dynamically loaded Herdr delivery helpers.
   FM_BACKEND_HERDR_EXPECTED_LABEL=$W
 fi
 # A dispatch or relaunch keeps the per-task meta lock through launch delivery.

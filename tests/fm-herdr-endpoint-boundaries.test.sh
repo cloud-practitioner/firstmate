@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
+# Fixture overrides are invoked by the dynamically loaded production modules.
+# shellcheck disable=SC2329
 set -u
+# shellcheck source=tests/lib.sh
 . "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+# shellcheck source=tests/fixtures.sh
 . "$(dirname "${BASH_SOURCE[0]}")/fixtures.sh"
+# shellcheck source=tests/herdr-test-safety.sh
 . "$(dirname "${BASH_SOURCE[0]}")/herdr-test-safety.sh"
 command -v jq >/dev/null 2>&1 || { echo 'skip: jq not found'; exit 0; }
 herdr_forget_inherited_pane

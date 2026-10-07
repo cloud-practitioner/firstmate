@@ -953,6 +953,7 @@ fm_backend_busy_state() {  # <backend> <target> [expected-label]
 # assumption; zellij's classifier reads `dump-screen --ansi`, which replaced
 # its old no-classifier content-diff reporting.
 fm_backend_composer_state() {  # <backend> <target> [expected-label] -> empty|pending|pending-unproven|unknown
+  # shellcheck disable=SC2034 # Dynamically scoped context consumed by the Herdr adapter.
   local backend=$1 FM_BACKEND_HERDR_EXPECTED_LABEL=${3:-}
   shift
   fm_backend_source "$backend" || { printf 'unknown'; return 0; }
