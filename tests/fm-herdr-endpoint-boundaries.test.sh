@@ -784,11 +784,11 @@ SH
 }
 
 test_push_event_accepts_the_bound_record_behind_a_stale_one() {
-  local path order
-  for path in level stream; do
+  local event_path order
+  for event_path in level stream; do
     for order in stale-first bound-first both-stale; do
       (
-        local dir="$TMP_ROOT/push-order-$path-$order" state marker out rc=0 bound_task='' stale_task level=blocked size
+        local dir="$TMP_ROOT/push-order-$event_path-$order" state marker out rc=0 bound_task='' stale_task level=blocked size
         setup_world "$dir"
         write_pane w1:p1 42 "$FM_HOME"
         bind_mine
@@ -806,10 +806,10 @@ test_push_event_accepts_the_bound_record_behind_a_stale_one() {
         . "$ROOT/bin/fm-push-transition-lib.sh"
         wake() { printf '%s\n' "$1" >> "$STATE/wakes"; }
         marker=$(fm_backend_herdr_escalation_marker "$state" fmtest:w1:p1)
-        [ "$path" != stream ] || level=idle
+        [ "$event_path" != stream ] || level=idle
         jq -n --arg status "$level" '{result:{agent:{agent:"pi",agent_status:$status}}}' > "$FM_FAKE_WORLD/agent-w1_p1.json"
         : > "$dir/edges"
-        [ "$path" != stream ] || printf 'w1:p1\tw1\tblocked\tpi\n' > "$dir/edges"
+        [ "$event_path" != stream ] || printf 'w1:p1\tw1\tblocked\tpi\n' > "$dir/edges"
         cat > "$dir/reader" <<'SH'
 #!/usr/bin/env bash
 printf '@subscribed\n'
@@ -819,24 +819,24 @@ SH
         # shellcheck disable=SC2030,SC2031 # each case runs in its own subshell fixture.
         export FM_BACKEND_HERDR_EVENT_READER="$dir/reader" FM_BACKEND_EVENTS_CAPABILITY_CONFIRMED=1 FM_STREAM_EDGES="$dir/edges"
         out=$(fm_backend_wait_transition herdr fmtest 0 "$state" fmtest:w1:p1) || rc=$?
-        [ ! -e "$marker" ] || fail "$path/$order: detection prematurely committed the marker"
+        [ ! -e "$marker" ] || fail "$event_path/$order: detection prematurely committed the marker"
         if [ "$order" = both-stale ]; then
           [ "$rc" = 1 ] && [ -z "$out" ] || fail 'a pane bound to neither record produced a transition'
           handle_push_transition herdr fmtest "$(fm_transition_record w1:p1 w1 '' blocked pi)"
           [ ! -e "$marker" ] && [ ! -e "$state/wakes" ] && [ ! -e "$state/.wake-queue" ] \
-            || fail "$path/$order: handling accepted a pane bound to neither record"
+            || fail "$event_path/$order: handling accepted a pane bound to neither record"
         else
-          [ "$rc" = 0 ] && [ "$(fm_transition_to_status "$out")" = blocked ] || fail "$path/$order: the correctly bound record's blocked alert was dropped"
+          [ "$rc" = 0 ] && [ "$(fm_transition_to_status "$out")" = blocked ] || fail "$event_path/$order: the correctly bound record's blocked alert was dropped"
           handle_push_transition herdr fmtest "$out"
-          assert_contains "$(cat "$state/wakes")" 'herdr: agent blocked' "$path/$order: the bound task did not wake the supervisor"
-          assert_contains "$(cat "$state/.wake-queue")" 'fmtest:w1:p1' "$path/$order: the bound task did not enqueue its alert"
-          [ -e "$marker" ] || fail "$path/$order: handling did not commit the escalation marker"
+          assert_contains "$(cat "$state/wakes")" 'herdr: agent blocked' "$event_path/$order: the bound task did not wake the supervisor"
+          assert_contains "$(cat "$state/.wake-queue")" 'fmtest:w1:p1' "$event_path/$order: the bound task did not enqueue its alert"
+          [ -e "$marker" ] || fail "$event_path/$order: handling did not commit the escalation marker"
           size=$(wc -c < "$state/$bound_task.status" | tr -d '[:space:]')
-          [ "$(hb_surfaced_offset "$bound_task")" = "$size" ] || fail "$path/$order: handling did not mark the bound task's status surfaced"
-          [ ! -e "$(_hb_surfaced_path "$stale_task")" ] || fail "$path/$order: handling marked the stale task's status surfaced"
-          [ ! -e "$state/.watch-triage.log" ] || fail "$path/$order: the stale pause absorbed the bound task's alert"
+          [ "$(hb_surfaced_offset "$bound_task")" = "$size" ] || fail "$event_path/$order: handling did not mark the bound task's status surfaced"
+          [ ! -e "$(_hb_surfaced_path "$stale_task")" ] || fail "$event_path/$order: handling marked the stale task's status surfaced"
+          [ ! -e "$state/.watch-triage.log" ] || fail "$event_path/$order: the stale pause absorbed the bound task's alert"
         fi
-      ) || fail "$path/$order push ordering regression"
+      ) || fail "$event_path/$order push ordering regression"
     done
   done
   pass 'reconnect and stream push handling uses the bound claimant for waits, wakes, dedupe, and status bookkeeping'
