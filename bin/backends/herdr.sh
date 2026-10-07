@@ -4223,26 +4223,11 @@ fm_backend_herdr_escalation_marker() {  # <state_dir> <window>
 # with no output. <session> reconstructs the window ("<session>:<pane_id>") for
 # the marker key, matching the watcher's own key scheme.
 fm_backend_herdr_apply_transition() {  # <state_dir> <session> <record>
-  local state=$1 session=$2 record=$3 pane_id to action window marker meta task ownership claimed=0 owned=0
+  local state=$1 session=$2 record=$3 pane_id to action window marker
   pane_id=$(fm_transition_pane_id "$record")
   [ -n "$pane_id" ] || return 1
   window="$session:$pane_id"
-  # Every record claiming this address is consulted: a stale record that sorts
-  # before the correctly bound one must not reject the event on its own.
-  for meta in "$state"/*.meta; do
-    [ -f "$meta" ] || continue
-    [ "$(fm_backend_herdr_meta_value "$meta" window)" = "$window" ] || continue
-    task=${meta##*/}
-    task=${task%.meta}
-    claimed=1
-    ownership=0
-    FM_STATE_OVERRIDE="$state" fm_backend_herdr_endpoint_foreign "$session" "$pane_id" "fm-$task" || ownership=$?
-    if [ "$ownership" -eq 1 ]; then
-      owned=1
-      break
-    fi
-  done
-  [ "$claimed" -eq 0 ] || [ "$owned" -eq 1 ] || return 1
+  fm_backend_herdr_transition_task "$state" "$session" "$pane_id" >/dev/null || return 1
   to=$(fm_transition_to_status "$record")
   action=$(fm_transition_policy "$to")
   marker=$(fm_backend_herdr_escalation_marker "$state" "$window")
@@ -4258,6 +4243,24 @@ fm_backend_herdr_apply_transition() {  # <state_dir> <session> <record>
       ;;
   esac
   return 1
+}
+
+fm_backend_herdr_transition_task() {
+  local state=$1 session=$2 pane_id=$3 meta task ownership claimed=0
+  for meta in "$state"/*.meta; do
+    [ -f "$meta" ] || continue
+    [ "$(fm_backend_herdr_meta_value "$meta" window)" = "$session:$pane_id" ] || continue
+    task=${meta##*/}
+    task=${task%.meta}
+    claimed=1
+    ownership=0
+    FM_STATE_OVERRIDE="$state" fm_backend_herdr_endpoint_foreign "$session" "$pane_id" "fm-$task" || ownership=$?
+    if [ "$ownership" -eq 1 ]; then
+      printf '%s' "$task"
+      return 0
+    fi
+  done
+  [ "$claimed" -eq 0 ]
 }
 
 fm_backend_herdr_commit_transition() {  # <state_dir> <session> <record>

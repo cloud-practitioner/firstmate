@@ -784,41 +784,61 @@ SH
 }
 
 test_push_event_accepts_the_bound_record_behind_a_stale_one() {
-  local order
-  for order in stale-first bound-first both-stale; do
-    (
-      local dir="$TMP_ROOT/push-order-$order" state marker out rc=0
-      setup_world "$dir"
-      write_pane w1:p1 42 "$FM_HOME"
-      bind_mine
-      state="$dir/child/state"; mkdir -p "$state"
-      # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
-      case "$order" in
-        stale-first) cp "$FM_STATE_OVERRIDE/other.meta" "$state/a.meta"; cp "$FM_STATE_OVERRIDE/mine.meta" "$state/b.meta" ;;
-        bound-first) cp "$FM_STATE_OVERRIDE/mine.meta" "$state/a.meta"; cp "$FM_STATE_OVERRIDE/other.meta" "$state/b.meta" ;;
-        both-stale) cp "$FM_STATE_OVERRIDE/other.meta" "$state/a.meta"; cp "$FM_STATE_OVERRIDE/other.meta" "$state/b.meta" ;;
-      esac
-      marker=$(fm_backend_herdr_escalation_marker "$state" fmtest:w1:p1)
-      jq -n '{result:{agent:{agent:"pi",agent_status:"blocked"}}}' > "$FM_FAKE_WORLD/agent-w1_p1.json"
-      printf 'w1:p1\tw1\tblocked\tpi\n' > "$dir/edges"
-      cat > "$dir/reader" <<'SH'
+  local path order
+  for path in level stream; do
+    for order in stale-first bound-first both-stale; do
+      (
+        local dir="$TMP_ROOT/push-order-$path-$order" state marker out rc=0 bound_task='' stale_task level=blocked size
+        setup_world "$dir"
+        write_pane w1:p1 42 "$FM_HOME"
+        bind_mine
+        state="$dir/child/state"; mkdir -p "$state"
+        # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
+        case "$order" in
+          stale-first) cp "$FM_STATE_OVERRIDE/other.meta" "$state/a.meta"; cp "$FM_STATE_OVERRIDE/mine.meta" "$state/b.meta"; bound_task=b; stale_task=a ;;
+          bound-first) cp "$FM_STATE_OVERRIDE/mine.meta" "$state/a.meta"; cp "$FM_STATE_OVERRIDE/other.meta" "$state/b.meta"; bound_task=a; stale_task=b ;;
+          both-stale) cp "$FM_STATE_OVERRIDE/other.meta" "$state/a.meta"; cp "$FM_STATE_OVERRIDE/other.meta" "$state/b.meta"; stale_task=a ;;
+        esac
+        printf 'paused: waiting on an upstream release\n' > "$state/$stale_task.status"
+        [ -z "$bound_task" ] || printf 'blocked: approval needed\n' > "$state/$bound_task.status"
+        export FM_STATE_OVERRIDE="$state"
+        . "$ROOT/bin/fm-push-transition-lib.sh"
+        wake() { printf '%s\n' "$1" >> "$STATE/wakes"; }
+        marker=$(fm_backend_herdr_escalation_marker "$state" fmtest:w1:p1)
+        [ "$path" != stream ] || level=idle
+        jq -n --arg status "$level" '{result:{agent:{agent:"pi",agent_status:$status}}}' > "$FM_FAKE_WORLD/agent-w1_p1.json"
+        : > "$dir/edges"
+        [ "$path" != stream ] || printf 'w1:p1\tw1\tblocked\tpi\n' > "$dir/edges"
+        cat > "$dir/reader" <<'SH'
 #!/usr/bin/env bash
 printf '@subscribed\n'
 cat "$FM_STREAM_EDGES"
 SH
-      chmod +x "$dir/reader"
-      # shellcheck disable=SC2030,SC2031 # each case runs in its own subshell fixture.
-      export FM_BACKEND_HERDR_EVENT_READER="$dir/reader" FM_BACKEND_EVENTS_CAPABILITY_CONFIRMED=1 FM_STREAM_EDGES="$dir/edges"
-      out=$(fm_backend_herdr_wait_transition fmtest 0 "$state" fmtest:w1:p1) || rc=$?
-      if [ "$order" = both-stale ]; then
-        [ "$rc" = 1 ] && [ -z "$out" ] || fail 'a pane bound to neither record produced a transition'
-      else
-        [ "$rc" = 0 ] && [ "$(fm_transition_to_status "$out")" = blocked ] || fail "$order: the correctly bound record's blocked alert was dropped"
-      fi
-      [ ! -e "$marker" ] || fail "$order: detection prematurely committed the marker"
-    ) || fail "$order push ordering regression"
+        chmod +x "$dir/reader"
+        # shellcheck disable=SC2030,SC2031 # each case runs in its own subshell fixture.
+        export FM_BACKEND_HERDR_EVENT_READER="$dir/reader" FM_BACKEND_EVENTS_CAPABILITY_CONFIRMED=1 FM_STREAM_EDGES="$dir/edges"
+        out=$(fm_backend_wait_transition herdr fmtest 0 "$state" fmtest:w1:p1) || rc=$?
+        [ ! -e "$marker" ] || fail "$path/$order: detection prematurely committed the marker"
+        if [ "$order" = both-stale ]; then
+          [ "$rc" = 1 ] && [ -z "$out" ] || fail 'a pane bound to neither record produced a transition'
+          handle_push_transition herdr fmtest "$(fm_transition_record w1:p1 w1 '' blocked pi)"
+          [ ! -e "$marker" ] && [ ! -e "$state/wakes" ] && [ ! -e "$state/.wake-queue" ] \
+            || fail "$path/$order: handling accepted a pane bound to neither record"
+        else
+          [ "$rc" = 0 ] && [ "$(fm_transition_to_status "$out")" = blocked ] || fail "$path/$order: the correctly bound record's blocked alert was dropped"
+          handle_push_transition herdr fmtest "$out"
+          assert_contains "$(cat "$state/wakes")" 'herdr: agent blocked' "$path/$order: the bound task did not wake the supervisor"
+          assert_contains "$(cat "$state/.wake-queue")" 'fmtest:w1:p1' "$path/$order: the bound task did not enqueue its alert"
+          [ -e "$marker" ] || fail "$path/$order: handling did not commit the escalation marker"
+          size=$(wc -c < "$state/$bound_task.status" | tr -d '[:space:]')
+          [ "$(hb_surfaced_offset "$bound_task")" = "$size" ] || fail "$path/$order: handling did not mark the bound task's status surfaced"
+          [ ! -e "$(_hb_surfaced_path "$stale_task")" ] || fail "$path/$order: handling marked the stale task's status surfaced"
+          [ ! -e "$state/.watch-triage.log" ] || fail "$path/$order: the stale pause absorbed the bound task's alert"
+        fi
+      ) || fail "$path/$order push ordering regression"
+    done
   done
-  pass 'push events are accepted when any record claiming the address is bound to the live pane, and rejected when none is'
+  pass 'reconnect and stream push handling uses the bound claimant for waits, wakes, dedupe, and status bookkeeping'
 }
 
 test_secondmate_recovery_keeps_task_selection_across_lock_wait() {
