@@ -4492,7 +4492,7 @@ SH
             run_captain "$home" answer "$id" --release --decision-file "$home/answer.txt" >/dev/null \
               || fail "could not replay A's earlier answer"
           else
-            tasks_in "$home" done "$id" --keep 1 >/dev/null || fail "could not complete the released work"
+            tasks_in "$home" "done" "$id" --keep 1 >/dev/null || fail "could not complete the released work"
           fi
           shown=$(tasks_in "$home" show "$id" --full)
           assert_contains "$shown" 'Captain hold origin: origin-a' "the subsequent transition changed A's association"
