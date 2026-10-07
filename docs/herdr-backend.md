@@ -738,17 +738,21 @@ Pane ids are per-server counters, so a recorded id can outlive the Herdr server 
 When a devcontainer rebuild drops Herdr's session state, the fresh session's ids restart from `w1`, and surviving task records can name ids now belonging to another lane's live agent or a plain shell.
 The pane classifier alone would read the first as this task's live agent and the second as its adoptable dead pane.
 
-Herdr task records carry `herdr_process_identity=ps:<shell-pid>:<start-time>` when the process identity can be read.
+Herdr task records carry `herdr_process_identity=proc:<shell-pid>:<boot-id>:<start-ticks>` when the process identity can be read, or `ps:<shell-pid>:<start-time>` where `/proc` is unavailable.
 Spawn records it at the shared metadata-publication boundary, including flat and projected spawns, relaunches that adopt a pane, and relaunches that bind a new pane.
-`pane process-info` exposes the pane's persistent `shell_pid`; `ps -o lstart= -p <pid>` supplies its full start date and time on both Linux and macOS/BSD, without requiring `/proc`.
-The read pins `LC_ALL=C` and `TZ=UTC0` and trims surrounding whitespace so the serialized identity has the same meaning regardless of the caller's locale or timezone.
+`pane process-info` exposes the pane's persistent `shell_pid`.
+Where `/proc` exists, the identity uses field 22 of `/proc/<pid>/stat` (the start time in clock ticks) and the kernel boot id; both are exact integers or ids, so repeated reads of one live process always agree, and a reboot cannot reproduce them for another process.
+Without `/proc` (macOS/BSD) it falls back to `ps -o lstart= -p <pid>`, which gives the full start date and time without requiring `/proc`.
+`ps` derives `lstart` from boot time plus ticks divided by the clock rate, so it can read one second apart across calls for the same live process; that reading is therefore never compared for equality.
+The `ps` read pins `LC_ALL=C` and `TZ=UTC0` and trims surrounding whitespace so the serialized value has the same meaning regardless of the caller's locale or timezone.
 This binds the pane's root process rather than its changing foreground child: the shell stays alive while its agent runs, including while the agent runs tools, and an exec preserves the process start time.
 A Herdr live-handoff preserves that process and therefore this identity even if Herdr's internal terminal IDs change.
 A container rebuild destroys the old process; a newly launched process has its own PID/start-time pair rather than inheriting ownership from a recycled pane id.
 If the identity cannot be obtained during spawn or relaunch, publication omits the field and launch continues using the same best-effort label-plus-cwd fallback as a legacy record.
-A relaunch replaces any previously recorded identity with the newly read value, or removes it when the new read is unavailable.
+A relaunch replaces any previously recorded identity, including a legacy `ps:` one, with the newly read value, or removes it when the new read is unavailable; `fm-control relaunch` and `fm-secondmate-restart` both launch through that path, so a replaced pane process is re-recorded.
 
 `fm_backend_herdr_endpoint_foreign`, also used by the data-plane dispatcher guard, compares the current process identity whenever a claiming record carries it.
+A `proc:` record must match exactly; a `ps:` record (written by earlier releases, or where `/proc` is unavailable) matches when the pid is equal and the current `ps` start time is within one second of the recorded one.
 A mismatch is treated as foreign, regardless of matching cwd or `fm-<id>` label.
 An unreadable identity blocks active operations and closure but reports `unreadable` for liveness unless the pane or server is independently proven gone; it does not authorize a duplicate launch.
 A server restart that replaces the pane shell therefore invalidates the binding; a live-handoff that preserves it does not.
@@ -770,7 +774,7 @@ Unreadable legacy panes and records without a worktree are not proof of foreign 
 When the caller has no label, every record in the state directory claiming the exact target is consulted; any matching claimant can allow the operation.
 The guarantee is therefore scoped to the task record selected by the caller and its owning state directory, not ambient or other-home records.
 
-`tests/fm-backend-herdr.test.sh` exercises portable identity reads without `/proc`, identity mismatches despite matching labels and worktrees, process-preserving handoffs, fresh process bindings, and successful spawn/relaunch with the legacy-record fallback when the identity read fails.
+`tests/fm-backend-herdr.test.sh` exercises stable `/proc` identities under `ps` drift, legacy one-second `lstart` tolerance, portable identity reads without `/proc`, relaunch identity refresh, identity mismatches despite matching labels and worktrees, process-preserving handoffs, fresh process bindings, and successful spawn/relaunch with the legacy-record fallback when the identity read fails.
 
 ## Agent status authority and relaunch
 

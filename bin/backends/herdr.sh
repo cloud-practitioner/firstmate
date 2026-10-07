@@ -2414,23 +2414,123 @@ fm_backend_herdr_meta_value() {  # <meta-file> <key>
   printf '%s' "$value"
 }
 
-fm_backend_herdr_pane_process_identity() {
-  local session=$1 pane=$2 info pid starttime
+# fm_backend_herdr_pane_shell_pid: the pane's persistent root shell pid from
+# `pane process-info`, or failure when it cannot be read for exactly this pane.
+fm_backend_herdr_pane_shell_pid() {  # <session> <pane>
+  local session=$1 pane=$2 info
   info=$(fm_backend_herdr_cli "$session" pane process-info --pane "$pane" 2>/dev/null) || return 1
-  pid=$(printf '%s' "$info" | jq -er --arg pane "$pane" '
+  printf '%s' "$info" | jq -er --arg pane "$pane" '
     select(.result.type == "pane_process_info" and .result.process_info.pane_id == $pane)
     | .result.process_info.shell_pid
     | select(type == "number" and . > 1 and . == floor)
-  ' 2>/dev/null) || return 1
-  starttime=$(LC_ALL=C TZ=UTC0 ps -o lstart= -p "$pid" 2>/dev/null) || return 1
+  ' 2>/dev/null
+}
+
+# fm_backend_herdr_ps_lstart: `ps -o lstart=` for a pid, trimmed, with the
+# locale and timezone pinned. It is derived from boot time plus starttime/HZ
+# and can drift by one second between reads of the same live process.
+fm_backend_herdr_ps_lstart() {  # <pid>
+  local starttime
+  starttime=$(LC_ALL=C TZ=UTC0 ps -o lstart= -p "$1" 2>/dev/null) || return 1
   starttime=${starttime#"${starttime%%[![:space:]]*}"}
   starttime=${starttime%"${starttime##*[![:space:]]}"}
   case "$starttime" in ''|*$'\n'*|*$'\r'*) return 1 ;; esac
+  printf '%s' "$starttime"
+}
+
+# fm_backend_herdr_proc_starttime: field 22 of /proc/<pid>/stat (start time in
+# clock ticks since boot), an exact integer that never drifts for a live
+# process. FM_PROC_ROOT_OVERRIDE selects an alternate /proc root for tests.
+fm_backend_herdr_proc_starttime() {  # <pid>
+  local stat_line starttime
+  local -a stat_fields
+  [ -r "${FM_PROC_ROOT_OVERRIDE:-/proc}/$1/stat" ] || return 1
+  stat_line=$(cat "${FM_PROC_ROOT_OVERRIDE:-/proc}/$1/stat" 2>/dev/null) || return 1
+  read -r -a stat_fields <<< "${stat_line##*)}"
+  [ "${#stat_fields[@]}" -ge 20 ] || return 1
+  starttime=${stat_fields[19]}
+  case "$starttime" in ''|*[!0-9]*) return 1 ;; esac
+  printf '%s' "$starttime"
+}
+
+# fm_backend_herdr_pane_process_identity: the identity recorded as
+# herdr_process_identity. Where /proc exists it is
+# `proc:<pid>:<boot-id>:<starttime-ticks>`, stable across repeated reads; the
+# boot id (or `-` when unreadable) keeps a pid and tick count from matching
+# across a reboot. Without /proc (macOS/BSD) it is `ps:<pid>:<lstart>`, which
+# fm_backend_herdr_identity_matches compares with a one-second tolerance.
+# docs/herdr-backend.md "Endpoints from a previous session" owns the contract.
+fm_backend_herdr_pane_process_identity() {
+  local session=$1 pane=$2 pid ticks boot starttime
+  pid=$(fm_backend_herdr_pane_shell_pid "$session" "$pane") || return 1
+  if ticks=$(fm_backend_herdr_proc_starttime "$pid"); then
+    boot=
+    [ ! -r "${FM_PROC_ROOT_OVERRIDE:-/proc}/sys/kernel/random/boot_id" ] \
+      || IFS= read -r boot < "${FM_PROC_ROOT_OVERRIDE:-/proc}/sys/kernel/random/boot_id" 2>/dev/null || boot=
+    case "$boot" in ''|*[!0-9a-fA-F-]*) boot=- ;; esac
+    printf 'proc:%s:%s:%s\n' "$pid" "$boot" "$ticks"
+    return 0
+  fi
+  starttime=$(fm_backend_herdr_ps_lstart "$pid") || return 1
   printf 'ps:%s:%s\n' "$pid" "$starttime"
 }
 
+# fm_backend_herdr_lstart_epoch: seconds since the epoch for a `ps -o lstart=`
+# string ("Wed Oct  7 02:03:32 2026", read under TZ=UTC0), computed without
+# date(1) so it behaves the same on GNU and BSD.
+fm_backend_herdr_lstart_epoch() {  # <lstart>
+  local mon day clock year h m s mnum y era yoe doy doe days
+  read -r _ mon day clock year <<< "$1"
+  [ -n "$year" ] || return 1
+  case "$day$year" in *[!0-9]*) return 1 ;; esac
+  case "$clock" in [0-9][0-9]:[0-9][0-9]:[0-9][0-9]) ;; *) return 1 ;; esac
+  IFS=: read -r h m s <<< "$clock"
+  case "$mon" in
+    Jan) mnum=1 ;; Feb) mnum=2 ;; Mar) mnum=3 ;; Apr) mnum=4 ;; May) mnum=5 ;; Jun) mnum=6 ;;
+    Jul) mnum=7 ;; Aug) mnum=8 ;; Sep) mnum=9 ;; Oct) mnum=10 ;; Nov) mnum=11 ;; Dec) mnum=12 ;;
+    *) return 1 ;;
+  esac
+  day=$((10#$day)) h=$((10#$h)) m=$((10#$m)) s=$((10#$s)) year=$((10#$year))
+  y=$year
+  [ "$mnum" -gt 2 ] || y=$((y - 1))
+  era=$((y / 400))
+  yoe=$((y - era * 400))
+  doy=$(( (153 * (mnum > 2 ? mnum - 3 : mnum + 9) + 2) / 5 + day - 1 ))
+  doe=$((yoe * 365 + yoe / 4 - yoe / 100 + doy))
+  days=$((era * 146097 + doe - 719468))
+  printf '%s' $((days * 86400 + h * 3600 + m * 60 + s))
+}
+
+# fm_backend_herdr_identity_matches: does the pane's current root process match
+# a recorded herdr_process_identity? Returns 0 for the same process, 1 for a
+# different one, and 2 when the current process cannot be read.
+# A `proc:` record must match exactly. A `ps:<pid>:<lstart>` record (legacy, or
+# written where /proc is unavailable) names the same process when the pid
+# matches and the lstart is within one second of the current reading, because
+# ps derives lstart from boot time plus ticks/HZ and drifts across calls.
+fm_backend_herdr_identity_matches() {  # <session> <pane> <recorded>
+  local session=$1 pane=$2 recorded=$3 actual pid pid_now rest lstart cur want have
+  case "$recorded" in
+    ps:?*:?*)
+      rest=${recorded#ps:}
+      pid=${rest%%:*}
+      lstart=${rest#*:}
+      pid_now=$(fm_backend_herdr_pane_shell_pid "$session" "$pane") || return 2
+      [ "$pid_now" = "$pid" ] || return 1
+      cur=$(fm_backend_herdr_ps_lstart "$pid") || return 2
+      [ "$cur" != "$lstart" ] || return 0
+      want=$(fm_backend_herdr_lstart_epoch "$lstart") || return 1
+      have=$(fm_backend_herdr_lstart_epoch "$cur") || return 1
+      [ "$((want - have))" -le 1 ] && [ "$((have - want))" -le 1 ]
+      return
+      ;;
+  esac
+  actual=$(fm_backend_herdr_pane_process_identity "$session" "$pane") || return 2
+  [ "$actual" = "$recorded" ]
+}
+
 fm_backend_herdr_endpoint_foreign() {  # <session> <pane> [expected-label]
-  local session=$1 pane=$2 want=${3:-} state meta id ids='' wt window cwd tab_id label info checked=0 identity actual
+  local session=$1 pane=$2 want=${3:-} state meta id ids='' wt window cwd tab_id label info checked=0 identity match
   [ -n "$session" ] && [ -n "$pane" ] || return 1
   state=${FM_STATE_OVERRIDE:-$FM_HOME/state}
   if [ -n "$want" ]; then
@@ -2451,8 +2551,12 @@ fm_backend_herdr_endpoint_foreign() {  # <session> <pane> [expected-label]
     [ "$window" = "$session:$pane" ] || continue
     identity=$(fm_backend_herdr_meta_value "$meta" herdr_process_identity)
     if [ -n "$identity" ]; then
-      actual=$(fm_backend_herdr_pane_process_identity "$session" "$pane") || return 2
-      [ "$actual" != "$identity" ] || return 1
+      match=0
+      fm_backend_herdr_identity_matches "$session" "$pane" "$identity" || match=$?
+      case "$match" in
+        0) return 1 ;;
+        2) return 2 ;;
+      esac
       checked=1
       continue
     fi

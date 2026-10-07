@@ -5507,6 +5507,185 @@ test_process_identity_is_portable_and_distinguishes_pid_reuse() {
   pass "portable ps identities work without /proc and distinguish process PIDs and start times"
 }
 
+# write_fake_proc: a fake /proc root with one process's stat line (field 22 is
+# the start time in ticks) and a boot id, for FM_PROC_ROOT_OVERRIDE.
+write_fake_proc() {  # <proc-root> <pid> <starttime-ticks> [boot-id]
+  mkdir -p "$1/$2" "$1/sys/kernel/random"
+  printf '%s (sh) S 1 %s %s 0 -1 4194304 100 0 0 0 0 0 0 0 20 0 1 0 %s 1000 100 18446744073709551615\n' \
+    "$2" "$2" "$2" "$3" > "$1/$2/stat"
+  printf '%s\n' "${4:-3f2a9c1e-0000-4000-8000-0123456789ab}" > "$1/sys/kernel/random/boot_id"
+}
+
+test_process_identity_is_stable_across_ps_lstart_drift() {
+  (
+    local dir="$TMP_ROOT/process-identity-stable" fb world proc identity again lstart
+    mkdir -p "$dir"
+    fb=$(make_stateful_herdr "$dir")
+    world="$dir/world"; proc="$dir/proc"
+    FM_TEST_REAL_PS=$(command -v ps)
+    export FM_TEST_REAL_PS
+    make_process_identity_ps "$fb"
+    export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_PROC_ROOT_OVERRIDE="$proc"
+    . "$ROOT/bin/backends/herdr.sh"
+    printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":1408408}}}\n' > "$world/process-w1_p1.json"
+    write_fake_proc "$proc" 1408408 43800329
+    identity=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "cannot read a /proc identity"
+    [ "$identity" = 'proc:1408408:3f2a9c1e-0000-4000-8000-0123456789ab:43800329' ] || fail "unexpected /proc identity '$identity'"
+    # ps lstart drifts by a second between calls; the identity must not follow it.
+    for lstart in 'Wed Oct  7 02:03:32 2026' 'Wed Oct  7 02:03:31 2026' 'Wed Oct  7 02:03:33 2026'; do
+      again=$(FM_FAKE_PROCESS_LSTART=$lstart fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "repeat identity read failed"
+      [ "$again" = "$identity" ] || fail "ps lstart drift changed the identity: '$again'"
+    done
+    # A replaced process (pid reuse with another start, or the same pid after a reboot) is a different identity.
+    write_fake_proc "$proc" 1408408 43800330
+    again=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "changed start time unreadable"
+    [ "$again" != "$identity" ] || fail "a different start time must change the identity"
+    write_fake_proc "$proc" 1408408 43800329 aaaaaaaa-0000-4000-8000-0123456789ab
+    again=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "changed boot id unreadable"
+    [ "$again" != "$identity" ] || fail "a different boot must change the identity"
+    write_fake_proc "$proc" 1408409 43800329
+    printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":1408409}}}\n' > "$world/process-w1_p1.json"
+    again=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "changed pid unreadable"
+    [ "$again" != "$identity" ] || fail "a different pid must change the identity"
+  ) || fail "stable process identity regression failed"
+  pass "the Herdr process identity derives from /proc start ticks and boot id, ignoring ps lstart drift but changing with the process"
+}
+
+test_lstart_drift_does_not_make_a_live_pane_foreign() {
+  (
+    local dir="$TMP_ROOT/process-identity-drift" fb world state wt proc out mode recorded current
+    mkdir -p "$dir"
+    fb=$(make_stateful_herdr "$dir")
+    world="$dir/world"; state="$dir/state"; wt="$dir/wt/mine"; proc="$dir/proc"
+    mkdir -p "$state" "$wt"
+    FM_TEST_REAL_PS=$(command -v ps)
+    export FM_TEST_REAL_PS
+    make_process_identity_ps "$fb"
+    export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$state" FM_HOME="$dir"
+    . "$ROOT/bin/fm-backend.sh"
+    fm_backend_source herdr
+    # shellcheck disable=SC2329 # Adapter callback invoked by the sourced backend.
+    fm_backend_herdr_pane_process_state() { printf agent; }
+    printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":42}}}\n' > "$world/process-w1_p1.json"
+    write_ownership_pane "$world" w1:p1 w1:t1 "$dir/elsewhere" fm-other
+    printf '{"result":{"agent":{"agent":"pi","agent_status":"idle"}}}\n' > "$world/agent-w1_p1.json"
+    # The cwd and label would say foreign, so only the process identity can keep the pane the task's.
+    for mode in proc noproc; do
+      if [ "$mode" = proc ]; then
+        write_fake_proc "$proc" 42 5000
+        export FM_PROC_ROOT_OVERRIDE="$proc"
+      else
+        export FM_PROC_ROOT_OVERRIDE="$dir/no-proc"
+      fi
+      # Legacy ps:<pid>:<lstart> records as the previous release wrote them.
+      recorded='Wed Oct  7 02:03:32 2026'
+      printf 'backend=herdr\nwindow=fmtest:w1:p1\nworktree=%s\nherdr_process_identity=ps:42:%s\n' "$wt" "$recorded" > "$state/mine.meta"
+      for current in 'Wed Oct  7 02:03:32 2026' 'Wed Oct  7 02:03:31 2026' 'Wed Oct  7 02:03:33 2026'; do
+        export FM_FAKE_PROCESS_LSTART=$current
+        ! fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-mine || fail "($mode) a live pane read foreign at lstart '$current' against '$recorded'"
+        [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = alive ] || fail "($mode) a live pane read missing at lstart '$current'"
+        fm_backend_send_key herdr fmtest:w1:p1 Enter fm-mine || fail "($mode) a live pane refused input at lstart '$current'"
+      done
+      # A different process behind the same pid, or another pid, is still foreign.
+      for current in 'Wed Oct  7 02:03:34 2026' 'Wed Oct  7 02:03:30 2026' 'Thu Oct  8 02:03:32 2026' 'Wed Oct  7 02:03:32 2025'; do
+        export FM_FAKE_PROCESS_LSTART=$current
+        fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-mine || fail "($mode) a different start '$current' must read foreign"
+        [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = missing ] || fail "($mode) a different start '$current' must read missing"
+      done
+      export FM_FAKE_PROCESS_LSTART='Wed Oct  7 02:03:32 2026'
+      printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":43}}}\n' > "$world/process-w1_p1.json"
+      fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-mine || fail "($mode) a different pid must read foreign"
+        printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"w1:p1","shell_pid":42}}}\n' > "$world/process-w1_p1.json"
+    done
+    # A minute boundary crossed by the drift is still one second.
+    export FM_PROC_ROOT_OVERRIDE="$dir/no-proc"
+    printf 'backend=herdr\nwindow=fmtest:w1:p1\nworktree=%s\nherdr_process_identity=ps:42:Wed Oct  7 02:03:59 2026\n' "$wt" > "$state/mine.meta"
+    export FM_FAKE_PROCESS_LSTART='Wed Oct  7 02:04:00 2026'
+    ! fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-mine || fail "drift across a minute boundary read foreign"
+    printf 'backend=herdr\nwindow=fmtest:w1:p1\nworktree=%s\nherdr_process_identity=ps:42:Fri Dec 31 23:59:59 2027\n' "$wt" > "$state/mine.meta"
+    export FM_FAKE_PROCESS_LSTART='Sat Jan  1 00:00:00 2028'
+    ! fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-mine || fail "drift across a year boundary read foreign"
+    # An unreadable current process stays unreadable, never foreign.
+    export FM_FAKE_PROCESS_PS_FAIL=1
+    out=0
+    fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-mine || out=$?
+    [ "$out" -eq 2 ] || fail "an unreadable legacy comparison must not claim foreign ownership (rc $out)"
+    unset FM_FAKE_PROCESS_PS_FAIL
+    # A current-format record is exact: the same ticks match and a replaced process does not.
+    write_fake_proc "$proc" 42 5000
+    export FM_PROC_ROOT_OVERRIDE="$proc"
+    recorded=$(fm_backend_herdr_pane_process_identity fmtest w1:p1) || fail "cannot read a current-format identity"
+    printf 'backend=herdr\nwindow=fmtest:w1:p1\nworktree=%s\nherdr_process_identity=%s\n' "$wt" "$recorded" > "$state/mine.meta"
+    export FM_FAKE_PROCESS_LSTART='Wed Oct  7 02:03:31 2026'
+    ! fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-mine || fail "a current-format record read foreign under ps drift"
+    write_fake_proc "$proc" 42 5001
+    fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-mine || fail "a replaced process must read foreign against a current-format record"
+  ) || fail "lstart drift regression failed"
+  pass "a plus or minus one second ps lstart drift (legacy record, with or without /proc) no longer reads a live pane foreign or missing, while a different process still does"
+}
+
+test_relaunch_refreshes_the_recorded_process_identity() {
+  (
+    . "$ROOT/tests/fixtures.sh"
+    local dir="$TMP_ROOT/relaunch-refreshes-identity" home proj wt fb layout out proc before
+    home="$dir/home"; proj="$dir/project"; wt="$dir/wt"; proc="$dir/proc"
+    fb=$(fm_test_make_spawn_fakebin "$dir/fake" codex)
+    layout=$(make_herdr_statefake "$dir/layout")
+    cp "$layout/herdr" "$fb/herdr-layout"
+    FM_TEST_REAL_PS=$(command -v ps)
+    export FM_TEST_REAL_PS
+    make_process_identity_ps "$fb"
+    fm_test_fake_sleep_noop "$fb"
+    fm_test_spawn_home "$home" codex
+    printf 'off\n' > "$home/config/herdr-presentation-spaces"
+    fm_git_worktree "$proj" "$wt" refresh-identity
+    fm_test_spawn_brief "$home" refresh-identity
+    write_fake_proc "$proc" 42 7000
+    export FM_FAKE_HERDR_STATE="$dir/layout/state.json" FM_HERDR_LOG="$dir/herdr.log"
+    export FM_FAKE_LAUNCH_LOG="$dir/launch.log" FM_PROC_ROOT_OVERRIDE="$proc"
+    : > "$FM_HERDR_LOG"
+    cat > "$fb/herdr" <<'SH'
+#!/usr/bin/env bash
+case "${1:-} ${2:-}" in
+  'pane get')
+    jq --arg pane "$3" --arg cwd "$FM_FAKE_PANE_PATH" '
+      .tabs[] | select(.pane_id == $pane)
+      | {result:{pane:{pane_id,tab_id,workspace_id,foreground_cwd:$cwd,cwd:$cwd}}}
+    ' "$FM_FAKE_HERDR_STATE"
+    ;;
+  'pane process-info')
+    printf '{"result":{"type":"pane_process_info","process_info":{"pane_id":"%s","shell_pid":42}}}\n' "$4"
+    ;;
+  'pane send-text')
+    case "$4" in
+      ". '"*"'")
+        staged=${4#". '"}; staged=${staged%"'"}
+        cat "$staged" > "$FM_FAKE_LAUNCH_LOG"
+        ;;
+    esac
+    ;;
+  'pane run' | 'pane send-keys') exit 0 ;;
+  *) exec "${0%/*}/herdr-layout" "$@" ;;
+esac
+SH
+    chmod +x "$fb/herdr"
+    out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$home" "$wt" "$fb" refresh-identity "$proj" --backend herdr --mode no-mistakes --yolo off) || fail "spawn failed: $out"
+    before=$(grep '^herdr_process_identity=' "$home/state/refresh-identity.meta" | tail -1)
+    [ "$before" = 'herdr_process_identity=proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000' ] || fail "spawn recorded '$before'"
+    # A legacy record as the previous release wrote it is replaced by the stable form on relaunch.
+    sed -i 's/^herdr_process_identity=.*/herdr_process_identity=ps:42:Wed Oct  7 02:03:32 2026/' "$home/state/refresh-identity.meta"
+    out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$home" "$wt" "$fb" refresh-identity --relaunch) || fail "relaunch failed: $out"
+    [ "$(grep -c '^herdr_process_identity=' "$home/state/refresh-identity.meta")" = 1 ] || fail "relaunch must leave exactly one identity line"
+    [ "$(grep '^herdr_process_identity=' "$home/state/refresh-identity.meta")" = "$before" ] || fail "relaunch did not refresh a legacy identity"
+    # A changed pane process (new start time) is recorded on the next relaunch.
+    write_fake_proc "$proc" 42 7100
+    out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$home" "$wt" "$fb" refresh-identity --relaunch) || fail "second relaunch failed: $out"
+    [ "$(grep '^herdr_process_identity=' "$home/state/refresh-identity.meta")" = 'herdr_process_identity=proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7100' ] \
+      || fail "relaunch kept the replaced process's identity"
+  ) || fail "relaunch identity refresh regression failed"
+  pass "relaunch (the fm-control and fm-secondmate-restart launch path) replaces a legacy or stale recorded identity with the current process's"
+}
+
 test_spawn_and_relaunch_continue_without_process_identity() {
   (
     . "$ROOT/tests/fixtures.sh"
@@ -6586,6 +6765,9 @@ test_dispatch_composer_state_routes_by_backend
 test_recorded_endpoint_from_a_previous_session_is_never_the_tasks_agent
 test_process_bound_endpoint_rejects_matching_labels_and_worktrees
 test_process_identity_is_portable_and_distinguishes_pid_reuse
+test_process_identity_is_stable_across_ps_lstart_drift
+test_lstart_drift_does_not_make_a_live_pane_foreign
+test_relaunch_refreshes_the_recorded_process_identity
 test_spawn_and_relaunch_continue_without_process_identity
 test_projection_abort_cleans_response_owned_pane_despite_stale_record
 test_active_operations_check_ownership_after_server_restore
