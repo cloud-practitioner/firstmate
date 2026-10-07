@@ -748,11 +748,33 @@ fm_backend_resolve_selector() {  # <raw-target> <state-dir>
 # at every call site. Each verified backend adds its own arm here, without
 # changing call sites.
 
+fm_backend_endpoint_ready() {
+  if [ "$1" = herdr ]; then
+    fm_backend_herdr_target_ready "$2" || return 1
+  fi
+  ! fm_backend_endpoint_foreign "$@"
+}
+
+fm_backend_endpoint_foreign() {  # <backend> <target> [expected-label]
+  local target=$2 session pane
+  [ "$1" = herdr ] || return 1
+  declare -F fm_backend_herdr_endpoint_foreign >/dev/null 2>&1 || return 1
+  session=${target%%:*}
+  pane=${target#*:}
+  [ -n "$session" ] && [ -n "$pane" ] && [ "$pane" != "$target" ] || return 1
+  if fm_backend_herdr_endpoint_foreign "$session" "$pane" "${3:-}"; then
+    return 0
+  else
+    [ "$?" -ne 1 ]
+  fi
+}
+
 # fm_backend_capture: bounded plain-text session capture.
 fm_backend_capture() {  # <backend> <target> <lines> [expected-label]
   local backend=$1
   shift
   fm_backend_source "$backend" || return 1
+  fm_backend_endpoint_ready "$backend" "$1" "${3:-}" || return 1
   case "$backend" in
     tmux) fm_backend_tmux_capture "$@" ;;
     herdr) fm_backend_herdr_capture "$@" ;;
@@ -790,6 +812,7 @@ fm_backend_visible_capture() {  # <backend> <target> [expected-label]
     return 1
   }
   fm_backend_source "$backend" || return 1
+  fm_backend_endpoint_ready "$backend" "$1" "${2:-}" || return 1
   "fm_backend_${backend}_visible_capture" "$@"
 }
 
@@ -798,6 +821,7 @@ fm_backend_send_key() {  # <backend> <target> <key> [expected-label]
   local backend=$1
   shift
   fm_backend_source "$backend" || return 1
+  fm_backend_endpoint_ready "$backend" "$1" "${3:-}" || return 1
   case "$backend" in
     tmux) fm_backend_tmux_send_key "$@" ;;
     herdr) fm_backend_herdr_send_key "$@" ;;
@@ -815,6 +839,7 @@ fm_backend_send_text_submit() {  # <backend> <target> <text> <retries> <enter-sl
   local backend=$1
   shift
   fm_backend_source "$backend" || return 1
+  fm_backend_endpoint_ready "$backend" "$1" "${6:-}" || return 1
   case "$backend" in
     tmux) fm_backend_tmux_send_text_submit "$@" ;;
     herdr) fm_backend_herdr_send_text_submit "$@" ;;
@@ -883,6 +908,7 @@ fm_backend_busy_state() {  # <backend> <target>
   local backend=$1
   shift
   fm_backend_source "$backend" || { printf 'unknown'; return 0; }
+  fm_backend_endpoint_ready "$backend" "$1" || { printf 'unknown'; return 0; }
   case "$backend" in
     herdr) fm_backend_herdr_busy_state "$@" ;;
     *) printf 'unknown' ;;
@@ -905,6 +931,7 @@ fm_backend_composer_state() {  # <backend> <target> [expected-label] -> empty|pe
   local backend=$1
   shift
   fm_backend_source "$backend" || { printf 'unknown'; return 0; }
+  fm_backend_endpoint_ready "$backend" "$1" "${2:-}" || { printf 'unknown'; return 0; }
   case "$backend" in
     tmux) fm_tmux_composer_state "$@" ;;
     herdr) fm_backend_herdr_composer_state "$@" ;;
@@ -938,6 +965,7 @@ fm_backend_target_exists() {  # <backend> <target> [expected-label]
       session=${target%%:*}
       pane=${target#*:}
       [ -n "$session" ] && [ -n "$pane" ] && [ "$pane" != "$target" ] || return 1
+      ! fm_backend_endpoint_foreign herdr "$target" "$expected_label" || return 1
       # fm_backend_herdr_cli (not a raw HERDR_SESSION-only call): verified
       # empirically (docs/herdr-backend.md "Session targeting") that the bare
       # env var alone is NOT reliably honored once another herdr server is
@@ -979,19 +1007,24 @@ fm_backend_target_exists() {  # <backend> <target> [expected-label]
 # process level through the shared classifier in bin/fm-agent-process-lib.sh,
 # never from a registration or a rendered title alone. The tmux adapter
 # requires a successful session inventory and returns `missing` only when it
-# omits the exact window; the Herdr adapter reuses its strict husk classifier -
+# omits the exact window; Herdr first applies recorded-endpoint ownership
+# (docs/herdr-backend.md "Endpoints from a previous session"), treating a proven
+# foreign pane as `missing` and an unreadable bound identity as `unreadable`
+# unless pane/server absence is independently proven. A caller's `fm-<id>`
+# selects its task record in the owning state directory. If ownership permits
+# classification, the Herdr adapter reuses its strict husk classifier -
 # which verifies a registered agent against `pane process-info` and the real
 # process table, so a registration Herdr kept over a shell-only pane reads
 # `dead` here (issue #4115) - then maps a positively stopped session server to
 # `missing` only in this recovery-grade view. Zellij remains unverified because
 # its secondmate ghost-tab and agent-process recovery path has not been
 # empirically validated. Orca and cmux do not support secondmate spawns.
-fm_backend_agent_state() {  # <backend> <target>
+fm_backend_agent_state() {  # <backend> <target> [expected-label]
   local backend=$1 target=$2
   fm_backend_source "$backend" || { printf 'unverified'; return 0; }
   case "$backend" in
     tmux) fm_backend_tmux_agent_state "$target" ;;
-    herdr) fm_backend_herdr_agent_state "$target" ;;
+    herdr) fm_backend_herdr_agent_state "$target" "${3:-}" ;;
     *) printf 'unverified' ;;
   esac
 }
@@ -999,8 +1032,8 @@ fm_backend_agent_state() {  # <backend> <target>
 # Backward-compatible three-state view for existing callers. An
 # authoritatively missing endpoint is confidently not a live agent, while every
 # ambiguous, unreadable, or unverified result stays unknown.
-fm_backend_agent_alive() {  # <backend> <target>
-  case "$(fm_backend_agent_state "$1" "$2")" in
+fm_backend_agent_alive() {  # <backend> <target> [expected-label]
+  case "$(fm_backend_agent_state "$1" "$2" "${3:-}")" in
     alive) printf 'alive' ;;
     dead|missing) printf 'dead' ;;
     *) printf 'unknown' ;;

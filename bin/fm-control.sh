@@ -56,7 +56,8 @@
 #              still exists - on the same or a newly chosen
 #              harness/model/effort - so switching harness is one ordinary use
 #              of this verb. When the recorded endpoint is instead proven gone -
-#              a Herdr pane or workspace destroyed in churn - the launch owner
+#              under Herdr's recorded-endpoint ownership and absence policy
+#              (docs/herdr-backend.md) - the launch owner
 #              re-creates one in that worktree, in the herdr session the record
 #              names, and the task's record rebinds to it; that is how a task
 #              whose terminal was destroyed is reclaimed by the home that owns
@@ -357,7 +358,7 @@ fm_backend_validate "$BACKEND" || exit 1
 # --- shared helpers ---------------------------------------------------------
 
 agent_state() {
-  fm_backend_agent_state "$BACKEND" "$T"
+  fm_backend_agent_state "$BACKEND" "$T" "$LABEL"
 }
 
 busy_verdict() {
@@ -571,7 +572,7 @@ do_exit() {
       # "destroyed" with "unreachable from this seat". Route it through the
       # control plane's one absence proof - the same one the relaunch gate uses
       # - and report what that proof actually established, never more.
-      absence=$(fm_control_endpoint_absence_verdict "$BACKEND" "$T")
+      absence=$(fm_control_endpoint_absence_verdict "$BACKEND" "$T" "$LABEL")
       case "${absence%%$'\t'*}" in
         gone)
           # Proven gone, so the agent that lived in it went with it: exit's

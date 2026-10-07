@@ -62,9 +62,10 @@
 #   worktree and the republished record rebinds the task to it. That proof is
 #   its own step, because a backend's `missing` also covers an endpoint that is
 #   merely unreachable from here - and it is only available on HERDR, which must
-#   still read the recorded pane as gone once that session's server is running
-#   again. A tmux `missing` always refuses: a task record carries no socket
-#   identity for its endpoint, so no read here can tell a destroyed window from
+#   still prove the task's endpoint absent once that session's server is
+#   running again (docs/herdr-backend.md "Endpoints from a previous session").
+#   A tmux `missing` always refuses: a task record carries no socket identity
+#   for its endpoint, so no read here can tell a destroyed window from
 #   one on a tmux server this process cannot address. An endpoint that turns out
 #   to have survived refuses too. The worktree is reused untouched either way; a
 #   rebind is a recovery, never a teardown. Only a crewmate or scout rebinds: a
@@ -124,8 +125,8 @@
 #   then creates a disposable
 #   workspace containing only the ordinary task pane. A successful clean create
 #   upgrades its attempt journal with exact home, session, workspace, tab, pane,
-#   parent, and label bindings. On a same-identity restart, that complete binding
-#   plus authoritative metadata may replace one exact agent-free husk in place.
+#   parent, and label bindings. docs/herdr-backend.md "Restart recovery" owns
+#   replacement eligibility, including recorded-endpoint ownership checks.
 #   The journal, visible token, and labels alone are never endpoint or ownership
 #   authority, and every ambiguous recovery stays on the flat fallback after
 #   duplicate-agent risk is independently absent. Treehouse allocation and task
@@ -1747,38 +1748,14 @@ if [ "$RELAUNCH" -eq 1 ]; then
     echo "error: backend '$BACKEND' has no recovery-grade agent-state classifier, so a relaunch cannot prove the previous agent exited; refusing rather than risking two agents in one endpoint" >&2
     exit 1
   }
-  # Two states are agent-free, and both license a relaunch:
-  #   dead    - the endpoint exists and confidently holds no agent. The
-  #             endpoint is ADOPTED, so the task keeps its exact address.
-  #   missing - the endpoint itself is gone. There is no endpoint AND therefore
-  #             no agent, so a relaunch cannot adopt it: it CREATES a fresh
-  #             endpoint in the recorded worktree and the published record
-  #             rebinds to it.
-  # `missing` is NOT one state, and that is what the duplicate-agent argument
-  # turns on. fm_backend_agent_state's per-backend `missing` conflates "the
-  # endpoint was DESTROYED" with "the endpoint is UNREACHABLE from here right
-  # now", and an unreachable endpoint can still hold the live agent this
-  # relaunch would duplicate. So absence is PROVEN before it may rebind, never
-  # inferred from a failed read - and only HERDR can prove it:
-  #   herdr - the recorded session's server is started, and the recorded pane is
-  #           RE-READ through that session's own socket. `dead` means the pane
-  #           survived the restart and is adopted after all; `alive` means the
-  #           agent came back and refuses; only a second `missing` proves the
-  #           pane itself did not survive.
-  #   tmux  - REFUSES, always. A task record carries no socket identity for its
-  #           endpoint, and a server-wide inventory describes only the server
-  #           this process addresses, so no read available here can tell "gone"
-  #           from "on a server I cannot see". A tmux `missing` therefore stays
-  #           as deadlocked as it was before this change - deliberately, and
-  #           with the reason stated rather than guessed past.
-  # Every transient or self-contradicting read stays `unreadable`/`ambiguous`
-  # and refuses as it always did (bin/fm-backend.sh's fm_backend_agent_state
-  # owns that vocabulary). The proof itself lives in one place for the whole
-  # control plane - fm_control_endpoint_absence_verdict - so `exit` and
-  # `relaunch` cannot reach two different answers about one endpoint.
-  RELAUNCH_STATE=$(fm_backend_agent_state "$BACKEND" "$RELAUNCH_TARGET")
+  # A failed read is not absence proof: rebinding an unreachable endpoint
+  # could duplicate its live agent. fm_control_endpoint_absence_verdict owns
+  # the shared proof for `exit` and `relaunch`; fm_backend_agent_state owns the
+  # state vocabulary. Keep the task label through both reads so another task
+  # claiming this address cannot authorize adoption.
+  RELAUNCH_STATE=$(fm_backend_agent_state "$BACKEND" "$RELAUNCH_TARGET" "fm-$ID")
   if [ "$RELAUNCH_STATE" = missing ]; then
-    RELAUNCH_ABSENCE=$(fm_control_endpoint_absence_verdict "$BACKEND" "$RELAUNCH_TARGET")
+    RELAUNCH_ABSENCE=$(fm_control_endpoint_absence_verdict "$BACKEND" "$RELAUNCH_TARGET" "fm-$ID")
     case "${RELAUNCH_ABSENCE%%$'\t'*}" in
       gone) RELAUNCH_STATE=missing ;;
       dead) RELAUNCH_STATE=dead ;;
@@ -3485,7 +3462,7 @@ herdr_projection_existing_meta_allows_flat() { # <meta>
       ;;
     esac
   fi
-  old_state=$(fm_backend_agent_alive "$old_backend" "$old_target")
+  old_state=$(fm_backend_agent_alive "$old_backend" "$old_target" "fm-$ID")
   case "$old_state" in
   dead) return 0 ;;
   alive | unknown)
@@ -3617,7 +3594,7 @@ if [ "$RELAUNCH" -eq 1 ]; then
     HERDR_SEEDED_DEFAULT_TAB_ID=${HERDR_CONTAINER_RAW#*$'\t'}
     HERDR_SES=${CONTAINER%%:*}
     HERDR_WORKSPACE_ID=${CONTAINER#*:}
-    HERDR_TASK_IDS=$(fm_backend_herdr_create_task "$CONTAINER" "$W" "$WT" "$HERDR_SEEDED_DEFAULT_TAB_ID") || exit 1
+    HERDR_TASK_IDS=$(FM_STATE_OVERRIDE="$STATE" fm_backend_herdr_create_task "$CONTAINER" "$W" "$WT" "$HERDR_SEEDED_DEFAULT_TAB_ID") || exit 1
     read -r HERDR_TAB_ID HERDR_PANE_ID <<EOF
 $HERDR_TASK_IDS
 EOF
@@ -3809,7 +3786,7 @@ else
       HERDR_SEEDED_DEFAULT_TAB_ID=${HERDR_CONTAINER_RAW#*$'\t'}
       HERDR_SES=${CONTAINER%%:*}
       HERDR_WORKSPACE_ID=${CONTAINER#*:}
-      HERDR_TASK_IDS=$(FM_HOME="$HERDR_LABEL_HOME" fm_backend_herdr_create_task "$CONTAINER" "$W" "$PROJ_ABS" "$HERDR_SEEDED_DEFAULT_TAB_ID") || exit 1
+      HERDR_TASK_IDS=$(FM_HOME="$HERDR_LABEL_HOME" FM_STATE_OVERRIDE="$STATE" fm_backend_herdr_create_task "$CONTAINER" "$W" "$PROJ_ABS" "$HERDR_SEEDED_DEFAULT_TAB_ID") || exit 1
       read -r HERDR_TAB_ID HERDR_PANE_ID <<EOF
 $HERDR_TASK_IDS
 EOF
@@ -4897,6 +4874,10 @@ else
   fi
 fi
 
+HERDR_PROCESS_IDENTITY=
+if [ "$BACKEND" = herdr ]; then
+  HERDR_PROCESS_IDENTITY=$(fm_backend_herdr_pane_process_identity "$HERDR_SES" "$HERDR_PANE_ID") || HERDR_PROCESS_IDENTITY=
+fi
 META_WINDOW=$T
 [ "$BACKEND" = orca ] && META_WINDOW=$W
 SPAWN_GEN="s$(date +%s).${BASHPID:-$$}.$RANDOM"
@@ -4916,7 +4897,7 @@ SPAWN_META_PATH=$SPAWN_META_TMP
 preserve_relaunch_meta() {
   awk -F= '
     BEGIN {
-      split("window endpoint_task_id worktree project harness kind mode yolo branch tasktmp model effort account account_provider busy_gen spawn_gen traceparent backend herdr_session herdr_workspace_id herdr_tab_id herdr_pane_id zellij_session zellij_tab_id zellij_pane_id orca_worktree_id terminal cmux_workspace_id cmux_surface_id home projects control_relaunch_tx", keys, " ")
+      split("window endpoint_task_id worktree project harness kind mode yolo branch tasktmp model effort account account_provider busy_gen spawn_gen traceparent backend herdr_session herdr_workspace_id herdr_tab_id herdr_pane_id herdr_process_identity zellij_session zellij_tab_id zellij_pane_id orca_worktree_id terminal cmux_workspace_id cmux_surface_id home projects control_relaunch_tx", keys, " ")
       for (i in keys) owned[keys[i]] = 1
     }
     !($1 in owned)
@@ -4951,6 +4932,7 @@ preserve_relaunch_meta() {
     echo "herdr_workspace_id=$HERDR_WORKSPACE_ID"
     echo "herdr_tab_id=$HERDR_TAB_ID"
     echo "herdr_pane_id=$HERDR_PANE_ID"
+    [ -z "$HERDR_PROCESS_IDENTITY" ] || echo "herdr_process_identity=$HERDR_PROCESS_IDENTITY"
   fi
   if [ "$BACKEND" = zellij ]; then
     echo "zellij_session=$ZELLIJ_SES"

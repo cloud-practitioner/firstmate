@@ -98,14 +98,14 @@ The task's worktree, branch, commits, and uncommitted changes all survive that; 
 Two endpoint verdicts are agent-free, and both license a relaunch:
 
 - `dead` - the endpoint exists and confidently holds no agent. It is **adopted**, so the task keeps its exact recorded address.
-- gone, **proven** - there is no endpoint and therefore no agent, and it cannot be adopted, so the launch owner **creates one fresh endpoint in the recorded worktree** and the republished record rebinds the task to it.
+- gone, **proven** - the task's endpoint is absent at the recorded address and cannot be adopted, so the launch owner **creates one fresh endpoint in the recorded worktree** and the republished record rebinds the task to it.
 
-That proof is its own step, because the classifier's `missing` is not one state: it conflates *the endpoint was destroyed* with *the endpoint is unreachable from here right now*.
+That proof is its own step, because the classifier's `missing` covers both *the task's endpoint is absent* and *the endpoint is unreachable from here right now*.
 An unreachable endpoint can still hold the live agent a rebind would duplicate, so absence is proven and never inferred from a failed read - and whether it is provable at all is a property of the backend:
 
 - **Herdr can prove it.** Every read goes through the adapter's `--session <session>` CLI, so the recheck starts and reads the session the *record* names, through that session's own socket.
   It starts that server (only the server: no workspace and no tab are created) and **re-reads the recorded pane**.
-  `dead` means the pane survived the restart and is adopted after all, with no second tab; `alive` means the agent came back and refuses; only a second `missing` proves the pane itself did not survive ([`docs/herdr-backend.md`](herdr-backend.md) "Restart and liveness behavior").
+  The recheck applies [Herdr's recorded-endpoint ownership policy](herdr-backend.md#endpoints-from-a-previous-session), then interprets the recovery-grade verdict: `dead` adopts the surviving endpoint with no second tab, `alive` refuses, and only a second `missing` proves the task's endpoint absent.
   That server start is a real side effect, and the parenthetical above does not cover it: when the recorded session's server no longer exists at all, the probe stands a fresh empty one up in order to ask, and nothing afterwards uses it.
   So in that state `exit` - which otherwise reads as a read-only inspection - leaves an idle herdr server behind.
 - **tmux cannot.** `list-windows -a` describes only the tmux server the *current process* addresses (its `TMUX_TMPDIR`/socket), and a task record carries no socket identity for its endpoint.
@@ -131,13 +131,13 @@ A seat that *claims* a herdr launcher pane belonging to a different session is r
 A seat with no herdr launcher pane at all - a plain ssh or cron shell, which is the ordinary way an operator reclaims - is not refused: placement falls back to the recorded session's labeled container, so the tab still lands in the session the record names.
 The reclaim pins the recorded **session** but not the **workspace**: the container follows the reclaiming seat, so a reclaim run from a seat inside the recorded session places the new tab in *that seat's* workspace rather than the recorded `herdr_workspace_id`, even when the recorded workspace still exists and only the pane was destroyed.
 The record is republished consistently and no work is lost, but the task's `herdr_workspace_id` moves with it.
-The pane id necessarily changes (the pane did not survive), and the record follows it.
+The record follows the newly created endpoint, not any unrelated pane at its old address.
 A Herdr reclaim deliberately uses the flat container shape rather than presentation projection: projection is a presentation-only layout that is never endpoint or ownership authority, and flat is already the documented fallback for every recovery it cannot bind exactly ([`docs/herdr-backend.md`](herdr-backend.md)).
 
 **Known limitation - a refusal before the record is republished leaves a stray husk pane** (follow-up bead `fm-herdr-rebind-leak-20260913`).
 The rebind registers no abort cleanup, so a refusal in the window between the new tab being created and the record being republished leaves that pane behind while the record still names the old, gone one.
-The stray pane holds a bare shell - the harness is not delivered until after publication - so the next reclaim cleans up after it: the re-created tab carries the same `fm-<id>` label, `tab create` finds it, classifies it a husk, and closes and replaces it.
-That self-heals only when the retry resolves the *same* workspace, which the placement rule above does not guarantee.
+The stray pane holds a bare shell - the harness is not delivered until after publication.
+Do not rely on a retry to remove it: cleanup follows [Herdr's recorded-endpoint ownership policy](herdr-backend.md#endpoints-from-a-previous-session), and the placement rule above does not guarantee the retry resolves the same workspace.
 The worktree and the task's records are unaffected either way.
 
 ### Failure and rollback

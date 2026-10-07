@@ -1177,7 +1177,7 @@ if [ "$TEARDOWN_LEGACY_PENDING" = 1 ]; then
   if [ "$TEARDOWN_WINDOWLESS" = 1 ]; then
     TEARDOWN_LEGACY_ENDPOINT=missing
   else
-    TEARDOWN_LEGACY_ENDPOINT=$(fm_backend_agent_state "$BACKEND" "$T")
+    TEARDOWN_LEGACY_ENDPOINT=$(fm_backend_agent_state "$BACKEND" "$T" "fm-$ID")
     case "$TEARDOWN_LEGACY_ENDPOINT" in
       dead|missing) ;;
       *)
@@ -3289,8 +3289,8 @@ cleanup_firstmate_home_children() {
           echo "error: herdr session presentation lock is not held for child $child_id; retaining that child's durable identity records and stopping forced cleanup" >&2
           return 1
         fi
-        fm_backend_herdr_kill_serialized "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" 2>/dev/null || true
-        if ! fm_backend_herdr_endpoint_confirmed_gone "$child_t"; then
+        FM_STATE_OVERRIDE="$sub_state" fm_backend_herdr_kill_serialized "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" "fm-$child_id" 2>/dev/null || true
+        if ! FM_STATE_OVERRIDE="$sub_state" fm_backend_herdr_endpoint_confirmed_gone "$child_t" "fm-$child_id"; then
           echo "error: herdr pane $child_t for child $child_id is not confirmed gone; retaining that child's durable identity records and stopping forced cleanup" >&2
           return 1
         fi
@@ -3730,13 +3730,13 @@ if [ "$HERDR_PRESENTATION_RETIRE_CANDIDATE" = 1 ]; then
     # signal at all. The close stays non-fatal exactly as before: the presence
     # gate below is what decides whether any durable record may be removed.
     fm_backend_herdr_projection_close_pane_focus_preserving \
-      "$HERDR_PRESENTATION_SESSION" "$HERDR_PRESENTATION_PANE" || true
+      "$HERDR_PRESENTATION_SESSION" "$HERDR_PRESENTATION_PANE" "" "fm-$ID" || true
   else
     echo "warning: herdr presentation focus lock unavailable; refusing a concurrent focus-unsafe pane close" >&2
   fi
 elif [ "$BACKEND" = herdr ]; then
   if teardown_herdr_session_lock_held "$TEARDOWN_HERDR_SESSION"; then
-    fm_backend_herdr_kill_serialized "$TEARDOWN_HERDR_SESSION" "$TEARDOWN_HERDR_PANE" 2>/dev/null || true
+    fm_backend_herdr_kill_serialized "$TEARDOWN_HERDR_SESSION" "$TEARDOWN_HERDR_PANE" "fm-$ID" 2>/dev/null || true
   else
     echo "warning: herdr session presentation lock path is unavailable; skipping the pane close rather than closing unlocked" >&2
   fi
@@ -3755,18 +3755,17 @@ elif [ "$BACKEND" = herdr ] \
   echo "warning: herdr presentation journal for $ID was not retired by its close; no workspace cleanup was attempted" >&2
 fi
 # A refused, skipped, or failed Herdr close must never erase a live task's
-# durable endpoint identity: unless the exact pane is confirmed gone, retain
-# every record and stop before any removal below so a later rerun can retry
-# the locked close. Only a structured not-found proves the pane gone; unknown
-# presence, missing or malformed endpoint identity, and missing confirmation
-# machinery all refuse.
+# durable endpoint identity: require fm_backend_herdr_endpoint_confirmed_gone
+# to prove the task's endpoint absent before any removal below, so a later
+# rerun can retry the locked close. docs/herdr-backend.md "When task records
+# are erased" owns the proof policy; missing confirmation machinery refuses.
 if [ "$BACKEND" = herdr ]; then
   fm_backend_source herdr || true
   if ! declare -F fm_backend_herdr_endpoint_confirmed_gone >/dev/null 2>&1; then
     echo "error: herdr endpoint confirmation is unavailable for $ID; retaining every durable task record" >&2
     exit 1
   fi
-  if ! fm_backend_herdr_endpoint_confirmed_gone "$T"; then
+  if ! fm_backend_herdr_endpoint_confirmed_gone "$T" "fm-$ID"; then
     echo "error: herdr pane $T for $ID is not confirmed gone after its close was refused, skipped, or failed; retaining every durable task record - rerun teardown once the close can run under the session lock" >&2
     exit 1
   fi
