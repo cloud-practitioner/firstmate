@@ -1,0 +1,10 @@
+Selected existing executable tests:
+test_pr_based_dod_draft_check_uses_gh_axi
+test_direct_pr_dod_is_forge_aware
+test_bitbucket_dod_commands_preserve_shell_arguments
+
+ok - PR-based DoD draft check uses gh-axi
+ok - direct-PR DoD names gh-axi for GitHub and fm-pr-open.sh for Bitbucket, and nothing else changes
+ok - the Bitbucket DoD commands execute with literal branch names and helper paths containing spaces and apostrophes
+
+exit: 0

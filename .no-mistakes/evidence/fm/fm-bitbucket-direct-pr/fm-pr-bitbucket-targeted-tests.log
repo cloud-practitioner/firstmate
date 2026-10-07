@@ -1,0 +1,30 @@
+Selected existing executable tests:
+test_remote_path_names_only_bitbucket_cloud_repositories
+test_project_pr_host_follows_the_origin_remote
+test_open_creates_a_non_draft_pull_request
+test_open_reuses_an_existing_pull_request
+test_draft_is_refused_by_open_and_repaired_by_ready
+test_verify_checks_state_branch_and_head
+test_open_never_leaks_credentials
+test_open_accepts_supported_bitbucket_origins
+test_commands_require_current_bitbucket_context
+test_verify_and_ready_require_a_url
+test_discovery_distinguishes_forks_from_the_origin
+test_read_back_enforces_source_identity_before_accepting_or_updating
+test_open_recovers_a_missing_creation_id_by_reopening
+
+ok - a remote URL names a Bitbucket Cloud repository only when it is one, and never prints userinfo
+ok - the pull request forge follows the clone's origin remote and defaults to GitHub
+ok - fm-pr-open open creates a non-draft pull request, reads it back, and prints its URL
+ok - fm-pr-open open reuses an open pull request for the source branch instead of duplicating it
+ok - fm-pr-open refuses a draft, never flips one implicitly, and ready repairs it with a read-back
+ok - fm-pr-open verify exits zero only for an open, ready pull request from the branch at HEAD
+ok - fm-pr-open names missing credentials by variable only and never prints the token or an auth header
+ok - fm-pr-open accepts every supported Bitbucket Cloud origin form
+ok - all fm-pr-open commands require the current branch and Bitbucket origin, and URLs must match it
+ok - verify and ready require an explicit pull request URL
+ok - open discovers only PRs from the origin repository and current branch
+ok - reuse, creation read-back, verify, and ready reject foreign source identities before acceptance or update
+ok - open recovers an accepted creation with no usable ID by discovering the existing PR
+
+exit: 0

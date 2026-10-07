@@ -1,0 +1,130 @@
+Real product scaffolding, promotion, and emitted snippets. No fake executable, API, worker, login, or production credential was used.
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-bb-0 bb-proj --mode direct-PR
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-bb-0/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-promote-0 bb-proj --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-0/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-promote.sh' live-promote-0 --mode direct-PR --yolo off
+promoted live-promote-0 to ship mode=direct-PR yolo=off (teardown protection restored)
+wrote ship instructions for mode=direct-PR: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-0/ship-instructions.md
+next: FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home bin/fm-send.sh fm-live-promote-0 "$(cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-0/ship-instructions.md)"
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-bb-1 bb-proj --mode direct-PR
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-bb-1/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-promote-1 bb-proj --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-1/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-promote.sh' live-promote-1 --mode direct-PR --yolo off
+promoted live-promote-1 to ship mode=direct-PR yolo=off (teardown protection restored)
+wrote ship instructions for mode=direct-PR: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-1/ship-instructions.md
+next: FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home bin/fm-send.sh fm-live-promote-1 "$(cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-1/ship-instructions.md)"
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-bb-2 bb-proj --mode direct-PR
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-bb-2/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-promote-2 bb-proj --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-2/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-promote.sh' live-promote-2 --mode direct-PR --yolo off
+promoted live-promote-2 to ship mode=direct-PR yolo=off (teardown protection restored)
+wrote ship instructions for mode=direct-PR: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-2/ship-instructions.md
+next: FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home bin/fm-send.sh fm-live-promote-2 "$(cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-2/ship-instructions.md)"
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-bb-3 bb-proj --mode direct-PR
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-bb-3/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-promote-3 bb-proj --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-3/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-promote.sh' live-promote-3 --mode direct-PR --yolo off
+promoted live-promote-3 to ship mode=direct-PR yolo=off (teardown protection restored)
+wrote ship instructions for mode=direct-PR: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-3/ship-instructions.md
+next: FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home bin/fm-send.sh fm-live-promote-3 "$(cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-3/ship-instructions.md)"
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-bb-4 bb-proj --mode direct-PR
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-bb-4/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-promote-4 bb-proj --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-4/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-promote.sh' live-promote-4 --mode direct-PR --yolo off
+promoted live-promote-4 to ship mode=direct-PR yolo=off (teardown protection restored)
+wrote ship instructions for mode=direct-PR: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-4/ship-instructions.md
+next: FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home bin/fm-send.sh fm-live-promote-4 "$(cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-promote-4/ship-instructions.md)"
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-quoted bb-proj --mode direct-PR --branch-prefix 'quoted/$USER/o'"'"'brien/'
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-quoted/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ bash -c 'git push -u origin quoted/\$USER/o\'"'"'brien/live-quoted'
+branch 'quoted/$USER/o'brien/live-quoted' set up to track 'origin/quoted/$USER/o'brien/live-quoted'.
+To /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/disposable-push.git
+ * [new branch]      quoted/$USER/o'brien/live-quoted -> quoted/$USER/o'brien/live-quoted
+exit: 0
+
+$ bash -c '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first\ mate\'"'"'s\ files/bin/fm-pr-open.sh open'
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ bash -c '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first\ mate\'"'"'s\ files/bin/fm-pr-open.sh verify https://bitbucket.org/ws/bb-proj/pull-requests/7'
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ bash -c '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first\ mate\'"'"'s\ files/bin/fm-pr-open.sh ready https://bitbucket.org/ws/bb-proj/pull-requests/7'
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ git --git-dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/disposable-push.git rev-parse 'refs/heads/quoted/$USER/o'"'"'brien/live-quoted'
+01baaad1b593aa53152290b9d4854d487caa7005
+exit: 0
+
+$ git --git-dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/disposable-push.git for-each-ref '--format=%(refname)' refs/heads/
+refs/heads/quoted/$USER/o'brien/live-quoted
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-github gh-proj --mode direct-PR
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-github/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-brief.sh' live-no-mistakes bb-proj --mode no-mistakes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home/data/live-no-mistakes/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})
+exit: 0
+
+Rendered DoD is byte-identical to base commit: mode=direct-PR, forge=none
+
+Rendered DoD is byte-identical to base commit: mode=no-mistakes, forge=none
+
+Rendered DoD is byte-identical to base commit: mode=local-only, forge=none
+
+Rendered DoD is byte-identical to base commit: mode=direct-PR, forge=gerrit
+
+Rendered DoD is byte-identical to base commit: mode=no-mistakes, forge=gerrit

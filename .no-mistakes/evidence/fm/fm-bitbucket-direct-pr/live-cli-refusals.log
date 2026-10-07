@@ -1,0 +1,173 @@
+Actual product CLI with real git/curl/jq, isolated HOME, no network or API stub.
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/live-lab-home
+exit: 0
+
+Origin fixture: https://bitbucket.org/ws/bb-proj.git
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+Origin fixture: git@bitbucket.org:ws/bb-proj.git
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+Origin fixture: ssh://git@bitbucket.org/ws/bb-proj.git
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+Origin fixture: ssh://git@bitbucket.org:22/ws/bb-proj.git
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+Origin fixture: ssh://git@altssh.bitbucket.org:443/ws/bb-proj.git
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: talking to Bitbucket requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify
+fm-pr-open: verify requires the pull request URL
+usage: fm-pr-open.sh open | verify <pr-url> | ready <pr-url> (see --help)
+exit: 2
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify https://bitbucket.org/foreign/repo/pull-requests/7
+fm-pr-open: the pull request URL does not name this work tree's origin repository
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready
+fm-pr-open: ready requires the pull request URL
+usage: fm-pr-open.sh open | verify <pr-url> | ready <pr-url> (see --help)
+exit: 2
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready https://bitbucket.org/foreign/repo/pull-requests/7
+fm-pr-open: the pull request URL does not name this work tree's origin repository
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open --worktree arbitrary-value
+fm-pr-open: unknown option '--worktree'
+usage: fm-pr-open.sh open | verify <pr-url> | ready <pr-url> (see --help)
+exit: 2
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open --source arbitrary-value
+fm-pr-open: unknown option '--source'
+usage: fm-pr-open.sh open | verify <pr-url> | ready <pr-url> (see --help)
+exit: 2
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open --repo arbitrary-value
+fm-pr-open: unknown option '--repo'
+usage: fm-pr-open.sh open | verify <pr-url> | ready <pr-url> (see --help)
+exit: 2
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open --dest arbitrary-value
+fm-pr-open: unknown option '--dest'
+usage: fm-pr-open.sh open | verify <pr-url> | ready <pr-url> (see --help)
+exit: 2
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open --title arbitrary-value
+fm-pr-open: unknown option '--title'
+usage: fm-pr-open.sh open | verify <pr-url> | ready <pr-url> (see --help)
+exit: 2
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open --description arbitrary-value
+fm-pr-open: unknown option '--description'
+usage: fm-pr-open.sh open | verify <pr-url> | ready <pr-url> (see --help)
+exit: 2
+
+Local context fixture: no-origin
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: this work tree has no origin remote
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: this work tree has no origin remote
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: this work tree has no origin remote
+exit: 1
+
+Local context fixture: github
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: the origin remote is not a Bitbucket Cloud repository
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: the origin remote is not a Bitbucket Cloud repository
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: the origin remote is not a Bitbucket Cloud repository
+exit: 1
+
+Local context fixture: detached
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: this work tree is on a detached HEAD; check out the branch
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' verify https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: this work tree is on a detached HEAD; check out the branch
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' ready https://bitbucket.org/ws/bb-proj/pull-requests/7
+fm-pr-open: this work tree is on a detached HEAD; check out the branch
+exit: 1
+
+$ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M49Z4JCXXQR6ZMPDQQC08J2K/.gate-test-tmp/first mate'"'"'s files/bin/fm-pr-open.sh' open
+fm-pr-open: the current directory is not a git work tree
+exit: 1

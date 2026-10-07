@@ -1,0 +1,8 @@
+Selected existing executable tests:
+test_ship_modes_generate_clean_briefs
+test_direct_pr_brief_follows_the_origin_remote
+
+ok - fm-brief.sh: no-mistakes/direct-PR/local-only briefs generate cleanly
+ok - fm-brief.sh: the direct-PR open command follows the project's origin remote
+
+exit: 0
