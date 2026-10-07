@@ -717,6 +717,49 @@ SH
   pass 'native reconnect levels and stream edges validate the selected home before wakes or marker changes'
 }
 
+test_secondmate_recovery_keeps_task_selection_across_lock_wait() {
+  (
+    local dir="$TMP_ROOT/secondmate-lock-reset"
+    setup_world "$dir"
+    . "$ROOT/bin/fm-env-lib.sh"
+    . "$ROOT/bin/fm-secondmate-liveness-lib.sh"
+    STATE=$FM_STATE_OVERRIDE
+    write_pane w1:p1 42 "$FM_HOME"
+    printf '{"error":{"code":"agent_not_found"}}\n' > "$FM_FAKE_WORLD/agent-w1_p1.json"
+    fm_write_meta "$STATE/b.meta" backend=herdr window=fmtest:w1:p1 kind=secondmate harness=pi \
+      'herdr_process_identity=proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000'
+    fm_secondmate_liveness_probe "$STATE/b.meta" b poll
+    [ "$FM_SM_LIVE_STATE" = dead ] && [ "$FM_SM_LIVE_KILL" = 1 ] || fail 'the original owned secondmate shell was not eligible for cleanup'
+    FM_ROOT="$dir/runner"
+    mkdir -p "$FM_ROOT/bin"
+    cat > "$FM_ROOT/bin/fm-spawn.sh" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' "$*" > "$FM_FAKE_WORLD/relaunch"
+SH
+    chmod +x "$FM_ROOT/bin/fm-spawn.sh"
+    export FM_CLOSE_REMOVES=1
+    fm_backend_herdr_presentation_session_lock_path() { printf '%s/lock' "$FM_FAKE_WORLD"; }
+    fm_lock_try_acquire() {
+      [ -f "$FM_FAKE_WORLD/reset-during-lock" ] || return 1
+      : > "$FM_FAKE_WORLD/lock-acquired"
+    }
+    fm_lock_release() { : > "$FM_FAKE_WORLD/lock-released"; }
+    sleep() {
+      write_pane w1:p1 43 "$FM_HOME"
+      fm_write_meta "$STATE/c.meta" backend=herdr window=fmtest:w1:p1 kind=secondmate harness=pi \
+        'herdr_process_identity=proc:43:3f2a9c1e-0000-4000-8000-0123456789ab:7100'
+      : > "$FM_FAKE_WORLD/reset-during-lock"
+    }
+    fm_secondmate_liveness_relaunch "$STATE/b.meta" b || fail 'recovery did not reach its relaunch after skipping the foreign close'
+    [ -f "$FM_FAKE_WORLD/lock-acquired" ] && [ -f "$FM_FAKE_WORLD/lock-released" ] || fail 'recovery did not cross and release the presentation lock'
+    [ -f "$FM_FAKE_WORLD/pane-w1_p1.json" ] && [ ! -s "$FM_FAKE_WORLD/inputs" ] || fail 'recovery borrowed the competing task binding and closed its pane'
+    [ "$(fm_backend_herdr_pane_shell_pid fmtest w1:p1)" = 43 ] || fail 'recovery removed the replacement shell'
+    ! fm_backend_herdr_endpoint_foreign fmtest w1:p1 fm-c || fail 'the competing task no longer owns the replacement pane'
+    [ "$(cat "$FM_FAKE_WORLD/relaunch")" = 'b --secondmate' ] || fail 'recovery relaunched the wrong task'
+  ) || fail 'secondmate task-selection lock-wait regression'
+  pass 'secondmate recovery cannot borrow a competing binding after a reset during lock acquisition'
+}
+
 test_dispatch_boundaries
 test_submit_boundaries
 test_identity_requires_boot_and_ticks
@@ -730,3 +773,4 @@ test_deferred_husk_close_rechecks_ownership
 test_published_fresh_and_rebound_launches_keep_their_binding
 test_proc_binding_component_loss_is_unreadable
 test_native_push_validates_selected_task_ownership
+test_secondmate_recovery_keeps_task_selection_across_lock_wait

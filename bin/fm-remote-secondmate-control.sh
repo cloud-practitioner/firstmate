@@ -189,7 +189,7 @@ cmd_launch() {
         return 0
         ;;
       dead)
-        fm_backend_kill "$REMOTE_ENDPOINT_BACKEND" "$REMOTE_ENDPOINT_TARGET" 2>/dev/null \
+        fm_backend_kill "$REMOTE_ENDPOINT_BACKEND" "$REMOTE_ENDPOINT_TARGET" "" "fm-$id" 2>/dev/null \
           || die "could not remove the confirmed agent-less endpoint"
         ;;
       missing) ;;
