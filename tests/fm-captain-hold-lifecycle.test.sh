@@ -4235,10 +4235,14 @@ test_complete_refuses_an_entry_held_for_another_origin() {
 }
 
 test_hold_origins_follow_backend_holds() {
-  local home phase timing failure id shown origin out until_args=()
+  local home phase timing failure id shown origin out parent channel occurrence until_args=()
   for phase in new active released; do
     for timing in plain dated; do
       home=$(make_home "origin-failure-$phase-$timing")
+      parent=$(make_home "origin-parent-$phase-$timing")
+      channel="$parent/state/origin-mate.status"
+      occurrence=1
+      [ "$phase" != released ] || occurrence=2
       id=sample-call
       for origin in origin-a origin-b; do
         tasks_in "$home" add "$origin" "Review $origin" --kind scout --repo sample >/dev/null \
@@ -4268,6 +4272,8 @@ if [ "${1:-}" = update ]; then
       [ -f "$FM_HOME/backend-held" ] || exit 8
       "$REAL_TASKS_AXI" show "$2" --full > "$FM_HOME/before-origin-write" || exit $?
       if [ -f "$FM_HOME/fail-write" ]; then
+        channel="$(sed -n 's/^parent_home=//p' "$FM_HOME/.fm-secondmate-parent")/state/origin-mate.status"
+        [ ! -f "$channel" ] || cp "$channel" "$FM_HOME/parent-before-origin-write"
         : > "$FM_HOME/write-refused"
         exit 9
       fi
@@ -4291,6 +4297,11 @@ SH
       until_args=()
       [ "$timing" != dated ] || until_args=(--until 2099-01-01)
       for failure in lookup hold write; do
+        if [ "$failure" = write ]; then
+          printf 'schema=fm-secondmate-parent.v1\nroute=local\nparent_home=%s\n' "$parent" \
+            > "$home/.fm-secondmate-parent"
+          printf 'origin-mate\n' > "$home/.fm-secondmate-home"
+        fi
         : > "$home/fail-$failure"
         if run_captain "$home" hold "$id" --title "Separate call" --reason "Choose for B" \
           --origin origin-b ${until_args[@]+"${until_args[@]}"} > "$home/hold.out" 2> "$home/hold.err"; then
@@ -4309,6 +4320,12 @@ SH
           assert_present "$home/backend-held" "the origin write preceded backend success"
           assert_grep 'held: yes' "$home/before-origin-write" "the origin write did not follow a live hold"
           assert_grep 'hold_kind: captain' "$home/before-origin-write" "the origin write did not follow a captain hold"
+          assert_present "$home/parent-before-origin-write" "the verified hold was not published before the origin write"
+          assert_grep "needs-decision [key=captain-hold-$id-$occurrence]: captain hold $id: Choose for B" \
+            <(sed -E 's/ \[at=[0-9]+\]//' "$home/parent-before-origin-write") \
+            "the origin-write failure stranded the hold without its parent event"
+          assert_equals 1 "$(grep -Fc "needs-decision [key=captain-hold-$id-$occurrence]" "$channel")" \
+            "the failed origin write did not publish exactly one parent decision"
         fi
         shown=$(tasks_in "$home" show "$id" --full)
         assert_not_contains "$shown" 'Captain hold origin: origin-b' \
@@ -4362,6 +4379,8 @@ SH
       assert_contains "$shown" 'held: yes' "the successful retry did not hold the task"
       assert_contains "$shown" 'Captain hold origin: origin-b' "a successful hold lost its association"
       assert_not_contains "$shown" 'Captain hold origin: origin-a' "a successful hold retained the old association"
+      assert_equals 1 "$(grep -Fc "needs-decision [key=captain-hold-$id-$occurrence]" "$channel")" \
+        "retrying the origin write duplicated the parent decision"
       run_captain "$home" complete origin-b "$id" >/dev/null \
         || fail "a successful hold could not complete B"
       run_captain "$home" verify origin-b >/dev/null || fail "a successful hold could not verify B"

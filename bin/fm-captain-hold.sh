@@ -1029,11 +1029,11 @@ command_hold() {
   [ "$hold_kind" = captain ] || fail "task $id did not retain its captain hold"
   [ -n "$(body_hold_set_timestamp "$(show_field_value "$show" body)")" ] \
     || fail "task $id lost its hold-set stamp while being held"
+  occurrence=$(( $(resolution_record_count "$(show_field "$show" body)") + 1 ))
+  publish_parent_hold "$id" "$occurrence" needs-decision "$reason"
   if [ -n "$origin" ]; then
     write_hold_origin "$id" "$(show_field "$show" body)" "$origin" || exit $?
   fi
-  occurrence=$(( $(resolution_record_count "$(show_field "$show" body)") + 1 ))
-  publish_parent_hold "$id" "$occurrence" needs-decision "$reason"
   printf '%s\n' "$id"
 }
 

@@ -53,7 +53,8 @@ It works in this order:
 2. It records the task's UTC hold-set timestamp as the leading line of the task body.
 3. It invokes the underlying tasks-axi hold operation.
 4. It verifies the captain-hold annotations and timestamp.
-5. When `--origin` is supplied, it records the origin on the task, replacing any previous association only after the backend hold succeeds.
+5. In a secondmate home, it publishes the verified hold to the parent channel.
+6. When `--origin` is supplied, it records the origin on the task, replacing any previous association only after the backend hold succeeds.
 
 Publishing the stamp first ensures a snapshot cannot observe a newly captain-held task without the timestamp that defines its age.
 
@@ -68,7 +69,9 @@ Repeat and edge cases:
   An interrupted or refused backend hold therefore cannot publish the new association, even when an old captain hold is still active or date-expired.
 - If the backend hold fails, `hold` attempts to restore the previous body.
   If restoration also fails, the new stamp can remain, but the previous origin is unchanged.
-  If the subsequent origin write fails, the successful captain hold and its stamp remain with the previous association (or with no recorded origin for a new task); re-running `hold` retries publication.
+  If the subsequent origin write fails, the command returns nonzero, but the successful captain hold and its stamp remain with the previous association (or with no recorded origin for a new task).
+  Parent publication is attempted before that write in a secondmate home, so an origin-write failure cannot skip delivery; a channel failure retains the existing `actionable:` diagnostic.
+  Re-running `hold` retries origin publication without duplicating the parent decision.
 - An open task without captain-hold annotations that leads with a hold-set stamp above a recorded answer is refused by `complete` and `verify` because the answer alone cannot establish that the newer call was held.
   Replaying the earlier `answer --release` can remove that stamp, and normal work completion can retain the answer, but neither transition changes the stored origin: neither can certify the failed move's new origin.
   Re-running `hold` completes the move, and re-running the same `answer --release` also normalizes a release interrupted before its stamp was removed.
