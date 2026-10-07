@@ -138,7 +138,7 @@
 # `--none` is an explicit semantic attestation that the just-reviewed surface
 # has no unresolved captain call, and is refused while the origin still has an
 # open keyed status decision. With a non-empty inventory, every listed task is
-# verified durable (captain-held, or carrying a recorded resolution),
+# verified durable (docs/captain-hold-lifecycle.md owns the inventory checks),
 # is never the origin itself, and, when `hold --origin` recorded one, was held
 # for this origin; a hold with no recorded origin is accepted on durability
 # alone and named in the output,
@@ -523,10 +523,10 @@ resolution_block() {  # <mode>
 
 # Durable state of one captain call: an active captain hold (annotations
 # surviving even when a date gate has expired) or a recorded captain answer.
-# A recorded answer only counts when no newer hold lifecycle began after it:
-# an open, unheld task that leads with a hold-set stamp above its resolution
-# record is a re-hold that never completed, so the record answered an earlier
-# call. A finished answer restores resolution-first ordering.
+# Without captain annotations, an open task's leading stamp can signal an
+# incomplete re-hold or unfinished release normalization; the old record alone
+# cannot vouch for that state. Done tasks retain their recorded resolution as
+# evidence, and verify_entry_durable separately checks the stored origin.
 verify_hold_durable() {  # <task-id>
   local id=$1 show state hold_kind body
   task_show "$id" || fail "captain-held task $id is absent from this home's configured backlog (data directory $DATA)"
@@ -856,10 +856,10 @@ write_hold_origin() {  # <task-id> <shown-body> <origin>
   rm -f -- "$tmp"
 }
 
-# Put back the body a hold attempt started from, so an attempt that does not
-# complete leaves neither its new stamp nor its new origin behind. tasks-axi
-# cannot write an empty body, and a task that began empty carries no earlier
-# answer for a stale stamp to mislabel, so that case keeps its body.
+# Best-effort restoration removes a refused hold attempt's stamp while
+# preserving the prior body; the new origin has not been published yet.
+# tasks-axi cannot write an empty body, and a task that began empty carries no
+# earlier answer for a stale stamp to mislabel, so that case keeps its body.
 restore_hold_body() {  # <task-id> <shown-original-body>
   local id=$1 body tmp
   body=$(decode_shown_value "$2") || return 1
@@ -998,8 +998,8 @@ command_hold() {
   # Publish the timestamp before the captain-hold annotation. A concurrent
   # snapshot may see the harmless stamp by itself, but can never see a newly
   # held task without the timestamp that defines this hold lifecycle's age.
-  # Resolve the origin identity before any write, so a lookup failure leaves
-  # the task untouched.
+  # Resolve the origin identity before stamping or holding. A lookup failure
+  # leaves an existing task untouched, but a missing row was already created.
   if [ -n "$origin" ]; then
     origin=$(task_identity "$origin") || exit $?
   fi
@@ -1017,9 +1017,8 @@ command_hold() {
       || hold_status=$?
   fi
   if [ "$hold_status" -ne 0 ]; then
-    # A refused re-hold must neither associate the previous answer with a new
-    # origin nor leave a stamp that starts a hold lifecycle which never began.
-    # Restore the body the attempt started from, without resolving it again.
+    # Restore the body without resolving its old origin again. The new origin
+    # is still unpublished even if this best-effort restoration fails.
     restore_hold_body "$id" "$original_body" || true
     fail "could not hold task $id for the captain"
   fi
