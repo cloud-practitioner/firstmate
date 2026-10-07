@@ -5673,7 +5673,10 @@ SH
     before=$(grep '^herdr_process_identity=' "$home/state/refresh-identity.meta" | tail -1)
     [ "$before" = 'herdr_process_identity=proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000' ] || fail "spawn recorded '$before'"
     # A legacy record as the previous release wrote it is replaced by the stable form on relaunch.
-    sed -i 's/^herdr_process_identity=.*/herdr_process_identity=ps:42:Wed Oct  7 02:03:32 2026/' "$home/state/refresh-identity.meta"
+    sed 's/^herdr_process_identity=.*/herdr_process_identity=ps:42:Wed Oct  7 02:03:32 2026/' "$home/state/refresh-identity.meta" > "$dir/legacy.meta" \
+      && mv "$dir/legacy.meta" "$home/state/refresh-identity.meta" || fail "cannot write the legacy identity fixture"
+    [ "$(grep '^herdr_process_identity=' "$home/state/refresh-identity.meta")" = 'herdr_process_identity=ps:42:Wed Oct  7 02:03:32 2026' ] \
+      || fail "legacy identity fixture was not persisted"
     out=$(HERDR_SESSION=fmtest fm_test_run_spawn "$home" "$wt" "$fb" refresh-identity --relaunch) || fail "relaunch failed: $out"
     [ "$(grep -c '^herdr_process_identity=' "$home/state/refresh-identity.meta")" = 1 ] || fail "relaunch must leave exactly one identity line"
     [ "$(grep '^herdr_process_identity=' "$home/state/refresh-identity.meta")" = "$before" ] || fail "relaunch did not refresh a legacy identity"
