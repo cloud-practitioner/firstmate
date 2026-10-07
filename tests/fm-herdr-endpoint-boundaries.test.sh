@@ -692,7 +692,9 @@ test_native_push_validates_selected_task_ownership() {
           # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
           cp "$FM_STATE_OVERRIDE/other.meta" "$state/b.meta"
           if [ "$ownership" = foreign ]; then
-            write_pane w1:p1 43 "$FM_HOME"
+            # A third process owns the recycled address, so neither claiming record is bound to it.
+            write_proc "$FM_PROC_ROOT_OVERRIDE" 44 7200
+            write_pane w1:p1 44 "$FM_HOME"
             # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
             cp "$FM_STATE_OVERRIDE/other.meta" "$FM_STATE_OVERRIDE/mine.meta"
           elif [ "$ownership" = unreadable ]; then
@@ -710,6 +712,7 @@ printf '@subscribed\n'
 cat "$FM_STREAM_EDGES"
 SH
           chmod +x "$dir/reader"
+          # shellcheck disable=SC2030,SC2031 # each case runs in its own subshell fixture.
           export FM_BACKEND_HERDR_EVENT_READER="$dir/reader" FM_BACKEND_EVENTS_CAPABILITY_CONFIRMED=1 FM_STREAM_EDGES="$dir/edges"
           out=$(fm_backend_herdr_wait_transition fmtest 0 "$state" fmtest:w1:p1) || rc=$?
           if [ "$ownership" = owned ] && [ "$status" = blocked ]; then
@@ -734,6 +737,88 @@ SH
     done
   done
   pass 'native reconnect levels and stream edges validate the selected home before wakes or marker changes'
+}
+
+test_failed_treehouse_return_does_not_fall_back_to_deleting_a_foreign_worktree() {
+  (
+    local dir="$TMP_ROOT/return-fallback" wt proj state mate out
+    setup_world "$dir"
+    wt="$dir/wt"; proj="$dir/project"
+    # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
+    state="$FM_STATE_OVERRIDE"
+    fm_git_worktree "$proj" "$wt" return-fallback
+    mkdir -p "$FM_HOME/data" "$FM_HOME/config" "$dir/user-home"
+    write_pane w1:p1 42 "$wt"
+    mate="$dir/mate"; mkdir -p "$mate/state" "$mate/data" "$mate/config"
+    printf 'mine\n' > "$mate/.fm-secondmate-home"
+    write_pane w1:p2 43 "$mate"
+    fm_write_meta "$state/mine.meta" backend=herdr window=fmtest:w1:p2 endpoint_task_id=mine \
+      "worktree=$mate" "project=$mate" "home=$mate" kind=secondmate harness=pi mode=secondmate yolo=off \
+      herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t2 herdr_pane_id=w1:p2 \
+      'herdr_process_identity=proc:43:3f2a9c1e-0000-4000-8000-0123456789ab:7100'
+    fm_write_meta "$mate/state/leaf.meta" backend=herdr window=fmtest:w1:p1 endpoint_task_id=leaf \
+      "worktree=$wt" "project=$proj" kind=scout harness=pi \
+      herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t1 herdr_pane_id=w1:p1 \
+      'herdr_process_identity=proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000'
+    prepare_reset w1:p1
+    fm_fake_exit0 "$dir/fakebin" lsof
+    # The return fails for a reason other than a git lock, and a session reset
+    # hands the recycled pane to a foreign process in the same worktree before
+    # the fallback would delete the directory.
+    cat > "$dir/fakebin/treehouse" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' "$*" >> "$FM_FAKE_WORLD/returns"
+"$FM_FAKE_WORLD/reset"
+echo 'error: treehouse could not return this worktree' >&2
+exit 1
+SH
+    chmod +x "$dir/fakebin/treehouse"
+    out=$(FM_RESET_CWD="$wt" FM_CLOSE_REMOVES=1 HOME="$dir/user-home" FM_ROOT_OVERRIDE="$FM_HOME" \
+      "$ROOT/bin/fm-teardown.sh" mine --force 2>&1) && fail 'cleanup accepted a foreign pane after a failed return'
+    assert_contains "$out" 'foreign herdr' 'the fallback did not identify foreign ownership'
+    [ -f "$FM_FAKE_WORLD/reset-done" ] || fail 'the failed return never reached the reset'
+    [ -d "$wt" ] && [ -f "$mate/state/leaf.meta" ] && [ -f "$FM_FAKE_WORLD/pane-w1_p1.json" ] \
+      || fail 'the fallback deleted the worktree, its record, or the foreign pane'
+  ) || fail 'failed Treehouse return fallback regression'
+  pass 'a failed Treehouse return does not fall back to deleting a worktree a foreign pane now uses'
+}
+
+test_push_event_accepts_the_bound_record_behind_a_stale_one() {
+  local order
+  for order in stale-first bound-first both-stale; do
+    (
+      local dir="$TMP_ROOT/push-order-$order" state marker out rc=0
+      setup_world "$dir"
+      write_pane w1:p1 42 "$FM_HOME"
+      bind_mine
+      state="$dir/child/state"; mkdir -p "$state"
+      # shellcheck disable=SC2031 # setup_world initializes state in this fixture's subshell.
+      case "$order" in
+        stale-first) cp "$FM_STATE_OVERRIDE/other.meta" "$state/a.meta"; cp "$FM_STATE_OVERRIDE/mine.meta" "$state/b.meta" ;;
+        bound-first) cp "$FM_STATE_OVERRIDE/mine.meta" "$state/a.meta"; cp "$FM_STATE_OVERRIDE/other.meta" "$state/b.meta" ;;
+        both-stale) cp "$FM_STATE_OVERRIDE/other.meta" "$state/a.meta"; cp "$FM_STATE_OVERRIDE/other.meta" "$state/b.meta" ;;
+      esac
+      marker=$(fm_backend_herdr_escalation_marker "$state" fmtest:w1:p1)
+      jq -n '{result:{agent:{agent:"pi",agent_status:"blocked"}}}' > "$FM_FAKE_WORLD/agent-w1_p1.json"
+      printf 'w1:p1\tw1\tblocked\tpi\n' > "$dir/edges"
+      cat > "$dir/reader" <<'SH'
+#!/usr/bin/env bash
+printf '@subscribed\n'
+cat "$FM_STREAM_EDGES"
+SH
+      chmod +x "$dir/reader"
+      # shellcheck disable=SC2030,SC2031 # each case runs in its own subshell fixture.
+      export FM_BACKEND_HERDR_EVENT_READER="$dir/reader" FM_BACKEND_EVENTS_CAPABILITY_CONFIRMED=1 FM_STREAM_EDGES="$dir/edges"
+      out=$(fm_backend_herdr_wait_transition fmtest 0 "$state" fmtest:w1:p1) || rc=$?
+      if [ "$order" = both-stale ]; then
+        [ "$rc" = 1 ] && [ -z "$out" ] || fail 'a pane bound to neither record produced a transition'
+      else
+        [ "$rc" = 0 ] && [ "$(fm_transition_to_status "$out")" = blocked ] || fail "$order: the correctly bound record's blocked alert was dropped"
+      fi
+      [ ! -e "$marker" ] || fail "$order: detection prematurely committed the marker"
+    ) || fail "$order push ordering regression"
+  done
+  pass 'push events are accepted when any record claiming the address is bound to the live pane, and rejected when none is'
 }
 
 test_secondmate_recovery_keeps_task_selection_across_lock_wait() {
@@ -794,4 +879,6 @@ test_deferred_husk_close_rechecks_ownership
 test_published_fresh_and_rebound_launches_keep_their_binding
 test_proc_binding_component_loss_is_unreadable
 test_native_push_validates_selected_task_ownership
+test_failed_treehouse_return_does_not_fall_back_to_deleting_a_foreign_worktree
+test_push_event_accepts_the_bound_record_behind_a_stale_one
 test_secondmate_recovery_keeps_task_selection_across_lock_wait

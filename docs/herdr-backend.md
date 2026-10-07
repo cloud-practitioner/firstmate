@@ -763,10 +763,10 @@ A server restart that changes this identity invalidates the binding; a live-hand
 A foreign pane reads `missing` in the recovery-grade view, so the relaunch path can bind a fresh endpoint in the recorded session.
 Active capture, key, text, and classifier operations check ownership after server readiness at each internal read or input boundary, including submit verification, clearing, and retries, so restoring a stopped server cannot bypass the check.
 Passive liveness and existence probes do not start the server.
-Native push transitions check the selected task's ownership in the supplied state directory before surfacing a blocked edge or clearing its dedupe marker, both on reconnect and for streamed events.
+Native push transitions check ownership in the supplied state directory before surfacing a blocked edge or clearing its dedupe marker, both on reconnect and for streamed events; an event is accepted when any record claiming the address is bound to the live pane, so a stale record that sorts first cannot hide the correctly bound one, and it is rejected when none is.
 Task-specific liveness callers pass `fm-<id>` so another task claiming the same address cannot supply their ownership verdict.
 Teardown refuses destructive process or worktree cleanup when a proven foreign pane has processes in the directories being cleaned, retaining the task records for reconciliation.
-Guarded closes recheck ownership before each signal and explicit-close fallback, and Treehouse returns recheck before every attempt, including retries for an index lock.
+Guarded closes recheck ownership before each signal and explicit-close fallback, and Treehouse returns recheck before every attempt, including retries for an index lock, and the direct-removal fallback after a failed return repeats the same check before it deletes a worktree.
 Cleanup of panes obtained directly from a creation response remains creation-owned rather than adopting a stale task record.
 [When task records are erased](#when-task-records-are-erased) owns removal confirmation, including when identity cannot be read after a successful close.
 Replacement creation preserves both foreign and unclaimed same-label panes when the task has an identity-bearing record, including on repeated rebinds.

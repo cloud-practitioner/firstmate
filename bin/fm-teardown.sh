@@ -3406,9 +3406,17 @@ cleanup_firstmate_home_children() {
             if [ "$child_return_rc" -eq "$TEARDOWN_TREEHOUSE_LOCK_REFUSED" ]; then
               return "$child_return_rc"
             fi
+            # The fallback deletes the directory outright, so it needs the same
+            # ownership proof as the return it replaces.
+            if [ "$child_backend" = herdr ]; then
+              FM_STATE_OVERRIDE="$sub_state" teardown_herdr_cleanup_preflight "$child_t" "$child_id" "$child_wt" || return 1
+            fi
             safe_rm_rf_child_worktree "$child_wt" "$child_proj"
           fi
         else
+          if [ "$child_backend" = herdr ]; then
+            FM_STATE_OVERRIDE="$sub_state" teardown_herdr_cleanup_preflight "$child_t" "$child_id" "$child_wt" || return 1
+          fi
           safe_rm_rf_child_worktree "$child_wt" "$child_proj"
         fi
       fi
