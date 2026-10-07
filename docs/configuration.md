@@ -1224,7 +1224,7 @@ The live rule-match evidence is recorded in [`verification/dispatch-resolve.md`]
 
 ## Bitbucket Cloud pull requests (NO_MISTAKES_BITBUCKET_EMAIL / NO_MISTAKES_BITBUCKET_API_TOKEN)
 
-Firstmate records, watches, reads, and merges a Bitbucket Cloud pull request (`https://bitbucket.org/<workspace>/<repository>/pull-requests/<number>`) through the Bitbucket REST API 2.0, with the same credential the no-mistakes pipeline uses to open it, so the fleet has one Bitbucket credential.
+Firstmate opens, records, watches, reads, and merges a Bitbucket Cloud pull request (`https://bitbucket.org/<workspace>/<repository>/pull-requests/<number>`) through the Bitbucket REST API 2.0, with the same credential the no-mistakes pipeline uses, so the fleet has one Bitbucket credential.
 Bitbucket Data Center and Server URLs are not Bitbucket Cloud URLs and are refused.
 
 Set both variables in the environment firstmate runs in, which its watcher inherits:
@@ -1232,23 +1232,20 @@ Set both variables in the environment firstmate runs in, which its watcher inher
 - `NO_MISTAKES_BITBUCKET_EMAIL` is the Atlassian account email.
 - `NO_MISTAKES_BITBUCKET_API_TOKEN` is an Atlassian API token for that account, used as HTTP Basic auth.
 
-The token needs read access to pull requests, commit statuses, and the repository, and write access to pull requests for a merge.
+The token needs read access to pull requests, commit statuses, and the repository, and write access to pull requests to open, take out of draft, or merge one.
 A merge also reads the destination branch's restrictions, which Bitbucket exposes only to a repository administrator, so without admin access every Bitbucket merge refuses and names that missing read; when those restrictions require default-reviewer approvals or resolved tasks, it also reads the repository's effective default reviewers or the pull request's tasks; see [`bin/fm-pr-merge.sh`](../bin/fm-pr-merge.sh)'s header for the full merge contract.
 Firstmate reads the credential from the environment only, never from `.env`, and hands it to `curl` on standard input rather than as an argument, so it never appears in a process listing and is never printed, logged, or recorded.
 `curl` and `jq` are required alongside it.
-Registering a Bitbucket watch, merging a Bitbucket pull request, or reading one with `bin/fm-pr-state.sh` refuses and names whichever of the four is missing, rather than skipping the read.
+The Bitbucket helpers refuse and name whichever of these four requirements is missing, rather than skipping the operation.
 
 ### Opening a Bitbucket pull request in direct-PR mode
 
-`gh-axi` is GitHub-only, so a `direct-PR` task on a project whose `origin` is a Bitbucket Cloud repository opens its pull request with [`bin/fm-pr-open.sh`](../bin/fm-pr-open.sh) instead, through the same REST path and credential as above.
-`bin/fm-brief.sh` and `bin/fm-promote.sh` read the project clone's `origin` remote when they render the worker's Definition of done, so a Bitbucket origin gets the helper's commands and every other project keeps the `gh-axi` wording unchanged.
-That choice only selects the open command: it is not the registry's `forge=` binding, and the `no-mistakes` mode is unchanged because its pipeline opens the pull request itself.
-Supported Cloud origins include HTTPS, `git@bitbucket.org:<workspace>/<repository>`, `ssh://git@bitbucket.org[:port]/<workspace>/<repository>`, and `ssh://git@altssh.bitbucket.org:443/<workspace>/<repository>`, with an optional `.git` suffix.
-The helper operates only on the current copy, its Bitbucket origin repository, and its current branch; it refuses a missing or non-Bitbucket origin, a detached HEAD, and a PR URL naming a different repository. There are no worktree, repository, branch, destination, title, or description overrides.
-The worker pushes its branch, runs `fm-pr-open.sh open` to create a non-draft pull request using the repository's default destination and the HEAD commit's subject and body (reusing one already open from the same source repository and branch), and runs `fm-pr-open.sh verify <pr-url>` with the returned URL before reporting done. If creation returns no usable ID, running `open` again discovers the existing PR.
-`verify` requires the PR URL and exits zero only when the pull request is open, not a draft, from the origin repository's current branch, and at the worker copy's `HEAD`; `fm-pr-open.sh ready <pr-url>` takes a draft from that same source repository and branch out of draft, then verifies it.
-The worker's environment needs the same two variables, and the helper names a missing one without printing any value; the token needs write access to pull requests.
-The helper's header owns its options and exit statuses, and `tests/fm-pr-bitbucket.test.sh` covers it against a stubbed API.
+`gh-axi` is GitHub-only, so PR-based `direct-PR` delivery on a project whose `origin` is a Bitbucket Cloud repository uses [`bin/fm-pr-open.sh`](../bin/fm-pr-open.sh), through the shared REST path and credential above.
+`bin/fm-brief.sh` and `bin/fm-promote.sh` read the project clone's `origin` remote when they render the worker's Definition of done; Bitbucket Cloud selects the helper, while other or unreadable origins keep the existing GitHub instructions.
+This selects the PR-publication instructions, not the registry's `forge=` binding; Gerrit publication takes precedence, and `no-mistakes` mode is unchanged because its pipeline opens the pull request itself.
+The worker's environment must provide the credential above.
+The [helper's header and help](../bin/fm-pr-open.sh) own supported origin forms, current-copy restrictions, push/open/verify/ready usage, draft handling, recovery, and exit statuses; [`bin/fm-dod-lib.sh`](../bin/fm-dod-lib.sh) owns the worker's delivery contract.
+[`tests/fm-pr-bitbucket.test.sh`](../tests/fm-pr-bitbucket.test.sh) covers the helper against a stubbed API.
 
 ## Toolchain
 

@@ -1172,7 +1172,7 @@ fm_pr_gerrit_read_revision() {  # <host> <number>
 }
 
 # --- Bitbucket Cloud REST API 2.0 --------------------------------------------
-# Bitbucket Cloud has no CLI firstmate can rely on, so its reads and its merge
+# Bitbucket Cloud has no CLI firstmate can rely on, so its PR reads and writes
 # go through curl against this one fixed API base. The credential is the one
 # the no-mistakes pipeline already uses to open Bitbucket pull requests:
 # NO_MISTAKES_BITBUCKET_EMAIL and NO_MISTAKES_BITBUCKET_API_TOKEN, an Atlassian
@@ -1183,7 +1183,7 @@ fm_pr_gerrit_read_revision() {  # <host> <number>
 # .curlrc can add options to a request that carries it.
 FM_PR_BITBUCKET_API=https://api.bitbucket.org/2.0
 
-# Prints what a Bitbucket read or merge still needs, joined for a refusal, and
+# Prints what a Bitbucket API operation still needs, joined for a refusal, and
 # nothing when every requirement is present.
 fm_pr_bitbucket_missing_requirements() {
   local missing=''
@@ -1198,12 +1198,9 @@ fm_pr_bitbucket_missing_requirements() {
 
 # The workspace/repository a git remote URL names on Bitbucket Cloud, printed
 # lowercase in the canonical spelling every other helper here uses, and nothing
-# for any other host, a malformed path, or a Bitbucket Data Center address. It
-# accepts the three shapes git stores: https://[userinfo@]bitbucket.org/<w>/<r>,
-# ssh://[user@]bitbucket.org[:port]/<w>/<r>,
-# ssh://[user@]altssh.bitbucket.org:443/<w>/<r>, and
-# [user@]bitbucket.org:<w>/<r>, each with an optional ".git" suffix. Only the
-# path is ever printed, so userinfo never reaches output through this.
+# for any other host, a malformed path, or a Bitbucket Data Center address.
+# bin/fm-pr-open.sh's header owns the supported transport forms. Only the path
+# is ever printed, so userinfo never reaches output through this.
 fm_pr_bitbucket_remote_path() {  # <remote-url>
   local url=${1-} rest authority host path
   local LC_ALL=C
@@ -1243,9 +1240,8 @@ fm_pr_bitbucket_remote_path() {  # <remote-url>
 # the remote is a Bitbucket Cloud repository, and "github" for anything else,
 # including a missing clone or remote, so a project this does not recognise
 # keeps the GitHub contract it always had. This reads the clone's own git
-# config and never the network. bin/fm-dod-lib.sh calls it to choose the
-# direct-PR worker's open command, and bin/fm-pr-open.sh calls it to find the
-# repository to open the pull request on.
+# config and never the network; bin/fm-brief.sh and bin/fm-promote.sh pass its
+# result to bin/fm-dod-lib.sh's direct-PR renderer.
 fm_pr_project_pr_host() {  # <clone-dir>
   local dir=${1-} url
   if [ -n "$dir" ] && [ -d "$dir" ] \

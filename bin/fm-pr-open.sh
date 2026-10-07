@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
 # Open, verify, and ready a Bitbucket Cloud pull request for a direct-PR worker.
 #
-# gh-axi is GitHub-only, so a direct-PR task on a Bitbucket Cloud project opens
-# its pull request here instead; bin/fm-dod-lib.sh's direct-PR Definition of done
-# names these commands for a project whose origin is Bitbucket Cloud and keeps
-# gh-axi for every other one. The pull request is created, found, and read back
-# through bin/fm-pr-lib.sh's Bitbucket REST helpers, under the same
-# NO_MISTAKES_BITBUCKET_EMAIL and NO_MISTAKES_BITBUCKET_API_TOKEN credential that
-# bin/fm-pr-merge.sh, bin/fm-pr-state.sh, and the no-mistakes pipeline use
-# (docs/configuration.md "Bitbucket Cloud pull requests" owns it). There is no
-# second HTTP client. A missing credential is reported by variable name only, and
-# neither the token nor the authorization header is ever printed.
+# docs/configuration.md's "Opening a Bitbucket pull request in direct-PR mode"
+# section owns setup and forge selection. Requests use bin/fm-pr-lib.sh's shared
+# REST helpers and the credential configured in that document's "Bitbucket Cloud
+# pull requests" section; there is no second HTTP client. Missing requirements
+# are reported by name only, and neither credentials nor authorization headers
+# are ever printed.
 #
 # Usage:
 #   fm-pr-open.sh open
@@ -20,25 +16,34 @@
 # All commands operate on the current git work tree, its Bitbucket Cloud origin
 # repository, and its current branch; a missing or non-Bitbucket origin and a
 # detached HEAD are refused. A PR URL must name that origin repository.
+# There are no worktree, repository, branch, destination, title, or description
+# overrides. Supported origin forms, each with an optional ".git" suffix, are:
+#   https://[userinfo@]bitbucket.org/<workspace>/<repository>
+#   [user@]bitbucket.org:<workspace>/<repository>
+#   ssh://[user@]bitbucket.org[:port]/<workspace>/<repository>
+#   ssh://[user@]altssh.bitbucket.org:443/<workspace>/<repository>
+#
 # open creates a non-draft pull request from the current branch, which must
 # already be pushed, to the repository's default destination. The title is the
 # HEAD commit's subject and the description is its body. An open pull request
 # for the same source repository and branch is reused rather than duplicated.
 # An existing draft is refused, because opening never changes a pull request it
-# did not create; "ready" is the explicit step that takes a draft out of draft. open
-# always finishes with the same read-back verify performs, prints the pull
-# request's https URL as its last line, and exits nonzero when the read-back
-# fails.
+# did not create; "ready" is the explicit step that takes a draft out of draft.
+# Before reporting success, open performs the same read-back as verify and writes
+# its diagnostics to stderr. It prints only the pull request's https URL to stdout
+# on success and exits nonzero when the read-back fails. If creation is accepted
+# but returns no usable ID, run open again to discover the existing pull request.
 #
 # verify reads the pull request back and exits 0 only when it is open, not a
 # draft, from the origin repository's current branch, and carries this work
 # tree's HEAD, so a commit that was never pushed is refused. The <pr-url> is
-# required. It prints "state:", "draft:", "source:", "head:",
+# required. It prints "state:", "draft:", "source:", "destination:", "head:",
 # and "url:" lines, with "draft: no" on success mirroring `gh-axi pr view`.
 #
 # ready takes a pull request out of draft, then verifies it.
 #
 # Exit status: 0 success, 1 a refusal or failed read-back, 2 a usage error.
+#
 set -eu
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -128,7 +133,8 @@ pr_url() {  # <number>
   printf 'https://bitbucket.org/%s/pull-requests/%s' "$REPO_PATH" "$1"
 }
 
-# The lowest-numbered open pull request from the source branch, or nothing.
+# Discovery must bind repository as well as branch: incoming forks can share
+# the branch name.
 find_open_pr() {
   local query encoded
   query=$(jq -rn --arg b "$SOURCE" --arg r "$REPO_PATH" '
@@ -158,8 +164,7 @@ read_pr() {  # <number>
   api_failure "reading $(pr_url "$1")"
 }
 
-# Read a pull request back and exit nonzero unless it is open, not a draft, from
-# the source branch, and at this work tree's HEAD.
+# Use the same read-back for reused, created, and explicitly readied PRs.
 verify_pr() {  # <number>
   local number=$1 url problems=''
   url=$(pr_url "$number")
