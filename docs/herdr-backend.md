@@ -156,8 +156,7 @@ Rename it manually before expecting new tasks or recovery to use it.
 ### Recovery and existing tasks
 
 Recovery and list-live still scan the first workspace matching the home label, because they address panes they already recorded rather than choosing where new work goes.
-The one recovery that does place new work is the control plane's reclaim of a destroyed endpoint.
-It mints a replacement tab through this section's ordinary placement rules while pinning the herdr session the task's record names ([`agent-control.md`](agent-control.md) "Reclaiming a task whose endpoint is gone").
+[Reclaiming a task whose endpoint is gone](agent-control.md#reclaiming-a-task-whose-endpoint-is-gone) owns recovery that needs a replacement endpoint, including its session and placement constraints.
 
 Existing task operations use recorded endpoint ids and do not move a live task when labels change.
 The per-home workspace is reused while it has task tabs.
