@@ -4350,6 +4350,79 @@ SH
   pass "new, active, and released holds require the origin first with and without deferral"
 }
 
+# A hold moved to a new origin must not let the previous origin's answer satisfy
+# the new one when the move never completed. The backend hold is refused and
+# every later body write fails, so the rollback cannot run and the task keeps
+# the new stamp and origin above the earlier answer.
+test_interrupted_origin_move_does_not_inherit_the_previous_answer() {
+  local home id=sample-moved-call shown
+  home=$(make_home interrupted-origin-move)
+  for o in origin-a origin-b; do
+    tasks_in "$home" add "$o" "Review $o" --kind scout --repo sample >/dev/null \
+      || fail "could not create $o"
+    write_origin_meta "$home" "$o"
+  done
+  run_captain "$home" hold "$id" --title "Separate call" --reason "Choose for A" \
+    --origin origin-a >/dev/null || fail "could not hold the call for A"
+  printf 'Release this work.\n' > "$home/answer.txt"
+  run_captain "$home" answer "$id" --release --decision-file "$home/answer.txt" >/dev/null \
+    || fail "could not release the call for A"
+  run_captain "$home" complete origin-a "$id" >/dev/null \
+    || fail "the genuine answer for A did not complete A"
+
+  cat > "$home/fakebin/tasks-axi" <<'SH'
+#!/usr/bin/env bash
+if [ -f "$FM_HOME/hold-refused" ] && [ "${1:-}" = update ]; then
+  exit 9
+fi
+if [ "${1:-}" = hold ] && [ "${2:-}" != --help ] && [ -f "$FM_HOME/fail-hold" ]; then
+  : > "$FM_HOME/hold-refused"
+  exit 9
+fi
+exec "$REAL_TASKS_AXI" "$@"
+SH
+  chmod +x "$home/fakebin/tasks-axi"
+  : > "$home/fail-hold"
+  if run_captain "$home" hold "$id" --reason "Choose for B" --origin origin-b \
+    > "$home/hold.out" 2> "$home/hold.err"; then
+    fail "the hold succeeded although the backend refused it"
+  fi
+  assert_present "$home/hold-refused" "the failure did not reach the backend hold"
+  shown=$(tasks_in "$home" show "$id" --full)
+  assert_contains "$shown" 'held: no' "the refused hold left the task held"
+  assert_contains "$shown" 'Captain hold origin: origin-b' \
+    "the interrupted move did not leave B's origin behind, so it reproduces nothing"
+  rm "$home/fail-hold" "$home/hold-refused"
+  rm "$home/fakebin/tasks-axi"
+
+  if run_captain "$home" complete origin-b "$id" > "$home/complete.out" 2> "$home/complete.err"; then
+    fail "complete accepted the previous origin's answer for B"
+  fi
+  assert_grep "newer hold never completed" "$home/complete.err" \
+    "the refusal does not name the incomplete move"
+  assert_no_grep "decisions_reviewed=1" "$home/state/origin-b.meta" \
+    "the refused completion recorded an attestation for B"
+  printf 'decisions_reviewed=1\ndecision_keys=%s\n' "$id" >> "$home/state/origin-b.meta"
+  if run_captain "$home" verify origin-b > "$home/verify.out" 2> "$home/verify.err"; then
+    fail "verify accepted the previous origin's answer for B"
+  fi
+
+  # Completing the interrupted move holds the call for B; B's own answer then
+  # completes it.
+  run_captain "$home" hold "$id" --reason "Choose for B" --origin origin-b >/dev/null \
+    || fail "the interrupted move could not be completed"
+  run_captain "$home" complete origin-b "$id" >/dev/null \
+    || fail "a held call for B did not complete B"
+  printf 'Ship it for B.\n' > "$home/answer-b.txt"
+  run_captain "$home" answer "$id" --release --decision-file "$home/answer-b.txt" >/dev/null \
+    || fail "could not release the call for B"
+  run_captain "$home" complete origin-b "$id" >/dev/null \
+    || fail "the genuine answer for B did not complete B"
+  run_captain "$home" verify origin-b >/dev/null \
+    || fail "the genuine answer for B did not verify B"
+  pass "an interrupted origin move cannot satisfy the new origin with the previous answer"
+}
+
 test_historical_self_inventory_has_workable_repair() {
   local home origin=sample-review keep=retained-call replacement=repair-call meta before out
   home=$(make_home historical-self-inventory)
@@ -4631,6 +4704,7 @@ SH
 
 test_hold_reason_round_trips_awkward_characters
 test_hold_origins_precede_backend_holds
+test_interrupted_origin_move_does_not_inherit_the_previous_answer
 test_historical_self_inventory_has_workable_repair
 test_inventory_compares_backend_identities
 test_origin_is_never_its_own_inventory_entry

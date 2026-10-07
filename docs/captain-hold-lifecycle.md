@@ -65,6 +65,10 @@ Repeat and edge cases:
 - `--until` stores the captain's own deferral date through tasks-axi's date gate.
 - Before the backend hold runs, `--origin` records the origin the call is held for on its own `Captain hold origin:` body line, which `complete` and `verify` check using backend identities rather than alias spellings.
   If that write fails, the backend hold is not attempted.
+- If the origin write or the backend hold fails, `hold` restores the body the attempt started from, so a refused re-hold leaves neither the new origin nor the new stamp behind.
+- An open task that is not held and leads with a hold-set stamp above a recorded answer is a re-hold that never completed.
+  `complete` and `verify` refuse it, so a process killed between the stamp or origin write and the backend hold cannot make the earlier call's answer satisfy the new origin.
+  Re-running `hold` completes the move, and re-running the same `answer --release` normalizes a release interrupted before its stamp was removed.
 - The reason may contain parentheses, semicolons, quotes, and line breaks.
   [`bin/fm-hold-reason-lib.sh`](../bin/fm-hold-reason-lib.sh) owns the storage encoding and compatibility rules; [`bin/fm-tasks-axi.sh --help`](../bin/fm-tasks-axi.sh) owns the public read commands and output contract.
 
