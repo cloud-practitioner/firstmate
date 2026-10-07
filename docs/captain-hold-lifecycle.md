@@ -51,9 +51,9 @@ It works in this order:
 
 1. It uses an existing task, or creates one when nothing exists to hold.
 2. It records the task's UTC hold-set timestamp as the leading line of the task body.
-3. When `--origin` is supplied, it records the origin on the task, replacing any previous association.
-4. It invokes the underlying tasks-axi hold operation.
-5. It verifies the hold and timestamp.
+3. It invokes the underlying tasks-axi hold operation.
+4. It verifies the captain-hold annotations and timestamp.
+5. When `--origin` is supplied, it records the origin on the task, replacing any previous association only after the backend hold succeeds.
 
 Publishing the stamp first ensures a snapshot cannot observe a newly captain-held task without the timestamp that defines its age.
 
@@ -63,12 +63,15 @@ Repeat and edge cases:
 - Re-holding released work starts a new timestamped lifecycle.
 - A closed task is refused rather than reopened.
 - `--until` stores the captain's own deferral date through tasks-axi's date gate.
-- Before the backend hold runs, `--origin` records the origin the call is held for on its own `Captain hold origin:` body line, which `complete` and `verify` check using backend identities rather than alias spellings.
-  If that write fails, the backend hold is not attempted.
-- If the origin write or the backend hold fails, `hold` restores the body the attempt started from, so a refused re-hold leaves neither the new origin nor the new stamp behind.
-- An open task that is not held and leads with a hold-set stamp above a recorded answer is a re-hold that never completed.
-  `complete` and `verify` refuse it, so a process killed between the stamp or origin write and the backend hold cannot make the earlier call's answer satisfy the new origin.
-  Re-running `hold` completes the move, and re-running the same `answer --release` normalizes a release interrupted before its stamp was removed.
+- `--origin` resolves the backend origin identity before writing the hold-set stamp and publishes it on its own `Captain hold origin:` body line only after the backend hold succeeds.
+  `complete` and `verify` check that line using backend identities rather than alias spellings.
+  An interrupted or refused backend hold therefore cannot publish the new association, even when an old captain hold is still active or date-expired.
+- If the backend hold fails, `hold` attempts to restore the previous body.
+  If restoration also fails, the new stamp can remain, but the previous origin is unchanged.
+  If the subsequent origin write fails, the successful captain hold and its stamp remain with the previous association (or with no recorded origin for a new task); re-running `hold` retries publication.
+- An open task without captain-hold annotations that leads with a hold-set stamp above a recorded answer is refused by `complete` and `verify` because the answer alone cannot establish that the newer call was held.
+  Replaying the earlier `answer --release` can remove that stamp, and normal work completion can retain the answer, but neither transition changes the stored origin: neither can certify the failed move's new origin.
+  Re-running `hold` completes the move, and re-running the same `answer --release` also normalizes a release interrupted before its stamp was removed.
 - The reason may contain parentheses, semicolons, quotes, and line breaks.
   [`bin/fm-hold-reason-lib.sh`](../bin/fm-hold-reason-lib.sh) owns the storage encoding and compatibility rules; [`bin/fm-tasks-axi.sh --help`](../bin/fm-tasks-axi.sh) owns the public read commands and output contract.
 

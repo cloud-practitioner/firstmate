@@ -4234,8 +4234,8 @@ test_complete_refuses_an_entry_held_for_another_origin() {
   pass "complete refuses an entry held for another origin and flags one with none recorded"
 }
 
-test_hold_origins_precede_backend_holds() {
-  local home phase timing failure id shown origin until_args=()
+test_hold_origins_follow_backend_holds() {
+  local home phase timing failure id shown origin out until_args=()
   for phase in new active released; do
     for timing in plain dated; do
       home=$(make_home "origin-failure-$phase-$timing")
@@ -4261,12 +4261,16 @@ if [ "${1:-}" = show ] && [ "${2:-}" = origin-b ] && [ -f "$FM_HOME/fail-lookup"
   printf 'error: origin read failed\ncode: READ_FAILED\n' >&2
   exit 2
 fi
-if [ "${1:-}" = update ] && [ -f "$FM_HOME/fail-write" ]; then
+if [ "${1:-}" = update ]; then
   previous=''
   for arg in "$@"; do
     if [ "$previous" = --body-file ] && grep -qx 'Captain hold origin: origin-b' "$arg"; then
-      : > "$FM_HOME/write-refused"
-      exit 9
+      [ -f "$FM_HOME/backend-held" ] || exit 8
+      "$REAL_TASKS_AXI" show "$2" --full > "$FM_HOME/before-origin-write" || exit $?
+      if [ -f "$FM_HOME/fail-write" ]; then
+        : > "$FM_HOME/write-refused"
+        exit 9
+      fi
     fi
     previous=$arg
   done
@@ -4277,32 +4281,40 @@ if [ "${1:-}" = hold ] && [ "${2:-}" != --help ]; then
     : > "$FM_HOME/hold-refused"
     exit 9
   fi
+  "$REAL_TASKS_AXI" "$@" || exit $?
+  : > "$FM_HOME/backend-held"
+  exit 0
 fi
 exec "$REAL_TASKS_AXI" "$@"
 SH
       chmod +x "$home/fakebin/tasks-axi"
       until_args=()
       [ "$timing" != dated ] || until_args=(--until 2099-01-01)
-      for failure in lookup write hold; do
+      for failure in lookup hold write; do
         : > "$home/fail-$failure"
         if run_captain "$home" hold "$id" --title "Separate call" --reason "Choose for B" \
           --origin origin-b ${until_args[@]+"${until_args[@]}"} > "$home/hold.out" 2> "$home/hold.err"; then
           fail "$phase $timing hold succeeded despite an origin $failure failure"
         fi
         assert_present "$home/$failure-refused" "the failure did not reach the origin $failure"
-        if [ "$failure" = hold ]; then
-          assert_present "$home/before-backend-hold" "$phase $timing failure never reached the backend hold"
-          assert_grep 'Captain hold origin: origin-b' "$home/before-backend-hold" \
-            "the failed backend hold did not see the new association"
-          rm "$home/before-backend-hold"
+        if [ "$failure" = lookup ]; then
+          assert_absent "$home/before-backend-hold" "$phase $timing origin lookup failure reached the backend hold"
         else
-          assert_absent "$home/before-backend-hold" "$phase $timing origin $failure failure reached the backend hold"
+          assert_present "$home/before-backend-hold" "$phase $timing failure never reached the backend hold"
+          assert_no_grep 'Captain hold origin: origin-b' "$home/before-backend-hold" \
+            "the backend hold saw the new association before succeeding"
+          rm "$home/before-backend-hold"
+        fi
+        if [ "$failure" = write ]; then
+          assert_present "$home/backend-held" "the origin write preceded backend success"
+          assert_grep 'held: yes' "$home/before-origin-write" "the origin write did not follow a live hold"
+          assert_grep 'hold_kind: captain' "$home/before-origin-write" "the origin write did not follow a captain hold"
         fi
         shown=$(tasks_in "$home" show "$id" --full)
         assert_not_contains "$shown" 'Captain hold origin: origin-b' \
           "$phase $timing origin $failure failure published the new association"
-        if [ "$phase" = active ]; then
-          assert_contains "$shown" 'held: yes' "an origin $failure failure lifted an existing hold"
+        if [ "$phase" = active ] || [ "$failure" = write ]; then
+          assert_contains "$shown" 'held: yes' "an origin $failure failure lost the successful hold"
         else
           assert_contains "$shown" 'held: no' "$phase $timing origin $failure failure left the task held"
         fi
@@ -4311,6 +4323,14 @@ SH
             "$phase $timing origin $failure failure lost the original association"
         fi
         rm "$home/fail-$failure"
+        rm -f "$home/backend-held" "$home/before-origin-write"
+        if [ "$phase" = new ] && [ "$failure" = write ]; then
+          out=$(run_captain "$home" complete origin-b "$id") \
+            || fail "the unrecorded successful hold was not durable"
+          assert_contains "$out" "no recorded origin on: $id" "the unrecorded hold was claimed to have an origin"
+          run_captain "$home" verify origin-b >/dev/null || fail "the unrecorded hold could not verify"
+          continue
+        fi
         if [ "$phase" = new ] && run_captain "$home" complete origin-a "$id" \
           > "$home/unrelated.out" 2> "$home/unrelated.err"; then
           fail "$timing origin $failure failure satisfied an unrelated inventory"
@@ -4333,8 +4353,11 @@ SH
         ${until_args[@]+"${until_args[@]}"} >/dev/null || fail "$phase $timing successful retry failed"
       assert_present "$home/before-backend-hold" "the successful retry did not reach the backend hold"
       shown=$(cat "$home/before-backend-hold")
-      assert_contains "$shown" 'Captain hold origin: origin-b' "the backend hold ran before the new origin was recorded"
-      assert_not_contains "$shown" 'Captain hold origin: origin-a' "the backend hold ran with the old association"
+      assert_not_contains "$shown" 'Captain hold origin: origin-b' "the backend hold ran with the new association already published"
+      if [ "$phase" != new ]; then
+        assert_contains "$shown" 'Captain hold origin: origin-a' "the backend hold lost the old association before succeeding"
+      fi
+      assert_grep 'held: yes' "$home/before-origin-write" "the successful origin write preceded a live hold"
       shown=$(tasks_in "$home" show "$id" --full)
       assert_contains "$shown" 'held: yes' "the successful retry did not hold the task"
       assert_contains "$shown" 'Captain hold origin: origin-b' "a successful hold lost its association"
@@ -4347,80 +4370,141 @@ SH
       fi
     done
   done
-  pass "new, active, and released holds require the origin first with and without deferral"
+  pass "new, active, and released holds publish origins after backend success with and without deferral"
 }
 
-# A hold moved to a new origin must not let the previous origin's answer satisfy
-# the new one when the move never completed. The backend hold is refused and
-# every later body write fails, so the rollback cannot run and the task keeps
-# the new stamp and origin above the earlier answer.
 test_interrupted_origin_move_does_not_inherit_the_previous_answer() {
-  local home id=sample-moved-call shown
-  home=$(make_home interrupted-origin-move)
-  for o in origin-a origin-b; do
-    tasks_in "$home" add "$o" "Review $o" --kind scout --repo sample >/dev/null \
-      || fail "could not create $o"
-    write_origin_meta "$home" "$o"
-  done
-  run_captain "$home" hold "$id" --title "Separate call" --reason "Choose for A" \
-    --origin origin-a >/dev/null || fail "could not hold the call for A"
-  printf 'Release this work.\n' > "$home/answer.txt"
-  run_captain "$home" answer "$id" --release --decision-file "$home/answer.txt" >/dev/null \
-    || fail "could not release the call for A"
-  run_captain "$home" complete origin-a "$id" >/dev/null \
-    || fail "the genuine answer for A did not complete A"
+  local home id=sample-moved-call shown phase failure o rc until_args=()
+  for phase in active expired released-replay released-done; do
+    for failure in refused interrupted; do
+      home=$(make_home "interrupted-origin-move-$phase-$failure")
+      for o in origin-a origin-b; do
+        tasks_in "$home" add "$o" "Review $o" --kind scout --repo sample >/dev/null \
+          || fail "could not create $o"
+        write_origin_meta "$home" "$o"
+      done
+      run_captain "$home" hold "$id" --title "Separate call" --reason "Choose for A" \
+        --origin origin-a >/dev/null || fail "could not hold the call for A"
+      printf 'Release this work.\n' > "$home/answer.txt"
+      run_captain "$home" answer "$id" --release --decision-file "$home/answer.txt" >/dev/null \
+        || fail "could not release the call for A"
+      until_args=()
+      [ "$phase" != expired ] || until_args=(--until 2000-01-01)
+      case "$phase" in
+        active|expired)
+          run_captain "$home" hold "$id" --reason "Choose again for A" --origin origin-a \
+            ${until_args[@]+"${until_args[@]}"} >/dev/null || fail "could not re-hold the call for A"
+          ;;
+      esac
+      run_captain "$home" complete origin-a "$id" >/dev/null \
+        || fail "the genuine call for A did not complete A"
 
-  cat > "$home/fakebin/tasks-axi" <<'SH'
+      cat > "$home/fakebin/tasks-axi" <<'SH'
 #!/usr/bin/env bash
 if [ -f "$FM_HOME/hold-refused" ] && [ "${1:-}" = update ]; then
+  : > "$FM_HOME/restore-refused"
   exit 9
 fi
-if [ "${1:-}" = hold ] && [ "${2:-}" != --help ] && [ -f "$FM_HOME/fail-hold" ]; then
+if [ "${1:-}" = hold ] && [ "${2:-}" != --help ]; then
+  "$REAL_TASKS_AXI" show "$2" --full > "$FM_HOME/before-backend-hold" || exit $?
   : > "$FM_HOME/hold-refused"
+  if [ -f "$FM_HOME/interrupt-hold" ]; then
+    kill -TERM "$(cat "$FM_HOME/hold-pid")"
+  fi
   exit 9
 fi
 exec "$REAL_TASKS_AXI" "$@"
 SH
-  chmod +x "$home/fakebin/tasks-axi"
-  : > "$home/fail-hold"
-  if run_captain "$home" hold "$id" --reason "Choose for B" --origin origin-b \
-    > "$home/hold.out" 2> "$home/hold.err"; then
-    fail "the hold succeeded although the backend refused it"
-  fi
-  assert_present "$home/hold-refused" "the failure did not reach the backend hold"
-  shown=$(tasks_in "$home" show "$id" --full)
-  assert_contains "$shown" 'held: no' "the refused hold left the task held"
-  assert_contains "$shown" 'Captain hold origin: origin-b' \
-    "the interrupted move did not leave B's origin behind, so it reproduces nothing"
-  rm "$home/fail-hold" "$home/hold-refused"
-  rm "$home/fakebin/tasks-axi"
+      chmod +x "$home/fakebin/tasks-axi"
+      rc=0
+      if [ "$failure" = interrupted ]; then
+        : > "$home/interrupt-hold"
+        PATH="$home/fakebin:$PATH" REAL_TASKS_AXI="$TASKS_AXI_BIN" \
+          FM_HOME="$home" FM_STATE_OVERRIDE="$home/state" FM_DATA_OVERRIDE="$home/data" \
+          FM_CONFIG_OVERRIDE="$home/config" bash -c \
+          'printf "%s\n" "$$" > "$FM_HOME/hold-pid"; exec "$@"' _ \
+          "$ROOT/bin/fm-captain-hold.sh" hold "$id" --reason "Choose for B" --origin origin-b \
+          > "$home/hold.out" 2> "$home/hold.err" || rc=$?
+        [ "$rc" -eq 143 ] || fail "the hold was not interrupted by TERM: $rc"
+        assert_absent "$home/restore-refused" "an interrupted hold attempted restoration"
+      else
+        run_captain "$home" hold "$id" --reason "Choose for B" --origin origin-b \
+          > "$home/hold.out" 2> "$home/hold.err" || rc=$?
+        [ "$rc" -ne 0 ] || fail "the hold succeeded although the backend refused it"
+        assert_present "$home/restore-refused" "the refused hold did not attempt restoration"
+      fi
+      assert_present "$home/hold-refused" "the failure did not reach the backend hold"
+      assert_no_grep 'Captain hold origin: origin-b' "$home/before-backend-hold" \
+        "the move published B before the backend hold"
+      shown=$(tasks_in "$home" show "$id" --full)
+      assert_contains "$shown" 'Captain hold origin: origin-a' "the failed move lost A's association"
+      assert_not_contains "$shown" 'Captain hold origin: origin-b' "the failed move published B's association"
+      assert_contains "$shown" 'Captain hold set:' "the fixture did not retain the uncommitted stamp"
+      assert_contains "$shown" 'Release this work.' "the failed move lost the earlier answer"
+      if [ "$phase" = active ]; then
+        assert_contains "$shown" 'held: yes' "the failed move lifted A's active hold"
+      else
+        assert_contains "$shown" 'held: no' "the failed move created a live hold"
+      fi
+      if [ "$phase" = expired ]; then
+        assert_contains "$shown" 'hold_kind: captain' "the expired fixture lost A's captain annotations"
+      fi
+      rm "$home/fakebin/tasks-axi"
 
-  if run_captain "$home" complete origin-b "$id" > "$home/complete.out" 2> "$home/complete.err"; then
-    fail "complete accepted the previous origin's answer for B"
-  fi
-  assert_grep "newer hold never completed" "$home/complete.err" \
-    "the refusal does not name the incomplete move"
-  assert_no_grep "decisions_reviewed=1" "$home/state/origin-b.meta" \
-    "the refused completion recorded an attestation for B"
-  printf 'decisions_reviewed=1\ndecision_keys=%s\n' "$id" >> "$home/state/origin-b.meta"
-  if run_captain "$home" verify origin-b > "$home/verify.out" 2> "$home/verify.err"; then
-    fail "verify accepted the previous origin's answer for B"
-  fi
+      if run_captain "$home" complete origin-b "$id" > "$home/complete.out" 2> "$home/complete.err"; then
+        fail "complete accepted the previous call for B"
+      fi
+      assert_no_grep "decisions_reviewed=1" "$home/state/origin-b.meta" \
+        "the refused completion recorded an attestation for B"
+      printf 'decisions_reviewed=1\ndecision_keys=%s\n' "$id" >> "$home/state/origin-b.meta"
+      if run_captain "$home" verify origin-b > "$home/verify.out" 2> "$home/verify.err"; then
+        fail "verify accepted the previous call for B"
+      fi
+      case "$phase" in
+        released-*)
+          if run_captain "$home" complete origin-a "$id" >/dev/null 2> "$home/incomplete.err"; then
+            fail "the verification boundary accepted a released answer beneath an incomplete hold"
+          fi
+          assert_grep "newer hold never completed" "$home/incomplete.err" "the stamp guard did not refuse the incomplete hold"
+          if run_captain "$home" verify origin-a >/dev/null 2> "$home/incomplete-verify.err"; then
+            fail "verify accepted a released answer beneath an incomplete hold"
+          fi
+          if [ "$phase" = released-replay ]; then
+            run_captain "$home" answer "$id" --release --decision-file "$home/answer.txt" >/dev/null \
+              || fail "could not replay A's earlier answer"
+          else
+            tasks_in "$home" done "$id" --keep 1 >/dev/null || fail "could not complete the released work"
+          fi
+          shown=$(tasks_in "$home" show "$id" --full)
+          assert_contains "$shown" 'Captain hold origin: origin-a' "the subsequent transition changed A's association"
+          if run_captain "$home" complete origin-b "$id" >/dev/null 2> "$home/transition-complete.err"; then
+            fail "$phase certified B after a failed move"
+          fi
+          assert_grep "was held for origin origin-a, not origin-b" "$home/transition-complete.err" \
+            "the transition did not refuse B on origin provenance"
+          if run_captain "$home" verify origin-b >/dev/null 2> "$home/transition-verify.err"; then
+            fail "$phase verified B after a failed move"
+          fi
+          ;;
+      esac
+      run_captain "$home" complete origin-a "$id" >/dev/null || fail "the surviving call could not complete A"
+      run_captain "$home" verify origin-a >/dev/null || fail "the surviving call could not verify A"
+      [ "$phase" != released-done ] || continue
 
-  # Completing the interrupted move holds the call for B; B's own answer then
-  # completes it.
-  run_captain "$home" hold "$id" --reason "Choose for B" --origin origin-b >/dev/null \
-    || fail "the interrupted move could not be completed"
-  run_captain "$home" complete origin-b "$id" >/dev/null \
-    || fail "a held call for B did not complete B"
-  printf 'Ship it for B.\n' > "$home/answer-b.txt"
-  run_captain "$home" answer "$id" --release --decision-file "$home/answer-b.txt" >/dev/null \
-    || fail "could not release the call for B"
-  run_captain "$home" complete origin-b "$id" >/dev/null \
-    || fail "the genuine answer for B did not complete B"
-  run_captain "$home" verify origin-b >/dev/null \
-    || fail "the genuine answer for B did not verify B"
-  pass "an interrupted origin move cannot satisfy the new origin with the previous answer"
+      run_captain "$home" hold "$id" --reason "Choose for B" --origin origin-b >/dev/null \
+        || fail "the interrupted move could not be completed"
+      run_captain "$home" complete origin-b "$id" >/dev/null \
+        || fail "a held call for B did not complete B"
+      printf 'Ship it for B.\n' > "$home/answer-b.txt"
+      run_captain "$home" answer "$id" --release --decision-file "$home/answer-b.txt" >/dev/null \
+        || fail "could not release the call for B"
+      run_captain "$home" complete origin-b "$id" >/dev/null \
+        || fail "the genuine answer for B did not complete B"
+      run_captain "$home" verify origin-b >/dev/null \
+        || fail "the genuine answer for B did not verify B"
+    done
+  done
+  pass "failed and interrupted origin moves cannot inherit active, expired, replayed, or completed calls"
 }
 
 test_historical_self_inventory_has_workable_repair() {
@@ -4703,7 +4787,7 @@ SH
 }
 
 test_hold_reason_round_trips_awkward_characters
-test_hold_origins_precede_backend_holds
+test_hold_origins_follow_backend_holds
 test_interrupted_origin_move_does_not_inherit_the_previous_answer
 test_historical_self_inventory_has_workable_repair
 test_inventory_compares_backend_identities
