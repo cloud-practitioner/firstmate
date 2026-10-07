@@ -1116,6 +1116,234 @@ test_pi_approve_probe_omits_unsupported_flag() {
   pass "Pi approve probing omits --approve when help does not advertise it"
 }
 
+# config/crew-exclude-tools: per-home worker tool exclusions (fm-spawn header).
+write_exclude_file() {  # <home> <line>...
+  local home=$1
+  shift
+  printf '%s\n' "$@" > "$home/config/crew-exclude-tools"
+}
+
+test_pi_exclude_tools_reach_ship_and_scout_launches() {
+  local harness rec id out status launch kindflag
+  for harness in pi pi-signed; do
+    for kindflag in --ship --scout; do
+      id="excl-${harness}-${kindflag#--}-z9a"
+      rec=$(make_spawn_case "excl-${harness}-${kindflag#--}" "$harness" "$id")
+      read_case_record "$rec"
+      write_exclude_file "$HOME_DIR" '# hide the write tools' '' \
+        '  mcp__iqx_jira__editJiraIssue  ' 'mcp__iqx_jira__createConfluenceContent' 'mcp__other-srv__tool.v2'
+      if [ "$kindflag" = --scout ]; then
+        out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --scout)
+      else
+        out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+      fi
+      status=$?
+      expect_code 0 "$status" "$harness $kindflag spawn with exclusions should succeed"$'\n'"$out"
+      launch=$(cat "$LAUNCH_LOG")
+      assert_contains "$launch" "--exclude-tools 'mcp__iqx_jira__editJiraIssue,mcp__iqx_jira__createConfluenceContent,mcp__other-srv__tool.v2' " \
+        "$harness $kindflag launch must carry the comma-joined, quoted exclusion list"
+    done
+  done
+  pass "Pi and pi-signed ship and scout launches carry the configured tool exclusions"
+}
+
+test_pi_exclude_tools_worker_registry_reports() {
+  local harness kindflag scenario rec id out status report
+  command -v node >/dev/null 2>&1 || fail "node is required to drive Pi worker exclusion reporting"
+  for harness in pi pi-signed; do
+    for kindflag in --ship --scout; do
+      for scenario in matched unmatched unverified; do
+        id="excl-registry-${harness}-${kindflag#--}-${scenario}"
+        rec=$(make_spawn_case "$id" "$harness" "$id")
+        read_case_record "$rec"
+        case "$scenario" in
+          matched) write_exclude_file "$HOME_DIR" 'mcp__iqx_jira__editJiraIssue' ;;
+          unmatched) write_exclude_file "$HOME_DIR" 'mcp__iqx_jira__editJiraIssu' 'mcp__iqx_jira__createJiraIssu' ;;
+          unverified) write_exclude_file "$HOME_DIR" 'mcp__offline__executeWrite' ;;
+        esac
+        if [ "$kindflag" = --scout ]; then
+          out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --scout)
+        else
+          out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+        fi
+        expect_code 0 "$?" "$harness $kindflag registry-report spawn should succeed: $out"
+        out=$(EXT_PATH="$HOME_DIR/state/$id.pi-ext.ts" STATUS_FILE="$HOME_DIR/state/$id.status" \
+          EXCLUDE_FILE="$HOME_DIR/config/crew-exclude-tools" TURNEND="$HOME_DIR/state/$id.turn-ended" \
+          SCENARIO="$scenario" node --input-type=module 2>&1 <<'JS'
+import assert from "node:assert/strict";
+import { appendFileSync, existsSync, readFileSync, rmSync } from "node:fs";
+import { pathToFileURL } from "node:url";
+const status = () => existsSync(process.env.STATUS_FILE) ? readFileSync(process.env.STATUS_FILE, "utf8") : "";
+const before = status();
+const handlers = {};
+let tools = [];
+const extension = await import(pathToFileURL(process.env.EXT_PATH).href);
+extension.default({
+  on: (name, handler) => { handlers[name] = handler; },
+  events: { on() {} },
+  getAllTools: () => tools,
+});
+assert.equal(status(), before, "registration must not validate against a registry that has not loaded yet");
+if (process.env.SCENARIO !== "unverified") {
+  tools = [{ name: "mcp__iqx_jira__editJiraIssue" }, { name: "mcp__iqx_jira__createJiraIssue" }];
+}
+rmSync(process.env.TURNEND, { force: true });
+await handlers.agent_start();
+const after = status();
+if (process.env.SCENARIO === "matched") {
+  assert.equal(after, before, "an exact match must produce no report");
+} else {
+  const report = after.slice(before.length);
+  assert.match(report, /^note \[at=\d+\]: warning: /);
+  assert.ok(report.includes(process.env.EXCLUDE_FILE), "the report must identify the config file");
+  assert.ok(report.includes("unmatched exclusion entries"));
+  assert.ok(report.includes("unverified"), "absence must never imply validity");
+  const missing = process.env.SCENARIO === "unmatched"
+    ? ["mcp__iqx_jira__editJiraIssu", "mcp__iqx_jira__createJiraIssu"]
+    : ["mcp__offline__executeWrite"];
+  for (const name of missing) assert.ok(report.includes(name), "every unmatched entry must be reported: " + name);
+  assert.ok(!report.includes("mcp__iqx_jira__editJiraIssue"), "a loaded tool must not be reported");
+}
+await handlers.agent_start();
+assert.equal(status(), after, "report once per worker incarnation, not on every turn");
+appendFileSync(process.env.STATUS_FILE, "done: completed task\n");
+const completed = status();
+await handlers.turn_end();
+await handlers.agent_settled({}, { isIdle: () => true });
+assert.equal(status(), completed, "a reporting extension must not supersede a terminal worker status");
+await new Promise((resolve) => setTimeout(resolve, 200));
+assert.ok(existsSync(process.env.TURNEND), "reporting must preserve turn-end notification");
+JS
+        )
+        status=$?
+        expect_code 0 "$status" "$harness $kindflag $scenario worker registry check failed: $out"
+        if [ "$scenario" != matched ]; then
+          report=$(bash -c '. "$1/bin/fm-classify-lib.sh"; scan_unread_surface_lines "$2"' \
+            _ "$ROOT" "$HOME_DIR/state")
+          expect_code 0 "$?" "the supervisor's unread-status consumer should succeed"
+          assert_contains "$report" "$HOME_DIR/config/crew-exclude-tools" "the supervisor must see the exclusion warning even after done"
+          assert_contains "$report" "unverified" "the supervisor must see that exclusions remain unverified"
+        fi
+      done
+    done
+  done
+  pass "Pi worker registries report unmatched and unverified exclusions without reporting exact matches"
+}
+
+test_pi_exclude_tools_absent_and_empty_lists() {
+  local rec id out status launch
+  id=excl-absent-z9b
+  rec=$(make_spawn_case excl-absent pi "$id")
+  read_case_record "$rec"
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+  expect_code 0 "$?" "Pi spawn without the file should succeed"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--exclude-tools" "an absent file must add no exclusions"
+
+  id=excl-empty-z9c
+  rec=$(make_spawn_case excl-empty pi "$id")
+  read_case_record "$rec"
+  write_exclude_file "$HOME_DIR" '# nothing yet' ''
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+  expect_code 0 "$?" "Pi spawn with a comment-only file should succeed"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--exclude-tools" "a file with no entries must add no exclusions"
+
+  local harness
+  for harness in claude codex; do
+    id="excl-${harness}-empty-z9d"
+    rec=$(make_spawn_case "excl-${harness}-empty" "$harness" "$id")
+    read_case_record "$rec"
+    write_exclude_file "$HOME_DIR" '# nothing yet' ''
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+    status=$?
+    expect_code 0 "$status" "$harness spawn with an empty exclusion list should succeed"$'\n'"$out"
+    assert_not_contains "$(cat "$LAUNCH_LOG")" "--exclude-tools" "$harness must receive no exclusion flag"
+  done
+  pass "an absent or empty exclusion list leaves every runtime unaffected"
+}
+
+test_exclude_tools_non_pi_runtime_refuses_non_empty_list() {
+  local harness rec id out status
+  for harness in claude codex grok; do
+    id="excl-refuse-${harness}-z9i"
+    rec=$(make_spawn_case "excl-refuse-${harness}" "$harness" "$id")
+    read_case_record "$rec"
+    write_exclude_file "$HOME_DIR" 'mcp__srv__writeTool'
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+    status=$?
+    expect_code 1 "$status" "$harness spawn with a non-empty exclusion list must refuse"
+    assert_contains "$out" "config/crew-exclude-tools" "the $harness refusal must name the config file"
+    assert_contains "$out" "$harness runtime cannot hide tools" "the $harness refusal must name the runtime"
+    [ ! -s "$LAUNCH_LOG" ] || fail "$harness launched despite an unhonorable exclusion list"
+    [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "$harness refusal still wrote a task record"
+  done
+  # A raw launch command cannot receive the flag, Pi-named or not.
+  id=excl-refuse-raw-z9j
+  rec=$(make_spawn_case excl-refuse-raw pi "$id")
+  read_case_record "$rec"
+  write_exclude_file "$HOME_DIR" 'mcp__srv__writeTool'
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" "pi Verify this adapter")
+  status=$?
+  expect_code 1 "$status" "a raw launch with a non-empty exclusion list must refuse"
+  assert_contains "$out" "config/crew-exclude-tools" "the raw-launch refusal must name the config file"
+  [ ! -s "$LAUNCH_LOG" ] || fail "a raw launch ignored the exclusion list"
+  pass "a runtime that cannot hide tools, or a raw launch, refuses a non-empty exclusion list"
+}
+
+test_pi_exclude_tools_malformed_entry_refuses_before_endpoint() {
+  local rec id out status bad n=0
+  for bad in 'two words' 'a,b' 'mcp__srv__tool;rm' '*' 'mcp__srv__*Admin' 'quote'"'"'d' "mcp__srv__\$X"; do
+    n=$((n + 1))
+    id="excl-bad-$n-z9e"
+    rec=$(make_spawn_case "excl-bad-$n" pi "$id")
+    read_case_record "$rec"
+    write_exclude_file "$HOME_DIR" 'mcp__srv__good' "$bad"
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+    status=$?
+    expect_code 1 "$status" "malformed entry '$bad' must refuse the spawn"
+    assert_contains "$out" "config/crew-exclude-tools has a malformed entry '$bad'" \
+      "the refusal must name the malformed entry '$bad'"
+    [ ! -s "$LAUNCH_LOG" ] || fail "a malformed exclusion entry '$bad' still launched a worker"
+    [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "a malformed exclusion entry '$bad' still wrote a task record"
+  done
+  pass "a malformed exclusion entry refuses the spawn before any launch or record"
+}
+
+test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates() {
+  local rec_a rec_b id_a id_b launch sm out status
+  id_a=excl-home-a-z9f
+  id_b=excl-home-b-z9g
+  rec_a=$(make_spawn_case excl-home-a pi "$id_a")
+  read_case_record "$rec_a"
+  write_exclude_file "$HOME_DIR" 'mcp__srv__writeTool'
+  run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_a" "$PROJ_DIR" >/dev/null
+  expect_code 0 "$?" "home A spawn should succeed"
+  assert_contains "$(cat "$LAUNCH_LOG")" "--exclude-tools 'mcp__srv__writeTool'" "home A lost its own exclusions"
+
+  # A second home running the same code, with no file of its own, inherits nothing.
+  rec_b=$(make_spawn_case excl-home-b pi "$id_b")
+  read_case_record "$rec_b"
+  run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_b" "$PROJ_DIR" >/dev/null
+  expect_code 0 "$?" "home B spawn should succeed"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--exclude-tools" "home B must not inherit home A's exclusions"
+
+  # A seeded secondmate agent is unaffected even in the home that has the file.
+  id_a=excl-sm-z9h
+  rec_a=$(make_spawn_case excl-sm codex "$id_a")
+  read_case_record "$rec_a"
+  printf '%s\n' pi > "$HOME_DIR/config/secondmate-harness"
+  write_exclude_file "$HOME_DIR" 'mcp__srv__writeTool'
+  sm="$CASE_DIR/secondmate-home"
+  make_seeded_secondmate_home "$sm" "$id_a"
+  sm=$(cd "$sm" && pwd -P)
+  out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_a" "$sm" --secondmate)
+  status=$?
+  expect_code 0 "$status" "Pi secondmate spawn should succeed"$'\n'"$out"
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" "fm-primary-turnend-guard.ts" "secondmate launch was not the Pi secondmate shape"
+  assert_not_contains "$launch" "--exclude-tools" "a secondmate's own agent must not receive the worker exclusions"
+  pass "exclusions stay in the home that configured them and skip secondmate agents"
+}
+
 test_batch_forwards_shared_profile_flags() {
   local rec id1 id2 out status
   id1=profile-batch-a-z9
@@ -1931,6 +2159,12 @@ test_pi_signed_persistent_secondmate_uses_pi_extensions_and_identity
 test_pi_seeded_secondmate_preapproves_project_trust
 test_pi_worker_launch_omits_seeded_home_approve
 test_pi_approve_probe_omits_unsupported_flag
+test_pi_exclude_tools_reach_ship_and_scout_launches
+test_pi_exclude_tools_worker_registry_reports
+test_pi_exclude_tools_absent_and_empty_lists
+test_exclude_tools_non_pi_runtime_refuses_non_empty_list
+test_pi_exclude_tools_malformed_entry_refuses_before_endpoint
+test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates
 test_batch_forwards_shared_profile_flags
 test_claude_forwards_firstmate_config_dir_when_set
 test_lavish_server_address_is_exported_to_worker_launch
