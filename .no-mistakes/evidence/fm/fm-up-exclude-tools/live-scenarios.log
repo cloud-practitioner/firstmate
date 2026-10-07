@@ -1,0 +1,288 @@
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-ship-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+
+SCENARIO: Pi ship launches with per-home write exclusions
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+notice: xcl-ship-4167481 ships mode=local-only while the standing posture for tracker-demo is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned xcl-ship-4167481 harness=pi kind=ship mode=local-only yolo=off window=primary:fm-xcl-ship-4167481 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/1/tracker-demo
+
+OBSERVED ship launch (CRLF, whitespace, comment, blank, no-final-newline, UTF-8 home): model-visible tools = bash, codemode, edit, mcp__tracker__addComment, mcp__tracker__readIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+Supervisor status: note [at=1791353736]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__tracker__createIssue, mcp__tracker__editIssue, mcp__tracker__transitionIssue, mcp__tracker__deleteIssue, missing_tool_for_live_check
+
+Persisted lifecycle: v1 gen=g1791353733.4168012.21075 seq=3 state=idle source=pi-ext event=agent-settled ts=1791353736
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-scout-4167481/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+SCENARIO: Pi scout launches with per-home write exclusions
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+spawned xcl-scout-4167481 harness=pi kind=scout window=primary:fm-xcl-scout-4167481 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/2/tracker-demo
+
+OBSERVED scout launch (CRLF, whitespace, comment, blank, no-final-newline, UTF-8 home): model-visible tools = bash, codemode, edit, mcp__tracker__addComment, mcp__tracker__readIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+Supervisor status: note [at=1791353743]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__tracker__createIssue, mcp__tracker__editIssue, mcp__tracker__transitionIssue, mcp__tracker__deleteIssue, missing_tool_for_live_check
+
+Persisted lifecycle: v1 gen=g1791353740.4172301.24273 seq=3 state=idle source=pi-ext event=agent-settled ts=1791353743
+
+SCENARIO: model attempts excluded createIssue using ADVERSARIAL_DIRECT
+Real Pi rejected attempted tool invocation: ["Tool mcp__tracker__createIssue not found"]
+MCP side effects: no createIssue call reached disposable tracker
+
+SCENARIO: model attempts excluded createIssue using ADVERSARIAL_CODEMODE
+Real Pi rejected attempted tool invocation: ["Script failed\nWall time 0.1 seconds\nOutput:\n\nScript error:\nTypeError: tools.mcp__tracker__createIssue does not exist. Available: read, bash, edit, write, mcp__tracker__readIssue, mcp__tracker__addComment. ALL_TOOLS lists every tool; searchTools(query) finds tools by topic. Check for a member with \"mcp__tracker__createIssue\" in tools.\n    at <anonymous> (codemode.js:1:42)\n\nNo tool calls were made."]
+MCP side effects: no createIssue call reached disposable tracker
+
+SCENARIO: malformed and unsupported replacement refuses BEFORE stopping live Pi
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools has a malformed entry 'two words'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the codex runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+exit=1
+Running worker retained: 4167795:pi; durable metadata byte-identical after both refusals
+
+SCENARIO: unsupported runtimes and raw commands refuse BEFORE provisioning
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-claude-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+claude: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the claude runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-codex-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+codex: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the codex runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-grok-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+grok: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the grok runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-opencode-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+opencode: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the opencode runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-cursor-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+cursor: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the cursor runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-omp-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+omp: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the omp runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-gemini-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+gemini: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the gemini runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-kimi-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+kimi: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the kimi runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-muse-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+muse: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the muse runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-devin-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+devin: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the devin runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-agy-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+agy: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the agy runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-rovo-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+rovo: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but the rovo runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-refuse-raw-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+raw command: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools lists tools to hide, but a raw launch command cannot hide tools; remove the entries or launch a runtime that supports them (pi, pi-signed)
+
+SCENARIO: invalid syntax and unreadable/nonregular files refuse before provisioning
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-malformed-1-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+entry=two words: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools has a malformed entry 'two words'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-malformed-2-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+entry=a,b: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools has a malformed entry 'a,b'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-malformed-3-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+entry=*: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools has a malformed entry '*'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-malformed-4-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+entry=mcp__tracker__*Issue: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools has a malformed entry 'mcp__tracker__*Issue'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-malformed-5-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+entry=name;touch pwned: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools has a malformed entry 'name;touch pwned'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-malformed-6-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+entry=quote'd: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools has a malformed entry 'quote'd'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-malformed-7-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+entry=name$VAR: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools has a malformed entry 'name$VAR'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-malformed-8-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+entry=tool # trailing comment: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools has a malformed entry 'tool # trailing comment'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-invalid-unreadable-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+unreadable: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools must be a readable regular file
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-invalid-directory-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+directory: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools must be a readable regular file
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-invalid-dangling-symlink-4167481/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+dangling-symlink: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: config/crew-exclude-tools must be a readable regular file
+All rejected spawns left private tmux endpoint inventory unchanged and created no task metadata
+
+SCENARIO: ship relaunch reads NEW exclusions; scout relaunch reads REMOVED exclusions
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+notice: xcl-ship-4167481 ships mode=local-only while the standing posture for tracker-demo is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched xcl-ship-4167481 harness=pi from=pi model=lab/fixture effort=default backend=tmux endpoint=primary:fm-xcl-ship-4167481 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/1/tracker-demo
+
+OBSERVED ship relaunch: model-visible tools = bash, codemode, edit, mcp__tracker__readIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker"]
+Supervisor status: note [at=1791353736]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__tracker__createIssue, mcp__tracker__editIssue, mcp__tracker__transitionIssue, mcp__tracker__deleteIssue, missing_tool_for_live_check
+note [at=1791353763]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__tracker__createIssue, mcp__tracker__editIssue, mcp__tracker__transitionIssue, mcp__tracker__deleteIssue, missing_tool_for_live_check, mcp__tracker__addComment
+
+Persisted lifecycle: v1 gen=g1791353760.4181793.32085 seq=3 state=idle source=pi-ext event=agent-settled ts=1791353763
+Replacement kept endpoint=primary:fm-xcl-ship-4167481 and worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/1/tracker-demo; minted new busy generation
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+relaunched xcl-scout-4167481 harness=pi from=pi model=lab/fixture effort=default backend=tmux endpoint=primary:fm-xcl-scout-4167481 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/2/tracker-demo
+
+OBSERVED scout relaunch: model-visible tools = bash, codemode, edit, mcp__tracker__addComment, mcp__tracker__createIssue, mcp__tracker__deleteIssue, mcp__tracker__editIssue, mcp__tracker__readIssue, mcp__tracker__transitionIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+Supervisor status: note [at=1791353743]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__tracker__createIssue, mcp__tracker__editIssue, mcp__tracker__transitionIssue, mcp__tracker__deleteIssue, missing_tool_for_live_check
+
+Persisted lifecycle: v1 gen=g1791353768.4184972.7767 seq=3 state=idle source=pi-ext event=agent-settled ts=1791353771
+Replacement kept endpoint=primary:fm-xcl-scout-4167481 and worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/2/tracker-demo; minted new busy generation
+
+SCENARIO: another home without exclusions retains all tools
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.b.pEfu
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.b.pEfu/data/xcl-home-b-4167481/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.b.pEfu
+spawned xcl-home-b-4167481 harness=pi kind=scout window=primary:fm-xcl-home-b-4167481 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/3/tracker-demo
+
+OBSERVED home B without file while home A still excludes writes: model-visible tools = bash, codemode, edit, mcp__tracker__addComment, mcp__tracker__createIssue, mcp__tracker__deleteIssue, mcp__tracker__editIssue, mcp__tracker__readIssue, mcp__tracker__transitionIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+Persisted lifecycle: v1 gen=g1791353775.4188222.17016 seq=3 state=idle source=pi-ext event=agent-settled ts=1791353778
+
+SCENARIO: comments-only list leaves real Pi tools unchanged
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-empty-4167481/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+spawned xcl-empty-4167481 harness=pi kind=scout window=primary:fm-xcl-empty-4167481 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/4/tracker-demo
+
+OBSERVED comments-only configuration: model-visible tools = bash, codemode, edit, mcp__tracker__addComment, mcp__tracker__createIssue, mcp__tracker__deleteIssue, mcp__tracker__editIssue, mcp__tracker__readIssue, mcp__tracker__transitionIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+Persisted lifecycle: v1 gen=g1791353783.4190769.3278 seq=3 state=idle source=pi-ext event=agent-settled ts=1791353787
+
+SIGNED RUNTIME AVAILABILITY CHECK (not a feature pass):
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/data/xcl-signed-missing-4167481/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+bin/fm-spawn.sh --harness pi-signed: exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+error: pi-signed executable not found on PATH; install it or select a different verified harness
+pi-signed live exclusion validation UNTESTED: authentic signed wrapper not installed; no substituted CLI
+
+SCENARIO: secondmate agent ignores malformed parent worker list and does not inherit it
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+warning: secondmate xcl-secondmate-4167481 sync skipped before launch: primary default-branch commit cannot be resolved
+spawned xcl-secondmate-4167481 harness=pi kind=secondmate mode=secondmate yolo=off window=primary:fm-xcl-secondmate-4167481 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS
+
+[Context]
+  /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/AGENTS.md, AGENTS.md
+
+[Skills]
+  afk, agent-skill-trigger-index, ahoy, ask-user-authority, away-quiet-supervision, bearings, bootstrap-diagnostics,
+captain-hold-lifecycle, decision-hold-lifecycle, diagnostic-reasoning, firstmate-codexapp, firstmate-coding-guidelines,
+firstmate-orca, fmx-respond, harness-adapters, operational-home-layout, process-event-sources, project-management,
+quiet, quota-array-dispatch, scout-completion, secondmate-provisioning, session-start-recovery, ship-landing, stow,
+stuck-crewmate-recovery, updatefirstmate, validation-supervision
+
+[Extensions]
+  fm-branch-supervision.ts, fm-calm.ts, fm-primary-pi-watch.ts, fm-primary-turnend-guard.ts
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ ⁣FIRSTMATE_OP: v1 launch-brief: Inspect only the disposable tracker read and comment tools. Do not start supervision or
+ any fleet task.
+
+
+
+ tracker/readIssue
+
+ Executed readIssue in disposable tracker
+
+
+
+ tracker/addComment
+
+ Executed addComment in disposable tracker
+
+
+── ⠼ Working ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS (main)
+50.2%/66k (auto)                                                                                                 fixture
+
+OBSERVED secondmate agent with malformed parent exclusions: model-visible tools = bash, codemode, edit, fm_branch_outcomes, fm_branch_processed, fm_watch_arm_pi, mcp__tracker__addComment, mcp__tracker__createIssue, mcp__tracker__deleteIssue, mcp__tracker__editIssue, mcp__tracker__readIssue, mcp__tracker__transitionIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+Secondmate exclusion config absent after real spawn inheritance; parent malformed list did not refuse agent
+
+SCENARIO: secondmate relaunch remains unaffected; its workers use only their OWN exclusion list
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL
+warning: secondmate xcl-secondmate-4167481 sync skipped before launch: primary default-branch commit cannot be resolved
+relaunched xcl-secondmate-4167481 harness=pi from=pi model=lab/fixture effort=default backend=tmux endpoint=primary:fm-xcl-secondmate-4167481 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS
+
+OBSERVED secondmate relaunch ignores parent and own worker lists: model-visible tools = bash, codemode, edit, fm_branch_outcomes, fm_branch_processed, fm_watch_arm_pi, mcp__tracker__addComment, mcp__tracker__createIssue, mcp__tracker__deleteIssue, mcp__tracker__editIssue, mcp__tracker__readIssue, mcp__tracker__transitionIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS/data/xcl-secondmate-worker-4167481/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS
+spawned xcl-secondmate-worker-4167481 harness=pi kind=scout window=primary:fm-xcl-secondmate-worker-4167481 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/5/tracker-demo
+
+OBSERVED secondmate own worker hides only its locally configured createIssue: model-visible tools = bash, codemode, edit, mcp__tracker__addComment, mcp__tracker__deleteIssue, mcp__tracker__editIssue, mcp__tracker__readIssue, mcp__tracker__transitionIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+Supervisor status: note [at=1791353832]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__tracker__createIssue
+
+Persisted lifecycle: v1 gen=g1791353829.20462.2366 seq=3 state=idle source=pi-ext event=agent-settled ts=1791353832
+
+REAL CLI END-USER RESULT (last worker viewport):
+ First, check your instruction inbox: list
+ /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/state/xcl-ship-4167481.inbox/*.msg,
+ act on
+ each message in numeric order, then mv each handled file into
+ /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/state/xcl-ship-4167481.inbox/handled
+ /. A steer sent before the relaunch survives there.
+
+ Recheck ship with changed per-home exclusion configuration
+
+
+
+ tracker/readIssue
+
+ Executed readIssue in disposable tracker
+
+
+ LAB RESULT: model-visible tools = read, bash, edit, write, codemode, mcp__tracker__readIssue; tracker results =
+ ["Executed readIssue in disposable tracker"]
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455...
+26.3%/66k (auto)                                                                                                 fixture
+
+LIVE MATRIX COMPLETE; all marked homes and private tmux server removed by trap

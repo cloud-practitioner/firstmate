@@ -1,0 +1,565 @@
+{
+  "product": "Firstmate target bb24ee47ef07cbe73c5cbd830c061fca1cf26067; real Pi 1.0.4; real tmux 3.3a; real Treehouse",
+  "infrastructure": "Disposable stdio MCP tracker and deterministic localhost OpenAI-compatible endpoint; no production credentials or services used.",
+  "model_requests": [
+    {
+      "at": 1791353736.4524436,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment"
+      ],
+      "latest_tool_results": []
+    },
+    {
+      "at": 1791353736.5659933,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        }
+      ]
+    },
+    {
+      "at": 1791353743.770742,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment"
+      ],
+      "latest_tool_results": []
+    },
+    {
+      "at": 1791353743.8139033,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        }
+      ]
+    },
+    {
+      "at": 1791353744.6508176,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        }
+      ]
+    },
+    {
+      "at": 1791353744.6740339,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Tool mcp__tracker__createIssue not found"
+        }
+      ]
+    },
+    {
+      "at": 1791353745.4451976,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Tool mcp__tracker__createIssue not found"
+        }
+      ]
+    },
+    {
+      "at": 1791353745.5987234,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Tool mcp__tracker__createIssue not found"
+        },
+        {
+          "name": null,
+          "content": "Script failed\nWall time 0.1 seconds\nOutput:\n\nScript error:\nTypeError: tools.mcp__tracker__createIssue does not exist. Available: read, bash, edit, write, mcp__tracker__readIssue, mcp__tracker__addComment. ALL_TOOLS lists every tool; searchTools(query) finds tools by topic. Check for a member with \"mcp__tracker__createIssue\" in tools.\n    at <anonymous> (codemode.js:1:42)\n\nNo tool calls were made."
+        }
+      ]
+    },
+    {
+      "at": 1791353763.3993666,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue"
+      ],
+      "latest_tool_results": []
+    },
+    {
+      "at": 1791353763.4527094,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        }
+      ]
+    },
+    {
+      "at": 1791353771.1549096,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": []
+    },
+    {
+      "at": 1791353771.233778,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        }
+      ]
+    },
+    {
+      "at": 1791353778.311704,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": []
+    },
+    {
+      "at": 1791353778.3685565,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        }
+      ]
+    },
+    {
+      "at": 1791353787.5076816,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": []
+    },
+    {
+      "at": 1791353787.6012683,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        }
+      ]
+    },
+    {
+      "at": 1791353803.2262626,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "fm_watch_arm_pi",
+        "fm_branch_outcomes",
+        "fm_branch_processed",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": []
+    },
+    {
+      "at": 1791353803.4859712,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "fm_watch_arm_pi",
+        "fm_branch_outcomes",
+        "fm_branch_processed",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        }
+      ]
+    },
+    {
+      "at": 1791353823.894281,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "fm_watch_arm_pi",
+        "fm_branch_outcomes",
+        "fm_branch_processed",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": []
+    },
+    {
+      "at": 1791353824.1815429,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "fm_watch_arm_pi",
+        "fm_branch_outcomes",
+        "fm_branch_processed",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__createIssue",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        }
+      ]
+    },
+    {
+      "at": 1791353832.6971118,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": []
+    },
+    {
+      "at": 1791353832.7619722,
+      "tools": [
+        "read",
+        "bash",
+        "edit",
+        "write",
+        "codemode",
+        "mcp__tracker__readIssue",
+        "mcp__tracker__addComment",
+        "mcp__tracker__editIssue",
+        "mcp__tracker__transitionIssue",
+        "mcp__tracker__deleteIssue"
+      ],
+      "latest_tool_results": [
+        {
+          "name": null,
+          "content": "Executed readIssue in disposable tracker"
+        },
+        {
+          "name": null,
+          "content": "Executed addComment in disposable tracker"
+        }
+      ]
+    }
+  ],
+  "executed_mcp_calls": [
+    {
+      "pid": 4169500,
+      "tool": "readIssue",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/1/tracker-demo",
+      "at": 1791353736.5347981
+    },
+    {
+      "pid": 4169500,
+      "tool": "addComment",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/1/tracker-demo",
+      "at": 1791353736.5352309
+    },
+    {
+      "pid": 4173507,
+      "tool": "readIssue",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/2/tracker-demo",
+      "at": 1791353743.793528
+    },
+    {
+      "pid": 4173507,
+      "tool": "addComment",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/2/tracker-demo",
+      "at": 1791353743.7938764
+    },
+    {
+      "pid": 4183132,
+      "tool": "readIssue",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/1/tracker-demo",
+      "at": 1791353763.427174
+    },
+    {
+      "pid": 4185901,
+      "tool": "readIssue",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/2/tracker-demo",
+      "at": 1791353771.210537
+    },
+    {
+      "pid": 4185901,
+      "tool": "addComment",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/2/tracker-demo",
+      "at": 1791353771.2109258
+    },
+    {
+      "pid": 4189663,
+      "tool": "readIssue",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/3/tracker-demo",
+      "at": 1791353778.3394403
+    },
+    {
+      "pid": 4189663,
+      "tool": "addComment",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/3/tracker-demo",
+      "at": 1791353778.3398404
+    },
+    {
+      "pid": 4191929,
+      "tool": "readIssue",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/4/tracker-demo",
+      "at": 1791353787.5736814
+    },
+    {
+      "pid": 4191929,
+      "tool": "addComment",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/4/tracker-demo",
+      "at": 1791353787.574043
+    },
+    {
+      "pid": 376,
+      "tool": "readIssue",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS",
+      "at": 1791353803.2560248
+    },
+    {
+      "pid": 376,
+      "tool": "addComment",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS",
+      "at": 1791353803.2563338
+    },
+    {
+      "pid": 10731,
+      "tool": "readIssue",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS",
+      "at": 1791353823.9555497
+    },
+    {
+      "pid": 10731,
+      "tool": "addComment",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.iZQS",
+      "at": 1791353823.9558868
+    },
+    {
+      "pid": 22577,
+      "tool": "readIssue",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/5/tracker-demo",
+      "at": 1791353832.73272
+    },
+    {
+      "pid": 22577,
+      "tool": "addComment",
+      "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.8yfL/pool/.treehouse/tracker-demo-5d5455/5/tracker-demo",
+      "at": 1791353832.733142
+    }
+  ]
+}

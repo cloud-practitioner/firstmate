@@ -1,0 +1,79 @@
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.300k
+
+SCENARIO: secondmate agent ignores malformed parent worker list and does not inherit it
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.8ci6
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.é.300k
+warning: secondmate xcl-secondmate-4107512 sync skipped before launch: primary default-branch commit cannot be resolved
+spawned xcl-secondmate-4107512 harness=pi kind=secondmate mode=secondmate yolo=off window=primary:fm-xcl-secondmate-4107512 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.8ci6
+  afk, agent-skill-trigger-index, ahoy, ask-user-authority, away-quiet-supervision, bearings, bootstrap-diagnostics,
+captain-hold-lifecycle, decision-hold-lifecycle, diagnostic-reasoning, firstmate-codexapp, firstmate-coding-guidelines,
+firstmate-orca, fmx-respond, harness-adapters, operational-home-layout, process-event-sources, project-management,
+quiet, quota-array-dispatch, scout-completion, secondmate-provisioning, session-start-recovery, ship-landing, stow,
+stuck-crewmate-recovery, updatefirstmate, validation-supervision
+
+[Extensions]
+  fm-branch-supervision.ts, fm-calm.ts, fm-primary-pi-watch.ts, fm-primary-turnend-guard.ts
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ ⁣FIRSTMATE_OP: v1 launch-brief: Inspect only the disposable tracker read and comment tools. Do not start supervision or
+ any fleet task.
+
+
+
+ tracker/readIssue
+
+ Executed readIssue in disposable tracker
+
+
+
+ tracker/addComment
+
+ Executed addComment in disposable tracker
+
+
+ LAB RESULT: model-visible tools = read, bash, edit, write, codemode, fm_watch_arm_pi, fm_branch_outcomes,
+ fm_branch_processed, mcp__tracker__readIssue, mcp__tracker__addComment, mcp__tracker__createIssue,
+ mcp__tracker__editIssue, mcp__tracker__transitionIssue, mcp__tracker__deleteIssue; tracker results = ["Executed
+ readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.8ci6 (main)
+50.3%/66k (auto)                                                                                                 fixture
+
+OBSERVED secondmate agent with malformed parent exclusions: model-visible tools = bash, codemode, edit, fm_branch_outcomes, fm_branch_processed, fm_watch_arm_pi, mcp__tracker__addComment, mcp__tracker__createIssue, mcp__tracker__deleteIssue, mcp__tracker__editIssue, mcp__tracker__readIssue, mcp__tracker__transitionIssue, read, write
+Tool results: ["Executed readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+Secondmate exclusion config absent after real spawn inheritance; parent malformed list did not refuse agent
+
+REAL CLI END-USER RESULT (last worker viewport):
+
+
+
+ tracker/readIssue
+
+ Executed readIssue in disposable tracker
+
+
+
+ tracker/addComment
+
+ Executed addComment in disposable tracker
+
+
+ LAB RESULT: model-visible tools = read, bash, edit, write, codemode, fm_watch_arm_pi, fm_branch_outcomes,
+ fm_branch_processed, mcp__tracker__readIssue, mcp__tracker__addComment, mcp__tracker__createIssue,
+ mcp__tracker__editIssue, mcp__tracker__transitionIssue, mcp__tracker__deleteIssue; tracker results = ["Executed
+ readIssue in disposable tracker", "Executed addComment in disposable tracker"]
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.m.8ci6 (main)
+50.3%/66k (auto)                                                                                                 fixture
+
+LIVE MATRIX COMPLETE; all marked homes and private tmux server removed by trap

@@ -1,0 +1,17 @@
+not ok - pi --ship unmatched worker registry check failed: node:fs:2483
+    return binding.writeFileUtf8(
+                   ^
+
+Error: ENOENT: no such file or directory, open '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.validation-tmp/fm-spawn-dispatch-profile.cQ2Eez/josÃ©-excl-registry-pi-ship-unmatched/home/state/excl-registry-pi-ship-unmatched.status'
+    at Object.writeFileSync (node:fs:2483:20)
+    at appendFileSync (node:fs:2565:6)
+    at Object.agent_start (file:///home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.validation-tmp/fm-spawn-dispatch-profile.cQ2Eez/jos%C3%A9-excl-registry-pi-ship-unmatched/home/state/excl-registry-pi-ship-unmatched.pi-ext.ts:33:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/[eval1]:35:1 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4ADJ9R8AD3453670KZJM8HE/.validation-tmp/fm-spawn-dispatch-profile.cQ2Eez/josÃ©-excl-registry-pi-ship-unmatched/home/state/excl-registry-pi-ship-unmatched.status'
+}
+
+Node.js v24.20.0: expected exit 0, got 1
