@@ -471,7 +471,7 @@ Task meta records `backend=` only for a non-default backend; an absent `backend=
 
 - Every new task records `endpoint_task_id=` as the cleanup binding between the metadata filename and its opaque runtime endpoint.
 
-- A herdr task additionally records `herdr_session=`, `herdr_workspace_id=`, `herdr_tab_id=`, and `herdr_pane_id=`, plus `herdr_process_identity=` when the pane's owning shell process can be read ([Endpoints from a previous session](herdr-backend.md#endpoints-from-a-previous-session)).
+- [Herdr endpoint metadata](herdr-backend.md#endpoint-metadata) owns Herdr-specific fields and links to the recorded-endpoint ownership policy.
 
 - A zellij task additionally records `zellij_session=`, `zellij_tab_id=`, and `zellij_pane_id=`.
 - An Orca task additionally records `orca_worktree_id=` and `terminal=`, with `window=fm-<id>` kept as the shared firstmate alias.

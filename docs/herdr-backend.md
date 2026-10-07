@@ -763,8 +763,9 @@ A server restart that changes this identity invalidates the binding; a live-hand
 A foreign pane reads `missing` in the recovery-grade view, so the relaunch path can bind a fresh endpoint in the recorded session.
 Active capture, key, text, and classifier operations check ownership after server readiness at each internal read or input boundary, including submit verification, clearing, and retries, so restoring a stopped server cannot bypass the check.
 Passive liveness and existence probes do not start the server.
-Native push transitions check ownership in the supplied state directory before surfacing a blocked edge or clearing its dedupe marker, both on reconnect and for streamed events; an event is accepted when any record claiming the address is bound to the live pane, and it is rejected when none is.
-Push handling uses the same ownership-aware claimant resolution for declared waits and status bookkeeping, so a stale paused record that sorts first cannot absorb the bound task's blocked alert or receive its status-presentation marker.
+Native push transitions check ownership in the supplied state directory before surfacing a blocked edge or clearing its dedupe marker, both on reconnect and for streamed events; when records claim the address, at least one claimant must pass the ownership check for the event to be accepted.
+With no claiming record, the push path retains its compatibility behavior without requiring a process binding.
+Push handling uses the same ownership-aware claimant resolution for declared waits and status bookkeeping, so a stale paused record that sorts first cannot absorb the bound task's blocked alert or receive its status-presentation marker ([regression](../tests/fm-herdr-endpoint-boundaries.test.sh)).
 Task-specific liveness callers pass `fm-<id>` so another task claiming the same address cannot supply their ownership verdict.
 Teardown refuses destructive process or worktree cleanup when a proven foreign pane has processes in the directories being cleaned, retaining the task records for reconciliation.
 Guarded closes recheck ownership before each signal and explicit-close fallback, and Treehouse returns recheck before every attempt, including retries for an index lock, and the direct-removal fallback after a failed return repeats the same check before it deletes a worktree.
