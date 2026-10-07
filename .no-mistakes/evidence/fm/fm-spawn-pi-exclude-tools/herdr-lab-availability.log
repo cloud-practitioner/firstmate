@@ -1,0 +1,83 @@
+tmux: not on PATH; no repository-local binary supplied.
+$ bin/fm-herdr-lab.sh prepare fm-lab-exclude-tools-977399-23847
+Exit: 0
+$ bin/fm-herdr-lab.sh provision fm-lab-exclude-tools-977399-23847
+fm-herdr-lab: tripwire already exists for 'fm-lab-exclude-tools-977399-23847'; refusing ambiguous ownership
+Exit: 1
+$ bin/fm-herdr-lab.sh provision fm-lab-exclude-runtime-988735-14940 (internally performs prepare)
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-runtime-988735-14940 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-exclude-runtime-988735-14940"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/node/.config/herdr/sessions/fm-lab-exclude-runtime-988735-14940/herdr.sock","session":"fm-lab-exclude-runtime-988735-14940","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-runtime-988735-14940 pane --help
+Control terminal panes
+
+Usage: herdr pane [COMMAND]
+
+Commands:
+  list                  List panes
+  current               Show the current pane
+  get                   Show a pane
+  layout                Show pane layout information
+  process-info          Show pane process information
+  neighbor              Find a pane neighbor
+  edges                 Show pane edge information
+  focus                 Focus a neighboring pane
+  resize                Resize a pane split
+  zoom                  Toggle or set pane zoom
+  read                  Read pane terminal output
+  rename                Rename a pane
+  input                 Set pane input routing
+  split                 Split a pane
+  swap                  Swap panes
+  move                  Move a pane
+  close                 Close a pane
+  send-text             Send literal text to a pane
+  send-keys             Send key presses to a pane
+  wait-output           Wait for matching pane output
+  run                   Run a command in a pane
+  report-agent          Report pane agent lifecycle state
+  report-agent-session  Report pane agent session identity
+  release-agent         Release pane agent lifecycle authority
+  report-metadata       Report display-only pane metadata
+
+Are you an AI? Use these resources ONLY IF your task specifically asks you to:
+  Help a human understand or set up Herdr for the first time:
+    https://herdr.dev/agent-guide.md
+  Debug or investigate a problem with Herdr:
+    https://herdr.dev/llms.txt
+  Control Herdr panes, agents, or workspaces:
+    SKIP if a Herdr skill is already in your context. Otherwise run: herdr --skill
+
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-runtime-988735-14940 agent start --help
+Start a supported interactive agent in an existing pane
+
+Usage: herdr agent start <NAME> --kind <KIND> --pane <ID> [OPTIONS] [-- [AGENT_ARG]...]
+
+Arguments:
+  <NAME>
+          
+
+  [AGENT_ARG]...
+          
+
+Options:
+      --kind <KIND>
+          Supported agent kind and canonical executable
+          
+          [possible values: pi, claude, codex, gemini, cursor, devin, agy, cline, omp, mastracode, opencode, copilot, kimi, kiro, droid, amp, grok, hermes, kilo, qodercli, qwen, letta, maki, muse]
+
+      --pane <ID>
+          Existing pane at an interactive shell prompt
+
+      --timeout <MS>
+          Wait for interactive readiness (default: 30000; max: 300000)
+
+The pane must be at its interactive shell prompt. Success means the expected agent was detected in the same terminal and is ready for input.
+
+next: herdr agent prompt <TARGET> <TEXT> --wait
+
+Exit: 0
+Teardown
+Exit: 0

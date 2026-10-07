@@ -1,0 +1,80 @@
+[
+  {
+    "case": "Absent list",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "case": "Comment-only list",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "case": "Trimmed exact names, final line without newline",
+    "exit": 0,
+    "stdout": "mcp__iqx_jira__editJiraIssue,read,tool.v2,srv-tool",
+    "stderr": ""
+  },
+  {
+    "case": "Malformed two words",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: config/crew-exclude-tools has a malformed entry 'two words'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)\n"
+  },
+  {
+    "case": "Malformed a,b",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: config/crew-exclude-tools has a malformed entry 'a,b'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)\n"
+  },
+  {
+    "case": "Malformed mcp__server__*Write",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: config/crew-exclude-tools has a malformed entry 'mcp__server__*Write'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)\n"
+  },
+  {
+    "case": "Malformed tool; touch x",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: config/crew-exclude-tools has a malformed entry 'tool; touch x'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)\n"
+  },
+  {
+    "case": "Malformed quote'd",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: config/crew-exclude-tools has a malformed entry 'quote'd'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)\n"
+  },
+  {
+    "case": "Malformed tool # trailing comment",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: config/crew-exclude-tools has a malformed entry 'tool # trailing comment'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)\n"
+  },
+  {
+    "case": "Directory is refused",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: config/crew-exclude-tools must be a readable regular file\n"
+  },
+  {
+    "case": "Dangling symlink is refused",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: config/crew-exclude-tools must be a readable regular file\n"
+  },
+  {
+    "case": "Unreadable list is refused",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: config/crew-exclude-tools must be a readable regular file\n"
+  },
+  {
+    "case": "Supported configuration inheritance leaves exclusions local",
+    "exit": 0,
+    "stdout": "home-A-exclusions=mcp__iqx_jira__editJiraIssue\nhome-B-exclusions=\nhome-B-harness=pi\n",
+    "stderr": ""
+  }
+]

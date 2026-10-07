@@ -1,0 +1,399 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+[exit=0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo init -q -b main
+[exit=0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo add README.md
+[exit=0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo -c user.name=Lab -c user.email=lab@example.invalid commit -qm initial
+[exit=0]
+
+$ git clone --bare --quiet /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/origin.git
+[exit=0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo remote add origin file:///home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/origin.git
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/tools/installed/bin/tmux -L fm-lab new-session -d -s primary -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7 /workspaces/wp/.pi/bin/pi --no-approve --no-context-files --no-skills --model lab/audit
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/tools/installed/bin/tmux -L fm-lab set-option -g default-shell /bin/bash
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/tools/installed/bin/tmux -L fm-lab set-option -g default-command bash --noprofile --norc
+[exit=0]
+
+PRIMARY
+ This project is not trusted. Project .pi resources and packages are ignored. Use /trust to save a trust decision, then
+ restart pi.
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC (detached)
+0.0%/100k (auto)                                                                                                   audit
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-brief.sh live-ship repo --mode local-only --forge none
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/data/live-ship/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh live-ship /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --mode local-only --yolo off --forge none
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+notice: live-ship ships mode=local-only while the standing posture for repo is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned live-ship harness=pi kind=ship mode=local-only yolo=off window=primary:fm-live-ship worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/pool/.treehouse/repo-4d167e/1/repo
+[exit=0]
+
+OBSERVED {"task": "live-ship", "pid": 503909, "calls": [{"name": "mcp__iqx_jira__editJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__transitionJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__createJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__executeWrite", "allowed": false}, {"name": "mcp__iqx_jira__executeDestructive", "allowed": false}, {"name": "mcp__iqx_jira__createConfluenceContent", "allowed": false}, {"name": "mcp__iqx_jira__updateConfluenceContent", "allowed": false}, {"name": "mcp__iqx_jira__extraWriteTool", "allowed": false}, {"name": "mcp__iqx_jira__getJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "allowed": true}], "declared": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "callable": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]}
+
+STATUS
+note [at=1791336286]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__iqx_jira__editJiraIssue, mcp__iqx_jira__transitionJiraIssue, mcp__iqx_jira__createJiraIssue, mcp__iqx_jira__executeWrite, mcp__iqx_jira__executeDestructive, mcp__iqx_jira__createConfluenceContent, mcp__iqx_jira__updateConfluenceContent, mcp__iqx_jira__extraWriteTool, mcp__iqx_jira__editJiraIssu, mcp__offline__executeWrite
+
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-brief.sh live-scout repo --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/data/live-scout/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh live-scout /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --scout
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+spawned live-scout harness=pi kind=scout window=primary:fm-live-scout worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/pool/.treehouse/repo-4d167e/2/repo
+[exit=0]
+
+OBSERVED {"task": "live-scout", "pid": 507224, "calls": [{"name": "mcp__iqx_jira__editJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__transitionJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__createJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__executeWrite", "allowed": false}, {"name": "mcp__iqx_jira__executeDestructive", "allowed": false}, {"name": "mcp__iqx_jira__createConfluenceContent", "allowed": false}, {"name": "mcp__iqx_jira__updateConfluenceContent", "allowed": false}, {"name": "mcp__iqx_jira__extraWriteTool", "allowed": false}, {"name": "mcp__iqx_jira__getJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "allowed": true}], "declared": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "callable": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]}
+
+$ bash -c . "$1/bin/fm-classify-lib.sh"; scan_unread_surface_lines "$2" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/state
+live-scout	note [at=1791336296]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__iqx_jira__editJiraIssue, mcp__iqx_jira__transitionJiraIssue, mcp__iqx_jira__createJiraIssue, mcp__iqx_jira__executeWrite, mcp__iqx_jira__executeDestructive, mcp__iqx_jira__createConfluenceContent, mcp__iqx_jira__updateConfluenceContent, mcp__iqx_jira__extraWriteTool, mcp__iqx_jira__editJiraIssu, mcp__offline__executeWrite
+live-ship	note [at=1791336286]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__iqx_jira__editJiraIssue, mcp__iqx_jira__transitionJiraIssue, mcp__iqx_jira__createJiraIssue, mcp__iqx_jira__executeWrite, mcp__iqx_jira__executeDestructive, mcp__iqx_jira__createConfluenceContent, mcp__iqx_jira__updateConfluenceContent, mcp__iqx_jira__extraWriteTool, mcp__iqx_jira__editJiraIssu, mcp__offline__executeWrite
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-brief.sh refuse-bad repo --mode local-only --forge none
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/data/refuse-bad/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh refuse-bad /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --mode local-only --yolo off --forge none
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+error: config/crew-exclude-tools has a malformed entry 'two words'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+[exit=1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh refuse-bad /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --mode local-only --yolo off --forge none
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+error: config/crew-exclude-tools has a malformed entry 'mcp__iqx_jira__*'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+[exit=1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh refuse-bad /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --mode local-only --yolo off --forge none
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+error: config/crew-exclude-tools has a malformed entry 'a,b'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+[exit=1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh refuse-bad /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --mode local-only --yolo off --forge none
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+error: config/crew-exclude-tools has a malformed entry 'tool;rm'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+[exit=1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh refuse-bad /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --mode local-only --yolo off --forge none --harness claude
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+error: config/crew-exclude-tools lists tools to hide, but the claude runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+[exit=1]
+
+$ bin/fm-spawn.sh refuse-bad /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo pi This raw command must not start --backend tmux --mode local-only --yolo off --forge none
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+error: config/crew-exclude-tools lists tools to hide, but a raw launch command cannot hide tools; remove the entries or launch a runtime that supports them (pi, pi-signed)
+[exit=1]
+
+$ bin/fm-control.sh live-ship relaunch --note Disposable live policy check
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+error: config/crew-exclude-tools has a malformed entry 'two words'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+[exit=1]
+
+$ bin/fm-control.sh live-ship relaunch --note Disposable live policy check --harness claude
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+error: config/crew-exclude-tools lists tools to hide, but the claude runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+[exit=1]
+
+$ bin/fm-control.sh live-ship relaunch --note Recheck current home policy
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+notice: live-ship ships mode=local-only while the standing posture for repo is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched live-ship harness=pi from=pi model=lab/audit effort=default backend=tmux endpoint=primary:fm-live-ship worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/pool/.treehouse/repo-4d167e/1/repo
+[exit=0]
+
+OBSERVED {"task": "live-ship", "pid": 513622, "calls": [{"name": "mcp__iqx_jira__editJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__transitionJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__createJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__executeWrite", "allowed": false}, {"name": "mcp__iqx_jira__executeDestructive", "allowed": false}, {"name": "mcp__iqx_jira__createConfluenceContent", "allowed": false}, {"name": "mcp__iqx_jira__updateConfluenceContent", "allowed": false}, {"name": "mcp__iqx_jira__extraWriteTool", "allowed": true}, {"name": "mcp__iqx_jira__getJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "allowed": true}], "declared": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "callable": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]}
+
+$ bin/fm-control.sh live-scout relaunch --note Scout rechecks current policy
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+relaunched live-scout harness=pi from=pi model=lab/audit effort=default backend=tmux endpoint=primary:fm-live-scout worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/pool/.treehouse/repo-4d167e/2/repo
+[exit=0]
+
+OBSERVED {"task": "live-scout", "pid": 517756, "calls": [{"name": "mcp__iqx_jira__editJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__transitionJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__createJiraIssue", "allowed": false}, {"name": "mcp__iqx_jira__executeWrite", "allowed": false}, {"name": "mcp__iqx_jira__executeDestructive", "allowed": false}, {"name": "mcp__iqx_jira__createConfluenceContent", "allowed": false}, {"name": "mcp__iqx_jira__updateConfluenceContent", "allowed": false}, {"name": "mcp__iqx_jira__extraWriteTool", "allowed": true}, {"name": "mcp__iqx_jira__getJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "allowed": true}], "declared": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "callable": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]}
+
+$ bin/fm-control.sh live-scout relaunch --note Scout rechecks removed policy
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+relaunched live-scout harness=pi from=pi model=lab/audit effort=default backend=tmux endpoint=primary:fm-live-scout worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/pool/.treehouse/repo-4d167e/2/repo
+[exit=0]
+
+OBSERVED {"task": "live-scout", "pid": 523013, "calls": [{"name": "mcp__iqx_jira__editJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__transitionJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__createJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__executeWrite", "allowed": true}, {"name": "mcp__iqx_jira__executeDestructive", "allowed": true}, {"name": "mcp__iqx_jira__createConfluenceContent", "allowed": true}, {"name": "mcp__iqx_jira__updateConfluenceContent", "allowed": true}, {"name": "mcp__iqx_jira__extraWriteTool", "allowed": true}, {"name": "mcp__iqx_jira__getJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "allowed": true}], "declared": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "callable": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-brief.sh matched repo --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/data/matched/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh matched /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --scout
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+spawned matched harness=pi kind=scout window=primary:fm-matched worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/pool/.treehouse/repo-4d167e/3/repo
+[exit=0]
+
+OBSERVED {"task": "matched", "pid": 526213, "calls": [{"name": "mcp__iqx_jira__editJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__transitionJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__createJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__executeWrite", "allowed": true}, {"name": "mcp__iqx_jira__executeDestructive", "allowed": true}, {"name": "mcp__iqx_jira__createConfluenceContent", "allowed": true}, {"name": "mcp__iqx_jira__updateConfluenceContent", "allowed": true}, {"name": "mcp__iqx_jira__extraWriteTool", "allowed": true}, {"name": "mcp__iqx_jira__getJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "allowed": true}], "declared": ["read", "bash", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "callable": ["read", "bash", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]}
+
+Pi 1.0.4 removes even excluded builtin edit from its registry; a correct exclusion is therefore honestly reported unverified. A registry-match/no-warning case cannot be constructed on this installed version without mocking Pi.
+
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/home-b
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/home-b
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-brief.sh home-b repo --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/home-b/data/home-b/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh home-b /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --scout
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/home-b
+spawned home-b harness=pi kind=scout window=primary:fm-home-b worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/pool/.treehouse/repo-4d167e/4/repo
+[exit=0]
+
+OBSERVED {"task": "home-b", "pid": 530418, "calls": [{"name": "mcp__iqx_jira__editJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__transitionJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__createJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__executeWrite", "allowed": true}, {"name": "mcp__iqx_jira__executeDestructive", "allowed": true}, {"name": "mcp__iqx_jira__createConfluenceContent", "allowed": true}, {"name": "mcp__iqx_jira__updateConfluenceContent", "allowed": true}, {"name": "mcp__iqx_jira__extraWriteTool", "allowed": true}, {"name": "mcp__iqx_jira__getJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "allowed": true}], "declared": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "callable": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-brief.sh home-empty repo --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/home-b/data/home-empty/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/bin/fm-spawn.sh home-empty /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/repo --harness pi --model lab/audit --backend tmux --scout
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/home-b
+spawned home-empty harness=pi kind=scout window=primary:fm-home-empty worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/pool/.treehouse/repo-4d167e/5/repo
+[exit=0]
+
+OBSERVED {"task": "home-empty", "pid": 533721, "calls": [{"name": "mcp__iqx_jira__editJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__transitionJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__createJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__executeWrite", "allowed": true}, {"name": "mcp__iqx_jira__executeDestructive", "allowed": true}, {"name": "mcp__iqx_jira__createConfluenceContent", "allowed": true}, {"name": "mcp__iqx_jira__updateConfluenceContent", "allowed": true}, {"name": "mcp__iqx_jira__extraWriteTool", "allowed": true}, {"name": "mcp__iqx_jira__getJiraIssue", "allowed": true}, {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "allowed": true}], "declared": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "callable": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/runtime/bin/fm-home-seed.sh live-sm /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/sm-l.f6sf_sk7 --no-projects
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7/data/live-sm/brief.md (secondmate charter)
+home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/sm-l.f6sf_sk7
+[exit=0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/runtime/bin/fm-spawn.sh live-sm /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/sm-l.f6sf_sk7 --secondmate --harness pi --model lab/audit --backend tmux
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/l.f6sf_sk7
+spawned live-sm harness=pi kind=secondmate mode=secondmate yolo=off window=primary:fm-live-sm worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/sm-l.f6sf_sk7
+[exit=0]
+
+SECOND MATE started despite malformed parent policy; no policy inherited; live registry {"event": "agent_start", "all": [{"name": "read", "exposure": "direct"}, {"name": "bash", "exposure": "direct"}, {"name": "powershell", "exposure": "direct"}, {"name": "edit", "exposure": "direct"}, {"name": "write", "exposure": "direct"}, {"name": "grep", "exposure": "direct"}, {"name": "find", "exposure": "direct"}, {"name": "ls", "exposure": "direct"}, {"name": "fm_watch_arm_pi", "exposure": "direct"}, {"name": "fm_branch_outcomes", "exposure": "direct"}, {"name": "fm_branch_processed", "exposure": "direct"}, {"name": "lab_probe", "exposure": "direct"}, {"name": "codemode", "exposure": "model-only"}, {"name": "tool_search", "exposure": "model-only"}, {"name": "mcp__iqx_jira__editJiraIssue", "exposure": "direct"}, {"name": "mcp__iqx_jira__transitionJiraIssue", "exposure": "direct"}, {"name": "mcp__iqx_jira__createJiraIssue", "exposure": "direct"}, {"name": "mcp__iqx_jira__executeWrite", "exposure": "direct"}, {"name": "mcp__iqx_jira__executeDestructive", "exposure": "direct"}, {"name": "mcp__iqx_jira__createConfluenceContent", "exposure": "direct"}, {"name": "mcp__iqx_jira__updateConfluenceContent", "exposure": "direct"}, {"name": "mcp__iqx_jira__extraWriteTool", "exposure": "direct"}, {"name": "mcp__iqx_jira__getJiraIssue", "exposure": "direct"}, {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "exposure": "direct"}], "active": ["read", "bash", "edit", "write", "fm_watch_arm_pi", "fm_branch_outcomes", "fm_branch_processed", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "task": "primary", "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/sm-l.f6sf_sk7", "pid": 536543}
+
+MCP lifecycle/calls
+{"event": "connect", "pid": 499865, "task": "primary"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "primary"}
+{"method": "notifications/initialized", "params": null, "task": "primary"}
+{"method": "tools/list", "params": null, "task": "primary"}
+{"event": "connect", "pid": 504368, "task": "live-ship"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-ship"}
+{"method": "notifications/initialized", "params": null, "task": "live-ship"}
+{"method": "tools/list", "params": null, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-ship"}
+{"event": "connect", "pid": 507630, "task": "live-scout"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-scout"}
+{"method": "notifications/initialized", "params": null, "task": "live-scout"}
+{"method": "tools/list", "params": null, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-scout"}
+{"event": "connect", "pid": 514192, "task": "live-ship"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-ship"}
+{"method": "notifications/initialized", "params": null, "task": "live-ship"}
+{"method": "tools/list", "params": null, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "live-ship"}
+{"event": "connect", "pid": 518165, "task": "live-scout"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-scout"}
+{"method": "notifications/initialized", "params": null, "task": "live-scout"}
+{"method": "tools/list", "params": null, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "live-scout"}
+{"event": "connect", "pid": 523562, "task": "live-scout"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-scout"}
+{"method": "notifications/initialized", "params": null, "task": "live-scout"}
+{"method": "tools/list", "params": null, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "editJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "transitionJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "createJiraIssue", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "executeWrite", "arguments": {}, "_meta": {"progressToken": 6}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "executeDestructive", "arguments": {}, "_meta": {"progressToken": 7}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "createConfluenceContent", "arguments": {}, "_meta": {"progressToken": 8}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "updateConfluenceContent", "arguments": {}, "_meta": {"progressToken": 9}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 10}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 11}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 12}}, "task": "live-scout"}
+{"event": "connect", "pid": 526537, "task": "matched"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "matched"}
+{"method": "notifications/initialized", "params": null, "task": "matched"}
+{"method": "tools/list", "params": null, "task": "matched"}
+{"method": "tools/call", "params": {"name": "editJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "transitionJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "createJiraIssue", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "executeWrite", "arguments": {}, "_meta": {"progressToken": 6}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "executeDestructive", "arguments": {}, "_meta": {"progressToken": 7}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "createConfluenceContent", "arguments": {}, "_meta": {"progressToken": 8}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "updateConfluenceContent", "arguments": {}, "_meta": {"progressToken": 9}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 10}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 11}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 12}}, "task": "matched"}
+{"event": "connect", "pid": 530879, "task": "home-b"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "home-b"}
+{"method": "notifications/initialized", "params": null, "task": "home-b"}
+{"method": "tools/list", "params": null, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "editJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "transitionJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "createJiraIssue", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "executeWrite", "arguments": {}, "_meta": {"progressToken": 6}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "executeDestructive", "arguments": {}, "_meta": {"progressToken": 7}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "createConfluenceContent", "arguments": {}, "_meta": {"progressToken": 8}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "updateConfluenceContent", "arguments": {}, "_meta": {"progressToken": 9}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 10}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 11}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 12}}, "task": "home-b"}
+{"event": "connect", "pid": 533885, "task": "home-empty"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "home-empty"}
+{"method": "notifications/initialized", "params": null, "task": "home-empty"}
+{"method": "tools/list", "params": null, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "editJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "transitionJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "createJiraIssue", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "executeWrite", "arguments": {}, "_meta": {"progressToken": 6}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "executeDestructive", "arguments": {}, "_meta": {"progressToken": 7}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "createConfluenceContent", "arguments": {}, "_meta": {"progressToken": 8}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "updateConfluenceContent", "arguments": {}, "_meta": {"progressToken": 9}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 10}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 11}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 12}}, "task": "home-empty"}
+{"event": "connect", "pid": 537221, "task": "primary"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "primary"}
+{"method": "notifications/initialized", "params": null, "task": "primary"}
+{"method": "tools/list", "params": null, "task": "primary"}
+
+
+Model tool declarations
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "user"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "tool"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "user"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "tool"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "user"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "tool"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "user"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "tool"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "user"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "tool"}
+{"model": "audit", "declaredTools": ["read", "bash", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "user"}
+{"model": "audit", "declaredTools": ["read", "bash", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "tool"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "user"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "tool"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "user"}
+{"model": "audit", "declaredTools": ["read", "bash", "edit", "write", "lab_probe", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__transitionJiraIssue", "mcp__iqx_jira__createJiraIssue", "mcp__iqx_jira__executeWrite", "mcp__iqx_jira__executeDestructive", "mcp__iqx_jira__createConfluenceContent", "mcp__iqx_jira__updateConfluenceContent", "mcp__iqx_jira__extraWriteTool", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"], "lastRole": "tool"}
+
+
+Final outcomes
+[
+  {
+    "name": "ship excludes write tools and keeps read/comment",
+    "result": "pass"
+  },
+  {
+    "name": "scout excludes write tools and keeps read/comment",
+    "result": "pass"
+  },
+  {
+    "name": "unknown and unverified names reach supervisor",
+    "result": "pass"
+  },
+  {
+    "name": "malformed and wildcard policy refuses without endpoint",
+    "result": "pass"
+  },
+  {
+    "name": "unsupported and raw runtime refuses without endpoint",
+    "result": "pass"
+  },
+  {
+    "name": "unsafe relaunch preserves running worker",
+    "result": "pass"
+  },
+  {
+    "name": "Pi relaunch rereads home policy",
+    "result": "pass"
+  },
+  {
+    "name": "scout relaunch rereads changed and absent policies",
+    "result": "pass"
+  },
+  {
+    "name": "excluded known tool absent from registry is reported unverified",
+    "result": "pass"
+  },
+  {
+    "name": "unconfigured and empty second home retains tools",
+    "result": "pass"
+  },
+  {
+    "name": "secondmate agent ignores parent worker policy and does not inherit it",
+    "result": "pass"
+  }
+]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.test-live/tools/installed/bin/tmux -L fm-lab kill-server
+[exit=0]
+
+$ bin/fm-procevent.sh sweep-home
+swept: attempted=0
+[exit=0]
+
+$ bin/fm-procevent.sh sweep-home
+swept: attempted=0
+[exit=0]
+
+$ bin/fm-procevent.sh sweep-home
+swept: attempted=0
+[exit=0]
+
+Disposable lab removed; private tmux server stopped.

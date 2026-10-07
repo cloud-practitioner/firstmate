@@ -1,0 +1,281 @@
+$ bin/fm-herdr-lab.sh name exclude-live
+fm-lab-exclude-live-1244487-12461
+
+Exit: 0
+$ bin/fm-herdr-lab.sh provision fm-lab-exclude-live-1244487-12461
+
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-live-1244487-12461 pane run --help
+Run a command in a pane
+
+Usage: herdr pane run <PANE_ID> <COMMAND>...
+
+Arguments:
+  <PANE_ID>
+          
+
+  <COMMAND>...
+
+
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-live-1244487-12461 workspace create --help
+Create a workspace
+
+Usage: herdr workspace create [OPTIONS]
+
+Options:
+      --cwd <PATH>
+          
+
+      --label <TEXT>
+          
+
+      --env <KEY=VALUE>
+          Set an environment variable for the launched process
+
+      --focus
+          
+
+      --no-focus
+
+
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-live-1244487-12461 pane list
+{"id":"cli:pane:list","result":{"panes":[],"type":"pane_list"}}
+
+Exit: 0
+$ git -C /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/projects/probe init -q -b main
+
+Exit: 0
+$ git -C /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/projects/probe add README.md
+
+Exit: 0
+$ git -C /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/projects/probe -c user.name=Validation -c user.email=validation@example.invalid commit -qm initial
+
+Exit: 0
+Scaffold
+scaffolded: /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/data/live-excl/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+Actual spawn
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d
+spawned live-excl harness=pi kind=scout window=fm-lab-exclude-live-1244487-12461:w1:p2 worktree=/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/.treehouse/probe-76deec/1/probe
+
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-live-1244487-12461 pane read w1:p2
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/projects/probe$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab
+.rzhso61d/treehouse/.treehouse/probe-76deec/1/probe. Type 'exit' to return.
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ cd -- '/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn
+-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/.treehouse/probe-76deec/1/probe'
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ export GOTMPDIR='/home/node/.treehouse/firstmate-35d3d0/1/firstmate/stat
+e/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live-excl.tasktmp/gotmp'
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ export COMPACT_ADVISER_DISABLE=1
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ export FM_TASK_ID=live-excl
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ . '/tmp/fm-live-excl+6e1908c5b1e1c65762b645b2bf35cc2f821d81e8a27780c8c70
+ac8279212e3ba/launch.s1791338151.1244786.22680.sh'
+
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-live-1244487-12461 pane read w1:p2
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/projects/probe$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab
+.rzhso61d/treehouse/.treehouse/probe-76deec/1/probe. Type 'exit' to return.
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ cd -- '/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn
+-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/.treehouse/probe-76deec/1/probe'
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ export GOTMPDIR='/home/node/.treehouse/firstmate-35d3d0/1/firstmate/stat
+e/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live-excl.tasktmp/gotmp'
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ export COMPACT_ADVISER_DISABLE=1
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ export FM_TASK_ID=live-excl
+node@afd4c13fc509:/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhs
+o61d/treehouse/.treehouse/probe-76deec/1/probe$ . '/tmp/fm-live-excl+6e1908c5b1e1c65762b645b2bf35cc2f821d81e8a27780c8c70
+ac8279212e3ba/launch.s1791338151.1244786.22680.sh'
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ Trust project folder?
+ /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/.
+ treehouse/probe-76deec/1/probe
+
+ This allows pi to load .pi settings and resources, install missing project packages, and execute project extensions.
+
+ → Trust
+   Trust parent folder
+ (/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/
+ .treehouse/probe-76deec/1)
+   Trust (this session only)
+   Do not trust
+   Do not trust (this session only)
+
+ ↑↓ navigate  enter select  escape/ctrl+c cancel
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-live-1244487-12461 pane send-keys w1:p2 Enter
+
+Exit: 0
+Model-facing tools: [{"type": "function", "function": {"name": "read", "description": "Read the contents of a file. Supports text files and images (jpg, png, gif, webp, bmp). Images are sent as attachments. For text files, output is truncated to 2000 lines or 50KB (whichever is hit first). Use offset/limit for large files. When you need the full file, continue with offset until complete.", "parameters": {"type": "object", "required": ["path"], "properties": {"path": {"type": "string", "description": "Path to the file to read (relative or absolute)"}, "offset": {"type": "number", "description": "Line number to start reading from (1-indexed)"}, "limit": {"type": "number", "description": "Maximum number of lines to read"}}}}}, {"type": "function", "function": {"name": "bash", "description": "Execute a bash command in the current working directory. Returns stdout and stderr. Output is truncated to last 2000 lines or 50KB (whichever is hit first). If truncated, full output is saved to a temp file. Optionally provide a timeout in seconds.", "parameters": {"type": "object", "required": ["command"], "properties": {"command": {"type": "string", "description": "Shell command to execute"}, "timeout": {"type": "number", "description": "Timeout in seconds (optional, no default timeout)"}}}}}, {"type": "function", "function": {"name": "edit", "description": "Edit a single file using exact text replacement. Every edits[].oldText must match a unique, non-overlapping region of the original file. If two changes affect the same block or nearby lines, merge them into one edit instead of emitting overlapping edits. Do not include large unchanged regions just to connect distant changes.", "parameters": {"type": "object", "required": ["path", "edits"], "properties": {"path": {"type": "string", "description": "Path to the file to edit (relative or absolute)"}, "edits": {"type": "array", "items": {"type": "object", "required": ["oldText", "newText"], "properties": {"oldText": {"type": "string", "description": "Exact text for one targeted replacement. It must be unique in the original file and must not overlap with any other edits[].oldText in the same call."}, "newText": {"type": "string", "description": "Replacement text for this targeted edit."}}}, "description": "One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead."}}}}}, {"type": "function", "function": {"name": "write", "description": "Write content to a file. Creates the file if it doesn't exist, overwrites if it does. Automatically creates parent directories.", "parameters": {"type": "object", "required": ["path", "content"], "properties": {"path": {"type": "string", "description": "Path to the file to write (relative or absolute)"}, "content": {"type": "string", "description": "Content to write to the file"}}}}}, {"type": "function", "function": {"name": "mcp__iqx_jira__getJiraIssue", "description": "Local disposable tool, no MCP connection", "parameters": {"type": "object", "properties": {}}}}, {"type": "function", "function": {"name": "mcp__iqx_jira__addOrEditJiraIssueComment", "description": "Local disposable tool, no MCP connection", "parameters": {"type": "object", "properties": {}}}}]
+Task metadata
+window=fm-lab-exclude-live-1244487-12461:w1:p2
+endpoint_task_id=live-excl
+worktree=/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/.treehouse/probe-76deec/1/probe
+project=/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/projects/probe
+harness=pi
+kind=scout
+tasktmp=/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live-excl.tasktmp
+model=exclusion-lab/lab-model
+effort=default
+busy_gen=g1791338151.1246913.32398
+spawn_gen=s1791338151.1244786.22680
+backend=herdr
+herdr_session=fm-lab-exclude-live-1244487-12461
+herdr_workspace_id=w1
+herdr_tab_id=w1:t2
+herdr_pane_id=w1:p2
+
+Task status
+note [at=1791338155]: warning: /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__iqx_jira__editJiraIssue
+
+$ bin/fm-lab-home.sh create /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/other-home
+/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/other-home
+
+Exit: 0
+Second home, no configured exclusion list
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/other-home
+spawned live-isolated harness=pi kind=scout window=fm-lab-exclude-live-1244487-12461:w1:p3 worktree=/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/.treehouse/probe-76deec/2/probe
+
+Exit: 0
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-live-1244487-12461 pane send-keys w1:p3 Enter
+
+Exit: 0
+Second home model-facing tools: ["read", "bash", "edit", "write", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]
+Home A remains configured; Home B has no crew-exclude-tools file.
+Actual relaunch retaining exclusions
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 35s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+relaunched live-excl harness=pi from=pi model=exclusion-lab/lab-model effort=default backend=herdr endpoint=fm-lab-exclude-live-1244487-12461:w1:p2 worktree=/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/.treehouse/probe-76deec/1/probe
+
+Exit: 0
+Retained-list replacement tools: ["read", "bash", "edit", "write", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]
+Actual relaunch refusal
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d
+error: config/crew-exclude-tools has a malformed entry 'two words'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+
+Exit: 1
+Actual relaunch refusal
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d
+error: config/crew-exclude-tools lists tools to hide, but the codex runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+
+Exit: 1
+Actual relaunch without exclusions
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d
+WARNING: watcher still down (same stale episode; last beat: 50s ago, grace 300s) - full banner already printed this episode.
+relaunched live-excl harness=pi from=pi model=exclusion-lab/lab-model effort=default backend=herdr endpoint=fm-lab-exclude-live-1244487-12461:w1:p2 worktree=/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/.treehouse/probe-76deec/1/probe
+
+Exit: 0
+Replacement model-facing tools: ["read", "bash", "edit", "write", "mcp__iqx_jira__editJiraIssue", "mcp__iqx_jira__getJiraIssue", "mcp__iqx_jira__addOrEditJiraIssueComment"]
+$ bin/fm-herdr-lab.sh run fm-lab-exclude-live-1244487-12461 pane read w1:p2
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live
+ -excl.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list
+ '/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live
+ -excl.inbox'/*.msg, read and act on each message in numeric order, then acknowledge each handled message by moving it:
+ mv
+ '/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live
+ -excl.inbox'/NNN.msg
+ '/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live
+ -excl.inbox'/handled/.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Definition of done
+
+ Write your findings to
+ /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/data/live-e
+ xcl/report.md.
+ The report must stand alone: what you did, what you found, the evidence (commands run, output, file:line references),
+ and what you recommend.
+ If your deliverable is a visual artifact the captain will review and iterate on, use the lavish-axi rule: arm your
+ board with bin/fm-procevent-lavish.sh arm <artifact.html> --for <task-id>; never run lavish-axi poll yourself. Re-arm
+ with the reply after each nonterminal round to acknowledge it, route the board feedback through your steering inbox,
+ write needs-decision [key=board-review] with the live board URL when the captain owes a decision, and stop at
+ session_ended or an empty End without re-arming - acknowledge that final round with bin/fm-procevent.sh handled
+ <source-id> <sequence> to conclude and retire your board.
+ Before reporting done, read and follow
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M49W3M79ENYHYMK104A317EC/.agents/skills/captain-hold-lifecycle/SKILL.
+ md and pass its shared completion gate for the report and any visual review.
+ When the report is complete, append done [at=<epoch>]: {one-line conclusion} to the status file and stop.
+ If your findings reveal work that should ship (e.g. you reproduced a bug and the fix is clear), say so in the report;
+ firstmate may promote this task in place, and you would then receive mode-specific ship instructions as a follow-up
+ message.
+
+ Progress note (2026-10-07T01:56:15Z)
+
+ This task was relaunched. Continue from here; the local copy and every
+ uncommitted change are exactly as the previous worker left them.
+
+ First, check your instruction inbox: list
+ /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live-
+ excl.inbox/*.msg, act on
+ each message in numeric order, then mv each handled file into
+ /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live-
+ excl.inbox/handled/. A steer sent before the relaunch survives there.
+
+ keep current exclusions
+
+ Progress note (2026-10-07T01:56:29Z)
+
+ This task was relaunched. Continue from here; the local copy and every
+ uncommitted change are exactly as the previous worker left them.
+
+ First, check your instruction inbox: list
+ /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live-
+ excl.inbox/*.msg, act on
+ each message in numeric order, then mv each handled file into
+ /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/state/live-
+ excl.inbox/handled/. A steer sent before the relaunch survives there.
+
+ remove tool exclusions
+
+
+── ⠋ Working ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-lab.rzhso61d/treehouse/...
+53.8%/32k (auto)                                                                                               lab-model
+
+Exit: 0
+$ bin/fm-herdr-lab.sh teardown fm-lab-exclude-live-1244487-12461
+
+Exit: 0

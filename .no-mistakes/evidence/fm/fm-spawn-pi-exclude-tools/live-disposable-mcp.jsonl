@@ -1,0 +1,90 @@
+{"event": "connect", "pid": 499865, "task": "primary"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "primary"}
+{"method": "notifications/initialized", "params": null, "task": "primary"}
+{"method": "tools/list", "params": null, "task": "primary"}
+{"event": "connect", "pid": 504368, "task": "live-ship"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-ship"}
+{"method": "notifications/initialized", "params": null, "task": "live-ship"}
+{"method": "tools/list", "params": null, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-ship"}
+{"event": "connect", "pid": 507630, "task": "live-scout"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-scout"}
+{"method": "notifications/initialized", "params": null, "task": "live-scout"}
+{"method": "tools/list", "params": null, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-scout"}
+{"event": "connect", "pid": 514192, "task": "live-ship"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-ship"}
+{"method": "notifications/initialized", "params": null, "task": "live-ship"}
+{"method": "tools/list", "params": null, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-ship"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "live-ship"}
+{"event": "connect", "pid": 518165, "task": "live-scout"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-scout"}
+{"method": "notifications/initialized", "params": null, "task": "live-scout"}
+{"method": "tools/list", "params": null, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "live-scout"}
+{"event": "connect", "pid": 523562, "task": "live-scout"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "live-scout"}
+{"method": "notifications/initialized", "params": null, "task": "live-scout"}
+{"method": "tools/list", "params": null, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "editJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "transitionJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "createJiraIssue", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "executeWrite", "arguments": {}, "_meta": {"progressToken": 6}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "executeDestructive", "arguments": {}, "_meta": {"progressToken": 7}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "createConfluenceContent", "arguments": {}, "_meta": {"progressToken": 8}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "updateConfluenceContent", "arguments": {}, "_meta": {"progressToken": 9}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 10}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 11}}, "task": "live-scout"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 12}}, "task": "live-scout"}
+{"event": "connect", "pid": 526537, "task": "matched"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "matched"}
+{"method": "notifications/initialized", "params": null, "task": "matched"}
+{"method": "tools/list", "params": null, "task": "matched"}
+{"method": "tools/call", "params": {"name": "editJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "transitionJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "createJiraIssue", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "executeWrite", "arguments": {}, "_meta": {"progressToken": 6}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "executeDestructive", "arguments": {}, "_meta": {"progressToken": 7}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "createConfluenceContent", "arguments": {}, "_meta": {"progressToken": 8}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "updateConfluenceContent", "arguments": {}, "_meta": {"progressToken": 9}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 10}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 11}}, "task": "matched"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 12}}, "task": "matched"}
+{"event": "connect", "pid": 530879, "task": "home-b"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "home-b"}
+{"method": "notifications/initialized", "params": null, "task": "home-b"}
+{"method": "tools/list", "params": null, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "editJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "transitionJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "createJiraIssue", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "executeWrite", "arguments": {}, "_meta": {"progressToken": 6}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "executeDestructive", "arguments": {}, "_meta": {"progressToken": 7}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "createConfluenceContent", "arguments": {}, "_meta": {"progressToken": 8}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "updateConfluenceContent", "arguments": {}, "_meta": {"progressToken": 9}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 10}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 11}}, "task": "home-b"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 12}}, "task": "home-b"}
+{"event": "connect", "pid": 533885, "task": "home-empty"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "home-empty"}
+{"method": "notifications/initialized", "params": null, "task": "home-empty"}
+{"method": "tools/list", "params": null, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "editJiraIssue", "arguments": {}, "_meta": {"progressToken": 3}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "transitionJiraIssue", "arguments": {}, "_meta": {"progressToken": 4}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "createJiraIssue", "arguments": {}, "_meta": {"progressToken": 5}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "executeWrite", "arguments": {}, "_meta": {"progressToken": 6}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "executeDestructive", "arguments": {}, "_meta": {"progressToken": 7}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "createConfluenceContent", "arguments": {}, "_meta": {"progressToken": 8}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "updateConfluenceContent", "arguments": {}, "_meta": {"progressToken": 9}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "extraWriteTool", "arguments": {}, "_meta": {"progressToken": 10}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "getJiraIssue", "arguments": {}, "_meta": {"progressToken": 11}}, "task": "home-empty"}
+{"method": "tools/call", "params": {"name": "addOrEditJiraIssueComment", "arguments": {}, "_meta": {"progressToken": 12}}, "task": "home-empty"}
+{"event": "connect", "pid": 537221, "task": "primary"}
+{"method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.0.4"}}, "task": "primary"}
+{"method": "notifications/initialized", "params": null, "task": "primary"}
+{"method": "tools/list", "params": null, "task": "primary"}

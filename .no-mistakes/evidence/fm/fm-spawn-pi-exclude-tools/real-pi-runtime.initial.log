@@ -1,0 +1,9 @@
+# all fm-spawn-dispatch-profile tests passed
+ok - Pi worker registries report unmatched and unverified exclusions without reporting exact matches
+Traceback (most recent call last):
+  File "/home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/validate-real-pi.py", line 56, in <module>
+    assert report=='active: real Pi validation\n', report
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: active: real Pi validation
+note [at=1791337363]: warning: /home/node/.treehouse/firstmate-35d3d0/1/firstmate/state/fm-spawn-pi-exclude-tools.tasktmp/fm-spawn-dispatch-profile.GEqgm1/excl-registry-pi-ship-matched/home/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__iqx_jira__editJiraIssue
+
