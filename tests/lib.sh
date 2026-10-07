@@ -593,7 +593,7 @@ SH
 # pr-moved.json from the full read numbered in pr-moved.at, the second by
 # default, when that file exists, and pr-post.json once a merge was requested), commit (an abbreviated-hash
 # resolution, answered by commit-<abbreviation>.json when that exists), statuses and statuses-2 (the second page), restrictions, model,
-# default-reviewers, tasks, and merge (whose request body is kept in
+# default-reviewers, tasks, prlist (the open-pull-request list), create (the response to a pull request creation, whose body is kept in create-body.json), ready (the response to a draft update, whose body is kept in ready-body.json and after which a GET answers pr-ready.json when that exists), and merge (whose request body is kept in
 # merge-body.json, and which gets no HTTP response at all, the way curl fails
 # in transport, when merge.transport-failure exists). The credential is
 # checked against FM_TEST_BB_EXPECT_USER, the escaped "email:token" curl's
@@ -646,12 +646,24 @@ case "$method $path" in
     [ ! -e "$dir/merge.transport-failure" ] || exit 28
     respond merge
     ;;
+  "POST "*/pullrequests)
+    printf '%s' "$data" > "$dir/create-body.json"
+    : > "$dir/create-called"
+    respond create
+    ;;
+  "PUT "*/pullrequests/*)
+    printf '%s' "$data" > "$dir/ready-body.json"
+    : > "$dir/ready-called"
+    respond ready
+    ;;
+  "GET "*/pullrequests"?"*) respond prlist ;;
   "GET "*/pullrequests/*/tasks*) respond tasks ;;
   "GET "*/pullrequests/*"?fields=id,state")
     if [ -e "$dir/merge-called" ] && [ -f "$dir/pr-post.json" ]; then respond pr-post; fi
     respond pr
     ;;
   "GET "*/pullrequests/*)
+    if [ -e "$dir/ready-called" ] && [ -f "$dir/pr-ready.json" ]; then respond pr-ready; fi
     if [ -e "$dir/merge-called" ] && [ -f "$dir/pr-post.json" ]; then respond pr-post; fi
     reads=$(( $(cat "$dir/pr-reads" 2>/dev/null || echo 0) + 1 ))
     printf '%s\n' "$reads" > "$dir/pr-reads"

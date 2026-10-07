@@ -1238,6 +1238,16 @@ Firstmate reads the credential from the environment only, never from `.env`, and
 `curl` and `jq` are required alongside it.
 Registering a Bitbucket watch, merging a Bitbucket pull request, or reading one with `bin/fm-pr-state.sh` refuses and names whichever of the four is missing, rather than skipping the read.
 
+### Opening a Bitbucket pull request in direct-PR mode
+
+`gh-axi` is GitHub-only, so a `direct-PR` task on a project whose `origin` is a Bitbucket Cloud repository opens its pull request with [`bin/fm-pr-open.sh`](../bin/fm-pr-open.sh) instead, through the same REST path and credential as above.
+`bin/fm-brief.sh` and `bin/fm-promote.sh` read the project clone's `origin` remote when they render the worker's Definition of done, so a Bitbucket origin gets the helper's commands and every other project keeps the `gh-axi` wording unchanged.
+That choice only selects the open command: it is not the registry's `forge=` binding, and the `no-mistakes` mode is unchanged because its pipeline opens the pull request itself.
+The worker pushes its branch, runs `fm-pr-open.sh open` to create a non-draft pull request to the repository's main branch (reusing one already open from that branch), and runs `fm-pr-open.sh verify <pr-url>` before reporting done.
+`verify` exits zero only when the pull request is open, not a draft, from the worker's branch, and at the worker copy's `HEAD`; `fm-pr-open.sh ready <pr-url>` takes a draft out of draft.
+The worker's environment needs the same two variables, and the helper names a missing one without printing any value; the token needs write access to pull requests.
+The helper's header owns its options and exit statuses, and `tests/fm-pr-bitbucket.test.sh` covers it against a stubbed API.
+
 ## Toolchain
 
 On session start the first mate detects what its required toolchain is missing or too old and lists each problem with either an exact install command or manual instructions.

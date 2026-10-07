@@ -1420,10 +1420,47 @@ test_crewmate_scaffolds_forbid_pool_administration() {
   pass "fm-brief.sh: every crewmate scaffold forbids administering the shared worktree pool"
 }
 
+# The direct-PR Definition of done names the open command that fits the project's
+# origin remote: gh-axi for GitHub and for a clone it cannot read, and
+# bin/fm-pr-open.sh for a Bitbucket Cloud clone. The forge binding and the
+# machine-readable contract line are unaffected.
+test_direct_pr_brief_follows_the_origin_remote() {
+  local home tid brief
+  home="$TMP_ROOT/pr-host-home"
+  write_registry "$home"
+  mkdir -p "$home/projects"
+  fm_git_init_commit "$home/projects/bb-proj"
+  git -C "$home/projects/bb-proj" remote add origin 'git@bitbucket.org:ws/bb-proj.git'
+  fm_git_init_commit "$home/projects/gh-proj"
+  git -C "$home/projects/gh-proj" remote add origin 'https://github.com/o/gh-proj.git'
+
+  tid="brief-prhost-bbone"
+  FM_HOME="$home" "$ROOT/bin/fm-brief.sh" "$tid" bb-proj --mode direct-PR >/dev/null 2>&1 \
+    || fail "a Bitbucket direct-PR brief should scaffold"
+  brief="$home/data/$tid/brief.md"
+  assert_grep "$ROOT/bin/fm-pr-open.sh open" "$brief" "a Bitbucket direct-PR brief must name the helper"
+  grep -qx 'Delivery contract: mode=direct-PR' "$brief" || fail "a Bitbucket brief's contract line changed"
+
+  tid="brief-prhost-ghone"
+  FM_HOME="$home" "$ROOT/bin/fm-brief.sh" "$tid" gh-proj --mode direct-PR >/dev/null 2>&1 \
+    || fail "a GitHub direct-PR brief should scaffold"
+  brief="$home/data/$tid/brief.md"
+  assert_no_grep 'fm-pr-open.sh' "$brief" "a GitHub direct-PR brief named the Bitbucket helper"
+  # shellcheck disable=SC2016  # single quotes are deliberate: the backticks must stay literal
+  assert_grep 'open a PR with `gh-axi`' "$brief" "a GitHub direct-PR brief lost the gh-axi command"
+
+  tid="brief-prhost-nm"
+  FM_HOME="$home" "$ROOT/bin/fm-brief.sh" "$tid" bb-proj --mode no-mistakes >/dev/null 2>&1 \
+    || fail "a Bitbucket no-mistakes brief should scaffold"
+  assert_no_grep 'fm-pr-open.sh' "$home/data/$tid/brief.md" "a no-mistakes brief named the Bitbucket helper"
+  pass "fm-brief.sh: the direct-PR open command follows the project's origin remote"
+}
+
 test_script_parses
 test_no_heredoc_in_command_substitution
 test_help_includes_entire_header
 test_ship_modes_generate_clean_briefs
+test_direct_pr_brief_follows_the_origin_remote
 test_ship_mode_is_required_and_closed_set
 test_ship_mode_is_explicit_not_registry
 test_delivery_flags_are_refused_where_they_do_not_apply

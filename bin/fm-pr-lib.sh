@@ -1196,6 +1196,62 @@ fm_pr_bitbucket_missing_requirements() {
   printf '%s' "$missing"
 }
 
+# The workspace/repository a git remote URL names on Bitbucket Cloud, printed
+# lowercase in the canonical spelling every other helper here uses, and nothing
+# for any other host, a malformed path, or a Bitbucket Data Center address. It
+# accepts the three shapes git stores: https://[userinfo@]bitbucket.org/<w>/<r>,
+# ssh://[user@]bitbucket.org/<w>/<r>, and [user@]bitbucket.org:<w>/<r>, each
+# with an optional ".git" suffix. Only the path is ever printed, so a remote
+# whose userinfo carries a credential never reaches output through this.
+fm_pr_bitbucket_remote_path() {  # <remote-url>
+  local url=${1-} rest authority host path
+  local LC_ALL=C
+  case "$url" in
+    https://*|ssh://*)
+      rest=${url#*://}
+      authority=${rest%%/*}
+      [ "$authority" != "$rest" ] || return 1
+      path=${rest#*/}
+      host=${authority##*@}
+      ;;
+    *:*)
+      case "$url" in
+        *://*) return 1 ;;
+      esac
+      rest=${url##*@}
+      [ "$rest" != "$url" ] || rest=$url
+      host=${rest%%:*}
+      path=${rest#*:}
+      ;;
+    *) return 1 ;;
+  esac
+  host=$(printf '%s' "$host" | tr '[:upper:]' '[:lower:]')
+  [ "$host" = bitbucket.org ] || return 1
+  path=${path%/}
+  path=${path%.git}
+  path=$(printf '%s' "$path" | tr '[:upper:]' '[:lower:]')
+  fm_pr_bitbucket_path_valid "$path" || return 1
+  printf '%s' "$path"
+}
+
+# Which forge's pull requests a clone's origin remote serves: "bitbucket" when
+# the remote is a Bitbucket Cloud repository, and "github" for anything else,
+# including a missing clone or remote, so a project this does not recognise
+# keeps the GitHub contract it always had. This reads the clone's own git
+# config and never the network. bin/fm-dod-lib.sh calls it to choose the
+# direct-PR worker's open command, and bin/fm-pr-open.sh calls it to find the
+# repository to open the pull request on.
+fm_pr_project_pr_host() {  # <clone-dir>
+  local dir=${1-} url
+  if [ -n "$dir" ] && [ -d "$dir" ] \
+    && url=$(git -C "$dir" remote get-url origin 2>/dev/null) \
+    && fm_pr_bitbucket_remote_path "$url" >/dev/null; then
+    printf 'bitbucket\n'
+  else
+    printf 'github\n'
+  fi
+}
+
 # One request to the Bitbucket API. <api-path> is relative to the fixed base
 # and is built only from a validated identity. Sets FM_PR_BITBUCKET_STATUS to
 # the HTTP status and FM_PR_BITBUCKET_BODY to the response body whenever curl

@@ -2,7 +2,8 @@
 # Tests for Bitbucket Cloud pull request support across the PR scripts: URL
 # parsing in bin/fm-pr-lib.sh, recording and arming in bin/fm-pr-check.sh, the
 # static merge poll in bin/fm-pr-poll.sh, state reads in bin/fm-pr-lib.sh and
-# bin/fm-pr-state.sh, and the guarded merge in bin/fm-pr-merge.sh. The
+# bin/fm-pr-state.sh, the guarded merge in bin/fm-pr-merge.sh, and the direct-PR
+# worker's open, verify, and ready commands in bin/fm-pr-open.sh. The
 # Bitbucket API is the stub tests/lib.sh's fm_fake_bitbucket_curl drops, so no
 # case reaches the network; landed-work proof after a squash merge is covered by
 # tests/fm-teardown.test.sh, which owns the teardown fixture.
@@ -629,6 +630,263 @@ test_merge_reads_back_after_a_transport_failure() {
   pass "fm-pr-merge reads a Bitbucket pull request back after its merge request got no response"
 }
 
+# A direct-PR worker's copy: a branch named like the stub's pull request source,
+# with a Bitbucket origin that is only a name, so nothing is ever fetched or
+# pushed. Its pull request fixture reports the copy's real HEAD.
+make_open_case() {
+  local name=$1 case_dir head
+  case_dir=$(make_case "$name")
+  git -C "$case_dir/wt" checkout -q -b fm/task-x1
+  git -C "$case_dir/wt" remote add origin "git@bitbucket.org:$BB_PATH.git"
+  head=$(git -C "$case_dir/wt" rev-parse HEAD)
+  printf '%s\n' "$head" > "$case_dir/head"
+  fm_bitbucket_pr_json 7 OPEN "$head" > "$case_dir/bb/pr.json"
+  cp "$case_dir/bb/pr.json" "$case_dir/bb/create.json"
+  printf '%s\n' '{"values":[],"pagelen":50,"page":1}' > "$case_dir/bb/prlist.json"
+  printf '%s\n' "$case_dir"
+}
+
+run_open() {
+  local case_dir=$1
+  shift
+  bb_env "$case_dir" "$ROOT/bin/fm-pr-open.sh" "$@" --worktree "$case_dir/wt" \
+    > "$case_dir/stdout" 2> "$case_dir/stderr"
+}
+
+assert_token_never_in_output() {
+  local case_dir=$1 label=$2
+  assert_no_grep 'synthetic' "$case_dir/stdout" "$label: the token reached stdout"
+  assert_no_grep 'synthetic' "$case_dir/stderr" "$label: the token reached stderr"
+  assert_no_grep 'Authorization' "$case_dir/stdout" "$label: an auth header reached stdout"
+  assert_no_grep 'authorization' "$case_dir/stdout" "$label: an auth header reached stdout"
+  assert_no_grep 'Authorization' "$case_dir/stderr" "$label: an auth header reached stderr"
+  assert_no_grep 'authorization' "$case_dir/stderr" "$label: an auth header reached stderr"
+}
+
+test_remote_path_names_only_bitbucket_cloud_repositories() {
+  local url got
+  for url in \
+    "https://bitbucket.org/$BB_PATH.git" \
+    "https://user:secret@bitbucket.org/$BB_PATH" \
+    "https://captain@bitbucket.org/$BB_PATH.git/" \
+    "ssh://git@bitbucket.org/$BB_PATH.git" \
+    "git@bitbucket.org:$BB_PATH.git" \
+    "bitbucket.org:$BB_PATH" \
+    'https://BitBucket.org/IQXBusiness/Supplier_Online_Orchestration_API.git'; do
+    got=$(bash -c '. "$1"; fm_pr_bitbucket_remote_path "$2"' _ "$ROOT/bin/fm-pr-lib.sh" "$url") \
+      || fail "a Bitbucket Cloud remote did not parse: ${url%%@*}"
+    assert_equals "$BB_PATH" "$got" "a Bitbucket Cloud remote must name its workspace/repository"
+    assert_not_contains "$got" secret "the remote's userinfo must never be printed"
+  done
+  for url in \
+    'https://github.com/o/r.git' \
+    'git@github.com:o/r.git' \
+    'https://bitbucket.org.evil.example/ws/repo.git' \
+    'https://evil.example/bitbucket.org/ws/repo.git' \
+    'https://bitbucket.example/scm/p/r.git' \
+    'ssh://git@bitbucket.org:7999/ws/repo.git' \
+    'http://bitbucket.org/ws/repo.git' \
+    'https://bitbucket.org/ws' \
+    'https://bitbucket.org/ws/repo/extra.git' \
+    'https://bitbucket.org/ws/-repo.git' \
+    '/srv/git/bitbucket.org/ws/repo.git' \
+    ''; do
+    if bash -c '. "$1"; fm_pr_bitbucket_remote_path "$2" >/dev/null' _ "$ROOT/bin/fm-pr-lib.sh" "$url"; then
+      fail "a remote that is not a Bitbucket Cloud repository parsed: $url"
+    fi
+  done
+  pass "a remote URL names a Bitbucket Cloud repository only when it is one, and never prints userinfo"
+}
+
+test_project_pr_host_follows_the_origin_remote() {
+  local case_dir clone
+  case_dir=$(make_open_case pr-host)
+  clone="$case_dir/wt"
+  assert_equals bitbucket "$(bash -c '. "$1"; fm_pr_project_pr_host "$2"' _ "$ROOT/bin/fm-pr-lib.sh" "$clone")" \
+    "a Bitbucket origin must select the Bitbucket contract"
+  git -C "$clone" remote set-url origin https://github.com/o/r.git
+  assert_equals github "$(bash -c '. "$1"; fm_pr_project_pr_host "$2"' _ "$ROOT/bin/fm-pr-lib.sh" "$clone")" \
+    "a GitHub origin must keep the GitHub contract"
+  git -C "$clone" remote remove origin
+  assert_equals github "$(bash -c '. "$1"; fm_pr_project_pr_host "$2"' _ "$ROOT/bin/fm-pr-lib.sh" "$clone")" \
+    "a clone with no origin must keep the GitHub contract"
+  assert_equals github "$(bash -c '. "$1"; fm_pr_project_pr_host "$2"' _ "$ROOT/bin/fm-pr-lib.sh" "$case_dir/absent")" \
+    "a missing clone must keep the GitHub contract"
+  pass "the pull request forge follows the clone's origin remote and defaults to GitHub"
+}
+
+test_open_creates_a_non_draft_pull_request() {
+  local case_dir rc=0
+  case_dir=$(make_open_case open-create)
+  run_open "$case_dir" open || rc=$?
+  expect_code 0 "$rc" "open-create: opening a pull request should succeed"$'\n'"$(cat "$case_dir/stderr")"
+  assert_equals "$BB_URL" "$(cat "$case_dir/stdout")" "open-create: stdout must be the pull request URL alone"
+  assert_present "$case_dir/bb/create-called" "open-create: no pull request was created"
+  assert_equals false "$(jq -r .draft "$case_dir/bb/create-body.json")" "open-create: the request must ask for a non-draft pull request"
+  assert_equals fm/task-x1 "$(jq -r .source.branch.name "$case_dir/bb/create-body.json")" "open-create: the source branch was not the current branch"
+  assert_equals initial "$(jq -r .title "$case_dir/bb/create-body.json")" "open-create: the title should default to the commit subject"
+  assert_equals null "$(jq -r '.destination // null' "$case_dir/bb/create-body.json")" "open-create: no destination should be sent unless asked"
+  assert_grep 'draft: no' "$case_dir/stderr" "open-create: the read-back was not reported"
+  assert_token_never_in_argv "$case_dir" open-create
+  assert_token_never_in_output "$case_dir" open-create
+
+  case_dir=$(make_open_case open-create-flags)
+  run_open "$case_dir" open --title 'Add the thing' --description 'Body text' --dest develop || rc=$?
+  assert_equals 'Add the thing|Body text|develop' \
+    "$(jq -r '[.title, .description, .destination.branch.name] | join("|")' "$case_dir/bb/create-body.json")" \
+    "open-create-flags: title, description, and destination were not sent"
+  pass "fm-pr-open open creates a non-draft pull request, reads it back, and prints its URL"
+}
+
+test_open_reuses_an_existing_pull_request() {
+  local case_dir rc=0
+  case_dir=$(make_open_case open-reuse)
+  printf '{"values":[%s],"pagelen":50,"page":1}\n' "$(cat "$case_dir/bb/pr.json")" > "$case_dir/bb/prlist.json"
+  run_open "$case_dir" open || rc=$?
+  expect_code 0 "$rc" "open-reuse: an already-open pull request should be reused"$'\n'"$(cat "$case_dir/stderr")"
+  assert_equals "$BB_URL" "$(cat "$case_dir/stdout")" "open-reuse: the existing pull request's URL was not printed"
+  assert_absent "$case_dir/bb/create-called" "open-reuse: a duplicate pull request was created"
+
+  rc=0
+  run_open "$case_dir" open --dest release || rc=$?
+  expect_code 1 "$rc" "open-reuse: an existing pull request to another destination must refuse"
+  assert_grep 'targets main, not release' "$case_dir/stderr" "open-reuse: the destination mismatch was not named"
+  assert_absent "$case_dir/bb/create-called" "open-reuse: a pull request was created despite the mismatch"
+  pass "fm-pr-open open reuses an open pull request for the source branch instead of duplicating it"
+}
+
+test_draft_is_refused_by_open_and_repaired_by_ready() {
+  local case_dir rc=0 head
+  case_dir=$(make_open_case draft)
+  head=$(cat "$case_dir/head")
+  fm_bitbucket_pr_json 7 OPEN "$head" true > "$case_dir/bb/pr.json"
+  printf '{"values":[%s],"pagelen":50,"page":1}\n' "$(cat "$case_dir/bb/pr.json")" > "$case_dir/bb/prlist.json"
+  fm_bitbucket_pr_json 7 OPEN "$head" false > "$case_dir/bb/pr-ready.json"
+  cp "$case_dir/bb/pr-ready.json" "$case_dir/bb/ready.json"
+
+  run_open "$case_dir" open || rc=$?
+  expect_code 1 "$rc" "draft: open must not report success for a draft"
+  assert_grep 'is a draft' "$case_dir/stderr" "draft: the draft was not named"
+  assert_grep "fm-pr-open.sh ready $BB_URL" "$case_dir/stderr" "draft: the repair command was not named"
+  assert_absent "$case_dir/bb/ready-called" "draft: open changed a pull request it did not create"
+  assert_absent "$case_dir/bb/create-called" "draft: open created a duplicate"
+
+  rc=0
+  run_open "$case_dir" verify "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "draft: verify must refuse a draft"
+  assert_grep 'draft: yes' "$case_dir/stdout" "draft: verify did not report the draft"
+  assert_absent "$case_dir/bb/ready-called" "draft: verify changed the pull request"
+
+  rc=0
+  run_open "$case_dir" ready "$BB_URL" || rc=$?
+  expect_code 0 "$rc" "draft: ready should take the pull request out of draft"$'\n'"$(cat "$case_dir/stderr")"
+  assert_equals '{"draft":false}' "$(cat "$case_dir/bb/ready-body.json")" "draft: ready sent more than the draft flag"
+  assert_grep 'draft: no' "$case_dir/stdout" "draft: ready did not read back a non-draft pull request"
+
+  # An API that creates a draft despite the request is caught by the read-back.
+  case_dir=$(make_open_case draft-created)
+  fm_bitbucket_pr_json 7 OPEN "$(cat "$case_dir/head")" true > "$case_dir/bb/pr.json"
+  rc=0
+  run_open "$case_dir" open || rc=$?
+  expect_code 1 "$rc" "draft-created: a pull request created as a draft must fail the read-back"
+  assert_grep 'is a draft' "$case_dir/stderr" "draft-created: the read-back did not name the draft"
+  pass "fm-pr-open refuses a draft, never flips one implicitly, and ready repairs it with a read-back"
+}
+
+test_verify_checks_state_branch_and_head() {
+  local case_dir rc=0 head
+  case_dir=$(make_open_case verify)
+  head=$(cat "$case_dir/head")
+  printf '{"values":[%s],"pagelen":50,"page":1}\n' "$(cat "$case_dir/bb/pr.json")" > "$case_dir/bb/prlist.json"
+
+  run_open "$case_dir" verify "$BB_URL" || rc=$?
+  expect_code 0 "$rc" "verify: an open, ready pull request at HEAD should verify"$'\n'"$(cat "$case_dir/stderr")"
+  assert_grep 'state: open' "$case_dir/stdout" "verify: the state was not printed"
+  assert_grep 'draft: no' "$case_dir/stdout" "verify: draft: no was not printed"
+  assert_grep "head: $head" "$case_dir/stdout" "verify: the head was not printed"
+  assert_grep "url: $BB_URL" "$case_dir/stdout" "verify: the URL was not printed"
+  rc=0
+  run_open "$case_dir" verify || rc=$?
+  expect_code 0 "$rc" "verify: finding the pull request by branch should verify"
+  assert_grep "url: $BB_URL" "$case_dir/stdout" "verify: the pull request found by branch was not printed"
+
+  fm_bitbucket_pr_json 7 OPEN "$BB_OTHER_HEAD" > "$case_dir/bb/pr.json"
+  rc=0
+  run_open "$case_dir" verify "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "verify: a pull request not at this HEAD must refuse"
+  assert_grep "so push your latest commit" "$case_dir/stderr" "verify: the unpushed commit was not named"
+
+  fm_bitbucket_pr_json 7 MERGED "$head" > "$case_dir/bb/pr.json"
+  rc=0
+  run_open "$case_dir" verify "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "verify: a merged pull request must refuse"
+  assert_grep 'is MERGED, not open' "$case_dir/stderr" "verify: the state was not named"
+
+  fm_bitbucket_pr_json 7 OPEN "$head" false release > "$case_dir/bb/pr.json"
+  rc=0
+  run_open "$case_dir" verify "$BB_URL" --dest main || rc=$?
+  expect_code 1 "$rc" "verify: a wrong destination must refuse when one is asked for"
+  assert_grep 'targets release, not main' "$case_dir/stderr" "verify: the destination was not named"
+
+  rc=0
+  run_open "$case_dir" verify "$BB_URL" --source other-branch || rc=$?
+  expect_code 1 "$rc" "verify: a wrong source branch must refuse"
+  assert_grep 'its source branch is fm/task-x1, not other-branch' "$case_dir/stderr" "verify: the source branch was not named"
+
+  case_dir=$(make_open_case verify-none)
+  rc=0
+  run_open "$case_dir" verify || rc=$?
+  expect_code 1 "$rc" "verify-none: no pull request for the branch must refuse"
+  assert_grep 'no open pull request from fm/task-x1' "$case_dir/stderr" "verify-none: the absence was not named"
+  pass "fm-pr-open verify exits zero only for an open, ready pull request from the branch at HEAD"
+}
+
+test_open_never_leaks_credentials() {
+  local case_dir rc=0
+  case_dir=$(make_open_case cred-missing)
+  FM_TEST_BB_EMAIL='' run_open "$case_dir" open || rc=$?
+  expect_code 1 "$rc" "cred-missing: a missing email must refuse"
+  assert_grep 'requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable' "$case_dir/stderr" \
+    "cred-missing: the missing variable was not named"
+  assert_no_grep 'NO_MISTAKES_BITBUCKET_API_TOKEN' "$case_dir/stderr" "cred-missing: a present variable was named as missing"
+  assert_token_never_in_output "$case_dir" cred-missing
+  assert_no_grep "$BB_EMAIL" "$case_dir/stderr" "cred-missing: the email value was printed"
+  assert_absent "$case_dir/bb/curl-argv.log" "cred-missing: the API was called without a credential"
+
+  rc=0
+  FM_TEST_BB_EMAIL='' FM_TEST_BB_TOKEN='' run_open "$case_dir" open || rc=$?
+  expect_code 1 "$rc" "cred-missing: both missing must refuse"
+  assert_grep 'NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable' \
+    "$case_dir/stderr" "cred-missing: both variable names were not reported"
+
+  case_dir=$(make_open_case cred-rejected)
+  rc=0
+  FM_TEST_BB_TOKEN='synthetic-wrong-token' run_open "$case_dir" open || rc=$?
+  expect_code 1 "$rc" "cred-rejected: a refused credential must fail"
+  assert_grep 'Bitbucket answered HTTP 401 (Unauthorized)' "$case_dir/stderr" "cred-rejected: the refusal was not reported"
+  assert_no_grep 'synthetic-wrong-token' "$case_dir/stderr" "cred-rejected: the rejected token was printed"
+  assert_no_grep 'synthetic-wrong-token' "$case_dir/stdout" "cred-rejected: the rejected token was printed"
+  assert_no_grep 'synthetic-wrong-token' "$case_dir/bb/curl-argv.log" "cred-rejected: the token reached a curl argument"
+  assert_absent "$case_dir/bb/create-called" "cred-rejected: a pull request was created without a valid credential"
+  pass "fm-pr-open names missing credentials by variable only and never prints the token or an auth header"
+}
+
+test_open_refuses_a_non_bitbucket_origin_unless_a_repository_is_named() {
+  local case_dir rc=0
+  case_dir=$(make_open_case origin)
+  git -C "$case_dir/wt" remote set-url origin https://user:synthetic-secret@github.com/o/r.git
+  run_open "$case_dir" open || rc=$?
+  expect_code 1 "$rc" "origin: a GitHub origin must refuse"
+  assert_grep 'origin remote is not a Bitbucket Cloud repository' "$case_dir/stderr" "origin: the refusal was not explained"
+  assert_no_grep 'synthetic-secret' "$case_dir/stderr" "origin: the remote's userinfo was printed"
+  assert_absent "$case_dir/bb/create-called" "origin: a pull request was created"
+  rc=0
+  run_open "$case_dir" open --repo "$BB_PATH" || rc=$?
+  expect_code 0 "$rc" "origin: --repo should name the repository"$'\n'"$(cat "$case_dir/stderr")"
+  assert_equals "$BB_URL" "$(cat "$case_dir/stdout")" "origin: the URL was not printed"
+  pass "fm-pr-open takes the repository from a Bitbucket origin or --repo and never prints remote userinfo"
+}
+
 test_url_parse_accepts_canonical_bitbucket_urls
 test_url_parse_refuses_malformed_bitbucket_urls
 test_record_read_reports_state_and_merged
@@ -648,3 +906,11 @@ test_merge_refuses_a_head_that_moved_before_the_request
 test_merge_reports_forge_refusal_unconfirmed_and_wrong_head
 test_merge_refuses_unmet_review_merge_checks
 test_merge_reads_back_after_a_transport_failure
+test_remote_path_names_only_bitbucket_cloud_repositories
+test_project_pr_host_follows_the_origin_remote
+test_open_creates_a_non_draft_pull_request
+test_open_reuses_an_existing_pull_request
+test_draft_is_refused_by_open_and_repaired_by_ready
+test_verify_checks_state_branch_and_head
+test_open_never_leaks_credentials
+test_open_refuses_a_non_bitbucket_origin_unless_a_repository_is_named

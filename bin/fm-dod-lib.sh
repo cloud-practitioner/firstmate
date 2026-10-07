@@ -6,7 +6,7 @@
 # receives. Both paths must hand the worker the same contract: a promoted
 # no-mistakes worker that never received the ask-user escalation rule or the
 # `--yes` ban is the exact delivery hole this single owner exists to close.
-# fm_dod_block <no-mistakes|direct-PR|local-only> <task-id> [branch] [<forge>]
+# fm_dod_block <no-mistakes|direct-PR|local-only> <task-id> [branch] [<forge>] [<pr-host>]
 # prints the block on stdout with no trailing blank line. The caller validates the
 # mode; an unknown mode is refused rather than silently rendered as the pipeline
 # contract.
@@ -59,6 +59,15 @@
 # changes is refused until it can be watched by its membership pinned when its
 # watch is armed, because the merge poll watches one change. No contract here
 # lets a worker submit, vote on, or abandon a change.
+# The optional fifth argument, pr-host, is github (the default) or bitbucket and
+# names which forge's pull requests the direct-PR worker opens. It is the one
+# thing that changes the direct-PR text: github keeps the `gh-axi` wording
+# byte for byte, and bitbucket names bin/fm-pr-open.sh's open, verify, and ready
+# commands, because gh-axi cannot reach Bitbucket Cloud. Callers derive it from
+# the project's origin remote with fm_pr_project_pr_host (bin/fm-pr-lib.sh);
+# it has no effect on no-mistakes, whose pipeline opens the PR itself, on
+# local-only, or on a gerrit forge, and it never changes the fixed
+# "Delivery contract:" line. bin/fm-pr-open.sh's header owns those commands.
 # The two PR-based blocks require a non-draft pull request before the done
 # report, read back from the forge; a lane that deliberately holds a draft
 # declares a paused wait instead. bin/fm-pr-check.sh refuses to arm merge
@@ -351,10 +360,20 @@ There is no pull request, no \`gh-axi\` call, and no forge CI result to report: 
 EOF
 }
 
-fm_dod_block() {  # <mode> <task-id> [branch] [<forge>]
-  local mode=$1 id=$2 forge=${4:-none}
+# The one place that names the direct-PR worker's Bitbucket commands, so the
+# rendered path is absolute: a worker's directory is another project's worktree.
+FM_DOD_PR_OPEN="$(d=${BASH_SOURCE[0]%/*}; [ "$d" != "${BASH_SOURCE[0]}" ] || d=.; cd "${d:-/}" && pwd)/fm-pr-open.sh"
+
+fm_dod_block() {  # <mode> <task-id> [branch] [<forge>] [<pr-host>]
+  local mode=$1 id=$2 forge=${4:-none} pr_host=${5:-github}
   local branch=${3:-fm/$id}
   fm_forge_valid_for_mode "$forge" "$mode" fm_dod_block || return 1
+  case "$pr_host" in
+    github|bitbucket) ;;
+    *)
+      echo "error: fm_dod_block: unknown pr host '$pr_host' (expected github or bitbucket)" >&2
+      return 1 ;;
+  esac
   case "$mode:$forge" in
     direct-PR:gerrit)
       cat <<EOF
@@ -404,6 +423,25 @@ EOF
       fm_gerrit_publish_block
       ;;
     direct-PR:*)
+      if [ "$pr_host" = bitbucket ]; then
+        cat <<EOF
+# Definition of done
+Delivery contract: mode=direct-PR
+Ship branch: $branch
+This task ships **direct-PR**: you raise the PR yourself, without the no-mistakes pipeline.
+This project's origin is Bitbucket Cloud, which \`gh-axi\` cannot reach, so you open and check the PR with firstmate's helper, \`$FM_DOD_PR_OPEN\`.
+The task is complete only when committed on your branch.
+When it is implemented and committed, push your branch with \`git push -u origin $branch\`, then run \`$FM_DOD_PR_OPEN open\` from this copy, which opens a PR that is ready for review, not a draft, and prints its https URL (it reuses a PR already open from your branch rather than creating a second one).
+Before you report done, read the PR back from Bitbucket with \`$FM_DOD_PR_OPEN verify <pr-url>\`: it must exit 0 and print \`draft: no\`, which also confirms the PR is open, comes from your branch, and carries this copy's HEAD; if it reports a draft, run \`$FM_DOD_PR_OPEN ready <pr-url>\`, and if it reports a different head, push your latest commit and verify again.
+The helper takes its credential from the NO_MISTAKES_BITBUCKET_EMAIL and NO_MISTAKES_BITBUCKET_API_TOKEN environment variables and never prints them; never print, echo, or write either one anywhere yourself, and if the helper names one as missing, append \`blocked [at=<epoch>]: {the missing variable}\` and stop.
+A draft cannot be merged, so a done report on one leaves the merge unasked.
+Then append \`done [at=<epoch>]: PR {url}\` to the status file and stop.
+That \`done:\` is accepted only when this copy's HEAD - your latest commit - is pushed to your PR branch; the check tests that commit, not merely that a branch moved.
+If you deliberately keep the PR a draft, append \`paused [at=<epoch>]: {why the draft is held}\` instead of done.
+Do NOT run /no-mistakes. The configured merge authority decides whether to merge the PR; firstmate relays the outcome.
+EOF
+        return 0
+      fi
       cat <<EOF
 # Definition of done
 Delivery contract: mode=direct-PR

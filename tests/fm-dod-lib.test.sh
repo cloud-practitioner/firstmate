@@ -382,6 +382,57 @@ test_pr_based_dod_draft_check_uses_gh_axi() {
   pass "PR-based DoD draft check uses gh-axi"
 }
 
+# A Bitbucket Cloud project's direct-PR worker cannot open its PR with gh-axi, so
+# only that one block changes: GitHub keeps its text exactly, and the
+# machine-readable contract line, the no-mistakes block, and local-only are
+# untouched by the host (docs/configuration.md owns the helper's contract).
+test_direct_pr_dod_is_forge_aware() {
+  local github default bitbucket helper
+  github="$TMP_ROOT/dod-direct-github.md"
+  default="$TMP_ROOT/dod-direct-default.md"
+  bitbucket="$TMP_ROOT/dod-direct-bitbucket.md"
+  helper="$ROOT/bin/fm-pr-open.sh"
+  fm_dod_block direct-PR dod-forge-task fm/dod-forge-task none github > "$github"
+  fm_dod_block direct-PR dod-forge-task > "$default"
+  fm_dod_block direct-PR dod-forge-task fm/dod-forge-task none bitbucket > "$bitbucket"
+  cmp -s "$github" "$default" || fail "an explicit github host must render the default direct-PR text"
+  # shellcheck disable=SC2016  # single quotes are deliberate: the backticks must stay literal
+  assert_grep 'open a PR with `gh-axi` that is ready for review, not a draft' "$github" \
+    "github: the direct-PR text must keep the gh-axi open command"
+  assert_no_grep 'fm-pr-open.sh' "$github" "github: the Bitbucket helper leaked into the GitHub text"
+
+  assert_grep "Delivery contract: mode=direct-PR" "$bitbucket" "bitbucket: the contract line is missing"
+  grep -qx 'Delivery contract: mode=direct-PR' "$bitbucket" \
+    || fail "bitbucket: the machine-readable contract line must be unchanged"
+  assert_grep "$helper open" "$bitbucket" "bitbucket: the open command is not named"
+  assert_grep "$helper verify <pr-url>" "$bitbucket" "bitbucket: the read-back command is not named"
+  assert_grep "$helper ready <pr-url>" "$bitbucket" "bitbucket: the draft repair command is not named"
+  # shellcheck disable=SC2016  # single quotes are deliberate: the backticks must stay literal
+  assert_grep 'must exit 0 and print `draft: no`' "$bitbucket" "bitbucket: the read-back success condition is not named"
+  assert_grep 'NO_MISTAKES_BITBUCKET_EMAIL and NO_MISTAKES_BITBUCKET_API_TOKEN' "$bitbucket" \
+    "bitbucket: the credential variables are not named"
+  assert_no_grep 'gh-axi pr' "$bitbucket" "bitbucket: a GitHub-only draft check was left in the text"
+  # shellcheck disable=SC2016  # single quotes are deliberate: the backticks must stay literal
+  assert_no_grep 'open a PR with `gh-axi`' "$bitbucket" "bitbucket: the GitHub open command was left in the text"
+  assert_grep 'Do NOT run /no-mistakes' "$bitbucket" "bitbucket: the no-pipeline rule was dropped"
+
+  local mode
+  for mode in no-mistakes local-only; do
+    fm_dod_block "$mode" dod-forge-task fm/dod-forge-task none > "$TMP_ROOT/dod-$mode-plain.md"
+    fm_dod_block "$mode" dod-forge-task fm/dod-forge-task none bitbucket > "$TMP_ROOT/dod-$mode-bb.md"
+    cmp -s "$TMP_ROOT/dod-$mode-plain.md" "$TMP_ROOT/dod-$mode-bb.md" \
+      || fail "$mode: the pull request host must not change this mode's block"
+  done
+  fm_dod_block direct-PR dod-forge-task fm/dod-forge-task gerrit > "$TMP_ROOT/dod-gerrit-plain.md"
+  fm_dod_block direct-PR dod-forge-task fm/dod-forge-task gerrit bitbucket > "$TMP_ROOT/dod-gerrit-bb.md"
+  cmp -s "$TMP_ROOT/dod-gerrit-plain.md" "$TMP_ROOT/dod-gerrit-bb.md" \
+    || fail "a gerrit forge must not be changed by the pull request host"
+  if fm_dod_block direct-PR dod-forge-task fm/dod-forge-task none gitlab >/dev/null 2>&1; then
+    fail "an unknown pull request host must be refused rather than rendered as GitHub"
+  fi
+  pass "direct-PR DoD names gh-axi for GitHub and fm-pr-open.sh for Bitbucket, and nothing else changes"
+}
+
 test_scout_done_is_not_gated
 test_unpushed_ship_done_is_refused
 test_no_mistakes_prevalidation_done_is_not_gated
@@ -400,5 +451,6 @@ test_standalone_local_only_needs_project_ref
 test_non_done_lines_are_not_gated
 test_fenced_and_indented_captain_lines_are_not_intent
 test_pr_based_dod_draft_check_uses_gh_axi
+test_direct_pr_dod_is_forge_aware
 
 echo "all fm-dod-lib tests passed"

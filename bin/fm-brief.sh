@@ -42,7 +42,8 @@
 # resolves it per task at intake (AGENTS.md section 7); data/projects.md holds the
 # captain's standing posture as context, and this script never reads it:
 #   no-mistakes  implement -> /no-mistakes pipeline -> PR -> configured merge authority
-#   direct-PR    implement -> push + open PR via gh-axi (no pipeline) -> configured merge authority
+#   direct-PR    implement -> push + open PR via gh-axi, or via bin/fm-pr-open.sh when
+#                the project's origin is Bitbucket Cloud (no pipeline) -> configured merge authority
 #   local-only   implement on branch, stop and report "ready in branch" (no push/PR);
 #                the configured merge authority approves, firstmate merges to local main
 # no-mistakes-prod-only is a registry policy, not a task mode; resolve it to one of
@@ -646,7 +647,11 @@ case "$MODE" in
     ;;
 esac
 RULE1=$(fm_ship_rule_one "$MODE" "$ID" "$BRANCH" "$FORGE") || exit 1
-DOD=$(fm_dod_block "$MODE" "$ID" "$BRANCH" "$FORGE") || exit 1
+# Which forge's pull requests a direct-PR worker opens follows the project clone's
+# origin remote, never the registry: this changes only the open command the
+# Definition of done names, not the forge binding bin/fm-spawn.sh checks.
+PR_HOST=$(fm_pr_project_pr_host "$FM_HOME/projects/$REPO")
+DOD=$(fm_dod_block "$MODE" "$ID" "$BRANCH" "$FORGE" "$PR_HOST") || exit 1
 
 cat > "$BRIEF" <<EOF
 You are a crewmate: an autonomous worker agent managed by firstmate. Work on your own; do not wait for a human.
