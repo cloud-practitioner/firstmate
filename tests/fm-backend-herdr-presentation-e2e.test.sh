@@ -1514,11 +1514,9 @@ assert_focus_is "$LOCK_REFUSE_FOCUS" "resume lock-refuse"
 # same identity after another stop/reprovision cycle.
 pass "real Herdr lab: default resumed identity refuses session lock contention"
 
-# With --herdr-resume-lock-wait, the same exact resume WAITS for session lock
-# contention rather than treating a short bounded window as fatal. Hold the
-# shared session lock from an unrelated process for a duration well past any
-# plausible bounded-retry window so the assertion below is deterministic
-# rather than a race that could pass by luck on a fast machine.
+# Both invocations use the same one-second recovery bound, so success after
+# this longer lock hold distinguishes --herdr-resume-lock-wait from the
+# default bounded wait rather than passing within the normal 120-second bound.
 LOCK_WAIT_ID=$LOCK_REFUSE_ID
 LOCK_WAIT_META=$LOCK_REFUSE_META
 LOCK_WAIT_OLD_WT=$LOCK_REFUSE_OLD_WT
