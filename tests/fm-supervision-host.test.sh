@@ -1464,7 +1464,7 @@ test_successor_left_at_the_turn_survives_the_hook_process_group_teardown() {
 test_claude_stop_hook_notifies_when_at_turn_downtime_write_fails() {
   local home real_mktemp
   home=$(make_primary_home hook-turns-main-only-write-fails)
-  turn_main_only_at_second_offer "$home"
+  turn_main_only_at_second_offer "$home" quiet
   real_mktemp=$(command -v mktemp)
   cat > "$home/fakebin/mktemp" <<SH
 #!/usr/bin/env bash
@@ -1486,6 +1486,8 @@ SH
   expect_code 2 "$(cat "$home/hook.rc")" "the Stop hook must notify main instead of dropping the close"
   assert_grep 'firstmate watcher auto-arm FAILED' "$home/hook.err" "main must receive the failure notification"
   assert_re 'outcome=failed ' "$home/state/.claude-autoarm-epoch" "the failure must be committed"
+  FM_HOME="$home" bash -c '. "$1"; fm_watcher_healthy "$2/state" "$2/bin/fm-watch.sh" 30 "$2"' _ \
+    "$ROOT/bin/fm-wake-lib.sh" "$home" || fail "hook write failure: the successor must remain healthy"
   pass "host+hook: failed at-turn downtime write notifies main despite a healthy successor"
 }
 
