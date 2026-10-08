@@ -1471,6 +1471,7 @@ PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" stop "$HERDR_LAB_SESSION" >/dev/
   || fail "could not stop the isolated session for resume lock-refuse"
 PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" provision "$HERDR_LAB_SESSION" \
   || fail "could not reprovision the isolated session for resume lock-refuse"
+use_legacy_restart_record "$LOCK_REFUSE_META"
 
 LOCK_REFUSE_READY="$TMP_ROOT/lock-refuse-ready"
 LOCK_REFUSE_HOLD_SECONDS=15
@@ -1527,6 +1528,7 @@ PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" stop "$HERDR_LAB_SESSION" >/dev/
   || fail "could not stop the isolated session for resume lock-wait"
 PATH="$HERDR_ORIGINAL_PATH" "$HERDR_LAB_HELPER" provision "$HERDR_LAB_SESSION" \
   || fail "could not reprovision the isolated session for resume lock-wait"
+use_legacy_restart_record "$LOCK_WAIT_META"
 
 LOCK_WAIT_READY="$TMP_ROOT/lock-wait-ready"
 LOCK_WAIT_HOLD_SECONDS=30
@@ -1546,7 +1548,7 @@ while [ ! -e "$LOCK_WAIT_READY" ] && kill -0 "$LOCK_WAIT_HOLDER_PID" 2>/dev/null
 LOCK_WAIT_DEADLINE_SECONDS=$((LOCK_WAIT_HOLD_SECONDS + 60))
 LOCK_WAIT_FOCUS=$(focus_snapshot)
 LOCK_WAIT_START=$(date +%s)
-if SPAWN_DEADLINE_SECONDS=$LOCK_WAIT_DEADLINE_SECONDS \
+if FM_TEST_HERDR_RECOVERY_LOCK_WAIT=1 SPAWN_DEADLINE_SECONDS=$LOCK_WAIT_DEADLINE_SECONDS \
     spawn_task "$LOCK_WAIT_ID" "$HOME_DIR" "$RECOVERY_PROJECT_DIR" --herdr-resume-lock-wait \
     > "$TMP_ROOT/lock-wait-resume.out" 2> "$TMP_ROOT/lock-wait-resume.err"; then
   LOCK_WAIT_STATUS=0
