@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Spawn a direct report: a crewmate in a treehouse or Orca worktree, or a
 # secondmate in its isolated firstmate home.
-# Usage: fm-spawn.sh <task-id> <project-dir> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--branch-prefix <prefix>] [--base-branch <branch>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>]
-#        fm-spawn.sh <task-id> <project-dir> --scout [--base-branch <branch>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>]
+# Usage: fm-spawn.sh <task-id> <project-dir> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--branch-prefix <prefix>] [--base-branch <branch>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] [--herdr-resume-lock-wait]
+#        fm-spawn.sh <task-id> <project-dir> --scout [--base-branch <branch>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] [--herdr-resume-lock-wait]
 #        fm-spawn.sh <task-id> [<firstmate-home>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] --secondmate
 #   --mode and --yolo are this task's delivery contract, REQUIRED for every ship
 #   spawn and refused on --scout and --secondmate spawns. Firstmate resolves both
@@ -141,14 +141,24 @@
 #   authority, and every ambiguous recovery stays on the flat fallback after
 #   duplicate-agent risk is independently absent. Treehouse allocation and task
 #   metadata are unchanged.
-#   A clean projected create or exact resume makes one bounded attempt to hold
-#   the one session-scoped presentation-order lock (keyed by named session plus
-#   canonical socket, outside any home's state/) through launch handoff. Lock
-#   contention warns and falls back to the ordinary flat layout before any
-#   projection mutation. The exact response-derived new workspace is inserted
-#   immediately after its owning parent (firstmate or 2ndmate-<id>) contiguous
-#   child block. Ordering never authorizes lifecycle cleanup, and any
-#   unavailable, ambiguous, or failed move warns while the spawn continues.
+#   A clean projected create and an exact resume both hold the one
+#   session-scoped presentation-order lock (keyed by named session plus
+#   canonical socket, outside any home's state/) through launch handoff.
+#   On contention a create makes one bounded attempt and falls back to the
+#   ordinary flat layout before any projection mutation. A resume waits up to
+#   120 seconds for a concurrent recovery on the same session and refuses by
+#   default only past that bound (it does not degrade flat; a stuck holder is a
+#   hard failure). Pass --herdr-resume-lock-wait to opt that resume into
+#   waiting for the lock without that bound instead, so two concurrent
+#   recoveries always serialize and each still replace its own exact husk. The flag acts
+#   only on that fresh ship or scout spawn path: --relaunch reuses the
+#   recorded endpoint without taking this lock, so the flag has no effect
+#   there, and a secondmate spawn never projects. Unbounded
+#   blocking on a third-party session lock is never the default. The exact
+#   response-derived new workspace is inserted immediately after its owning
+#   parent (firstmate or 2ndmate-<id>) contiguous child block. Ordering never
+#   authorizes lifecycle cleanup, and any unavailable, ambiguous, or failed
+#   move warns while the spawn continues.
 #   Every projected create, prune, and move captures and verifies the named
 #   session's exact active workspace and tab. A detected focus change restores
 #   only that exact tab id; an ambiguous pre-operation snapshot refuses the
@@ -174,6 +184,20 @@
 #   fm_firstmate_root_home resolves, so a home seeded from another machine anchors
 #   that lock itself rather than failing to resolve one;
 #   contention refuses rather than waits.
+#   Project capacity: when this machine declares how many workers a project
+#   admits at once (config/project-capacity; bin/fm-project-capacity-lib.sh owns
+#   the declaration, what holds a place, and the race argument), a fresh ship or
+#   scout spawn counts the places already held while holding that same
+#   project-identity lock - taken on every backend whenever the declaration caps
+#   any project, Orca included, because an uncapped clone's worker still holds a
+#   place for a capped clone of the same origin - and holds it through metadata
+#   publication. A spawn that finds
+#   every place held prints one `deferred:` line and exits 75 before any brief
+#   render, endpoint, worktree, record, or backlog move exists, so the task stays
+#   exactly as queued as it was; an unreadable declaration refuses with exit 1.
+#   A batch reports such a pair as `batch: DEFERRED` and exits 75 when nothing
+#   else failed. A relaunch and a --secondmate spawn are never counted against
+#   capacity.
 #   With no harness arg, a crewmate/scout spawn resolves the CREW harness only when
 #   config/crew-dispatch.json is absent. When that file exists, crewmate/scout
 #   spawns require an explicit harness so firstmate cannot silently skip dispatch
@@ -380,7 +404,7 @@
 #     __PIAPPROVE__ optional --approve on a seeded Pi/pi-signed secondmate when
 #                  that executable advertises the flag (empty otherwise; session
 #                  trust for the launch cwd only, never a trust.json rewrite)
-#     __PIEXCLUDE__ optional ` --exclude-tools '<names>'` from
+#     __PIEXCLUDE__ optional ` --exclude-tools '<comma-joined names>'` from
 #                  config/crew-exclude-tools on Pi/pi-signed ship and scout
 #                  launches (supplies its own leading space, empty otherwise)
 #     __PIRESUME__ optional relaunch-only `--session <reference>` that keeps a
@@ -681,6 +705,8 @@ fm_snapshot_env_clear
 . "$SCRIPT_DIR/fm-remote-readiness-lib.sh"
 # shellcheck source=bin/fm-timeout-lib.sh
 . "$SCRIPT_DIR/fm-timeout-lib.sh"
+# shellcheck source=bin/fm-project-capacity-lib.sh
+. "$SCRIPT_DIR/fm-project-capacity-lib.sh"
 # shellcheck source=bin/fm-worker-account-lib.sh
 . "$SCRIPT_DIR/fm-worker-account-lib.sh"
 # Fail closed before any fleet mutation: a no-mistakes gate agent must never spawn
@@ -711,6 +737,9 @@ BASE_BRANCH_SET=0
 TRACEPARENT_SET=0
 RELAUNCH=0
 RELAUNCH_TASK_TMP=
+# Opt-in only: exact-resume presentation-order lock waits without a bound.
+# Absent/unset keeps the bounded recovery wait, then refusal. See header.
+HERDR_RESUME_LOCK_WAIT=0
 POS=()
 want_value=
 for a in "$@"; do
@@ -776,6 +805,7 @@ for a in "$@"; do
     KIND_SET=1
     ;;
   --relaunch) RELAUNCH=1 ;;
+  --herdr-resume-lock-wait) HERDR_RESUME_LOCK_WAIT=1 ;;
   --harness) want_value=harness ;;
   --harness=*)
     HARNESS_ARG=${a#--harness=}
@@ -1454,16 +1484,32 @@ spawn_abort_cleanup() {
 }
 trap spawn_abort_cleanup EXIT
 
-# One bounded lock per live Herdr session/socket, shared across all homes.
-# <session> is required so secondmate and primary spawns serialize against the
-# same session without writing any other home's state directory.
-# [wait-seconds] (default 5) bounds the whole wait, and the waiter always waits
-# at least that long before refusing.
-spawn_herdr_presentation_order_lock_acquire() {  # <session> [wait-seconds]
-  local session=${1:-} limit=$(( ${2:-5} * 10 )) attempt=0 lock_path
+# One lock per live Herdr session/socket, shared across all homes. <session>
+# is required so secondmate and primary spawns serialize against the same
+# session without writing any other home's state directory.
+#
+# A numeric [wait-seconds] (default 5) bounds the whole wait, and the waiter
+# always waits at least that long before refusing. A clean create uses that
+# default and falls back to the ordinary flat layout on contention. An exact
+# resume waits up to its longer recovery bound and then hard-refuses (it does
+# not degrade flat). Passing mode `wait` makes this call WAIT for the lock
+# without a bound instead (`fm_lock_acquire_wait`, the same unbounded-wait idiom
+# this file already uses for its other fleet-shared locks). Only the recovery
+# path under the explicit --herdr-resume-lock-wait opt-in passes `wait`, so
+# unbounded blocking on a third-party session lock never becomes the default
+# for every caller. Dead-owner reclaim inside `fm_lock_try_acquire` still
+# bounds a wait against a holder that crashed mid-hold.
+spawn_herdr_presentation_order_lock_acquire() {  # <session> [wait-seconds|wait]
+  local session=${1:-} mode=${2:-5} limit attempt=0 lock_path
   [ -n "$session" ] || session=$(fm_backend_herdr_session)
   lock_path=$(fm_backend_herdr_presentation_session_lock_path "$session") || return 1
   HERDR_PRESENTATION_ORDER_LOCK="$lock_path"
+  if [ "$mode" = wait ]; then
+    fm_lock_acquire_wait "$HERDR_PRESENTATION_ORDER_LOCK"
+    HERDR_PRESENTATION_ORDER_LOCK_HELD=1
+    return 0
+  fi
+  limit=$(( mode * 10 ))
   while ! fm_lock_try_acquire "$HERDR_PRESENTATION_ORDER_LOCK"; do
     [ "$attempt" -lt "$limit" ] || return 1
     sleep 0.1
@@ -1535,6 +1581,7 @@ if [ "${#POS[@]}" -gt 0 ] && [ "${POS[0]}" != "$idpart" ] && case "$idpart" in *
   [ "$YOLO_SET" -eq 0 ] || shared_args+=(--yolo "$YOLO")
   [ "$BRANCH_PREFIX_SET" -eq 0 ] || shared_args+=(--branch-prefix "$BRANCH_PREFIX")
   [ "$BASE_BRANCH_SET" -eq 0 ] || shared_args+=(--base-branch "$BASE_BRANCH")
+  [ "$HERDR_RESUME_LOCK_WAIT" -eq 0 ] || shared_args+=(--herdr-resume-lock-wait)
   for pair in "${POS[@]}"; do
     case "$pair" in
     *=*) : ;;
@@ -1548,16 +1595,17 @@ if [ "${#POS[@]}" -gt 0 ] && [ "${POS[0]}" != "$idpart" ] && case "$idpart" in *
       echo "error: batch dispatch does not support --secondmate; spawn each secondmate explicitly" >&2
       rc=2
       continue
-    elif [ "$KIND" = scout ]; then
-      if FM_SPAWN_NO_GUARD=1 "$FM_ROOT/bin/fm-spawn.sh" "${pair%%=*}" "${pair#*=}" "${shared_args[@]+"${shared_args[@]}"}" --scout; then :; else
-        echo "batch: FAILED to spawn ${pair%%=*} (${pair#*=})" >&2
-        rc=1
-      fi
-    else
-      if FM_SPAWN_NO_GUARD=1 "$FM_ROOT/bin/fm-spawn.sh" "${pair%%=*}" "${pair#*=}" "${shared_args[@]+"${shared_args[@]}"}"; then :; else
-        echo "batch: FAILED to spawn ${pair%%=*} (${pair#*=})" >&2
-        rc=1
-      fi
+    fi
+    pair_args=("${pair%%=*}" "${pair#*=}" "${shared_args[@]+"${shared_args[@]}"}")
+    [ "$KIND" != scout ] || pair_args+=(--scout)
+    pair_rc=0
+    FM_SPAWN_NO_GUARD=1 "$FM_ROOT/bin/fm-spawn.sh" "${pair_args[@]}" || pair_rc=$?
+    if [ "$pair_rc" -eq "$FM_PROJECT_CAPACITY_DEFER_EXIT" ]; then
+      echo "batch: DEFERRED ${pair%%=*} (${pair#*=}) - its project is at capacity, so it stays queued" >&2
+      [ "$rc" -ne 0 ] || rc=$FM_PROJECT_CAPACITY_DEFER_EXIT
+    elif [ "$pair_rc" -ne 0 ]; then
+      echo "batch: FAILED to spawn ${pair%%=*} (${pair#*=})" >&2
+      rc=1
     fi
   done
   exit "$rc"
@@ -2339,9 +2387,8 @@ if [ "$KIND" = secondmate ] && [ "$HARNESS" = rovo ]; then
   exit 1
 fi
 
-# config/crew-exclude-tools (header above): a non-empty list must be honored by
-# this launch or the spawn refuses, before any mutation. Secondmate agents are
-# not covered.
+# config/crew-exclude-tools (header above): refuse before worker provisioning
+# if this launch cannot honor the list. Secondmate agents are not covered.
 EXCLUDE_TOOLS=
 if [ "$KIND" != secondmate ]; then
   EXCLUDE_TOOLS=$(fm_exclude_tools_check "$HARNESS" "$RAW_LAUNCH" "$CONFIG") || exit 1
@@ -3071,16 +3118,51 @@ else
   WT=""
   BRIEF="$DATA/$ID/brief.md"
 fi
-if [ "$RELAUNCH" -eq 0 ] && [ "$KIND" != secondmate ] && [ "$BACKEND" != orca ]; then
+# Project capacity admission (bin/fm-project-capacity-lib.sh owns the
+# declaration, what holds a place, and why this is race-safe). A fresh worker
+# for a project whose declared capacity is already held is deferred here, before
+# any brief render, endpoint, worktree, record, or backlog move exists, so the
+# deferral leaves the task exactly as queued as it was. A relaunch replaces a
+# worker that already holds a place, and a secondmate is not a worker.
+SPAWN_PROJECT_CAPACITY=
+SPAWN_PROJECT_CAPACITY_ANY=
+if [ "$RELAUNCH" -eq 0 ] && [ "$KIND" != secondmate ]; then
+  SPAWN_CAPACITY_CONFIG=$(fm_project_capacity_config_dir "$FM_HOME" "$CONFIG") || {
+    echo "error: could not resolve the root Firstmate home that declares project capacity for $PROJ_ABS" >&2
+    exit 1
+  }
+  if ! fm_project_capacity_lookup "$SPAWN_CAPACITY_CONFIG" "$(basename "$PROJ_ABS")"; then
+    echo "error: spawn refused: the project capacity declaration is unreadable ($FM_PROJECT_CAPACITY_ERROR); fix it so the captain's worker limits are known (docs/configuration.md \"Project capacity\")" >&2
+    exit 1
+  fi
+  SPAWN_PROJECT_CAPACITY=$FM_PROJECT_CAPACITY
+  SPAWN_PROJECT_CAPACITY_ANY=$FM_PROJECT_CAPACITY_ANY
+fi
+if [ "$RELAUNCH" -eq 0 ] && [ "$KIND" != secondmate ] &&
+  { [ "$BACKEND" != orca ] || [ -n "$SPAWN_PROJECT_CAPACITY_ANY" ]; }; then
   SPAWN_TREEHOUSE_PROJECT_LOCK=$(fm_treehouse_project_lock_path "$PROJ_ABS") || {
     echo "error: could not resolve the shared Treehouse project lock for $PROJ_ABS" >&2
     exit 1
   }
   if ! fm_lock_try_acquire "$SPAWN_TREEHOUSE_PROJECT_LOCK"; then
-    echo "error: another Treehouse slot allocation or return is in progress for $PROJ_ABS; refusing to race it" >&2
+    if [ "$BACKEND" = orca ]; then
+      echo "error: another spawn or cleanup holds the shared project lock for $PROJ_ABS; refusing to race its capacity admission" >&2
+    else
+      echo "error: another Treehouse slot allocation or return is in progress for $PROJ_ABS; refusing to race it" >&2
+    fi
     exit 1
   fi
   SPAWN_TREEHOUSE_PROJECT_LOCK_HELD=1
+fi
+if [ -n "$SPAWN_PROJECT_CAPACITY" ]; then
+  if ! fm_project_capacity_occupants "$SPAWN_TREEHOUSE_PROJECT_LOCK" "$PROJ_ABS" "$STATE" "$ID"; then
+    echo "error: spawn refused: project $(basename "$PROJ_ABS") declares a capacity of $SPAWN_PROJECT_CAPACITY, but this machine's task records cannot all be read to count it ($FM_PROJECT_CAPACITY_ERROR)" >&2
+    exit 1
+  fi
+  if [ "$FM_PROJECT_CAPACITY_OCCUPANTS" -ge "$SPAWN_PROJECT_CAPACITY" ]; then
+    echo "deferred: project $(basename "$PROJ_ABS") admits $SPAWN_PROJECT_CAPACITY worker(s) at once on this machine ($FM_PROJECT_CAPACITY_FILE) and $FM_PROJECT_CAPACITY_OCCUPANTS already hold a place ($FM_PROJECT_CAPACITY_OCCUPANT_IDS); task $ID was not launched and its backlog item stays queued - dispatch it again once one of them records its ready PR or is cleaned up" >&2
+    exit "$FM_PROJECT_CAPACITY_DEFER_EXIT"
+  fi
 fi
 [ -f "$BRIEF" ] || {
   echo "error: task $ID has no brief at inaccessible data path $BRIEF" >&2
@@ -3734,16 +3816,25 @@ else
           exit 1
         }
         # A concurrent recovery on the same session holds this lock through its
-        # whole relaunch, so recovery waits far longer than an ordinary spawn.
-        HERDR_RECOVERY_LOCK_WAIT=120
-        case "${FM_TEST_HERDR_RECOVERY_LOCK_WAIT:-}" in
-          ''|*[!0-9]*|0) ;;
-          *) HERDR_RECOVERY_LOCK_WAIT=$FM_TEST_HERDR_RECOVERY_LOCK_WAIT ;;
-        esac
-        spawn_herdr_presentation_order_lock_acquire "$HERDR_SES" "$HERDR_RECOVERY_LOCK_WAIT" || {
-          echo "error: herdr presentation recovery could not acquire its session lock within ${HERDR_RECOVERY_LOCK_WAIT}s; refusing a concurrent resume" >&2
-          exit 1
-        }
+        # whole relaunch, so recovery waits far longer than an ordinary spawn
+        # and refuses only past that bound. --herdr-resume-lock-wait opts into
+        # waiting without the bound instead (see header).
+        if [ "$HERDR_RESUME_LOCK_WAIT" = 1 ]; then
+          spawn_herdr_presentation_order_lock_acquire "$HERDR_SES" wait || {
+            echo "error: herdr presentation recovery could not resolve its session lock" >&2
+            exit 1
+          }
+        else
+          HERDR_RECOVERY_LOCK_WAIT=120
+          case "${FM_TEST_HERDR_RECOVERY_LOCK_WAIT:-}" in
+            ''|*[!0-9]*|0) ;;
+            *) HERDR_RECOVERY_LOCK_WAIT=$FM_TEST_HERDR_RECOVERY_LOCK_WAIT ;;
+          esac
+          spawn_herdr_presentation_order_lock_acquire "$HERDR_SES" "$HERDR_RECOVERY_LOCK_WAIT" || {
+            echo "error: herdr presentation recovery could not acquire its session lock within ${HERDR_RECOVERY_LOCK_WAIT}s; refusing a concurrent resume" >&2
+            exit 1
+          }
+        fi
         if [ -e "$STATE/$ID.meta" ] || [ -L "$STATE/$ID.meta" ]; then
           herdr_projection_existing_meta_allows_flat "$STATE/$ID.meta" || exit 1
         fi
@@ -4700,8 +4791,8 @@ EOF
 import { execFile } from "node:child_process";
 import { appendFileSync } from "node:fs";
 const excludeTools = "$EXCLUDE_TOOLS".split(",").filter(Boolean);
-const excludeFile = $(perl -MJSON::PP -e 'print encode_json($ARGV[0])' -- "$CONFIG/crew-exclude-tools");
-const statusFile = $(perl -MJSON::PP -e 'print encode_json($ARGV[0])' -- "$STATE/$ID.status");
+const excludeFile = $(perl -MJSON::PP -MEncode=decode_utf8 -e 'print encode_json(decode_utf8($ARGV[0]))' -- "$CONFIG/crew-exclude-tools");
+const statusFile = $(perl -MJSON::PP -MEncode=decode_utf8 -e 'print encode_json(decode_utf8($ARGV[0]))' -- "$STATE/$ID.status");
 const busyEvent = (state: string, event: string) =>
   new Promise<void>((resolve) => {
     execFile("$FM_ROOT/bin/fm-busy-event.sh", [
