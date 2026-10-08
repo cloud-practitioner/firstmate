@@ -949,15 +949,6 @@ test_pi_signed_threads_shared_pi_profile_and_preserves_identity() {
   assert_present "$HOME_DIR/state/$id.busy-gen" "pi-signed spawn did not arm the busy-state contract"
   assert_contains "$(cat "$HOME_DIR/state/$id.busy-state")" "state=busy source=fm-spawn" \
     "pi-signed spawn did not seed the busy-state record from the launch brief"
-  local ext gen
-  ext=$(cat "$HOME_DIR/state/$id.pi-ext.ts")
-  gen=$(cat "$HOME_DIR/state/$id.busy-gen")
-  assert_contains "$ext" 'pi.on("agent_start"' "pi extension lost the semantic agent_start busy edge"
-  assert_contains "$ext" 'pi.on("agent_settled"' "pi extension lost the semantic agent_settled idle edge"
-  assert_contains "$ext" 'ctx.isIdle()' "pi extension no longer confirms idle with ctx.isIdle()"
-  assert_contains "$ext" "\"--gen\", \"$gen\"" "pi extension does not carry the armed incarnation gen"
-  assert_contains "$ext" '"--source", "pi-ext"' "pi extension does not attribute its semantic source"
-  assert_contains "$ext" 'pi.on("turn_end"' "pi extension lost the turn-end notification touch"
   pass "pi-signed shares Pi launch semantics while preserving its configured and recorded identity"
 }
 
@@ -1131,7 +1122,7 @@ test_pi_exclude_tools_reach_ship_and_scout_launches() {
       rec=$(make_spawn_case "excl-${harness}-${kindflag#--}" "$harness" "$id")
       read_case_record "$rec"
       write_exclude_file "$HOME_DIR" '# hide the write tools' '' \
-        '  mcp__iqx_jira__editJiraIssue  ' 'mcp__iqx_jira__createConfluenceContent' 'mcp__other-srv__tool.v2'
+        '  mcp__tracker__editIssue  ' 'mcp__tracker__createPage' 'mcp__other-srv__tool.v2'
       if [ "$kindflag" = --scout ]; then
         out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --scout)
       else
@@ -1140,7 +1131,7 @@ test_pi_exclude_tools_reach_ship_and_scout_launches() {
       status=$?
       expect_code 0 "$status" "$harness $kindflag spawn with exclusions should succeed"$'\n'"$out"
       launch=$(cat "$LAUNCH_LOG")
-      assert_contains "$launch" "--exclude-tools 'mcp__iqx_jira__editJiraIssue,mcp__iqx_jira__createConfluenceContent,mcp__other-srv__tool.v2' " \
+      assert_contains "$launch" "--exclude-tools 'mcp__tracker__editIssue,mcp__tracker__createPage,mcp__other-srv__tool.v2' " \
         "$harness $kindflag launch must carry the comma-joined, quoted exclusion list"
     done
   done
@@ -1148,17 +1139,19 @@ test_pi_exclude_tools_reach_ship_and_scout_launches() {
 }
 
 test_pi_exclude_tools_worker_registry_reports() {
-  local harness kindflag scenario rec id out status report
+  local harness kindflag scenario case_name rec id out status report
   command -v node >/dev/null 2>&1 || fail "node is required to drive Pi worker exclusion reporting"
   for harness in pi pi-signed; do
     for kindflag in --ship --scout; do
       for scenario in matched unmatched unverified; do
         id="excl-registry-${harness}-${kindflag#--}-${scenario}"
-        rec=$(make_spawn_case "$id" "$harness" "$id")
+        case_name=$id
+        [ "$scenario" != unmatched ] || case_name="josé-$id"
+        rec=$(make_spawn_case "$case_name" "$harness" "$id")
         read_case_record "$rec"
         case "$scenario" in
-          matched) write_exclude_file "$HOME_DIR" 'mcp__iqx_jira__editJiraIssue' ;;
-          unmatched) write_exclude_file "$HOME_DIR" 'mcp__iqx_jira__editJiraIssu' 'mcp__iqx_jira__createJiraIssu' ;;
+          matched) write_exclude_file "$HOME_DIR" 'mcp__tracker__editIssue' ;;
+          unmatched) write_exclude_file "$HOME_DIR" 'mcp__tracker__editIssu' 'mcp__tracker__createIssu' ;;
           unverified) write_exclude_file "$HOME_DIR" 'mcp__offline__executeWrite' ;;
         esac
         if [ "$kindflag" = --scout ]; then
@@ -1169,12 +1162,28 @@ test_pi_exclude_tools_worker_registry_reports() {
         expect_code 0 "$?" "$harness $kindflag registry-report spawn should succeed: $out"
         out=$(EXT_PATH="$HOME_DIR/state/$id.pi-ext.ts" STATUS_FILE="$HOME_DIR/state/$id.status" \
           EXCLUDE_FILE="$HOME_DIR/config/crew-exclude-tools" TURNEND="$HOME_DIR/state/$id.turn-ended" \
+          TASK_ID="$id" BUSY_EVENT="$ROOT/bin/fm-busy-event.sh" \
           SCENARIO="$scenario" node --input-type=module 2>&1 <<'JS'
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { appendFileSync, existsSync, readFileSync, rmSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { setTimeout } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
 const status = () => existsSync(process.env.STATUS_FILE) ? readFileSync(process.env.STATUS_FILE, "utf8") : "";
 const before = status();
+const stateDir = dirname(process.env.STATUS_FILE);
+const genFile = join(stateDir, process.env.TASK_ID + ".busy-gen");
+const gen = readFileSync(genFile, "utf8").trim();
+const busy = () => {
+  const [version, ...fields] = readFileSync(join(stateDir, process.env.TASK_ID + ".busy-state"), "utf8").trim().split(" ");
+  assert.equal(version, "v1");
+  const { ts, ...record } = Object.fromEntries(fields.map((field) => field.split("=")));
+  assert.match(ts, /^\d+$/);
+  return record;
+};
+const seeded = busy();
+assert.deepEqual(seeded, { gen, seq: "1", state: "busy", source: "fm-spawn", event: "launch-brief" });
 const handlers = {};
 let tools = [];
 const extension = await import(pathToFileURL(process.env.EXT_PATH).href);
@@ -1184,11 +1193,14 @@ extension.default({
   getAllTools: () => tools,
 });
 assert.equal(status(), before, "registration must not validate against a registry that has not loaded yet");
+assert.deepEqual(busy(), seeded, "registration must not change busy state");
 if (process.env.SCENARIO !== "unverified") {
-  tools = [{ name: "mcp__iqx_jira__editJiraIssue" }, { name: "mcp__iqx_jira__createJiraIssue" }];
+  tools = [{ name: "mcp__tracker__editIssue" }, { name: "mcp__tracker__createIssue" }];
 }
 rmSync(process.env.TURNEND, { force: true });
 await handlers.agent_start();
+const started = { gen, seq: "2", state: "busy", source: "pi-ext", event: "agent-start" };
+assert.deepEqual(busy(), started, "agent_start must publish a generation-bound Pi busy event");
 const after = status();
 if (process.env.SCENARIO === "matched") {
   assert.equal(after, before, "an exact match must produce no report");
@@ -1199,20 +1211,39 @@ if (process.env.SCENARIO === "matched") {
   assert.ok(report.includes("unmatched exclusion entries"));
   assert.ok(report.includes("unverified"), "absence must never imply validity");
   const missing = process.env.SCENARIO === "unmatched"
-    ? ["mcp__iqx_jira__editJiraIssu", "mcp__iqx_jira__createJiraIssu"]
+    ? ["mcp__tracker__editIssu", "mcp__tracker__createIssu"]
     : ["mcp__offline__executeWrite"];
   for (const name of missing) assert.ok(report.includes(name), "every unmatched entry must be reported: " + name);
-  assert.ok(!report.includes("mcp__iqx_jira__editJiraIssue"), "a loaded tool must not be reported");
+  assert.ok(!report.includes("mcp__tracker__editIssue"), "a loaded tool must not be reported");
 }
+await handlers.agent_settled({}, { isIdle: () => false });
+assert.deepEqual(busy(), started, "a continuation must stay busy even when agent_settled fires");
+await handlers.turn_end();
+for (let attempt = 0; attempt < 100 && !existsSync(process.env.TURNEND); attempt++) {
+  await setTimeout(10);
+}
+assert.ok(existsSync(process.env.TURNEND), "reporting must preserve turn-end notification");
+assert.deepEqual(busy(), started, "an inner turn boundary must not mark the worker idle");
+await handlers.agent_settled({}, { isIdle: () => true });
+assert.deepEqual(busy(), { gen, seq: "3", state: "idle", source: "pi-ext", event: "agent-settled" });
 await handlers.agent_start();
+assert.deepEqual(busy(), { gen, seq: "4", state: "busy", source: "pi-ext", event: "agent-start" });
 assert.equal(status(), after, "report once per worker incarnation, not on every turn");
 appendFileSync(process.env.STATUS_FILE, "done: completed task\n");
 const completed = status();
-await handlers.turn_end();
 await handlers.agent_settled({}, { isIdle: () => true });
+assert.deepEqual(busy(), { gen, seq: "5", state: "idle", source: "pi-ext", event: "agent-settled" });
 assert.equal(status(), completed, "a reporting extension must not supersede a terminal worker status");
-await new Promise((resolve) => setTimeout(resolve, 200));
-assert.ok(existsSync(process.env.TURNEND), "reporting must preserve turn-end notification");
+const replacementGen = execFileSync(process.env.BUSY_EVENT, ["arm", stateDir, process.env.TASK_ID], { encoding: "utf8" }).trim();
+assert.notEqual(replacementGen, gen, "relaunch must mint a new generation");
+const replacement = busy();
+assert.deepEqual(replacement, { gen: replacementGen, seq: "1", state: "busy", source: "fm-spawn", event: "launch-brief" });
+await handlers.agent_settled({}, { isIdle: () => true });
+assert.deepEqual(busy(), replacement, "a stale extension must not clear its replacement's busy state");
+await handlers.agent_start();
+assert.deepEqual(busy(), replacement, "a stale extension must not publish into its replacement's generation");
+assert.equal(readFileSync(genFile, "utf8").trim(), replacementGen);
+assert.equal(status(), completed, "stale lifecycle events must not repeat exclusion warnings");
 JS
         )
         status=$?
@@ -1306,6 +1337,45 @@ test_pi_exclude_tools_malformed_entry_refuses_before_endpoint() {
     [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "a malformed exclusion entry '$bad' still wrote a task record"
   done
   pass "a malformed exclusion entry refuses the spawn before any launch or record"
+}
+
+test_pi_exclude_tools_read_failure_refuses_before_launch() {
+  local harness kind rec id out status bash_env
+  for harness in pi pi-signed; do
+    for kind in ship scout; do
+      id="excl-read-failure-${harness}-${kind}"
+      rec=$(make_spawn_case "$id" "$harness" "$id")
+      read_case_record "$rec"
+      write_exclude_file "$HOME_DIR" 'mcp__srv__writeTool'
+      bash_env="$CASE_DIR/remove-exclusions.bash"
+      # Make the file disappear immediately after its readability check, without
+      # sleeps or permission assumptions (chmod alone would not fail as root).
+      cat > "$bash_env" <<'SH'
+function [ {
+  local status=0
+  builtin test "${@:1:$#-1}" || status=$?
+  if builtin [ "$#" -eq 4 ] && builtin [ "$1" = '!' ] &&
+    builtin [ "$2" = -r ] &&
+    builtin [ "$3" = "${FM_CONFIG_OVERRIDE:-}/crew-exclude-tools" ]; then
+    rm -f -- "$3"
+  fi
+  return "$status"
+}
+SH
+      if [ "$kind" = scout ]; then
+        out=$(BASH_ENV="$bash_env" run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --scout)
+      else
+        out=$(BASH_ENV="$bash_env" run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+      fi
+      status=$?
+      [ ! -e "$HOME_DIR/config/crew-exclude-tools" ] || fail "the read-failure injection did not remove the list"
+      expect_code 1 "$status" "$harness $kind must refuse when the checked exclusion file cannot be opened"
+      assert_contains "$out" "error: cannot read config/crew-exclude-tools" "the refusal must explain the read failure"
+      [ ! -s "$LAUNCH_LOG" ] || fail "$harness $kind launched despite the unreadable exclusion list"
+      [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "$harness $kind read failure still wrote a task record"
+    done
+  done
+  pass "Pi and pi-signed ship and scout launches refuse when the exclusion file disappears after its checks"
 }
 
 test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates() {
@@ -2166,6 +2236,7 @@ test_pi_exclude_tools_worker_registry_reports
 test_pi_exclude_tools_absent_and_empty_lists
 test_exclude_tools_non_pi_runtime_refuses_non_empty_list
 test_pi_exclude_tools_malformed_entry_refuses_before_endpoint
+test_pi_exclude_tools_read_failure_refuses_before_launch
 test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates
 test_batch_forwards_shared_profile_flags
 test_claude_forwards_firstmate_config_dir_when_set

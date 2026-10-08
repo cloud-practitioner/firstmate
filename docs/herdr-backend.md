@@ -282,7 +282,7 @@ Projected children are placed in one contiguous block immediately after their ow
 - The protocol.
 - The socket.
 - `python3`.
-- The machine-private per-session lock.
+- The account-private per-session lock.
 
 Existing legacy child labels may extend an already adjacent block read-only but are never renamed or migrated.
 A foreign, ambiguous, detached, or manually interleaved child makes ordering skip with a warning rather than rewriting the layout.
@@ -363,8 +363,12 @@ Journal retirement separately requires physical absence: once the exact pane is 
 Recovery is deliberately conservative and presentation-only.
 An existing journal suppresses another projected create.
 Before any recovery mutation, Firstmate holds both the task spawn lock and the named-session presentation lock.
-A concurrent recovery on the same session holds that lock through its whole relaunch, so recovery waits up to 120 seconds for it instead of the ordinary five-second spawn wait.
-A holder that keeps the lock past that bound counts as stuck, and recovery refuses the resume before any Herdr mutation.
+A concurrent recovery on the same session holds that lock through its whole relaunch, so recovery waits up to 120 seconds by default instead of the ordinary five-second spawn wait.
+A holder that keeps the lock past that default bound counts as stuck, and recovery refuses the resume before any Herdr mutation rather than falling back flat.
+Pass `fm-spawn.sh --herdr-resume-lock-wait` to opt journal recovery into waiting without that bound; dead-owner reclaim still handles a crashed holder.
+The [spawn header](../bin/fm-spawn.sh) owns the flag's fresh ship/scout scope, batch forwarding, and lack of effect on `--relaunch` or `--secondmate`.
+That presentation lock lives in a namespace private to the OS account, so another account on the same host running its own Firstmate on Herdr cannot block this account's spawn, recovery, or teardown.
+A namespace at this account's name that another account owns, or that is not mode 700, is still refused and is never adopted, chowned, or removed.
 
 A same-identity version 2 binding may replace one exact agent-free restart husk in place only when the [recorded-endpoint ownership policy](#endpoints-from-a-previous-session) permits closing that pane.
 A husk is a restored same-labeled tab with a missing pane or no registered agent, as [Restart and liveness behavior](#restart-and-liveness-behavior) describes.
@@ -459,7 +463,7 @@ Any of these preserves the candidate and lets session startup continue with at m
 - A failed journal publication or projected workspace create stops that spawn instead of falling back flat.
   So a Herdr create failure surfaces as a spawn failure in every Herdr home, rather than only in homes that opted in.
   Every earlier degradation on the fresh projected-create path (no session server, contended presentation lock, absent or ambiguous parent) still warns and continues flat.
-- Recovery of an existing presentation journal deliberately refuses the spawn when the shared presentation lock stays held past its [recovery wait](#restart-recovery), rather than falling back flat.
+- [Restart recovery](#restart-recovery) owns the default bounded refusal and the opt-in unbounded wait.
   Default-on makes that refusal reachable in any Herdr home.
 - Existing layouts are not force-renamed or rearranged.
 - Missing or ambiguous restart bindings fall back to the ordinary home workspace while the old projection remains untouched.
