@@ -1,0 +1,19 @@
+$ beta reports its own answer while quoting alpha correlation
+watcher exit=124
+Terminated
+alpha=awaiting_report beta=resolved
+$ alpha status includes prefixed and suffixed impostor tokens
+watcher exit=0
+check: rearm-resurface
+alpha=awaiting_report
+$ alpha reports the exact whole-word token through its own parent channel
+watcher exit=124
+Terminated
+alpha=resolved beta=resolved
+Persisted parent status protocol:
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.test-local/tmp/fm-lab.vHwYOm/state/alpha.status
+done corr=aa01e42eb31e1d1aff: longer token
+done xcorr=aa01e42eb31e1d1a: prefixed token
+done [corr=aa01e42eb31e1d1a] [at=1791460456]: alpha answered (via-helper)
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.test-local/tmp/fm-lab.vHwYOm/state/beta.status
+done [corr=0afa29a26ef79c86] [at=1791460450]: beta answered; alpha still owes corr=aa01e42eb31e1d1a (via-helper)

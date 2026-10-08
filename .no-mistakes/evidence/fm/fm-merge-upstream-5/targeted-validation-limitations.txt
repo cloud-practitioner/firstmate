@@ -1,0 +1,4 @@
+not ok - relaunch did not reach its pre-publication endpoint check
+not ok - tests/fm-spawn-dispatch-profile.test.sh exceeded the per-script bound of 240s and was terminated
+not ok - tests/fm-teardown.test.sh exceeded the per-script bound of 240s and was terminated
+Retry: tests/fm-control-relaunch.test.sh completed with exit=0 without source or test changes.

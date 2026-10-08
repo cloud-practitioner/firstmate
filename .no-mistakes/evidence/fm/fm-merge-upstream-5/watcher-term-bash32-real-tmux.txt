@@ -1,0 +1,12 @@
+$ Bash 3.2 fm-watch.sh reads a real lab tmux pane
+GNU bash, version 3.2.57(4)-release (x86_64-unknown-linux-gnu)
+Only the private lab tmux server was SIGSTOPped to block capture (pid=631207).
+ 631221  631195  631195 /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.test-local/bash32/bin/bash bin/fm-watch.sh
+ 631597  631221  631195 bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/bin/fm-home-summary-refresh.sh --best-effort
+ 632278  631221  632278 /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.test-local/bash32/bin/bash bin/fm-watch.sh
+ 632313  632278  632278 tmux capture-pane -p -t primary:fm-capture-demo -S -40
+TERM completed after 0.184s
+watcher exit=143
+Owned watcher lock and capture scratch file were removed while the backend was still stopped.
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/l.iSPupE/watcher.out
+bin/fm-watch.sh: line 2114: 632278 Terminated              fm_backend_capture "$@" < /dev/null > "$FM_CAPTURE_OUTPUT"

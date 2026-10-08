@@ -1,0 +1,1098 @@
+FM_TEST_BEGIN 2026-10-08T12:13:36Z tests/fm-test-fixtures.test.sh family=standalone expected_gate_skip=none
+ok - runner and shared helpers isolate host Git config and preserve explicit config and outside commits
+ok - suite exit cleanup removes an untorn spawn's read-only strip hooks and staged launch directory
+ok - a set -e suite with no staged launch directories finishes exit cleanup and exits 0
+ok - fm_test_remove_tree removes a tree holding read-only strip hooks and leaves outside targets alone
+ok - agent stand-in: a multicall sleep is refused, and the compiled stand-in survives a harness name
+ok - fm_touch_epoch preserves both epochs in the repeated DST hour
+ok - a fixture commit starts no background maintenance that a local clone could race
+ok - fake no-mistakes --version is the shared constant and overridable
+ok - init/doctor no-mistakes stub touches markers and refuses other verbs
+ok - fake gh authenticates and fake gh-axi reports the shared version
+ok - spawn fakebin answers pane path, logs -l payloads, and installs extra tools
+ok - send stubs log typed text and fake ssh records argv with a controllable exit
+ok - spawn-home layout writes harness pin, beat, and brief
+FM_TEST_END 2026-10-08T12:13:46Z tests/fm-test-fixtures.test.sh exit=0 duration_ms=10355 gate_skip=false
+FM_TEST_BEGIN 2026-10-08T12:13:46Z tests/fm-watch-arm.test.sh family=watcher-wake-lock expected_gate_skip=none
+ok - watch-arm: an attached arm reports the wake its cycle delivered instead of a false failure
+ok - watch-arm: a delivered wake consumed by the handling turn still closes the attached arm cleanly
+ok - watch-arm: an unusable launch confirm window refuses to arm by name
+ok - watch-arm: a disposable validation checkout refuses to arm
+ok - watch-arm: a watcher exits when its state directory is removed
+ok - watch-arm: a watcher exits when its home is removed
+ok - watch-arm: the test reaper stops a watcher armed for a tracked temporary home
+ok - watch-arm: a cycle that delivered no wake of its own still fails loudly
+ok - watch-arm: an attached arm keeps following a slow live holder and reports its wake
+ok - watch-arm: an attached arm hands a holder stalled past the bound to its owner's replacement
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/bin/fm-watch-arm.sh: line 773: 756558 Killed                  "$WATCH" > "$child_out"
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 757123.1791461685.TERBFI
+ok - watch-arm: re-arm surfaces every queued wake and an open remote decision after downtime
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/bin/fm-watch-arm.sh: line 773: 764440 Killed                  "$WATCH" > "$child_out"
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 765046.1791461695.vvJrSd
+ok - watch-arm: a re-arm whose recovery cycle runs slowly still surfaces it
+watcher: recovery state could not be persisted; retaining stale lock evidence
+ok - watch-arm: marker publication failure retains stale-lock recovery evidence
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 770340.1791461713.vUdmZS
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 3 --recovery-generation 773468.1791461715.TFkJVh
+ok - watch-arm: a wake queued after handling drain is recovered once at successor arm
+ok - watch-arm: interrupted handling leaves its wake durable for successor re-drain
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 0 --recovery-generation 781553.1791461725.ewniTF
+ok - watch-arm: malformed recovery state is quarantined without a successor loop
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 784077.1791461728.YMUKHO
+ok - watch-arm: publication after recovery handoff is surfaced
+ok - watch-arm: restart publishes recovery before clearing a reused-pid watcher lock
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 7 --recovery-generation 786733.1791461733.5ZlHsk
+ok - watch-arm: markerless legacy queues are adopted and recovered
+ok - watch-arm: an idle Lavish source stays quiet and its real result wakes promptly
+ok - watch-arm: appending work reopens an announced empty recovery
+ok - watch-arm: a watcher close during handling keeps the printed acknowledgement valid
+ok - watch-arm: a moved recovery generation consumes handled rows and names its remedy
+ok - watch-arm: downtime marker publication does not follow symlinks
+ok - watch-arm: --stop ends only this home's watcher, publishes downtime, and reports when none runs
+ok - watch-arm: an already-acknowledged handling confirmation succeeds as a no-op
+ok - watch-arm: a churned generation's handling confirmation reports a mismatch and an arm check keeps it
+ok - watch-arm: --take-over attaches to a cycle the named arm does not own and leaves it running
+ok - watch-arm: --take-over owns a fresh cycle without a recovery wake and still surfaces queued work
+watcher: secondmate liveness check failed
+ok - watch-arm: takeover preserves self-exit downtime and surfaces a recovery wake
+ok - watch-arm: snapshot-scoped variables in the arm's environment never reach the watcher it forks
+ok - watch-arm: the OpenCode arm plugin decides with the shared supervision predicate
+FM_TEST_END 2026-10-08T12:16:19Z tests/fm-watch-arm.test.sh exit=0 duration_ms=153347 gate_skip=false
+FM_TEST_BEGIN 2026-10-08T12:16:19Z tests/fm-control-relaunch.test.sh family=backend-dispatch expected_gate_skip=none
+ok - fm-control removes the dialog file after exit and after relaunch
+ok - fm-control exit removes the dialog file before it releases the control lock
+ok - fm-control relaunch: a same-harness relaunch replaces the agent in the same endpoint and worktree
+ok - fm-control relaunch: pending composer text refuses before the exit command is typed
+ok - fm-control relaunch: an unreadable composer fails safe before the exit command is typed
+ok - fm-control relaunch: a linked spawning home preserves committed and unfinished work in the recorded copy
+ok - fm-control relaunch: durable task metadata survives replacement launch publication
+ok - fm-control relaunch: a recorded legacy temp root is kept, and a missing one is scoped to the home
+ok - fm-control relaunch: delivery and concurrent task metadata publication serialize
+ok - fm-control relaunch: disabling tracing clears metadata and pane context
+ok - fm-control relaunch: progress and the Firstmate-worktree worker identity reach the replacement
+ok - fm-control relaunch: a ship task refuses without the progress note its replacement needs
+ok - fm-control relaunch: switching harness is one ordinary relaunch, and the old wiring goes with the old agent
+ok - fm-control relaunch: a harness switch resets model and effort unless they are named too
+ok - fm-control relaunch: a prefixed recorded harness can switch adapters transactionally
+ok - fm-control relaunch: a prefixed command requires an explicit replacement harness
+ok - fm-control relaunch: a same-harness relaunch keeps the profile axes it was running with
+ok - native Ultra relaunch preserves its profile and rejects an unsupported model before stopping
+ok - fm-control relaunch: a signed-out worker account pin refuses before the old agent stops
+ok - fm-control relaunch: the replacement follows the home's current worker account pin
+ok - fm-control relaunch: a Pi replacement keeps the home's tool exclusions
+ok - fm-control relaunch: exclusion-list refusals happen before the running agent stops
+ok - fm-control relaunch: explicit model and effort win over the recorded ones
+ok - fm-control relaunch: refuses to relaunch onto an adapter with no verified mechanics
+ok - fm-control relaunch: the retired incarnation's global turn-end token is revoked
+ok - fm-control relaunch: wiring cleanup failure refuses replacement arming
+ok - fm-control-lib: one owner resolves each harness's turn-end registry entry, and refuses a malformed token
+ok - fm-control relaunch: a secondmate relaunch re-resolves its durable configured harness pin
+ok - fm-control relaunch: invalid configured effort is ignored before stop
+ok - fm-control relaunch: an adapter unverified for this task kind refuses before the agent is stopped
+ok - fm-control relaunch: explicit secondmate harness resets unnamed profile axes
+ok - fm-control relaunch: a ship task keeps its recorded harness instead of re-reading crew config
+ok - fm-spawn --relaunch: with no explicit harness it reuses the task's recorded one, never the crew default
+ok - fm-spawn --relaunch: a promoted scout with a recorded custom branch relaunches on it instead of being refused
+ok - fm-promote/fm-spawn --relaunch: the current ship contract supersedes stale scout delivery text
+ok - fm-spawn --relaunch: wiring armed under a prefixed harness name is still retired
+ok - fm-spawn --relaunch: switching away from muse retires its session binding
+ok - fm-spawn --relaunch: switching away from cursor retires its session binding
+ok - fm-control relaunch: an unaccountable local copy refuses before the agent is touched
+ok - fm-control relaunch: a worker with nothing to work from is never launched
+ok - fm-control relaunch: a refusal before the agent is stopped leaves the durable record untouched
+ok - fm-control relaunch: checkpoint inspection failures refuse before stopping
+ok - fm-control relaunch: a launch failure after the stop keeps the prior record and reports the real state
+not ok - relaunch did not reach its pre-publication endpoint check
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/keepprofile-26906/home/state/rl6.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixcontrol-3328/home/state/rl32.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/same-828/home/state/rl1.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-no-mistakes-27378/home/state/rl-promoted-no-mistakes.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smpin-13366/home/state/sm3.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/prefixwiring-4408/home/state/rl30.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/crewcfg-31440/home/state/rl20.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/scoped-tasktmp-3840/home/state/rl92.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/invalid-effort-7054/home/state/sm6.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-local-only-1751/home/state/rl-promoted-local-only.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/profile-17405/home/state/rl5.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/explicit-18946/home/state/rl7.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/acct-3008/home/state/rl-acct.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/pi-exclude-7549/home/state/rl-pi-excl.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/switch-19008/home/state/rl4.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/cursorwiring-286/home/state/rl35.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/spawnharness-28931/home/state/rl21.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/dialog-file-relaunch-7780/home/state/rl71.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/native-ultra-18559/home/state/rl-ultra.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/smexplicit-19855/home/state/sm4.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/metadata-race-14195/home/state/rl28.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/linked-home-7282/home/state/rl42.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promoted-scout-direct-PR-13493/home/state/rl-promoted-direct-PR.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/note-29764/home/state/rl2.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/trace-off-4953/home/state/rl33.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/promotebranch-27129/home/state/rl42.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/legacy-tasktmp-3591/home/state/rl91.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/grokauth-11251/home/state/rl9.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/musewiring-13040/home/state/rl31.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/post-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/post-merge': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/pre-push': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/tmp/fm-control-relaunch.tUVIW1/durable-meta-24833/home/state/rl19.git-hooks/commit-msg': Permission denied
+FM_TEST_END 2026-10-08T12:17:56Z tests/fm-control-relaunch.test.sh exit=1 duration_ms=96982 gate_skip=false
+FM_TEST_BEGIN 2026-10-08T12:17:56Z tests/fm-project-capacity.test.sh family=backend-dispatch expected_gate_skip=none
+ok - a project with no declared capacity keeps today's uncapped dispatch
+ok - a spawn is admitted while its project still has a free place
+ok - a spawn beyond capacity is deferred before any record, brief, endpoint, worktree, or backlog move exists
+ok - a project name with spaces is declared by taking the capacity from the last field
+ok - a project name beginning with # is declared, and a # comment stays a comment
+ok - a home reached through a symlink counts each of its workers once
+ok - a recorded PR handoff or a cleanup each frees exactly one place
+ok - a restart of a task id does not count that task's own record
+ok - only this project's ship and scout records hold places
+ok - every local home shares one declared capacity per project origin, and remote homes do not count
+ok - an unreadable state directory or task record refuses admission rather than undercounting
+ok - concurrent spawns can never both take the last place
+ok - a spawn that fails after admission leaves no record and holds no place
+ok - an unreadable declaration refuses every fresh spawn rather than guessing the limit
+ok - a batch reports a capacity deferral as deferred, not failed
+ok - an Orca spawn takes the shared project lock whenever a same-origin clone is capped and defers before creating anything
+FM_TEST_END 2026-10-08T12:20:03Z tests/fm-project-capacity.test.sh exit=0 duration_ms=126351 gate_skip=false
+FM_TEST_BEGIN 2026-10-08T12:20:03Z tests/fm-spawn-dispatch-profile.test.sh family=backend-dispatch expected_gate_skip=none
+ok - allowlist=absent preserves the operational floor and filters only when opted in
+ok - allowlist=missing-config preserves the operational floor and filters only when opted in
+ok - allowlist=enabled preserves the operational floor and filters only when opted in
+ok - allowlist=empty preserves the operational floor and filters only when opted in
+ok - invalid allowlist names refuse before launch or task publication
+ok - inaccessible config with present allowlist refuses before launch or task publication
+ok - inaccessible config with absent allowlist refuses before launch or task publication
+ok - inaccessible ancestor with present allowlist refuses before launch or task publication
+ok - inaccessible ancestor with absent allowlist refuses before launch or task publication
+ok - secondmate launch inherits the allowlist for subsequent worker launches
+ok - local inheritance preserves the allowlist on source errors and mirrors proven absence
+ok - remote inheritance preserves the allowlist on source errors and mirrors proven absence
+ok - fm-spawn: actual ship/scout launch commands deliver the worker role contract
+ok - no --model/--effort records defaults and types the claude launch instructions
+ok - a claude launch publishes the brief as an operational-inbox record and passes only the doorbell
+ok - a secondmate claude launch publishes its brief record into the secondmate's own home
+ok - a claude spawn whose launch-brief record cannot publish stops with a clear error and sends no launch
+ok - non-cursor launches clear inherited Cursor identity markers
+ok - relative home overrides ignore CDPATH and become absolute before spawn launch construction
+ok - FM_HOME defaults resolve relative paths and preserve absolute spellings
+ok - absolute override spellings are preserved in spawn launch paths
+ok - unresolvable relative spawn overrides fail with named diagnostics
+ok - active crew-dispatch profile requires an explicit harness for ship spawns
+ok - active crew-dispatch profile requires an explicit harness for scout spawns
+ok - active crew-dispatch profile allows an explicit resolved harness
+ok - active crew-dispatch profile allows the legacy positional harness form
+ok - active crew-dispatch profile allows the raw launch-command escape hatch
+ok - a chained raw launch commits through the AI-trailer strip in every step
+ok - claude receives --model and --effort profile flags
+ok - codex receives --model and model_reasoning_effort profile flags
+ok - codex Luna receives --model and model_reasoning_effort max profile flags
+ok - codex omits max for models without the catalog capability
+ok - a codex crewmate launches with no hook layer and keeps its turn-end signal
+ok - a codex secondmate keeps the project hook layer its primary session runs on
+ok - grok receives --model and --reasoning-effort profile flags
+ok - grok omits unsupported max reasoning effort
+ok - grok omits unsupported xhigh reasoning effort
+ok - cursor receives its model-qualified reasoning class and exact task workspace
+ok - cursor refuses model ids absent from its resolved binary's live catalog
+ok - cursor preserves the requested model when its live catalog is unreachable
+ok - opencode receives --model and the effort as its config's agent variant
+ok - opencode without an effort keeps its launch config unchanged
+ok - opencode emits the variant for an effort the openai family exposes
+ok - opencode omits the variant for an effort outside the model family's list
+ok - native effort validator checks harness and model as separate axes
+ok - Ultra is explicit for native Pi and Pi-signed, including direct-PR, and refuses unsupported profiles before provisioning
+ok - batch dispatch preserves native Ultra in metadata and launch flags
+ok - Pi scout spawn enters the recorded worktree before launch
+ok - pi receives --model and --thinking max profile flags
+ok - Pi launch probing omits --tui-mode on older Pi and preserves it on supporting Pi
+ok - pi-signed shares Pi launch semantics while preserving its configured and recorded identity
+ok - pi-signed refuses safely and actionably when the selected executable is unavailable
+ok - pi-signed is a distinct persistent secondmate runtime with shared Pi supervision semantics
+ok - seeded Pi/pi-signed secondmate launches carry session --approve when advertised
+ok - ordinary Pi worker launches omit --approve
+ok - Pi approve probing omits --approve when help does not advertise it
+ok - Pi and pi-signed ship and scout launches carry the configured tool exclusions
+not ok - tests/fm-spawn-dispatch-profile.test.sh exceeded the per-script bound of 240s and was terminated
+FM_TEST_END 2026-10-08T12:24:03Z tests/fm-spawn-dispatch-profile.test.sh exit=124 duration_ms=240029 gate_skip=false
+FM_TEST_BEGIN 2026-10-08T12:24:03Z tests/fm-backend-herdr.test.sh family=backend-dispatch expected_gate_skip=none
+ok - fm_backend_herdr_version_check: accepts the current protocol (14)
+ok - fm_backend_herdr_version_check: refuses an old protocol loudly
+ok - fm_backend_herdr_version_check: refuses loudly when herdr is not installed
+ok - fm_backend_herdr_workspace_label: a primary home (no marker) resolves to 'firstmate'
+ok - fm_backend_herdr_workspace_label: a secondmate home (.fm-secondmate-home) resolves to '2ndmate-<id>'
+ok - fm_backend_herdr_workspace_label: trims whitespace around the marker's secondmate id
+ok - fm_backend_herdr_workspace_label: an empty marker file falls back to the primary label 'firstmate'
+ok - fm_backend_herdr_workspace_label: two different secondmate homes get two different, non-colliding labels
+ok - fm_backend_herdr_cli: sets HERDR_SESSION AND appends a trailing --session flag on every call
+ok - herdr client boundary strips snapshot-scoped variables from every herdr child and keeps the caller's own
+ok - herdr client selection: a live pane behind a stale shadowing client reads alive
+ok - herdr recovery-grade read: a stopped server means missing there, and nowhere else
+ok - herdr stale registration: a shell-only pane with a lingering Pi record is agent-free with an explicit reason
+ok - herdr stale registration: no registered status can outrank a shell-only process view
+ok - herdr pane agent session: a resumable reference is reported with the agent label that reported it
+ok - herdr pane agent session: anything unresumable degrades to a nonzero read with no output
+ok - herdr stale registration: a registered agent with a live Pi foreground process still reads alive
+ok - herdr stale registration: only a shell-only pane demotes a registration
+ok - herdr stale registration: a transient prompt helper settles into stale-agent instead of reading live
+ok - herdr stale registration: an exhausted settle window still reads a non-shell foreground as live
+Terminated
+ok - herdr stale registration: an agent process outside the foreground group still counts as alive
+Terminated
+ok - herdr stale registration: the descendant walk reads a spaced executable path whole
+ok - herdr stale registration: an unreadable process view refuses instead of guessing either way
+ok - herdr stale registration: an empty foreground list over a real shell is not unreadable, it settles via the descendant walk
+ok - herdr stale registration: presentation reclaim never closes a stale-registration pane
+ok - herdr stale registration: busy_state proves a working record at process level before reporting busy
+ok - herdr client selection: one selected client is reused per process
+ok - herdr client selection: selected clients remain scoped to their session
+ok - herdr client selection: only protocol_mismatch triggers reselection; other failures pass through untouched
+ok - herdr client selection: the happy path makes no extra call
+ok - herdr client status: .server.compatible, legacy protocol equality, unknown, and stopped shapes all normalize
+ok - fm_backend_herdr_launcher_identity: a firstmate not running inside herdr has no launcher workspace to inherit
+ok - fm_backend_herdr_launcher_identity: HERDR_ENV=1 without a pane id selects the backend but binds no parent
+ok - fm_backend_herdr_launcher_identity: resolves the launcher's exact workspace even when a same-labeled workspace sorts first
+ok - fm_backend_herdr_launcher_identity: refuses a launcher pane that names a different herdr session
+ok - fm_backend_herdr_launcher_identity: refuses a claimed pane without exact server identity
+ok - fm_backend_herdr_launcher_identity: refuses a launcher pane whose injected socket belongs to another herdr server
+ok - fm_backend_herdr_launcher_identity: refuses when the launcher's own pane no longer resolves
+ok - fm_backend_herdr_launcher_identity: refuses when the launcher's pane and tab disagree about their workspace
+ok - fm_backend_herdr_launcher_identity: refuses when the launcher's workspace is gone from its own session
+ok - fm_backend_herdr_workspace_ensure: places a worker in the launcher's exact workspace, not the first same-labeled one
+ok - fm_backend_herdr_workspace_ensure: refuses to guess between two same-labeled home workspaces
+ok - fm_backend_herdr_workspace_ensure: a --secondmate container resolves that home's own workspace, not the launcher's
+ok - fm_backend_herdr_container_ensure: surfaces the exact ambiguous-placement refusal instead of a generic failure
+ok - fm_backend_herdr_container_ensure: version-gates, starts the server, ensures the firstmate workspace, echoes session:workspace_id + the seeded default tab id
+ok - fm_backend_herdr_server_ensure: scrubs home and harness identity without disturbing unrelated environment or session routing
+ok - fm_backend_herdr_container_ensure: reuses an existing firstmate workspace without recreating it, and reports no seeded default tab (adopted, not created)
+ok - fm_backend_herdr_container_ensure: workspace create passes --no-focus
+ok - fm_backend_herdr_container_ensure: creates the workspace under the SECONDMATE home's own label, not 'firstmate'
+ok - fm_backend_herdr_create_task: prunes exactly the seeded default tab container_ensure identified, once the first real task tab exists
+ok - herdr repeated spawn/teardown: one persistent firstmate workspace reused, zero orphans, default tab pruned, create ran once
+ok - fm_backend_herdr_create_task: an ADOPTED workspace's pre-existing tab is never pruned (the created-vs-adopted gate)
+ok - fm_backend_herdr_create_task: the label-collision startup-workspace scenario (2026-07-02 incident) leaves the captain's live tab untouched
+ok - fm_backend_herdr_workspace_prune_seeded_default_tab: refuses to close the seeded default tab when its pane reports a working agent (defense in depth)
+ok - fm_backend_herdr_create_task: refuses a duplicate tab label (herdr's own tab create has no uniqueness check)
+ok - fm_backend_herdr_create_task: a same-labeled tab with a live (even idle) registered agent still refuses exactly as before
+ok - fm_backend_herdr_create_task: scans every same-labeled tab and refuses if any duplicate is live
+ok - fm_backend_herdr_create_task: closes and replaces a same-labeled tab whose pane is dead (pane_not_found)
+ok - fm_backend_herdr_create_task: closes and replaces a same-labeled tab whose pane is alive but hosts no registered agent (a restored plain shell)
+ok - fm_backend_herdr_create_task: closes every confirmed same-labeled husk only after creating the replacement
+ok - fm_backend_herdr_create_task: refuses success when a preexisting husk tab remains after replacement
+ok - fm_backend_herdr_create_task: refuses (fail-safe) rather than guessing when the duplicate's agent state cannot be classified confidently
+ok - fm_backend_herdr_create_task: creates the replacement tab BEFORE closing the husk tab, never the reverse
+ok - fm_backend_herdr_create_task: creates a tab and parses tab_id/pane_id from the JSON response, prunes nothing when no seeded tab id is given
+ok - fm_backend_herdr_create_task: tab create passes --no-focus
+ok - herdr presentation: a home that set nothing gets the projection by default at or above the floor
+ok - herdr presentation: an unconfigured home below the floor falls back flat with one naming warning
+ok - herdr presentation: an unreadable client release falls back flat instead of guessing
+ok - herdr presentation: a deliberate opt-in is never silently downgraded below the floor
+ok - herdr presentation: an explicit off opts the home out
+ok - herdr presentation: an unrecognized value warns and follows the default instead of failing a spawn
+ok - herdr presentation: the below-floor warning is one per home per release, not one per spawn
+ok - herdr presentation: warning marker publication is atomic, symlink-safe, and fails visible
+ok - herdr presentation: client and selected server floors compose conservatively without overriding explicit opt-in
+ok - herdr presentation floor: every measured release, and each signal alone, classifies correctly
+ok - herdr presentation floor: either signal alone can carry an above verdict, and each divergence is real
+ok - herdr presentation: config parsing separates a deliberate choice from an unconfigured default
+ok - herdr presentation journal: atomically publishes one non-authoritative 128-bit correlator and refuses overwrite
+ok - herdr presentation journal: version 2 binds exact home/endpoint/parent identities and advances atomically
+ok - herdr presentation create: exact response IDs yield one normal task pane with no workspace-close authority
+ok - herdr presentation create: concurrent same-label tabs are never prune targets
+ok - herdr presentation focus: snapshot requires one exact active workspace and tab
+ok - herdr presentation focus: exact pane close restores the exact prior workspace and tab
+ok - herdr presentation focus: cleanup refuses rather than close the tab a live client is viewing
+ok - herdr presentation focus: unexpected foreground-client reasons fail closed
+ok - herdr presentation focus: cleanup closes a persisted-focused tab when no live client is attached
+ok - herdr presentation focus: pane close fails when exact focus restoration fails
+ok - herdr presentation reclaim: live agent state at the close boundary refuses mutation
+ok - herdr presentation focus: active-tab attachment is rechecked after agent validation
+ok - herdr presentation focus: pre-close checkpoint catches a target focused during planning
+ok - herdr presentation focus: close preserves a live client that switches away from the target during planning
+ok - herdr presentation cleanup: emptying close behind focus ends the exact shell without a move or focus change
+ok - herdr presentation cleanup: emptying close before focus moves the doomed workspace to the end and ends its exact shell
+ok - herdr presentation cleanup: emptying close with the focused workspace last skips the move
+ok - herdr presentation cleanup: emptying close of the last workspace skips the move
+ok - herdr presentation cleanup: a non-emptying close stays plain with no proof, move, or signal
+ok - herdr presentation cleanup: no-move plain close requires structured pane removal
+ok - herdr presentation cleanup: an ambiguous workspace layout falls back to the plain close
+ok - herdr presentation cleanup: a failed repositioning move falls back to the plain close with a warning
+ok - herdr presentation cleanup: a pane with a live foreground process falls back to the plain close
+ok - herdr presentation cleanup: a transient prompt helper settles into the pane-death path instead of the plain close
+tests/fm-backend-herdr.test.sh: line 2760: 1027403 Killed                  bash -c 'trap "" HUP; sleep 300'
+ok - herdr presentation cleanup: a SIGHUP-surviving shell is escalated to SIGKILL before giving up
+tests/fm-backend-herdr.test.sh: line 2798: 1027766 Killed                  bash -c 'trap "" HUP; sleep 300'
+ok - herdr presentation cleanup: a failed pane-death close falls back to the plain close
+ok - herdr presentation cleanup: the exact-tab restore remains the backstop behind the pane-death close
+ok - herdr presentation cleanup: SIGKILL never reaches a pid the exact pane no longer owns
+ok - herdr presentation cleanup: every unconfirmed removal restores the exact original workspace order and reports failure
+ok - fm_backend_herdr_kill: one session lock covers the focus-safe emptying removal
+ok - fm_backend_herdr_kill: killing the focused workspace's tab keeps the legitimate plain close
+ok - endpoint confirmed-gone: only structured not-found permits record removal and ambiguous identity refuses
+ok - fm_backend_herdr_kill: unavailable session locks defer every pane close
+ok - herdr presentation focus: projected seeded pruning refuses the active tab
+ok - herdr presentation labels: └ concise-task · p:<full-token> for primary and secondmate children
+ok - herdr presentation ordering: exact new workspace appends to the primary block while focus and relative orders stay stable
+ok - herdr presentation ordering: secondmate children append under their owning parent block
+ok - herdr presentation ordering: a foreign legacy child is warning-only and read-only
+ok - herdr presentation ordering: intervening parent child blocks remain traversable
+ok - herdr presentation ordering: only the exact new id moves; human spaces keep relative order
+ok - herdr presentation ordering: move failure warns, returns success, and grants no cleanup authority
+ok - herdr presentation ordering: an ambiguous existing worker block is warning-only and read-only
+ok - herdr presentation ordering: the launcher's exact parent workspace id disambiguates a duplicated home label without moving anything
+ok - herdr presentation ordering: a foreign new-format child is warning-only and read-only
+ok - herdr presentation ordering: missing owning parent is warning-only and read-only
+ok - herdr presentation lock: one path per session/socket across homes
+ok - herdr presentation lock: null and missing socket paths fail closed
+ok - herdr presentation ordering: malformed socket metadata is warning-only and read-only
+ok - herdr presentation reclaim: legacy, cross-home, ambiguous, live/unknown, and focus-unknown cases refuse without mutation
+ok - herdr presentation reclaim: exact agent-free husk survives duplicate parent labels while its sibling stays untouched
+warning: 2 exact herdr presentation token matches for task-p3 are quarantined; inspecting only for duplicate-agent risk
+warning: quarantined herdr presentation for task-p3 is dead or agent-free; exact bound reclaim may proceed, otherwise spawning flat
+ok - herdr presentation recovery: duplicate-token inspection is read-only and live-agent risk refuses fallback
+ok - fm_backend_herdr_workspace_find: matches only THIS home's own label among several coexisting workspaces
+ok - fm_backend_herdr_list_live: scoped to this home's own workspace, never a sibling home's
+ok - fm_backend_herdr_parse_target: splits '<session>:<pane_id>' on the FIRST colon (pane_id itself contains one)
+ok - fm_backend_herdr_normalize_key: Enter/Escape/C-c map to herdr's verified enter/escape/ctrl+c
+ok - fm_backend_herdr_capture: calls 'pane read <pane> --source recent --lines N' with the session set
+ok - fm_backend_herdr_capture: works around the verified small-N '--lines' bug by over-fetching and trimming locally
+ok - fm_backend_herdr_capture: ensures the session and preserves pane read failure
+ok - fm_backend_herdr_send_key: normalizes the key and targets the right pane
+ok - fm_backend_herdr_kill: calls pane close and stays best-effort on failure
+ok - fm_backend_herdr_current_path: reads pane foreground_cwd (the live running process), not the frozen creation-time cwd
+ok - fm_backend_herdr_busy_state: working -> busy
+ok - fm_backend_herdr_busy_state: done -> idle, blocked -> idle (surfaced like a stale pane, not suppressed as busy)
+ok - fm_backend_herdr_busy_state: unparseable/absent agent state reports unknown, the regex-fallback cue
+ok - fm_backend_herdr_composer_state: a bare '❯' composer row reads empty
+ok - fm_backend_herdr_composer_state: bright placeholder-like text stays pending rather than being mistaken for an idle ghost
+ok - fm_backend_herdr_composer_state: real composer text reads pending
+ok - fm_backend_herdr_composer_state: Grok's exact title overhang is empty while pending and unproved panes remain safe
+ok - fm_backend_herdr_composer_state: a slash-command popup's argument-hint placeholder still reads pending (the incident fix)
+ok - fm_backend_herdr_composer_state: reports unknown when the pane cannot be captured
+ok - fm_backend_herdr_composer_state: reports unknown for bare shell prompts with no composer row
+ok - fm_backend_herdr_composer_state: a blocked pi pane parked on a prompt is not an empty composer
+ok - fm_backend_herdr_composer_state: a native idle Pi separator composer reads empty
+ok - fm_backend_herdr_composer_state: a dollar-first Pi status footer reads empty, not a dead shell
+ok - fm_backend_herdr_composer_state: real Pi composer text remains pending
+ok - fm_backend_herdr_composer_state: an incomplete lower Pi separator cannot inherit a stale empty row
+ok - fm_backend_herdr_composer_state: Pi separators never authorize working, non-Pi, unreadable, or over-tall targets
+ok - fm_backend_herdr_composer_state: a real-claude unbordered '❯' prompt row (no border box in view) reads empty
+ok - fm_backend_herdr_composer_state: a real-claude unbordered '❯ <text>' prompt row reads pending
+ok - fm_backend_herdr_composer_state: a live unbordered prompt row below a stale bordered decorative box still wins (not misread as the box's own row)
+ok - fm_backend_herdr_composer_state: claude's dim prompt-suggestion ghost (the overnight wedge shape) reads empty
+ok - fm_backend_herdr_composer_state: real typed text on the same claude prompt row still reads pending
+ok - fm_backend_herdr_composer_state: grok's dark-truecolor placeholder (the TRUECOLOR gap) reads empty
+ok - fm_backend_herdr_composer_state: grok's real bright typed input still reads pending
+ok - fm_backend_herdr_composer_state: a real-codex unbordered '›' prompt row reads empty
+ok - fm_backend_herdr_composer_state: a faint real-codex ghost suggestion reads empty
+ok - fm_backend_herdr_composer_state: non-faint codex prompt text still reads pending
+ok - fm_backend_herdr_wait_for_working: reports 'busy' immediately on the first poll, without spending the rest of the budget
+ok - fm_backend_herdr_wait_for_working: a slow transition landing on a later sample within one window is still caught (robust against the 'slow transition' failure direction)
+ok - fm_backend_herdr_wait_for_working: spreads six samples across the full budget endpoint without a final trailing sleep
+ok - fm_backend_herdr_send_text_submit: applies the herdr minimum confirmation budget before polling agent-state
+ok - fm_backend_herdr_wait_for_working: reports 'idle' (readable, genuinely not yet working) when 'busy' never appears
+ok - fm_backend_herdr_wait_for_working: reports 'unknown' (a hard read failure, not a timing race) only when EVERY poll in the window fails
+ok - fm_backend_herdr_wait_for_working: treats blocked as submit-active for confirmation without changing watcher busy-state semantics
+ok - fm_backend_herdr_send_text_submit: reports 'empty' once agent_status reports working after one Enter, without ever reading the composer
+ok - fm_backend_herdr_send_text_submit: reports 'pending' when agent_status stays idle and the composer still holds unsent text after retried Enters (swallowed)
+ok - fm_backend_herdr_send_text_submit: a failed literal send reports send-failed and replays the transport's stderr
+ok - fm_backend_herdr_send_text_submit: a slash-command popup's placeholder fill on Enter #1 never flips agent_status to working, so it does not short-circuit as submitted; Enter #2 is retried and lands it
+ok - fm_backend_herdr_send_text_submit: the Claude background-task exit picker gets no confirming Enter
+ok - fm_backend_send_text_submit (herdr): a picker behind a blocked verdict is named by the caller's next composer read
+ok - fm_backend_herdr_send_text_submit: a post-Enter blocked state confirms delivery without retrying into the prompt
+ok - fm_backend_herdr_send_text_submit: native working + proven pending after retries reports empty (queued Enter)
+ok - fm_backend_herdr_send_text_submit: a failed Enter cannot borrow preexisting working state as queued-delivery proof
+ok - fm_backend_herdr_send_text_submit: a failed Enter cannot borrow a later native transition as delivery proof
+ok - fm_backend_herdr_send_text_submit: idle native agent-state plus empty composer reports empty (landed Claude turn)
+ok - fm_backend_herdr_send_text_submit: idle native baseline uses a rendered busy footer to confirm a queued Enter
+ok - fm_backend_herdr_composer_state: cursor's mid-turn placeholder-plus-busy-token row reads pending (why delivery needs a separate signal)
+ok - fm_backend_herdr_rendered_busy_state: busy/idle/unknown from the rendered footer, with an unreadable pane never reading idle
+ok - fm_backend_herdr_send_text_submit: a rendered-footer idle-to-busy transition confirms delivery when native agent-state never reports idle
+ok - fm_backend_herdr_send_text_submit: an already-busy footer baseline is never accepted as proof that this Enter landed
+ok - fm_backend_herdr_send_text_submit: confirms submission via native agent-state alone, immune to a codex-style dynamic idle-tip composer that would have misread as 'pending' under the old composer-based confirmation
+ok - fm_backend_herdr_composer_state: a faint real-codex dynamic idle-tip composer row reads empty
+ok - fm_backend_composer_state (herdr): the pre-injection empty-box guard still refuses a genuinely non-empty composer, unaffected by the submit-confirmation change
+ok - fm_backend_herdr_send_text_submit: a slow transition landing on a later sample within one Enter's budget is confirmed WITHOUT sending a needless extra Enter
+ok - fm_backend_herdr_send_text_submit: reports 'send-failed' when the literal send-text call itself errors
+ok - fm_backend_herdr_send_text_submit: reports 'unknown' when the post-Enter agent-get read fails (never retries past an unreadable target)
+ok - fm_backend_herdr_send_text_submit: an unreadable composer stops Enter retries after native status stays idle
+ok - fm_backend_herdr_send_text_submit: a 1500-character payload a Claude composer still holds is submitted whole
+ok - fm_backend_herdr_send_text_submit: a long payload whose Claude composer kept only the tail is not submitted, is cleared, and reports send-failed
+ok - fm_backend_herdr_send_text_submit: a refused suffix whose clear cannot be verified reports unknown, not send-failed
+ok - fm_backend_herdr_send_text_submit: a refused 480-character suffix wrapped over five rows is cleared one row per Ctrl+U and reports send-failed
+ok - fm_backend_herdr_send_text_submit: after a refused suffix is cleared, a resend starts from an empty Claude composer and submits only the message
+ok - fm_backend_herdr_send_text_submit: a Claude composer holding leftover text is refused before anything is typed
+ok - fm_backend_herdr_send_text_submit: a matching head in the transcript does not prove the current composer
+ok - fm_backend_herdr_send_text_submit: an away-mode digest and a marked steer are submitted when Claude's read-back only drops U+2063
+ok - fm_backend_herdr_send_text_submit: dropping U+2063 does not let a marked digest missing its head be submitted
+ok - fm_backend_herdr_composer_state: a slash-command popup cannot hide a typed composer
+ok - fm_backend_herdr_send_text_submit: a typed slash command hidden behind its popup is still proven and submitted
+ok - fm_backend_herdr_send_text_submit: a typed slash command Claude draws in muted truecolor grey is proven and submitted
+ok - fm_backend_herdr_send_text_submit: a lone paste placeholder still submits the full long payload
+ok - fm_backend_herdr_send_text_submit: a lone multi-line paste placeholder still submits the long multi-line payload
+ok - fm_backend_herdr_send_text_submit: a paste placeholder followed by a literal remainder is not submitted and is cleared
+ok - fm_backend_herdr_send_text_submit: three paste placeholders with no literal remainder submit the long payload
+ok - fm_backend_herdr_send_text_submit: non-Claude and unidentified panes keep the pre-proof type-then-Enter behavior
+ok - fm_backend_validate: herdr is a known backend (P2)
+ok - fm_backend_busy_state: tmux (no native primitive) always reports unknown, preserving the P1 regex-only path
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+ok - fm_backend_composer_state dispatches every backend to its named thin classifier, unknown for unrecognized backends
+ok - herdr recorded endpoint from a previous session: a foreign live agent or shell at the id is missing, unread, unsteered and unclosed; the task's own, restored, and renamed panes are unchanged
+ok - process-bound endpoints reject same-label other-home agents and same-worktree shells while preserving live processes and replacement bindings
+ok - portable ps identities work without /proc and distinguish process PIDs and start times
+ok - the Herdr process identity derives from /proc start ticks and boot id, ignoring ps lstart drift but changing with the process
+ok - a plus or minus one second ps lstart drift (legacy record, with or without /proc) no longer reads a live pane foreign or missing, while a different process still does
+ok - relaunch (the fm-control and fm-secondmate-restart launch path) replaces a legacy or stale recorded identity with the current process's
+ok - Herdr spawn and relaunch deliver their agent launch with legacy ownership fallback when ps fails
+ok - a stale task record cannot block cleanup of a fresh projected spawn that aborts before publication
+ok - every active dispatcher checks restored ownership while passive liveness stays read-only
+ok - bootstrap and watcher secondmate probes cannot borrow another task's live endpoint binding
+ok - owned pane closure permits record removal and recursive cleanup respects each descendant's state
+ok - fm-peek/fm-send: explicit stale targets matching metadata use the recorded backend
+ok - fm_backend_herdr_normalize_event routes through the shared record with an empty from_status
+ok - fm_backend_herdr_escalation_marker keys the dedupe marker exactly like the watcher's .stale-<key>
+ok - fm_backend_herdr_apply_transition: blocked dedupe starts only after explicit commit
+ok - fm_backend_herdr_apply_transition: a working edge clears the marker so the next ->blocked re-escalates
+ok - fm_backend_herdr_clear_transition removes task-owned dedupe state
+ok - fm_backend_herdr_apply_transition: idle/done (defer) and unknown/empty (fallback) take no fast action
+ok - fm_backend_herdr_wait_transition: a home with no herdr panes falls back to polling (rc 2)
+ok - fm_backend_herdr_wait_transition: below-capability protocol/schema falls back to polling (rc 2)
+ok - fm_backend_herdr_wait_transition: reconnect level-reconcile returns an uncommitted blocked pane
+ok - fm_backend_herdr_wait_transition: subscribes before reconnect level-reconcile
+ok - fm_backend_herdr_wait_transition: a still-blocked, already-escalated pane is not re-delivered on reconnect
+ok - fm_backend_herdr_wait_transition: a streamed ->blocked edge returns the record sub-poll
+ok - fm_backend_herdr_wait_transition: streamed working clears the marker, idle/done are deferred (clean timeout)
+ok - fm_backend_herdr_wait_transition: a reader/subscribe failure falls back to polling (rc 2)
+ok - fm_backend_herdr_wait_transition: Bash 3.2-safe bad-ack path closes fd 9 and removes its FIFO
+ok - fm_backend_herdr_wait_transition: stock macOS Bash clean timeout closes fd 9 and returns 1
+FM_TEST_END 2026-10-08T12:25:54Z tests/fm-backend-herdr.test.sh exit=0 duration_ms=110924 gate_skip=false
+FM_TEST_BEGIN 2026-10-08T12:25:54Z tests/fm-teardown.test.sh family=pr-forge expected_gate_skip=none
+ok - a missing teardown startup source refuses before cleanup
+ok - an unreadable teardown startup source refuses before cleanup
+ok - a missing adapter sibling refuses before cleanup
+ok - a forced descendant with a missing adapter sibling refuses before cleanup
+ok - a forced secondmate with a missing own adapter sibling refuses before child cleanup
+ok - present required sources still reach the ordinary teardown refusal
+ok - local-only worktree with HEAD on a fork remote is torn down and the home summary is refreshed
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 1s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ok - teardown closes its own backlog item before reporting success
+ok - teardown closes a landed Gerrit task with its change URL as a note and a GitHub task with --pr
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 0s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ok - teardown honors config/backlog-backend=manual and still finishes cleanly
+ok - local-only worktree with truly unpushed work is refused (safety preserved)
+ok - local-only worktree with work merged into local main is torn down (no regression)
+ok - no-mistakes worktree with HEAD on origin is torn down (no regression)
+ok - no-mistakes worktree with genuinely unlanded work is refused (safety preserved)
+ok - local-only worktree with unpushed work is torn down under --force (escape hatch)
+ok - fm-pr-check publishes the PR-ready line on a secondmate's parent channel once
+ok - a secondmate home's teardown delivers the child's final line or refuses until it can
+ok - teardown completes when an exact busy-state sidecar is already absent
+ok - herdr teardown removes pane-owned escalation dedupe state
+ok - herdr flat teardown refuses before returning the isolated copy under lock contention and the retry completes cleanly
+ok - herdr flat teardown never erases records when pane presence is unparseable
+ok - herdr flat teardown preflight refuses before every destructive change
+ok - herdr teardown takes its lock in a per-account namespace another account cannot block, and still refuses a foreign-owned or wrong-mode one
+ok - forced secondmate teardown preflights every Herdr child before cleanup mutation
+ok - forced secondmate teardown holds every descendant lifecycle and metadata lock
+ok - forced secondmate teardown retains Herdr child identity until exact pane disappearance
+ok - forced teardown retains a nested secondmate home and its grandchild's Herdr identity when the grandchild close is unconfirmed
+ok - herdr projection teardown retires its journal only after confirming the exact recorded pane is gone
+ok - herdr projection teardown retains every record when post-close presence is unknown
+ok - herdr projection teardown surfaces failed focus restoration without turning confirmed cleanup into a hard failure
+ok - teardown retires the task's own watcher markers and orphaned presentation journal, leaving other tasks' markers alone
+ok - teardown retains a presentation journal bound to a pane other than the closed endpoint
+ok - teardown retires a v1 presentation journal once its token workspace is confirmed gone
+ok - teardown retains a v1 presentation journal while its token workspace is still present
+ok - teardown retains a v1 presentation journal when the workspace query is ambiguous
+ok - squash-merged + deleted-branch worktree (PR merged) is torn down (the fix)
+ok - squash-merged PR accepts a local HEAD that is an ancestor of the final PR head
+ok - teardown discovers a merged PR by branch name and tears down when no pr= was ever recorded
+ok - squash-merged PR accepts replayed unpushed local patches contained in the PR head
+ok - merged PR does not allow teardown after a later local commit
+ok - squash-merged + deleted-branch worktree with a merged Bitbucket PR is torn down
+ok - teardown of a merged Bitbucket task closes its backlog item with the PR recorded
+ok - a merged Bitbucket PR with no recorded head proves landing through the resolved head
+ok - a merged Bitbucket PR does not allow teardown of a later local commit
+ok - an open Bitbucket PR does not prove unpushed work landed
+ok - a Bitbucket landed proof without the credential refuses and names what is missing
+ok - squash-merged task whose local branch followed the pipeline rebase is torn down
+ok - squash-merged same-path different content still refuses
+ok - squash-merged rebased local still refuses a genuinely unlanded follow-up commit
+ok - squash-merged stale local still refuses when the forge is unreachable
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 0s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-contributions: data directory unavailable
+contributions: observation not armed; coverage is unconfirmed
+WARNING: watcher still down (same stale episode; last beat: 2s ago, grace 300s) - full banner already printed this episode.
+fm-contributions: data directory unavailable
+contributions: observation not armed; coverage is unconfirmed
+ok - fm-pr-check does not refresh PR head after HEAD moves
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 0s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-contributions: data directory unavailable
+contributions: observation not armed; coverage is unconfirmed
+ok - fm-pr-check records the remote PR head when the local worktree lags
+ok - worktree whose content already landed in the default branch is torn down (content fallback)
+ok - the content-landed fallback checks a task's recorded base branch, not the default branch
+ok - content fallback refreshes origin default before comparing trees
+ok - dirty worktree is refused even when its committed work has landed (dirty always wins)
+ok - untracked/no-mistakes: dirty refusal classifies leftovers and preserves work
+ok - untracked/local-only: dirty refusal classifies leftovers and preserves work
+ok - tracked/no-mistakes: dirty refusal classifies leftovers and preserves work
+ok - tracked/local-only: dirty refusal classifies leftovers and preserves work
+ok - mixed/no-mistakes: dirty refusal classifies leftovers and preserves work
+ok - mixed/local-only: dirty refusal classifies leftovers and preserves work
+ok - gh lookup error with content not in default refuses (fail-safe)
+ok - a record predating spawn_gen refuses teardown until --legacy-record is passed
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 2s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ok - a windowless leftover with no spawn_gen and no worktree tears down without --legacy-record
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 1s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ok - a windowless leftover with no spawn_gen also tears down when --legacy-record is passed
+ok - a windowless leftover still refuses while its worktree holds unlanded work
+ok - a windowless record with a spawn_gen, a non-tmux backend or endpoint identity, no backlog validation, or ambiguous, foreign, or malformed identity still refuses
+WARNING: watcher still down (same stale episode; last beat: 4s ago, grace 300s) - full banner already printed this episode.
+ok - a windowless leftover retries its retained legacy stamp without --legacy-record
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 2s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ok - a landed legacy record with a dead endpoint tears down and logs its accepted incarnation
+ok - --legacy-record never relaxes the unlanded-work refusal
+ok - an endpoint that cannot be confidently read as dead refuses --legacy-record teardown
+ok - --legacy-record teardown rolls its stamp back when the close marker write fails
+ok - a legacy stamp a failed rollback left behind still faces the endpoint gate
+ok - a corrupt spawn_gen is never accepted as a legacy record
+ok - provably-stale worktree index.lock (old, no live holder) is cleared and teardown succeeds
+ok - live-held worktree index.lock is never removed and teardown refuses
+ok - lsof errors leave worktree index.lock in place and refuse teardown
+ok - stale lock cleanup rechecks and refuses dirty worktree before return
+ok - normal repo index.lock is resolved from the worktree and cleared when stale
+ok - lock mtime read failures leave worktree index.lock in place and refuse teardown
+ok - transient index.lock cleared after first failed return is retried successfully without force-remove
+ok - persistent index.lock exhausts retries and refuses without force-removing the lock
+ok - empty retry wait overrides use the default without aborting teardown
+ok - fractional legacy retry wait remains supported without arithmetic
+ok - teardown records the task's pipeline spend before removing its branch and record
+ok - teardown skips all pipeline-spend recording when the home has not opted in
+ok - teardown records unavailable pipeline spend for an owned ship task whose copy is gone
+not ok - tests/fm-teardown.test.sh exceeded the per-script bound of 240s and was terminated
+FM_TEST_END 2026-10-08T12:29:54Z tests/fm-teardown.test.sh exit=124 duration_ms=240021 gate_skip=false
+FM_TEST_BEGIN 2026-10-08T12:29:54Z tests/fm-pending-reply.test.sh family=standalone expected_gate_skip=none
+ok - normal correlated reply resolves once (idempotent)
+ok - completed turn with no report triggers exactly one recovery
+ok - recovery never pokes a mate waiting on its own decision, and runs once it closes
+ok - recovery sends during an open decision when config/wait-no-turns is absent
+ok - recovery grace is measured from the request turn's completion, not delivery
+ok - one fresh status read immediately before firing catches a just-landed reply, any verb
+ok - a resolve that fails after committing resolved still blocks repost and escalation
+ok - missed-report escalation grace is measured from the recovery turn's completion
+ok - recovery attempts reconcile without reinjection
+ok - recovery reply resolves the original expectation
+ok - second missed turn escalates once and remains durable
+ok - escalations and replies wake; the home's own escalation close stays quiet
+ok - failed escalation publication remains retryable and publishes once
+ok - legacy escalation closes under the shared default key
+ok - legacy escalation cannot close an unrelated default-key decision
+ok - foreign correlated blocker cannot impersonate a pending-reply escalation
+ok - concurrent resolution closes one keyed escalation exactly once
+ok - concurrent escalation yields to a late correlated reply
+ok - transport success cannot masquerade as reply success
+ok - undelivered records remain immutable across scan paths
+ok - delivery confirmation fallback reconciles durably
+ok - delivery confirmation serializes with reconciliation
+ok - unrelated events and stale correlation ids cannot resolve
+ok - another mate's echoed token cannot resolve a request
+ok - restart preserves expectation and exact parent destination
+ok - wrong-home reports are detected but do not silently acknowledge
+ok - direct unmarked captain input creates no expectation
+ok - fm-send marked secondmate path creates pending and embeds corr
+ok - status-pointed document resolves the expectation
+ok - optional helper report resolves without being required for correctness
+ok - backend busy/idle observation covers Pi/Claude paths without conversation scrape
+ok - tmux and zellij unknown states use bounded capture fallback
+ok - pending replies scope Kimi capture fallback by recorded harness
+ok - tick skips terminal records and reuses target observations
+ok - the tick leaves settled records alone and still does the selected records' work
+ok - correlations are reused only for matching open task records
+ok - tick end-to-end: miss -> one recovery -> escalate -> durable
+ok - failed transport discards undelivered expectation only
+ok - a remote repost waits for the reply channel and still fires on a real miss
+ok - a mirrored correlated remote reply resolves without any repost
+ok - same-basename self-home corr= is restated onto the parent channel and resolves
+ok - same-basename reply resolves at the recovery failure boundary
+ok - a child-file mate-home sighting is not copied and still escalates
+ok - mechanical helper writes the parent channel from verb, corr, and note
+ok - remote parent-replies.status is not classified as wrong-home
+ok - local parent-replies.status remains wrong-home evidence
+ok - an escalated correlation stays retryable only while undelivered
+ok - a same-kind escalation after an operator close opens the decision again
+ok - all pending-reply tests passed
+FM_TEST_END 2026-10-08T12:30:58Z tests/fm-pending-reply.test.sh exit=0 duration_ms=64038 gate_skip=false
+FM_TEST_SUMMARY total=8 failed=3 skipped_gate=0 duration_ms=1042393
+FM_TEST_SUMMARY_FAMILY family=backend-dispatch count=4 duration_ms=574286 failed=2
+FM_TEST_SUMMARY_FAMILY family=pr-forge count=1 duration_ms=240021 failed=1
+FM_TEST_SUMMARY_FAMILY family=standalone count=2 duration_ms=74393 failed=0
+FM_TEST_SUMMARY_FAMILY family=watcher-wake-lock count=1 duration_ms=153347 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-spawn-dispatch-profile.test.sh duration_ms=240029
+FM_TEST_SLOWEST rank=2 script=tests/fm-teardown.test.sh duration_ms=240021
+FM_TEST_SLOWEST rank=3 script=tests/fm-watch-arm.test.sh duration_ms=153347
+FM_TEST_SLOWEST rank=4 script=tests/fm-project-capacity.test.sh duration_ms=126351
+FM_TEST_SLOWEST rank=5 script=tests/fm-backend-herdr.test.sh duration_ms=110924
+FM_TEST_SLOWEST rank=6 script=tests/fm-control-relaunch.test.sh duration_ms=96982
+FM_TEST_SLOWEST rank=7 script=tests/fm-pending-reply.test.sh duration_ms=64038
+FM_TEST_SLOWEST rank=8 script=tests/fm-test-fixtures.test.sh duration_ms=10355
+fm-test-run: wrote timing artifact: /home/node/.no-mistakes/evidence/01M4DMESQPKH4HM8802D7T5VFZ/targeted-timing.json

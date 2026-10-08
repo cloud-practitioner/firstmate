@@ -1,0 +1,40 @@
+
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ
+
+
+❯ This is an isolated validation home. Do not call tools or change files. Reply with the single word READY.
+
+● READY
+
+✻ Baked for 3s · done 12:09 PM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 6% used
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents

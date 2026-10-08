@@ -1,0 +1,49 @@
+$ fm-spawn.sh waiting <project> --mode no-mistakes --yolo off
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/l.SX0LXh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 1s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+deferred: project capacity-demo admits 1 worker(s) at once on this machine (/home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/l.SX0LXh/config/project-capacity) and 1 already hold a place (holder); task waiting was not launched and its backlog item stays queued - dispatch it again once one of them records its ready PR or is cleaned up
+exit=75
+task:
+  id: waiting
+  title: capacity candidate
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: "-"
+  priority: "-"
+  created: 2026-10-08
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/l.SX0LXh/projects/capacity-demo
+HEAD 3e726801d472ee16aada8e9bcc6500a992a2a539
+branch refs/heads/main
+
+No waiting task record, launch brief, terminal server, or added worktree was created.
+$ duplicate project-capacity declaration; retry
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/l.SX0LXh
+WARNING: watcher still down (same stale episode; last beat: 2s ago, grace 300s) - full banner already printed this episode.
+error: spawn refused: the project capacity declaration is unreadable (/home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/l.SX0LXh/config/project-capacity line 2 names capacity-demo a second time); fix it so the captain's worker limits are known (docs/configuration.md "Project capacity")
+exit=1
+$ crew-exclude-tools=read on unsupported Claude runtime; retry
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/l.SX0LXh
+WARNING: watcher still down (same stale episode; last beat: 2s ago, grace 300s) - full banner already printed this episode.
+error: config/crew-exclude-tools lists tools to hide, but the claude runtime cannot hide tools, so this launch is refused rather than running with them available; empty the file or launch a runtime that supports exclusion (pi, pi-signed)
+exit=1
+$ malformed exclusion name; retry with Pi
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4DMESQPKH4HM8802D7T5VFZ/l.SX0LXh
+WARNING: watcher still down (same stale episode; last beat: 3s ago, grace 300s) - full banner already printed this episode.
+error: config/crew-exclude-tools has a malformed entry 'bad name'; expected one tool name per line using only letters, digits, _ . and - (blank lines and # comment lines are allowed)
+exit=1
