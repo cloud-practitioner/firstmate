@@ -231,6 +231,7 @@ Every path that cannot finish a wake the engine took hands that wake to main, wi
 Before handing it back, the host stops its successor cycle, and whenever a successor generation was recorded (confirmed or not), it explicitly republishes downtime for that generation.
 That publication is required even when the successor already exited, because no watcher cleanup remains to make the close deliverable to the arm owner.
 If that publication fails, the hand-back adds a `supervision-host: watcher downtime could not be restored` line and the host exits nonzero.
+A close that turned main-only at its turn prints a `supervision-host hand-back failed: watcher downtime could not be restored` line instead, which is not a wake, so the output is never empty and the owner never reads the failure as a host that died.
 On Claude, a Stop hook whose rewake is refused while the recovery marker is still `pending:handling` and no watcher is live commits the auto-arm failure notice once per failure episode (`failed-suppressed` after that) and still exits 2, so the hand-back reaches main; every other refused rewake stays silent as before.
 So the owner's next arm starts from the same state as without the host, and the wake stays durable in the queue.
 

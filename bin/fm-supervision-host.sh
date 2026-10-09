@@ -1145,6 +1145,10 @@ while :; do
     if [ -n "$SUCCESSOR_GENERATION" ] \
       && ! fm_recovery_marker_publish "$STATE/.watcher-down" downtime >/dev/null 2>&1; then
       log_line "pass-through	downtime-unrestored	$(printf '%s\n' "$REASON" | head -n 1)"
+      # Not "supervision-host:", which would make the close a wake; and not
+      # silent, because no output at all reads as a host that died, which its
+      # owner retries into a second park that no event ever closes.
+      printf 'supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back\n'
       exit 1
     fi
     emit
