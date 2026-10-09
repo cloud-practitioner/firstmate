@@ -1,0 +1,27 @@
+RESULT expected-pre-fix-regression-failure
+Real Claude acquired session lock: 3879534
+stdout:
+
+stderr:
+
+exit=1
+AssertionError('diagnostic missing from stdout')
+state/.supervision-host.log:
+1791554353	start	gen=host-3893759-1791554352	primary=claude
+1791554373	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.4V9vlW/state/demo.status
+1791554374	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.4V9vlW/state/demo.status
+
+state/.claude-autoarm-epoch:
+
+state/.watcher-down:
+announced:handling:3895960.1791554357.LqmL2K
+
+{"type": "user", "content": "Run bash .gate-test/primary-command.sh now."}
+{"type": "system", "subtype": "hook_response", "hook_name": "SessionStart:startup", "hook_event": "SessionStart", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "UserPromptSubmit", "hook_event": "UserPromptSubmit", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "assistant", "content": [{"type": "tool_use", "id": "toolu_01LCiAtBy7u4BFuV5LJZGmq9", "name": "Bash", "input": {"command": "bash .gate-test/primary-command.sh", "description": "Run the gate test primary command"}, "caller": {"type": "direct"}}]}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "user", "content": [{"tool_use_id": "toolu_01LCiAtBy7u4BFuV5LJZGmq9", "type": "tool_result", "content": "lock acquired: harness pid 3879534\nDIRECT_HOST_FINISHED exit=1", "is_error": false}]}
+Lab home and private tmux server removed. Temporary primary-scope marker removed.

@@ -1,0 +1,37 @@
+RESULT pass
+Real Claude acquired session lock: 3729128
+stdout:
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+
+stderr:
+
+exit=1
+Scheduling fault log:
+Injected 15s scheduling delay in host park poll
+
+host ledger:
+1791554249	start	gen=host-3742609-1791554248	primary=claude
+1791554271	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.yaEuaz/state/demo.status
+1791554272	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.yaEuaz/state/demo.status
+
+recovery marker:
+announced:handling:3745226.1791554254.YrR4NR
+
+autoarm epoch:
+
+fault log:
+Injected EACCES for watcher downtime publication
+
+wake queue:
+1791554254	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.yaEuaz/state/demo.status
+1791554254	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.yaEuaz/state/demo.status
+
+{"type": "user", "content": "Run bash .gate-test/primary-command.sh now."}
+{"type": "system", "subtype": "hook_response", "hook_name": "SessionStart:startup", "hook_event": "SessionStart", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "UserPromptSubmit", "hook_event": "UserPromptSubmit", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "assistant", "content": [{"type": "tool_use", "id": "toolu_011dWoceuJRvV48ysjF81pqv", "name": "Bash", "input": {"command": "bash .gate-test/primary-command.sh", "description": "Run the gate test primary command"}, "caller": {"type": "direct"}}]}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "user", "content": [{"tool_use_id": "toolu_011dWoceuJRvV48ysjF81pqv", "type": "tool_result", "content": "lock acquired: harness pid 3729128\nDIRECT_HOST_FINISHED exit=1", "is_error": false}]}
+Lab home and private tmux server removed. Temporary primary-scope marker removed.

@@ -1,0 +1,122 @@
+RESULT pass
+Real Claude acquired session lock: 2924154
+stdout:
+watcher: started pid=2944527 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+
+stderr:
+
+exit=1
+host ledger:
+1791553726	start	gen=host-2941768-1791553724	primary=claude
+1791553738	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.esuo6G/state/demo.status
+1791553738	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.esuo6G/state/demo.status
+
+recovery marker:
+announced:handling:2944527.1791553731.J9FiDI
+
+fault log:
+Injected EACCES for watcher downtime publication
+
+wake queue:
+1791553731	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.esuo6G/state/demo.status
+1791553731	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.esuo6G/state/demo.status
+
+Primary capture:
+{"type": "user", "message": {"role": "user", "content": "Run bash .gate-test/primary-command.sh now."}}
+{"type":"system","subtype":"hook_started","hook_id":"495c91c5-bd42-42a3-bd1e-1e76d13eb78d","hook_name":"SessionStart:sta
+rtup","hook_event":"SessionStart","uuid":"d9455599-d71d-4c2b-a64c-589ea8eb1a42","session_id":"9a388c9c-5b67-48cc-bc44-7a
+06aa5fe684"}
+{"type":"system","subtype":"hook_response","hook_id":"495c91c5-bd42-42a3-bd1e-1e76d13eb78d","hook_name":"SessionStart:st
+artup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"cba2fbb
+d-5a5b-437a-834c-a3b7a4a7e8c5","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684"}
+{"type":"system","subtype":"hook_started","hook_id":"f868c848-388b-45f8-a6e4-7761c6dcbf7c","hook_name":"UserPromptSubmit
+","hook_event":"UserPromptSubmit","uuid":"cd0a95cb-cc58-4648-b92f-393f0a32469f","session_id":"9a388c9c-5b67-48cc-bc44-7a
+06aa5fe684"}
+{"type":"system","subtype":"hook_response","hook_id":"f868c848-388b-45f8-a6e4-7761c6dcbf7c","hook_name":"UserPromptSubmi
+t","hook_event":"UserPromptSubmit","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"6670cea
+b-c54d-469a-bbc4-34c19b2d350b","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684"}
+{"type":"system","subtype":"init","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN","ses
+sion_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684","tools":["Bash","mcp__claude_ai_Claude_Docs__batch","mcp__claude_ai_Clau
+de_Docs__create","mcp__claude_ai_Claude_Docs__delete","mcp__claude_ai_Claude_Docs__export","mcp__claude_ai_Claude_Docs__
+guide","mcp__claude_ai_Claude_Docs__query","mcp__claude_ai_Claude_Docs__read","mcp__claude_ai_Claude_Docs__update"],"mcp
+_servers":[{"name":"claude.ai Claude Docs","status":"connected","source":"claudeai"},{"name":"claude.ai Atlassian MCP","
+status":"pending","source":"claudeai"},{"name":"claude.ai Stratex Online","status":"needs-auth","source":"claudeai"},{"n
+ame":"claude.ai Zoho CRM","status":"needs-auth","source":"claudeai"},{"name":"claude.ai Semrush","status":"needs-auth","
+source":"claudeai"},{"name":"claude.ai vanta-us","status":"needs-auth","source":"claudeai"},{"name":"claude.ai Microsoft
+ 365","status":"needs-auth","source":"claudeai"},{"name":"claude.ai Atlassian Rovo","status":"pending","source":"claudea
+i"}],"model":"claude-opus-5-5","permissionMode":"default","slash_commands":["afk","ahoy","bearings","quiet","stow","upda
+tefirstmate","deep-research","design","design-sync","dataviz","update-config","verify","debug","code-review","simplify",
+"batch","fewer-permission-prompts","doctor","loop","schedule","claude-api","workflow-authoring","run","run-skill-generat
+or","plugin-authoring","advisor","agents","auto-mode-setup","autocompact","clear","color","compact","config","output-sty
+le","context","effort","fast","focus","heapdump","init","mcp","import","model","__remote-workflow","workflow-launch-exec
+","reload-plugins","reload-skills","rename","security-review","usage-credits","extra-usage","usage","insights","recap","
+skill-doctor","goal","design-consent","design-revoke","list-agents","team-onboarding"],"terminal_slash_commands":["docto
+r","color","focus","reload-plugins"],"apiKeySource":"none","claude_code_version":"2.1.295","output_style":"default","age
+nts":["claude","Explore","general-purpose","Plan","statusline-setup"],"skills":["afk","ahoy","bearings","quiet","stow","
+updatefirstmate","deep-research","design","design-sync","dataviz","update-config","verify","debug","code-review","simpli
+fy","batch","fewer-permission-prompts","doctor","loop","schedule","claude-api","workflow-authoring","run","run-skill-gen
+erator","plugin-authoring"],"plugins":[{"name":"cc-plugin-sec-default","path":"builtin","source":"cc-plugin-sec-default@
+builtin"},{"name":"cc-plugin-agents-md","path":"builtin","source":"cc-plugin-agents-md@builtin"},{"name":"cc-plugin-tele
+metry","path":"builtin","source":"cc-plugin-telemetry@builtin"},{"name":"cc-plugin-plugin-authoring","path":"builtin","s
+ource":"cc-plugin-plugin-authoring@builtin"}],"plugin_warnings":[{"plugin":"(suppressed)@skills-dir","type":"project-sco
+pe-suppressed-untrusted","message":"1 project-scope directory under ./.claude/skills/ that may load as a plugin was skip
+ped because this workspace was not trusted when plugins were scanned. After accepting the trust dialog, run /reload-plug
+ins (or relaunch) to load what qualifies."}],"capabilities":["interrupt_receipt_v1","interrupt_cancel_queued_v1","interr
+upt_send_now_v1","msg_lifecycle_v1","request_marker_lists_v1","sdk_mcp_tools_list_changed","sdk_mcp_manifests","mcp_read
+_resource_v1","mcp_tool_ui_meta_v1","ui_surface_v1"],"analytics_disabled":false,"product_feedback_disabled":false,"uuid"
+:"3777f3df-9ec5-4b47-ba70-38a411bfb1f0","memory_paths":{"auto":"/workspaces/wp/.claude/projects/-home-node--no-mistakes-
+repos-5e28e613310e-git/memory/"},"messaging_socket_path":"/tmp/cc-socks/2924154.sock","fast_mode_state":"off","fast_mode
+_disabled_reason":"sdk_opt_in_required","per_turn_effort_active":true,"view_mode":"default"}
+{"type":"assistant","message":{"model":"claude-opus-5-5","id":"msg_011CfrmYBLu8rVmcywQbsfxk","type":"message","role":"as
+sistant","content":[{"type":"tool_use","id":"toolu_01TjP6QY2QT3FXv1KSYnwtur","name":"Bash","input":{"command":"bash .gat
+e-test/primary-command.sh","description":"Run the gate test primary command"},"caller":{"type":"direct"}}],"container":n
+ull,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":2,"cache_creation_input_tokens":
+23179,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":23179},"ou
+tput_tokens":16,"service_tier":"standard","inference_geo":"not_available"},"input_transformations":[],"diagnostics":null
+,"context_management":null},"parent_tool_use_id":null,"session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684","uuid":"986082
+44-299c-4434-8628-e596a1a10753","timestamp":"2026-10-09T13:48:39.418Z","request_id":"req_011CfrmYArPVrAow2Q1L8q9o","wire
+_tool_inputs":{"toolu_01TjP6QY2QT3FXv1KSYnwtur":{"command":"bash .gate-test/primary-command.sh","description":"Run the g
+ate test primary command"}}}
+{"type":"system","subtype":"hook_started","hook_id":"6c290918-ab6c-49ec-8e71-5601453498ab","hook_name":"PreToolUse:Bash"
+,"hook_event":"PreToolUse","uuid":"1afc8a0e-f8ca-4625-ac6f-4e75a7aab350","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe
+684"}
+{"type":"system","subtype":"hook_started","hook_id":"ef6babcf-c269-41ef-92e8-afd5f28d99c2","hook_name":"PreToolUse:Bash"
+,"hook_event":"PreToolUse","uuid":"c402ba67-0929-4356-83a8-2368a6fe6a1c","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe
+684"}
+{"type":"system","subtype":"hook_started","hook_id":"71a4b5ae-2c0a-4729-8b8a-ed77396d26bb","hook_name":"PreToolUse:Bash"
+,"hook_event":"PreToolUse","uuid":"862f7565-4101-4e25-9ef6-8dba28d61630","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe
+684"}
+{"type":"rate_limit_event","rate_limit_info":{"status":"allowed","resetsAt":1791571200,"rateLimitType":"five_hour","over
+ageStatus":"rejected","overageDisabledReason":"out_of_credits","isUsingOverage":false,"unifiedWindows":{"five_hour":{"ut
+ilization":0.03,"resetsAt":1791571200},"seven_day":{"utilization":0.02,"resetsAt":1791655200}}},"uuid":"d5ae4dcf-a26b-48
+23-8b23-5aa6ded5030c","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684"}
+{"type":"system","subtype":"hook_response","hook_id":"71a4b5ae-2c0a-4729-8b8a-ed77396d26bb","hook_name":"PreToolUse:Bash
+","hook_event":"PreToolUse","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"92989b4e-35ec-
+414c-b0ae-4b237ca65a9a","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684"}
+{"type":"system","subtype":"hook_response","hook_id":"ef6babcf-c269-41ef-92e8-afd5f28d99c2","hook_name":"PreToolUse:Bash
+","hook_event":"PreToolUse","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"4e5b23b4-5f56-
+4700-a2b5-d49ef01c9663","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684"}
+{"type":"system","subtype":"hook_response","hook_id":"6c290918-ab6c-49ec-8e71-5601453498ab","hook_name":"PreToolUse:Bash
+","hook_event":"PreToolUse","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"72b211e9-da67-
+4ef3-a881-61d3fbc9c35c","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684"}
+{"type":"system","subtype":"task_started","task_id":"bd697zmmx","run_id":"0mv10tw5z-4b40844b","tool_use_id":"toolu_01TjP
+6QY2QT3FXv1KSYnwtur","description":"Run the gate test primary command","is_backgrounded":false,"task_type":"local_bash",
+"uuid":"0b17edc8-7bce-4480-9924-a2dfcc79d5f4","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684"}
+{"type":"system","subtype":"task_notification","task_id":"bd697zmmx","run_id":"0mv10tw5z-4b40844b","tool_use_id":"toolu_
+01TjP6QY2QT3FXv1KSYnwtur","status":"completed","output_file":"","summary":"Run the gate test primary command","uuid":"11
+59efba-ed61-483b-88a3-05430ac21754","session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684"}
+{"type":"user","message":{"role":"user","content":[{"tool_use_id":"toolu_01TjP6QY2QT3FXv1KSYnwtur","type":"tool_result",
+"content":"lock acquired: harness pid 2924154\nDIRECT_HOST_FINISHED exit=1","is_error":false}]},"parent_tool_use_id":nul
+l,"session_id":"9a388c9c-5b67-48cc-bc44-7a06aa5fe684","uuid":"3035d1c8-4e20-47d2-b0a9-c099125a39d6","timestamp":"2026-10
+-09T13:48:59.327Z","tool_use_result":{"stdout":"lock acquired: harness pid 2924154\nDIRECT_HOST_FINISHED exit=1","stderr
+":"","interrupted":false,"isImage":false,"noOutputExpected":false},"tool_result_meta":[{"id":"toolu_01TjP6QY2QT3FXv1KSYn
+wtur","permission_decision":{"decision":"accept","source":"config","reason_type":"rule"}}]}
+
+
+Non-JSON CLI diagnostics:
+
+{"type": "user", "message": {"role": "user", "content": "Run bash .gate-test/primary-command.sh now."}}
+{"type": "assistant", "message": {"model": "claude-opus-5-5", "id": "msg_011CfrmYBLu8rVmcywQbsfxk", "type": "message", "role": "assistant", "content": [{"type": "tool_use", "id": "toolu_01TjP6QY2QT3FXv1KSYnwtur", "name": "Bash", "input": {"command": "bash .gate-test/primary-command.sh", "description": "Run the gate test primary command"}, "caller": {"type": "direct"}}], "container": null, "stop_reason": null, "stop_sequence": null, "stop_details": null, "usage": {"input_tokens": 2, "cache_creation_input_tokens": 23179, "cache_read_input_tokens": 0, "cache_creation": {"ephemeral_5m_input_tokens": 0, "ephemeral_1h_input_tokens": 23179}, "output_tokens": 16, "service_tier": "standard", "inference_geo": "not_available"}, "input_transformations": [], "diagnostics": null, "context_management": null}, "parent_tool_use_id": null, "session_id": "9a388c9c-5b67-48cc-bc44-7a06aa5fe684", "uuid": "98608244-299c-4434-8628-e596a1a10753", "timestamp": "2026-10-09T13:48:39.418Z", "request_id": "req_011CfrmYArPVrAow2Q1L8q9o", "wire_tool_inputs": {"toolu_01TjP6QY2QT3FXv1KSYnwtur": {"command": "bash .gate-test/primary-command.sh", "description": "Run the gate test primary command"}}}
+{"type": "user", "message": {"role": "user", "content": [{"tool_use_id": "toolu_01TjP6QY2QT3FXv1KSYnwtur", "type": "tool_result", "content": "lock acquired: harness pid 2924154\nDIRECT_HOST_FINISHED exit=1", "is_error": false}]}, "parent_tool_use_id": null, "session_id": "9a388c9c-5b67-48cc-bc44-7a06aa5fe684", "uuid": "3035d1c8-4e20-47d2-b0a9-c099125a39d6", "timestamp": "2026-10-09T13:48:59.327Z", "tool_use_result": {"stdout": "lock acquired: harness pid 2924154\nDIRECT_HOST_FINISHED exit=1", "stderr": "", "interrupted": false, "isImage": false, "noOutputExpected": false}, "tool_result_meta": [{"id": "toolu_01TjP6QY2QT3FXv1KSYnwtur", "permission_decision": {"decision": "accept", "source": "config", "reason_type": "rule"}}]}
+Lab home and private tmux server removed. Temporary primary-scope marker removed.

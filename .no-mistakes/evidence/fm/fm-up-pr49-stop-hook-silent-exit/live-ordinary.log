@@ -1,0 +1,37 @@
+RESULT pass
+Real Claude acquired session lock: 3512202
+stdout:
+watcher: started pid=3524124 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.TF7iuf/state/demo.status
+supervision-host: the supervision session could not take this wake: the dialog mirror could not be read; this wake is yours
+supervision-host: watcher downtime could not be restored for the main hand-back
+
+stderr:
+
+exit=1
+host ledger:
+1791554107	start	gen=host-3522191-1791554106	primary=claude
+1791554127	to-main	downtime-unrestored	the supervision session could not take this wake: the dialog mirror could not be read; this wake is yours
+1791554127	to-main	the supervision session could not take this wake: the dialog mirror could not be read; this wake is yours
+
+recovery marker:
+announced:handling:3524124.1791554113.Hld4yh
+
+autoarm epoch:
+
+fault log:
+Injected EACCES for watcher downtime publication
+Injected EACCES for watcher downtime publication
+
+wake queue:
+1791554113	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.TF7iuf/state/demo.status
+1791554114	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.TF7iuf/state/demo.status
+
+{"type": "user", "content": "Run bash .gate-test/primary-command.sh now."}
+{"type": "system", "subtype": "hook_response", "hook_name": "SessionStart:startup", "hook_event": "SessionStart", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "UserPromptSubmit", "hook_event": "UserPromptSubmit", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "assistant", "content": [{"type": "tool_use", "id": "toolu_0158mjuHvfPdKGu3wTkUKDai", "name": "Bash", "input": {"command": "bash .gate-test/primary-command.sh", "description": "Run the gate test primary command"}, "caller": {"type": "direct"}}]}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+Lab home and private tmux server removed. Temporary primary-scope marker removed.

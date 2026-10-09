@@ -1,0 +1,120 @@
+ok - host: a failed at-turn downtime write names itself and is never read as a host that died
+
+HOME turns-main-only-write-fails
+--- host.out ---
+watcher: started pid=1952342 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+--- host.err ---
+--- host.rc ---
+1
+--- state/.supervision-host.log ---
+1791553078	start	gen=host-1951371-1791553078	primary=claude
+1791553088	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+1791553088	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+--- state/.watcher-down ---
+announced:handling:1952342.1791553082.UrtLZv
+--- state/.wake-queue ---
+1791553082	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+1791553082	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+ok - host+hook: failed at-turn downtime write notifies main despite a healthy successor
+
+HOME turns-main-only-write-fails
+--- host.out ---
+watcher: started pid=1952342 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+--- host.err ---
+--- host.rc ---
+1
+--- state/.supervision-host.log ---
+1791553078	start	gen=host-1951371-1791553078	primary=claude
+1791553088	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+1791553088	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+--- state/.watcher-down ---
+announced:handling:1952342.1791553082.UrtLZv
+--- state/.wake-queue ---
+1791553082	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+1791553082	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+
+HOME hook-turns-main-only-write-fails
+--- hook.out ---
+--- hook.err ---
+firstmate watcher auto-arm FAILED - the Stop-owned automatic supervision mechanism is broken after 1 bounded attempts, and no live watcher with a fresh beacon was verified.
+watcher: started pid=1975438 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+The supervision host (docs/supervision-host.md) ran these cycles; its last one exited 1 without a wake.
+Do not launch a manual background arm from this notice; investigate the automatic Stop hook and watcher startup before ending blind.
+--- hook.rc ---
+2
+--- state/.supervision-host.log ---
+1791553092	start	gen=host-1972630-1791553091	primary=claude
+1791553103	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only-write-fails/state/demo.status
+1791553103	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only-write-fails/state/demo.status
+--- state/.watcher-down ---
+announced:handling:1975438.1791553097.M0IFpd
+--- state/.claude-autoarm-epoch ---
+epoch=1 owner_pid=1971027 outcome=failed updated_at=1791553103
+linux-starttime=12309145 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3565323865363133333130652f30314d344744344e37395837483753364e39414a563144434e4e2f2e676174652d746573742f746d702f666d2d7375706572766973696f6e2d686f73742e4549447037332f686f6f6b2d7475726e732d6d61696e2d6f6e6c792d77726974652d6661696c732f62696e2f666d2d636c617564652d73746f702d6175746f61726d2e736800
+--- state/.wake-queue ---
+1791553097	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only-write-fails/state/demo.status
+1791553097	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only-write-fails/state/demo.status
+ok - host+hook: a close that turns main-only at its turn rewakes main and keeps its successor watcher
+
+HOME turns-main-only-write-fails
+--- host.out ---
+watcher: started pid=1952342 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+--- host.err ---
+--- host.rc ---
+1
+--- state/.supervision-host.log ---
+1791553078	start	gen=host-1951371-1791553078	primary=claude
+1791553088	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+1791553088	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+--- state/.watcher-down ---
+announced:handling:1952342.1791553082.UrtLZv
+--- state/.wake-queue ---
+1791553082	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+1791553082	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/turns-main-only-write-fails/state/demo.status
+
+HOME hook-turns-main-only-write-fails
+--- hook.out ---
+--- hook.err ---
+firstmate watcher auto-arm FAILED - the Stop-owned automatic supervision mechanism is broken after 1 bounded attempts, and no live watcher with a fresh beacon was verified.
+watcher: started pid=1975438 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+The supervision host (docs/supervision-host.md) ran these cycles; its last one exited 1 without a wake.
+Do not launch a manual background arm from this notice; investigate the automatic Stop hook and watcher startup before ending blind.
+--- hook.rc ---
+2
+--- state/.supervision-host.log ---
+1791553092	start	gen=host-1972630-1791553091	primary=claude
+1791553103	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only-write-fails/state/demo.status
+1791553103	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only-write-fails/state/demo.status
+--- state/.watcher-down ---
+announced:handling:1975438.1791553097.M0IFpd
+--- state/.claude-autoarm-epoch ---
+epoch=1 owner_pid=1971027 outcome=failed updated_at=1791553103
+linux-starttime=12309145 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3565323865363133333130652f30314d344744344e37395837483753364e39414a563144434e4e2f2e676174652d746573742f746d702f666d2d7375706572766973696f6e2d686f73742e4549447037332f686f6f6b2d7475726e732d6d61696e2d6f6e6c792d77726974652d6661696c732f62696e2f666d2d636c617564652d73746f702d6175746f61726d2e736800
+--- state/.wake-queue ---
+1791553097	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only-write-fails/state/demo.status
+1791553097	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only-write-fails/state/demo.status
+
+HOME hook-turns-main-only
+--- hook.out ---
+--- hook.err ---
+firstmate watcher wake - one supervision event needs a handling turn now.
+signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only/state/demo.status
+Run bin/fm-wake-drain.sh first, handle the wake, then run its exact WAKE_ACK_REQUIRED --ack-through command. Until that post-handling acknowledgement, interruption leaves the wake durable for idempotent re-handling. This Stop hook owns watcher continuity: when the handling turn ends, the next needed cycle arms automatically - do NOT run bin/fm-watch-arm.sh after an ordinary wake.
+--- hook.rc ---
+2
+--- state/.supervision-host.log ---
+1791553106	start	gen=host-1993094-1791553105	primary=claude
+1791553116	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only/state/demo.status
+--- state/.watcher-down ---
+pending:downtime:1996300.1791553110.FEGLUH
+--- state/.claude-autoarm-epoch ---
+epoch=1 owner_pid=1992099 outcome=rewake updated_at=1791553118 session_pid=1991602 recovery_generation=1996300.1791553110.FEGLUH
+linux-starttime=12310538 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3565323865363133333130652f30314d344744344e37395837483753364e39414a563144434e4e2f2e676174652d746573742f746d702f666d2d7375706572766973696f6e2d686f73742e4549447037332f686f6f6b2d7475726e732d6d61696e2d6f6e6c792f62696e2f666d2d636c617564652d73746f702d6175746f61726d2e736800
+--- state/.wake-queue ---
+1791553110	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only/state/demo.status
+1791553110	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/.gate-test/tmp/fm-supervision-host.EIDp73/hook-turns-main-only/state/demo.status

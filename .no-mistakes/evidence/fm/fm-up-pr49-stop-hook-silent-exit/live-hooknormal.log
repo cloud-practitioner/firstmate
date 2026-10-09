@@ -1,0 +1,39 @@
+RESULT pass
+Real Claude acquired session lock: 3412889
+Successor watcher alive when hook committed: True pid=3450842
+Actual Stop hook exit-2 feedback observed through Claude stream.
+host ledger:
+1791554049	start	gen=host-3434349-1791554047	primary=claude
+1791554061	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.sJcfRs/state/demo.status
+
+recovery marker:
+pending:downtime:3437122.1791554054.4fXGdq
+
+autoarm epoch:
+epoch=1 owner_pid=3433004 outcome=rewake updated_at=1791554062 session_pid=3412889 recovery_generation=3437122.1791554054.4fXGdq
+linux-starttime=12404793 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3565323865363133333130652f30314d344744344e37395837483753364e39414a563144434e4e2f62696e2f666d2d636c617564652d73746f702d6175746f61726d2e736800
+
+fault log:
+
+wake queue:
+1791554054	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.sJcfRs/state/demo.status
+1791554054	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.sJcfRs/state/demo.status
+1791554064	3	signal	demo.status	needs-decision: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.sJcfRs/state/demo.status
+1791554064	4	signal	demo.status	needs-decision: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.sJcfRs/state/demo.status
+
+{"type": "user", "content": "Run bash .gate-test/primary-hook-command.sh now."}
+{"type": "system", "subtype": "hook_response", "hook_name": "SessionStart:startup", "hook_event": "SessionStart", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "UserPromptSubmit", "hook_event": "UserPromptSubmit", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "assistant", "content": [{"type": "tool_use", "id": "toolu_015boTRD69yFs1KDv2GHwy9f", "name": "Bash", "input": {"command": "bash .gate-test/primary-hook-command.sh", "description": "Run the gate test hook script"}, "caller": {"type": "direct"}}]}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "PreToolUse:Bash", "hook_event": "PreToolUse", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "user", "content": [{"tool_use_id": "toolu_015boTRD69yFs1KDv2GHwy9f", "type": "tool_result", "content": "lock acquired: harness pid 3412889\nLAB_STOP_READY", "is_error": false}]}
+{"type": "assistant", "content": [{"type": "text", "text": "LAB_DONE"}]}
+{"type": "system", "subtype": "hook_response", "hook_name": "Stop", "hook_event": "Stop", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "system", "subtype": "hook_response", "hook_name": "Stop", "hook_event": "Stop", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "result", "subtype": "success", "result": "LAB_DONE", "is_error": false}
+{"type": "system", "subtype": "hook_response", "hook_name": "Stop", "hook_event": "Stop", "stdout": "", "stderr": "firstmate watcher wake - one supervision event needs a handling turn now.\nsignal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4GD4N79X7H7S6N9AJV1DCNN/l.sJcfRs/state/demo.status\nRun bin/fm-wake-drain.sh first, handle the wake, then run its exact WAKE_ACK_REQUIRED --ack-through command. Until that post-handling acknowledgement, interruption leaves the wake durable for idempotent re-handling. This Stop hook owns watcher continuity: when the handling turn ends, the next needed cycle arms automatically - do NOT run bin/fm-watch-arm.sh after an ordinary wake.\n", "exit_code": 2, "outcome": "error"}
+{"type": "system", "subtype": "hook_response", "hook_name": "UserPromptSubmit", "hook_event": "UserPromptSubmit", "stdout": "", "stderr": "", "exit_code": 0, "outcome": "success"}
+{"type": "assistant", "content": [{"type": "text", "text": "LAB_NOTICE_RECEIVED"}]}
+Lab home and private tmux server removed. Temporary primary-scope marker removed.
