@@ -1163,7 +1163,8 @@ test_pi_exclude_tools_worker_registry_reports() {
           SCENARIO="$scenario" node --input-type=module 2>&1 <<'JS'
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { appendFileSync, existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import fs, { appendFileSync, existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { syncBuiltinESMExports } from "node:module";
 import { dirname, join } from "node:path";
 import { setTimeout } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
@@ -1207,7 +1208,7 @@ const started = { gen, seq: "2", state: "busy", source: "pi-ext", event: "agent-
 assert.deepEqual(busy(), started, "agent_start must publish a generation-bound Pi busy event");
 if (process.env.SCENARIO === "present") {
   const report = warningsFor(before);
-  assert.match(report, /^note \[at=\d+\]: warning: /);
+  assert.match(report, /^note \[state=none\] \[at=\d+\]: warning: /);
   assert.ok(report.includes(process.env.EXCLUDE_FILE), "the report must identify the config file");
   assert.ok(report.includes("still present"), "only presence is reported");
   assert.ok(report.includes("mcp__tracker__editIssue"), "a present listed tool must be reported");
@@ -1241,7 +1242,7 @@ if (process.env.SCENARIO === "absent") {
   assert.equal(after, before, "a correctly excluded tool must never be reported");
 } else {
   const report = warningsFor(beforeConnect);
-  assert.match(report, /^note \[at=\d+\]: warning: /);
+  assert.match(report, /^note \[state=none\] \[at=\d+\]: warning: /);
   assert.ok(report.includes("mcp__tracker__createIssue"), "a tool that appears after servers connect must be reported");
   assert.ok(!report.includes("mcp__tracker__readIssue"), "an unlisted tool must not be reported");
   if (process.env.SCENARIO === "present") {
@@ -1275,43 +1276,112 @@ if (process.env.SCENARIO === "late") {
   const consume = (command) => execFileSync("bash", ["-c", '. "$1"; ' + command,
     "_", process.env.CLASSIFY_LIB, process.env.STATUS_FILE, process.env.TASK_KIND,
   ], { encoding: "utf8" }).trimEnd();
-  for (const terminal of [
+  const register = () => {
+    const lifecycle = {};
+    tools = [];
+    extension.default({
+      on: (name, handler) => { lifecycle[name] = handler; },
+      events: { on() {} },
+      getAllTools: () => tools,
+    });
+    return lifecycle;
+  };
+  let emittedWarning;
+  for (const state of [
     "done: completed task",
     "failed: task failed",
     "needs-decision [key=choice]: choose an option",
     "blocked [key=dependency]: waiting for access",
     "done [at=123] corr=0123456789abcdef: completed correlated task",
     "failed [at=123] corr=0123456789abcdef: failed correlated task",
+    "working: continuing task",
+    "paused [key=release]: waiting for release",
+    "captain-held [key=choice]: transferred decision",
+    "resolved [key=choice]: answered decision",
+    "note: ordinary state note mentions [state=none] in prose",
+    "parked: unknown declaration",
   ]) {
     for (const event of ["agent_start", "turn_end"]) {
       writeFileSync(process.env.STATUS_FILE, "working: starting task\n");
-      const lifecycle = {};
-      tools = [];
-      extension.default({
-        on: (name, handler) => { lifecycle[name] = handler; },
-        events: { on() {} },
-        getAllTools: () => tools,
-      });
+      const lifecycle = register();
       await lifecycle.agent_start();
-      appendFileSync(process.env.STATUS_FILE, terminal + "\nContinuation prose\n");
-      const declaration = consume('status_current_line "$2" "$3"');
+      appendFileSync(process.env.STATUS_FILE, state + "\nContinuation prose\n");
+      const queries = [
+        'last_status_line "$2"',
+        'last_status_line "$2" previous >/dev/null; printf "%s" "$previous"',
+        'status_current_line "$2" "$3"',
+        'status_declared_wait_line "$2"',
+        'status_open_decisions "$2" "$3"',
+        'status_open_activities "$2"',
+      ];
+      const declarations = queries.map(consume);
       tools = [edit];
       const beforeWarning = status();
       await lifecycle[event]();
       const report = warningsFor(beforeWarning);
-      assert.match(report, /^note \[at=\d+\]: warning: /);
+      assert.match(report, /^note \[state=none\] \[at=\d+\]: warning: /);
+      assert.equal(report.trimEnd().split("\n").length, 1, "warnings must never replay prior declarations");
       assert.ok(report.includes(process.env.EXCLUDE_FILE), "late warnings must identify their configuration");
       assert.ok(report.includes(edit.name), "late warnings must identify the present excluded tool");
-      assert.equal(consume('last_status_line "$2"'), terminal, event + " must preserve the latest terminal event");
-      assert.equal(consume('status_current_line "$2" "$3"'), declaration, event + " must preserve current terminal state");
+      assert.deepEqual(queries.map(consume), declarations, event + " must preserve every declaration consumer");
       const unread = consume('scan_unread_surface_lines "$(dirname "$2")"');
       assert.ok(unread.includes(process.env.EXCLUDE_FILE), event + " warning must remain visible to the supervisor");
       assert.ok(unread.includes(edit.name), "the supervisor must see the late exclusion failure");
       const warnedStatus = status();
       await lifecycle.agent_start();
       await lifecycle.turn_end();
-      assert.equal(status(), warnedStatus, "terminal preservation must retain per-name warning deduplication");
+      assert.equal(status(), warnedStatus, "non-state warnings must retain per-name warning deduplication");
+      appendFileSync(process.env.STATUS_FILE, report.repeat(210));
+      assert.deepEqual(queries.map(consume), declarations, "non-state notes past the tail window must not hide declarations");
+      emittedWarning = report;
     }
+  }
+  writeFileSync(process.env.STATUS_FILE, emittedWarning);
+  assert.equal(consume('last_status_line "$2"'), "", "a non-state note must not become the no-event fallback");
+  assert.equal(consume('status_current_line "$2" "$3"'), "", "a warning alone must not declare state");
+  assert.ok(consume('scan_unread_surface_lines "$(dirname "$2")"').includes(edit.name), "a warning alone must remain visible");
+  writeFileSync(process.env.STATUS_FILE, "paused [key=release]: waiting for release\nresolved [key=choice]: answered choice\n" + emittedWarning.repeat(210));
+  assert.equal(consume('status_declared_wait_line "$2"'), "paused [key=release]: waiting for release", "non-state notes must not cancel a pause during reverse scans");
+
+  const originalAppend = fs.appendFileSync;
+  let concurrentResolution = "";
+  fs.appendFileSync = (path, data, ...options) => {
+    if (path === process.env.STATUS_FILE && concurrentResolution && String(data).startsWith("note ")) {
+      originalAppend(path, concurrentResolution + "\n");
+      concurrentResolution = "";
+    }
+    return originalAppend(path, data, ...options);
+  };
+  syncBuiltinESMExports();
+  try {
+    for (const [opener, resolution] of [
+      ["blocked [key=dependency]: waiting for access", "resolved [key=dependency]: access granted"],
+      ["needs-decision [key=choice]: choose an option", "resolved [key=choice]: option chosen"],
+      ["blocked: waiting for access", "resolved: access granted"],
+      ["needs-decision corr=0123456789abcdef [key=choice] [at=123]: choose an option", "resolved corr=0123456789abcdef [key=choice]: option chosen"],
+    ]) {
+      for (const event of ["agent_start", "turn_end"]) {
+        for (const order of ["before-warning", "after-warning"]) {
+          writeFileSync(process.env.STATUS_FILE, "working: starting task\n");
+          const lifecycle = register();
+          await lifecycle.agent_start();
+          appendFileSync(process.env.STATUS_FILE, opener + "\n");
+          assert.notEqual(consume('status_open_decisions "$2" "$3"'), "", "the decision must start open");
+          tools = [edit];
+          if (order === "before-warning") concurrentResolution = resolution;
+          await lifecycle[event]();
+          if (order === "after-warning") appendFileSync(process.env.STATUS_FILE, resolution + "\n");
+          assert.equal(concurrentResolution, "", "the concurrent writer must run at the warning append boundary");
+          assert.equal(consume('status_open_decisions "$2" "$3"'), "", event + " must not reopen an answered decision");
+          assert.equal(consume('last_status_line "$2"'), resolution, "the resolved transition must remain latest");
+          assert.equal(consume('status_current_line "$2" "$3"'), resolution, "the resolved decision must remain closed");
+          assert.ok(consume('scan_unread_surface_lines "$(dirname "$2")"').includes(edit.name), "the interleaved warning must remain visible");
+        }
+      }
+    }
+  } finally {
+    fs.appendFileSync = originalAppend;
+    syncBuiltinESMExports();
   }
 }
 JS

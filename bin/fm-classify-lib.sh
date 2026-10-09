@@ -246,6 +246,7 @@ _fm_status_event_scan() {
   local line last='' prev='' fallback='' legacy_re
   legacy_re="^[[:space:]]*(${FM_CAPTAIN_RE:-$FM_CLASSIFY_CAPTAIN_RE_DEFAULT})"
   while IFS= read -r line || [ -n "$line" ]; do
+    status_line_is_nonstate_note "$line" && continue
     case "$line" in *[![:space:]]*) fallback=$line ;; *) continue ;; esac
     _fm_status_line_is_event "$line" "$legacy_re" && { prev=$last; last=$line; }
   done
@@ -253,9 +254,16 @@ _fm_status_event_scan() {
   [ -n "$last" ]
 }
 
+status_line_is_nonstate_note() {
+  local verb
+  status_line_verb "$1" verb
+  [ "$verb" = note ] && [[ "${1%%:*}" =~ [[:space:]]\[state=none\]([[:space:]]|$) ]]
+}
+
 # 0 when a nonblank <line> is a recognized status event for the scan above.
 _fm_status_line_is_event() {  # <line> <legacy-captain-re>
   local verb unstamped
+  status_line_is_nonstate_note "$1" && return 1
   case "$1" in *:*) status_line_verb "$1" verb ;; *) verb='' ;; esac
   _fm_status_verb_recognized "$verb" && return 0
   # Unrecognized verb-shaped prefixes (parked:, holding:, bad corr tokens) stay

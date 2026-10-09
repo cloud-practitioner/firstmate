@@ -4788,7 +4788,7 @@ EOF
 // "turn_end" fires at every inner turn boundary (one LLM response plus its
 // tool calls) and stays a wake NOTIFICATION touch for the watcher, never
 // current-state truth.
-import { execFile, execFileSync } from "node:child_process";
+import { execFile } from "node:child_process";
 import { appendFileSync } from "node:fs";
 const excludeTools = "$EXCLUDE_TOOLS".split(",").filter(Boolean);
 const excludeFile = $(perl -MJSON::PP -MEncode=decode_utf8 -e 'print encode_json(decode_utf8($ARGV[0]))' -- "$CONFIG/crew-exclude-tools");
@@ -4816,13 +4816,9 @@ export default function (pi: any) {
     }
     const present = excludeTools.filter((name) => !warned.has(name) && loaded.includes(name));
     if (present.length) {
-      const terminal = execFileSync("bash", ["-c",
-        '. "\$1"; line=\$(last_status_line "\$2"); if status_is_terminal_verb "\$line"; then printf "%s\\n" "\$line"; fi',
-        "_", $(perl -MJSON::PP -MEncode=decode_utf8 -e 'print encode_json(decode_utf8($ARGV[0]))' -- "$FM_ROOT/bin/fm-classify-lib.sh"), statusFile,
-      ], { encoding: "utf8" });
-      appendFileSync(statusFile, "note [at=" + Math.floor(Date.now() / 1000) + "]: warning: " + excludeFile
+      appendFileSync(statusFile, "note [state=none] [at=" + Math.floor(Date.now() / 1000) + "]: warning: " + excludeFile
         + " exclusion not in effect: these listed tools are still present in the worker's tool registry: "
-        + present.join(", ") + "\n" + terminal);
+        + present.join(", ") + "\n");
       for (const name of present) warned.add(name);
     }
   };

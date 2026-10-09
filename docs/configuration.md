@@ -905,7 +905,7 @@ A dash or dot in the tool part is accepted.
 The worker extension treats absence as the success state: Pi removes an excluded name from the registry the extension reads, so a correctly excluded tool is always absent, and absence never produces a note.
 It reads its own registry at every agent run start and turn end, because MCP servers connect in the background and may register tools after the first run starts.
 A listed name that is present in the registry is a real exclusion failure: the extension appends a timestamped warning note to `state/<task-id>.status` naming the configuration file and the present entries for the supervisor, at most once per name.
-If the latest status event is a terminal declaration (`done:`, `failed:`, `needs-decision:`, or `blocked:`), the extension repeats that declaration immediately after the warning in the same append, preserving terminal status while leaving the warning visible to the supervisor.
+The warning uses `note [state=none] [at=<epoch>]: ...`: it remains visible on the supervisor's unread-status surface but is excluded from declaration reads, including their no-event fallback. It neither replaces terminal, decision, working, or waiting state nor replays an earlier transition, so a concurrent `resolved:` line remains effective. Ordinary `note:` lines retain their existing behavior.
 As a backstop, the same extension blocks any call to a listed tool name, including calls a codemode script makes, which Pi routes through the same tool-call handlers.
 A misspelled tool name inside a correct server prefix cannot be detected, and a present or absent name never refuses the launch.
 Each relaunch installs a fresh worker extension with the home's current list, so the replacement performs the same check.
