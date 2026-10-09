@@ -26,6 +26,8 @@ set -u
 # shellcheck source=/dev/null
 . "$ROOT/bin/fm-trace-context-lib.sh"
 # shellcheck source=/dev/null
+. "$ROOT/bin/fm-pr-lib.sh"
+# shellcheck source=/dev/null
 . "$ROOT/bin/fm-tasks-axi-lib.sh"
 
 CONTROL="$ROOT/bin/fm-control.sh"
@@ -487,6 +489,62 @@ test_relaunch_preserves_durable_task_metadata() {
   [ "$(meta_field "$dir" rl19 decisions_reviewed)" = 1 ] \
     || fail "the task decision state must survive relaunch"
   pass "fm-control relaunch: durable task metadata survives replacement launch publication"
+}
+
+# The merge monitor only trusts a record whose pr= block (pr=, pr_head=, and
+# the X lines) is the tail, so a relaunch must write every other line first.
+assert_pr_identity_tail() {  # <case-dir> <id> <url> <head>
+  local meta="$1/home/state/$2.meta"
+  fm_pr_metadata_identity_parse "$meta" \
+    || fail "a relaunched record with a recorded PR must still parse as a PR identity"$'\n'"$(cat "$meta")"
+  [ "$FM_PR_META_URL" = "$3" ] || fail "the relaunched record must keep the recorded PR URL"
+  [ "$(meta_field "$1" "$2" pr)" = "$3" ] || fail "the task PR must survive relaunch"
+  [ "$(meta_field "$1" "$2" pr_head)" = "$4" ] || fail "the task PR head must survive relaunch"
+}
+
+test_relaunch_keeps_the_recorded_pr_identity_parseable() {
+  local dir out rc url=https://github.com/example/repo/pull/41
+  local head=0123456789abcdef0123456789abcdef01234567
+  dir=$(new_case pr-identity rl41)
+  add_ship_task "$dir" rl41 claude
+  {
+    printf '%s\n' "pr=$url"
+    printf '%s\n' "pr_head=$head"
+  } >> "$dir/home/state/rl41.meta"
+  fm_pr_metadata_identity_parse "$dir/home/state/rl41.meta" \
+    || fail "fixture record must start as a valid PR identity"
+
+  out=$(run_control "$dir" rl41 relaunch --note "continuing after PR"); rc=$?
+  expect_code 0 "$rc" "relaunch with a recorded PR should succeed"$'\n'"$out"
+  [ -n "$(meta_field "$dir" rl41 control_relaunch_tx)" ] \
+    || fail "the relaunched record must still carry control_relaunch_tx"
+  assert_pr_identity_tail "$dir" rl41 "$url" "$head"
+  pass "fm-control relaunch: a recorded PR identity stays parseable after relaunch"
+}
+
+test_traced_relaunch_keeps_the_recorded_pr_identity_parseable() {
+  local dir out rc url=https://github.com/example/repo/pull/42
+  local head=fedcba9876543210fedcba9876543210fedcba98
+  dir=$(new_case pr-identity-trace rl42)
+  add_ship_task "$dir" rl42 claude
+  printf '%s\n' "$$" > "$dir/home/state/.lock"
+  printf '%s on\n' "$$" > "$dir/home/state/.trace-context-effective"
+  {
+    printf '%s\n' "pr=$url"
+    printf '%s\n' "pr_head=$head"
+    printf '%s\n' 'x_request=request-42'
+  } >> "$dir/home/state/rl42.meta"
+
+  out=$(run_control "$dir" rl42 relaunch --note "continuing after PR"); rc=$?
+  expect_code 0 "$rc" "traced relaunch with a recorded PR should succeed"$'\n'"$out"
+  fm_trace_context_valid "$(meta_field "$dir" rl42 traceparent)" \
+    || fail "the traced relaunch must record a trace carrier"
+  [ -n "$(meta_field "$dir" rl42 control_relaunch_tx)" ] \
+    || fail "the relaunched record must still carry control_relaunch_tx"
+  [ "$(meta_field "$dir" rl42 x_request)" = request-42 ] \
+    || fail "the task X request must survive relaunch"
+  assert_pr_identity_tail "$dir" rl42 "$url" "$head"
+  pass "fm-control relaunch: tracing leaves a recorded PR identity parseable"
 }
 
 # A task spawned before the home-scoped temp root recorded the shared
@@ -2524,6 +2582,8 @@ test_relaunch_refuses_before_exit_when_the_composer_holds_pending_text
 test_relaunch_refuses_before_exit_when_the_composer_state_is_unproven
 test_relaunch_from_linked_home_preserves_recorded_worktree
 test_relaunch_preserves_durable_task_metadata
+test_relaunch_keeps_the_recorded_pr_identity_parseable
+test_traced_relaunch_keeps_the_recorded_pr_identity_parseable
 test_relaunch_keeps_a_legacy_task_temp_root_and_scopes_a_missing_one
 test_relaunch_serializes_concurrent_durable_metadata_publication
 test_disabled_relaunch_clears_prior_trace_context
