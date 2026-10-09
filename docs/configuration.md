@@ -900,10 +900,15 @@ An unreadable or nonregular file, or a path inspection error, also refuses and n
 For a new worker, these checks run before its endpoint, local copy, or task record is created; Firstmate never launches with a partial list.
 Only exact tool names are accepted, not wildcard patterns.
 Firstmate checks syntax and runtime support before launch but never runs `pi mcp list` or otherwise connects to servers to validate names.
-When its first agent run starts, after Pi's startup tool-loading boundary, the worker extension compares the launch's exclusion list with its own loaded-tool registry and appends a timestamped warning note to `state/<task-id>.status` naming the configuration file and every unmatched entry for the supervisor.
-The check runs before worker actions so it cannot supersede a terminal status emitted during the turn.
-An unmatched entry is reported as **unverified**, not valid: Pi versions that omit excluded tools from the registry cannot distinguish a correct exclusion from a typo, and a server that has not connected cannot verify its tools either.
-Names present in the registry produce no report; unknown or unverified names do not refuse the launch.
+An `mcp__` entry whose server part, the text before the next `__`, contains `-` or `.` is also refused with the sanitized spelling to use, because Pi names an MCP tool `mcp__<server>__<tool>` with every character outside letters, digits, and `_` in the server part replaced by `_`, so such an entry could never match.
+A dash or dot in the tool part is accepted.
+The worker extension treats absence as the success state: Pi removes an excluded name from the registry the extension reads, so a correctly excluded tool is always absent, and absence never produces a note.
+It reads its own registry at the first agent run and again at each later turn end, because MCP servers connect in the background and have not registered tools at the first run.
+The rechecks stop one pass after every listed `mcp__<server>` namespace has registered tools, or after a bounded number of checks when a server never registers any.
+A listed name that is present in the registry is a real exclusion failure: the extension appends a timestamped warning note to `state/<task-id>.status` naming the configuration file and the present entries for the supervisor, at most once per name.
+The check runs before worker actions at the first agent run so it cannot supersede a terminal status emitted during the turn.
+As a backstop, the same extension blocks any call to a listed tool name, including calls a codemode script makes, which Pi routes through the same tool-call handlers.
+A misspelled tool name inside a correct server prefix cannot be detected, and a present or absent name never refuses the launch.
 Each relaunch installs a fresh worker extension with the home's current list, so the replacement performs the same check.
 
 [`bin/fm-exclude-tools-lib.sh`](../bin/fm-exclude-tools-lib.sh) implements parsing and pre-launch validation for this contract; [`bin/fm-spawn.sh`](../bin/fm-spawn.sh)'s header owns the launch-flag mechanics.

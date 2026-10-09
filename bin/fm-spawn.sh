@@ -4791,6 +4791,10 @@ EOF
 import { execFile } from "node:child_process";
 import { appendFileSync } from "node:fs";
 const excludeTools = "$EXCLUDE_TOOLS".split(",").filter(Boolean);
+// Pi names an MCP tool mcp__<server>__<tool>; the server part identifies the
+// namespace whose registration the recheck waits for.
+const excludeServers = new Set(excludeTools.map((name) => (/^mcp__(.+?)__/.exec(name) || [])[1]).filter(Boolean));
+const maxExclusionChecks = 200;
 const excludeFile = $(perl -MJSON::PP -MEncode=decode_utf8 -e 'print encode_json(decode_utf8($ARGV[0]))' -- "$CONFIG/crew-exclude-tools");
 const statusFile = $(perl -MJSON::PP -MEncode=decode_utf8 -e 'print encode_json(decode_utf8($ARGV[0]))' -- "$STATE/$ID.status");
 const busyEvent = (state: string, event: string) =>
@@ -4801,27 +4805,57 @@ const busyEvent = (state: string, event: string) =>
     ], () => resolve());
   });
 export default function (pi: any) {
-  let checkedExclusions = false;
+  // Pi removes excluded names from the registry getAllTools() reads, so a
+  // correctly excluded name is always absent and absence is never reported.
+  // Only a listed name that IS registered is a real exclusion failure.
+  // MCP servers connect in the background after the first agent run starts,
+  // so recheck on later events until every listed server namespace has
+  // registered tools (plus one final pass) or a bounded number of checks.
+  const warned = new Set<string>();
+  const pendingServers = new Set(excludeServers);
+  let exclusionChecks = 0;
+  let settledChecks = 0;
+  const checkExclusions = () => {
+    if (!excludeTools.length || exclusionChecks >= maxExclusionChecks || settledChecks >= 2) return;
+    exclusionChecks++;
+    // Verify only this worker's registry, never connect servers from Firstmate.
+    let loaded: string[];
+    try {
+      loaded = pi.getAllTools().map((tool: any) => String(tool.name));
+    } catch {
+      return;
+    }
+    const present = excludeTools.filter((name) => !warned.has(name) && loaded.includes(name));
+    if (present.length) {
+      for (const name of present) warned.add(name);
+      appendFileSync(statusFile, "note [at=" + Math.floor(Date.now() / 1000) + "]: warning: " + excludeFile
+        + " exclusion not in effect: these listed tools are still present in the worker's tool registry: "
+        + present.join(", ") + "\n");
+    }
+    for (const server of [...pendingServers]) {
+      if (loaded.some((name) => name.startsWith("mcp__" + server + "__"))) pendingServers.delete(server);
+    }
+    if (pendingServers.size === 0) settledChecks++;
+  };
+  // Backstop: Pi routes codemode's nested calls through tool_call as well.
+  pi.on("tool_call", (event: any) => {
+    if (event && excludeTools.includes(event.toolName)) {
+      return { block: true, reason: event.toolName + " is excluded by config/crew-exclude-tools" };
+    }
+  });
   pi.on("agent_start", async () => {
     await busyEvent("busy", "agent-start");
-    // Verify only this worker's registry, never connect servers from Firstmate.
     // Check before actions so the warning cannot supersede this turn's terminal status.
-    if (!checkedExclusions && excludeTools.length) {
-      const loaded = new Set(pi.getAllTools().map((tool: any) => tool.name));
-      const unmatched = excludeTools.filter((name) => !loaded.has(name));
-      if (unmatched.length) {
-        appendFileSync(statusFile, "note [at=" + Math.floor(Date.now() / 1000) + "]: warning: " + excludeFile
-          + " unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): "
-          + unmatched.join(", ") + "\n");
-      }
-      checkedExclusions = true;
-    }
+    checkExclusions();
   });
   pi.on("agent_settled", (_event: any, ctx: any) => {
     if (ctx && typeof ctx.isIdle === "function" && !ctx.isIdle()) return;
     return busyEvent("idle", "agent-settled");
   });
-  pi.on("turn_end", () => execFile("touch", ["$TURNEND"]));
+  pi.on("turn_end", () => {
+    execFile("touch", ["$TURNEND"]);
+    checkExclusions();
+  });
   // A native harness can make progress inside one Pi turn. This separate
   // marker prevents false wedge alarms without fabricating a completed turn.
   let lastProgress = 0;
