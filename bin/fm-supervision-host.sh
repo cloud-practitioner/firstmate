@@ -23,9 +23,15 @@
 # OUTPUT, the contract every owner reads. The first cycle's status line
 # ("watcher: started ..." or "watcher: attached ...") is printed as soon as the
 # arm prints it, so an owner that waits for arm readiness sees it at once;
-# everything else is printed in one write when the host exits: the close as
-# the arm printed it (without that status line), then any "supervision-host:"
-# lines. A "supervision-host:" line is a wake in its own right (the park
+# everything else is printed in one write when the host exits: normally the
+# close as the arm printed it (without that status line), then any
+# "supervision-host:" lines. If downtime restoration fails for a close that
+# turned main-only at turn start, the host instead prints
+# "supervision-host hand-back failed: watcher downtime could not be restored
+# for the main hand-back" and exits 1 without printing the close. This is not
+# a wake; it must be nonempty even when no readiness line was emitted, so the
+# owner does not mistake a failed hand-back for host death.
+# A "supervision-host:" line is a wake in its own right (the park
 # boundary prints nothing else); "supervision-host stood down: ..." means this
 # session or generation no longer owns supervision and the owner stands down
 # silently; an exit status above 128, or no output at all, means the host
