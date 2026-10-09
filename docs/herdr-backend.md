@@ -763,8 +763,10 @@ A mismatch is treated as foreign, regardless of matching cwd or `fm-<id>` label.
 An unreadable identity blocks active operations and closure but reports `unreadable` for liveness unless the pane or server is independently proven gone; it does not authorize a duplicate launch.
 A server restart that changes this identity invalidates the binding; a live-handoff that preserves it does not.
 A foreign pane reads `missing` in the recovery-grade view, so the relaunch path can bind a fresh endpoint in the recorded session.
-Active capture, key, text, and classifier dispatchers establish server readiness before checking ownership, so restoring a stopped server cannot bypass the check.
-Passive liveness and existence probes do not start the server.
+Bounded capture, key, text, and busy-state dispatchers establish server readiness before checking ownership, so restoring a stopped server cannot bypass the check.
+Composer-state and visible-capture probes instead check that the server is already running, then apply the same ownership guard without starting it.
+If the server cannot be observed running or the ownership guard refuses, composer-state returns `unknown` and visible capture fails without capturing the pane's screen.
+Passive liveness and existence probes also do not start the server.
 Task-specific liveness callers pass `fm-<id>` so another task claiming the same address cannot supply their ownership verdict.
 Guarded closes leave foreign panes untouched; [When task records are erased](#when-task-records-are-erased) owns removal confirmation, including when identity cannot be read after a successful close.
 Replacement creation preserves both foreign and unclaimed same-label panes when the task has an identity-bearing record, including on repeated rebinds.
@@ -781,6 +783,7 @@ When the caller has no label, every record in the state directory claiming the e
 The guarantee is therefore scoped to the task record selected by the caller and its owning state directory, not ambient or other-home records.
 
 `tests/fm-backend-herdr.test.sh` exercises stable `/proc` identities under `ps` drift, legacy one-second `lstart` tolerance, portable identity reads without `/proc`, relaunch identity refresh, identity mismatches despite matching labels and worktrees, process-preserving handoffs, fresh process bindings, and successful spawn/relaunch with the legacy-record fallback when the identity read fails.
+Its `test_composer_state_piped_reader_does_not_hang` pins passive stopped-server probes, and `test_active_operations_check_ownership_after_server_restore` pins ownership checks for both active operations and passive probes.
 
 ## Agent status authority and relaunch
 
