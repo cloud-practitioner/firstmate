@@ -1,0 +1,6 @@
+session=fm-lab-p status --json 
+session=fm-lab-p pane get w1:p1 
+session=fm-lab-p tab get w1:t1 
+session=fm-lab-p status --json 
+session=fm-lab-p pane get w1:p1 
+session=fm-lab-p tab get w1:t1 

@@ -1,0 +1,13 @@
+refs/heads/main 799bdb6b84b864aa744ee14af095ce03639f5486
+worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M4H5KP1VG2X9YFP5CNNAPNGA/.test-phase/ambient
+HEAD 799bdb6b84b864aa744ee14af095ce03639f5486
+branch refs/heads/main
+
+worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M4H5KP1VG2X9YFP5CNNAPNGA/.test-phase/linked
+HEAD 799bdb6b84b864aa744ee14af095ce03639f5486
+detached
+
+100644 d927b62c7795246f60ea918739f556c10eb553a1 0	sentinel.txt
+100644 d927b62c7795246f60ea918739f556c10eb553a1 0	sentinel.txt
+900bb5303cdb124d9060e32632865a8db652d43ff3c88bca8b16727146523561  /home/node/.no-mistakes/worktrees/450411b3e67c/01M4H5KP1VG2X9YFP5CNNAPNGA/.test-phase/ambient/sentinel.txt
+900bb5303cdb124d9060e32632865a8db652d43ff3c88bca8b16727146523561  /home/node/.no-mistakes/worktrees/450411b3e67c/01M4H5KP1VG2X9YFP5CNNAPNGA/.test-phase/linked/sentinel.txt

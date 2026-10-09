@@ -1,0 +1,34 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4H5KP1VG2X9YFP5CNNAPNGA/.test-phase/watcher-home.uEvt2A
+initial verified-dead watcher PID=9999999
+watcher candidates=1127233 1127234 1127235 1127236 1127237 1127238 published_owner=1127233 live_candidates=1
+
+=== Actual owner process and persisted lock identity ===
+1127233 bash bin/fm-watch.sh
+fm-home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4H5KP1VG2X9YFP5CNNAPNGA/.test-phase/watcher-home.uEvt2A
+pid=1127233
+pid-identity=linux-starttime=15101567 cmdline-hex=626173680062696e2f666d2d77617463682e736800
+watcher-path=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4H5KP1VG2X9YFP5CNNAPNGA/bin/fm-watch.sh
+watcher beacon epoch=1791581016
+all competitors completed; same owner still alive after two further poll cycles
+owner TERM removed only its own lock; disposable home will be removed
+
+=== Real watcher CLI diagnostics ===
+
+watch-1.log
+
+watch-2.log
+watcher: already running pid 9999999
+
+watch-3.log
+watcher: already running pid 9999999
+
+watch-4.log
+watcher: already running pid 9999999
+
+watch-5.log
+watcher: already running pid 9999999
+
+watch-6.log
+watcher: already running pid 9999999
+
+=== Persisted cycle ledger ===

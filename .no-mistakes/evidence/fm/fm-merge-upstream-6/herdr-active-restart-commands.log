@@ -1,0 +1,15 @@
+session=fm-lab-p status --json 
+session=fm-lab-p server 
+session=fm-lab-p status --json 
+session=fm-lab-p status --json 
+session=fm-lab-p pane get w1:p1 
+session=fm-lab-p status --json 
+session=fm-lab-p pane send-keys w1:p1 enter 
+session=fm-lab-p status --json 
+session=fm-lab-p pane get w1:p1 
+session=fm-lab-p status --json 
+session=fm-lab-p pane send-keys w1:p1 enter 
+session=fm-lab-p status --json 
+session=fm-lab-p pane get w1:p1 
+session=fm-lab-p status --json 
+session=fm-lab-p pane read w1:p1 --source visible 
