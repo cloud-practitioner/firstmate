@@ -5158,9 +5158,8 @@ preserve_relaunch_meta() {
     echo "home=$PROJ_ABS"
     echo "projects=$SECONDMATE_PROJECTS"
   fi
-  # control_relaunch_tx= precedes the preserved lines: they end in the task's
-  # pr=/pr_head= block, and fm_pr_metadata_identity_parse refuses any other line
-  # after pr=, which would blind the merge monitor to the PR.
+  # Keep transaction metadata ahead of the preserved PR identity so the merge
+  # monitor can still authenticate it (fm_pr_metadata_identity_parse).
   if [ "$SPAWN_CONTROL_PARENT" = 1 ] && [ -n "${FM_CONTROL_RELAUNCH_TX:-}" ]; then
     echo "control_relaunch_tx=$FM_CONTROL_RELAUNCH_TX"
   fi
@@ -5449,8 +5448,7 @@ spawn_record_traceparent() {
   SPAWN_META_TMP="$STATE/.$ID.meta.trace.${BASHPID:-$$}"
   if [ ! -f "$meta" ] || [ ! -w "$meta" ] ||
     ! awk -F= -v tp="traceparent=$SPAWN_TRACEPARENT" '
-      # Land the carrier ahead of a recorded pr= block, which must stay last
-      # (fm_pr_metadata_identity_parse refuses any other line after pr=).
+      # Keep the carrier ahead of the PR identity for the same merge-poll guard.
       $1 == "traceparent" { next }
       $1 == "pr" && !done { print tp; done = 1 }
       { print }
