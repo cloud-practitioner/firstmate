@@ -227,12 +227,16 @@ The captain row is still durable, and the next drain presents it until it is ack
 
 ## Failure direction
 
-Every path that cannot finish a wake the engine took hands that wake to main, with one `supervision-host: <why>` line after the close.
-Before handing it back, the host stops its successor cycle, and whenever a successor generation was recorded (confirmed or not), it explicitly republishes downtime for that generation.
+When the host cannot finish handling a wake, it normally hands that wake to main with a wake diagnostic after the close.
+Before handing it back on this failure path, the host stops its successor cycle, and whenever a successor generation was recorded (confirmed or not), it explicitly republishes downtime for that generation.
 That publication is required even when the successor already exited, because no watcher cleanup remains to make the close deliverable to the arm owner.
-If that publication fails, the hand-back adds a `supervision-host: watcher downtime could not be restored` line and the host exits nonzero.
+If that publication fails, the hand-back includes an additional wake diagnostic and the host exits nonzero.
+A close that becomes main-only at its turn instead leaves its successor running, as [Away](#away) describes.
+If that path cannot restore downtime, it reports a non-wake failure rather than emitting the close; on Claude, the auto-arm failure notice reaches main even with a healthy successor.
+The [host header](../bin/fm-supervision-host.sh) owns the output contract that distinguishes this failure from host death; the direct-host and Claude Stop-hook downtime-write regressions in [fm-supervision-host.test.sh](../tests/fm-supervision-host.test.sh) cover it.
 On Claude, a Stop hook whose rewake is refused while the recovery marker is still `pending:handling` and no watcher is live commits the auto-arm failure notice once per failure episode (`failed-suppressed` after that) and still exits 2, so the hand-back reaches main; every other refused rewake stays silent as before.
-So the owner's next arm starts from the same state as without the host, and the wake stays durable in the queue.
+After a failure-path hand-back restores downtime, the owner's next arm starts from the same state as without the host.
+The wake stays durable in the queue even if restoration fails.
 
 ### Paths that hand the wake back
 

@@ -1459,14 +1459,11 @@ test_successor_left_at_the_turn_survives_the_hook_process_group_teardown() {
   pass "host+hook: the successor a close that turns main-only at its turn leaves for main survives the hook's process group teardown"
 }
 
-# If the at-turn hand-back cannot publish downtime, the healthy successor
-# cannot turn that undelivered close into a silent Stop-hook success.
-test_claude_stop_hook_notifies_when_at_turn_downtime_write_fails() {
-  local home real_mktemp
-  home=$(make_primary_home hook-turns-main-only-write-fails)
-  turn_main_only_at_second_offer "$home" quiet
+# Fails the downtime publication of the hand-back after the second offer.
+fail_downtime_write_at_second_offer() {  # <home>
+  local real_mktemp
   real_mktemp=$(command -v mktemp)
-  cat > "$home/fakebin/mktemp" <<SH
+  cat > "$1/fakebin/mktemp" <<SH
 #!/usr/bin/env bash
 case "\$*" in
   *'/state/.watcher-down.tmp.'*)
@@ -1474,7 +1471,38 @@ case "\$*" in
 esac
 exec "$real_mktemp" "\$@"
 SH
-  chmod +x "$home/fakebin/mktemp"
+  chmod +x "$1/fakebin/mktemp"
+}
+
+# A hand-back that cannot publish downtime fails on its own output, however
+# early the close arrives: no output at all is how a host that died reads, and
+# the Stop hook retries that into a second park that nothing ever closes. The
+# Stop hook test below used to hang on exactly that when its close beat the
+# host's first read of the arm's readiness line.
+test_at_turn_downtime_write_failure_is_never_silent() {
+  local home
+  home=$(make_primary_home turns-main-only-write-fails)
+  turn_main_only_at_second_offer "$home" quiet
+  fail_downtime_write_at_second_offer "$home"
+  start_host "$home"
+  wait_until 150 watcher_live "$home" || fail "write failure: the host never started a watcher cycle"
+  append_status "$home" 'step one'
+  wait_until 250 host_exited "$home" || fail "write failure: the host did not exit: $(cat "$home/state/.supervision-host.log")"
+  assert_re 'pass-through[[:space:]]+downtime-unrestored' "$home/state/.supervision-host.log" "fixture: downtime publication did not fail"
+  expect_code 1 "$(cat "$home/host.rc")" "a failed hand-back must exit nonzero"
+  assert_re '^supervision-host hand-back failed: ' "$home/host.out" "the failed hand-back must name itself in its own output"
+  assert_no_re '^(supervision-host:|signal:)' "$home/host.out" "the failed hand-back must not turn the close into a wake"
+  stop_home_processes "$home"
+  pass "host: a failed at-turn downtime write names itself and is never read as a host that died"
+}
+
+# If the at-turn hand-back cannot publish downtime, the healthy successor
+# cannot turn that undelivered close into a silent Stop-hook success.
+test_claude_stop_hook_notifies_when_at_turn_downtime_write_fails() {
+  local home
+  home=$(make_primary_home hook-turns-main-only-write-fails)
+  turn_main_only_at_second_offer "$home" quiet
+  fail_downtime_write_at_second_offer "$home"
   start_hook_session "$home"
   turn_end "$home"
   wait_until 150 watcher_live "$home" || fail "hook write failure: no watcher started"
@@ -3020,6 +3048,7 @@ run_case test_claude_stop_hook_rewakes_a_present_captain_beside_a_quiet_record
 run_case test_claude_stop_hook_runs_the_host_without_the_file_and_off_opts_out
 run_case test_claude_stop_hook_delivers_a_close_that_turns_main_only_at_its_turn
 run_case test_successor_left_at_the_turn_survives_the_hook_process_group_teardown
+run_case test_at_turn_downtime_write_failure_is_never_silent
 run_case test_claude_stop_hook_notifies_when_at_turn_downtime_write_fails
 run_case test_successor_close_during_main_turn_is_delivered_at_the_next_turn_end
 run_case test_pass_through_successor_survives_the_hook_process_group_teardown
