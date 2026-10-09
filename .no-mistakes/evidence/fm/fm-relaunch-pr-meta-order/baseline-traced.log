@@ -1,0 +1,20 @@
+not ok - a relaunched record with a recorded PR must still parse as a PR identity
+window=fmses:fm-rl42
+endpoint_task_id=rl42
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/tmp/fm-control-relaunch.DaKrZS/pr-identity-trace-31895/wt
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/tmp/fm-control-relaunch.DaKrZS/pr-identity-trace-31895/proj
+harness=claude
+kind=ship
+mode=no-mistakes
+yolo=off
+branch=fm/rl42
+tasktmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/tmp/fm-control-relaunch.DaKrZS/pr-identity-trace-31895/home/state/rl42.tasktmp
+model=default
+effort=default
+busy_gen=g1791550923.2872079.20457
+spawn_gen=s1791550924.2865432.6468
+pr=https://github.com/example/repo/pull/42
+pr_head=fedcba9876543210fedcba9876543210fedcba98
+x_request=request-42
+control_relaunch_tx=2860382.20261009T130159Z.27578
+traceparent=00-8e99f79d1c495ab10e825be245ce4dc2-c091977afb7d0a1d-01

@@ -1,0 +1,49 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h
+Initial real Pi process: alive; terminal grid: 120x40.
+Registering existing public merged PR through fm-pr-check.sh: https://github.com/cli/cli/pull/1
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+armed: state/prlab.check.sh
+=== Scenario: real worker relaunch, trace=off ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/data/prlab/launch-brief.md records no ship branch; defaulting to legacy branch fm/prlab
+warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/data/prlab/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+relaunched prlab harness=pi from=pi model=default effort=default backend=tmux endpoint=primary:fm-prlab worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/wt
+PR identity and original authenticated poll remain valid: https://github.com/cli/cli/pull/1, head=e9a3253762e768badaa1d4a5b3d267416d1e42f4
+Accepting trust for this disposable fixture session only.
+Settled composer: empty
+=== Scenario: real worker relaunch, trace=on ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/data/prlab/launch-brief.md records no ship branch; defaulting to legacy branch fm/prlab
+warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/data/prlab/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+relaunched prlab harness=pi from=pi model=default effort=default backend=tmux endpoint=primary:fm-prlab worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/wt
+PR identity and original authenticated poll remain valid: https://github.com/cli/cli/pull/1, head=e9a3253762e768badaa1d4a5b3d267416d1e42f4
+Accepting trust for this disposable fixture session only.
+Settled composer: empty
+=== Scenario: real worker relaunch, trace=on-reused ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/data/prlab/launch-brief.md records no ship branch; defaulting to legacy branch fm/prlab
+warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/data/prlab/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+relaunched prlab harness=pi from=pi model=default effort=default backend=tmux endpoint=primary:fm-prlab worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/wt
+Prior trace carrier was reused exactly once: 00-1d8d8875bca7d162480dcf85b2f595cf-88cba880344c6354-01
+PR identity and original authenticated poll remain valid: https://github.com/cli/cli/pull/1, head=e9a3253762e768badaa1d4a5b3d267416d1e42f4
+Accepting trust for this disposable fixture session only.
+Settled composer: empty
+=== Scenario: watcher refuses corrupted PR metadata ===
+check: rejected unauthenticated state checks: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/state/prlab.check.sh
+=== Scenario: watcher detects merge after relaunch without rearming ===
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/state/prlab.check.sh: merged
+1791551002	2	check	merged-prlab-https://github.com/cli/cli/pull/1	check: merge landed: prlab https://github.com/cli/cli/pull/1 external
+Watcher observed the real GitHub merge, recorded the outcome, queued the wake, and retired the original poll.
+Disposed lab home and private fm-lab tmux server (rc=0).

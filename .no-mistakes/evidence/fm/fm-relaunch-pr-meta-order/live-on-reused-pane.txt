@@ -1,0 +1,40 @@
+bash-5.2$ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/state/prlab.ta
+sktmp/gotmp'
+bash-5.2$ export COMPACT_ADVISER_DISABLE=1
+bash-5.2$ export FM_TASK_ID=prlab
+bash-5.2$ export TRACEPARENT=00-1d8d8875bca7d162480dcf85b2f595cf-88cba880344c6354-01
+bash-5.2$ . '/tmp/fm-prlab+3c95957b82ceba665fe7bbcf57e7696850eb07c29098834c4f37596ca5f842b0/launch.s1791550966.2929286.4
+791.sh'
+
+ ▀▀█  v1.1.0
+ █▀ █ escape interrupt · ctrl+c/ctrl+d clear/exit · / commands · ! bash · ctrl+o more
+ Press ctrl+o to show full startup help and loaded resources.
+
+ Pi can explain its own features and look up its docs. Ask it how to use or extend Pi.
+
+
+[Context]
+  /home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/AGENTS.md
+
+[Extensions]
+  prlab.pi-ext.ts
+
+
+ Warning: No models available. Use /login to log into a provider via OAuth or API key. See:
+   /workspaces/wp/.pi/install/releases/1.1.0/node_modules/@earendil-works/pi-coding-agent/docs/providers.md
+   /workspaces/wp/.pi/install/releases/1.1.0/node_modules/@earendil-works/pi-coding-agent/docs/models.md
+
+ Error: No API key found for the selected model.
+
+ Use /login to log into a provider via OAuth or API key. See:
+   /workspaces/wp/.pi/install/releases/1.1.0/node_modules/@earendil-works/pi-coding-agent/docs/providers.md
+   /workspaces/wp/.pi/install/releases/1.1.0/node_modules/@earendil-works/pi-coding-agent/docs/models.md
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4GAYTSCP6NAPPQR2V9325M0/.v/h/wt (fm/prlab)
+0.0%/0 (auto)                                                                                                    unknown
