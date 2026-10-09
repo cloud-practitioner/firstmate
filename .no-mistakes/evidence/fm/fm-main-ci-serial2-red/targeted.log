@@ -1,0 +1,6 @@
+ok - host: a failed at-turn downtime write names itself and is never read as a host that died
+ok - host+hook: failed at-turn downtime write notifies main despite a healthy successor
+ok - host+hook: a close that turns main-only at its turn rewakes main and keeps its successor watcher
+ok - host+hook: the successor a close that turns main-only at its turn leaves for main survives the hook's process group teardown
+ok - host+hook: a refused hand-back becomes a delivered failure notice
+ok - host+hook: a refused hand-back on an announced handling marker becomes a delivered failure notice

@@ -1,0 +1,3 @@
+1791528833	start	gen=host-348829-1791528833	primary=claude
+1791528837	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.validation/tmp/fm-supervision-host.Hl0PeL/hook-turns-main-only-write-fails/state/demo.status
+1791528837	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.validation/tmp/fm-supervision-host.Hl0PeL/hook-turns-main-only-write-fails/state/demo.status

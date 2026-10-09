@@ -1,0 +1,2 @@
+ok - host: a failed at-turn downtime write names itself and is never read as a host that died
+ok - host+hook: failed at-turn downtime write notifies main despite a healthy successor

@@ -1,0 +1,40 @@
+
+ ▐▛███▛█   Claude Code v2.1.295
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N
+
+
+❯ Captain-approved disposable lab validation: use only the existing FM_HOME lab, never another home. Do not spawn,
+  sync, merge, fetch, initialize, or invoke no-mistakes. Run bin/fm-lock.sh, then reply exactly "LAB READY" without any
+  other tool calls. If a lab Stop-hook notification appears later, do not run commands or acknowledge the wake; only
+  quote the notification. I will inject the lab status events.
+
+  Ran 1 shell command
+
+● LAB READY
+
+✻ Brewed for 9s · done 6:58 AM
+
+● Stop hook feedback
+
+● Captain, the lab Stop-hook notification arrived. Quoted verbatim:
+
+  ▎ Stop hook blocking error from command "Stop": firstmate watcher auto-arm FAILED - the Stop-owned automatic
+  ▎ supervision mechanism is broken after 1 bounded attempts, and no live watcher with a fresh beacon was verified.
+  ▎ supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+  ▎ The supervision host (docs/supervision-host.md) ran these cycles; its last one exited 1 without a wake.
+  ▎ Do not launch a manual background arm from this notice; investigate the automatic Stop hook and watcher startup
+  ▎ before ending blind.
+
+  As you asked, I have not run any commands or acknowledged anything.
+
+✻ Sautéed for 4s · done 6:58 AM
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 7% used
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents

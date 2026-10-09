@@ -1,0 +1,3 @@
+not ok - the failed hand-back must name itself in its own output
+--- /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.validation/tmp/fm-supervision-host.rlogWX/turns-main-only-write-fails/host.out ---
+watcher: started pid=169138 (beacon fresh)

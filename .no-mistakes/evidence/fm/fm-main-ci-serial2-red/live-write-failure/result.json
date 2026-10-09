@@ -1,0 +1,15 @@
+{
+  "first_offer_accepted_and_real_second_offer_reached": true,
+  "marker_before_handback": "pending:downtime:401046.1791529019.rnDwSS",
+  "stop_owner_outcome": "failed",
+  "host_log": "1791529018\tstart\tgen=host-400862-1791529017\tprimary=claude\n1791529022\tpass-through\tattended\tmain-only\tsignal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.l.NYSq2e/state/demo.status\n1791529022\tpass-through\tdowntime-unrestored\tsignal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.l.NYSq2e/state/demo.status\n",
+  "wake_remains_durable": true,
+  "marker": "pending:downtime:401046.1791529019.rnDwSS",
+  "fault_injected": true,
+  "downtime_unrestored": true,
+  "successor_still_healthy_at_failed_handback": true,
+  "feedback_visible_in_real_claude": true,
+  "elapsed_seconds": 26.49,
+  "result": "pass",
+  "lab_removed": true
+}

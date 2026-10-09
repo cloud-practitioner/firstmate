@@ -1,0 +1,13 @@
+{
+  "first_offer_accepted_and_real_second_offer_reached": true,
+  "marker_before_handback": "announced:handling:453813.1791529185.pxF1kX",
+  "stop_owner_outcome": "rewake",
+  "host_log": "1791529184\tstart\tgen=host-453613-1791529183\tprimary=claude\n1791529187\tpass-through\tattended\tmain-only\tsignal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.l.aMpc6t/state/demo.status\n",
+  "wake_remains_durable": true,
+  "marker": "pending:downtime:453813.1791529185.pxF1kX",
+  "pass_through_main_only": true,
+  "feedback_visible_in_real_claude": true,
+  "elapsed_seconds": 29.74,
+  "result": "pass",
+  "lab_removed": true
+}

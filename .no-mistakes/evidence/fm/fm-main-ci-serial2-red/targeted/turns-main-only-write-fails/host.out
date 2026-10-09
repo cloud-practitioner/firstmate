@@ -1,0 +1,2 @@
+watcher: started pid=199935 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back

@@ -1,0 +1,5 @@
+1791528956	start	gen=host-378592-1791528955	primary=claude
+1791528960	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.validation/tmp/fm-supervision-host.pt00ws/hook-turns-main-only-write-fails/state/demo.status
+1791528960	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.validation/tmp/fm-supervision-host.pt00ws/hook-turns-main-only-write-fails/state/demo.status
+1791528961	start	gen=host-381242-1791528960	primary=claude
+1791528961	take-over	arm=380475

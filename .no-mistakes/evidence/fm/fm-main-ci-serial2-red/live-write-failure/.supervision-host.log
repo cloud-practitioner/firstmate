@@ -1,0 +1,4 @@
+1791529018	start	gen=host-400862-1791529017	primary=claude
+1791529022	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.l.NYSq2e/state/demo.status
+1791529022	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.l.NYSq2e/state/demo.status
+1791529026	start	gen=host-405783-1791529026	primary=claude

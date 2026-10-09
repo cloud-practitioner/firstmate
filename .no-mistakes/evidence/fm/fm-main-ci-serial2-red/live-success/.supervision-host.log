@@ -1,0 +1,4 @@
+1791529184	start	gen=host-453613-1791529183	primary=claude
+1791529187	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FP5CTQHWWJANYTGJWVB08N/.l.aMpc6t/state/demo.status
+1791529193	start	gen=host-460237-1791529193	primary=claude
+1791529195	pass-through	attended	main-only	check: rearm-resurface
