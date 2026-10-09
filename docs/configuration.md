@@ -903,10 +903,9 @@ Firstmate checks syntax and runtime support before launch but never runs `pi mcp
 An `mcp__` entry whose server part, the text before the next `__`, contains `-` or `.` is also refused with the sanitized spelling to use, because Pi names an MCP tool `mcp__<server>__<tool>` with every character outside letters, digits, and `_` in the server part replaced by `_`, so such an entry could never match.
 A dash or dot in the tool part is accepted.
 The worker extension treats absence as the success state: Pi removes an excluded name from the registry the extension reads, so a correctly excluded tool is always absent, and absence never produces a note.
-It reads its own registry at the first agent run and again at each later turn end, because MCP servers connect in the background and have not registered tools at the first run.
-The rechecks stop one pass after every listed `mcp__<server>` namespace has registered tools, or after a bounded number of checks when a server never registers any.
+It reads its own registry at every agent run start and turn end, because MCP servers connect in the background and may register tools after the first run starts.
 A listed name that is present in the registry is a real exclusion failure: the extension appends a timestamped warning note to `state/<task-id>.status` naming the configuration file and the present entries for the supervisor, at most once per name.
-The check runs before worker actions at the first agent run so it cannot supersede a terminal status emitted during the turn.
+If the latest status event is a terminal declaration (`done:`, `failed:`, `needs-decision:`, or `blocked:`), the extension repeats that declaration immediately after the warning in the same append, preserving terminal status while leaving the warning visible to the supervisor.
 As a backstop, the same extension blocks any call to a listed tool name, including calls a codemode script makes, which Pi routes through the same tool-call handlers.
 A misspelled tool name inside a correct server prefix cannot be detected, and a present or absent name never refuses the launch.
 Each relaunch installs a fresh worker extension with the home's current list, so the replacement performs the same check.

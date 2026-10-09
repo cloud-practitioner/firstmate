@@ -1143,7 +1143,7 @@ test_pi_exclude_tools_worker_registry_reports() {
   command -v node >/dev/null 2>&1 || fail "node is required to drive Pi worker exclusion reporting"
   for harness in pi pi-signed; do
     for kindflag in --ship --scout; do
-      for scenario in absent late present; do
+      for scenario in absent late present delayed reconnect; do
         id="excl-registry-${harness}-${kindflag#--}-${scenario}"
         case_name=$id
         [ "$scenario" != late ] || case_name="josé-$id"
@@ -1159,10 +1159,11 @@ test_pi_exclude_tools_worker_registry_reports() {
         out=$(EXT_PATH="$HOME_DIR/state/$id.pi-ext.ts" STATUS_FILE="$HOME_DIR/state/$id.status" \
           EXCLUDE_FILE="$HOME_DIR/config/crew-exclude-tools" TURNEND="$HOME_DIR/state/$id.turn-ended" \
           TASK_ID="$id" BUSY_EVENT="$ROOT/bin/fm-busy-event.sh" \
+          CLASSIFY_LIB="$ROOT/bin/fm-classify-lib.sh" TASK_KIND="${kindflag#--}" \
           SCENARIO="$scenario" node --input-type=module 2>&1 <<'JS'
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { appendFileSync, existsSync, readFileSync, rmSync } from "node:fs";
+import { appendFileSync, existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { setTimeout } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
@@ -1199,6 +1200,7 @@ assert.deepEqual(handlers.tool_call({ toolName: "mcp__tracker__editIssue" }), {
 }, "a call to a listed tool must be blocked as a backstop");
 assert.equal(handlers.tool_call({ toolName: "mcp__tracker__readIssue" }), undefined, "an unlisted tool must not be blocked");
 if (process.env.SCENARIO === "present") tools = [edit, read];
+if (process.env.SCENARIO === "reconnect") tools = [read];
 rmSync(process.env.TURNEND, { force: true });
 await handlers.agent_start();
 const started = { gen, seq: "2", state: "busy", source: "pi-ext", event: "agent-start" };
@@ -1216,10 +1218,15 @@ if (process.env.SCENARIO === "present") {
 }
 await handlers.agent_settled({}, { isIdle: () => false });
 assert.deepEqual(busy(), started, "a continuation must stay busy even when agent_settled fires");
-if (process.env.SCENARIO === "absent") {
-  // Servers that never register tools must stay silent across many turns.
+if (process.env.SCENARIO === "absent" || process.env.SCENARIO === "delayed") {
   for (let turn = 0; turn < 210; turn++) await handlers.turn_end();
   assert.equal(status(), before, "repeated rechecks must not report absent tools");
+}
+if (process.env.SCENARIO === "reconnect") {
+  await handlers.turn_end();
+  tools = [];
+  await handlers.turn_end();
+  assert.equal(status(), before, "namespace registration and disconnection must not report absent tools");
 }
 // MCP servers connect in the background after the first agent run starts.
 tools = process.env.SCENARIO === "absent" ? [read] : [edit, create, read];
@@ -1264,6 +1271,49 @@ await handlers.agent_start();
 assert.deepEqual(busy(), replacement, "a stale extension must not publish into its replacement's generation");
 assert.equal(readFileSync(genFile, "utf8").trim(), replacementGen);
 assert.equal(status(), completed, "stale lifecycle events must not repeat exclusion warnings");
+if (process.env.SCENARIO === "late") {
+  const consume = (command) => execFileSync("bash", ["-c", '. "$1"; ' + command,
+    "_", process.env.CLASSIFY_LIB, process.env.STATUS_FILE, process.env.TASK_KIND,
+  ], { encoding: "utf8" }).trimEnd();
+  for (const terminal of [
+    "done: completed task",
+    "failed: task failed",
+    "needs-decision [key=choice]: choose an option",
+    "blocked [key=dependency]: waiting for access",
+    "done [at=123] corr=0123456789abcdef: completed correlated task",
+    "failed [at=123] corr=0123456789abcdef: failed correlated task",
+  ]) {
+    for (const event of ["agent_start", "turn_end"]) {
+      writeFileSync(process.env.STATUS_FILE, "working: starting task\n");
+      const lifecycle = {};
+      tools = [];
+      extension.default({
+        on: (name, handler) => { lifecycle[name] = handler; },
+        events: { on() {} },
+        getAllTools: () => tools,
+      });
+      await lifecycle.agent_start();
+      appendFileSync(process.env.STATUS_FILE, terminal + "\nContinuation prose\n");
+      const declaration = consume('status_current_line "$2" "$3"');
+      tools = [edit];
+      const beforeWarning = status();
+      await lifecycle[event]();
+      const report = warningsFor(beforeWarning);
+      assert.match(report, /^note \[at=\d+\]: warning: /);
+      assert.ok(report.includes(process.env.EXCLUDE_FILE), "late warnings must identify their configuration");
+      assert.ok(report.includes(edit.name), "late warnings must identify the present excluded tool");
+      assert.equal(consume('last_status_line "$2"'), terminal, event + " must preserve the latest terminal event");
+      assert.equal(consume('status_current_line "$2" "$3"'), declaration, event + " must preserve current terminal state");
+      const unread = consume('scan_unread_surface_lines "$(dirname "$2")"');
+      assert.ok(unread.includes(process.env.EXCLUDE_FILE), event + " warning must remain visible to the supervisor");
+      assert.ok(unread.includes(edit.name), "the supervisor must see the late exclusion failure");
+      const warnedStatus = status();
+      await lifecycle.agent_start();
+      await lifecycle.turn_end();
+      assert.equal(status(), warnedStatus, "terminal preservation must retain per-name warning deduplication");
+    }
+  }
+}
 JS
         )
         status=$?
