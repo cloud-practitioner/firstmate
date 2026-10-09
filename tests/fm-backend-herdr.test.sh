@@ -4028,11 +4028,23 @@ test_composer_state_inactive_session_fails_fast_without_server_autostart() {
 
 # shellcheck disable=SC2016
 test_composer_state_piped_reader_does_not_hang() {
-  local out rc=0
-  out=$( timeout 3s bash -c '. "$0/bin/fm-backend.sh"; ( fm_backend_composer_state herdr nonexistent-session:p2 ) 2>&1 | head -20' "$ROOT" ) || rc=$?
-  [ "$rc" -eq 0 ] || fail "piped composer probe on bad target hung or failed with rc=$rc"
+  local dir="$TMP_ROOT/composer-piped-stopped" fb world out rc=0
+  fb=$(make_stateful_herdr "$dir"); world="$dir/world"
+  mkdir -p "$dir/state"
+  : > "$world/stopped"
+  out=$( PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$dir/state" \
+    timeout 3s bash -c '. "$0/bin/fm-backend.sh"; ( fm_backend_composer_state herdr nonexistent-session:p2 ) 2>&1 | head -20' "$ROOT" ) || rc=$?
+  [ "$rc" -eq 0 ] || fail "piped composer probe on stopped server hung or failed with rc=$rc"
   [ "$out" = unknown ] || fail "piped composer probe should print unknown, got '$out'"
-  pass "fm_backend_composer_state (herdr): piped probe on bad target does not hang EOF-sensitive readers"
+  if out=$( PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$dir/state" \
+    bash -c '. "$0/bin/fm-backend.sh"; fm_backend_visible_capture herdr nonexistent-session:p2' "$ROOT" ); then
+    fail "visible capture must fail on a stopped server"
+  fi
+  [ -z "$out" ] || fail "stopped-server visible capture must not print a screen"
+  [ -e "$world/stopped" ] || fail "a passive probe started the stopped server"
+  [ ! -s "$world/server.log" ] || fail "a passive probe issued a server-start command"
+  [ ! -s "$world/read.log" ] || fail "a passive probe read a pane on a stopped server"
+  pass "public herdr composer and viewport probes leave stopped servers untouched and piped readers reach EOF"
 }
 
 test_composer_state_unknown_when_no_composer_row_found() {
@@ -5372,7 +5384,7 @@ case "${1:-} ${2:-}" in
     running=true; [ ! -e "$W/stopped" ] || running=false
     printf '{"client":{"version":"0.9.3","protocol":22},"server":{"running":%s}}\n' "$running"
     ;;
-  "server "*) rm -f "$W/stopped" ;;
+  "server "*) printf '%s\n' "$*" >> "$W/server.log"; rm -f "$W/stopped" ;;
   "session list") printf '{"sessions":[{"name":"fmtest","running":true,"socket_path":"%s/fmtest.sock"}]}\n' "$W" ;;
   "pane get") [ -f "$W/pane-$key.json" ] && cat "$W/pane-$key.json" \
     || { printf '{"error":{"code":"pane_not_found"}}\n'; exit 1; } ;;
@@ -5955,23 +5967,26 @@ test_active_operations_check_ownership_after_server_restore() {
     fm_backend_source herdr
     # shellcheck disable=SC2329 # Adapter callback invoked by the sourced backend.
     fm_backend_herdr_pane_process_state() { printf agent; }
-    for operation in capture visible key text busy composer; do
+    for operation in capture key text busy; do
       : > "$world/stopped"; : > "$world/typed.log"; : > "$world/read.log"
       case "$operation" in
         capture) ! fm_backend_capture herdr fmtest:w1:p1 5 fm-mine || fail "capture reached a restored foreign pane" ;;
-        visible) ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail "visible capture reached a restored foreign pane" ;;
         key) ! fm_backend_send_key herdr fmtest:w1:p1 C-c fm-mine || fail "interrupt reached a restored foreign pane" ;;
         text) ! fm_backend_send_text_submit herdr fmtest:w1:p1 exit 1 0 0 fm-mine || fail "text reached a restored foreign pane" ;;
         busy) out=$(fm_backend_busy_state herdr fmtest:w1:p1); [ "$out" = unknown ] || fail "busy classification trusted a restored foreign pane" ;;
-        composer) out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine); [ "$out" = unknown ] || fail "composer classification trusted a restored foreign pane" ;;
       esac
       [ ! -e "$world/stopped" ] || fail "$operation did not establish server readiness before checking ownership"
       [ ! -s "$world/typed.log" ] && [ ! -s "$world/read.log" ] || fail "$operation used the unrelated restored pane"
     done
+    ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail "visible capture reached a running foreign pane"
+    out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine)
+    [ "$out" = unknown ] || fail "composer classification trusted a running foreign pane"
+    [ ! -s "$world/read.log" ] || fail "a passive probe read the unrelated restored pane"
     write_ownership_pane "$world" w1:p1 w1:t1 "$dir/owned" fm-mine
     : > "$world/stopped"
     fm_backend_send_key herdr fmtest:w1:p1 Enter fm-mine || fail "restoring an owned endpoint must still permit input"
     [ -s "$world/typed.log" ] || fail "owned input was not delivered after restore"
+    [ "$(fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine)" = FOREIGN-SCREEN ] || fail "visible capture refused the running owned pane"
     : > "$world/stopped"
     [ "$(fm_backend_agent_state herdr fmtest:w1:p1 fm-mine)" = missing ] || fail "passive stopped-server liveness changed"
     [ -e "$world/stopped" ] || fail "passive liveness started the server"
@@ -6082,7 +6097,7 @@ test_dispatch_composer_state_routes_by_backend() {
     _FM_BACKEND_ORCA_SOURCED=1
     _FM_BACKEND_ZELLIJ_SOURCED=1
     fm_tmux_composer_state() { [ "$1" = "sess:win" ] || fail "tmux composer_state got wrong target: $1"; printf 'pending'; }
-    fm_backend_herdr_target_ready() { return 0; }
+    fm_backend_herdr_target_observable() { return 0; }
     fm_backend_herdr_composer_state() { [ "$1" = "default:w1:p2" ] || fail "herdr composer_state got wrong target: $1"; printf 'empty'; }
     fm_backend_orca_composer_state() { [ "$1" = "term-1" ] || fail "orca composer_state got wrong target: $1"; printf 'empty'; }
     fm_backend_zellij_composer_state() { [ "$1" = "sess:7" ] || fail "zellij composer_state got wrong target: $1"; printf 'empty'; }
