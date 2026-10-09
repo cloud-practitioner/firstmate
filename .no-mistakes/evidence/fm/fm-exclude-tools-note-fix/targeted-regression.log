@@ -1,0 +1,10 @@
+# all fm-spawn-dispatch-profile tests passed
+ok - Pi and pi-signed ship and scout launches carry the configured tool exclusions
+ok - Pi worker registries report only listed tools that are present, once each, including after servers connect
+ok - an absent or empty exclusion list leaves every runtime unaffected
+ok - a runtime that cannot hide tools, or a raw launch, refuses a non-empty exclusion list
+ok - a malformed exclusion entry refuses the spawn before any launch or record
+ok - an mcp__ entry whose server part has - or . refuses the spawn before any launch or record
+ok - Pi and pi-signed ship and scout launches refuse when the exclusion file disappears after its checks
+not ok - Pi secondmate spawn should succeed
+error: secondmate home cannot be inside the firstmate repo: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.gate-test-tmp/fm-spawn-dispatch-profile.HWP237/excl-sm/secondmate-home: expected exit 0, got 1

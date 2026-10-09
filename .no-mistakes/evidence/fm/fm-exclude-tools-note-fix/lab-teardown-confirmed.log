@@ -1,0 +1,6 @@
+complete: exclusion-scout captain-call inventory reviewed
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l
+WARNING: watcher still down (same stale episode; last beat: 330s ago, grace 300s) - full banner already printed this episode.
+🌳 Worktree returned to pool.
+teardown exclusion-scout complete (window primary:fm-exclusion-scout, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576/1/project)
+Backlog: exclusion-scout just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/data/backlog.md - move exclusion-scout to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.

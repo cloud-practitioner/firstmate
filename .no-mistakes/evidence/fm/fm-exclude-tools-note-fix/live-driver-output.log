@@ -1,0 +1,142 @@
+REAL SPAWN EXIT=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l
+WARNING: watcher still down (same stale episode; last beat: 0s ago, grace 300s) - full banner already printed this episode.
+spawned exclusion-scout harness=pi kind=scout window=primary:fm-exclusion-scout worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576/1/project
+
+windows primary:bash
+primary:fm-exclusion-scout
+
+WORKER PANE
+bash-5.2$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-1
+09576/1/project. Type 'exit' to return.
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-10957
+6/1/project'
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/state/exclusio
+n-scout.tasktmp/gotmp'
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ export COMPACT_ADVISER_DISABLE=1
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ export FM_TASK_ID=exclusion-scout
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ . '/tmp/fm-exclusion-scout+da20abbae3fdf0ea256e0dc8453260b59aca66c90ee1e24cc24b447b4784fad3/launch.s17915227
+67.1404808.2066.sh'
+
+ ⁣FIRSTMATE_OP: v1 launch-brief: # Current worker role contract
+ You are a crewmate: an autonomous worker agent managed by firstmate.
+ This section establishes your current identity before every project or task instruction below and supersedes any
+ conflicting role identity in those instructions.
+ Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor
+ identity, delegate the task, run fleet supervision, or address the captain.
+ Your steering inbox is
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/state/exclusion-scout.inbox; this exact
+ path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so
+ read and acknowledge its messages and do not reject it as another home's state.
+ Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths
+ named by this brief.
+ When this task works on Firstmate itself, the repository root AGENTS.md (also imported by CLAUDE.md) is project
+ content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor
+ contract.
+ Project instructions still govern the work wherever they do not conflict with this worker identity, including
+ CONTRIBUTING.md and firstmate-coding-guidelines for Firstmate changes.
+ If the firstmate-coding-guidelines skill name does not resolve in this session, read
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.agents/skills/firstmate-coding-guidelines/S
+ KILL.md instead.
+
+ Task
+
+ Captain's intent
+
+ Validate disposable tool exclusion behavior.
+
+ Firstmate spec
+
+ Perform only the local disposable observation requested; do not touch real projects, credentials, or pipeline state.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ $ touch /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/release; sleep 0.4;  (timeout
+ 10s)
+
+ (no output)
+
+ Took 0.4s
+
+
+ Disposable scenario complete.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576/1/project (det...
+11.5%/128k (auto)                                                                                                fixture
+
+STATUS AFTER NATIVE EXCLUSION
+working: disposable task
+
+LIVE REGISTRY
+{"event":"agent_start","tools":["read","bash","powershell","edit","write","grep","find","ls","codemode","tool_search"]}
+{"event":"turn_end","tools":["read","bash","powershell","edit","write","grep","find","ls","codemode","tool_search","mcp__lab__readIssue"]}
+{"event":"turn_end","tools":["read","bash","powershell","edit","write","grep","find","ls","codemode","tool_search","mcp__lab__readIssue"]}
+
+LATE TERMINAL STATUS
+working: disposable task
+done: completed disposable scout
+note [state=none] [at=1791522774]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab__editIssue, mcp__lab__createIssue
+
+DECLARATION done: completed disposable scout
+UNREAD
+exclusion-scout	note [state=none] [at=1791522774]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab__editIssue, mcp__lab__createIssue
+
+DIRECT CALL RESULTS [{"type": "tool_execution_end", "toolCallId": "lab-call", "toolName": "mcp__lab__editIssue", "result": {"content": [{"type": "text", "text": "mcp__lab__editIssue is excluded by config/crew-exclude-tools"}], "details": {}}, "isError": true}]
+CODEMODE RESULTS [{"type": "tool_execution_end", "toolCallId": "lab-call/1", "toolName": "mcp__lab__editIssue", "result": {"content": [{"type": "text", "text": "mcp__lab__editIssue is excluded by config/crew-exclude-tools"}], "details": {}}, "isError": true, "parentToolCallId": "lab-call"}, {"type": "tool_execution_end", "toolCallId": "lab-call/2", "toolName": "mcp__lab__createIssue", "result": {"content": [{"type": "text", "text": "mcp__lab__createIssue is excluded by config/crew-exclude-tools"}], "details": {}}, "isError": true, "parentToolCallId": "lab-call"}, {"type": "tool_execution_end", "toolCallId": "lab-call/3", "toolName": "mcp__lab__readIssue", "result": {"content": [{"type": "text", "text": "executed readIssue"}], "details": {"server": "lab", "tool": "readIssue"}, "structuredContent": {"content": [{"type": "text", "text": "executed readIssue"}]}}, "isError": false, "durationMs": 3, "parentToolCallId": "lab-call"}, {"type": "tool_execution_end", "toolCallId": "lab-call", "toolName": "codemode", "result": {"content": [{"type": "text", "text": "Script completed\nWall time 0.2 seconds\nOutput:\n"}, {"type": "text", "text": "==> text 1/3 <==\n{\"name\":\"mcp__lab__editIssue\",\"error\":\"Error: mcp__lab__editIssue is excluded by config/crew-exclude-tools\"}\n==> text 2/3 <==\n{\"name\":\"mcp__lab__createIssue\",\"error\":\"Error: mcp__lab__createIssue is excluded by config/crew-exclude-tools\"}\n==> text 3/3 <==\n{\"name\":\"mcp__lab__readIssue\",\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"executed readIssue\"}]}}"}], "details": {"calls": [{"id": "lab-call/1", "name": "mcp__lab__editIssue", "args": "{}", "status": "error", "durationMs": 2.0855659999999716, "error": "mcp__lab__editIssue is excluded by config/crew-exclude-tools"}, {"id": "lab-call/2", "name": "mcp__lab__createIssue", "args": "{}", "status": "error", "durationMs": 0.9608389999998508, "error": "mcp__lab__createIssue is excluded by config/crew-exclude-tools"}, {"id": "lab-call/3", "name": "mcp__lab__readIssue", "args": "{}", "status": "ok", "durationMs": 4.240868999999975}]}}, "isError": false, "durationMs": 175}]
+RESOLVED turn_end
+working: starting
+blocked [key=dependency]: waiting for access
+resolved [key=dependency]: access granted
+note [state=none] [at=1791522779]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab__editIssue, mcp__lab__createIssue
+CURRENT resolved [key=dependency]: access granted
+OPEN 
+RESOLVED agent_start
+working: starting
+blocked [key=dependency]: waiting for access
+resolved [key=dependency]: access granted
+note [state=none] [at=1791522781]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab__editIssue, mcp__lab__createIssue
+CURRENT resolved [key=dependency]: access granted
+OPEN 
+AFTER 210 SCANS
+working: disposable task
+note [state=none] [at=1791522792]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab__editIssue, mcp__lab__createIssue
+
+READER declaration='failed: failed disposable task' latest='failed: failed disposable task' current='failed: failed disposable task' wait=''
+READER declaration='working: continuing' latest='working: continuing' current='working: continuing' wait=''
+READER declaration='paused [key=release]: waiting for release' latest='paused [key=release]: waiting for release' current='paused [key=release]: waiting for release' wait='paused [key=release]: waiting for release'
+READER declaration='needs-decision [key=choice]: choose' latest='needs-decision [key=choice]: choose' current='needs-decision [key=choice]: choose' wait=''
+READER declaration='captain-held [key=choice]: waiting for captain' latest='captain-held [key=choice]: waiting for captain' current='captain-held [key=choice]: waiting for captain' wait='captain-held [key=choice]: waiting for captain'
+READER declaration='note: ordinary state note' latest='note: ordinary state note' current='note: ordinary state note' wait=''
+READER declaration='' latest='' current='' wait=''
+INVALID PREFIX mcp__lab-server__editIssue exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l
+WARNING: watcher still down (same stale episode; last beat: 32s ago, grace 300s) - full banner already printed this episode.
+error: config/crew-exclude-tools entry 'mcp__lab-server__editIssue' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__lab_server__<tool>)
+
+INVALID PREFIX mcp__lab.server__editIssue exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l
+WARNING: watcher still down (same stale episode; last beat: 33s ago, grace 300s) - full banner already printed this episode.
+error: config/crew-exclude-tools entry 'mcp__lab.server__editIssue' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__lab_server__<tool>)
+
+LIVE RESULTS
+absent names quiet during real spawned worker
+late presence warning deduplicated and terminal preserved
+direct and codemode excluded calls blocked; unlisted MCP read executed
+resolved decision not reopened at turn_end
+resolved decision not reopened at agent_start
+warning still active after more than 200 lifecycle scans
+public declaration readers preserve waiting/working/decision state and no-event fallback
+invalid server spelling refused by real spawn before task publication

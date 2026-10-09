@@ -1,0 +1,10 @@
+# all fm-spawn-dispatch-profile tests passed
+not ok - pi --ship absent worker registry check failed: file:///home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/[eval1]:36
+assert.deepEqual(handlers.tool_call({ toolName: "mcp__tracker__editIssue" }), {
+                          ^
+
+TypeError: handlers.tool_call is not a function
+    at file:///home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/[eval1]:36:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0: expected exit 0, got 1

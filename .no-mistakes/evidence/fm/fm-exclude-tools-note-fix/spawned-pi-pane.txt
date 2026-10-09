@@ -1,0 +1,69 @@
+bash-5.2$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-1
+09576/1/project. Type 'exit' to return.
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-10957
+6/1/project'
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/state/exclusio
+n-scout.tasktmp/gotmp'
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ export COMPACT_ADVISER_DISABLE=1
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ export FM_TASK_ID=exclusion-scout
+node@d3b5e5e7f359:/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576
+/1/project$ . '/tmp/fm-exclusion-scout+da20abbae3fdf0ea256e0dc8453260b59aca66c90ee1e24cc24b447b4784fad3/launch.s17915227
+67.1404808.2066.sh'
+
+ ⁣FIRSTMATE_OP: v1 launch-brief: # Current worker role contract
+ You are a crewmate: an autonomous worker agent managed by firstmate.
+ This section establishes your current identity before every project or task instruction below and supersedes any
+ conflicting role identity in those instructions.
+ Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor
+ identity, delegate the task, run fleet supervision, or address the captain.
+ Your steering inbox is
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/state/exclusion-scout.inbox; this exact
+ path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so
+ read and acknowledge its messages and do not reject it as another home's state.
+ Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths
+ named by this brief.
+ When this task works on Firstmate itself, the repository root AGENTS.md (also imported by CLAUDE.md) is project
+ content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor
+ contract.
+ Project instructions still govern the work wherever they do not conflict with this worker identity, including
+ CONTRIBUTING.md and firstmate-coding-guidelines for Firstmate changes.
+ If the firstmate-coding-guidelines skill name does not resolve in this session, read
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.agents/skills/firstmate-coding-guidelines/S
+ KILL.md instead.
+
+ Task
+
+ Captain's intent
+
+ Validate disposable tool exclusion behavior.
+
+ Firstmate spec
+
+ Perform only the local disposable observation requested; do not touch real projects, credentials, or pipeline state.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ $ touch /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/release; sleep 0.4;  (timeout
+ 10s)
+
+ (no output)
+
+ Took 0.4s
+
+
+ Disposable scenario complete.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.l/.treehouse/project-109576/1/project (det...
+11.5%/128k (auto)                                                                                                fixture

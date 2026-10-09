@@ -1,0 +1,22 @@
+# all fm-spawn-dispatch-profile tests passed
+not ok - pi --ship absent worker registry check failed: node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: absence of a listed tool is the success state and must produce no report
++ actual - expected
+
++ "note [at=1791523045]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.gate-test-tmp/fm-spawn-dispatch-profile.F0H7h8/excl-registry-pi-ship-absent/home/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__tracker__editIssue, mcp__tracker__createIssue\n"
+- ''
+
+    at file:///home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/[eval1]:57:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: "note [at=1791523045]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FG5JQ32H5W33X2X33GG2DC/.gate-test-tmp/fm-spawn-dispatch-profile.F0H7h8/excl-registry-pi-ship-absent/home/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__tracker__editIssue, mcp__tracker__createIssue\n",
+  expected: '',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0: expected exit 0, got 1
