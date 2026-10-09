@@ -1,0 +1,6 @@
+
+$ FM_HOME=<disposable-home> bin/fm-crew-state.sh live-exclusions (late-terminal-done persisted live-worker status)
+state: done · source: status-log · late-worker completed
+
+$ FM_HOME=<disposable-home> bin/fm-crew-state.sh live-exclusions (late-terminal-failed persisted live-worker status)
+state: failed · source: status-log · late-worker failed

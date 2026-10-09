@@ -1,0 +1,10 @@
+working: disposable worker started
+done: excluded-worker completed
+
+--- public status consumers ---
+{
+  "latest": "done: excluded-worker completed",
+  "current": "done: excluded-worker completed",
+  "decisions": "",
+  "unread": ""
+}

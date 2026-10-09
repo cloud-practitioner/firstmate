@@ -1,0 +1,11 @@
+working: disposable worker started
+done: delayed-worker completed
+note [state=none] [at=1791518656]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.hQJOB3/live-exclusions/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue
+
+--- public status consumers ---
+{
+  "latest": "done: delayed-worker completed",
+  "current": "done: delayed-worker completed",
+  "decisions": "",
+  "unread": "live-exclusions\tnote [state=none] [at=1791518656]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.hQJOB3/live-exclusions/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue"
+}

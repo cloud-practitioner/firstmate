@@ -1,0 +1,5 @@
+{"event":"agent_start","turns":0,"names":["read","bash","powershell","edit","write","grep","find","ls","codemode"]}
+{"event":"turn_end","turns":1,"names":["read","bash","powershell","edit","write","grep","find","ls","mcp__lab_tracker__readIssue","codemode"]}
+{"event":"turn_end","turns":2,"names":["read","bash","powershell","edit","write","grep","find","ls","mcp__lab_tracker__readIssue","codemode"]}
+{"event":"turn_end","turns":3,"names":["read","bash","powershell","edit","write","grep","find","ls","mcp__lab_tracker__readIssue","codemode"]}
+{"event":"agent_settled","turns":3,"names":["read","bash","powershell","edit","write","grep","find","ls","mcp__lab_tracker__readIssue","codemode"]}

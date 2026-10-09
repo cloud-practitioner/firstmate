@@ -1,0 +1,3 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/fake/fakebin/timeout: line 3: exec: 1: not found
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/fake/fakebin/timeout: line 3: exec: 1: not found
+spawned live-exclusions harness=pi kind=scout window=firstmate:fm-live-exclusions worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/wt

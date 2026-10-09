@@ -1,0 +1,179 @@
+[
+  {
+    "name": "correctly-excluded",
+    "result": "fail",
+    "reason": "{'exit': 0, 'agent_start_names': ['read', 'bash', 'powershell', 'edit', 'write', 'grep', 'find', 'ls', 'codemode'], 'turn_ends': 3, 'warning_lines': [\"note [at=1791518940]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/home/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue, mcp__offline__write, mcp__lab_tracker__typo\"], 'declarations': {'latest': 'done: excluded-worker completed', 'current': 'done: excluded-worker completed', 'decisions': '', 'unread': \"live-exclusions\\tnote [at=1791518940]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/home/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue, mcp__offline__write, mcp__lab_tracker__typo\"}, 'tool_results': [{'type': 'tool_execution_end', 'toolCallId': 'call_1/1', 'toolName': 'mcp__lab_tracker__readIssue', 'result': {'content': [{'type': 'text', 'text': 'disposable issue read successfully'}], 'details': {'server': 'lab_tracker', 'tool': 'readIssue'}, 'structuredContent': {'content': [{'type': 'text', 'text': 'disposable issue read successfully'}]}}, 'isError': False, 'durationMs': 2, 'parentToolCallId': 'call_1'}, {'type': 'tool_execution_end', 'toolCallId': 'call_1/2', 'toolName': 'bash', 'result': {'content': [{'type': 'text', 'text': '(no output)'}], 'structuredContent': {'output': '', 'truncated': False, 'exit_code': 0, 'wall_time_seconds': 0}}, 'isError': False, 'durationMs': 15, 'parentToolCallId': 'call_1'}, {'type': 'tool_execution_end', 'toolCallId': 'call_1', 'toolName': 'codemode', 'result': {'content': [{'type': 'text', 'text': 'Script completed\\nWall time 0.2 seconds\\nOutput:\\n'}, {'type': 'text', 'text': '==> text 1/4 <==\\n{\"names\":[\"mcp__lab_tracker__readIssue\"],\"search\":[\"mcp__lab_tracker__readIssue\",\"edit\"],\"described\":false}\\n==> text 2/4 <==\\n{\"editBlocked\":\"TypeError: tools.mcp__lab_tracker__editIssue does not exist. Did you mean tools.edit? ALL_TOOLS lists every tool; searchTools(query) finds tools by topic. Check for a member with \\\\\"mcp__lab_tracker__editIssue\\\\\" in tools.\"}\\n==> text 3/4 <==\\n{\"content\":[{\"type\":\"text\",\"text\":\"disposable issue read successfully\"}]}\\n==> text 4/4 <==\\n{\"output\":\"\",\"truncated\":false,\"exit_code\":0,\"wall_time_seconds\":0}'}], 'details': {'calls': [{'id': 'call_1/1', 'name': 'mcp__lab_tracker__readIssue', 'args': '{}', 'status': 'ok', 'durationMs': 7.423242000000073}, {'id': 'call_1/2', 'name': 'bash', 'args': '{\"command\":\"printf \\'%s\\\\\\\\n\\' \\'done: excluded-worker completed\\' >> /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-excl...', 'status': 'ok', 'durationMs': 17.081182000000126}]}}, 'isError': False, 'durationMs': 176}, {'type': 'tool_execution_end', 'toolCallId': 'call_2/1', 'toolName': 'mcp__lab_tracker__readIssue', 'result': {'content': [{'type': 'text', 'text': 'disposable issue read successfully'}], 'details': {'server': 'lab_tracker', 'tool': 'readIssue'}, 'structuredContent': {'content': [{'type': 'text', 'text': 'disposable issue read successfully'}]}}, 'isError': False, 'durationMs': 1, 'parentToolCallId': 'call_2'}, {'type': 'tool_execution_end', 'toolCallId': 'call_2', 'toolName': 'codemode', 'result': {'content': [{'type': 'text', 'text': 'Script completed\\nWall time 0.1 seconds\\nOutput:\\n'}, {'type': 'text', 'text': '==> text 1/2 <==\\n[{\"name\":\"mcp__lab_tracker__readIssue\",\"description\":\"readIssue on a disposable issue\\\\n\\\\ncodemode tool declaration:\\\\n```ts\\\\ndeclare const tools: { mcp__lab_tracker__readIssue(args: { [key: string]: unknown; }): Promise<CallToolResult>; };\\\\n```\"}]\\n==> text 2/2 <==\\n{\"content\":[{\"type\":\"text\",\"text\":\"disposable issue read successfully\"}]}'}], 'details': {'calls': [{'id': 'call_2/1', 'name': 'mcp__lab_tracker__readIssue', 'args': '{}', 'status': 'ok', 'durationMs': 1.9570920000001024}]}}, 'isError': False, 'durationMs': 95}]}",
+    "command": "pi --print --mode json --no-context-files --no-skills --no-prompt-templates --no-themes --no-extensions --approve --no-session -e builtin:mcp -e builtin:codemode -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/observe.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/home/state/live-exclusions.pi-ext.ts --provider lab --model correctly-excluded --thinking off --exclude-tools mcp__lab_tracker__editIssue,mcp__lab_tracker__createIssue,mcp__offline__write,mcp__lab_tracker__typo 'Exercise the disposable tracker scenario.'",
+    "observations": {
+      "exit": 0,
+      "agent_start_names": [
+        "read",
+        "bash",
+        "powershell",
+        "edit",
+        "write",
+        "grep",
+        "find",
+        "ls",
+        "codemode"
+      ],
+      "turn_ends": 3,
+      "warning_lines": [
+        "note [at=1791518940]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/home/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue, mcp__offline__write, mcp__lab_tracker__typo"
+      ],
+      "declarations": {
+        "latest": "done: excluded-worker completed",
+        "current": "done: excluded-worker completed",
+        "decisions": "",
+        "unread": "live-exclusions\tnote [at=1791518940]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/home/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue, mcp__offline__write, mcp__lab_tracker__typo"
+      },
+      "tool_results": [
+        {
+          "type": "tool_execution_end",
+          "toolCallId": "call_1/1",
+          "toolName": "mcp__lab_tracker__readIssue",
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "disposable issue read successfully"
+              }
+            ],
+            "details": {
+              "server": "lab_tracker",
+              "tool": "readIssue"
+            },
+            "structuredContent": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "disposable issue read successfully"
+                }
+              ]
+            }
+          },
+          "isError": false,
+          "durationMs": 2,
+          "parentToolCallId": "call_1"
+        },
+        {
+          "type": "tool_execution_end",
+          "toolCallId": "call_1/2",
+          "toolName": "bash",
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "(no output)"
+              }
+            ],
+            "structuredContent": {
+              "output": "",
+              "truncated": false,
+              "exit_code": 0,
+              "wall_time_seconds": 0
+            }
+          },
+          "isError": false,
+          "durationMs": 15,
+          "parentToolCallId": "call_1"
+        },
+        {
+          "type": "tool_execution_end",
+          "toolCallId": "call_1",
+          "toolName": "codemode",
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "Script completed\nWall time 0.2 seconds\nOutput:\n"
+              },
+              {
+                "type": "text",
+                "text": "==> text 1/4 <==\n{\"names\":[\"mcp__lab_tracker__readIssue\"],\"search\":[\"mcp__lab_tracker__readIssue\",\"edit\"],\"described\":false}\n==> text 2/4 <==\n{\"editBlocked\":\"TypeError: tools.mcp__lab_tracker__editIssue does not exist. Did you mean tools.edit? ALL_TOOLS lists every tool; searchTools(query) finds tools by topic. Check for a member with \\\"mcp__lab_tracker__editIssue\\\" in tools.\"}\n==> text 3/4 <==\n{\"content\":[{\"type\":\"text\",\"text\":\"disposable issue read successfully\"}]}\n==> text 4/4 <==\n{\"output\":\"\",\"truncated\":false,\"exit_code\":0,\"wall_time_seconds\":0}"
+              }
+            ],
+            "details": {
+              "calls": [
+                {
+                  "id": "call_1/1",
+                  "name": "mcp__lab_tracker__readIssue",
+                  "args": "{}",
+                  "status": "ok",
+                  "durationMs": 7.423242000000073
+                },
+                {
+                  "id": "call_1/2",
+                  "name": "bash",
+                  "args": "{\"command\":\"printf '%s\\\\n' 'done: excluded-worker completed' >> /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-excl...",
+                  "status": "ok",
+                  "durationMs": 17.081182000000126
+                }
+              ]
+            }
+          },
+          "isError": false,
+          "durationMs": 176
+        },
+        {
+          "type": "tool_execution_end",
+          "toolCallId": "call_2/1",
+          "toolName": "mcp__lab_tracker__readIssue",
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "disposable issue read successfully"
+              }
+            ],
+            "details": {
+              "server": "lab_tracker",
+              "tool": "readIssue"
+            },
+            "structuredContent": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "disposable issue read successfully"
+                }
+              ]
+            }
+          },
+          "isError": false,
+          "durationMs": 1,
+          "parentToolCallId": "call_2"
+        },
+        {
+          "type": "tool_execution_end",
+          "toolCallId": "call_2",
+          "toolName": "codemode",
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "Script completed\nWall time 0.1 seconds\nOutput:\n"
+              },
+              {
+                "type": "text",
+                "text": "==> text 1/2 <==\n[{\"name\":\"mcp__lab_tracker__readIssue\",\"description\":\"readIssue on a disposable issue\\n\\ncodemode tool declaration:\\n```ts\\ndeclare const tools: { mcp__lab_tracker__readIssue(args: { [key: string]: unknown; }): Promise<CallToolResult>; };\\n```\"}]\n==> text 2/2 <==\n{\"content\":[{\"type\":\"text\",\"text\":\"disposable issue read successfully\"}]}"
+              }
+            ],
+            "details": {
+              "calls": [
+                {
+                  "id": "call_2/1",
+                  "name": "mcp__lab_tracker__readIssue",
+                  "args": "{}",
+                  "status": "ok",
+                  "durationMs": 1.9570920000001024
+                }
+              ]
+            }
+          },
+          "isError": false,
+          "durationMs": 95
+        }
+      ]
+    }
+  }
+]

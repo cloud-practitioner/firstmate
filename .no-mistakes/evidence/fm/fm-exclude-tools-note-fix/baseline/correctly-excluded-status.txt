@@ -1,0 +1,11 @@
+working: disposable worker started
+note [at=1791518940]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/home/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue, mcp__offline__write, mcp__lab_tracker__typo
+done: excluded-worker completed
+
+--- public status consumers ---
+{
+  "latest": "done: excluded-worker completed",
+  "current": "done: excluded-worker completed",
+  "decisions": "",
+  "unread": "live-exclusions\tnote [at=1791518940]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.qK7e1K/base-exclusions/home/config/crew-exclude-tools unmatched exclusion entries (unverified: absent from the worker's loaded-tool registry; excluded tools or unavailable servers cannot be verified): mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue, mcp__offline__write, mcp__lab_tracker__typo"
+}

@@ -1,0 +1,7 @@
+{"name": "correctly-excluded", "result": "pass", "reason": "", "turn_ends": 3}
+{"name": "present-at-start", "result": "pass", "reason": "", "turn_ends": 3}
+{"name": "late-terminal-done", "result": "pass", "reason": "", "turn_ends": 3}
+{"name": "late-terminal-failed", "result": "pass", "reason": "", "turn_ends": 3}
+{"name": "after-210-turns", "result": "pass", "reason": "", "turn_ends": 212}
+{"name": "resolved-before-warning", "result": "pass", "reason": "", "turn_ends": 3}
+{"name": "resolved-after-warning", "result": "pass", "reason": "", "turn_ends": 3}

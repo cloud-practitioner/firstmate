@@ -1,0 +1,12 @@
+
+$ fm-spawn.sh bad-prefix disposable --scout --backend herdr --harness pi (entry=mcp__lab-tracker__editIssue)
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/launch-home
+error: config/crew-exclude-tools entry 'mcp__lab-tracker__editIssue' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__lab_tracker__<tool>)
+exit=1
+
+$ fm-spawn.sh bad-prefix disposable --scout --backend herdr --harness pi (entry=mcp__lab.tracker__editIssue)
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/launch-home
+error: config/crew-exclude-tools entry 'mcp__lab.tracker__editIssue' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__lab_tracker__<tool>)
+exit=1
+
+No task metadata was published; named-lab workspace inventory remained unchanged.

@@ -1,0 +1,12 @@
+working: disposable worker started
+blocked [key=dependency]: waiting for access
+resolved [key=dependency]: access granted by concurrent supervisor
+note [state=none] [at=1791518658]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.hQJOB3/live-exclusions/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue
+
+--- public status consumers ---
+{
+  "latest": "resolved [key=dependency]: access granted by concurrent supervisor",
+  "current": "resolved [key=dependency]: access granted by concurrent supervisor",
+  "decisions": "",
+  "unread": "live-exclusions\tnote [state=none] [at=1791518658]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.hQJOB3/live-exclusions/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue"
+}

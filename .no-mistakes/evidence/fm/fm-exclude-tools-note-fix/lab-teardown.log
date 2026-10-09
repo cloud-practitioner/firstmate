@@ -1,0 +1,2 @@
+$ bin/fm-herdr-lab.sh teardown fm-lab-exclusions-3996134-16961
+exit=0; helper verified lab removal and unchanged default-session tripwire

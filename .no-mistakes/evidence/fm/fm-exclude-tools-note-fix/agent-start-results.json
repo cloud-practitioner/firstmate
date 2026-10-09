@@ -1,0 +1,74 @@
+[
+  {
+    "name": "later-agent-start-done",
+    "result": "pass",
+    "command": "pi --mode rpc --no-context-files --no-skills --no-prompt-templates --no-themes --no-extensions --approve --no-session -e builtin:mcp -e builtin:codemode -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/observe.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.hQJOB3/live-exclusions/home/state/live-exclusions.pi-ext.ts --provider lab --model later-agent-start-done",
+    "initialStartNames": [
+      "read",
+      "bash",
+      "powershell",
+      "edit",
+      "write",
+      "grep",
+      "find",
+      "ls",
+      "codemode"
+    ],
+    "laterStartNames": [
+      "read",
+      "bash",
+      "powershell",
+      "edit",
+      "write",
+      "grep",
+      "find",
+      "ls",
+      "mcp__lab_tracker__editIssue",
+      "mcp__lab_tracker__createIssue",
+      "mcp__lab_tracker__readIssue",
+      "codemode"
+    ],
+    "declarations": {
+      "latest": "done: task completed between agent runs",
+      "current": "done: task completed between agent runs",
+      "decisions": "",
+      "unread": "live-exclusions\tnote [state=none] [at=1791518855]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.hQJOB3/live-exclusions/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue"
+    }
+  },
+  {
+    "name": "later-agent-start-resolved",
+    "result": "pass",
+    "command": "pi --mode rpc --no-context-files --no-skills --no-prompt-templates --no-themes --no-extensions --approve --no-session -e builtin:mcp -e builtin:codemode -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/observe.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.hQJOB3/live-exclusions/home/state/live-exclusions.pi-ext.ts --provider lab --model later-agent-start-resolved",
+    "initialStartNames": [
+      "read",
+      "bash",
+      "powershell",
+      "edit",
+      "write",
+      "grep",
+      "find",
+      "ls",
+      "codemode"
+    ],
+    "laterStartNames": [
+      "read",
+      "bash",
+      "powershell",
+      "edit",
+      "write",
+      "grep",
+      "find",
+      "ls",
+      "mcp__lab_tracker__editIssue",
+      "mcp__lab_tracker__createIssue",
+      "mcp__lab_tracker__readIssue",
+      "codemode"
+    ],
+    "declarations": {
+      "latest": "resolved [key=dependency]: concurrent access grant",
+      "current": "resolved [key=dependency]: concurrent access grant",
+      "decisions": "",
+      "unread": "live-exclusions\tnote [state=none] [at=1791518856]: warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4FATPH1GGTGPYHJS1Q4J58G/.test-exclusions/fm-spawn-dispatch-profile.hQJOB3/live-exclusions/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__lab_tracker__editIssue, mcp__lab_tracker__createIssue"
+    }
+  }
+]
