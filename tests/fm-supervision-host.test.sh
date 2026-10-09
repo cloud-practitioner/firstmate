@@ -250,7 +250,7 @@ start_host() {  # <home> [park options...]
         [ -f "$seed" ] || continue
         FM_ROOT_OVERRIDE="$MIRROR_ROOT" "$MIRROR_ROOT/bin/fm-host-mirror.sh" hook claude < "$seed"
       done
-      "$0" park "$@" > "$FM_HOME/host.out" 2>&1
+      "$0" park "$@" > "$FM_HOME/host.out" 2> "$FM_HOME/host.err"
       printf "%s\n" "$?" > "$FM_HOME/host.rc"
     ' "$HOST" "$@" 2>> "$home/claude.err" &
 }
@@ -1062,7 +1062,7 @@ test_attended_close_with_unidentified_main_session_passes_to_main() {
       printf "%s (claude) S\n" "$$" > "$FM_HOME/proc/$$/stat"
       printf "claude\0" > "$FM_HOME/proc/$$/cmdline"
       export FM_PROC_ROOT_OVERRIDE="$FM_HOME/proc"
-      "$0" park > "$FM_HOME/host.out" 2>&1
+      "$0" park > "$FM_HOME/host.out" 2> "$FM_HOME/host.err"
       printf "%s\n" "$?" > "$FM_HOME/host.rc"
     ' "$HOST" 2>> "$home/claude.err" &
   wait_until 150 watcher_live "$home" || fail "unidentified: the host never started a watcher cycle: $(cat "$home/host.out")"
@@ -1460,8 +1460,8 @@ test_at_turn_downtime_write_failure_is_never_silent() {
   wait_until 250 host_exited "$home" || fail "write failure: the host did not exit: $(cat "$home/state/.supervision-host.log")"
   assert_re 'pass-through[[:space:]]+downtime-unrestored' "$home/state/.supervision-host.log" "fixture: downtime publication did not fail"
   expect_code 1 "$(cat "$home/host.rc")" "a failed hand-back must exit nonzero"
-  assert_re '^supervision-host hand-back failed: ' "$home/host.out" "the failed hand-back must name itself in its own output"
-  assert_no_re '^(supervision-host:|signal:)' "$home/host.out" "the failed hand-back must not turn the close into a wake"
+  assert_re '^supervision-host hand-back failed: ' "$home/host.out" "the failed hand-back must name itself on stdout"
+  assert_no_re '^(supervision-host:|signal:|stale:|check:|heartbeat($|:))' "$home/host.out" "the failed hand-back must not emit a wake on stdout"
   stop_home_processes "$home"
   pass "host: a failed at-turn downtime write names itself and is never read as a host that died"
 }
@@ -2704,7 +2704,7 @@ start_session() {  # <home>
             [ -f "$seed" ] || continue
             FM_ROOT_OVERRIDE="$MIRROR_ROOT" "$MIRROR_ROOT/bin/fm-host-mirror.sh" hook claude < "$seed"
           done
-          "$0" park > "$FM_HOME/host.out" 2>&1
+          "$0" park > "$FM_HOME/host.out" 2> "$FM_HOME/host.err"
           printf "%s\n" "$?" > "$FM_HOME/host.rc"
         fi
         sleep 0.1
@@ -2932,7 +2932,7 @@ test_host_outside_the_lock_owner_stands_down() {
   other=$!
   printf '%s\n' "$other" >> "$home/claude-pids"
   printf '%s\n' "$other" > "$home/state/.lock"
-  out=$(FM_HOME="$home" PATH="$home/fakebin:$PATH" "$HOST" park 2>&1); rc=$?
+  out=$(FM_HOME="$home" PATH="$home/fakebin:$PATH" "$HOST" park 2> "$home/host.err"); rc=$?
   expect_code 0 "$rc" "a host that does not own supervision exits 0"
   assert_contains "$out" "supervision-host stood down: this session does not own supervision" "the stand-down must say why"
   watcher_live "$home" && fail "a host that does not own supervision started a watcher"
@@ -2949,9 +2949,9 @@ test_superseded_host_leaves_the_owner_untouched() {
     "$FAKE_CLAUDE" -c '
       printf "%s\n" "$$" > "$FM_HOME/state/.lock"
       printf "%s\n" "$$" >> "$FM_HOME/claude-pids"
-      "$0" park > "$FM_HOME/host.out" 2>&1 &
+      "$0" park > "$FM_HOME/host.out" 2> "$FM_HOME/host.err" &
       while [ ! -e "$FM_HOME/go-second" ]; do sleep 0.1; done
-      FM_SUPERVISION_HOST_AUTOARM_GEN=1 FM_SUPERVISION_HOST_OWNER_PID=$$ "$0" park > "$FM_HOME/host2.out" 2>&1
+      FM_SUPERVISION_HOST_AUTOARM_GEN=1 FM_SUPERVISION_HOST_OWNER_PID=$$ "$0" park > "$FM_HOME/host2.out" 2> "$FM_HOME/host2.err"
       printf "%s\n" "$?" > "$FM_HOME/host2.rc"
       wait
     ' "$HOST" 2>> "$home/claude.err" &
