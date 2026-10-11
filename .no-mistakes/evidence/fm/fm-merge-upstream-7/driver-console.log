@@ -1,0 +1,70 @@
+
+SCENARIO: Oversized backlog remains lossless and usable by contribution poll
+$ fm-fleet-snapshot.sh --contribution-input [home=large-backlog; code=head]
+exit=0; elapsed=0.89s; stdout_bytes=502309
+stderr=<empty>
+Verified: canonical contribution input exits successfully
+Verified: all 180 backlog records retain their order and identities
+Verified: long titles and structured kind metadata are preserved exactly
+Verified: backlog JSON exceeds Linux single-argument boundary: 488226 bytes
+Verified: no task metadata is invented
+$ fm-fleet-snapshot.sh --contribution-input [home=large-backlog; code=base]
+exit=0; elapsed=0.85s; stdout_bytes=0
+stderr=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4M3HQQZPRX4BQKNZYCRM1HR/.test-local/runtime-base/bin/fm-fleet-snapshot.sh: line 1998: /home/node/.nix-profile/bin/jq: Argument list too long
+FAILURE: AssertionError('same disposable input reproduces the pre-merge argv failure')
+
+SCENARIO: Oversized task metadata remains lossless
+$ fm-fleet-snapshot.sh --contribution-input [home=large-tasks; code=head]
+exit=0; elapsed=8.93s; stdout_bytes=191733
+stderr=<empty>
+Verified: canonical contribution input exits successfully
+Verified: all 720 task records retain sorted identities
+FAILURE: AssertionError('task kind, PR URL/head, and ungranted merge authority remain intact')
+
+SCENARIO: Normal and concurrent reads preserve ownership and final observation
+$ fm-fleet-snapshot.sh --contribution-input [home=normal; code=head]
+exit=0; elapsed=0.13s; stdout_bytes=1807
+stderr=<empty>
+Verified: canonical contribution input exits successfully
+$ fm-fleet-snapshot.sh --contribution-input [home=normal; code=base]
+exit=0; elapsed=0.12s; stdout_bytes=1807
+stderr=<empty>
+Verified: normal ownership-pair output is semantically identical before and after merge
+$ fm-fleet-snapshot.sh --contribution-input [home=normal; code=head]
+exit=0; elapsed=0.20s; stdout_bytes=1807
+stderr=<empty>
+Verified: canonical contribution input exits successfully
+$ fm-fleet-snapshot.sh --contribution-input [home=normal; code=head]
+exit=0; elapsed=0.20s; stdout_bytes=1807
+stderr=<empty>
+Verified: canonical contribution input exits successfully
+$ fm-fleet-snapshot.sh --contribution-input [home=normal; code=head]
+exit=0; elapsed=0.21s; stdout_bytes=1807
+stderr=<empty>
+Verified: canonical contribution input exits successfully
+$ fm-fleet-snapshot.sh --contribution-input [home=normal; code=head]
+exit=0; elapsed=0.22s; stdout_bytes=1807
+stderr=<empty>
+Verified: canonical contribution input exits successfully
+Verified: four concurrent real snapshot calls return identical canonical ownership pairs
+$ fm-contributions.sh snapshot /home/node/.no-mistakes/evidence/01M4M3HQQZPRX4BQKNZYCRM1HR/normal-contribution-input.json --all [home=normal; code=head]
+exit=0; elapsed=0.06s; stdout_bytes=949
+stderr=<empty>
+Verified: real contribution projection consumes the ownership pair
+Verified: persisted merged contribution is measured as final, without captain/fleet work
+$ fm-contributions.sh poll [home=normal; code=head]
+exit=0; elapsed=0.26s; stdout_bytes=0
+stderr=<empty>
+Verified: real poll accepts canonical input and settles existing final observation without a forge read
+Verified: local observation does not change the final record or backlog
+Verified: parallel calls, projection and poll remove all temp files
+
+SCENARIO: Unavailable temporary storage fails closed without state changes
+$ fm-fleet-snapshot.sh --contribution-input [home=failed-tempdir; code=head]
+exit=1; elapsed=0.10s; stdout_bytes=0
+stderr=mktemp: failed to create directory via template ‘/home/node/.no-mistakes/worktrees/450411b3e67c/01M4M3HQQZPRX4BQKNZYCRM1HR/.test-local/labs/failed-tempdir/nonexistent/tmp/fm-fleet-snapshot.contrib.XXXXXX’: No such file or directory
+fm-fleet-snapshot: contribution temp dir failed
+Verified: unavailable temporary directory refuses output and names the failed transport
+Verified: failed staging leaves operational state unchanged and creates no fallback files
+
+Disposable live homes removed; no lifecycle or forge operations were used.

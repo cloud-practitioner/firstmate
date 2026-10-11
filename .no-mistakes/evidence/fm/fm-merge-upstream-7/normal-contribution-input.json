@@ -1,0 +1,60 @@
+{
+  "backlog": {
+    "records": [
+      {
+        "merged": null,
+        "requires_child_metadata": false,
+        "state": "queued",
+        "hold_set": null,
+        "hold_bucket": null,
+        "body_lines": [],
+        "pr_url": "https://github.com/disposable-fixture/not-a-live-repository/pull/6830",
+        "hold_kind": null,
+        "done": null,
+        "report_path": null,
+        "hold_age_days": null,
+        "repo": "disposable",
+        "id": "delivery",
+        "hold_until": null,
+        "current_role": "queued",
+        "blocked_by_ids": [],
+        "hold_reason": null,
+        "since": null,
+        "kind": "ship",
+        "links": [
+          "https://github.com/disposable-fixture/not-a-live-repository/pull/6830"
+        ],
+        "completion": {
+          "verb": null,
+          "date": null
+        },
+        "unresolved_blocker_ids": [],
+        "body_excerpt": null,
+        "structured": true,
+        "title": "Published contribution",
+        "reported": null,
+        "blocked_reason": null,
+        "local_note": null,
+        "checked": false,
+        "order": 1,
+        "raw": "- [ ] delivery - Published contribution https://github.com/disposable-fixture/not-a-live-repository/pull/6830 (repo: disposable) (kind: ship)",
+        "blocked_by": null,
+        "priority": null,
+        "captain_actionable": false
+      }
+    ],
+    "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4M3HQQZPRX4BQKNZYCRM1HR/.test-local/labs/normal/data/backlog.md",
+    "present": true
+  },
+  "tasks": [
+    {
+      "id": "delivery",
+      "kind": "ship",
+      "pr": {
+        "url": "https://github.com/disposable-fixture/not-a-live-repository/pull/6830",
+        "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "merge_authority": "attended"
+    }
+  ]
+}

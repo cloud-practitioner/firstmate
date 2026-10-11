@@ -1,0 +1,421 @@
+FM_TEST_BEGIN 2026-10-10T23:52:50Z tests/fm-contributions.test.sh family=snapshot-bearings expected_gate_skip=optional-binary
+ok - only required-captain contributions are rows; other actors are counted
+ok - replaced-head verdict is stale and cannot create a captain requirement
+ok - unchecked ownership is disclosed and cannot prove silence
+ok - newest check with no verdict is distinct from passing and pending
+ok - new maintainer comment wakes once and stays pending until acknowledged
+ok - new maintainer review wakes once and stays pending until acknowledged
+ok - new maintainer inline wakes once and stays pending until acknowledged
+ok - ready-for-pr on a filed issue becomes a planning wake
+ok - a fresh open issue remains measured maintainer triage
+ok - an absent check lane remains missing across repeated observations
+ok - mixed freshness retains measured captain work and discloses the gap
+ok - malformed durable evidence cannot prove silence
+ok - a transient ready-for-pr label wakes and its exact acknowledgement survives replay
+ok - recorded judgment keeps its exact head and is stale immediately on a published replacement
+ok - verdict help and refusal name exactly the actors the command accepts
+ok - a current forge observation refreshes a verdict after a replacement
+ok - an unavailable current head leaves verdict freshness unknown
+ok - away yolo delivery is fleet work without granting merge authority
+actionable: PR https://github.com/o/r/pull/8 is registered but its ready line did not reach the parent channel (rc=3)
+not ok - cross-home away yolo delivery requiring a merge remained captain work
+ok - retired ownership persists and unsupported forge remains visibly unmeasured
+ok - unsupported forge coverage is disclosed without inventing fleet work
+ok - held unsupported forge coverage remains unmeasured
+ok - shared contribution signal wakes once while retaining both acknowledgements
+ok - watcher keeps observer diagnostics separate from contribution wakes
+not ok - expired child unsupported-forge coverage became fleet work
+ok - watcher surfaces one newly durable contribution signal without re-ringing it
+not ok - measured child coverage did not reach parent
+ok - unreadable pending signals refuse an empty-inbox claim
+ok - record task identity is the directory dirname/basename named
+ok - snapshot and pending create nothing in a home without state
+ok - budget exhausted mid-observation (exhaust) keeps the prior record and stays silent
+ok - budget exhausted mid-observation (hang) keeps the prior record and stays silent
+ok - a genuine forge failure inside the budget still records the error and wakes
+ok - a URL owned by two tasks is observed once and every owner receives the result
+ok - a merged or closed contribution settles once, is not re-read, and never wakes again
+ok - a late owner inherits a terminal observation without a forge read or wake
+ok - a retry converges every owner whose saved row is not terminal, keeping its own acknowledgement state
+ok - an open PR linked from a done task keeps being observed
+ok - a later URL waits when fewer than fifteen seconds remain for its observation
+ok - eight 3-second PR reads complete fresh within one 20-second poll cycle
+ok - a read killed at the five-second bound is budget refusal and stays silent
+ok - rotation preserves timed-out records and refreshes every slow PR on successive cycles
+ok - the effective budget is cut down to the watcher per-check bound with margin
+ok - generated checks enforce configured and inherited budgets at runtime
+ok - a genuinely unavailable forge records an error and wakes once per failure episode
+ok - a late owner does not restart a shared forge failure episode
+ok - retire stops the unavailable check, leaves rotation and restores complete coverage
+ok - a late owner settled beside a retired final record stays unretired and known
+ok - retire is idempotent and refuses non-captain, unknown, malformed and signal-bearing pairs
+not ok - 3 contribution regressions
+FM_TEST_END 2026-10-10T23:55:36Z tests/fm-contributions.test.sh exit=1 duration_ms=166436 gate_skip=false
+FM_TEST_BEGIN 2026-10-10T23:55:36Z tests/fm-fleet-snapshot-view.test.sh family=snapshot-bearings expected_gate_skip=optional-binary
+ok - empty fleet snapshot and view use explicit absence markers
+ok - fixture snapshot covers task rows, backlog rows, pointers, stable ordering, and emission-time event age
+ok - home-summary excludes kind=secondmate from unowned_current and terminal_in_flight
+ok - undated captain holds age after a configurable threshold, decided only from structured fields
+ok - captain-hold buckets are total, mutually exclusive, and never decided by prose
+ok - main_inventory discloses orphan/unstructured and clears when inventory is consistent
+ok - backlog normalization preserves strict roles and resolves every blocker compatibly
+ok - snapshot event hints follow reconciled current state
+ok - durable fold keeps an open decision past a later unrelated event
+ok - a live secondmate endpoint preserves unrelated open decisions
+ok - durable captain-held transfer closes the duplicate live status decision
+ok - durable fold clears a decision only on a keyed resolution
+ok - a completed scout's stale decision surfaces as a report pointer, not pending
+ok - a scout still parked at a decision stays pending (terminal clear does not over-fire)
+ok - snapshot includes durable scout reports after teardown
+ok - snapshot parses tasks-axi rows and respects operational overrides
+ok - fleet view renders the snapshot without secondmate peek guidance
+ok - fleet view renders secondmate agent liveness
+FM_TEST_END 2026-10-10T23:56:21Z tests/fm-fleet-snapshot-view.test.sh exit=0 duration_ms=44247 gate_skip=false
+FM_TEST_BEGIN 2026-10-10T23:56:21Z tests/fm-bearings-snapshot.test.sh family=snapshot-bearings expected_gate_skip=optional-binary
+ok - task teardown during metadata capture is omitted without aborting the snapshot
+ok - current state and decision hints share one captured status observation
+ok - reused live state is discarded when task generation changes
+ok - large local snapshot overlaps local reads with byte-identical serial and concurrent projections
+ok - remote ledgers collect concurrently under one budget, reuse aged cache, and cancel wedged collectors
+ok - a missing remote ledger stays explicitly unreadable without remote summary computation
+ok - Domain Alpha structured state overrides a stale parent Phase 7 event
+ok - GNU stat file reads select -c without BSD filesystem-report pollution
+ok - parent activity evidence is bounded and disclosed
+ok - Bearings excludes a status-only child decision
+ok - a structured child captain hold reaches Captain's Call
+ok - missing, invalid, unreadable, malformed, and unavailable-child homes stay explicit unknowns
+ok - oversized ledgers stay strict unknown
+ok - secondmate and per-home child counts are bounded, disclosed, and explicitly expandable
+ok - parent decisions remain untrusted contradiction evidence
+ok - parent evidence reconciliation distinguishes matching holds, blocks, and decisions
+ok - nonprogressing child states are explicit and inconsistent terminal rows invalidate
+ok - registry unavailability and bounded truncation remain explicit
+ok - repeated snapshots keep the same current landed baseline and ignore prior reports
+ok - default output is bounded, local-only, and marks omitted surfaces
+ok - TOON and JSON are parity representations of the same model
+ok - landed includes secondmate-managed merges alongside main-home merges
+ok - landed accepts only kind-owned delivery artifacts while answered questions stay out
+ok - kind fallback matches tasks-axi word boundaries and preserves scout deliveries
+ok - kindless v1 summaries retain report artifacts from fresh and cached ledgers
+ok - default landed selection balances one dominant home with sparse homes
+ok - landed selection refills capacity after sparse homes exhaust
+ok - landed selection uses deterministic home order when homes exceed the cap
+ok - landed selection preserves deterministic home and internal tie ordering
+ok - landed selection handles no landed items
+ok - --all-landed keeps the complete global landed output
+ok - landed stays bounded with per-home + overall caps and omitted[] disclosure
+ok - Bearings keeps a live blocker in structured live state and never converts it to Charted Next queue work
+ok - action-free items (working/done/queued/landed) do not leak into Captain's Call
+ok - main orphan in-flight stays out of Underway and is disclosed in omitted/gates
+ok - main unstructured current is disclosed while structured siblings still project
+ok - counterfactual meta clears main inventory warning and projects the live task
+ok - working captain holds retain main and secondmate bucket surfaces
+ok - active children reach Underway independently of a home captain hold
+ok - blank legacy summary names use their durable identifier
+ok - newest filed gates are selected before snapshot bounds
+ok - Underway rows carry the durable task name and gates carry their filed date
+ok - mixed secondmate roles, partial state, and captain readiness project independently
+ok - main and secondmate captain actionability use the same blocker readiness
+ok - a completed scout with decision-like report prose is a pointer, not pending
+ok - an authoritative captain hold surfaces end-to-end
+ok - current report pointers surface
+ok - queued body prose never hides an item from the board
+ok - --include-prs is the only path that fetches, and it enriches correctly
+ok - --include-prs maps a custom branch-prefix PR back to its recorded task
+ok - a partial GitHub failure degrades gracefully
+ok - Perl fallback bounds stalled GitHub calls without coreutils timeout
+ok - all fleet-sized sections are capped with counted opt-in expansion
+ok - captain-held tasks of any kind reach Captain's Call, deferral is honored, and landed excludes answered calls
+ok - structured hold buckets decide Captain's Call, Charted Next, and the reveal
+ok - a blocked deferred hold stays gated when its date arrives and is revealed by --all-decisions
+ok - revealed deferred holds display their deferral reason while live calls stay unannotated
+not ok - PR repository truncation was not recorded: {
+  "schema": "fm-bearings.v1",
+  "home": "fm-bearings.igYvJ5/repo-caps",
+  "generated": "2026-07-11T18:00:00Z",
+  "prs": "checked (2 repos, 2 open)",
+  "contributions": {
+    "scope": "owned contributions per home",
+    "known": 5,
+    "checked": 0,
+    "counts": {
+      "captain": 0,
+      "fleet": 5,
+      "maintainer": 0,
+      "nobody": 0
+    },
+    "complete": false,
+    "proven_clear": false,
+    "unmeasured_homes": 0,
+    "unreadable_records": 0,
+    "unmeasured": 0,
+    "stale_verdicts": 0,
+    "missing_verdicts": 0,
+    "captain_omitted": 0,
+    "captain": []
+  },
+  "in_flight": [
+    {
+      "id": "dead-1",
+      "kind": "scout",
+      "state": "unknown",
+      "repo": "repo-1",
+      "name": "dead-1",
+      "doing": "backend target gone: firstmate:fm-dead-1"
+    },
+    {
+      "id": "dead-2",
+      "kind": "scout",
+      "state": "unknown",
+      "repo": "repo-2",
+      "name": "dead-2",
+      "doing": "backend target gone: firstmate:fm-dead-2"
+    },
+    {
+      "id": "dead-3",
+      "kind": "scout",
+      "state": "unknown",
+      "repo": "repo-3",
+      "name": "dead-3",
+      "doing": "backend target gone: firstmate:fm-dead-3"
+    },
+    {
+      "id": "dead-4",
+      "kind": "scout",
+      "state": "unknown",
+      "repo": "repo-4",
+      "name": "dead-4",
+      "doing": "backend target gone: firstmate:fm-dead-4"
+    },
+    {
+      "id": "dead-5",
+      "kind": "scout",
+      "state": "unknown",
+      "repo": "repo-5",
+      "name": "dead-5",
+      "doing": "backend target gone: firstmate:fm-dead-5"
+    }
+  ],
+  "secondmates": [],
+  "secondmate_reconcile": [],
+  "decisions_open": [
+    {
+      "id": "decision-1",
+      "key": "decision-1",
+      "verb": "captain-hold",
+      "summary": "Decision 1: captain choice pending",
+      "owner": "(main)"
+    },
+    {
+      "id": "decision-2",
+      "key": "decision-2",
+      "verb": "captain-hold",
+      "summary": "Decision 2: captain choice pending",
+      "owner": "(main)"
+    },
+    {
+      "id": "decision-3",
+      "key": "decision-3",
+      "verb": "captain-hold",
+      "summary": "Decision 3: captain choice pending",
+      "owner": "(main)"
+    },
+    {
+      "id": "decision-4",
+      "key": "decision-4",
+      "verb": "captain-hold",
+      "summary": "Decision 4: captain choice pending",
+      "owner": "(main)"
+    },
+    {
+      "id": "decision-5",
+      "key": "decision-5",
+      "verb": "captain-hold",
+      "summary": "Decision 5: captain choice pending",
+      "owner": "(main)"
+    }
+  ],
+  "landed": [],
+  "gates": [
+    {
+      "id": "gate-1",
+      "title": "Gate 1",
+      "blocked_by": "task-1",
+      "reason": "-",
+      "owner": "(main)",
+      "filed": null
+    },
+    {
+      "id": "gate-2",
+      "title": "Gate 2",
+      "blocked_by": "task-2",
+      "reason": "-",
+      "owner": "(main)",
+      "filed": null
+    },
+    {
+      "id": "gate-3",
+      "title": "Gate 3",
+      "blocked_by": "task-3",
+      "reason": "-",
+      "owner": "(main)",
+      "filed": null
+    },
+    {
+      "id": "gate-4",
+      "title": "Gate 4",
+      "blocked_by": "task-4",
+      "reason": "-",
+      "owner": "(main)",
+      "filed": null
+    },
+    {
+      "id": "gate-5",
+      "title": "Gate 5",
+      "blocked_by": "task-5",
+      "reason": "-",
+      "owner": "(main)",
+      "filed": null
+    }
+  ],
+  "reports": [
+    {
+      "id": "dead-1",
+      "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4M3HQQZPRX4BQKNZYCRM1HR/.test-local/tmp/fm-bearings.igYvJ5/repo-caps/data/dead-1/report.md"
+    },
+    {
+      "id": "dead-2",
+      "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4M3HQQZPRX4BQKNZYCRM1HR/.test-local/tmp/fm-bearings.igYvJ5/repo-caps/data/dead-2/report.md"
+    },
+    {
+      "id": "dead-3",
+      "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4M3HQQZPRX4BQKNZYCRM1HR/.test-local/tmp/fm-bearings.igYvJ5/repo-caps/data/dead-3/report.md"
+    },
+    {
+      "id": "dead-4",
+      "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4M3HQQZPRX4BQKNZYCRM1HR/.test-local/tmp/fm-bearings.igYvJ5/repo-caps/data/dead-4/report.md"
+    },
+    {
+      "id": "dead-5",
+      "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4M3HQQZPRX4BQKNZYCRM1HR/.test-local/tmp/fm-bearings.igYvJ5/repo-caps/data/dead-5/report.md"
+    }
+  ],
+  "recorded_prs": [
+    {
+      "id": "dead-1",
+      "url": "https://github.com/acme/repo-1/pull/1"
+    },
+    {
+      "id": "dead-2",
+      "url": "https://github.com/acme/repo-2/pull/2"
+    },
+    {
+      "id": "dead-3",
+      "url": "https://github.com/acme/repo-3/pull/3"
+    },
+    {
+      "id": "dead-4",
+      "url": "https://github.com/acme/repo-4/pull/4"
+    },
+    {
+      "id": "dead-5",
+      "url": "https://github.com/acme/repo-5/pull/5"
+    }
+  ],
+  "unhealthy_endpoints": [
+    {
+      "id": "dead-1",
+      "backend": "tmux",
+      "target": "firstmate:fm-dead-1",
+      "exists": false,
+      "agent": "not_checked"
+    },
+    {
+      "id": "dead-2",
+      "backend": "tmux",
+      "target": "firstmate:fm-dead-2",
+      "exists": false,
+      "agent": "not_checked"
+    },
+    {
+      "id": "dead-3",
+      "backend": "tmux",
+      "target": "firstmate:fm-dead-3",
+      "exists": false,
+      "agent": "not_checked"
+    },
+    {
+      "id": "dead-4",
+      "backend": "tmux",
+      "target": "firstmate:fm-dead-4",
+      "exists": false,
+      "agent": "not_checked"
+    },
+    {
+      "id": "dead-5",
+      "backend": "tmux",
+      "target": "firstmate:fm-dead-5",
+      "exists": false,
+      "agent": "not_checked"
+    }
+  ],
+  "candidate_prs": [
+    {
+      "num": "9",
+      "repo": "acme/repo-1",
+      "task": "ship-task",
+      "url": "https://github.com/kunchenguid/firstmate/pull/9",
+      "review": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "checks": "passing"
+    },
+    {
+      "num": "9",
+      "repo": "acme/repo-2",
+      "task": "ship-task",
+      "url": "https://github.com/kunchenguid/firstmate/pull/9",
+      "review": "APPROVED",
+      "mergeable": "MERGEABLE",
+      "checks": "passing"
+    }
+  ],
+  "omitted": [
+    {
+      "surface": "backlog item bodies",
+      "reveal": "--fields bodies"
+    },
+    {
+      "surface": "task paths",
+      "reveal": "--fields paths"
+    },
+    {
+      "surface": "watch/steer actions",
+      "reveal": "--fields actions"
+    },
+    {
+      "surface": "healthy endpoint detail",
+      "reveal": "--fields endpoints"
+    },
+    {
+      "surface": "full scout-report inventory",
+      "reveal": "--all-reports"
+    },
+    {
+      "surface": "PR repositories showing 2 of 6",
+      "reveal": "--all-pr-repos"
+    }
+  ]
+}
+FM_TEST_END 2026-10-11T00:00:50Z tests/fm-bearings-snapshot.test.sh exit=1 duration_ms=269295 gate_skip=false
+FM_TEST_BEGIN 2026-10-11T00:00:50Z tests/fm-home-summary-refresh.test.sh family=snapshot-bearings expected_gate_skip=optional-binary
+ok - watcher-carried status append publishes the real home summary
+ok - large backlog snapshots and home-summary publication stay within exec limits
+ok - fleet snapshot transport does not require or mutate operational state
+not ok - parent fleet snapshot did not preserve the large child invalidity
+FM_TEST_END 2026-10-11T00:01:07Z tests/fm-home-summary-refresh.test.sh exit=1 duration_ms=17002 gate_skip=false
+FM_TEST_SUMMARY total=4 failed=3 skipped_gate=0 duration_ms=497142
+FM_TEST_SUMMARY_FAMILY family=snapshot-bearings count=4 duration_ms=496980 failed=3
+FM_TEST_SLOWEST rank=1 script=tests/fm-bearings-snapshot.test.sh duration_ms=269295
+FM_TEST_SLOWEST rank=2 script=tests/fm-contributions.test.sh duration_ms=166436
+FM_TEST_SLOWEST rank=3 script=tests/fm-fleet-snapshot-view.test.sh duration_ms=44247
+FM_TEST_SLOWEST rank=4 script=tests/fm-home-summary-refresh.test.sh duration_ms=17002

@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Oversized backlog remains lossless and usable by contribution poll",
+    "result": "pass"
+  },
+  {
+    "name": "Oversized task metadata remains lossless",
+    "result": "pass"
+  },
+  {
+    "name": "Normal and concurrent reads preserve ownership and final observation",
+    "result": "pass"
+  },
+  {
+    "name": "Unavailable temporary storage fails closed without state changes",
+    "result": "pass"
+  }
+]

@@ -1,0 +1,8 @@
+$ RLIMIT_FSIZE=1024; SIGXFSZ=ignored; bash bin/fm-fleet-snapshot.sh --contribution-input
+exit=1
+stdout=''
+stderr=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4M3HQQZPRX4BQKNZYCRM1HR/bin/fm-fleet-snapshot.sh: line 2003: printf: write error: File too large
+fm-fleet-snapshot: contribution backlog write failed
+temporary_entries_after_exit=[]
+operational_state_unchanged=True
+expected_write_refusal_and_cleanup=True

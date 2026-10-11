@@ -1,0 +1,43 @@
+{
+  "known": 1,
+  "checked": 1,
+  "counts": {
+    "captain": 0,
+    "fleet": 0,
+    "maintainer": 0,
+    "nobody": 1
+  },
+  "unmeasured": 0,
+  "complete": true,
+  "proven_clear": true,
+  "stale_verdicts": 0,
+  "missing_verdicts": 0,
+  "unreadable_records": 0,
+  "valid_until": 1791634500,
+  "captain": [],
+  "captain_omitted": 0,
+  "rows": [
+    {
+      "task": "delivery",
+      "url": "https://github.com/disposable-fixture/not-a-live-repository/pull/6830",
+      "kind": "pr",
+      "checked_at": "2026-10-10T12:00:00Z",
+      "checked": true,
+      "final": true,
+      "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "verdict": null,
+      "reviews": [],
+      "distinct_checks": 0,
+      "missing_verdicts": 0,
+      "pending_checks": 0,
+      "failed_checks": 0,
+      "stale_verdicts": 0,
+      "signals": [],
+      "actor": "nobody",
+      "reason": "forge reports merged",
+      "tasks": [
+        "delivery"
+      ]
+    }
+  ]
+}
