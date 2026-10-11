@@ -114,6 +114,8 @@
 #
 # --contribution-input prints only the canonical backlog/tasks ownership pair,
 # without worker observations or cross-home collection, for the home-local poll.
+# Its JSON staging requires writable temporary storage in ${TMPDIR:-/tmp}; the
+# staging directory is removed on exit without changing fleet state.
 # Compatibility: JSON is the primary machine-readable surface.
 # Human views must render this output instead of parsing state files again.
 set -u
