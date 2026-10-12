@@ -906,11 +906,16 @@ SH
     # shellcheck disable=SC2031 # This fixture sets its own close behavior, independent of earlier subshells.
     export FM_CLOSE_REMOVES=1
     fm_backend_herdr_presentation_session_lock_path() { printf '%s/lock' "$FM_FAKE_WORLD"; }
+    # shellcheck source=bin/fm-wake-lib.sh
+    . "$ROOT/bin/fm-wake-lib.sh"
+    # Only the presentation lock is contended; the per-home relaunch lock the
+    # liveness library takes first is granted at once.
     fm_lock_try_acquire() {
+      [ "$1" = "$FM_FAKE_WORLD/lock" ] || return 0
       [ -f "$FM_FAKE_WORLD/reset-during-lock" ] || return 1
       : > "$FM_FAKE_WORLD/lock-acquired"
     }
-    fm_lock_release() { : > "$FM_FAKE_WORLD/lock-released"; }
+    fm_lock_release() { [ "$1" != "$FM_FAKE_WORLD/lock" ] || : > "$FM_FAKE_WORLD/lock-released"; }
     sleep() {
       write_pane w1:p1 43 "$FM_HOME"
       fm_write_meta "$STATE/c.meta" backend=herdr window=fmtest:w1:p1 kind=secondmate harness=pi \
