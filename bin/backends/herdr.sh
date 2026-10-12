@@ -3338,14 +3338,23 @@ fm_backend_herdr_parse_target() {  # <target>
 # recorded session server is currently running, WITHOUT autostarting the server.
 # Passive read-only probes (e.g. composer inspection) must stay observable-only
 # and fail fast on inactive or bad targets without starting a new server.
+# The recorded-endpoint ownership check still applies, so a pane proven to
+# belong to someone else is refused without ever starting the server.
 fm_backend_herdr_target_observable() {  # <target>
   fm_backend_herdr_parse_target "$1" || return 1
-  [ "$(fm_backend_herdr_server_running_state "$FM_BACKEND_HERDR_SESSION")" = running ]
+  [ "$(fm_backend_herdr_server_running_state "$FM_BACKEND_HERDR_SESSION")" = running ] || return 1
+  fm_backend_herdr_target_owned
 }
 
 fm_backend_herdr_target_ready() {  # <target>
   fm_backend_herdr_parse_target "$1" || return 1
   fm_backend_herdr_server_ensure "$FM_BACKEND_HERDR_SESSION" || return 1
+  fm_backend_herdr_target_owned
+}
+
+# fm_backend_herdr_target_owned: refuse the parsed target when the recorded
+# ownership proves the pane belongs to someone else.
+fm_backend_herdr_target_owned() {
   if [ "${FM_BACKEND_HERDR_EXPECTED_LABEL+x}" = x ]; then
     if fm_backend_herdr_endpoint_foreign "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE" "$FM_BACKEND_HERDR_EXPECTED_LABEL"; then
       return 1

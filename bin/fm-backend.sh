@@ -755,6 +755,17 @@ fm_backend_endpoint_ready() {
   ! fm_backend_endpoint_foreign "$@"
 }
 
+# fm_backend_endpoint_observable: the passive counterpart of
+# fm_backend_endpoint_ready for read-only probes. It never starts the Herdr
+# server, so a probe of a stopped session reads as absent instead of
+# resurrecting it.
+fm_backend_endpoint_observable() {
+  if [ "$1" = herdr ]; then
+    fm_backend_herdr_target_observable "$2" || return 1
+  fi
+  ! fm_backend_endpoint_foreign "$@"
+}
+
 fm_backend_endpoint_foreign() {  # <backend> <target> [expected-label]
   local target=$2 session pane
   [ "$1" = herdr ] || return 1
@@ -812,7 +823,7 @@ fm_backend_visible_capture() {  # <backend> <target> [expected-label]
     return 1
   }
   fm_backend_source "$backend" || return 1
-  fm_backend_endpoint_ready "$backend" "$1" "${2:-}" || return 1
+  fm_backend_endpoint_observable "$backend" "$1" "${2:-}" || return 1
   "fm_backend_${backend}_visible_capture" "$@"
 }
 
@@ -957,7 +968,7 @@ fm_backend_composer_state() {  # <backend> <target> [expected-label] -> empty|pe
   local backend=$1 FM_BACKEND_HERDR_EXPECTED_LABEL=${3:-}
   shift
   fm_backend_source "$backend" || { printf 'unknown'; return 0; }
-  fm_backend_endpoint_ready "$backend" "$1" "${2:-}" || { printf 'unknown'; return 0; }
+  fm_backend_endpoint_observable "$backend" "$1" "${2:-}" || { printf 'unknown'; return 0; }
   case "$backend" in
     tmux) fm_tmux_composer_state "$@" ;;
     herdr) fm_backend_herdr_composer_state "$@" ;;

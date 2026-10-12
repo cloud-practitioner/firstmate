@@ -763,7 +763,8 @@ A mismatch is treated as foreign, regardless of matching cwd or `fm-<id>` label.
 An unreadable identity blocks active operations and closure but reports `unreadable` for liveness unless the pane or server is independently proven gone; it does not authorize a duplicate launch.
 A server restart that changes this identity invalidates the binding; a live-handoff that preserves it does not.
 A foreign pane reads `missing` in the recovery-grade view, so the relaunch path can bind a fresh endpoint in the recorded session.
-Active capture, key, text, and classifier operations check ownership after server readiness at each internal read or input boundary, including submit verification, clearing, and retries, so restoring a stopped server cannot bypass the check.
+Active capture, key, text, and busy-state operations check ownership after server readiness at each internal read or input boundary, including submit verification, clearing, and retries, so restoring a stopped server cannot bypass the check.
+The passive viewport and composer probes apply the same ownership check but only when the server is already running, and never start it.
 Passive liveness and existence probes do not start the server.
 Native push transitions check ownership in the supplied state directory before surfacing a blocked edge or clearing its dedupe marker, both on reconnect and for streamed events; when records claim the address, at least one claimant must pass the ownership check for the event to be accepted.
 With no claiming record, the push path retains its compatibility behavior without requiring a process binding.

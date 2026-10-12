@@ -40,8 +40,11 @@ setup_world() {
 w=$FM_FAKE_WORLD
 pane=${3:-}; key=${pane//:/_}
 case "${1:-} ${2:-}" in
-  'status --json') printf '{"client":{"version":"0.9.3","protocol":22},"server":{"running":true}}\n' ;;
-  'server '*) ;;
+  'status --json')
+    running=true; [ ! -e "$w/stopped" ] || running=false
+    printf '{"client":{"version":"0.9.3","protocol":22},"server":{"running":%s}}\n' "$running"
+    ;;
+  'server '*) printf '%s\n' "$*" >> "$w/server.log"; rm -f "$w/stopped" ;;
   'session list') printf '{"sessions":[{"name":"fmtest","running":true,"socket_path":"%s/fmtest.sock"}]}\n' "$w" ;;
   'workspace list') cat "$w/workspaces.json" ;;
   'workspace get') printf '{"result":{"workspace":{"workspace_id":"w1","label":"firstmate"}}}\n' ;;
@@ -118,13 +121,17 @@ test_dispatch_boundaries() {
       setup_world "$TMP_ROOT/dispatch-$op"
       write_pane w1:p1 42 "$FM_HOME" claude
       bind_mine
-      fm_backend_herdr_server_ensure() {
+      # The passive probes (viewport, composer) gate on the running state and
+      # never ensure the server; the rest ensure it. Either way the second
+      # readiness read is where the pane is swapped.
+      count_ready() {
         local n=0
         [ ! -f "$FM_FAKE_WORLD/ready-count" ] || read -r n < "$FM_FAKE_WORLD/ready-count"
         n=$((n + 1)); printf '%s\n' "$n" > "$FM_FAKE_WORLD/ready-count"
         [ "$n" -ne 2 ] || reset_pane
-        return 0
       }
+      fm_backend_herdr_server_ensure() { count_ready; return 0; }
+      fm_backend_herdr_server_running_state() { count_ready; printf running; }
       case "$op" in
         capture) ! fm_backend_capture herdr fmtest:w1:p1 5 fm-mine || fail 'capture crossed a reset' ;;
         visible) ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail 'viewport crossed a reset' ;;
@@ -136,6 +143,39 @@ test_dispatch_boundaries() {
     ) || fail "$op boundary regression"
   done
   pass 'dispatchers revalidate the selected binding at their internal boundary'
+}
+
+test_passive_probes_do_not_start_the_server() {
+  local op out
+  for op in visible composer; do
+    (
+      setup_world "$TMP_ROOT/passive-$op"
+      write_pane w1:p1 42 "$FM_HOME" claude
+      bind_mine
+      : > "$FM_FAKE_WORLD/stopped"
+      case "$op" in
+        visible) ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail 'viewport read a stopped session' ;;
+        composer) out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine); [ "$out" = unknown ] || fail "composer read a stopped session: $out" ;;
+      esac
+      [ -e "$FM_FAKE_WORLD/stopped" ] && [ ! -s "$FM_FAKE_WORLD/server.log" ] || fail "$op probe started the stopped server"
+      [ ! -s "$FM_FAKE_WORLD/reads" ] || fail "$op probe read a pane of a stopped session"
+      rm -f "$FM_FAKE_WORLD/stopped"
+      case "$op" in
+        visible) fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine >/dev/null || fail 'viewport refused the owned pane' ;;
+        composer) out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine); [ "$out" = empty ] || fail "composer refused the owned pane: $out" ;;
+      esac
+      write_pane w1:p1 43 "$FM_HOME" claude
+      printf 'foreign draft' > "$FM_FAKE_WORLD/composer-w1_p1"
+      : > "$FM_FAKE_WORLD/reads"
+      case "$op" in
+        visible) ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail 'viewport read a running foreign pane' ;;
+        composer) out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine); [ "$out" = unknown ] || fail "composer read a running foreign pane: $out" ;;
+      esac
+      [ ! -s "$FM_FAKE_WORLD/reads" ] || fail "$op probe read the foreign pane"
+      [ ! -s "$FM_FAKE_WORLD/server.log" ] || fail "$op probe started the server"
+    ) || fail "$op passive probe regression"
+  done
+  pass 'viewport and composer probes never start a stopped server and still refuse a foreign pane'
 }
 
 test_submit_boundaries() {
@@ -888,6 +928,7 @@ SH
 }
 
 test_dispatch_boundaries
+test_passive_probes_do_not_start_the_server
 test_submit_boundaries
 test_identity_requires_boot_and_ticks
 test_teardown_preserves_foreign_processes
