@@ -640,15 +640,12 @@ The guard submits no prompt and spends no tokens, so it runs by default wherever
 
 ## Secondmate busy contract
 
-Verified 2026-09-22 on this host with Claude Code 2.1.278, OpenCode 1.18.31, Pi 0.86.1, and Grok 1.0.40.
+Recorded 2026-09-22 with Claude Code 2.1.278, OpenCode 1.18.31, Pi 0.86.1, and Grok 1.0.40.
 
-A tmux-backed secondmate's active-turn gate reads the parent home's semantic busy record.
-Launches of opencode, pi, pi-signed, and omp arm that record and load the same hook or extension an ordinary worker uses, and those hooks do not touch the parent's turn-ended marker.
-A Claude secondmate arms the same record through busy hooks in the parent home's `state/<id>.claude-settings.json`, passed as Claude Code's `--settings` file, and does not write the mate home's `.claude/settings.local.json`.
-That `--settings` load and the merge of its hook entries with the home's own hooks rest on Claude Code's documentation (<https://code.claude.com/docs/en/cli-reference>, <https://code.claude.com/docs/en/hooks>) and not on a live run recorded in this section: the sample output below predates the `--settings` mechanism.
-A Claude secondmate is the one exception on Stop: its home's tracked Stop guard is the only Stop writer, recording idle when it allows the Stop and busy when it blocks it into a continuation, because Claude runs Stop hooks in parallel.
+The [fm-spawn.sh header](../../bin/fm-spawn.sh) owns secondmate launch arming and wiring; [turnend-guard.md](../turnend-guard.md#harness-integrations) owns the Claude secondmate Stop lifecycle.
+The sample output below predates the current Claude `--settings` mechanism and supplies no live proof of that file's loading or hook merging; [configuration.md](../configuration.md#installed-hooks-and-launch-details) links the vendor settings contracts.
 Claude Code 2.1.278 was probed live in a scratch project with logging `UserPromptSubmit` and `Stop` hooks.
-A synchronous Stop hook that exits 2 forced a continuation with no `UserPromptSubmit`, which is why the guard itself records busy when it blocks.
+A synchronous Stop hook that exits 2 forced a continuation with no `UserPromptSubmit`.
 An `asyncRewake` Stop hook that exited 2 six seconds after the turn ended woke a new turn, and `UserPromptSubmit` fired 45ms after that hook exited.
 So a secondmate turn started by the Stop auto-arm reopens busy through the same `UserPromptSubmit` hook as a typed prompt, and the auto-arm needs no busy writer of its own.
 
@@ -660,19 +657,18 @@ rewake 1790092386.979819188        block 1790092418.692480013
 ups    1790092387.025050498        stop  1790092419.717886938
 stop   1790092388.953108486
 ```
-Codex stays unverified.
-Grok keeps its rendered-tail verdict and gets no parent turn-end hook.
-Cursor's transcript sidecar is written for a secondmate the same way it is for an ordinary worker, and this host has no Cursor agent binary, so that path was not started.
-Kimi stays unarmed, and a secondmate still gets no parent turn-end token.
+Codex, pi-signed, and omp were absent from the recorded run, as its output below shows.
+Cursor was also absent, so its secondmate path was not started; Kimi was not exercised by this guard.
 
 The portable regression is `tests/fm-busy-adapter-wiring.test.sh`.
 It spawns those harnesses through the real `bin/fm-spawn.sh --secondmate` path on a fake tmux pane, drives the generated hook or extension, and runs the stall gate while the record is busy and again after it goes idle.
 
 The live guard is `tests/fm-secondmate-busy-contract-live-e2e.test.sh`.
 It runs by default wherever tmux is installed.
-`FM_SECONDMATE_BUSY_LIVE=1` forces an absent binary to fail rather than skip.
+`FM_SECONDMATE_BUSY_LIVE=1` forces missing tmux to fail rather than skip; absent harness binaries are still individually reported and skipped, and a run that checks no harness fails.
 The spawn pane is a sleeper, so the launch brief is never delivered to a model.
 Each installed armed harness is then started for real, with no prompt and no keystrokes.
+This checks process survival beside the generated wiring and the seeded busy verdict, not live busy-to-idle lifecycle transitions.
 
 ```sh
 bash tests/fm-secondmate-busy-contract-live-e2e.test.sh

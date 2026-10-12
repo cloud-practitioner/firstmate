@@ -464,7 +464,7 @@
 # each ready and dialog-free before the ordinary readiness gates can pass. A
 # blank viewport read proves nothing either way: it costs the poll and restarts
 # that count. A viewport read that fails outright fails readiness at once.
-# grok uses a firstmate-owned global hook under ${GROK_HOME:-$HOME/.grok}/hooks
+# grok crews use a firstmate-owned global hook under ${GROK_HOME:-$HOME/.grok}/hooks
 # plus a gitignored .fm-grok-turnend worktree pointer and a state token.
 # muse installs no hook at all - its plugin engine is off in the default build - so
 # it writes state/<id>.muse-session to bind the pane to muse's own session event
@@ -501,7 +501,7 @@
 # scope test for both shapes and every refusal; a failed registration stops this
 # spawn rather than launching a worker that would wedge on the dialog.
 # Unless config/keep-ai-trailers is present, every claude launch carries the
-# attribution-off policy in its per-launch --settings JSON, so a spawned worker
+# attribution-off policy in its session --settings value, so a spawned worker
 # never writes a Co-Authored-By trailer, Claude-Session link, or generated-with
 # line into a commit or PR body; launch_template() below owns the reason it
 # cannot come from the captain's own settings.
@@ -2090,7 +2090,7 @@ launch_template() {
   # alone disables the feature; keep both so a managed override of one still
   # leaves the other in force. Both are per-launch, scoped to this invocation only,
   # and never touch the captain's global ~/.claude/settings.json.
-  # Unless config/keep-ai-trailers is present, the same inline --settings JSON
+  # Unless config/keep-ai-trailers is present, the same session --settings value
   # also carries the attribution policy
   # ("attribution": {"commit": "", "pr": "", "sessionUrl": false}), which
   # suppresses Claude Code's Co-Authored-By trailer, Claude-Session link, and
@@ -4738,10 +4738,8 @@ BUSY_GEN=
     # persistent home is where Claude Code stores the captain's "don't ask
     # again" rules, and rewriting it drops them. The secondmate hooks go in
     # a firstmate-owned state/<id>.claude-settings.json passed through
-    # --settings. Claude Code merges hook entries across settings files
-    # (https://code.claude.com/docs/en/hooks) and keeps any key
-    # the flag omits (https://code.claude.com/docs/en/cli-reference), so the
-    # home's tracked Stop guard and its settings.local.json both stay.
+    # --settings. docs/configuration.md (Installed hooks and launch details)
+    # owns session precedence and hook merging with the home's settings.
     busy_cmd_prefix="$(shell_quote "$FM_ROOT/bin/fm-busy-event.sh") apply $(shell_quote "$STATE_REAL") $(shell_quote "$ID")"
     busy_suffix="--gen $(shell_quote "$BUSY_GEN") --source claude-hook"
     j_submit=$(json_escape "$busy_cmd_prefix busy $busy_suffix --event user-prompt-submit 2>/dev/null || true")
