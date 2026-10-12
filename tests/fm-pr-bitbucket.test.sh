@@ -533,9 +533,12 @@ test_merge_reports_forge_refusal_unconfirmed_and_wrong_head() {
   expect_code 1 "$rc" "merge-wrong-head: a merge that landed another head must exit non-zero"
   assert_grep "reads back at head ${BB_OTHER_HEAD:0:12}, not the verified head $BB_HEAD" "$case_dir/stderr" \
     "merge-wrong-head: the unverified landed head was not reported"
-  assert_present "$case_dir/state/task-x1.pr-poll-merge-notified" \
-    "merge-wrong-head: the landed outcome must still be recorded"
-  pass "fm-pr-merge quotes Bitbucket's refusal, leaves an unconfirmed merge armed, and flags a landed head it did not verify"
+  assert_grep 'no landed outcome is recorded' "$case_dir/stderr" \
+    "merge-wrong-head: the refusal to record a landing was not stated"
+  assert_absent "$case_dir/state/task-x1.pr-poll-merge-notified" \
+    "merge-wrong-head: an unverified landed head must not be recorded as a clean landing"
+  assert_present "$case_dir/state/task-x1.check.sh" "merge-wrong-head: the merge poll was not left armed"
+  pass "fm-pr-merge quotes Bitbucket's refusal, leaves an unconfirmed merge armed, and fails without recording a landing whose head it did not verify"
 }
 
 test_merge_refuses_unmet_review_merge_checks() {
