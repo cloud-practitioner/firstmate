@@ -1,0 +1,125 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-home
+[exit 0]
+
+$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-project
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-project add .
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-project commit -qm Fixture base
+[exit 0]
+
+$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/nested-src
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/nested-src add .
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/nested-src commit -qm Fixture base
+[exit 0]
+
+$ treehouse --root /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool get --lease --lease-holder scout-clean --no-fetch --base main --json
+🌳 Setting up worktree...
+🌳 Leased worktree at /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project. Run 'treehouse return /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project' to release it.
+{"path":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project","lease_id":"b329812fa46caebad9205bcfa820885d","lease_holder":"scout-clean","leased_at":"2026-10-12T03:25:51.218933321Z","base_branch":"main"}
+[exit 0]
+
+$ git clone -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/nested-src /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project/scratch-clone
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project status --porcelain --untracked-files=all
+?? scratch-clone/
+?? scratch.txt
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/product/bin/fm-teardown.sh scout-clean
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-home
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/product/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/product/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌳 Worktree returned to pool.
+teardown scout-clean complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261012T032552Z-4066294)
+Backlog: scout-clean is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-home/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project status --porcelain --untracked-files=all
+[exit 0]
+
+$ treehouse --root /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool status
+base  main  (repository default)
+1     available    /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project  (detached)
+[exit 0]
+
+$ treehouse --root /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool get --lease --lease-holder ship-refuse --no-fetch --base main --json
+🌳 Setting up worktree...
+🌳 Leased worktree at /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project. Run 'treehouse return /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project' to release it.
+{"path":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project","lease_id":"9baee798a8eb0ccd7c9542d74d212d8c","lease_holder":"ship-refuse","leased_at":"2026-10-12T03:25:53.881278295Z","base_branch":"main"}
+[exit 0]
+
+$ git clone -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/nested-src /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project/scratch-clone
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project rev-parse HEAD
+95034f97307fc4af57b26c1a2e0962b484ab2510
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/product/bin/fm-teardown.sh ship-refuse
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+REFUSED: local-only worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project has work not yet merged into main and not on any remote.
+uncommitted changes present (untracked-only leftovers)
+untracked paths (up to 10):
+  scratch-clone/
+  scratch.txt
+Merge the branch into local main first (bin/fm-merge-local.sh after the captain approves), or push to a fork/remote, or get the captain's explicit OK to discard, then --force.
+[exit 1]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project rev-parse HEAD
+95034f97307fc4af57b26c1a2e0962b484ab2510
+[exit 0]
+
+Ship refusal preserved nested payload SHA-256 601fd67387fed71282bfdea395c7a9bdfa60d52d5166babeaa561ceacd4a7574, HEAD, scratch file and task record.
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/product/bin/fm-teardown.sh ship-refuse --force
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for ship-refuse: 4070276
+🌳 Worktree returned to pool.
+teardown ship-refuse complete (window none, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project, legacy record accepted without spawn_gen: endpoint missing, incarnation legacy-20261012T032556Z-4069287)
+Backlog: ship-refuse is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-home/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project status --porcelain --untracked-files=all
+[exit 0]
+
+$ treehouse --root /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool get --lease --lease-holder ship-lost --no-fetch --base main --json
+🌳 Setting up worktree...
+🌳 Leased worktree at /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project. Run 'treehouse return /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project' to release it.
+{"path":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project","lease_id":"e60c9c200a51f222a5821bf48d77300b","lease_holder":"ship-lost","leased_at":"2026-10-12T03:25:58.389776258Z","base_branch":"main"}
+[exit 0]
+
+$ git clone -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/nested-src /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project/.claude/nested-clone
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/product/bin/fm-teardown.sh ship-lost
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for ship-lost: 4072249
+🌳 Worktree returned to pool.
+warning: treehouse return left pool slot 1 (/home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project) dirty or unverified; the pool lost this slot. Remaining paths:
+  ?? .claude/nested-clone/
+teardown ship-lost finished its cleanup and removed its task record, but a returned pool slot did not come back clean (see the warning above); clear those paths so the pool can reuse the slot
+Backlog: ship-lost is closed in /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-home/data/backlog.md. Run bin/fm-tasks-axi.sh ready for dependency-cleared candidates, check date gates, and dispatch only work whose blockers are gone and date is due.
+[exit 4]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/treehouse-pool/.treehouse/treehouse-project-6412ab/1/treehouse-project status --porcelain --untracked-files=all
+?? .claude/nested-clone/
+[exit 0]
+
+Lost-slot return left the documented .claude nested repository, reported exit 4, and retired task metadata.

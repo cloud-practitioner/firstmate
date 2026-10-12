@@ -1,0 +1,40 @@
+
+ ▐▛███▛█   Claude Code v2.1.296
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH
+
+
+❯ Do not use tools or modify anything. Reply with the short sentence: disposable hook validation complete.
+
+● disposable hook validation complete.
+
+✻ Crunched for 2s · done 3:42 AM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 6% used
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents

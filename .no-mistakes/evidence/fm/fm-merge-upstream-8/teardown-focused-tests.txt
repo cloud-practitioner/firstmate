@@ -1,0 +1,19 @@
+ok - scout copy with a nested clone and a scratch file returns with no untracked entries
+ok - ship copy with a nested clone is refused and its bytes stay
+ok - a return that leaves residue names the lost slot and the remaining paths
+ok - a forced secondmate teardown returns a child scout copy with a nested clone clean
+
+--- dirty child product stdout ---
+
+--- dirty child product stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 0s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/product/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/product/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+warning: treehouse return left pool slot 6 (/home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/.test-phase/tmp/fm-teardown-tests.HjdiVl/secondmate-child-dirty-return/pool/6/repo) dirty or unverified; the pool lost this slot. Remaining paths:
+  ?? left-behind-clone/
+teardown task-x1 finished its cleanup and removed its task record, but a returned pool slot did not come back clean (see the warning above); clear those paths so the pool can reuse the slot
+ok - a forced secondmate teardown warns about a dirty child return and still completes

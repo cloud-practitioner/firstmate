@@ -1,0 +1,2 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/l.k2aZ
+spawned busy-pi harness=pi kind=secondmate mode=secondmate yolo=off window=primary:fm-busy-pi worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4Q1JF87GH0W93H3RAB5V5HH/s.quO5

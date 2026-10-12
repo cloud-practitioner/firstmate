@@ -1,0 +1,1 @@
+ok - home seeding handles spaced project names in project-less refusal and registry queries
