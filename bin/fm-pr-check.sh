@@ -120,9 +120,13 @@ if [ "$PROVIDER" = github ] && [ "${FM_PR_CHECK_MERGE:-}" != 1 ] && command -v g
   DRAFT_JSON=$(gh pr view "$URL" --json isDraft 2>/dev/null || true)
   DRAFT_STATE=$(fm_pr_json_draft_state "$DRAFT_JSON")
 fi
-if [ "$PROVIDER" = bitbucket ] && fm_pr_bitbucket_read_pull_request "$PROJECT_PATH" "$NUMBER"; then
+# The record is read without resolving its abbreviated head, so a draft state
+# read positively is enforced even when the separate commit lookup that
+# resolves the head to a full hash fails; that lookup only decides whether a
+# pr_head= is recorded.
+if [ "$PROVIDER" = bitbucket ] && fm_pr_bitbucket_read_pull_request "$PROJECT_PATH" "$NUMBER" reported; then
   [ "${FM_PR_CHECK_MERGE:-}" = 1 ] || DRAFT_STATE=$FM_PR_BITBUCKET_DRAFT
-  BITBUCKET_HEAD=$FM_PR_BITBUCKET_HEAD
+  BITBUCKET_HEAD=$(fm_pr_bitbucket_resolve_commit "$PROJECT_PATH" "$FM_PR_BITBUCKET_HEAD_REPORTED" 2>/dev/null || true)
 fi
 if [ "$DRAFT_STATE" = true ]; then
   echo "error: $URL is a draft pull request; a draft cannot be merged, so merge monitoring would wait for an event that cannot occur - mark it ready for review and arm again, or declare a wait instead of done if the draft is deliberate" >&2

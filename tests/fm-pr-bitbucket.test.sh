@@ -53,6 +53,7 @@ make_case() {
   printf '%s\n' '{"values":[{"key":"pipeline","name":"Pipeline #1","state":"SUCCESSFUL"}],"pagelen":100,"page":1}' \
     > "$case_dir/bb/statuses.json"
   printf '%s\n' '{"values":[],"pagelen":100,"page":1}' > "$case_dir/bb/restrictions.json"
+  printf '%s\n' '{"values":[{"name":"main","default_merge_strategy":"merge_commit"},{"name":"feature/login","default_merge_strategy":"merge_commit"}]}' > "$case_dir/bb/branches.json"
   printf '%s\n' '{"type":"pullrequest","id":7,"state":"MERGED"}' > "$case_dir/bb/merge.json"
   printf '%s\n' "$case_dir"
 }
@@ -214,6 +215,27 @@ test_check_refuses_a_draft() {
   pass "fm-pr-check refuses a draft Bitbucket pull request"
 }
 
+test_check_refuses_a_draft_when_the_commit_lookup_fails() {
+  local case_dir rc=0
+  case_dir=$(make_case check-draft-lookup)
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" true > "$case_dir/bb/pr.json"
+  printf '503\n' > "$case_dir/bb/commit.code"
+  run_check "$case_dir" || rc=$?
+  expect_code 1 "$rc" "check-draft-lookup: a draft read positively must not arm because the commit lookup failed"
+  assert_grep 'is a draft pull request' "$case_dir/stderr" "check-draft-lookup: the refusal did not name the draft"
+  assert_no_grep 'pr=' "$case_dir/state/task-x1.meta" "check-draft-lookup: a draft was recorded"
+  assert_absent "$case_dir/state/task-x1.check.sh" "check-draft-lookup: a draft armed a poll"
+
+  case_dir=$(make_case check-ready-lookup)
+  printf '503\n' > "$case_dir/bb/commit.code"
+  rc=0
+  run_check "$case_dir" || rc=$?
+  expect_code 0 "$rc" "check-ready-lookup: a ready pull request must still arm when only the head lookup fails"$'\n'"$(cat "$case_dir/stderr")"
+  assert_grep "pr=$BB_URL" "$case_dir/state/task-x1.meta" "check-ready-lookup: pr= was not recorded"
+  assert_no_grep 'pr_head=' "$case_dir/state/task-x1.meta" "check-ready-lookup: an unresolved head was recorded"
+  pass "fm-pr-check keeps a positively read draft refused when the separate commit lookup fails"
+}
+
 test_check_refuses_without_the_credential() {
   local case_dir rc=0
   case_dir=$(make_case check-no-credential)
@@ -279,8 +301,8 @@ test_merge_succeeds_with_read_back_and_keeps_the_branch() {
   case_dir=$(make_case merge-ok)
   run_merge "$case_dir" "$BB_URL" || rc=$?
   expect_code 0 "$rc" "merge-ok: a green open pull request should merge"$'\n'"$(cat "$case_dir/stderr")"
-  assert_equals '{"type":"pullrequest","close_source_branch":false}' "$(cat "$case_dir/bb/merge-body.json")" \
-    "merge-ok: the merge request must keep the source branch and use the branch's own strategy"
+  assert_equals '{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}' "$(cat "$case_dir/bb/merge-body.json")" \
+    "merge-ok: the merge request must keep the source branch and send the branch's own default strategy explicitly"
   assert_grep "verified: $BB_URL is merged at the verified head $BB_HEAD" "$case_dir/stdout" \
     "merge-ok: the landed merge was not proven by reading it back"
   assert_grep "pr=$BB_URL" "$case_dir/state/task-x1.meta" "merge-ok: pr= was not recorded before merging"
@@ -310,7 +332,7 @@ test_merge_passes_a_requested_strategy() {
   rc=0
   run_merge "$case_dir" "$BB_URL" --attended-override -- --delete-branch || rc=$?
   expect_code 0 "$rc" "merge-delete-branch: an attended branch deletion should merge"$'\n'"$(cat "$case_dir/stderr")"
-  assert_equals '{"type":"pullrequest","close_source_branch":true}' "$(cat "$case_dir/bb/merge-body.json")" \
+  assert_equals '{"type":"pullrequest","close_source_branch":true,"merge_strategy":"merge_commit"}' "$(cat "$case_dir/bb/merge-body.json")" \
     "merge-delete-branch: the attended deletion was not sent"
   case_dir=$(make_case merge-bad-arg)
   local arg
@@ -487,6 +509,90 @@ test_merge_under_away_authority_is_synchronous_and_gated() {
   pass "a Bitbucket merge under away authority stays synchronous, records that authority, and keeps the green gate"
 }
 
+test_merge_sends_the_destination_default_strategy_or_refuses() {
+  local case_dir rc=0
+  case_dir=$(make_case merge-default-squash)
+  printf '%s\n' '{"values":[{"name":"main","default_merge_strategy":"squash"},{"name":"main-other","default_merge_strategy":"rebase_merge"}]}' \
+    > "$case_dir/bb/branches.json"
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 0 "$rc" "merge-default-squash: a squash-default branch should merge"$'\n'"$(cat "$case_dir/stderr")"
+  assert_equals '{"type":"pullrequest","close_source_branch":false,"merge_strategy":"squash"}' \
+    "$(cat "$case_dir/bb/merge-body.json")" "merge-default-squash: the branch's own default was not sent explicitly"
+  assert_grep 'refs/branches?q=name%20%3D%20%22main%22' "$case_dir/bb/curl-argv.log" \
+    "merge-default-squash: the destination branch was not looked up by exact name"
+
+  case_dir=$(make_case merge-default-explicit)
+  rm -f "$case_dir/bb/branches.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" -- --rebase || rc=$?
+  expect_code 0 "$rc" "merge-default-explicit: a named strategy needs no default read"$'\n'"$(cat "$case_dir/stderr")"
+  assert_no_grep 'refs/branches' "$case_dir/bb/curl-argv.log" "merge-default-explicit: the default was read despite a named strategy"
+
+  local variant
+  for variant in unreadable unknown missing; do
+    case_dir=$(make_case "merge-default-$variant")
+    case "$variant" in
+      unreadable) printf '500\n' > "$case_dir/bb/branches.code" ;;
+      unknown) printf '%s\n' '{"values":[{"name":"main","default_merge_strategy":"octopus"}]}' > "$case_dir/bb/branches.json" ;;
+      missing) printf '%s\n' '{"values":[{"name":"main"}]}' > "$case_dir/bb/branches.json" ;;
+    esac
+    rc=0
+    run_merge "$case_dir" "$BB_URL" || rc=$?
+    expect_code 1 "$rc" "merge-default-$variant: an unusable default must refuse, not guess"
+    assert_grep 'merge strategy' "$case_dir/stderr" "merge-default-$variant: the refusal did not name the strategy"
+    assert_absent "$case_dir/bb/merge-called" "merge-default-$variant: a merge was requested anyway"
+  done
+  pass "fm-pr-merge sends the destination branch's configured default strategy explicitly and refuses when it cannot be read"
+}
+
+test_merge_refuses_review_or_destination_drift_before_the_request() {
+  local case_dir rc=0 alice alice_approved bob_changes
+  alice='{"user":{"uuid":"{alice}","nickname":"alice"},"role":"REVIEWER","approved":true,"state":"approved"}'
+  bob_changes='{"user":{"uuid":"{bob}","nickname":"bob"},"role":"REVIEWER","approved":false,"state":"changes_requested"}'
+  alice_approved="[$alice]"
+
+  # Reads one and two are the recording and the verification; the third is the
+  # final read, where the state has drifted.
+  case_dir=$(make_case merge-drift-dest)
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main "$alice_approved" > "$case_dir/bb/pr.json"
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false release "$alice_approved" > "$case_dir/bb/pr-moved.json"
+  printf '3\n' > "$case_dir/bb/pr-moved.at"
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "merge-drift-dest: a retargeted pull request must not merge"
+  assert_grep 'now targets release, not the verified destination branch main' "$case_dir/stderr" \
+    "merge-drift-dest: the retarget was not named"
+  assert_absent "$case_dir/bb/merge-called" "merge-drift-dest: a merge was requested anyway"
+
+  case_dir=$(make_case merge-drift-withdrawn)
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main "$alice_approved" > "$case_dir/bb/pr.json"
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main '[]' > "$case_dir/bb/pr-moved.json"
+  printf '3\n' > "$case_dir/bb/pr-moved.at"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "merge-drift-withdrawn: a withdrawn approval must not merge"
+  assert_grep 'approval withdrawn by {alice}' "$case_dir/stderr" "merge-drift-withdrawn: the withdrawal was not named"
+  assert_absent "$case_dir/bb/merge-called" "merge-drift-withdrawn: a merge was requested anyway"
+
+  case_dir=$(make_case merge-drift-changes)
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main "$alice_approved" > "$case_dir/bb/pr.json"
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main "[$alice,$bob_changes]" > "$case_dir/bb/pr-moved.json"
+  printf '3\n' > "$case_dir/bb/pr-moved.at"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 1 "$rc" "merge-drift-changes: a newly requested change must not merge"
+  assert_grep 'changes requested by {bob}' "$case_dir/stderr" "merge-drift-changes: the new changes request was not named"
+  assert_absent "$case_dir/bb/merge-called" "merge-drift-changes: a merge was requested anyway"
+
+  # An unchanged review state, and a changes-requested verdict already present
+  # at verification (no restriction required it clear), must still merge.
+  case_dir=$(make_case merge-drift-none)
+  fm_bitbucket_pr_json 7 OPEN "$BB_ABBREV" false main "[$alice,$bob_changes]" > "$case_dir/bb/pr.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" || rc=$?
+  expect_code 0 "$rc" "merge-drift-none: an unchanged review state should merge"$'\n'"$(cat "$case_dir/stderr")"
+  pass "fm-pr-merge refuses at the final read when the destination changed, an approval was withdrawn, or changes were requested"
+}
+
 test_merge_refuses_a_head_that_moved_before_the_request() {
   local case_dir rc=0
   case_dir=$(make_case merge-moved)
@@ -635,6 +741,7 @@ test_record_read_reports_state_and_merged
 test_statuses_read_follows_pagination_only_under_the_api_base
 test_check_records_full_head_and_arms_the_poll
 test_check_refuses_a_draft
+test_check_refuses_a_draft_when_the_commit_lookup_fails
 test_check_refuses_without_the_credential
 test_poll_wakes_only_on_an_exact_merged_record
 test_pr_state_reports_bitbucket_blockers
@@ -644,6 +751,8 @@ test_merge_refuses_red_and_unreported_required_builds
 test_merge_refuses_draft_closed_and_missing_credentials
 test_merge_waivers_follow_the_attended_rules
 test_merge_under_away_authority_is_synchronous_and_gated
+test_merge_sends_the_destination_default_strategy_or_refuses
+test_merge_refuses_review_or_destination_drift_before_the_request
 test_merge_refuses_a_head_that_moved_before_the_request
 test_merge_reports_forge_refusal_unconfirmed_and_wrong_head
 test_merge_refuses_unmet_review_merge_checks
