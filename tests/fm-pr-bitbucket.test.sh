@@ -487,6 +487,92 @@ test_merge_under_away_authority_is_synchronous_and_gated() {
   pass "a Bitbucket merge under away authority stays synchronous, records that authority, and keeps the green gate"
 }
 
+# Probe both locks through their public interfaces on every post-acceptance PR
+# read. The first read remains OPEN; a landing, when requested, appears only
+# on the final bounded attempt, so releasing authority between reads is caught.
+test_away_async_merge_holds_authority_until_read_back_ends() {
+  local case_dir status outcome rc
+  for status in 202 555; do
+    for outcome in landed unconfirmed; do
+      case_dir=$(make_case "merge-away-async-$status-$outcome")
+      FM_HOME="$case_dir/home" FM_STATE_OVERRIDE="$case_dir/state" \
+        "$ROOT/bin/fm-afk-contract.sh" enter --words 'merge task-x1 when green' >/dev/null \
+        || fail "away-async: could not write the away record"
+      printf '%s\n' "$status" > "$case_dir/bb/merge.code"
+      mv "$case_dir/bb/pr-post.json" "$case_dir/bb/pr-ready.json"
+      [ "$outcome" != landed ] || printf '2\n' > "$case_dir/bb/pr-land.at"
+      mv "$case_dir/fakebin/curl" "$case_dir/fakebin/curl-api"
+      {
+        printf '#!/usr/bin/env bash\n'
+        printf 'root=%q\ncase_dir=%q\n' "$ROOT" "$case_dir"
+        cat <<'SH'
+method=GET url=''
+for arg in "$@"; do
+  case "$arg" in POST) method=POST ;; https://*) url=$arg ;; esac
+done
+if [ "$method" = GET ] && [ -e "$case_dir/bb/merge-called" ]; then
+  case "$url" in
+    */pullrequests/7)
+      reads=$(( $(cat "$case_dir/bb/post-reads" 2>/dev/null || echo 0) + 1 ))
+      printf '%s\n' "$reads" > "$case_dir/bb/post-reads"
+      archive_rc=0 control_rc=0
+      FM_TEST_AFK_CONTRACT_LOCK_TIMEOUT=1 "$root/bin/fm-afk-contract.sh" archive \
+        > "$case_dir/bb/archive-$reads.log" 2>&1 || archive_rc=$?
+      bash -c '. "$1"; fm_lock_try_acquire "$2" || exit 1; fm_lock_release "$2"' \
+        _ "$root/bin/fm-wake-lib.sh" "$case_dir/state/.control-task-x1.lock" \
+        > "$case_dir/bb/control-$reads.log" 2>&1 || control_rc=$?
+      printf '%s %s\n' "$archive_rc" "$control_rc" >> "$case_dir/bb/read-locks.log"
+      if [ -f "$case_dir/bb/pr-land.at" ] && [ "$reads" -ge "$(cat "$case_dir/bb/pr-land.at")" ]; then
+        cp "$case_dir/bb/pr-ready.json" "$case_dir/bb/pr-post.json"
+      fi
+      ;;
+  esac
+fi
+exec "$case_dir/fakebin/curl-api" "$@"
+SH
+      } > "$case_dir/fakebin/curl"
+      chmod +x "$case_dir/fakebin/curl"
+      rc=0
+      FM_PR_BITBUCKET_CONFIRM_ATTEMPTS=2 run_merge "$case_dir" "$BB_URL" || rc=$?
+      assert_equals 2 "$(cat "$case_dir/bb/post-reads")" \
+        "away-async-$status-$outcome: read-back did not reach its bounded final attempt"
+      assert_equals $'1 1\n1 1' "$(cat "$case_dir/bb/read-locks.log")" \
+        "away-async-$status-$outcome: archive or task control acquired authority during read-back"
+      assert_grep 'locked by live process' "$case_dir/bb/archive-2.log" \
+        "away-async-$status-$outcome: the final archive probe did not encounter a live holder"
+      if [ "$outcome" = landed ]; then
+        expect_code 0 "$rc" "away-async-$status: a verified landing within the bound must succeed"
+        assert_grep "is merged at the verified head $BB_HEAD" "$case_dir/stdout" \
+          "away-async-$status: success did not confirm the verified head"
+        assert_present "$case_dir/state/task-x1.pr-poll-merge-notified" \
+          "away-async-$status: the confirmed landing was not recorded"
+        assert_grep "merge landed: task-x1 $BB_URL away" "$case_dir/state/.wake-queue" \
+          "away-async-$status: the outcome did not retain away authority"
+      else
+        expect_code 1 "$rc" "away-async-$status: an unconfirmed landing must not succeed"
+        assert_grep 'landing unconfirmed' "$case_dir/stderr" \
+          "away-async-$status: the non-success did not name the unconfirmed landing"
+        assert_absent "$case_dir/state/task-x1.pr-poll-merge-notified" \
+          "away-async-$status: an unconfirmed landing was recorded"
+        if [ -f "$case_dir/state/.wake-queue" ]; then
+          assert_no_grep 'merge landed:' "$case_dir/state/.wake-queue" \
+            "away-async-$status: an unconfirmed landing emitted a landed outcome"
+        fi
+        assert_present "$case_dir/state/task-x1.check.sh" \
+          "away-async-$status: the merge poll was not left armed"
+      fi
+      bb_env "$case_dir" "$ROOT/bin/fm-afk-contract.sh" archive >/dev/null \
+        || fail "away-async-$status-$outcome: authority stayed locked after read-back ended"
+      # shellcheck disable=SC2016 # The child shell expands its positional arguments.
+      bb_env "$case_dir" bash -c \
+        '. "$1"; fm_lock_try_acquire "$2" || exit 1; fm_lock_release "$2"' \
+        _ "$ROOT/bin/fm-wake-lib.sh" "$case_dir/state/.control-task-x1.lock" \
+        || fail "away-async-$status-$outcome: task control stayed locked after read-back ended"
+    done
+  done
+  pass "away Bitbucket 202/555 merges hold both locks through bounded read-back and succeed only on a verified landing"
+}
+
 test_merge_refuses_a_head_that_moved_before_the_request() {
   local case_dir rc=0
   case_dir=$(make_case merge-moved)
@@ -647,6 +733,7 @@ test_merge_refuses_red_and_unreported_required_builds
 test_merge_refuses_draft_closed_and_missing_credentials
 test_merge_waivers_follow_the_attended_rules
 test_merge_under_away_authority_is_synchronous_and_gated
+test_away_async_merge_holds_authority_until_read_back_ends
 test_merge_refuses_a_head_that_moved_before_the_request
 test_merge_reports_forge_refusal_unconfirmed_and_wrong_head
 test_merge_refuses_unmet_review_merge_checks

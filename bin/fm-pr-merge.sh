@@ -183,11 +183,15 @@
 # deletes a branch on its own. No other extra argument applies, and --auto and
 # --admin have no Bitbucket equivalent, so each is refused.
 # Bitbucket may accept a merge and finish it asynchronously (202, or its 555
-# timeout); either way the landed state is read back a bounded number of times,
-# and a merge that has not landed yet is reported as unconfirmed without failing
-# the run, leaving the poll armed, as on GitLab. A merge request that got no
-# HTTP response at all may still have landed, so the pull request is read back
-# once and its observed state reported, and the run fails with the poll armed.
+# timeout); either way the landed state is read back a bounded number of times.
+# While away, both the away-record authority lock and task control lock remain
+# held through read-back, and success requires a landing at the verified head;
+# an unconfirmed landing exits non-zero and records no landed outcome. Attended
+# merges release both locks before read-back and report an unconfirmed landing
+# without failing the run, leaving the poll armed, as on GitLab. A merge request
+# that got no HTTP response at all may still have landed, so the pull request is
+# read back once and its observed state reported, and the run fails with the poll
+# armed.
 #
 # Before any forge merge, the task's existing per-task control lock
 # serializes the captain-hold check through the forge command. A still-held or
@@ -203,9 +207,9 @@
 # authority lapses when the record is archived.
 # The authority read and synchronous forge command share the away record's
 # cross-subsystem lock, which bin/fm-afk-contract.sh owns, closing the common
-# live-owner TOCTOU; failure to take it refuses before the forge call. Async and
-# queued paths are refused while away. Two confused-agent-grade limitations are
-# accepted rather than hidden: queue or base changes after GitHub's preflight can
+# live-owner TOCTOU; failure to take it refuses before the forge call. Deferred
+# and queued outcomes are refused while away. Two confused-agent-grade
+# limitations are accepted rather than hidden: queue or base changes after GitHub's preflight can
 # still enqueue, and killing this shell can orphan a forge child after stale-lock
 # recovery. docs/architecture.md owns those away-merge limits, while
 # docs/captain-hold-lifecycle.md owns the separate merge-to-cleanup residual.
@@ -2212,8 +2216,8 @@ case "$PROVIDER" in
     FM_PR_BITBUCKET_MAX_TIME=120 fm_pr_bitbucket_request POST \
       "repositories/$PR_PATH/pullrequests/$PR_NUMBER/merge" "$bitbucket_merge_body" || true
     # 202 is an accepted merge still completing and 555 is Bitbucket's own merge
-    # timeout, after which the merge may still land, so both read back like a
-    # success rather than report a failure that may not be one.
+    # timeout, after which the merge may still land, so both require read-back
+    # rather than treating the HTTP status as proof of a landing.
     case "$FM_PR_BITBUCKET_STATUS" in
       2??|555) ;;
       '')
@@ -2240,14 +2244,26 @@ case "$PROVIDER" in
         ;;
     esac
     persist_accepted_merge_authority || exit 1
-    fm_afk_contract_lock_release || true
-    fm_lock_release "$MERGE_CONTROL_LOCK" || true
-    MERGE_CONTROL_LOCK=
+    # Attended merges release both locks before bounded read-back and may leave
+    # an accepted request completing with the poll armed. Away merges retain
+    # both locks through same-head confirmation; EXIT cleanup releases them
+    # only after recording a verified landing or returning a non-success.
+    if [ "$FM_PR_AWAY_POSTURE" != true ]; then
+      fm_afk_contract_lock_release || true
+      fm_lock_release "$MERGE_CONTROL_LOCK" || true
+      MERGE_CONTROL_LOCK=
+    fi
     bitbucket_confirm_rc=0
     bitbucket_confirm_merged || bitbucket_confirm_rc=$?
     case "$bitbucket_confirm_rc" in
       0) ;;
-      2) exit 0 ;;
+      2)
+        if [ "$FM_PR_AWAY_POSTURE" = true ]; then
+          printf 'error: Bitbucket landing unconfirmed while away for %s; no landed outcome is recorded; the merge poll remains armed\n' "$URL" >&2
+          exit 1
+        fi
+        exit 0
+        ;;
       *) exit 1 ;;
     esac
     if [ "$FM_PR_BITBUCKET_MERGED_HEAD_OK" != true ]; then
