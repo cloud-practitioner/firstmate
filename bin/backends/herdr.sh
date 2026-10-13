@@ -3996,7 +3996,7 @@ fm_backend_herdr_classify_submit_agent_status() {  # <raw-agent_status>
 fm_backend_herdr_agent_status_raw() {  # <session> <pane_id>
   local session=$1 pane_id=$2 out
   if [ "${FM_BACKEND_HERDR_EXPECTED_LABEL+x}" = x ]; then
-    fm_backend_herdr_target_ready "$session:$pane_id" || return 0
+    fm_backend_herdr_target_observable "$session:$pane_id" || return 0
   fi
   out=$(fm_backend_herdr_cli "$session" agent get "$pane_id" 2>/dev/null) || { printf ''; return 0; }
   printf '%s' "$out" | jq -r '.result.agent.agent_status // empty' 2>/dev/null

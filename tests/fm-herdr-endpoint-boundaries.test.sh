@@ -43,6 +43,12 @@ case "${1:-} ${2:-}" in
   'status --json')
     running=true; [ ! -e "$w/stopped" ] || running=false
     printf '{"client":{"version":"0.9.3","protocol":22},"server":{"running":%s}}\n' "$running"
+    if [ -f "$w/stop-after-status" ]; then
+      n=0; [ ! -f "$w/status-reads" ] || read -r n < "$w/status-reads"
+      n=$((n + 1)); printf '%s\n' "$n" > "$w/status-reads"
+      read -r stop_after < "$w/stop-after-status"
+      [ "$n" -ne "$stop_after" ] || : > "$w/stopped"
+    fi
     ;;
   'server '*) printf '%s\n' "$*" >> "$w/server.log"; rm -f "$w/stopped" ;;
   'session list') printf '{"sessions":[{"name":"fmtest","running":true,"socket_path":"%s/fmtest.sock"}]}\n' "$w" ;;
@@ -173,6 +179,15 @@ test_passive_probes_do_not_start_the_server() {
         composer) out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine); [ "$out" = empty ] || fail "composer refused the owned pane: $out" ;;
         busy) out=$(fm_backend_busy_state herdr fmtest:w1:p1 fm-mine); [ "$out" = idle ] || fail "busy refused the owned pane: $out" ;;
       esac
+      if [ "$op" = busy ]; then
+        : > "$FM_FAKE_WORLD/agent-reads"
+        printf '2\n' > "$FM_FAKE_WORLD/stop-after-status"
+        out=$(fm_backend_busy_state herdr fmtest:w1:p1 fm-mine)
+        [ "$out" = unknown ] || fail "busy read native status after the server stopped: $out"
+        [ -e "$FM_FAKE_WORLD/stopped" ] && [ ! -s "$FM_FAKE_WORLD/server.log" ] || fail 'busy native status probe restarted the server'
+        [ ! -s "$FM_FAKE_WORLD/agent-reads" ] || fail 'busy native status probe read the stopped session'
+        rm -f "$FM_FAKE_WORLD/stopped" "$FM_FAKE_WORLD/stop-after-status" "$FM_FAKE_WORLD/status-reads"
+      fi
       write_pane w1:p1 43 "$FM_HOME" claude
       printf 'foreign draft' > "$FM_FAKE_WORLD/composer-w1_p1"
       : > "$FM_FAKE_WORLD/reads"
