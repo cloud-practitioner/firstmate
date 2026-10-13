@@ -1,0 +1,131 @@
+{
+  "version": "1.1.0",
+  "product": "real Pi AgentSession + tracked Firstmate extensions + real bin scripts",
+  "dependency": "disposable loopback OpenAI-compatible SSE endpoint (no live LLM or credentials)",
+  "before": [
+    {
+      "hasPrompt": true,
+      "prompt": "Keep this run active while the local watcher receives a status update."
+    },
+    {
+      "hasPrompt": true,
+      "prompt": "⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SJ6G1XHXFQPDSN8VT81BHJ/.test-pi12/pi11-watch-home/state/lab.status\n\nwatcher: FAILED - handling delivery confirmation was rejected (status=1 generation=1543599.1791860062.tuvc2i watcherPid=1547915)\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+    }
+  ],
+  "contexts": [
+    {
+      "roles": [
+        "user"
+      ],
+      "customTypes": []
+    },
+    {
+      "roles": [
+        "user",
+        "assistant",
+        "custom"
+      ],
+      "customTypes": [
+        "lab-same-wake"
+      ]
+    },
+    {
+      "roles": [
+        "user",
+        "assistant",
+        "custom",
+        "assistant",
+        "user"
+      ],
+      "customTypes": [
+        "lab-same-wake"
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "url": "/v1/chat/completions",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use no tools. Reply briefly.\n\n<cwd>\n/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SJ6G1XHXFQPDSN8VT81BHJ\n</cwd>"
+        },
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "Keep this run active while the local watcher receives a status update."
+            }
+          ]
+        }
+      ],
+      "tools": [
+        "fm_watch_arm_pi"
+      ]
+    },
+    {
+      "url": "/v1/chat/completions",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Use no tools. Reply briefly.\n\n<cwd>\n/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SJ6G1XHXFQPDSN8VT81BHJ\n</cwd>"
+        },
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "Keep this run active while the local watcher receives a status update."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SJ6G1XHXFQPDSN8VT81BHJ/.test-pi12/pi11-watch-home/state/lab.status\n\nwatcher: FAILED - handling delivery confirmation was rejected (status=1 generation=1543599.1791860062.tuvc2i watcherPid=1546835)\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SJ6G1XHXFQPDSN8VT81BHJ/.test-pi12/pi11-watch-home/state/lab.status\n\nwatcher: FAILED - handling delivery confirmation was rejected (status=1 generation=1543599.1791860062.tuvc2i watcherPid=1547915)\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+            }
+          ]
+        }
+      ],
+      "tools": [
+        "fm_watch_arm_pi"
+      ]
+    }
+  ],
+  "errors": [],
+  "results": [
+    {
+      "scenario": "real watcher delivery",
+      "wake": "⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SJ6G1XHXFQPDSN8VT81BHJ/.test-pi12/pi11-watch-home/state/lab.status\n\nwatcher: FAILED - handling delivery confirmation was rejected (status=1 generation=1543599.1791860062.tuvc2i watcherPid=1546835)\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+    },
+    {
+      "scenario": "custom wake survives replacement and user consumes replay",
+      "handoff": {
+        "version": 2,
+        "pending": [
+          {
+            "version": 1,
+            "token": "1530422-1791860064100-1",
+            "message": "signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SJ6G1XHXFQPDSN8VT81BHJ/.test-pi12/pi11-watch-home/state/lab.status",
+            "predecessorArmPid": "1543477"
+          }
+        ]
+      },
+      "replayedPrompt": "⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SJ6G1XHXFQPDSN8VT81BHJ/.test-pi12/pi11-watch-home/state/lab.status\n\nwatcher: FAILED - handling delivery confirmation was rejected (status=1 generation=1543599.1791860062.tuvc2i watcherPid=1547915)\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned.",
+      "response": "Local endpoint completed the requested run."
+    }
+  ],
+  "status": "pass"
+}
