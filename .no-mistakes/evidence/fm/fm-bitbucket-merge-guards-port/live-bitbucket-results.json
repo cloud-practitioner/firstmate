@@ -1,0 +1,1201 @@
+[
+  {
+    "name": "default-squash",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-squash/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/default-squash/pull-requests/7 is merged at the verified head 9a651a1215477d539e15135aac862a8b277c2e4a\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/default-squash/pull-requests/7 is open, with every unwaived build green and every merge check met at head 9a651a1215477d539e15135aac862a8b277c2e4a\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-squash/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-squash/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-squash/pull-requests/7",
+      "pr_head": "9a651a1215477d539e15135aac862a8b277c2e4a"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "8077ba8 Squashed fixture PR 7\n1b03d3b baseline",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-merge-commit",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-merge-commit/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/default-merge-commit/pull-requests/7 is merged at the verified head 08373482822295f5ec84937e994bff54de9ef450\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/default-merge-commit/pull-requests/7 is open, with every unwaived build green and every merge check met at head 08373482822295f5ec84937e994bff54de9ef450\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-merge-commit/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-merge-commit/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-merge-commit/pull-requests/7",
+      "pr_head": "08373482822295f5ec84937e994bff54de9ef450"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "merge_commit"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "ba0ed03 Merged fixture PR 7\n2158821 baseline\n0837348 feature",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-fast-forward",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-fast-forward/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/default-fast-forward/pull-requests/7 is merged at the verified head 9897626363a99911a5c15e6fa061ca63be53c53f\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/default-fast-forward/pull-requests/7 is open, with every unwaived build green and every merge check met at head 9897626363a99911a5c15e6fa061ca63be53c53f\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-fast-forward/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-fast-forward/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-fast-forward/pull-requests/7",
+      "pr_head": "9897626363a99911a5c15e6fa061ca63be53c53f"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "fast_forward"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "9897626 feature\n960641a baseline",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-squash-fast-forward",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-squash-fast-forward/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/default-squash-fast-forward/pull-requests/7 is merged at the verified head eb2cf829b1623fde08f8929930d09712148679e0\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/default-squash-fast-forward/pull-requests/7 is open, with every unwaived build green and every merge check met at head eb2cf829b1623fde08f8929930d09712148679e0\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-squash-fast-forward/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-squash-fast-forward/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-squash-fast-forward/pull-requests/7",
+      "pr_head": "eb2cf829b1623fde08f8929930d09712148679e0"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash_fast_forward"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "1c4b948 Squashed fixture PR 7\n8948af8 baseline",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-rebase-fast-forward",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-rebase-fast-forward/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/default-rebase-fast-forward/pull-requests/7 is merged at the verified head f84f6bca56c0431d2ca34185091d4836818078bb\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/default-rebase-fast-forward/pull-requests/7 is open, with every unwaived build green and every merge check met at head f84f6bca56c0431d2ca34185091d4836818078bb\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-rebase-fast-forward/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-rebase-fast-forward/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-rebase-fast-forward/pull-requests/7",
+      "pr_head": "f84f6bca56c0431d2ca34185091d4836818078bb"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "rebase_fast_forward"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "f84f6bc feature\n3172d97 baseline",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-rebase-merge",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-rebase-merge/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/default-rebase-merge/pull-requests/7 is merged at the verified head 6ec7e4f40c16d84af381fb393f4a72e780274f08\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/default-rebase-merge/pull-requests/7 is open, with every unwaived build green and every merge check met at head 6ec7e4f40c16d84af381fb393f4a72e780274f08\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-rebase-merge/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-rebase-merge/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-rebase-merge/pull-requests/7",
+      "pr_head": "6ec7e4f40c16d84af381fb393f4a72e780274f08"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "rebase_merge"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "8f260c5 Merged fixture PR 7\n6b0c059 baseline\n6ec7e4f feature",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "slash-destination",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/slash-destination/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/slash-destination/pull-requests/7 is merged at the verified head 3a3be115a14ee747a4f30104edddeb9411b49f66\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/slash-destination/pull-requests/7 is open, with every unwaived build green and every merge check met at head 3a3be115a14ee747a4f30104edddeb9411b49f66\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/slash-destination/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/slash-destination/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/slash-destination/pull-requests/7",
+      "pr_head": "3a3be115a14ee747a4f30104edddeb9411b49f66"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "92b1360 Squashed fixture PR 7\n120bc77 baseline",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-http500",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-http500/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/default-http500/pull-requests/7\n  - the configured default merge strategy of destination branch main could not be read (HTTP 500); name a strategy with --squash, --merge, --rebase, or --method, or fix the read\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-http500/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-http500/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-http500/pull-requests/7",
+      "pr_head": "460f249f6034784b310a55323e9a751bf0a80d8f"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 2,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "0f7ae8b baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-http403",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-http403/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/default-http403/pull-requests/7\n  - the configured default merge strategy of destination branch main could not be read (HTTP 403); name a strategy with --squash, --merge, --rebase, or --method, or fix the read\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-http403/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-http403/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-http403/pull-requests/7",
+      "pr_head": "b670d5a373be2864855d01781f870af560a2e47c"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 2,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "4ac39bd baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-unknown",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-unknown/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/default-unknown/pull-requests/7\n  - destination branch main reports no merge strategy this script knows as its default (got \"octopus\"); name a strategy with --squash, --merge, --rebase, or --method, or fix the read\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-unknown/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-unknown/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-unknown/pull-requests/7",
+      "pr_head": "75d5f14bb76abba8db1ac417887b3f3d3a13ec0b"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 2,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "93b6256 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-missing",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-missing/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/default-missing/pull-requests/7\n  - destination branch main reports no merge strategy this script knows as its default (got \"\"); name a strategy with --squash, --merge, --rebase, or --method, or fix the read\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-missing/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-missing/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-missing/pull-requests/7",
+      "pr_head": "6152a0171ff5bed321c650bd3f088f7cdf7f1854"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 2,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "faf7bea baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-wrong-branch",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-wrong-branch/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/default-wrong-branch/pull-requests/7\n  - destination branch main reports no merge strategy this script knows as its default (got \"\"); name a strategy with --squash, --merge, --rebase, or --method, or fix the read\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-wrong-branch/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-wrong-branch/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-wrong-branch/pull-requests/7",
+      "pr_head": "7c435989cfb5e2d06373080c0e2e14ec13af228e"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 2,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "c9b6b2d baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "default-malformed",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/default-malformed/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nerror: refusing to merge https://bitbucket.org/fm-lab/default-malformed/pull-requests/7\n  - the configured default merge strategy of destination branch main could not be read (HTTP 200); name a strategy with --squash, --merge, --rebase, or --method, or fix the read\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-malformed/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/default-malformed/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/default-malformed/pull-requests/7",
+      "pr_head": "faeeea179ee8ea10f0afa1960a5cc791e4a36817"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 2,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "9099f20 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "explicit-squash",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/explicit-squash/pull-requests/7",
+      "--",
+      "--squash"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/explicit-squash/pull-requests/7 is merged at the verified head 59c433cefc5a4d3c1c16fb2ac048dba6647ad674\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/explicit-squash/pull-requests/7 is open, with every unwaived build green and every merge check met at head 59c433cefc5a4d3c1c16fb2ac048dba6647ad674\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/explicit-squash/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/explicit-squash/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/explicit-squash/pull-requests/7",
+      "pr_head": "59c433cefc5a4d3c1c16fb2ac048dba6647ad674"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "2133400 Squashed fixture PR 7\nd51dd58 baseline",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "explicit-merge",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/explicit-merge/pull-requests/7",
+      "--",
+      "--merge"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/explicit-merge/pull-requests/7 is merged at the verified head 5864e865d183cd1d3ddc389eb84e4e86fe0cddae\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/explicit-merge/pull-requests/7 is open, with every unwaived build green and every merge check met at head 5864e865d183cd1d3ddc389eb84e4e86fe0cddae\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/explicit-merge/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/explicit-merge/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/explicit-merge/pull-requests/7",
+      "pr_head": "5864e865d183cd1d3ddc389eb84e4e86fe0cddae"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "merge_commit"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "5cf8391 Merged fixture PR 7\ndd8dd94 baseline\n5864e86 feature",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "explicit-rebase",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/explicit-rebase/pull-requests/7",
+      "--",
+      "--rebase"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/explicit-rebase/pull-requests/7 is merged at the verified head d2ef8978d71f7ae7104e0b4af97cb19ed1232106\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/explicit-rebase/pull-requests/7 is open, with every unwaived build green and every merge check met at head d2ef8978d71f7ae7104e0b4af97cb19ed1232106\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/explicit-rebase/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/explicit-rebase/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/explicit-rebase/pull-requests/7",
+      "pr_head": "d2ef8978d71f7ae7104e0b4af97cb19ed1232106"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "rebase_fast_forward"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "d2ef897 feature\n1e2b83c baseline",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "explicit-method",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/explicit-method/pull-requests/7",
+      "--",
+      "--method",
+      "rebase_merge"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/explicit-method/pull-requests/7 is merged at the verified head e9ebe8bf21487b0f1deb5f009086eb91eefba0e6\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/explicit-method/pull-requests/7 is open, with every unwaived build green and every merge check met at head e9ebe8bf21487b0f1deb5f009086eb91eefba0e6\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/explicit-method/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/explicit-method/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/explicit-method/pull-requests/7",
+      "pr_head": "e9ebe8bf21487b0f1deb5f009086eb91eefba0e6"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "rebase_merge"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "3030a3b Merged fixture PR 7\ncfcc23a baseline\ne9ebe8b feature",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "final-destination",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/final-destination/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/final-destination/pull-requests/7 is open, with every unwaived build green and every merge check met at head 55c3535746d10cf7ca11638a90e10d4fa60ffbb6\nerror: https://bitbucket.org/fm-lab/final-destination/pull-requests/7 now targets release, not the verified destination branch main, so its merge checks were never read; nothing was merged\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-destination/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-destination/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/final-destination/pull-requests/7",
+      "pr_head": "55c3535746d10cf7ca11638a90e10d4fa60ffbb6"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 3,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "5661315 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "final-withdrawn",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/final-withdrawn/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/final-withdrawn/pull-requests/7 is open, with every unwaived build green and every merge check met at head 0d23b60934ad58b6ab97e21145a03be63d1a3002\nerror: the reviews of https://bitbucket.org/fm-lab/final-withdrawn/pull-requests/7 changed after verification (approval withdrawn by {alice}); nothing was merged\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-withdrawn/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-withdrawn/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/final-withdrawn/pull-requests/7",
+      "pr_head": "0d23b60934ad58b6ab97e21145a03be63d1a3002"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 3,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "4cfe80a baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "final-replacement",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/final-replacement/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/final-replacement/pull-requests/7 is open, with every unwaived build green and every merge check met at head fc3eaa8ccac3952816f5ad8b370da98d4559eb8b\nerror: the reviews of https://bitbucket.org/fm-lab/final-replacement/pull-requests/7 changed after verification (approval withdrawn by {alice}); nothing was merged\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-replacement/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-replacement/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/final-replacement/pull-requests/7",
+      "pr_head": "fc3eaa8ccac3952816f5ad8b370da98d4559eb8b"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 3,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "4557421 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "final-changes",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/final-changes/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/final-changes/pull-requests/7 is open, with every unwaived build green and every merge check met at head d8446e697c68ad4d7115cfcfefd5fb766ecc9e88\nerror: the reviews of https://bitbucket.org/fm-lab/final-changes/pull-requests/7 changed after verification (changes requested by {carol}); nothing was merged\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-changes/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-changes/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/final-changes/pull-requests/7",
+      "pr_head": "d8446e697c68ad4d7115cfcfefd5fb766ecc9e88"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 3,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "c1aa785 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "final-malformed",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/final-malformed/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/final-malformed/pull-requests/7 is open, with every unwaived build green and every merge check met at head a8362fe4936d84311e7345a5db4d618e60a9b25c\nerror: the reviews of the pull request could not be interpreted immediately before merging, so a change since verification cannot be ruled out; nothing was merged\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-malformed/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-malformed/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/final-malformed/pull-requests/7",
+      "pr_head": "a8362fe4936d84311e7345a5db4d618e60a9b25c"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 3,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "65274a0 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "final-head",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/final-head/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/final-head/pull-requests/7 is open, with every unwaived build green and every merge check met at head 661b18595b3d8f30ce1201fcf71c9090d18af683\nerror: https://bitbucket.org/fm-lab/final-head/pull-requests/7 changed after verification (state OPEN, head 7a66e5f242dec9daf30a63ca203ad80a1e3edf1e, verified head 661b18595b3d8f30ce1201fcf71c9090d18af683); nothing was merged\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-head/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-head/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/final-head/pull-requests/7",
+      "pr_head": "661b18595b3d8f30ce1201fcf71c9090d18af683"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 3,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "6492349 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "final-closed",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/final-closed/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/final-closed/pull-requests/7 is open, with every unwaived build green and every merge check met at head a6b8a6e4ad8ff66a93c842a4b6d8605b4f2ccba4\nerror: https://bitbucket.org/fm-lab/final-closed/pull-requests/7 changed after verification (state DECLINED, head a6b8a6e4ad8ff66a93c842a4b6d8605b4f2ccba4, verified head a6b8a6e4ad8ff66a93c842a4b6d8605b4f2ccba4); nothing was merged\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-closed/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-closed/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/final-closed/pull-requests/7",
+      "pr_head": "a6b8a6e4ad8ff66a93c842a4b6d8605b4f2ccba4"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 3,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "32d6e85 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "final-nickname-withdrawn",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/final-nickname-withdrawn/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/final-nickname-withdrawn/pull-requests/7 is open, with every unwaived build green and every merge check met at head 26932e5a3020bcab84e3db0c7f87df537d5ccd08\nerror: the reviews of https://bitbucket.org/fm-lab/final-nickname-withdrawn/pull-requests/7 changed after verification (approval withdrawn by alice); nothing was merged\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-nickname-withdrawn/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-nickname-withdrawn/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/final-nickname-withdrawn/pull-requests/7",
+      "pr_head": "26932e5a3020bcab84e3db0c7f87df537d5ccd08"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 3,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "82338b8 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "final-reordered-reviews",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/final-reordered-reviews/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/final-reordered-reviews/pull-requests/7 is merged at the verified head df8f5bc80789f7531f9c7bf6557d4dc71fd88097\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/final-reordered-reviews/pull-requests/7 is open, with every unwaived build green and every merge check met at head df8f5bc80789f7531f9c7bf6557d4dc71fd88097\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-reordered-reviews/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/final-reordered-reviews/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/final-reordered-reviews/pull-requests/7",
+      "pr_head": "df8f5bc80789f7531f9c7bf6557d4dc71fd88097"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash"
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "8d4d36d Squashed fixture PR 7\n0509ca6 baseline",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "draft-lookup-503",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-check.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/draft-lookup-503/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "error: https://bitbucket.org/fm-lab/draft-lookup-503/pull-requests/7 is a draft pull request; a draft cannot be merged, so merge monitoring would wait for an event that cannot occur - mark it ready for review and arm again, or declare a wait instead of done if the draft is deliberate\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/draft-lookup-503/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/draft-lookup-503/repo",
+      "kind": "ship",
+      "mode": "no-mistakes"
+    },
+    "poll_armed": false,
+    "full_pr_reads": 1,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "532eb39 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "draft-lookup-404",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-check.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/draft-lookup-404/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "error: https://bitbucket.org/fm-lab/draft-lookup-404/pull-requests/7 is a draft pull request; a draft cannot be merged, so merge monitoring would wait for an event that cannot occur - mark it ready for review and arm again, or declare a wait instead of done if the draft is deliberate\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/draft-lookup-404/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/draft-lookup-404/repo",
+      "kind": "ship",
+      "mode": "no-mistakes"
+    },
+    "poll_armed": false,
+    "full_pr_reads": 1,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "532eb39 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "draft-lookup-malformed",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-check.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/draft-lookup-malformed/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "error: https://bitbucket.org/fm-lab/draft-lookup-malformed/pull-requests/7 is a draft pull request; a draft cannot be merged, so merge monitoring would wait for an event that cannot occur - mark it ready for review and arm again, or declare a wait instead of done if the draft is deliberate\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/draft-lookup-malformed/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/draft-lookup-malformed/repo",
+      "kind": "ship",
+      "mode": "no-mistakes"
+    },
+    "poll_armed": false,
+    "full_pr_reads": 1,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "bf23af7 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "ready-lookup-503",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-check.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/ready-lookup-503/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/ready-lookup-503/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/ready-lookup-503/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/ready-lookup-503/pull-requests/7"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 1,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "bf23af7 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "ready-lookup-malformed",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/bin/fm-pr-check.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/ready-lookup-malformed/pull-requests/7"
+    ],
+    "product": "target",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/ready-lookup-malformed/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/ready-lookup-malformed/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/ready-lookup-malformed/pull-requests/7"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 1,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "659c865 baseline",
+    "destination_tree": "README.md",
+    "errors": [],
+    "result": "pass"
+  },
+  {
+    "name": "base-default-squash",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/base-default-squash/pull-requests/7"
+    ],
+    "product": "base",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/base-default-squash/pull-requests/7 is merged at the verified head 6deca35080b9b5aaaf358e8bc75b2f98099f5702\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/base-default-squash/pull-requests/7 is open, with every unwaived build green and every merge check met at head 6deca35080b9b5aaaf358e8bc75b2f98099f5702\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-default-squash/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-default-squash/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/base-default-squash/pull-requests/7",
+      "pr_head": "6deca35080b9b5aaaf358e8bc75b2f98099f5702"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "c856ec2 Merged fixture PR 7\ne0d77b9 baseline\n6deca35 feature",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [
+      "wrong merge request body: [{'type': 'pullrequest', 'close_source_branch': False}]"
+    ],
+    "result": "fail"
+  },
+  {
+    "name": "base-default-unreadable",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/base-default-unreadable/pull-requests/7"
+    ],
+    "product": "base",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/base-default-unreadable/pull-requests/7 is merged at the verified head 4d2c5bffde94836d34f73f6fb617f388a918252e\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/base-default-unreadable/pull-requests/7 is open, with every unwaived build green and every merge check met at head 4d2c5bffde94836d34f73f6fb617f388a918252e\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-default-unreadable/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-default-unreadable/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/base-default-unreadable/pull-requests/7",
+      "pr_head": "4d2c5bffde94836d34f73f6fb617f388a918252e"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "7fa77d7 Merged fixture PR 7\n542a031 baseline\n4d2c5bf feature",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [
+      "exit 0, expected 1",
+      "refusal did not name 'merge strategy'",
+      "refused case still requested a merge",
+      "destination changed despite refusal"
+    ],
+    "result": "fail"
+  },
+  {
+    "name": "base-final-destination",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/base-final-destination/pull-requests/7"
+    ],
+    "product": "base",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/base-final-destination/pull-requests/7 is merged at the verified head 1b05391b749349bcf996c78f56e54ed437eeda0a\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/base-final-destination/pull-requests/7 is open, with every unwaived build green and every merge check met at head 1b05391b749349bcf996c78f56e54ed437eeda0a\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-final-destination/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-final-destination/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/base-final-destination/pull-requests/7",
+      "pr_head": "1b05391b749349bcf996c78f56e54ed437eeda0a"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "ffb2f86 Merged fixture PR 7\n5c84a75 baseline\n1b05391 feature",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [
+      "exit 0, expected 1",
+      "refusal did not name 'now targets release'",
+      "refused case still requested a merge",
+      "destination changed despite refusal",
+      "drift did not reach final pre-merge read"
+    ],
+    "result": "fail"
+  },
+  {
+    "name": "base-final-withdrawn",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/base-final-withdrawn/pull-requests/7"
+    ],
+    "product": "base",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/base-final-withdrawn/pull-requests/7 is merged at the verified head c2b0ff9b592d0310fc2cae4a69115ae8ec7dfe29\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/base-final-withdrawn/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2b0ff9b592d0310fc2cae4a69115ae8ec7dfe29\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-final-withdrawn/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-final-withdrawn/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/base-final-withdrawn/pull-requests/7",
+      "pr_head": "c2b0ff9b592d0310fc2cae4a69115ae8ec7dfe29"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "7ee5113 Merged fixture PR 7\ndbe5e37 baseline\nc2b0ff9 feature",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [
+      "exit 0, expected 1",
+      "refusal did not name 'approval withdrawn'",
+      "refused case still requested a merge",
+      "destination changed despite refusal",
+      "drift did not reach final pre-merge read"
+    ],
+    "result": "fail"
+  },
+  {
+    "name": "base-final-changes",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/base-final-changes/pull-requests/7"
+    ],
+    "product": "base",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/fm-lab/base-final-changes/pull-requests/7 is merged at the verified head 2854c9aeb80187c1ba6f51bc02934e3864d6384b\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\nverified: https://bitbucket.org/fm-lab/base-final-changes/pull-requests/7 is open, with every unwaived build green and every merge check met at head 2854c9aeb80187c1ba6f51bc02934e3864d6384b\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-final-changes/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-final-changes/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/base-final-changes/pull-requests/7",
+      "pr_head": "2854c9aeb80187c1ba6f51bc02934e3864d6384b"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 4,
+    "merge_requests": [
+      {
+        "type": "pullrequest",
+        "close_source_branch": false
+      }
+    ],
+    "api_merged": true,
+    "destination_history": "b2557fb Merged fixture PR 7\n04b18a8 baseline\n2854c9a feature",
+    "destination_tree": "README.md\nfeature.txt",
+    "errors": [
+      "exit 0, expected 1",
+      "refusal did not name 'changes requested'",
+      "refused case still requested a merge",
+      "destination changed despite refusal",
+      "drift did not reach final pre-merge read"
+    ],
+    "result": "fail"
+  },
+  {
+    "name": "base-draft-lookup-503",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/bin/fm-pr-check.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-lab/base-draft-lookup-503/pull-requests/7"
+    ],
+    "product": "base",
+    "exit_code": 0,
+    "stdout": "armed: state/task-x1.check.sh\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n",
+    "metadata": {
+      "window": "fm-task-x1",
+      "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-draft-lookup-503/repo",
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4SV111DPBMGY82J84GZ53QX/.bitbucket-test-tmp/live/base-draft-lookup-503/repo",
+      "kind": "ship",
+      "mode": "no-mistakes",
+      "pr": "https://bitbucket.org/fm-lab/base-draft-lookup-503/pull-requests/7"
+    },
+    "poll_armed": true,
+    "full_pr_reads": 1,
+    "merge_requests": [],
+    "api_merged": false,
+    "destination_history": "b48e6f6 baseline",
+    "destination_tree": "README.md",
+    "errors": [
+      "exit 0, expected 1",
+      "refusal did not name 'is a draft pull request'",
+      "draft was armed or recorded"
+    ],
+    "result": "fail"
+  }
+]

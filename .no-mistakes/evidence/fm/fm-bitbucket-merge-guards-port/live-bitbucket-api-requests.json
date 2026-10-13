@@ -1,0 +1,8136 @@
+[
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "9a651a121547",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "1b03d3b7d76f"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/commit/9a651a121547?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "9a651a1215477d539e15135aac862a8b277c2e4a"
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "9a651a121547",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "1b03d3b7d76f"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/commit/9a651a121547?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "9a651a1215477d539e15135aac862a8b277c2e4a"
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/commit/9a651a1215477d539e15135aac862a8b277c2e4a/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "9a651a121547",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "1b03d3b7d76f"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/commit/9a651a121547?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "9a651a1215477d539e15135aac862a8b277c2e4a"
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/default-squash/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "9a651a121547",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "1b03d3b7d76f"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "083734828222",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "2158821833d6"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/commit/083734828222?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "08373482822295f5ec84937e994bff54de9ef450"
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "083734828222",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "2158821833d6"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/commit/083734828222?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "08373482822295f5ec84937e994bff54de9ef450"
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/commit/08373482822295f5ec84937e994bff54de9ef450/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "083734828222",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "2158821833d6"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/commit/083734828222?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "08373482822295f5ec84937e994bff54de9ef450"
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "merge_commit"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "default-merge-commit",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-merge-commit/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "083734828222",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "2158821833d6"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "9897626363a9",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "960641a9e14e"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/commit/9897626363a9?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "9897626363a99911a5c15e6fa061ca63be53c53f"
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "9897626363a9",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "960641a9e14e"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/commit/9897626363a9?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "9897626363a99911a5c15e6fa061ca63be53c53f"
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "fast_forward"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/commit/9897626363a99911a5c15e6fa061ca63be53c53f/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "9897626363a9",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "960641a9e14e"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/commit/9897626363a9?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "9897626363a99911a5c15e6fa061ca63be53c53f"
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "fast_forward"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "default-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "9897626363a9",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "960641a9e14e"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "eb2cf829b162",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "8948af865c5c"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/commit/eb2cf829b162?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "eb2cf829b1623fde08f8929930d09712148679e0"
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "eb2cf829b162",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "8948af865c5c"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/commit/eb2cf829b162?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "eb2cf829b1623fde08f8929930d09712148679e0"
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash_fast_forward"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/commit/eb2cf829b1623fde08f8929930d09712148679e0/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "eb2cf829b162",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "8948af865c5c"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/commit/eb2cf829b162?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "eb2cf829b1623fde08f8929930d09712148679e0"
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash_fast_forward"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "default-squash-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-squash-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "eb2cf829b162",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "8948af865c5c"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "f84f6bca56c0",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "3172d97a0508"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/commit/f84f6bca56c0?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "f84f6bca56c0431d2ca34185091d4836818078bb"
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "f84f6bca56c0",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "3172d97a0508"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/commit/f84f6bca56c0?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "f84f6bca56c0431d2ca34185091d4836818078bb"
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "rebase_fast_forward"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/commit/f84f6bca56c0431d2ca34185091d4836818078bb/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "f84f6bca56c0",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "3172d97a0508"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/commit/f84f6bca56c0?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "f84f6bca56c0431d2ca34185091d4836818078bb"
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "rebase_fast_forward"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "default-rebase-fast-forward",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-fast-forward/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "f84f6bca56c0",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "3172d97a0508"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6ec7e4f40c16",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "6b0c05995f58"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/commit/6ec7e4f40c16?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "6ec7e4f40c16d84af381fb393f4a72e780274f08"
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6ec7e4f40c16",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "6b0c05995f58"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/commit/6ec7e4f40c16?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "6ec7e4f40c16d84af381fb393f4a72e780274f08"
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "rebase_merge"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/commit/6ec7e4f40c16d84af381fb393f4a72e780274f08/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6ec7e4f40c16",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "6b0c05995f58"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/commit/6ec7e4f40c16?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "6ec7e4f40c16d84af381fb393f4a72e780274f08"
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "rebase_merge"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "default-rebase-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-rebase-merge/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6ec7e4f40c16",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "6b0c05995f58"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "3a3be115a14e",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "release/2026.06"
+        },
+        "commit": {
+          "hash": "120bc77f8403"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/commit/3a3be115a14e?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "3a3be115a14ee747a4f30104edddeb9411b49f66"
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "3a3be115a14e",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "release/2026.06"
+        },
+        "commit": {
+          "hash": "120bc77f8403"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/commit/3a3be115a14e?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "3a3be115a14ee747a4f30104edddeb9411b49f66"
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/refs/branches?q=name%20%3D%20%22release%2F2026.06%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "release/2026.06-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "release/2026.06",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/commit/3a3be115a14ee747a4f30104edddeb9411b49f66/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "3a3be115a14e",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "release/2026.06"
+        },
+        "commit": {
+          "hash": "120bc77f8403"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/commit/3a3be115a14e?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "3a3be115a14ee747a4f30104edddeb9411b49f66"
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/slash-destination/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "slash-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/slash-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "3a3be115a14e",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "release/2026.06"
+        },
+        "commit": {
+          "hash": "120bc77f8403"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-http500",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http500/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "460f249f6034",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "0f7ae8bc2563"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-http500",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http500/commit/460f249f6034?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "460f249f6034784b310a55323e9a751bf0a80d8f"
+    }
+  },
+  {
+    "scenario": "default-http500",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http500/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "460f249f6034",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "0f7ae8bc2563"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-http500",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http500/commit/460f249f6034?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "460f249f6034784b310a55323e9a751bf0a80d8f"
+    }
+  },
+  {
+    "scenario": "default-http500",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http500/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 500,
+    "response": {
+      "type": "error",
+      "error": {
+        "message": "branch default inaccessible"
+      }
+    }
+  },
+  {
+    "scenario": "default-http500",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http500/commit/460f249f6034784b310a55323e9a751bf0a80d8f/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-http500",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http500/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-http403",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http403/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "b670d5a373be",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "4ac39bd82df0"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-http403",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http403/commit/b670d5a373be?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "b670d5a373be2864855d01781f870af560a2e47c"
+    }
+  },
+  {
+    "scenario": "default-http403",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http403/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "b670d5a373be",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "4ac39bd82df0"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-http403",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http403/commit/b670d5a373be?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "b670d5a373be2864855d01781f870af560a2e47c"
+    }
+  },
+  {
+    "scenario": "default-http403",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http403/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 403,
+    "response": {
+      "type": "error",
+      "error": {
+        "message": "branch default inaccessible"
+      }
+    }
+  },
+  {
+    "scenario": "default-http403",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http403/commit/b670d5a373be2864855d01781f870af560a2e47c/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-http403",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-http403/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-unknown",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-unknown/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "75d5f14bb76a",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "93b625623440"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-unknown",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-unknown/commit/75d5f14bb76a?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "75d5f14bb76abba8db1ac417887b3f3d3a13ec0b"
+    }
+  },
+  {
+    "scenario": "default-unknown",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-unknown/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "75d5f14bb76a",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "93b625623440"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-unknown",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-unknown/commit/75d5f14bb76a?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "75d5f14bb76abba8db1ac417887b3f3d3a13ec0b"
+    }
+  },
+  {
+    "scenario": "default-unknown",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-unknown/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "octopus"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "default-unknown",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-unknown/commit/75d5f14bb76abba8db1ac417887b3f3d3a13ec0b/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-unknown",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-unknown/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-missing",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-missing/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6152a0171ff5",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "faf7beaa6d22"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-missing",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-missing/commit/6152a0171ff5?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "6152a0171ff5bed321c650bd3f088f7cdf7f1854"
+    }
+  },
+  {
+    "scenario": "default-missing",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-missing/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6152a0171ff5",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "faf7beaa6d22"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-missing",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-missing/commit/6152a0171ff5?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "6152a0171ff5bed321c650bd3f088f7cdf7f1854"
+    }
+  },
+  {
+    "scenario": "default-missing",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-missing/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "default-missing",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-missing/commit/6152a0171ff5bed321c650bd3f088f7cdf7f1854/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-missing",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-missing/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-wrong-branch",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-wrong-branch/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "7c435989cfb5",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "c9b6b2dd44a8"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-wrong-branch",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-wrong-branch/commit/7c435989cfb5?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "7c435989cfb5e2d06373080c0e2e14ec13af228e"
+    }
+  },
+  {
+    "scenario": "default-wrong-branch",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-wrong-branch/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "7c435989cfb5",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "c9b6b2dd44a8"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-wrong-branch",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-wrong-branch/commit/7c435989cfb5?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "7c435989cfb5e2d06373080c0e2e14ec13af228e"
+    }
+  },
+  {
+    "scenario": "default-wrong-branch",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-wrong-branch/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "default-wrong-branch",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-wrong-branch/commit/7c435989cfb5e2d06373080c0e2e14ec13af228e/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-wrong-branch",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-wrong-branch/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-malformed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "faeeea179ee8",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "9099f203ab5e"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-malformed/commit/faeeea179ee8?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "faeeea179ee8ea10f0afa1960a5cc791e4a36817"
+    }
+  },
+  {
+    "scenario": "default-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-malformed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "faeeea179ee8",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "9099f203ab5e"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "default-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-malformed/commit/faeeea179ee8?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "faeeea179ee8ea10f0afa1960a5cc791e4a36817"
+    }
+  },
+  {
+    "scenario": "default-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-malformed/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": "not-an-array"
+    }
+  },
+  {
+    "scenario": "default-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-malformed/commit/faeeea179ee8ea10f0afa1960a5cc791e4a36817/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "default-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/default-malformed/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "59c433cefc5a",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "d51dd5841491"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/commit/59c433cefc5a?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "59c433cefc5a4d3c1c16fb2ac048dba6647ad674"
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "59c433cefc5a",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "d51dd5841491"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/commit/59c433cefc5a?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "59c433cefc5a4d3c1c16fb2ac048dba6647ad674"
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/commit/59c433cefc5a4d3c1c16fb2ac048dba6647ad674/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "59c433cefc5a",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "d51dd5841491"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/commit/59c433cefc5a?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "59c433cefc5a4d3c1c16fb2ac048dba6647ad674"
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "explicit-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "59c433cefc5a",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "d51dd5841491"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "5864e865d183",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "dd8dd94f475b"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/commit/5864e865d183?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "5864e865d183cd1d3ddc389eb84e4e86fe0cddae"
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "5864e865d183",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "dd8dd94f475b"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/commit/5864e865d183?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "5864e865d183cd1d3ddc389eb84e4e86fe0cddae"
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/commit/5864e865d183cd1d3ddc389eb84e4e86fe0cddae/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "5864e865d183",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "dd8dd94f475b"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/commit/5864e865d183?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "5864e865d183cd1d3ddc389eb84e4e86fe0cddae"
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "merge_commit"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "explicit-merge",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-merge/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "5864e865d183",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "dd8dd94f475b"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "d2ef8978d71f",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "1e2b83c5e7dc"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/commit/d2ef8978d71f?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "d2ef8978d71f7ae7104e0b4af97cb19ed1232106"
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "d2ef8978d71f",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "1e2b83c5e7dc"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/commit/d2ef8978d71f?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "d2ef8978d71f7ae7104e0b4af97cb19ed1232106"
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/commit/d2ef8978d71f7ae7104e0b4af97cb19ed1232106/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "d2ef8978d71f",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "1e2b83c5e7dc"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/commit/d2ef8978d71f?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "d2ef8978d71f7ae7104e0b4af97cb19ed1232106"
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "rebase_fast_forward"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "explicit-rebase",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-rebase/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "d2ef8978d71f",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "1e2b83c5e7dc"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-method/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "e9ebe8bf2148",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "cfcc23a9e687"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-method/commit/e9ebe8bf2148?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "e9ebe8bf21487b0f1deb5f009086eb91eefba0e6"
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-method/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "e9ebe8bf2148",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "cfcc23a9e687"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-method/commit/e9ebe8bf2148?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "e9ebe8bf21487b0f1deb5f009086eb91eefba0e6"
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-method/commit/e9ebe8bf21487b0f1deb5f009086eb91eefba0e6/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-method/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-method/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "e9ebe8bf2148",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "cfcc23a9e687"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-method/commit/e9ebe8bf2148?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "e9ebe8bf21487b0f1deb5f009086eb91eefba0e6"
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/explicit-method/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "rebase_merge"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "explicit-method",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/explicit-method/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "e9ebe8bf2148",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "cfcc23a9e687"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "55c3535746d1",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "56613159bf7d"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-destination/commit/55c3535746d1?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "55c3535746d10cf7ca11638a90e10d4fa60ffbb6"
+    }
+  },
+  {
+    "scenario": "final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "55c3535746d1",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "56613159bf7d"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-destination/commit/55c3535746d1?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "55c3535746d10cf7ca11638a90e10d4fa60ffbb6"
+    }
+  },
+  {
+    "scenario": "final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-destination/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-destination/commit/55c3535746d10cf7ca11638a90e10d4fa60ffbb6/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-destination/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "55c3535746d1",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "release"
+        },
+        "commit": {
+          "hash": "56613159bf7d"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-destination/commit/55c3535746d1?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "55c3535746d10cf7ca11638a90e10d4fa60ffbb6"
+    }
+  },
+  {
+    "scenario": "final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "0d23b60934ad",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "4cfe80a28f63"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-withdrawn/commit/0d23b60934ad?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "0d23b60934ad58b6ab97e21145a03be63d1a3002"
+    }
+  },
+  {
+    "scenario": "final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "0d23b60934ad",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "4cfe80a28f63"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-withdrawn/commit/0d23b60934ad?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "0d23b60934ad58b6ab97e21145a03be63d1a3002"
+    }
+  },
+  {
+    "scenario": "final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-withdrawn/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-withdrawn/commit/0d23b60934ad58b6ab97e21145a03be63d1a3002/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-withdrawn/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "0d23b60934ad",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "4cfe80a28f63"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": false,
+          "state": null
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-withdrawn/commit/0d23b60934ad?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "0d23b60934ad58b6ab97e21145a03be63d1a3002"
+    }
+  },
+  {
+    "scenario": "final-replacement",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-replacement/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "fc3eaa8ccac3",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "45574217b63e"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-replacement",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-replacement/commit/fc3eaa8ccac3?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "fc3eaa8ccac3952816f5ad8b370da98d4559eb8b"
+    }
+  },
+  {
+    "scenario": "final-replacement",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-replacement/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "fc3eaa8ccac3",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "45574217b63e"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-replacement",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-replacement/commit/fc3eaa8ccac3?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "fc3eaa8ccac3952816f5ad8b370da98d4559eb8b"
+    }
+  },
+  {
+    "scenario": "final-replacement",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-replacement/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "final-replacement",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-replacement/commit/fc3eaa8ccac3952816f5ad8b370da98d4559eb8b/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-replacement",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-replacement/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-replacement",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-replacement/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "fc3eaa8ccac3",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "45574217b63e"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{carol}",
+            "nickname": "carol"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-replacement",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-replacement/commit/fc3eaa8ccac3?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "fc3eaa8ccac3952816f5ad8b370da98d4559eb8b"
+    }
+  },
+  {
+    "scenario": "final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-changes/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "d8446e697c68",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "c1aa785f9ed7"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-changes/commit/d8446e697c68?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "d8446e697c68ad4d7115cfcfefd5fb766ecc9e88"
+    }
+  },
+  {
+    "scenario": "final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-changes/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "d8446e697c68",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "c1aa785f9ed7"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-changes/commit/d8446e697c68?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "d8446e697c68ad4d7115cfcfefd5fb766ecc9e88"
+    }
+  },
+  {
+    "scenario": "final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-changes/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-changes/commit/d8446e697c68ad4d7115cfcfefd5fb766ecc9e88/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-changes/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-changes/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "d8446e697c68",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "c1aa785f9ed7"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{carol}",
+            "nickname": "carol"
+          },
+          "role": "REVIEWER",
+          "approved": false,
+          "state": "changes_requested"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-changes/commit/d8446e697c68?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "d8446e697c68ad4d7115cfcfefd5fb766ecc9e88"
+    }
+  },
+  {
+    "scenario": "final-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-malformed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "a8362fe4936d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "65274a0703ee"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-malformed/commit/a8362fe4936d?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "a8362fe4936d84311e7345a5db4d618e60a9b25c"
+    }
+  },
+  {
+    "scenario": "final-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-malformed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "a8362fe4936d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "65274a0703ee"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-malformed/commit/a8362fe4936d?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "a8362fe4936d84311e7345a5db4d618e60a9b25c"
+    }
+  },
+  {
+    "scenario": "final-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-malformed/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "final-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-malformed/commit/a8362fe4936d84311e7345a5db4d618e60a9b25c/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-malformed/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-malformed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "a8362fe4936d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "65274a0703ee"
+        }
+      },
+      "participants": "unreadable",
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-malformed/commit/a8362fe4936d?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "a8362fe4936d84311e7345a5db4d618e60a9b25c"
+    }
+  },
+  {
+    "scenario": "final-head",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-head/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "661b18595b3d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "64923492a18a"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-head",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-head/commit/661b18595b3d?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "661b18595b3d8f30ce1201fcf71c9090d18af683"
+    }
+  },
+  {
+    "scenario": "final-head",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-head/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "661b18595b3d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "64923492a18a"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-head",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-head/commit/661b18595b3d?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "661b18595b3d8f30ce1201fcf71c9090d18af683"
+    }
+  },
+  {
+    "scenario": "final-head",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-head/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "final-head",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-head/commit/661b18595b3d8f30ce1201fcf71c9090d18af683/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-head",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-head/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-head",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-head/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "7a66e5f242de",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "64923492a18a"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-head",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-head/commit/7a66e5f242de?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "7a66e5f242dec9daf30a63ca203ad80a1e3edf1e"
+    }
+  },
+  {
+    "scenario": "final-closed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-closed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "a6b8a6e4ad8f",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "32d6e854c9ca"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-closed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-closed/commit/a6b8a6e4ad8f?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "a6b8a6e4ad8ff66a93c842a4b6d8605b4f2ccba4"
+    }
+  },
+  {
+    "scenario": "final-closed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-closed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "a6b8a6e4ad8f",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "32d6e854c9ca"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-closed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-closed/commit/a6b8a6e4ad8f?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "a6b8a6e4ad8ff66a93c842a4b6d8605b4f2ccba4"
+    }
+  },
+  {
+    "scenario": "final-closed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-closed/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "final-closed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-closed/commit/a6b8a6e4ad8ff66a93c842a4b6d8605b4f2ccba4/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-closed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-closed/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-closed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-closed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "DECLINED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "a6b8a6e4ad8f",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "32d6e854c9ca"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-closed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-closed/commit/a6b8a6e4ad8f?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "a6b8a6e4ad8ff66a93c842a4b6d8605b4f2ccba4"
+    }
+  },
+  {
+    "scenario": "final-nickname-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-nickname-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "26932e5a3020",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "82338b8fdc35"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-nickname-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-nickname-withdrawn/commit/26932e5a3020?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "26932e5a3020bcab84e3db0c7f87df537d5ccd08"
+    }
+  },
+  {
+    "scenario": "final-nickname-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-nickname-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "26932e5a3020",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "82338b8fdc35"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-nickname-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-nickname-withdrawn/commit/26932e5a3020?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "26932e5a3020bcab84e3db0c7f87df537d5ccd08"
+    }
+  },
+  {
+    "scenario": "final-nickname-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-nickname-withdrawn/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "final-nickname-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-nickname-withdrawn/commit/26932e5a3020bcab84e3db0c7f87df537d5ccd08/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-nickname-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-nickname-withdrawn/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-nickname-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-nickname-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "26932e5a3020",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "82338b8fdc35"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": false,
+          "state": null
+        },
+        {
+          "user": {
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-nickname-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-nickname-withdrawn/commit/26932e5a3020?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "26932e5a3020bcab84e3db0c7f87df537d5ccd08"
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "df8f5bc80789",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "0509ca6edb86"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/commit/df8f5bc80789?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "df8f5bc80789f7531f9c7bf6557d4dc71fd88097"
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "df8f5bc80789",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "0509ca6edb86"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/commit/df8f5bc80789?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "df8f5bc80789f7531f9c7bf6557d4dc71fd88097"
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/refs/branches?q=name%20%3D%20%22main%22&fields=values.name,values.default_merge_strategy",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main-other",
+          "default_merge_strategy": "merge_commit"
+        },
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/commit/df8f5bc80789f7531f9c7bf6557d4dc71fd88097/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "df8f5bc80789",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "0509ca6edb86"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/commit/df8f5bc80789?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "df8f5bc80789f7531f9c7bf6557d4dc71fd88097"
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "final-reordered-reviews",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/final-reordered-reviews/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "df8f5bc80789",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "0509ca6edb86"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "draft-lookup-503",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/draft-lookup-503/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": true,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "b3c0f14fb7dc",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "532eb3950b40"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "draft-lookup-503",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/draft-lookup-503/commit/b3c0f14fb7dc?fields=hash",
+    "request_body": null,
+    "status": 503,
+    "response": {
+      "type": "error",
+      "error": {
+        "message": "commit lookup temporarily unavailable"
+      }
+    }
+  },
+  {
+    "scenario": "draft-lookup-404",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/draft-lookup-404/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": true,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "b3c0f14fb7dc",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "532eb3950b40"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "draft-lookup-404",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/draft-lookup-404/commit/b3c0f14fb7dc?fields=hash",
+    "request_body": null,
+    "status": 404,
+    "response": {
+      "type": "error",
+      "error": {
+        "message": "commit lookup temporarily unavailable"
+      }
+    }
+  },
+  {
+    "scenario": "draft-lookup-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/draft-lookup-malformed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": true,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "a3b5b67dbb19",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "bf23af751961"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "draft-lookup-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/draft-lookup-malformed/commit/a3b5b67dbb19?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "not-a-commit"
+    }
+  },
+  {
+    "scenario": "ready-lookup-503",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/ready-lookup-503/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "a3b5b67dbb19",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "bf23af751961"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "ready-lookup-503",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/ready-lookup-503/commit/a3b5b67dbb19?fields=hash",
+    "request_body": null,
+    "status": 503,
+    "response": {
+      "type": "error",
+      "error": {
+        "message": "commit lookup temporarily unavailable"
+      }
+    }
+  },
+  {
+    "scenario": "ready-lookup-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/ready-lookup-malformed/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "fdfb36cc040d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "659c86550098"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "ready-lookup-malformed",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/ready-lookup-malformed/commit/fdfb36cc040d?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "not-a-commit"
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6deca35080b9",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "e0d77b9ac9d5"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/commit/6deca35080b9?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "6deca35080b9b5aaaf358e8bc75b2f98099f5702"
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6deca35080b9",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "e0d77b9ac9d5"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/commit/6deca35080b9?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "6deca35080b9b5aaaf358e8bc75b2f98099f5702"
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/commit/6deca35080b9b5aaaf358e8bc75b2f98099f5702/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6deca35080b9",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "e0d77b9ac9d5"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/commit/6deca35080b9?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "6deca35080b9b5aaaf358e8bc75b2f98099f5702"
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "base-default-squash",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-squash/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "6deca35080b9",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "e0d77b9ac9d5"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "4d2c5bffde94",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "542a031924a5"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/commit/4d2c5bffde94?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "4d2c5bffde94836d34f73f6fb617f388a918252e"
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "4d2c5bffde94",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "542a031924a5"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/commit/4d2c5bffde94?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "4d2c5bffde94836d34f73f6fb617f388a918252e"
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/commit/4d2c5bffde94836d34f73f6fb617f388a918252e/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "4d2c5bffde94",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "542a031924a5"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/commit/4d2c5bffde94?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "4d2c5bffde94836d34f73f6fb617f388a918252e"
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "base-default-unreadable",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-default-unreadable/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "4d2c5bffde94",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "542a031924a5"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "1b05391b7493",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "5c84a75ba3a9"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/commit/1b05391b7493?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "1b05391b749349bcf996c78f56e54ed437eeda0a"
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "1b05391b7493",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "5c84a75ba3a9"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/commit/1b05391b7493?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "1b05391b749349bcf996c78f56e54ed437eeda0a"
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/commit/1b05391b749349bcf996c78f56e54ed437eeda0a/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "1b05391b7493",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "release"
+        },
+        "commit": {
+          "hash": "5c84a75ba3a9"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/commit/1b05391b7493?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "1b05391b749349bcf996c78f56e54ed437eeda0a"
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "base-final-destination",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-destination/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "1b05391b7493",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "5c84a75ba3a9"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "c2b0ff9b592d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "dbe5e37fd35c"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/commit/c2b0ff9b592d?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "c2b0ff9b592d0310fc2cae4a69115ae8ec7dfe29"
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "c2b0ff9b592d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "dbe5e37fd35c"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/commit/c2b0ff9b592d?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "c2b0ff9b592d0310fc2cae4a69115ae8ec7dfe29"
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/commit/c2b0ff9b592d0310fc2cae4a69115ae8ec7dfe29/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "c2b0ff9b592d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "dbe5e37fd35c"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": false,
+          "state": null
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/commit/c2b0ff9b592d?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "c2b0ff9b592d0310fc2cae4a69115ae8ec7dfe29"
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "base-final-withdrawn",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-withdrawn/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "c2b0ff9b592d",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "dbe5e37fd35c"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "2854c9aeb801",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "04b18a81eaf9"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/commit/2854c9aeb801?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "2854c9aeb80187c1ba6f51bc02934e3864d6384b"
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "2854c9aeb801",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "04b18a81eaf9"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/commit/2854c9aeb801?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "2854c9aeb80187c1ba6f51bc02934e3864d6384b"
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/commit/2854c9aeb80187c1ba6f51bc02934e3864d6384b/statuses?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/branch-restrictions?pagelen=100",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "values": [],
+      "page": 1,
+      "pagelen": 100
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "2854c9aeb801",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "04b18a81eaf9"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{carol}",
+            "nickname": "carol"
+          },
+          "role": "REVIEWER",
+          "approved": false,
+          "state": "changes_requested"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/commit/2854c9aeb801?fields=hash",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "hash": "2854c9aeb80187c1ba6f51bc02934e3864d6384b"
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "POST",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/pullrequests/7/merge",
+    "request_body": {
+      "type": "pullrequest",
+      "close_source_branch": false
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "scenario": "base-final-changes",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-final-changes/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "2854c9aeb801",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "04b18a81eaf9"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-draft-lookup-503",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-draft-lookup-503/pullrequests/7",
+    "request_body": null,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": true,
+      "source": {
+        "branch": {
+          "name": "fm/task-x1"
+        },
+        "commit": {
+          "hash": "7cf26dd0b90e",
+          "type": "commit"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        },
+        "commit": {
+          "hash": "b48e6f6e1fa8"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}",
+            "nickname": "bob"
+          },
+          "role": "REVIEWER",
+          "approved": true,
+          "state": "approved"
+        }
+      ],
+      "close_source_branch": true
+    }
+  },
+  {
+    "scenario": "base-draft-lookup-503",
+    "method": "GET",
+    "path": "/2.0/repositories/fm-lab/base-draft-lookup-503/commit/7cf26dd0b90e?fields=hash",
+    "request_body": null,
+    "status": 503,
+    "response": {
+      "type": "error",
+      "error": {
+        "message": "commit lookup temporarily unavailable"
+      }
+    }
+  }
+]
