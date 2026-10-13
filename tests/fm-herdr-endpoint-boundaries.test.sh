@@ -72,8 +72,14 @@ case "${1:-} ${2:-}" in
     printf '{"result":{"tab":{"tab_id":"w1:t3","workspace_id":"w1"},"root_pane":{"pane_id":"w1:p3"}}}\n'
     ;;
   'pane read')
+    case "$*" in *'--format ansi'*) [ ! -e "$w/plain-only" ] || exit 1 ;; esac
     printf '%s\n' "$pane" >> "$w/reads"
-    printf '❯ %s\n' "$(cat "$w/composer-$key")"
+    if [ -f "$w/screen-$key" ]; then
+      cat "$w/screen-$key"
+    else
+      printf '❯ %s\n' "$(cat "$w/composer-$key")"
+    fi
+    [ ! -e "$w/stop-after-read" ] || : > "$w/stopped"
     ;;
   'pane send-text')
     printf '%s %s\n' "$pane" "$2" >> "$w/inputs"
@@ -146,7 +152,7 @@ test_dispatch_boundaries() {
 }
 
 test_passive_probes_do_not_start_the_server() {
-  local op out
+  local op out format
   for op in visible composer; do
     (
       setup_world "$TMP_ROOT/passive-$op"
@@ -175,7 +181,27 @@ test_passive_probes_do_not_start_the_server() {
       [ ! -s "$FM_FAKE_WORLD/server.log" ] || fail "$op probe started the server"
     ) || fail "$op passive probe regression"
   done
-  pass 'viewport and composer probes never start a stopped server and still refuse a foreign pane'
+  for format in ansi plain; do
+    (
+      setup_world "$TMP_ROOT/passive-pi-$format"
+      write_pane w1:p1 42 "$FM_HOME" pi
+      bind_mine
+      printf 'transcript\n─────────────────────────────────────────────────────\n\n─────────────────────────────────────────────────────\n' > "$FM_FAKE_WORLD/screen-w1_p1"
+      [ "$format" != plain ] || : > "$FM_FAKE_WORLD/plain-only"
+      out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine)
+      [ "$out" = empty ] || fail "$format Pi composer refused the owned pane: $out"
+      [ "$(cat "$FM_FAKE_WORLD/agent-reads")" = w1:p1 ] || fail "$format Pi composer did not corroborate native identity"
+      : > "$FM_FAKE_WORLD/reads"
+      : > "$FM_FAKE_WORLD/agent-reads"
+      : > "$FM_FAKE_WORLD/stop-after-read"
+      out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine)
+      [ "$out" = unknown ] || fail "$format Pi composer read a stopped identity: $out"
+      [ -s "$FM_FAKE_WORLD/reads" ] || fail "$format Pi composer did not capture before the stop"
+      [ -e "$FM_FAKE_WORLD/stopped" ] && [ ! -s "$FM_FAKE_WORLD/server.log" ] || fail "$format Pi identity probe restarted the server"
+      [ ! -s "$FM_FAKE_WORLD/agent-reads" ] || fail "$format Pi identity probe read the stopped session"
+    ) || fail "$format Pi passive identity regression"
+  done
+  pass 'viewport and composer probes never start a stopped server, including lazy Pi identity reads'
 }
 
 test_submit_boundaries() {

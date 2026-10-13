@@ -3486,9 +3486,6 @@ fm_backend_herdr_visible_capture_ansi() {  # <target>
 
 fm_backend_herdr_agent_identity_raw() {  # <session> <pane> -> <agent>\t<status>
   local out
-  if [ "${FM_BACKEND_HERDR_EXPECTED_LABEL+x}" = x ]; then
-    fm_backend_herdr_target_ready "$1:$2" || return 1
-  fi
   out=$(fm_backend_herdr_cli "$1" agent get "$2" 2>/dev/null) || return 1
   printf '%s' "$out" | jq -r '[.result.agent.agent // "", .result.agent.agent_status // ""] | @tsv' 2>/dev/null
 }
@@ -3497,7 +3494,7 @@ fm_backend_herdr_agent_identity_raw() {  # <session> <pane> -> <agent>\t<status>
 # backing the shared classifier's separated (pi) shape - the genuine herdr
 # primitive no other backend has natively.
 fm_backend_herdr_composer_identity() {  # <target> -> "<agent>\t<status>"
-  fm_backend_herdr_parse_target "$1" || return 1
+  fm_backend_herdr_target_observable "$1" || return 1
   fm_backend_herdr_agent_identity_raw "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE"
 }
 
@@ -3763,7 +3760,12 @@ fm_backend_herdr_send_text_submit() {  # <target> <text> <retries> <enter-sleep>
   # unless the composer, empty before the send, shows this payload. A suffix
   # that then starts a turn must not report empty. Other harnesses keep the
   # unproven type-then-Enter path.
-  identity=$(fm_backend_herdr_agent_identity_raw "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE") || identity=
+  identity=$(
+    if [ "${FM_BACKEND_HERDR_EXPECTED_LABEL+x}" = x ]; then
+      fm_backend_herdr_target_ready "$target" || exit 1
+    fi
+    fm_backend_herdr_agent_identity_raw "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE"
+  ) || identity=
   if [ "${identity%%$'\t'*}" = claude ]; then
     proof=1
     content=$(fm_backend_herdr_composer_content "$target") \
