@@ -123,13 +123,23 @@
 # before any state is recorded.
 # Bitbucket's merge API takes no expected-head parameter, so the verified head
 # cannot be bound to the merge the way --match-head-commit and --sha bind it.
-# Instead the head is read again inside the away-record lock immediately before
-# the merge request, and a moved head refuses with nothing merged; the remaining
-# window is that final read's round trip. The landed pull request is then read
-# back, and a merged head that is not the verified one is reported loudly and
-# exits non-zero after the landed outcome is recorded.
-# The merge strategy is the destination branch's own default unless the extra
-# args name one: --squash, --merge (merge_commit), --rebase (rebase_fast_forward,
+# Instead the pull request is read again inside the away-record lock immediately
+# before the merge request. That final read refuses if the state is no longer
+# OPEN, the source head or destination branch changed, an approval present at
+# verification was withdrawn, or a new changes-requested verdict appeared.
+# Uninterpretable review snapshots also refuse because drift cannot be ruled out.
+# Review drift refuses even when the destination's restrictions do not require
+# approvals or no requested changes; unchanged reviews still face the checks above.
+# The remaining race window is between that final read and the merge request.
+# The landed pull request is then read back, and a merged head that is not the
+# verified one is reported loudly and exits non-zero after the landed outcome
+# is recorded.
+# Bitbucket applies merge_commit when a merge request omits merge_strategy,
+# whatever the destination branch is configured to default to, so unless the
+# extra args name a strategy the destination branch's configured
+# default_merge_strategy is read live and sent explicitly, and an unreadable or
+# unrecognized default refuses the merge rather than guessing.
+# Explicit choices are --squash, --merge (merge_commit), --rebase (rebase_fast_forward,
 # the closest match to a rebase-and-merge: linear history and no merge commit),
 # or --method <strategy> with any strategy the API accepts. The source branch is
 # kept (close_source_branch=false) unless --delete-branch is passed with
@@ -1608,6 +1618,14 @@ bitbucket_verify_mergeable() {
   [ "$FM_PR_BITBUCKET_DRAFT" = false ] \
     || refusals="$refusals  - the pull request is a draft, or its draft state could not be read
 "
+  if [ -z "$BITBUCKET_MERGE_STRATEGY" ]; then
+    if bitbucket_read_default_strategy "$FM_PR_BITBUCKET_DEST_BRANCH"; then
+      BITBUCKET_MERGE_STRATEGY=$BITBUCKET_DEFAULT_STRATEGY
+    else
+      refusals="$refusals  - $BITBUCKET_STRATEGY_ERROR; name a strategy with --squash, --merge, --rebase, or --method, or fix the read
+"
+    fi
+  fi
   if fm_pr_bitbucket_read_statuses "$PR_PATH" "$FM_PR_BITBUCKET_HEAD"; then
     statuses=$FM_PR_BITBUCKET_VALUES
   else
@@ -1656,12 +1674,64 @@ RED
   printf 'verified: %s is open, with every unwaived build green and every merge check met at head %s\n' \
     "$URL" "$FM_PR_BITBUCKET_HEAD" >&2
   FM_PR_MERGE_HEAD=$FM_PR_BITBUCKET_HEAD
+  BITBUCKET_VERIFIED_DEST=$FM_PR_BITBUCKET_DEST_BRANCH
+  BITBUCKET_VERIFIED_REVIEWS=$(bitbucket_review_snapshot "$FM_PR_BITBUCKET_JSON") || BITBUCKET_VERIFIED_REVIEWS=
 }
 
-# The last read before the merge request, taken inside the away-record lock:
-# Bitbucket's merge API cannot bind a head, so a head that moved after the
-# verification refuses here with nothing merged.
+# Read default_merge_strategy for the exact destination branch; the header
+# owns why the merge request must carry it explicitly. Sets
+# BITBUCKET_DEFAULT_STRATEGY and returns 0, or sets BITBUCKET_STRATEGY_ERROR
+# and returns 1 when the default cannot be read or is not a known strategy.
+BITBUCKET_DEFAULT_STRATEGY=
+BITBUCKET_STRATEGY_ERROR=
+bitbucket_read_default_strategy() {  # <destination-branch>
+  local dest=$1 query found
+  BITBUCKET_DEFAULT_STRATEGY=
+  BITBUCKET_STRATEGY_ERROR=
+  case "$dest" in
+    *\"*|*\\*)
+      BITBUCKET_STRATEGY_ERROR="the destination branch name $dest cannot be looked up"
+      return 1
+      ;;
+  esac
+  query=$(jq -rn --arg dest "$dest" '"name = \"" + $dest + "\"" | @uri') || return 1
+  if ! fm_pr_bitbucket_request GET "repositories/$PR_PATH/refs/branches?q=$query&fields=values.name,values.default_merge_strategy" \
+    || ! found=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -r --arg dest "$dest" '
+      if type == "object" and (.values | type) == "array"
+      then ([.values[] | select(type == "object" and .name == $dest) | .default_merge_strategy] | .[0] // "")
+      else error("invalid branch list") end' 2>/dev/null); then
+    BITBUCKET_STRATEGY_ERROR="the configured default merge strategy of destination branch $dest could not be read (HTTP ${FM_PR_BITBUCKET_STATUS:-unreachable})"
+    return 1
+  fi
+  case "$found" in
+    merge_commit|squash|fast_forward|squash_fast_forward|rebase_fast_forward|rebase_merge)
+      BITBUCKET_DEFAULT_STRATEGY=$found
+      ;;
+    *)
+      BITBUCKET_STRATEGY_ERROR="destination branch $dest reports no merge strategy this script knows as its default (got \"$found\")"
+      return 1
+      ;;
+  esac
+}
+
+# The review state of a pull request record as two sorted lists of participant
+# keys (the user's uuid, else nickname): who has approved and who has requested
+# changes. Fails when the participants cannot be interpreted.
+BITBUCKET_VERIFIED_DEST=
+BITBUCKET_VERIFIED_REVIEWS=
+bitbucket_review_snapshot() {  # <pull-request-json>
+  printf '%s' "${1-}" | jq -c '
+    (.participants // []) as $p
+    | if ($p | type) == "array" and ($p | all(.[]; type == "object")) then
+        def key: (.user.uuid? // .user.nickname? // "unknown" | tostring);
+        {approved: [$p[] | select(.approved == true) | key] | sort,
+         changes: [$p[] | select(.state == "changes_requested") | key] | sort}
+      else error("invalid participants") end' 2>/dev/null
+}
+
+# Final recheck inside the away-record lock; the header owns the drift refusals.
 bitbucket_require_unmoved_head() {
+  local current drift
   if ! fm_pr_bitbucket_read_pull_request "$PR_PATH" "$PR_NUMBER"; then
     echo "error: could not re-read the Bitbucket pull request head immediately before merging; nothing was merged" >&2
     return 1
@@ -1669,6 +1739,25 @@ bitbucket_require_unmoved_head() {
   if [ "$FM_PR_BITBUCKET_STATE" != OPEN ] || [ "$FM_PR_BITBUCKET_HEAD" != "$FM_PR_MERGE_HEAD" ]; then
     printf 'error: %s changed after verification (state %s, head %s, verified head %s); nothing was merged\n' \
       "$URL" "$FM_PR_BITBUCKET_STATE" "$FM_PR_BITBUCKET_HEAD" "$FM_PR_MERGE_HEAD" >&2
+    return 1
+  fi
+  if [ "$FM_PR_BITBUCKET_DEST_BRANCH" != "$BITBUCKET_VERIFIED_DEST" ]; then
+    printf 'error: %s now targets %s, not the verified destination branch %s, so its merge checks were never read; nothing was merged\n' \
+      "$URL" "$FM_PR_BITBUCKET_DEST_BRANCH" "$BITBUCKET_VERIFIED_DEST" >&2
+    return 1
+  fi
+  if [ -z "$BITBUCKET_VERIFIED_REVIEWS" ] || ! current=$(bitbucket_review_snapshot "$FM_PR_BITBUCKET_JSON"); then
+    echo "error: the reviews of the pull request could not be interpreted immediately before merging, so a change since verification cannot be ruled out; nothing was merged" >&2
+    return 1
+  fi
+  drift=$(jq -rn --argjson was "$BITBUCKET_VERIFIED_REVIEWS" --argjson now "$current" '
+    ([$was.approved[] | select(. as $k | $now.approved | index($k) | not)] | join(", ")) as $withdrawn
+    | ([$now.changes[] | select(. as $k | $was.changes | index($k) | not)] | join(", ")) as $requested
+    | [(if $withdrawn != "" then "approval withdrawn by " + $withdrawn else empty end),
+       (if $requested != "" then "changes requested by " + $requested else empty end)]
+    | join("; ")')
+  if [ -n "$drift" ]; then
+    printf 'error: the reviews of %s changed after verification (%s); nothing was merged\n' "$URL" "$drift" >&2
     return 1
   fi
 }
