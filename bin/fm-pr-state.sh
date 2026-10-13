@@ -3,11 +3,11 @@
 # pull request.
 #
 # This is a one-shot, read-only command. It reads the current pull request,
-# reported checks, submitted reviews, and review decision from the forge at
-# invocation time. It never posts, requests, approves, or merges.
-# It reports on checks that have reported. A required context that has never
-# reported on this head is absent from what this command reads and cannot be
-# enumerated here. Empty output therefore means that no reported required check
+# reported checks, and provider-specific review evidence at invocation time.
+# It never posts, requests, approves, or merges.
+# On GitHub, it reports on required checks that have reported. A required
+# context that has never reported on this head is absent from what this command
+# reads and cannot be enumerated here. Empty output therefore means that no reported required check
 # is failing or pending; it does not mean the pull request is ready to merge.
 # When nothing has reported, or nothing required has, that is printed rather
 # than read as ready. Advisory checks do not block and are omitted.

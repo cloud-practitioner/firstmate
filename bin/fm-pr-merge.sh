@@ -169,11 +169,13 @@
 # can land a head whose statuses and merge checks were never verified. After the
 # merge, the landed pull request is read back, and a merged head that is not the
 # verified one detects that race but cannot undo it: the run exits non-zero with
-# a loud error naming both heads and records no landed outcome, so the merge is
-# never reported as a clean landing, while the merge poll stays armed and the
-# unverified commits stay in the destination branch until a person reviews them.
-# The merge strategy is the destination branch's own default unless the extra
-# args name one: --squash, --merge (merge_commit), --rebase (rebase_fast_forward,
+# a loud error naming both heads and this invocation records no landed outcome.
+# The merge poll stays armed and observes only merged state, not head equality
+# (bin/fm-pr-poll.sh), so it can subsequently publish a landing despite that error.
+# The unverified commits remain in the destination branch for a person to review.
+# The merge_strategy field is omitted unless the extra args name a strategy;
+# the script does not read or select the destination branch's configured default.
+# Explicit choices are --squash, --merge (merge_commit), --rebase (rebase_fast_forward,
 # the closest match to a rebase-and-merge: linear history and no merge commit),
 # or --method <strategy> with any strategy the API accepts. The source branch is
 # kept (close_source_branch=false) unless --delete-branch is passed with

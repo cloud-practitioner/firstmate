@@ -1328,10 +1328,8 @@ Set both variables in the environment firstmate runs in, which its watcher inher
 - `NO_MISTAKES_BITBUCKET_API_TOKEN` is an Atlassian API token for that account, used as HTTP Basic auth.
 
 The token needs read access to pull requests, commit statuses, and the repository, and write access to pull requests for a merge.
-A merge also reads the destination branch's restrictions, which Bitbucket exposes only to a repository administrator, so without admin access every Bitbucket merge refuses and names that missing read; when those restrictions require default-reviewer approvals or resolved tasks, it also reads the repository's effective default reviewers or the pull request's tasks; see [`bin/fm-pr-merge.sh`](../bin/fm-pr-merge.sh)'s header for the full merge contract.
-A merge verifies five merge-check kinds from those restrictions: `require_passing_builds_to_merge`, `require_approvals_to_merge`, `require_default_reviewer_approvals_to_merge`, `require_no_changes_requested`, and `require_tasks_to_be_completed`.
-Other Bitbucket merge-check kinds, for example `require_commits_behind`, `require_all_dependencies_merged`, and `require_review_group_approvals_to_merge`, are not verified by the script and are enforced only where the workspace turns Bitbucket's merge-check enforcement on.
-Bitbucket's merge API cannot bind a merge to an expected head, so a merge re-reads the head immediately before the merge request and reads the landed head back afterwards; a push to the source branch after that final head read and before Bitbucket processes the merge request can land an unverified head, which the read-back detects but cannot undo, so the run then fails loudly with no landed outcome recorded.
+A merge also needs repository admin access to read the destination branch's restrictions; an unreadable restriction set refuses the merge.
+[`bin/fm-pr-merge.sh`](../bin/fm-pr-merge.sh)'s header owns the supported merge checks, strategy selection, and remaining unbound-head race that can land unverified commits.
 Firstmate reads the credential from the environment only, never from `.env`, and hands it to `curl` on standard input rather than as an argument, so it never appears in a process listing and is never printed, logged, or recorded.
 `curl` and `jq` are required alongside it.
 Registering a Bitbucket watch, merging a Bitbucket pull request, or reading one with `bin/fm-pr-state.sh` refuses and names whichever of the four is missing, rather than skipping the read.
@@ -1443,7 +1441,8 @@ It uses the same live secondmate discovery and propagation helper as bootstrap; 
 A project with no `forge=` token is served by the GitHub tooling, `gh` and `gh-axi`, exactly as before the token existed, and the token changes nothing for existing entries.
 A remote-backed project on a Forgejo or Gitea server is registered with `forge=forgejo`, one value of the same closed `forge=` binding that Gerrit uses; `bin/fm-project-mode.sh`'s header owns its grammar, values, and refusals, and `bin/fm-project-mode.sh --forge <name>` reads it back.
 Firstmate passes the binding to `bin/fm-brief.sh --forge` at intake the same way it passes `--mode`, and `bin/fm-spawn.sh` refuses a brief whose forge disagrees with the registry; on `forgejo` the generated ship brief names `tea` instead of `gh-axi`.
-The URL-driven provider dispatch in [`bin/fm-pr-lib.sh`](../bin/fm-pr-lib.sh) recognizes a GitHub, GitLab, Gerrit, or Forgejo PR/MR/change URL once one exists, regardless of this token.
+The URL-driven provider dispatch in [`bin/fm-pr-lib.sh`](../bin/fm-pr-lib.sh) recognizes a GitHub, Bitbucket Cloud, GitLab, Gerrit, or Forgejo PR/MR/change URL once one exists, regardless of this token.
+Bitbucket Cloud pull requests need no forge token; see [Bitbucket Cloud pull requests](#bitbucket-cloud-pull-requests-no_mistakes_bitbucket_email--no_mistakes_bitbucket_api_token) for their setup and limits.
 
 A Forgejo (or Gitea) project needs `tea` on `PATH` plus a `tea login` registered for that project's host (`tea login add`); the login is matched to a PR's host automatically, never configured per project.
 A GitLab project needs no forge token, only `glab` on `PATH`, authenticated via `glab auth login`.
