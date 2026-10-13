@@ -1,0 +1,8 @@
+Read-only lab prerequisite check; no session provision or product scenario.
+$ herdr --version
+herdr 0.9.3
+$ bin/fm-herdr-lab.sh prepare fm-lab-stale-preflight-365956-29879
+prepare_exit=0
+$ bin/fm-herdr-lab.sh teardown fm-lab-stale-preflight-365956-29879 (unprovisioned preparation only)
+teardown_exit=0
+No default-session lifecycle calls, lab provision, or live scenarios were run.

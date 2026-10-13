@@ -2,22 +2,22 @@
   "families": [
     {
       "count": 1,
-      "duration_ms": 120126,
+      "duration_ms": 104707,
       "failed": 0,
       "name": "backend-dispatch"
     },
     {
       "count": 2,
-      "duration_ms": 111045,
+      "duration_ms": 70085,
       "failed": 0,
       "name": "unclassified"
     }
   ],
-  "finished_at": "2026-10-07T12:42:45Z",
-  "run_id": "fm-test-run-1791376733748-164244",
+  "finished_at": "2026-10-13T03:49:05Z",
+  "run_id": "fm-test-run-1791863170829-59173",
   "scripts": [
     {
-      "duration_ms": 120126,
+      "duration_ms": 104707,
       "exit": 0,
       "expected_gate_skip": "none",
       "family": "backend-dispatch",
@@ -26,7 +26,7 @@
       "path": "tests/fm-backend-herdr.test.sh"
     },
     {
-      "duration_ms": 99187,
+      "duration_ms": 61436,
       "exit": 0,
       "expected_gate_skip": "none",
       "family": "unclassified",
@@ -35,7 +35,7 @@
       "path": "tests/fm-herdr-endpoint-boundaries.test.sh"
     },
     {
-      "duration_ms": 11858,
+      "duration_ms": 8649,
       "exit": 0,
       "expected_gate_skip": "none",
       "family": "unclassified",
@@ -45,9 +45,9 @@
     }
   ],
   "selection": "scripts;jobs=1",
-  "started_at": "2026-10-07T12:38:53Z",
+  "started_at": "2026-10-13T03:46:10Z",
   "summary": {
-    "duration_ms": 231353,
+    "duration_ms": 174951,
     "failed": 0,
     "skipped_gate": 0,
     "total": 3
