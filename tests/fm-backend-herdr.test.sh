@@ -5929,13 +5929,12 @@ test_active_operations_check_ownership_after_server_restore() {
     fm_backend_source herdr
     # shellcheck disable=SC2329 # Adapter callback invoked by the sourced backend.
     fm_backend_herdr_pane_process_state() { printf agent; }
-    for operation in capture key text busy; do
+    for operation in capture key text; do
       : > "$world/stopped"; : > "$world/typed.log"; : > "$world/read.log"
       case "$operation" in
         capture) ! fm_backend_capture herdr fmtest:w1:p1 5 fm-mine || fail "capture reached a restored foreign pane" ;;
         key) ! fm_backend_send_key herdr fmtest:w1:p1 C-c fm-mine || fail "interrupt reached a restored foreign pane" ;;
         text) ! fm_backend_send_text_submit herdr fmtest:w1:p1 exit 1 0 0 fm-mine || fail "text reached a restored foreign pane" ;;
-        busy) out=$(fm_backend_busy_state herdr fmtest:w1:p1); [ "$out" = unknown ] || fail "busy classification trusted a restored foreign pane" ;;
       esac
       [ ! -e "$world/stopped" ] || fail "$operation did not establish server readiness before checking ownership"
       [ ! -s "$world/typed.log" ] && [ ! -s "$world/read.log" ] || fail "$operation used the unrelated restored pane"
@@ -5946,11 +5945,15 @@ test_active_operations_check_ownership_after_server_restore() {
     ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail "visible capture read a stopped session"
     out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine)
     [ "$out" = unknown ] || fail "composer classification read a stopped session"
+    out=$(fm_backend_busy_state herdr fmtest:w1:p1 fm-mine)
+    [ "$out" = unknown ] || fail "busy classification read a stopped session"
     [ -e "$world/stopped" ] && [ ! -s "$world/server.log" ] || fail "a passive probe started the stopped server"
     rm -f "$world/stopped"; : > "$world/read.log"
     ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail "visible capture reached a running foreign pane"
     out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine)
     [ "$out" = unknown ] || fail "composer classification trusted a running foreign pane"
+    out=$(fm_backend_busy_state herdr fmtest:w1:p1 fm-mine)
+    [ "$out" = unknown ] || fail "busy classification trusted a running foreign pane"
     [ ! -s "$world/read.log" ] || fail "a passive probe read the unrelated pane"
     write_ownership_pane "$world" w1:p1 w1:t1 "$dir/owned" fm-mine
     : > "$world/stopped"

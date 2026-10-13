@@ -153,7 +153,7 @@ test_dispatch_boundaries() {
 
 test_passive_probes_do_not_start_the_server() {
   local op out format
-  for op in visible composer; do
+  for op in visible composer busy; do
     (
       setup_world "$TMP_ROOT/passive-$op"
       write_pane w1:p1 42 "$FM_HOME" claude
@@ -162,13 +162,16 @@ test_passive_probes_do_not_start_the_server() {
       case "$op" in
         visible) ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail 'viewport read a stopped session' ;;
         composer) out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine); [ "$out" = unknown ] || fail "composer read a stopped session: $out" ;;
+        busy) out=$(fm_backend_busy_state herdr fmtest:w1:p1 fm-mine); [ "$out" = unknown ] || fail "busy read a stopped session: $out" ;;
       esac
       [ -e "$FM_FAKE_WORLD/stopped" ] && [ ! -s "$FM_FAKE_WORLD/server.log" ] || fail "$op probe started the stopped server"
       [ ! -s "$FM_FAKE_WORLD/reads" ] || fail "$op probe read a pane of a stopped session"
+      [ ! -s "$FM_FAKE_WORLD/agent-reads" ] || fail "$op probe read an agent of a stopped session"
       rm -f "$FM_FAKE_WORLD/stopped"
       case "$op" in
         visible) fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine >/dev/null || fail 'viewport refused the owned pane' ;;
         composer) out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine); [ "$out" = empty ] || fail "composer refused the owned pane: $out" ;;
+        busy) out=$(fm_backend_busy_state herdr fmtest:w1:p1 fm-mine); [ "$out" = idle ] || fail "busy refused the owned pane: $out" ;;
       esac
       write_pane w1:p1 43 "$FM_HOME" claude
       printf 'foreign draft' > "$FM_FAKE_WORLD/composer-w1_p1"
@@ -176,6 +179,7 @@ test_passive_probes_do_not_start_the_server() {
       case "$op" in
         visible) ! fm_backend_visible_capture herdr fmtest:w1:p1 fm-mine || fail 'viewport read a running foreign pane' ;;
         composer) out=$(fm_backend_composer_state herdr fmtest:w1:p1 fm-mine); [ "$out" = unknown ] || fail "composer read a running foreign pane: $out" ;;
+        busy) out=$(fm_backend_busy_state herdr fmtest:w1:p1 fm-mine); [ "$out" = unknown ] || fail "busy read a running foreign pane: $out" ;;
       esac
       [ ! -s "$FM_FAKE_WORLD/reads" ] || fail "$op probe read the foreign pane"
       [ ! -s "$FM_FAKE_WORLD/server.log" ] || fail "$op probe started the server"
@@ -201,7 +205,7 @@ test_passive_probes_do_not_start_the_server() {
       [ ! -s "$FM_FAKE_WORLD/agent-reads" ] || fail "$format Pi identity probe read the stopped session"
     ) || fail "$format Pi passive identity regression"
   done
-  pass 'viewport and composer probes never start a stopped server, including lazy Pi identity reads'
+  pass 'viewport, composer and busy probes never start a stopped server, including lazy Pi identity reads'
 }
 
 test_submit_boundaries() {

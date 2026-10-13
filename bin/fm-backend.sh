@@ -944,7 +944,7 @@ fm_backend_busy_state() {  # <backend> <target> [expected-label]
   local backend=$1 FM_BACKEND_HERDR_EXPECTED_LABEL=${3:-}
   shift
   fm_backend_source "$backend" || { printf 'unknown'; return 0; }
-  fm_backend_endpoint_ready "$backend" "$1" "${2:-}" || { printf 'unknown'; return 0; }
+  fm_backend_endpoint_observable "$backend" "$1" "${2:-}" || { printf 'unknown'; return 0; }
   case "$backend" in
     herdr) fm_backend_herdr_busy_state "$@" ;;
     *) printf 'unknown' ;;
