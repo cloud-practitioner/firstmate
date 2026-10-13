@@ -1,0 +1,80 @@
+{"scenario": "registration", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "registration", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "draft-boundary", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "draft-boundary", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "state-blockers", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "state-blockers", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "state-blockers", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738feeab967c13ebaaf57437af45a7122b/statuses", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "state-clean", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "state-clean", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "state-clean", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738feeab967c13ebaaf57437af45a7122b/statuses", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "state-terminal", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "state-terminal", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "foreign-pagination", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "foreign-pagination", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "foreign-pagination", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738feeab967c13ebaaf57437af45a7122b/statuses", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "poll", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "poll", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "poll", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {"fields": ["id,state"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "poll", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {"fields": ["id,state"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "poll", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {"fields": ["id,state"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "poll", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {"fields": ["id,state"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "review-live-head", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "review-live-head", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "review-live-head", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738feeab967c13ebaaf57437af45a7122b/statuses", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "GET", "path": "/2.0/repositories/lab/repo/branch-restrictions", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "POST", "path": "/2.0/repositories/lab/repo/pullrequests/7/merge", "query": {}, "body": {"type": "pullrequest", "close_source_branch": false, "merge_strategy": "squash"}, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-success", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-check-refusal", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-check-refusal", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-check-refusal", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-check-refusal", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-check-refusal", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738feeab967c13ebaaf57437af45a7122b/statuses", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-check-refusal", "method": "GET", "path": "/2.0/repositories/lab/repo/branch-restrictions", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "merge-check-refusal", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7/tasks", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "move-before-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "move-before-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "move-before-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "move-before-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "move-before-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738feeab967c13ebaaf57437af45a7122b/statuses", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "move-before-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/branch-restrictions", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "move-before-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "move-before-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/23722518cf19", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "final-read-unavailable", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "final-read-unavailable", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "final-read-unavailable", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "final-read-unavailable", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "final-read-unavailable", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738feeab967c13ebaaf57437af45a7122b/statuses", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "final-read-unavailable", "method": "GET", "path": "/2.0/repositories/lab/repo/branch-restrictions", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "final-read-unavailable", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738feeab967c13ebaaf57437af45a7122b/statuses", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/branch-restrictions", "query": {"pagelen": ["100"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/commit/7362f1738fee", "query": {"fields": ["hash"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "POST", "path": "/2.0/repositories/lab/repo/pullrequests/7/merge", "query": {}, "body": {"type": "pullrequest", "close_source_branch": false}, "authenticated_with_disposable_credential": true}
+{"scenario": "mismatch-after-submit", "method": "GET", "path": "/2.0/repositories/lab/repo/pullrequests/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-setup", "method": "GET", "path": "/api/v1/user", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-setup", "method": "GET", "path": "/api/v1/user/keys", "query": {"limit": ["50"], "page": ["1"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-success", "method": "GET", "path": "/api/v1/repos/lab/repo/pulls/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-success", "method": "GET", "path": "/api/v1/repos/lab/repo/pulls/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-success", "method": "GET", "path": "/api/v1/repos/lab/repo/commits/7362f1738feeab967c13ebaaf57437af45a7122b/status", "query": {"limit": ["50"], "page": ["1"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-success", "method": "GET", "path": "/api/v1/repos/lab/repo/commits/7362f1738feeab967c13ebaaf57437af45a7122b/status", "query": {"limit": ["50"], "page": ["2"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-success", "method": "POST", "path": "/api/v1/repos/lab/repo/pulls/7/merge", "query": {}, "body": {"Do": "squash", "head_commit_id": "7362f1738feeab967c13ebaaf57437af45a7122b"}, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-success", "method": "GET", "path": "/api/v1/repos/lab/repo/pulls/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-success", "method": "GET", "path": "/api/v1/repos/lab/repo/pulls/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-head-race", "method": "GET", "path": "/api/v1/repos/lab/repo/pulls/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-head-race", "method": "GET", "path": "/api/v1/repos/lab/repo/commits/7362f1738feeab967c13ebaaf57437af45a7122b/status", "query": {"limit": ["50"], "page": ["1"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-head-race", "method": "GET", "path": "/api/v1/repos/lab/repo/commits/7362f1738feeab967c13ebaaf57437af45a7122b/status", "query": {"limit": ["50"], "page": ["2"]}, "body": null, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-head-race", "method": "POST", "path": "/api/v1/repos/lab/repo/pulls/7/merge", "query": {}, "body": {"Do": "squash", "head_commit_id": "7362f1738feeab967c13ebaaf57437af45a7122b"}, "authenticated_with_disposable_credential": true}
+{"scenario": "forgejo-head-race", "method": "GET", "path": "/api/v1/repos/lab/repo/pulls/7", "query": {}, "body": null, "authenticated_with_disposable_credential": true}

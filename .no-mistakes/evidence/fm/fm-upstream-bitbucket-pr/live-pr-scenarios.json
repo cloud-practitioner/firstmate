@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Register a Bitbucket PR and persist its resolved head and private watch",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 2
+  },
+  {
+    "name": "Refuse missing environment credentials, malformed URLs, and drafts before arming",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 2
+  },
+  {
+    "name": "Report Bitbucket blockers and terminal state; refuse off-host pagination",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 11
+  },
+  {
+    "name": "Run the persisted poll: wake only for the exact merged PR, never errors",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 6
+  },
+  {
+    "name": "Review the live Bitbucket head over stale metadata; warn on recorded-head fallback",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 3
+  },
+  {
+    "name": "Merge a green Bitbucket PR with squash and publish a durable landed wake",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 10
+  },
+  {
+    "name": "Refuse failed builds, insufficient approvals, and unresolved tasks without POST",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 7
+  },
+  {
+    "name": "Refuse a changed or unreadable head at the final pre-submit read",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 15
+  },
+  {
+    "name": "Detect a landed-head mismatch without reporting a clean landing (accepted containment)",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 10
+  },
+  {
+    "name": "Register, poll, and merge Forgejo with real tea; preserve expected-head binding",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-pr-transcript.log; live-pr-http.jsonl",
+    "reason": "Real repository CLI and transport executed against a disposable stateful API service, not a hosted forge.",
+    "request_count": 14
+  }
+]

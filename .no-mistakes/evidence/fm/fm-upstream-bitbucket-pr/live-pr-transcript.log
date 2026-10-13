@@ -1,0 +1,357 @@
+Real Firstmate CLI / curl / tea; disposable TLS API service only. No hosted forge or operator fleet used.
+$ git -C .validation/api-repo init -b main
+Initialized empty Git repository in /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/api-repo/.git/
+[exit 0]
+$ git -C .validation/api-repo add .
+[exit 0]
+$ git -C .validation/api-repo commit -m fixture base
+[main (root-commit) 8ae9915] fixture base
+ 1 file changed, 1 insertion(+)
+ create mode 100644 example.txt
+[exit 0]
+$ git -C .validation/api-repo rev-parse HEAD
+8ae9915f08290882aea23f17575f5af9ecca4156
+[exit 0]
+$ git -C .validation/api-repo checkout -b feature
+Switched to a new branch 'feature'
+[exit 0]
+$ git -C .validation/api-repo add .
+[exit 0]
+$ git -C .validation/api-repo commit -m fixture feature
+[feature 7362f17] fixture feature
+ 1 file changed, 1 insertion(+)
+[exit 0]
+$ git -C .validation/api-repo rev-parse HEAD
+7362f1738feeab967c13ebaaf57437af45a7122b
+[exit 0]
+$ git -C .validation/api-repo checkout -b alternative
+Switched to a new branch 'alternative'
+[exit 0]
+$ git -C .validation/api-repo add .
+[exit 0]
+$ git -C .validation/api-repo commit -m fixture moved head
+[alternative 2372251] fixture moved head
+ 1 file changed, 1 insertion(+)
+[exit 0]
+$ git -C .validation/api-repo rev-parse HEAD
+23722518cf190f5e93561037681545eca515eed1
+[exit 0]
+$ git -C .validation/api-repo checkout main
+Switched to branch 'main'
+[exit 0]
+$ git init --bare .validation/local-origin.git
+Initialized empty Git repository in /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/local-origin.git/
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+[exit 0]
+$ git -C .validation/api-repo remote add origin .validation/local-origin.git
+[exit 0]
+$ git -C .validation/api-repo push origin main feature alternative
+To /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/local-origin.git
+ * [new branch]      main -> main
+ * [new branch]      feature -> feature
+ * [new branch]      alternative -> alternative
+[exit 0]
+
+=== Register a Bitbucket PR and persist its resolved head and private watch ===
+$ bin/fm-lab-home.sh create .validation/lab-register
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-register
+[exit 0]
+$ bin/fm-pr-check.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+Persisted task metadata contract:
+window=lab-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/api-repo
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/api-repo
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab/repo/pull-requests/7
+pr_head=7362f1738feeab967c13ebaaf57437af45a7122b
+
+=== Refuse missing environment credentials, malformed URLs, and drafts before arming ===
+$ bin/fm-lab-home.sh create .validation/lab-auth
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-auth
+[exit 0]
+$ bin/fm-pr-check.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7
+error: watching a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+[exit 1]
+$ bin/fm-pr-check.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7?redirect=evil
+error: invalid PR check request
+[exit 2]
+$ bin/fm-lab-home.sh create .validation/lab-draft
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-draft
+[exit 0]
+$ bin/fm-pr-check.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7
+error: https://bitbucket.org/lab/repo/pull-requests/7 is a draft pull request; a draft cannot be merged, so merge monitoring would wait for an event that cannot occur - mark it ready for review and arm again, or declare a wait instead of done if the draft is deliberate
+[exit 1]
+
+=== Report Bitbucket blockers and terminal state; refuse off-host pagination ===
+$ bin/fm-pr-state.sh https://bitbucket.org/lab/repo/pull-requests/7
+CHECK: pipeline (FAILED)
+REVIEW: reviewer CHANGES_REQUESTED
+[exit 0]
+$ bin/fm-pr-state.sh https://bitbucket.org/lab/repo/pull-requests/7
+[exit 0]
+$ bin/fm-pr-state.sh https://bitbucket.org/lab/repo/pull-requests/7
+STATE: declined
+[exit 0]
+$ bin/fm-pr-state.sh https://bitbucket.org/lab/repo/pull-requests/7
+fm-pr-state: could not read the builds for https://bitbucket.org/lab/repo/pull-requests/7
+[exit 2]
+
+=== Run the persisted poll: wake only for the exact merged PR, never errors ===
+$ bin/fm-lab-home.sh create .validation/lab-poll
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-poll
+[exit 0]
+$ bin/fm-pr-check.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+$ bash .validation/lab-poll/state/task-x1.check.sh
+[exit 0]
+$ bash .validation/lab-poll/state/task-x1.check.sh
+merged
+[exit 0]
+$ bash .validation/lab-poll/state/task-x1.check.sh
+[exit 0]
+$ bash .validation/lab-poll/state/task-x1.check.sh
+[exit 0]
+$ bash .validation/lab-poll/state/task-x1.check.sh
+[exit 0]
+
+=== Review the live Bitbucket head over stale metadata; warn on recorded-head fallback ===
+$ bin/fm-lab-home.sh create .validation/lab-review
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-review
+[exit 0]
+$ bin/fm-review-diff.sh task-x1
+diff base: origin/main
+ example.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/example.txt b/example.txt
+index df967b9..2c19faa 100644
+--- a/example.txt
++++ b/example.txt
+@@ -1 +1,2 @@
+ base
++Bitbucket feature
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+$ bin/fm-review-diff.sh task-x1
+diff base: origin/main
+ example.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/example.txt b/example.txt
+index df967b9..ab3d2b0 100644
+--- a/example.txt
++++ b/example.txt
+@@ -1 +1,3 @@
+ base
++Bitbucket feature
++unverified addition
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+warning: could not read the live head of https://bitbucket.org/lab/repo/pull-requests/7; falling back to its recorded pr_head
+[exit 0]
+
+=== Merge a green Bitbucket PR with squash and publish a durable landed wake ===
+$ bin/fm-lab-home.sh create .validation/lab-merge
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-merge
+[exit 0]
+$ git -C .validation/api-repo merge --squash feature
+Updating 8ae9915..7362f17
+Fast-forward
+Squash commit -- not updating HEAD
+ example.txt | 1 +
+ 1 file changed, 1 insertion(+)
+[exit 0]
+$ git -C .validation/api-repo commit -m fixture backend squash merge
+[main 53bfc08] fixture backend squash merge
+ 1 file changed, 1 insertion(+)
+[exit 0]
+$ bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7 -- --squash
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/lab/repo/pull-requests/7 is merged at the verified head 7362f1738feeab967c13ebaaf57437af45a7122b
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab/repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head 7362f1738feeab967c13ebaaf57437af45a7122b
+[exit 0]
+Durable landed wake contract:
+1791850598	1	check	merged-task-x1-https://bitbucket.org/lab/repo/pull-requests/7	check: merge landed: task-x1 https://bitbucket.org/lab/repo/pull-requests/7
+$ git -C .validation/api-repo rev-parse main^{tree}
+c70c03166a51819d69d103673411af0a55a29733
+[exit 0]
+$ git -C .validation/api-repo rev-parse feature^{tree}
+c70c03166a51819d69d103673411af0a55a29733
+[exit 0]
+$ git -C .validation/api-repo rev-parse feature
+7362f1738feeab967c13ebaaf57437af45a7122b
+[exit 0]
+Destination tree equals feature tree; source branch retained.
+
+=== Refuse failed builds, insufficient approvals, and unresolved tasks without POST ===
+$ bin/fm-lab-home.sh create .validation/lab-refusal
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-refusal
+[exit 0]
+$ bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/lab/repo/pull-requests/7
+  - build 'pipeline' is FAILED, not SUCCESSFUL
+  - base branch main requires 2 successful builds, and 0 reported at head 7362f1738feeab967c13ebaaf57437af45a7122b
+  - base branch main requires 1 approvals, and the pull request has 0
+  - base branch main requires every task resolved, and 1 are unresolved
+error: these builds are not green: pipeline
+[exit 1]
+
+=== Refuse a changed or unreadable head at the final pre-submit read ===
+$ bin/fm-lab-home.sh create .validation/lab-move-before-submit
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-move-before-submit
+[exit 0]
+$ bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab/repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head 7362f1738feeab967c13ebaaf57437af45a7122b
+error: https://bitbucket.org/lab/repo/pull-requests/7 changed after verification (state OPEN, head 23722518cf190f5e93561037681545eca515eed1, verified head 7362f1738feeab967c13ebaaf57437af45a7122b); nothing was merged
+[exit 1]
+$ bin/fm-lab-home.sh create .validation/lab-final-read-unavailable
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-final-read-unavailable
+[exit 0]
+$ bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab/repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head 7362f1738feeab967c13ebaaf57437af45a7122b
+error: could not re-read the Bitbucket pull request head immediately before merging; nothing was merged
+[exit 1]
+
+=== Detect a landed-head mismatch without reporting a clean landing (accepted containment) ===
+$ bin/fm-lab-home.sh create .validation/lab-mismatch
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-mismatch
+[exit 0]
+$ bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab/repo/pull-requests/7
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab/repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head 7362f1738feeab967c13ebaaf57437af45a7122b
+error: https://bitbucket.org/lab/repo/pull-requests/7 merged, but it reads back at head 23722518cf19, not the verified head 7362f1738feeab967c13ebaaf57437af45a7122b; the landed commits were never verified, so no landed outcome is recorded - review what landed in the destination branch
+[exit 1]
+Accepted containment: merged API record has changed head; CLI refuses a clean landing. This does NOT close the accepted post-read race.
+
+=== Register, poll, and merge Forgejo with real tea; preserve expected-head binding ===
+$ git -C .validation/api-repo checkout feature
+Switched to branch 'feature'
+[exit 0]
+$ .validation/tools/tea login add --name lab --url http://forgejo.test:40723 --token lab-forgejo-token --no-version-check
+Warning: problem while finding a SSH key: unhandled forgejo route /api/v1/user/keys
+Login as lab on http://forgejo.test:40723 successful. Added this login as lab
+Tip: pass --git-credentials (or run 'tea login helper setup') to authenticate 'git push' and 'git clone' over HTTPS with this token.
+[exit 0]
+$ .validation/tools/tea login list --output json
+[
+  {
+    "name": "lab",
+    "url": "http://forgejo.test:40723",
+    "ssh_host": "forgejo.test:40723",
+    "user": "lab",
+    "default": "false"
+  }
+]
+[exit 0]
+$ bin/fm-lab-home.sh create .validation/lab-forgejo
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-forgejo
+[exit 0]
+$ bin/fm-pr-check.sh task-x1 https://forgejo.test/lab/repo/pulls/7
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+$ bash .validation/lab-forgejo/state/task-x1.check.sh
+[exit 0]
+$ bin/fm-pr-merge.sh task-x1 https://forgejo.test/lab/repo/pulls/7 -- --squash
+armed: state/task-x1.check.sh
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+verified: https://forgejo.test/lab/repo/pulls/7 is open and mergeable, with a successful combined status at head 7362f1738feeab967c13ebaaf57437af45a7122b
+[exit 0]
+$ bash .validation/lab-forgejo/state/task-x1.check.sh
+merged
+[exit 0]
+$ bin/fm-lab-home.sh create .validation/lab-forgejo-race
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.validation/lab-forgejo-race
+[exit 0]
+$ bin/fm-pr-merge.sh task-x1 https://forgejo.test/lab/repo/pulls/7 -- --squash
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4S89G4MJKH7FQ650DXKN8MF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://forgejo.test/lab/repo/pulls/7 is open and mergeable, with a successful combined status at head 7362f1738feeab967c13ebaaf57437af45a7122b
+error: > {"message": "head out of date"}
+error: Forgejo did not confirm https://forgejo.test/lab/repo/pulls/7 as merged
+[exit 1]

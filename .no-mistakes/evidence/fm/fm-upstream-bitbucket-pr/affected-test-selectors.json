@@ -1,0 +1,40 @@
+{
+  "fm-pr-merge": [
+    "test_verified_merge_records_pr_and_head",
+    "test_gitlab_url_resolves_and_merges",
+    "test_forgejo_url_resolves_and_merges",
+    "test_forgejo_login_resolves_from_the_host",
+    "test_forgejo_refuses_when_login_is_ambiguous",
+    "test_forgejo_each_condition_refuses_independently",
+    "test_forgejo_unconfigured_ci_refuses_as_none",
+    "test_forgejo_combined_status_reads_every_page",
+    "test_forgejo_stale_recorded_head_is_reported",
+    "test_forgejo_invalid_head_refuses",
+    "test_forgejo_missing_tool_refuses_before_recording",
+    "test_forgejo_rejected_merge_is_never_trusted_by_exit_status",
+    "test_forgejo_transient_confirm_read_failure_still_persists_authority",
+    "test_forgejo_merge_method_and_extra_args"
+  ],
+  "fm-pr-check-security": [
+    "test_parser_matrix",
+    "test_forgejo_merge_watch",
+    "test_forgejo_login_list_shapes",
+    "test_invalid_entrypoints_have_zero_side_effects",
+    "test_draft_pull_request_is_not_armed",
+    "test_valid_recording_and_merge_derivation",
+    "test_static_poll_contract"
+  ],
+  "fm-teardown": [
+    "test_bitbucket_squash_merged_branch_deleted_allows",
+    "test_bitbucket_teardown_closes_the_backlog_item",
+    "test_bitbucket_merged_pr_without_recorded_head_resolves_it",
+    "test_bitbucket_merged_pr_with_later_local_commit_refuses",
+    "test_bitbucket_open_pr_refuses",
+    "test_bitbucket_merged_pr_without_credential_names_it",
+    "test_squash_merged_forgejo_pr_allows_when_main_moved_on"
+  ],
+  "fm-captain-hold-lifecycle": [
+    "test_answer_before_cleanup_replay_notes_a_retained_gerrit_change",
+    "test_answer_before_cleanup_replay_notes_a_retained_bitbucket_pr"
+  ]
+}
