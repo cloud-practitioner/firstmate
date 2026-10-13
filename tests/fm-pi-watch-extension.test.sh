@@ -3565,6 +3565,14 @@ if (wakes("signal: streaming chain wake 2") !== 1) throw new Error(`wrong second
 await waitFor(() => arms() === 3, "successor after the second streaming-time delivery");
 if (beforeAgentStarts !== 0) throw new Error(`streaming follow-ups raised before_agent_start ${beforeAgentStarts} times`);
 
+// A custom-start event has no user prompt and must not consume a queued user
+// wake even when its custom content happens to contain that exact wake text.
+for (const content of [prompts[1], [{ type: "text", text: prompts[1] }]]) {
+  handlers.get("before_agent_start")?.({
+    messageType: "custom",
+    message: { customType: "fixture-note", content, display: false },
+  }, {});
+}
 // The run reaches the first queued follow-up; the second is still queued when
 // the captain replaces the session, so only the second rides the handoff.
 consumeQueued(prompts[0]);

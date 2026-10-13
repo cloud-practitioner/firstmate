@@ -1061,6 +1061,15 @@ const operational = spawnSync(
 if (operational.status !== 0) throw new Error(`could not create operational input: ${operational.stderr}`);
 await fire("before_agent_start", { prompt: operational.stdout }, mainCtx);
 entries.push({ type: "message", message: { role: "user", content: operational.stdout } });
+// Custom starts carry no user prompt. Even request-like custom content must
+// stay out of the captain mirror, whether represented as text or text blocks.
+const customRequest = "Please give me a system-resource report from this custom message.";
+for (const content of [customRequest, [{ type: "text", text: customRequest }]]) {
+  await fire("before_agent_start", {
+    messageType: "custom",
+    message: { customType: "fixture-note", content, display: false },
+  }, mainCtx);
+}
 const unsolicitedPrompt = "Please keep responses concise while monitoring the fleet.";
 await fire("before_agent_start", { prompt: unsolicitedPrompt }, mainCtx);
 entries.push({ type: "message", message: { role: "user", content: unsolicitedPrompt } });
@@ -1121,7 +1130,8 @@ for (const content of [unsolicitedPrompt, ...requestedPrompts]) {
   if (copies !== 1) throw new Error(`current captain prompt was mirrored ${copies} times instead of once`);
 }
 if (mirroredCaptainText.some((text) =>
-  text.includes("operational watcher injection") || text.includes("FIRSTMATE_OP: give me a fresh system-resource report")
+  text.includes("operational watcher injection") || text.includes("FIRSTMATE_OP: give me a fresh system-resource report") ||
+  text.includes(customRequest)
 )) {
   throw new Error("canonical current or legacy operational input entered captain mirror context");
 }
@@ -2115,15 +2125,20 @@ if (stolen?.messages?.some((message) => message.customType === "fm-branch-proces
   throw new Error(`joined processing was not stripped from the captain-opened run: ${JSON.stringify(stolen)}`);
 }
 await fire("agent_end", {});
-aborted = false;
-await fire("before_agent_start", { prompt: pending.message.content }, abortCtx);
-await fire("agent_start", {}, defaultSessionCtx);
-const openedByRequest = await fire("context", { messages: [...history, processingMsg] }, abortCtx);
-if (!aborted) throw new Error("a dedicated processing turn with history was not aborted under the record");
-if (openedByRequest?.messages?.some((message) => message.customType === "fm-branch-process")) {
-  throw new Error(`dedicated processing with history was not stripped: ${JSON.stringify(openedByRequest)}`);
+for (const event of [
+  { prompt: pending.message.content }, // legacy Pi custom-start representation
+  { messageType: "custom", message: pending.message },
+]) {
+  aborted = false;
+  await fire("before_agent_start", event, abortCtx);
+  await fire("agent_start", {}, defaultSessionCtx);
+  const openedByRequest = await fire("context", { messages: [...history, processingMsg] }, abortCtx);
+  if (!aborted) throw new Error("a dedicated processing turn with history was not aborted under the record");
+  if (openedByRequest?.messages?.some((message) => message.customType === "fm-branch-process")) {
+    throw new Error(`dedicated processing with history was not stripped: ${JSON.stringify(openedByRequest)}`);
+  }
+  await fire("agent_end", {});
 }
-await fire("agent_end", {});
 await fire("agent_settled", {});
 if (requests().length !== 1) throw new Error("a request pending when the record appeared was re-presented to the parked main");
 if (JSON.stringify(unprocessedSeqs()) !== JSON.stringify([seq1])) throw new Error(`the record moved the processed marker: ${unprocessedSeqs()}`);
