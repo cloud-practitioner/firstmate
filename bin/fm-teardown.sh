@@ -102,13 +102,9 @@
 # That volatile state includes the watcher's per-task .seen-* signature for
 # the task's turn-ended file, minted by bin/fm-wake-lib.sh (the .seen-*
 # signature for its status file and its .hb-surfaced- heartbeat marker are
-# already retired by status_retire_presentation_task) - and, once the
-# recorded pane is proven gone, an orphaned Herdr presentation journal: a
-# binding of exactly that pane, or a version 1 attempt whose
-# token-bearing projected workspace is itself confirmed gone, names nothing the
-# session-start sweep could still close, while a journal bound to any other pane
-# - or a version 1 attempt whose workspace is still present or unreadable - may
-# name a live quarantined space and is retained for that sweep.
+# already retired by status_retire_presentation_task).
+# Herdr presentation-journal retirement follows the proof policy owned by
+# docs/herdr-backend.md "When task records are erased".
 # data/<id>/ is deliberately left in place: a successor spawn reads brief.md
 # from it.
 # Worktree-slot ownership (teardown-slot-collision): a treehouse pool slot is
@@ -3813,12 +3809,10 @@ elif [ -d "$WT" ] && [ "$KIND" != secondmate ]; then
 fi
 
 HERDR_PRESENTATION_JOURNAL="$STATE/$ID.herdr-presentation"
-# teardown_herdr_journal_orphaned: true when the task's own journal names
-# nothing the session-start sweep could still close - a version 1 attempt whose
-# token-bearing projected workspace is confirmed gone, or a version 2 binding of
-# exactly the recorded pane this teardown proves gone. Unreadable, malformed, or
-# otherwise-bound journals, and a version 1 workspace still present or
-# unreadable, are not orphans.
+# teardown_herdr_journal_orphaned: journal-retirement eligibility after the
+# task-endpoint absence gate, per docs/herdr-backend.md "When task records
+# are erased". A journal match is not authority over a recycled address's
+# current occupant.
 teardown_herdr_journal_orphaned() {
   fm_backend_source herdr || return 1
   fm_backend_herdr_projection_journal_snapshot "$HERDR_PRESENTATION_JOURNAL" "$ID" || return 1
@@ -3990,11 +3984,8 @@ rm -f "$STATE/$ID.turn-ended" "$STATE/$ID.progress" \
 # read-only by its installer.
 chmod u+w "$STATE/$ID.git-hooks" 2>/dev/null || true
 rm -rf "$STATE/$ID.inbox" "$STATE/$ID.git-hooks"
-# A presentation journal the close path left behind is orphaned once the
-# recorded pane is proven gone (the Herdr gate above) unless it still names a
-# live projected workspace - a version 2 binding of some other pane, or a
-# version 1 attempt whose token-bearing workspace is still present - which the
-# session-start sweep alone may judge (header).
+# After the task-endpoint absence gate, apply the journal-retirement policy
+# owned by docs/herdr-backend.md "When task records are erased".
 if [ -e "$HERDR_PRESENTATION_JOURNAL" ] || [ -L "$HERDR_PRESENTATION_JOURNAL" ]; then
   if teardown_herdr_journal_orphaned; then
     rm -f "$HERDR_PRESENTATION_JOURNAL"

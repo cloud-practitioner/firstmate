@@ -54,8 +54,9 @@
 #   secondmate's charter.
 #        fm-spawn.sh <task-id> --relaunch [--harness <name>] [--model <name>] [--effort <level>]
 #   --relaunch launches a replacement agent for an EXISTING task into that
-#   task's own recorded worktree, reusing its recorded endpoint when that
-#   endpoint still exists, instead of creating either from scratch. It is
+#   task's own recorded worktree instead of creating one from scratch.
+#   docs/agent-control.md "Reclaiming a task whose endpoint is gone" owns
+#   endpoint adoption and rebind eligibility. It is
 #   the launch half of the control plane (bin/fm-control.sh relaunch), which
 #   owns the checkpoint, the progress note, stopping the previous agent, and the
 #   transaction; call fm-control rather than this flag directly unless you are
