@@ -225,14 +225,18 @@ test_no_reported_checks_is_unverified() {
 }
 
 test_help_states_what_silence_means_and_what_is_out_of_scope() {
-  local out
-  out=$("$SCRIPT" --help) || fail "help was refused"
-  assert_contains "$out" 'it does not mean the pull request is ready to merge' \
-    "help must not let empty output read as a verdict that the pull request can merge"
-  assert_contains "$out" 'is absent from what this command reads' \
-    "help must name the limit: a required context that never reported is absent from what is read"
-  assert_contains "$out" "Unresolved review-thread state is out of this command's scope" \
-    "help must state the thread-resolution boundary without inventing a reason for it"
+  local out flag
+  for flag in --help -h; do
+    out=$("$SCRIPT" "$flag") || fail "help was refused"
+    # The emitted CLI help is the public text contract; wrapping is not.
+    out=$(printf '%s\n' "$out" | awk '{$1=$1; printf "%s%s", sep, $0; sep=" "} END { print "" }')
+    assert_contains "$out" 'it does not mean the pull request is ready to merge' \
+      "help must not let empty output read as a verdict that the pull request can merge"
+    assert_contains "$out" 'is absent from what this command reads' \
+      "help must name the limit: a required context that never reported is absent from what is read"
+    assert_contains "$out" "Unresolved review-thread state is out of this command's scope" \
+      "help must state the thread-resolution boundary without inventing a reason for it"
+  done
   pass "help states what empty output means and what is out of scope"
 }
 
