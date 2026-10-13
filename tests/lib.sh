@@ -633,6 +633,7 @@ case "$method $path" in
     [ ! -f "$dir/commit-$abbrev.json" ] || respond "commit-$abbrev"
     respond commit
     ;;
+  "GET "*/refs/branches*) respond branches ;;
   "GET "*/branch-restrictions*) respond restrictions ;;
   "GET "*/effective-branching-model) respond model ;;
   "GET "*/effective-default-reviewers*) respond default-reviewers ;;

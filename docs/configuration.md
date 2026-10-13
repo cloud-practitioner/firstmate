@@ -1329,6 +1329,7 @@ Set both variables in the environment firstmate runs in, which its watcher inher
 
 The token needs read access to pull requests, commit statuses, and the repository, and write access to pull requests for a merge.
 A merge also needs repository admin access to read the destination branch's restrictions; an unreadable restriction set refuses the merge.
+A merge that names no strategy sends the destination branch's own configured default merge strategy explicitly, because Bitbucket applies a merge commit when the field is omitted, and refuses when that default cannot be read.
 [`bin/fm-pr-merge.sh`](../bin/fm-pr-merge.sh)'s header owns the supported merge checks, strategy selection, and remaining unbound-head race that can land unverified commits.
 Firstmate reads the credential from the environment only, never from `.env`, and hands it to `curl` on standard input rather than as an argument, so it never appears in a process listing and is never printed, logged, or recorded.
 `curl` and `jq` are required alongside it.
