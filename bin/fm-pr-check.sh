@@ -16,6 +16,8 @@
 # Mark the pull request ready for review, then arm again; a lane that keeps a
 # draft on purpose declares a wait instead of reporting done. An unreadable
 # draft state does not refuse, matching how the head read below is optional.
+# On Bitbucket, failure of the separate full-head lookup omits pr_head= but
+# never discards a positively read draft state.
 # bin/fm-pr-merge.sh records through this script with FM_PR_CHECK_MERGE=1 and
 # skips this refusal, because its own merge-time draft refusal is authoritative.
 # The recorded pr= also frees the task's place in a declared project capacity
@@ -112,8 +114,7 @@ if [ "$PROVIDER" = gerrit ]; then
 fi
 
 # The draft state is read before anything is recorded or armed. Only a positive
-# draft reading refuses, because an unreadable one must not block arming. The
-# one Bitbucket read also supplies the head recorded below.
+# draft reading refuses, because an unreadable one must not block arming.
 DRAFT_STATE=
 BITBUCKET_HEAD=
 if [ "$PROVIDER" = github ] && [ "${FM_PR_CHECK_MERGE:-}" != 1 ] && command -v gh >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then
@@ -136,8 +137,8 @@ fi
 "$FM_ROOT/bin/fm-guard.sh" || true
 
 # pr_head is recorded only when the forge can supply it. gh exposes the head
-# commit as a selectable field, and the Bitbucket read above resolved the pull
-# request's abbreviated head to the full hash. Plain glab exposes it only inside
+# commit as a selectable field, and the optional Bitbucket commit lookup above
+# resolves the pull request's abbreviated head to the full hash. Plain glab exposes it only inside
 # its JSON output, which would need a JSON processor firstmate does not require,
 # so a GitLab task records no pr_head, and neither does a Gerrit task: a Gerrit
 # revision names one patch set, every amend or rebase is a new patch set, and

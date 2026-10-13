@@ -123,11 +123,17 @@
 # before any state is recorded.
 # Bitbucket's merge API takes no expected-head parameter, so the verified head
 # cannot be bound to the merge the way --match-head-commit and --sha bind it.
-# Instead the head is read again inside the away-record lock immediately before
-# the merge request, and a moved head refuses with nothing merged; the remaining
-# window is that final read's round trip. The landed pull request is then read
-# back, and a merged head that is not the verified one is reported loudly and
-# exits non-zero after the landed outcome is recorded.
+# Instead the pull request is read again inside the away-record lock immediately
+# before the merge request. That final read refuses if the state is no longer
+# OPEN, the source head or destination branch changed, an approval present at
+# verification was withdrawn, or a new changes-requested verdict appeared.
+# Uninterpretable review snapshots also refuse because drift cannot be ruled out.
+# Review drift refuses even when the destination's restrictions do not require
+# approvals or no requested changes; unchanged reviews still face the checks above.
+# The remaining race window is between that final read and the merge request.
+# The landed pull request is then read back, and a merged head that is not the
+# verified one is reported loudly and exits non-zero after the landed outcome
+# is recorded.
 # Bitbucket applies merge_commit when a merge request omits merge_strategy,
 # whatever the destination branch is configured to default to, so unless the
 # extra args name a strategy the destination branch's configured
@@ -1672,13 +1678,10 @@ RED
   BITBUCKET_VERIFIED_REVIEWS=$(bitbucket_review_snapshot "$FM_PR_BITBUCKET_JSON") || BITBUCKET_VERIFIED_REVIEWS=
 }
 
-# The merge strategy a Bitbucket merge request without a merge_strategy field
-# would use is merge_commit, whatever the destination branch is configured to
-# default to, so a caller who names no strategy gets the destination branch's
-# own configured default read from the branch (its default_merge_strategy) and
-# sent explicitly. Sets BITBUCKET_DEFAULT_STRATEGY and returns 0, or sets
-# BITBUCKET_STRATEGY_ERROR and returns 1 when the default cannot be read or is
-# not a strategy this script knows; the caller then refuses rather than guess.
+# Read default_merge_strategy for the exact destination branch; the header
+# owns why the merge request must carry it explicitly. Sets
+# BITBUCKET_DEFAULT_STRATEGY and returns 0, or sets BITBUCKET_STRATEGY_ERROR
+# and returns 1 when the default cannot be read or is not a known strategy.
 BITBUCKET_DEFAULT_STRATEGY=
 BITBUCKET_STRATEGY_ERROR=
 bitbucket_read_default_strategy() {  # <destination-branch>
@@ -1726,13 +1729,7 @@ bitbucket_review_snapshot() {  # <pull-request-json>
       else error("invalid participants") end' 2>/dev/null
 }
 
-# The last read before the merge request, taken inside the away-record lock:
-# Bitbucket's merge API cannot bind a head, so a head that moved after the
-# verification refuses here with nothing merged. The same read also refuses
-# when anything the verification relied on has drifted: the destination branch
-# differs from the verified one (its merge checks were never read), an approval
-# present at verification has been withdrawn, or a changes-requested verdict
-# has appeared since.
+# Final recheck inside the away-record lock; the header owns the drift refusals.
 bitbucket_require_unmoved_head() {
   local current drift
   if ! fm_pr_bitbucket_read_pull_request "$PR_PATH" "$PR_NUMBER"; then
