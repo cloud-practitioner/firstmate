@@ -2691,24 +2691,9 @@ fm_backend_herdr_agent_alive() {  # <target> [expected-label]
 # uniqueness itself (verified: two tabs can share a label), so the duplicate
 # check is ours, mirroring tmux's manual check.
 #
-# A same-labeled tab already existing no longer means an automatic refusal:
-# herdr persists and restores its whole session layout (workspaces/tabs/
-# panes) across a server restart, including a reboot, and a restored fm-<id>
-# task tab comes back a HUSK - a dead pane, or (today, and unconditionally
-# once a future `resume_agents_on_restore = false` config ships) a plain
-# agent-less shell sitting in the saved cwd, never the crewmate that used to
-# be there. Before this fix, every fleet respawn after such a restart needed
-# the operator to manually close each husk pane first before firstmate could
-# spawn into it again. fm_backend_herdr_tab_is_husk classifies the existing
-# tab's pane conservatively (dead or no-agent only; anything live or
-# ambiguous refuses exactly as before) and, when it is a confirmed husk,
-# this function CLOSES AND REPLACES it instead of refusing.
-#
-#
-# A same-labeled tab is never ownership proof, though: the recorded-endpoint
-# policy in docs/herdr-backend.md "Endpoints from a previous session" decides
-# which candidates may reach that husk check, and a pane proven to belong to
-# someone else is left untouched.
+# docs/herdr-backend.md "Husks after a server restart" owns replacement
+# eligibility and links to the recorded-endpoint ownership policy.
+# A matching label alone must never authorize closing a preexisting pane.
 #
 # Ordering is deliberate: the REPLACEMENT tab is created FIRST, and the husk
 # is closed only AFTER that succeeds - never the reverse. Closing a
@@ -4042,10 +4027,10 @@ fm_backend_herdr_busy_state() {  # <target>
 #             "busy" across the whole window. This is readable but
 #             inconclusive: native state can remain idle for a landed turn,
 #             so the caller falls through to composer confirmation.
-#   unknown - EVERY poll in the window failed to read the target at all (a
-#             hard I/O failure - pane gone, socket error - not a timing
-#             race). The caller must not keep retrying Enter against a target
-#             it cannot even read.
+#   unknown - no poll read a recognized status, or a readiness/ownership
+#             recheck refused the target. A refusal stops polling immediately,
+#             even after an earlier idle sample; the caller must not retry
+#             Enter against a target it can no longer safely read.
 #
 # <polls> spread across <budget-seconds> (rather than one check at the end)
 # lets the fast path catch a native transition that lands partway through the
@@ -4160,17 +4145,10 @@ fm_backend_herdr_list_live() {  # <session>
 
 # --- native event push: pane.agent_status_changed subscriber -----------------
 #
-# The push half of the immediate blocked-state escalation (AGENTS.md section 8,
-# docs/herdr-backend.md "Native pane.agent_status_changed push escalation").
-# fm_backend_herdr_wait_transition is the watcher's bounded wait primitive for
-# herdr homes: instead of a blind sleep, it blocks on herdr's native event
-# stream and returns the instant a subscribed pane transitions to `blocked`, so
-# a crew waiting on the human wakes its supervisor sub-second instead of after
-# the ~240s stale-pane wedge timer. Everything not `blocked` is streamed too
-# (the policy, not the subscription, makes `blocked` the sole immediate action)
-# so `working` edges clear the per-pane dedupe marker. Polling stays the
-# permanent fail-closed backstop: below-capability, a connect/subscribe failure,
-# or a missing reader all fall back to the caller sleeping the same budget.
+# docs/herdr-backend.md "Push events and polling fallback" owns push policy;
+# "Endpoints from a previous session" owns claimant acceptance.
+# fm_backend_herdr_wait_transition supplies a bounded native-event wait instead
+# of a blind sleep. Reader or capability failure leaves polling as the backstop.
 
 # fm_backend_herdr_socket_path: the control-socket path for <session>, read from
 # `herdr session list --json` (the default session's socket differs from a named
