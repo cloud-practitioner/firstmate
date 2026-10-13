@@ -1,0 +1,33 @@
+cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.0qEN9X/pool/.treehouse/proje
+ct-98966e/1/project'
+project on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.0qEN9X/pool/.treehouse/pro
+ject-98966e/1/project'
+project on  HEAD
+❯ export GOTMPDIR=/tmp/fm-worker/gotmp
+project on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+project on  HEAD
+❯ export FM_TASK_ID=worker
+project on  HEAD
+❯ . '/tmp/fm-worker+84dbe67af6e4d673022c9d62dd8a4feb389c684b292e4627cefe18992c258726/launch.s1791923728.1190759.11120.sh
+'
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ Trust project folder?
+ /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.0qEN9X/pool/.treehouse/project-98
+ 966e/1/project
+
+ This allows pi to load .pi settings and resources, install missing project packages, and execute project extensions.
+
+ → Trust
+   Trust parent folder
+ (/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.0qEN9X/pool/.treehouse/project-9
+ 8966e/1)
+   Trust (this session only)
+   Do not trust
+   Do not trust (this session only)
+
+ ↑↓ navigate  enter select  escape/ctrl+c cancel
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

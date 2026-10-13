@@ -1,0 +1,86 @@
+Isolation: XDG config resolves to the worktree through an open directory fd; only a read-only real-default socket alias supplies the helper tripwire.
+session=fm-lab-stale-716645-2443
+provision_exit=0
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-stale-716645-2443"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/proc/716642/fd/9/herdr/sessions/fm-lab-stale-716645-2443/herdr.sock","session":"fm-lab-stale-716645-2443","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[]}}
+Manage workspaces over the socket API
+
+Usage: herdr workspace [COMMAND]
+
+Commands:
+  list             List workspaces
+  create           Create a workspace
+  get              Show a workspace
+  focus            Focus a workspace
+  rename           Rename a workspace
+  report-metadata  Report display-only workspace metadata
+  close            Close a workspace
+
+Are you an AI? Use these resources ONLY IF your task specifically asks you to:
+  Help a human understand or set up Herdr for the first time:
+    https://herdr.dev/agent-guide.md
+  Debug or investigate a problem with Herdr:
+    https://herdr.dev/llms.txt
+  Control Herdr panes, agents, or workspaces:
+    SKIP if a Herdr skill is already in your context. Otherwise run: herdr --skill
+
+Manage tabs over the socket API
+
+Usage: herdr tab [COMMAND]
+
+Commands:
+  list    List tabs
+  create  Create a tab
+  get     Show a tab
+  focus   Focus a tab
+  rename  Rename a tab
+  close   Close a tab
+
+Are you an AI? Use these resources ONLY IF your task specifically asks you to:
+  Help a human understand or set up Herdr for the first time:
+    https://herdr.dev/agent-guide.md
+  Debug or investigate a problem with Herdr:
+    https://herdr.dev/llms.txt
+  Control Herdr panes, agents, or workspaces:
+    SKIP if a Herdr skill is already in your context. Otherwise run: herdr --skill
+
+Control terminal panes
+
+Usage: herdr pane [COMMAND]
+
+Commands:
+  list                  List panes
+  current               Show the current pane
+  get                   Show a pane
+  layout                Show pane layout information
+  process-info          Show pane process information
+  neighbor              Find a pane neighbor
+  edges                 Show pane edge information
+  focus                 Focus a neighboring pane
+  resize                Resize a pane split
+  zoom                  Toggle or set pane zoom
+  read                  Read pane terminal output
+  rename                Rename a pane
+  input                 Set pane input routing
+  split                 Split a pane
+  swap                  Swap panes
+  move                  Move a pane
+  close                 Close a pane
+  send-text             Send literal text to a pane
+  send-keys             Send key presses to a pane
+  wait-output           Wait for matching pane output
+  run                   Run a command in a pane
+  report-agent          Report pane agent lifecycle state
+  report-agent-session  Report pane agent session identity
+  release-agent         Release pane agent lifecycle authority
+  report-metadata       Report display-only pane metadata
+
+Are you an AI? Use these resources ONLY IF your task specifically asks you to:
+  Help a human understand or set up Herdr for the first time:
+    https://herdr.dev/agent-guide.md
+  Debug or investigate a problem with Herdr:
+    https://herdr.dev/llms.txt
+  Control Herdr panes, agents, or workspaces:
+    SKIP if a Herdr skill is already in your context. Otherwise run: herdr --skill
+
+teardown_exit=0

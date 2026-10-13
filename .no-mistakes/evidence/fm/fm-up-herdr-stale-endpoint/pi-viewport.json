@@ -1,0 +1,40 @@
+treehouse get
+project on  master
+❯ treehouse get
+A new version of treehouse is available: v3.1.2 → v3.1.3
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehous
+e/project-4949b8/1/project. Type 'exit' to return.
+project on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/pro
+ject-4949b8/1/project'
+project on  HEAD
+❯ export GOTMPDIR=/tmp/fm-worker/gotmp
+project on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+project on  HEAD
+❯ export FM_TASK_ID=worker
+project on  HEAD
+❯ . '/tmp/fm-worker+72a119f9b611bc3777366e0fff95adf63685129ae0377c7da8441b8763de52b7/launch.s1791923932.1256102.11963.sh
+'
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ Trust project folder?
+ /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-49
+ 49b8/1/project
+
+ This allows pi to load .pi settings and resources, install missing project packages, and execute project extensions.
+
+ → Trust
+   Trust parent folder
+ (/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-4
+ 949b8/1)
+   Trust (this session only)
+   Do not trust
+   Do not trust (this session only)
+
+ ↑↓ navigate  enter select  escape/ctrl+c cancel
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

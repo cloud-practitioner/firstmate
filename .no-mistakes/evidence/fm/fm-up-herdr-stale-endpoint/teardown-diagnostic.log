@@ -1,0 +1,26 @@
+=== head ===
+not ok - missing-child-source: the refusal did not name the missing source
+
+--- teardown stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 2s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REFUSED: unsafe secondmate home removal target /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-teardown-diagnostic.D4xvXH/tmp/fm-teardown-tests.D1GIjr/missing-child-adapter-sibling/secondmate-home is inside the firstmate repo
+diagnostic_exit=1
+=== base ===
+ok - a forced descendant with a missing adapter sibling refuses before cleanup
+
+--- teardown stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 1s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-teardown-diagnostic.D4xvXH/base/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-teardown-diagnostic.D4xvXH/base/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: teardown refused: required herdr source is missing or unreadable for child-herdr; nothing was changed
+diagnostic_exit=0

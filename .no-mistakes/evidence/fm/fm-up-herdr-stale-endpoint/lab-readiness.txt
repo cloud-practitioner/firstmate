@@ -1,0 +1,3 @@
+Herdr version: herdr 0.9.3
+Session: fm-lab-stale-endpoint-569999-28744
+prepare_exit=0

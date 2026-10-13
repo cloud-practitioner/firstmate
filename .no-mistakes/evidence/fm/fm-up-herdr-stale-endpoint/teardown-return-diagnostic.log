@@ -1,0 +1,130 @@
+=== head ===
+not ok - return-removes-copy: warning did not say the slot is unverified
+
+--- teardown stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 1s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-teardown-return.xHhd4l/head/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-teardown-return.xHhd4l/head/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+warning: treehouse return left pool slot 7 (/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-teardown-return.xHhd4l/tmp/fm-teardown-tests.kk5SH3/return-removes-copy/pool/7/repo) dirty or unverified; the pool lost this slot. Remaining paths:
+  ?? .test-herdr-live.sh
+  ?? .test-teardown-return.xHhd4l/base-diagnostic.sh
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/afk/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/agent-skill-trigger-index/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/ahoy/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/ask-user-authority/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/away-quiet-supervision/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/bearings/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/bearings/assets/board-template.html
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/bootstrap-diagnostics/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/captain-hold-lifecycle/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/decision-hold-lifecycle/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/diagnostic-reasoning/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-calm
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-codexapp/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-codexapp/agents/openai.yaml
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-coding-guidelines/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-orca/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-self-repo/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/fmx-respond/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/common/control-and-recovery.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/common/dispatch.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/common/model-and-effort.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/common/primary-hooks.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/agy.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/claude.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/codex.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/cursor.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/devin.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/gemini.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/grok.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/kimi.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/muse.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/omp.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/opencode.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/pi.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/rovo.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/operational-home-layout/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/process-event-sources/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/project-management/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/quiet/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/quota-array-dispatch/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/scout-completion/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/secondmate-provisioning/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/session-start-recovery/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/ship-landing/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/stow/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/stuck-crewmate-recovery/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/updatefirstmate/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/validation-supervision/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.claude/mods/firstmate-calm/.claude-plugin/plugin.json
+diagnostic_exit=1
+=== base ===
+not ok - return-removes-copy: warning did not say the slot is unverified
+
+--- teardown stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 1s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-teardown-return.xHhd4l/base/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-teardown-return.xHhd4l/base/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+warning: treehouse return left pool slot 7 (/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-teardown-return.xHhd4l/tmp/fm-teardown-tests.e0BrSX/return-removes-copy/pool/7/repo) dirty or unverified; the pool lost this slot. Remaining paths:
+  ?? .test-herdr-live.sh
+  ?? .test-teardown-return.xHhd4l/base-diagnostic.sh
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/afk/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/agent-skill-trigger-index/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/ahoy/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/ask-user-authority/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/away-quiet-supervision/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/bearings/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/bearings/assets/board-template.html
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/bootstrap-diagnostics/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/captain-hold-lifecycle/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/decision-hold-lifecycle/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/diagnostic-reasoning/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-calm
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-codexapp/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-codexapp/agents/openai.yaml
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-coding-guidelines/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-orca/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/firstmate-self-repo/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/fmx-respond/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/common/control-and-recovery.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/common/dispatch.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/common/model-and-effort.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/common/primary-hooks.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/agy.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/claude.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/codex.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/cursor.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/devin.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/gemini.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/grok.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/kimi.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/muse.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/omp.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/opencode.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/pi.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/harness-adapters/references/harness/rovo.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/operational-home-layout/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/process-event-sources/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/project-management/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/quiet/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/quota-array-dispatch/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/scout-completion/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/secondmate-provisioning/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/session-start-recovery/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/ship-landing/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/stow/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/stuck-crewmate-recovery/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/updatefirstmate/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.agents/skills/validation-supervision/SKILL.md
+  ?? .test-teardown-return.xHhd4l/base/.claude/mods/firstmate-calm/.claude-plugin/plugin.json
+diagnostic_exit=1

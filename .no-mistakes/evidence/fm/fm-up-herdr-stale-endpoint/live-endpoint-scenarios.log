@@ -1,0 +1,66 @@
+=== stable owning-shell identity and portable drift ===
+initial_target=fm-lab-ownership-1252166-29972:w1:p1 initial_identity=proc:1252246:114383cd-0716-4c57-b93b-053709d24e9b:15861698
+identity_sample_1=proc:1252246:114383cd-0716-4c57-b93b-053709d24e9b:15861698
+identity_sample_2=proc:1252246:114383cd-0716-4c57-b93b-053709d24e9b:15861698
+identity_sample_3=proc:1252246:114383cd-0716-4c57-b93b-053709d24e9b:15861698
+identity_sample_4=proc:1252246:114383cd-0716-4c57-b93b-053709d24e9b:15861698
+identity_sample_5=proc:1252246:114383cd-0716-4c57-b93b-053709d24e9b:15861698
+recorded_ps_offset=-1 exists=yes
+recorded_ps_offset=1 exists=yes
+recorded_ps_offset=3 exists=no
+unavailable_proc_liveness=unreadable
+=== session reset: same id, label and cwd but a different process ===
+old_pane=w1:p1 recycled_pane=w1:p1 old_identity=proc:1252246:114383cd-0716-4c57-b93b-053709d24e9b:15861698 current_identity=proc:1253763:114383cd-0716-4c57-b93b-053709d24e9b:15861938
+recorded_task_liveness=missing
+foreign capture refused
+foreign submit refused
+foreign key refused
+guarded cleanup completed without closing the unrelated pane
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/owned","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/owned","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65dbecd12cd2c1","workspace_id":"w1"},"type":"pane_info"}}
+recovery_recheck=missing
+owning_child_home_liveness=dead
+=== legacy dead husk replacement ===
+old_husk=w1:p2 new_tab=w1:t3 new_pane=w1:p3
+{"error":{"code":"pane_not_found","message":"pane w1:p2 not found"},"id":"cli:pane:get"}
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/other","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/other","pane_id":"w1:p3","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t3","terminal_id":"term_65dbecd1d50fd3","workspace_id":"w1"},"type":"pane_info"}}
+=== remote parent-route owns endpoint reads rather than ordinary state ===
+parent_route_stale_state=missing
+remote capture returned no foreign output
+remote_key_live=untested (gate refusal before endpoint access; exit=3)
+parent_route_bound_state=dead
+01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/owned on  HEAD [?]
+❯=== real spawn publishes its root process identity ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/home
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  2 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+notice: worker ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned worker harness=pi kind=ship mode=local-only yolo=off window=fm-lab-ownership-1252166-29972:w2:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-4949b8/1/project
+published_worker_target=fm-lab-ownership-1252166-29972:w2:p2 published_identity=proc:1256789:114383cd-0716-4c57-b93b-053709d24e9b:15862319 current_identity=proc:1256789:114383cd-0716-4c57-b93b-053709d24e9b:15862319
+real_pi_process_liveness=unreadable
+{"id":"cli:agent:get","result":{"agent":{"agent":"pi","agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-4949b8/1/project","pane_id":"w2:p2","revision":0,"state_change_seq":0,"tab_id":"w2:t2","terminal_id":"term_65dbecd4cffae5","workspace_id":"w2"},"type":"agent_info"}}
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/home
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+notice: worker ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned worker harness=pi kind=ship mode=local-only yolo=off window=fm-lab-ownership-1252166-29972:w2:p3 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-4949b8/1/project
+relaunch_old_pane=w2:p2 relaunch_new_pane=w2:p3 old_identity=proc:1256789:114383cd-0716-4c57-b93b-053709d24e9b:15862319 republished_identity=proc:1262361:114383cd-0716-4c57-b93b-053709d24e9b:15863283
+=== bound push claimant beats a stale paused claimant ===
+{"id":"cli:agent:get","result":{"agent":{"agent":"pi","agent_status":"blocked","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-4949b8/1/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-4949b8/1/project","pane_id":"w2:p3","revision":1,"state_change_seq":2,"tab_id":"w2:t3","terminal_id":"term_65dbecde00c244","terminal_title":"π - project","terminal_title_stripped":"π - project","workspace_id":"w2"},"type":"agent_info"}}
+native_transition=w2:p3			blocked	
+stale: fm-lab-ownership-1252166-29972:w2:p3 (herdr: agent blocked - waiting on human, escalated immediately, not via wedge timer)
+bound_status_surfaced=34 stale_status_surfaced=0
+wake_queue=1791923946	1	stale	fm-lab-ownership-1252166-29972:w2:p3	stale: fm-lab-ownership-1252166-29972:w2:p3 (herdr: agent blocked - waiting on human, escalated immediately, not via wedge timer)
+live_pi_composer_baseline=empty
+=== passive composer stop after the real viewport capture ===
+composer_after_stop=unknown server_state=stopped
+=== passive busy stop before native status lookup ===
+busy_after_stop=unknown server_state=stopped
+RACE: real server stopped after returning real viewport
+RACE: real server stopped before native agent lookup
+ALL LIVE SCENARIOS COMPLETE
+lab_teardown_exit=0
+real default tripwire unchanged

@@ -1,0 +1,4 @@
+An initial probe left its disposable Treehouse cache slot at /home/node/.treehouse/project-5cfd59/1/project.
+This resulted from setting TREEHOUSE_ROOT after Herdr provision, too late to affect pane shells.
+The final driver exports TREEHOUSE_ROOT and PI_CODING_AGENT_DIR before provision; all final fixtures were removed in the same evidence turn.
+No outside-worktree deletion was attempted because the workspace boundary does not authorize it.

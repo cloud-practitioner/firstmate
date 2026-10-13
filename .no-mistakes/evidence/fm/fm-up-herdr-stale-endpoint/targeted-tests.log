@@ -1,4 +1,4 @@
-FM_TEST_BEGIN 2026-10-13T03:46:10Z tests/fm-backend-herdr.test.sh family=backend-dispatch expected_gate_skip=none
+FM_TEST_BEGIN 2026-10-13T20:15:45Z tests/fm-backend-herdr.test.sh family=backend-dispatch expected_gate_skip=none
 ok - fm_backend_herdr_version_check: accepts the current protocol (14)
 ok - fm_backend_herdr_version_check: refuses an old protocol loudly
 ok - fm_backend_herdr_version_check: refuses loudly when herdr is not installed
@@ -18,6 +18,7 @@ ok - herdr stale registration: a registered agent with a live Pi foreground proc
 ok - herdr stale registration: only a shell-only pane demotes a registration
 ok - herdr stale registration: a transient prompt helper settles into stale-agent instead of reading live
 ok - herdr stale registration: an exhausted settle window still reads a non-shell foreground as live
+Terminated
 ok - herdr stale registration: an agent process outside the foreground group still counts as alive
 Terminated
 ok - herdr stale registration: the descendant walk reads a spaced executable path whole
@@ -100,9 +101,9 @@ ok - herdr presentation cleanup: an ambiguous workspace layout falls back to the
 ok - herdr presentation cleanup: a failed repositioning move falls back to the plain close with a warning
 ok - herdr presentation cleanup: a pane with a live foreground process falls back to the plain close
 ok - herdr presentation cleanup: a transient prompt helper settles into the pane-death path instead of the plain close
-tests/fm-backend-herdr.test.sh: line 2734: 99296 Killed                  bash -c 'trap "" HUP; sleep 300'
+tests/fm-backend-herdr.test.sh: line 2734: 593694 Killed                  bash -c 'trap "" HUP; sleep 300'
 ok - herdr presentation cleanup: a SIGHUP-surviving shell is escalated to SIGKILL before giving up
-tests/fm-backend-herdr.test.sh: line 2772: 100023 Killed                  bash -c 'trap "" HUP; sleep 300'
+tests/fm-backend-herdr.test.sh: line 2772: 593919 Killed                  bash -c 'trap "" HUP; sleep 300'
 ok - herdr presentation cleanup: a failed pane-death close falls back to the plain close
 ok - herdr presentation cleanup: the exact-tab restore remains the backstop behind the pane-death close
 ok - herdr presentation cleanup: SIGKILL never reaches a pid the exact pane no longer owns
@@ -248,8 +249,8 @@ ok - fm_backend_herdr_wait_transition: streamed working clears the marker, idle/
 ok - fm_backend_herdr_wait_transition: a reader/subscribe failure falls back to polling (rc 2)
 ok - fm_backend_herdr_wait_transition: Bash 3.2-safe bad-ack path closes fd 9 and removes its FIFO
 ok - fm_backend_herdr_wait_transition: stock macOS Bash clean timeout closes fd 9 and returns 1
-FM_TEST_END 2026-10-13T03:47:55Z tests/fm-backend-herdr.test.sh exit=0 duration_ms=104707 gate_skip=false
-FM_TEST_BEGIN 2026-10-13T03:47:55Z tests/fm-herdr-endpoint-boundaries.test.sh family=unclassified expected_gate_skip=none
+FM_TEST_END 2026-10-13T20:16:44Z tests/fm-backend-herdr.test.sh exit=0 duration_ms=59246 gate_skip=false
+FM_TEST_BEGIN 2026-10-13T20:16:44Z tests/fm-herdr-endpoint-boundaries.test.sh family=unclassified expected_gate_skip=none
 ok - dispatchers revalidate the selected binding at their internal boundary
 ok - viewport, composer and busy probes never start a stopped server, including lazy Pi identity reads
 ok - submit settlement and confirmation resets neither read nor modify foreign drafts
@@ -269,16 +270,23 @@ ok - native reconnect levels and stream edges validate the selected home before 
 ok - a failed Treehouse return does not fall back to deleting a worktree a foreign pane now uses
 ok - reconnect and stream push handling uses the bound claimant for waits, wakes, dedupe, and status bookkeeping
 ok - secondmate recovery cannot borrow a competing binding after a reset during lock acquisition
-FM_TEST_END 2026-10-13T03:48:57Z tests/fm-herdr-endpoint-boundaries.test.sh exit=0 duration_ms=61436 gate_skip=false
-FM_TEST_BEGIN 2026-10-13T03:48:57Z tests/fm-remote-secondmate-control.test.sh family=unclassified expected_gate_skip=none
+FM_TEST_END 2026-10-13T20:17:26Z tests/fm-herdr-endpoint-boundaries.test.sh exit=0 duration_ms=42355 gate_skip=false
+FM_TEST_BEGIN 2026-10-13T20:17:26Z tests/fm-remote-secondmate-control.test.sh family=unclassified expected_gate_skip=none
 ok - owned remote state, launch, capture, observation, key and doorbell use parent-route records
 ok - stale remote endpoints remain missing, unread and unsteered despite a matching ordinary-home record
 ok - close, recovery, relaunch and retirement retain route state while code-root update uses root state
-FM_TEST_END 2026-10-13T03:49:05Z tests/fm-remote-secondmate-control.test.sh exit=0 duration_ms=8649 gate_skip=false
-FM_TEST_SUMMARY total=3 failed=0 skipped_gate=0 duration_ms=174951
-FM_TEST_SUMMARY_FAMILY family=backend-dispatch count=1 duration_ms=104707 failed=0
-FM_TEST_SUMMARY_FAMILY family=unclassified count=2 duration_ms=70085 failed=0
-FM_TEST_SLOWEST rank=1 script=tests/fm-backend-herdr.test.sh duration_ms=104707
-FM_TEST_SLOWEST rank=2 script=tests/fm-herdr-endpoint-boundaries.test.sh duration_ms=61436
-FM_TEST_SLOWEST rank=3 script=tests/fm-remote-secondmate-control.test.sh duration_ms=8649
-fm-test-run: wrote timing artifact: /home/node/.no-mistakes/evidence/01M4SKKEZG21H4FGF8S63HQM01/targeted-tests.json
+FM_TEST_END 2026-10-13T20:17:32Z tests/fm-remote-secondmate-control.test.sh exit=0 duration_ms=6048 gate_skip=false
+FM_TEST_BEGIN 2026-10-13T20:17:32Z tests/fm-teardown.test.sh family=pr-forge expected_gate_skip=none
+ok - a missing teardown startup source refuses before cleanup
+ok - an unreadable teardown startup source refuses before cleanup
+ok - a missing adapter sibling refuses before cleanup
+not ok - missing-child-source: the refusal did not name the missing source
+FM_TEST_END 2026-10-13T20:17:36Z tests/fm-teardown.test.sh exit=1 duration_ms=4022 gate_skip=false
+FM_TEST_SUMMARY total=4 failed=1 skipped_gate=0 duration_ms=111783
+FM_TEST_SUMMARY_FAMILY family=backend-dispatch count=1 duration_ms=59246 failed=0
+FM_TEST_SUMMARY_FAMILY family=pr-forge count=1 duration_ms=4022 failed=1
+FM_TEST_SUMMARY_FAMILY family=unclassified count=2 duration_ms=48403 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-backend-herdr.test.sh duration_ms=59246
+FM_TEST_SLOWEST rank=2 script=tests/fm-herdr-endpoint-boundaries.test.sh duration_ms=42355
+FM_TEST_SLOWEST rank=3 script=tests/fm-remote-secondmate-control.test.sh duration_ms=6048
+FM_TEST_SLOWEST rank=4 script=tests/fm-teardown.test.sh duration_ms=4022
