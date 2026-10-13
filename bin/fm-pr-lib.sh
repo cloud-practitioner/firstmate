@@ -1431,7 +1431,8 @@ fm_pr_bitbucket_fetch_commit() {  # <worktree> <full-hash> <source-branch>
 # (the head exactly as reported, which is abbreviated), FM_PR_BITBUCKET_HEAD,
 # both branch names, and FM_PR_BITBUCKET_JSON. With the default "resolve",
 # FM_PR_BITBUCKET_HEAD is the full hash resolved live; with "reported" it is
-# left empty, for a read after a merge whose source branch may already be gone.
+# left empty, so draft and state reads do not depend on a separate commit lookup
+# and post-merge reads work even when the source branch has already gone.
 # The record must be the exact pull request asked for, and every field a
 # caller relies on must be present, or the read fails.
 # shellcheck disable=SC2034 # These results are read by sourcing callers.

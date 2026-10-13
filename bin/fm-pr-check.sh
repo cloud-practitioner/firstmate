@@ -133,7 +133,8 @@ fi
 
 # The draft state is read before anything is recorded or armed. Only a positive
 # draft reading refuses, because an unreadable one must not block arming. The
-# one Bitbucket read also supplies the head recorded below.
+# Bitbucket record read also supplies the reported head, resolved separately
+# for recording below.
 DRAFT_STATE=
 BITBUCKET_HEAD=
 if [ "$PROVIDER" = github ] && [ "${FM_PR_CHECK_MERGE:-}" != 1 ] && command -v gh >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then

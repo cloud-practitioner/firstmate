@@ -16,10 +16,8 @@
 # neither PR head can be resolved, fall back to the local branch with a warning.
 # A GitLab merge request and a Gerrit change expose no comparable ref and record
 # no pr_head, so a task recording one always takes that warning path. A
-# Bitbucket pull request exposes no ref either, so its head is read live from
-# the Bitbucket API and fetched by its source branch or hash when this copy
-# lacks it; a recorded pr_head= is the fallback only when that live read fails,
-# with a warning. docs/architecture.md owns that fallback. Without pr=, compare
+# Bitbucket pull request uses the API-based head resolution and warned fallback
+# owned by docs/architecture.md. Without pr=, compare
 # the task's immutable ship branch recorded in state/<id>.meta ("fm/<id>" for
 # records created before that field existed), or the worktree's checked-out
 # branch when that branch does not exist in the worktree. A recorded branch that
