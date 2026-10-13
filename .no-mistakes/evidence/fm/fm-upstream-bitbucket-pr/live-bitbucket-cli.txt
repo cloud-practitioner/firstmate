@@ -1,0 +1,5754 @@
+$ FM_HOME=<disposable/register-state-poll> bin/fm-pr-check.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=0
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+$ FM_HOME=<disposable/register-state-poll> bin/fm-pr-state.sh https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=0
+stdout:
+stderr:
+
+$ FM_HOME=<disposable/register-state-poll> bin/fm-pr-state.sh https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=0
+stdout:
+DRAFT: pull request is not ready for review
+CHECK: pipeline (FAILED)
+CHECK: deploy (INPROGRESS)
+REVIEW: bob CHANGES_REQUESTED
+stderr:
+
+$ FM_HOME=<disposable/register-state-poll> bin/fm-pr-poll.sh --validated bitbucket https://bitbucket.org/lab-team/sample_repo/pull-requests/7 bitbucket.org lab-team/sample_repo 7
+exit=0
+stdout:
+stderr:
+
+$ FM_HOME=<disposable/register-state-poll> bin/fm-pr-poll.sh --validated bitbucket https://bitbucket.org/lab-team/sample_repo/pull-requests/7 bitbucket.org lab-team/sample_repo 7
+exit=0
+stdout:
+merged
+stderr:
+
+$ FM_HOME=<disposable/register-state-poll> bin/fm-pr-poll.sh --validated bitbucket https://bitbucket.org/lab-team/sample_repo/pull-requests/7 bitbucket.org lab-team/sample_repo 7
+exit=0
+stdout:
+stderr:
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": true,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "nickname": "bob"
+          },
+          "approved": false,
+          "state": "changes_requested"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "state": "FAILED"
+        },
+        {
+          "key": "deploy",
+          "state": "INPROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {
+      "fields": [
+        "id,state"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {
+      "fields": [
+        "id,state"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {
+      "fields": [
+        "id,state"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 503,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/register-state-poll/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/register-state-poll/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: Register full head, report blockers, and poll only merged PRs
+
+$ FM_HOME=<disposable/draft-commit-outage> bin/fm-pr-check.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+stderr:
+error: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is a draft pull request; a draft cannot be merged, so merge monitoring would wait for an event that cannot occur - mark it ready for review and arm again, or declare a wait instead of done if the draft is deliberate
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": true,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 503,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/draft-commit-outage/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/draft-commit-outage/worktree
+kind=ship
+mode=no-mistakes
+
+SCENARIO PASSED: Draft registration refuses even during commit lookup outage
+
+$ FM_HOME=<disposable/credential-boundary> bin/fm-pr-check.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=0
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+$ FM_HOME=<disposable/credential-boundary> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+stderr:
+error: merging a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/credential-boundary/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/credential-boundary/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: Use credentials only from environment and refuse missing token
+
+$ FM_HOME=<disposable/branch-default-squash> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=0
+stdout:
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7/merge",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/branch-default-squash/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/branch-default-squash/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+Persisted state/.wake-queue:
+1791861663	1	check	merged-task-x1-https://bitbucket.org/lab-team/sample_repo/pull-requests/7	check: merge landed: task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+
+Persisted state/task-x1.merge-authority:
+fm-merge-authority-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+attended
+
+Persisted state/task-x1.pr-poll-merge-notified:
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: branch-default-squash
+
+$ FM_HOME=<disposable/branch-default-unreadable> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+  - the configured default merge strategy of destination branch main could not be read (HTTP 403); name a strategy with --squash, --merge, --rebase, or --method, or fix the read
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 403,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/branch-default-unreadable/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/branch-default-unreadable/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: branch-default-unreadable
+
+$ FM_HOME=<disposable/branch-default-unknown> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+  - destination branch main reports no merge strategy this script knows as its default (got "unknown"); name a strategy with --squash, --merge, --rebase, or --method, or fix the read
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "unknown"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/branch-default-unknown/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/branch-default-unknown/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: branch-default-unknown
+
+$ FM_HOME=<disposable/explicit-rebase> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7 -- --rebase
+exit=0
+stdout:
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7/merge",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "rebase_fast_forward"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/explicit-rebase/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/explicit-rebase/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+Persisted state/.wake-queue:
+1791861672	1	check	merged-task-x1-https://bitbucket.org/lab-team/sample_repo/pull-requests/7	check: merge landed: task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+
+Persisted state/task-x1.merge-authority:
+fm-merge-authority-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+attended
+
+Persisted state/task-x1.pr-poll-merge-notified:
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: explicit-rebase
+
+$ FM_HOME=<disposable/final-read-destination> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 now targets release, not the verified destination branch main, so its merge checks were never read; nothing was merged
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "release"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-destination/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-destination/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: final-read-destination
+
+$ FM_HOME=<disposable/final-read-withdraw> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: the reviews of https://bitbucket.org/lab-team/sample_repo/pull-requests/7 changed after verification (approval withdrawn by {alice}); nothing was merged
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-withdraw/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-withdraw/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: final-read-withdraw
+
+$ FM_HOME=<disposable/final-read-changes> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: the reviews of https://bitbucket.org/lab-team/sample_repo/pull-requests/7 changed after verification (changes requested by {bob}); nothing was merged
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        },
+        {
+          "user": {
+            "uuid": "{bob}"
+          },
+          "approved": false,
+          "state": "changes_requested"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-changes/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-changes/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: final-read-changes
+
+$ FM_HOME=<disposable/final-read-head> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 changed after verification (state OPEN, head bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa); nothing was merged
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "bbbbbbbbbbbb"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/bbbbbbbbbbbb",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-head/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-head/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: final-read-head
+
+$ FM_HOME=<disposable/final-read-closed> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 changed after verification (state DECLINED, head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa); nothing was merged
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "DECLINED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-closed/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-closed/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: final-read-closed
+
+$ FM_HOME=<disposable/final-read-None> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=0
+stdout:
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7/merge",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-None/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/final-read-None/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+Persisted state/.wake-queue:
+1791861695	1	check	merged-task-x1-https://bitbucket.org/lab-team/sample_repo/pull-requests/7	check: merge landed: task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+
+Persisted state/task-x1.merge-authority:
+fm-merge-authority-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+attended
+
+Persisted state/task-x1.pr-poll-merge-notified:
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: final-read-None
+
+$ FM_HOME=<disposable/away-async-202-landed> bin/fm-afk-contract.sh enter --words merge task-x1 when green
+exit=0
+stdout:
+Away posture recorded at 2026-10-13T03:21:35Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 4 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-13T03:21:35Z
+  expected return: not given
+  spend cap: 4 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    merge task-x1 when green
+stderr:
+
+$ FM_HOME=<disposable/away-async-202-landed> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=0
+stdout:
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+$ FM_HOME=<disposable/away-async-202-landed> bin/fm-afk-contract.sh archive
+exit=0
+stdout:
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-202-landed/state/afk-contracts/1791861695.afk-contract
+stderr:
+
+Post-completion task-control probe exit=0
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7/merge",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 202,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-202-landed/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-202-landed/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+Persisted state/.wake-queue:
+1791861701	1	check	merged-task-x1-https://bitbucket.org/lab-team/sample_repo/pull-requests/7	check: merge landed: task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7 away
+
+Persisted state/task-x1.merge-authority:
+fm-merge-authority-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+away
+
+Persisted state/task-x1.pr-poll-merge-notified:
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+
+Competing public-interface lock probes:
+[
+  {
+    "read": 1,
+    "archive_rc": 1,
+    "archive_output": "fm-afk-contract: the away-posture record is locked by live process 3129771 (an in-flight merge, or another change to this record); nothing was changed\n",
+    "control_rc": 1
+  },
+  {
+    "read": 2,
+    "archive_rc": 1,
+    "archive_output": "fm-afk-contract: the away-posture record is locked by live process 3129771 (an in-flight merge, or another change to this record); nothing was changed\n",
+    "control_rc": 1
+  }
+]
+SCENARIO PASSED: away-async-202-landed
+
+$ FM_HOME=<disposable/away-async-202-unconfirmed> bin/fm-afk-contract.sh enter --words merge task-x1 when green
+exit=0
+stdout:
+Away posture recorded at 2026-10-13T03:21:42Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 4 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-13T03:21:42Z
+  expected return: not given
+  spend cap: 4 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    merge task-x1 when green
+stderr:
+
+$ FM_HOME=<disposable/away-async-202-unconfirmed> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+actionable: Bitbucket accepted the merge request for https://bitbucket.org/lab-team/sample_repo/pull-requests/7 but its landed state could not be confirmed; the merge poll remains armed
+error: Bitbucket landing unconfirmed while away for https://bitbucket.org/lab-team/sample_repo/pull-requests/7; no landed outcome is recorded; the merge poll remains armed
+
+$ FM_HOME=<disposable/away-async-202-unconfirmed> bin/fm-afk-contract.sh archive
+exit=0
+stdout:
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-202-unconfirmed/state/afk-contracts/1791861702.afk-contract
+stderr:
+
+Post-completion task-control probe exit=0
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7/merge",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 202,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-202-unconfirmed/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-202-unconfirmed/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+Persisted state/task-x1.merge-authority:
+fm-merge-authority-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+away
+
+Competing public-interface lock probes:
+[
+  {
+    "read": 1,
+    "archive_rc": 1,
+    "archive_output": "fm-afk-contract: the away-posture record is locked by live process 3142058 (an in-flight merge, or another change to this record); nothing was changed\n",
+    "control_rc": 1
+  },
+  {
+    "read": 2,
+    "archive_rc": 1,
+    "archive_output": "fm-afk-contract: the away-posture record is locked by live process 3142058 (an in-flight merge, or another change to this record); nothing was changed\n",
+    "control_rc": 1
+  }
+]
+SCENARIO PASSED: away-async-202-unconfirmed
+
+$ FM_HOME=<disposable/away-async-555-landed> bin/fm-afk-contract.sh enter --words merge task-x1 when green
+exit=0
+stdout:
+Away posture recorded at 2026-10-13T03:21:51Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 4 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-13T03:21:51Z
+  expected return: not given
+  spend cap: 4 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    merge task-x1 when green
+stderr:
+
+$ FM_HOME=<disposable/away-async-555-landed> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=0
+stdout:
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+$ FM_HOME=<disposable/away-async-555-landed> bin/fm-afk-contract.sh archive
+exit=0
+stdout:
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-555-landed/state/afk-contracts/1791861711.afk-contract
+stderr:
+
+Post-completion task-control probe exit=0
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7/merge",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 555,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "MERGED",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-555-landed/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-555-landed/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+Persisted state/.wake-queue:
+1791861719	1	check	merged-task-x1-https://bitbucket.org/lab-team/sample_repo/pull-requests/7	check: merge landed: task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7 away
+
+Persisted state/task-x1.merge-authority:
+fm-merge-authority-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+away
+
+Persisted state/task-x1.pr-poll-merge-notified:
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+
+Competing public-interface lock probes:
+[
+  {
+    "read": 1,
+    "archive_rc": 1,
+    "archive_output": "fm-afk-contract: the away-posture record is locked by live process 3155665 (an in-flight merge, or another change to this record); nothing was changed\n",
+    "control_rc": 1
+  },
+  {
+    "read": 2,
+    "archive_rc": 1,
+    "archive_output": "fm-afk-contract: the away-posture record is locked by live process 3155665 (an in-flight merge, or another change to this record); nothing was changed\n",
+    "control_rc": 1
+  }
+]
+SCENARIO PASSED: away-async-555-landed
+
+$ FM_HOME=<disposable/away-async-555-unconfirmed> bin/fm-afk-contract.sh enter --words merge task-x1 when green
+exit=0
+stdout:
+Away posture recorded at 2026-10-13T03:21:59Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 4 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-13T03:21:59Z
+  expected return: not given
+  spend cap: 4 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    merge task-x1 when green
+stderr:
+
+$ FM_HOME=<disposable/away-async-555-unconfirmed> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+actionable: Bitbucket accepted the merge request for https://bitbucket.org/lab-team/sample_repo/pull-requests/7 but its landed state could not be confirmed; the merge poll remains armed
+error: Bitbucket landing unconfirmed while away for https://bitbucket.org/lab-team/sample_repo/pull-requests/7; no landed outcome is recorded; the merge poll remains armed
+
+$ FM_HOME=<disposable/away-async-555-unconfirmed> bin/fm-afk-contract.sh archive
+exit=0
+stdout:
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-555-unconfirmed/state/afk-contracts/1791861719.afk-contract
+stderr:
+
+Post-completion task-control probe exit=0
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7/merge",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 555,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-555-unconfirmed/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/away-async-555-unconfirmed/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+Persisted state/task-x1.merge-authority:
+fm-merge-authority-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+away
+
+Competing public-interface lock probes:
+[
+  {
+    "read": 1,
+    "archive_rc": 1,
+    "archive_output": "fm-afk-contract: the away-posture record is locked by live process 3166434 (an in-flight merge, or another change to this record); nothing was changed\n",
+    "control_rc": 1
+  },
+  {
+    "read": 2,
+    "archive_rc": 1,
+    "archive_output": "fm-afk-contract: the away-posture record is locked by live process 3166434 (an in-flight merge, or another change to this record); nothing was changed\n",
+    "control_rc": 1
+  }
+]
+SCENARIO PASSED: away-async-555-unconfirmed
+
+$ FM_HOME=<disposable/attended-async-unconfirmed> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=0
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/lab-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+actionable: Bitbucket accepted the merge request for https://bitbucket.org/lab-team/sample_repo/pull-requests/7 but its landed state could not be confirmed; the merge poll remains armed
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7/merge",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "body": {
+      "type": "pullrequest",
+      "close_source_branch": false,
+      "merge_strategy": "squash"
+    },
+    "status": 202,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/attended-async-unconfirmed/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/attended-async-unconfirmed/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+Persisted state/task-x1.merge-authority:
+fm-merge-authority-v1
+bitbucket
+bitbucket.org
+lab-team/sample_repo
+7
+attended
+
+SCENARIO PASSED: Attended async acceptance leaves unconfirmed poll armed
+
+$ FM_HOME=<disposable/red-build> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+  - build 'pipeline' is FAILED, not SUCCESSFUL
+error: these builds are not green: pipeline
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "state": "FAILED"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/red-build/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/red-build/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: red-build
+
+$ FM_HOME=<disposable/unmet-build-count> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+  - base branch main requires 2 successful builds, and 1 reported at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "kind": "require_passing_builds_to_merge",
+          "branch_match_kind": "glob",
+          "pattern": "main",
+          "value": 2
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/unmet-build-count/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/unmet-build-count/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: unmet-build-count
+
+$ FM_HOME=<disposable/unmet-review-check> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+  - base branch main requires 2 approvals, and the pull request has 1
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "kind": "require_approvals_to_merge",
+          "branch_match_kind": "glob",
+          "pattern": "main",
+          "value": 2
+        }
+      ]
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/unmet-review-check/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/unmet-review-check/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: unmet-review-check
+
+$ FM_HOME=<disposable/unsafe-pagination> bin/fm-pr-merge.sh task-x1 https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+exit=1
+stdout:
+armed: state/task-x1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+  - the commit statuses at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa could not be read
+
+HTTP service transcript (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/pullrequests/7",
+    "query": {},
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "type": "pullrequest",
+      "id": 7,
+      "state": "OPEN",
+      "draft": false,
+      "source": {
+        "branch": {
+          "name": "feature/login"
+        },
+        "commit": {
+          "hash": "aaaaaaaaaaaa"
+        }
+      },
+      "destination": {
+        "branch": {
+          "name": "main"
+        }
+      },
+      "participants": [
+        {
+          "user": {
+            "uuid": "{alice}",
+            "nickname": "alice"
+          },
+          "approved": true,
+          "state": "approved"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaa",
+    "query": {
+      "fields": [
+        "hash"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/refs/branches",
+    "query": {
+      "q": [
+        "name = \"main\""
+      ],
+      "fields": [
+        "values.name,values.default_merge_strategy"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "name": "main",
+          "default_merge_strategy": "squash"
+        },
+        {
+          "name": "other",
+          "default_merge_strategy": "merge_commit"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/statuses",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": [
+        {
+          "key": "pipeline",
+          "name": "Pipeline #1",
+          "state": "SUCCESSFUL"
+        }
+      ],
+      "next": "https://evil.example/steal"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/2.0/repositories/lab-team/sample_repo/branch-restrictions",
+    "query": {
+      "pagelen": [
+        "100"
+      ]
+    },
+    "authenticated_with_disposable_env_credential": true,
+    "status": 200,
+    "response": {
+      "values": []
+    }
+  }
+]
+Persisted state/task-x1.meta:
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/unsafe-pagination/worktree
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/live/unsafe-pagination/worktree
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Persisted state/task-x1.pr-poll:
+bitbucket
+https://bitbucket.org/lab-team/sample_repo/pull-requests/7
+bitbucket.org
+lab-team/sample_repo
+7
+
+SCENARIO PASSED: unsafe-pagination

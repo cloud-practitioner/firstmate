@@ -1,0 +1,7 @@
+window=fm-task-x1
+worktree=/home/node/.no-mistakes/evidence/01M4SKS0R6FEJG7GBWFDJ90AEN/fixture-scratch/fm-pr-bitbucket-tests.DcY0M1/merge-wrong-head/wt
+project=/home/node/.no-mistakes/evidence/01M4SKS0R6FEJG7GBWFDJ90AEN/fixture-scratch/fm-pr-bitbucket-tests.DcY0M1/merge-wrong-head/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

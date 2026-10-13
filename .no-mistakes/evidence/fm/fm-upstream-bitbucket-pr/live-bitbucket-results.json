@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Register full head, report blockers, and poll only merged PRs",
+    "result": "pass",
+    "requests": 11
+  },
+  {
+    "name": "Draft registration refuses even during commit lookup outage",
+    "result": "pass",
+    "requests": 2
+  },
+  {
+    "name": "Use credentials only from environment and refuse missing token",
+    "result": "pass",
+    "requests": 2
+  },
+  {
+    "name": "branch-default-squash",
+    "result": "pass",
+    "requests": 11
+  },
+  {
+    "name": "branch-default-unreadable",
+    "result": "pass",
+    "requests": 7
+  },
+  {
+    "name": "branch-default-unknown",
+    "result": "pass",
+    "requests": 7
+  },
+  {
+    "name": "explicit-rebase",
+    "result": "pass",
+    "requests": 10
+  },
+  {
+    "name": "final-read-destination",
+    "result": "pass",
+    "requests": 9
+  },
+  {
+    "name": "final-read-withdraw",
+    "result": "pass",
+    "requests": 9
+  },
+  {
+    "name": "final-read-changes",
+    "result": "pass",
+    "requests": 9
+  },
+  {
+    "name": "final-read-head",
+    "result": "pass",
+    "requests": 9
+  },
+  {
+    "name": "final-read-closed",
+    "result": "pass",
+    "requests": 9
+  },
+  {
+    "name": "final-read-None",
+    "result": "pass",
+    "requests": 11
+  },
+  {
+    "name": "away-async-202-landed",
+    "result": "pass",
+    "requests": 12
+  },
+  {
+    "name": "away-async-202-unconfirmed",
+    "result": "pass",
+    "requests": 12
+  },
+  {
+    "name": "away-async-555-landed",
+    "result": "pass",
+    "requests": 12
+  },
+  {
+    "name": "away-async-555-unconfirmed",
+    "result": "pass",
+    "requests": 12
+  },
+  {
+    "name": "Attended async acceptance leaves unconfirmed poll armed",
+    "result": "pass",
+    "requests": 12
+  },
+  {
+    "name": "red-build",
+    "result": "pass",
+    "requests": 7
+  },
+  {
+    "name": "unmet-build-count",
+    "result": "pass",
+    "requests": 7
+  },
+  {
+    "name": "unmet-review-check",
+    "result": "pass",
+    "requests": 7
+  },
+  {
+    "name": "unsafe-pagination",
+    "result": "pass",
+    "requests": 7
+  }
+]

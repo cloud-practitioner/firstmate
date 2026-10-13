@@ -1,0 +1,457 @@
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/bin/fm-lab-home.sh create <disposable>/home
+exit=0
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.test-phase/forgejo/home
+
+$ git -C <disposable>/home/worktree init -q
+exit=0
+
+$ git -C <disposable>/home/worktree -c user.name=Lab -c user.email=lab@example.invalid commit --allow-empty -qm fixture
+exit=0
+
+$ git -C <disposable>/home/worktree rev-parse HEAD
+exit=0
+913df5087a48370cd60e2731817cd70b492ea1e2
+
+$ git -C <disposable>/home/worktree update-ref refs/remotes/origin/main 913df5087a48370cd60e2731817cd70b492ea1e2
+exit=0
+
+$ tea login add --name lab --url http://127.0.0.1:43295 --no-version-check
+exit=0
+Warning: problem while finding a SSH key: unsupported local API path
+Login as lab-user on http://127.0.0.1:43295 successful. Added this login as lab
+
+$ tea login list --output json
+exit=0
+[
+  {
+    "name": "lab",
+    "url": "http://127.0.0.1:43295",
+    "ssh_host": "127.0.0.1:43295",
+    "user": "lab-user",
+    "default": "false"
+  }
+]
+
+$ tea api --login lab --repo o/r /repos/{owner}/{repo}
+exit=0
+{"default_merge_style": "squash"}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/bin/fm-pr-check.sh task-x1 https://127.0.0.1/o/r/pulls/7
+exit=0
+armed: state/task-x1.check.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/bin/fm-pr-poll.sh --validated forgejo https://127.0.0.1/o/r/pulls/7 127.0.0.1 o/r 7
+exit=0
+
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/bin/fm-pr-merge.sh task-x1 https://127.0.0.1/o/r/pulls/7
+exit=0
+armed: state/task-x1.check.sh
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+verified: https://127.0.0.1/o/r/pulls/7 is open and mergeable, with a successful combined status at head cccccccccccccccccccccccccccccccccccccccc
+
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M4SKS0R6FEJG7GBWFDJ90AEN/bin/fm-pr-poll.sh --validated forgejo https://127.0.0.1/o/r/pulls/7 127.0.0.1 o/r 7
+exit=0
+merged
+
+Persisted landed outcome:
+1791862750	1	check	merged-task-x1-https://127.0.0.1/o/r/pulls/7	check: merge landed: task-x1 https://127.0.0.1/o/r/pulls/7
+
+HTTP exchange (no secrets):
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/user",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "id": 1,
+      "login": "lab-user",
+      "username": "lab-user",
+      "email": "lab@example.invalid"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/user/keys",
+    "query": {
+      "limit": [
+        "0"
+      ],
+      "page": [
+        "0"
+      ]
+    },
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 404,
+    "response": {
+      "message": "unsupported local API path"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "default_merge_style": "squash"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/pulls/7",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "number": 7,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "head": {
+        "sha": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "base": {
+        "ref": "main"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "default_merge_style": "squash"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/pulls/7",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "number": 7,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "head": {
+        "sha": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "base": {
+        "ref": "main"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/commits/cccccccccccccccccccccccccccccccccccccccc/status",
+    "query": {
+      "limit": [
+        "50"
+      ],
+      "page": [
+        "1"
+      ]
+    },
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "state": "success",
+      "statuses": [
+        {
+          "context": "pipeline",
+          "state": "success"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/commits/cccccccccccccccccccccccccccccccccccccccc/status",
+    "query": {
+      "limit": [
+        "50"
+      ],
+      "page": [
+        "2"
+      ]
+    },
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "state": "success",
+      "statuses": []
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/repos/o/r/pulls/7/merge",
+    "query": {},
+    "body": {
+      "Do": "squash",
+      "head_commit_id": "cccccccccccccccccccccccccccccccccccccccc"
+    },
+    "uses_disposable_token": true,
+    "status": 204,
+    "response": {}
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/pulls/7",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "number": 7,
+      "state": "closed",
+      "merged": true,
+      "mergeable": true,
+      "draft": false,
+      "head": {
+        "sha": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "base": {
+        "ref": "main"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/pulls/7",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "number": 7,
+      "state": "closed",
+      "merged": true,
+      "mergeable": true,
+      "draft": false,
+      "head": {
+        "sha": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "base": {
+        "ref": "main"
+      }
+    }
+  }
+]
+PASS: Real tea registered, watched, and merged a Forgejo PR; POST bound the verified head and used the destination default squash strategy.
+All HTTP requests:
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/user",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "id": 1,
+      "login": "lab-user",
+      "username": "lab-user",
+      "email": "lab@example.invalid"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/user/keys",
+    "query": {
+      "limit": [
+        "0"
+      ],
+      "page": [
+        "0"
+      ]
+    },
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 404,
+    "response": {
+      "message": "unsupported local API path"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "default_merge_style": "squash"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/pulls/7",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "number": 7,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "head": {
+        "sha": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "base": {
+        "ref": "main"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "default_merge_style": "squash"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/pulls/7",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "number": 7,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "head": {
+        "sha": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "base": {
+        "ref": "main"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/commits/cccccccccccccccccccccccccccccccccccccccc/status",
+    "query": {
+      "limit": [
+        "50"
+      ],
+      "page": [
+        "1"
+      ]
+    },
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "state": "success",
+      "statuses": [
+        {
+          "context": "pipeline",
+          "state": "success"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/commits/cccccccccccccccccccccccccccccccccccccccc/status",
+    "query": {
+      "limit": [
+        "50"
+      ],
+      "page": [
+        "2"
+      ]
+    },
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "state": "success",
+      "statuses": []
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/repos/o/r/pulls/7/merge",
+    "query": {},
+    "body": {
+      "Do": "squash",
+      "head_commit_id": "cccccccccccccccccccccccccccccccccccccccc"
+    },
+    "uses_disposable_token": true,
+    "status": 204,
+    "response": {}
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/pulls/7",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "number": 7,
+      "state": "closed",
+      "merged": true,
+      "mergeable": true,
+      "draft": false,
+      "head": {
+        "sha": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "base": {
+        "ref": "main"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/repos/o/r/pulls/7",
+    "query": {},
+    "body": null,
+    "uses_disposable_token": true,
+    "status": 200,
+    "response": {
+      "number": 7,
+      "state": "closed",
+      "merged": true,
+      "mergeable": true,
+      "draft": false,
+      "head": {
+        "sha": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "base": {
+        "ref": "main"
+      }
+    }
+  }
+]

@@ -1,0 +1,1 @@
+error: watching a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable

@@ -1,0 +1,2 @@
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
