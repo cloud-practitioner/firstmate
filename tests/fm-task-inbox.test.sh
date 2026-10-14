@@ -773,7 +773,7 @@ test_watcher_busy_again_defers_a_spent_ladder() {
 }
 
 test_watcher_composer_defers_doorbell() (
-  local mode=$1 harness=$2 dir rec delivery='' count=1 ladder check
+  local mode=$1 harness=$2 dir rec delivery='' count=1 ladder check gen
   dir=$(setup_watch_case "$harness-composer-$mode")
   fm_write_meta "$dir/state/t1.meta" "window=sess:fm-t1" "kind=ship" "harness=$harness"
   unset FM_BUSY_REGEX
@@ -782,7 +782,13 @@ test_watcher_composer_defers_doorbell() (
   case "$harness" in
     codex) printf 'some output\n\n• Working (6s • esc to interrupt)\n\n›\n\n? for shortcuts\n' ;;
     kimi) printf 'some output\n\n  🌒 · Tip: Kimi is working\n╭────────────────────────╮\n│ >                      │\n╰────────────────────────╯\n' ;;
+    claude) printf 'Tests completed… (6s)\n\n❯\n' ;;
   esac > "$dir/busy.capture"
+  if [ "$harness" = claude ]; then
+    gen=$("$ROOT/bin/fm-busy-event.sh" arm "$dir/state" t1) || fail "could not arm Claude semantic state"
+    "$ROOT/bin/fm-busy-event.sh" apply "$dir/state" t1 busy --gen "$gen" --source claude-hook --event user-prompt-submit \
+      || fail "could not record Claude semantic busy state"
+  fi
   if [ "$mode" = retry ]; then
     delivery=fire-and-forget
     mkdir -p "$dir/config"
@@ -817,6 +823,10 @@ test_watcher_composer_defers_doorbell() (
     fi
   done
   age_path "$rec"
+  if [ "$harness" = claude ]; then
+    "$ROOT/bin/fm-busy-event.sh" apply "$dir/state" t1 idle --gen "$gen" --source claude-hook --event stop \
+      || fail "could not record Claude semantic idle state"
+  fi
   export FM_FAKE_TMUX_CAPTURE
   FM_FAKE_TMUX_CAPTURE=$(idle_capture "$dir")
   for check in 1 2; do
@@ -843,19 +853,33 @@ test_watcher_composer_defers_doorbell() (
 )
 
 test_watcher_ignores_busy_tokens_in_output() (
-  local mode shape dir rec delivery check
+  local harness=$1 mode shape dir rec delivery check shapes gen
   unset FM_BUSY_REGEX
-  for shape in token quoted stale; do
+  case "$harness" in
+    codex) shapes='token quoted stale' ;;
+    claude) shapes='bare boxed separated' ;;
+  esac
+  for shape in $shapes; do
     for mode in grace ring retry escalate; do
-      dir=$(setup_watch_case "output-token-$shape-$mode")
-      fm_write_meta "$dir/state/t1.meta" "window=sess:fm-t1" "kind=ship" "harness=codex"
+      dir=$(setup_watch_case "output-token-$harness-$shape-$mode")
+      fm_write_meta "$dir/state/t1.meta" "window=sess:fm-t1" "kind=ship" "harness=$harness"
       export PATH="$dir/fakebin:$PATH" FM_STATE_OVERRIDE="$dir/state" FM_SEND_LOG="$dir/send.log"
       export FM_FAKE_TMUX_CAPTURE="$dir/output.capture" FM_TASK_INBOX_GRACE_SECS=60 FM_TASK_INBOX_RING_MAX=3
       case "$shape" in
         token) printf 'the source contains esc to interrupt\nesc to interrupt\n›\n' ;;
         quoted) printf '  printf "esc to interrupt"\n• Working (6s • esc to interrupt) was printed by a test\n›\n' ;;
         stale) printf '• Working (6s • esc to interrupt)\n› previous request\nTest completed: esc to interrupt\n›\n' ;;
+        bare) printf 'Tests completed… (6s)\n\n❯\n' ;;
+        boxed) printf 'Tests completed… (6s)\n╭────────────────────────╮\n│ ❯                      │\n╰────────────────────────╯\n' ;;
+        separated) printf 'Tests completed… (6s)\n────────────────────\n❯\n────────────────────\n' ;;
       esac > "$dir/output.capture"
+      if [ "$harness" = claude ]; then
+        gen=$("$ROOT/bin/fm-busy-event.sh" arm "$dir/state" t1) || fail "could not arm Claude semantic state"
+        "$ROOT/bin/fm-busy-event.sh" apply "$dir/state" t1 idle --gen "$gen" --source claude-hook --event stop \
+          || fail "could not record Claude semantic idle state"
+        [ "$(bash -c '. "$1"; fm_busy_classify_meta "$2/t1.meta" t1 "$2"' _ "$WATCH" "$dir/state")" = 'idle claude-hook' ] \
+          || fail "Claude output regression did not begin semantically idle"
+      fi
       delivery=
       if [ "$mode" = retry ]; then
         delivery=fire-and-forget
@@ -898,7 +922,7 @@ test_watcher_ignores_busy_tokens_in_output() (
       [ ! -s "$dir/state/.wake-queue" ] || fail "$shape output caused an early wake"
     done
   done
-  pass "watcher: ordinary output cannot refresh busy grace or suppress delivery and idle recovery"
+  pass "watcher: ordinary $harness output cannot refresh busy grace or suppress delivery and idle recovery"
 )
 
 test_watcher_observes_busy_during_every_grace() {
@@ -1544,7 +1568,12 @@ test_watcher_composer_defers_doorbell grace kimi || exit 1
 test_watcher_composer_defers_doorbell escalate kimi || exit 1
 test_watcher_composer_defers_doorbell ring kimi || exit 1
 test_watcher_composer_defers_doorbell retry kimi || exit 1
-test_watcher_ignores_busy_tokens_in_output || exit 1
+test_watcher_composer_defers_doorbell grace claude || exit 1
+test_watcher_composer_defers_doorbell escalate claude || exit 1
+test_watcher_composer_defers_doorbell ring claude || exit 1
+test_watcher_composer_defers_doorbell retry claude || exit 1
+test_watcher_ignores_busy_tokens_in_output codex || exit 1
+test_watcher_ignores_busy_tokens_in_output claude || exit 1
 test_watcher_observes_busy_during_every_grace
 test_watcher_busy_observation_resets_on_ack
 test_watcher_busy_bookkeeping_failure_surfaces

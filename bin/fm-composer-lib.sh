@@ -452,7 +452,7 @@ fm_busy_lines_match() {  # [harness]
 fm_composer_status_is_busy() {
   local harness=$1 screen=$2 row='' prompt glyph='' index regex
   local status_re='^•[[:space:]]+.+[[:space:]]+\([0-9]+[smh]([[:space:]]+[0-9]+[smh])*[[:space:]]+•[[:space:]]+[^)]+\)$'
-  case "$harness" in codex|kimi|claude|omp|devin) ;; *) return 1 ;; esac
+  case "$harness" in codex|kimi|omp|devin) ;; *) return 1 ;; esac
   _fm_composer_scan_screen "$screen" '' 1
   _fm_composer_select_cursorless "$screen" || return 1
   case "$FM_COMPOSER_SELECTED_KIND" in
@@ -464,12 +464,7 @@ fm_composer_status_is_busy() {
       ;;
     box)
       [ "$FM_COMPOSER_SELECTED_AMBIG" = 0 ] || return 1
-      glyph=$FM_COMPOSER_SCAN_BOX_GLYPH
       index=$((FM_COMPOSER_SCAN_BOX_TOP - 1))
-      ;;
-    pi)
-      glyph=$FM_COMPOSER_SCAN_PI_GLYPH
-      index=$((FM_COMPOSER_SCAN_PI_OPEN - 1))
       ;;
     *) return 1 ;;
   esac
@@ -481,15 +476,6 @@ fm_composer_status_is_busy() {
     kimi)
       [ "$FM_COMPOSER_SELECTED_KIND" = box ] || return 1
       regex=$FM_DELIVERY_KIMI_BUSY_REGEX_DEFAULT
-      ;;
-    claude)
-      [ "$glyph" = '❯' ] || return 1
-      if [ "$FM_COMPOSER_SCAN_PI_PAIR_FOUND" = 1 ] \
-        && [ "$FM_COMPOSER_SELECTED_FIRST" -gt "$FM_COMPOSER_SCAN_PI_OPEN" ] \
-        && [ "$FM_COMPOSER_SELECTED_FIRST" -lt "$FM_COMPOSER_SCAN_PI_CLOSE" ]; then
-        index=$((FM_COMPOSER_SCAN_PI_OPEN - 1))
-      fi
-      regex=${FM_DELIVERY_CLAUDE_BUSY_REGEX_DEFAULT#*|}
       ;;
     omp)
       [ "$FM_COMPOSER_SELECTED_KIND" = bare ] && [ "$glyph" = '❯' ] || return 1
@@ -505,7 +491,7 @@ fm_composer_status_is_busy() {
       ;;
   esac
   case "$harness" in
-    codex|kimi|claude)
+    codex|kimi)
       while [ "$index" -ge 0 ]; do
         row=$(_fm_composer_screen_row "$index" "$screen")
         fm_composer_normalize_trim_var row

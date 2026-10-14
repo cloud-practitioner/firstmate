@@ -1038,12 +1038,13 @@ test_verified_current_activity_is_harness_scoped() (
     fm_composer_status_is_busy codex "$screen" || fail "Codex current activity was rejected ($locale)"
     screen=$'source text: esc to interrupt\nesc to interrupt\n›\n'
     if fm_composer_status_is_busy codex "$screen"; then fail "ordinary Codex output counted as activity ($locale)"; fi
-    screen=$'✳ Working… (6s)\n\n❯\n'
-    fm_composer_status_is_busy claude "$screen" || fail "Claude elapsed activity was rejected ($locale)"
-    screen=$'✳ Working… (6s)\n────────────────────\n❯\n────────────────────\n'
-    fm_composer_status_is_busy claude "$screen" || fail "Claude separated-composer activity was rejected ($locale)"
-    screen=$'✳ Working… (6s)\n╭────────────────────────╮\n│ ❯                      │\n╰────────────────────────╯'
-    fm_composer_status_is_busy claude "$screen" || fail "Claude boxed-composer activity was rejected ($locale)"
+    for screen in \
+      $'Tests completed… (6s)\n\n❯\n' \
+      $'Tests completed… (6s)\n────────────────────\n❯\n────────────────────\n' \
+      $'Tests completed… (6s)\n╭────────────────────────╮\n│ ❯                      │\n╰────────────────────────╯' \
+      $'✳ Working… (6s)\n\n❯\n'; do
+      if fm_composer_status_is_busy claude "$screen"; then fail "Claude elapsed output counted as activity ($locale)"; fi
+    done
     screen=$'esc to interrupt\n\n❯\n'
     if fm_composer_status_is_busy claude "$screen"; then fail "Claude output token counted as activity ($locale)"; fi
     screen=$'transcript\n\n❯\n ⠧ 11s  · ◔ GPT-6-Astra · ◫ 15.4%/272K'
