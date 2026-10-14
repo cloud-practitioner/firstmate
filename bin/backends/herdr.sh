@@ -3203,9 +3203,7 @@ fm_backend_herdr_projection_reclaim_task() {  # <session> <journal> <task-id> <h
 # fm_backend_herdr_projection_recovery_allows_flat: inspect an existing
 # journal's exact token matches without adopting, reusing, renaming, closing,
 # or deleting anything.
-# Missing matches safely degrade to the normal flat workspace.
-# One or more matches allow flat fallback only when every pane is positively
-# dead or agent-free; a live or unknown pane refuses a duplicate launch.
+# docs/herdr-backend.md "Restart recovery" owns flat-fallback eligibility.
 fm_backend_herdr_projection_recovery_allows_flat() {  # <session> <journal> <task-id>
   local session=$1 journal=$2 id=$3 token list wsids count wsid panes pane_ids pane state
   token=$(fm_backend_herdr_projection_journal_token "$journal" "$id") || {

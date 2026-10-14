@@ -395,7 +395,7 @@ These cases fall back flat without mutating the old projection when duplicate-ag
 - Active target tabs.
 - Ambiguous identity or focus.
 
-A live or unknown recorded or token-matched endpoint refuses duplicate launch.
+After [recorded-endpoint ownership](#endpoints-from-a-previous-session) permits pane classification, a live or unknown recorded or token-matched endpoint refuses duplicate launch.
 
 ### Startup cleanup of restored projections
 
