@@ -46,9 +46,9 @@
 # reachable from any remote-tracking branch (a fork counts as a remote, so
 # upstream-contribution PRs pushed to a fork satisfy this in any mode), OR - for a
 # normal ship task whose commits are not so reachable - when its PR is merged and
-# the forge (GitHub, or Bitbucket Cloud for a recorded Bitbucket pr=) reports a PR
-# head that contains the current local work, or its content is already present in
-# the up-to-date default branch. This recognizes the common
+# the forge (GitHub, or Forgejo/Gitea or Bitbucket Cloud for a recorded pr=)
+# reports a PR head that contains the current local work, or its content is
+# already present in the up-to-date default branch. This recognizes the common
 # squash-merge-then-delete-branch flow, where the branch's own commits live nowhere
 # on a remote yet the change is fully in main. A task whose meta records
 # base_branch= (bin/fm-spawn.sh) runs that content check against origin's copy of

@@ -164,15 +164,10 @@ fi
 # nor a Forgejo task records a pr_head here, and neither does a Gerrit task: a
 # Gerrit revision names one patch set, every amend or rebase is a new patch set,
 # and bin/fm-review-diff.sh has no Gerrit path to resolve a current head with,
-# so a recorded revision would silently become the reviewed content. Both
-# consumers already treat it as optional:
-# bin/fm-teardown.sh reads the head from the forge at teardown rather than from
-# metadata and falls back to its provider-agnostic content check, and
-# bin/fm-review-diff.sh fetches a pull request head from the remote when none is
-# recorded and otherwise diffs the local branch, which is the current content.
-# bin/fm-pr-merge.sh reads a GitLab, Forgejo, or Bitbucket head live at merge
-# time for the same reason, and treats a recorded value that disagrees as stale
-# rather than authoritative.
+# so a recorded revision would silently become the reviewed content.
+# bin/fm-teardown.sh's header owns landed-work proofs, docs/architecture.md
+# owns review-diff fallbacks, and bin/fm-pr-merge.sh's header owns live-head
+# verification; each treats pr_head as optional rather than merge authority.
 WT=$(grep '^worktree=' "$META" | tail -1 | cut -d= -f2- || true)
 PR_HEAD=
 if [ "$PROVIDER" = github ] && [ -n "$WT" ] && [ -d "$WT" ] && command -v gh >/dev/null 2>&1; then
