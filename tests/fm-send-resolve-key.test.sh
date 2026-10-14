@@ -117,6 +117,75 @@ drain_out() {  # <home>
   FM_STATE_OVERRIDE="$1/state" "$DRAIN" 2>/dev/null
 }
 
+test_transferred_hold_keys_acknowledge_inbox() {
+  command -v tasks-axi >/dev/null 2>&1 || { pass "skipped transferred-hold acknowledgement: tasks-axi not found"; return 0; }
+  local dir fb log home idempotent mode hold_id expected rec rc show stamp args
+  for idempotent in 0 1; do
+    for mode in held mixed alias; do
+      dir="$TMP_ROOT/transferred-$idempotent-$mode"; mkdir -p "$dir"
+      fb=$(make_stubs "$dir"); log="$dir/send.log"
+      home=$(setup_home "transferred-$idempotent-$mode")
+      mkdir -p "$home/data" "$home/config"
+      fm_test_tasks_toml "$home/.tasks.toml"
+      printf '## In flight\n\n## Queued\n\n## Done\n' > "$home/data/backlog.md"
+      fm_write_meta "$home/state/t1.meta" "window=sess:fm-t1" "kind=ship"
+      printf 'needs-decision [key=chat-choice]: pick option A or B\n' > "$home/state/t1.status"
+      hold_id=chat-choice
+      [ "$mode" != alias ] || hold_id=t1-decision-chat-choice
+      (
+        export PATH="$fb:$PATH" FM_HOME="$home" FM_ROOT_OVERRIDE="$home"
+        export FM_STATE_OVERRIDE="$home/state" FM_DATA_OVERRIDE="$home/data" FM_CONFIG_OVERRIDE="$home/config"
+        "$ROOT/bin/fm-captain-hold.sh" hold "$hold_id" --origin t1 --title "Choose the chat option" \
+          --reason "captain choice pending" --repo sample >/dev/null \
+          && "$ROOT/bin/fm-captain-hold.sh" complete t1 "$hold_id" >/dev/null
+      ) || fail "could not transfer the $mode decision to its captain-held task"
+      grep -qF 'captain-held [key=chat-choice]' "$home/state/t1.status" \
+        || fail "the hold fixture did not transfer its decision"
+      args=(t1 --resolve-key chat-choice)
+      expected=$hold_id
+      if [ "$mode" = mixed ]; then
+        printf 'needs-decision [key=api-shape]: pick REST or RPC\n' >> "$home/state/t1.status"
+        args+=(--resolve-key api-shape)
+        expected=api-shape,chat-choice
+      elif [ "$mode" = alias ]; then
+        printf 'needs-decision [key=%s]: confirm the chat follow-up\n' "$hold_id" >> "$home/state/t1.status"
+        args+=(--resolve-key "$hold_id")
+      fi
+      FM_SEND_IDEMPOTENT="$idempotent" run_send "$fb" "$home" "$log" "${args[@]}" "go with option A"; rc=$?
+      expect_code 0 "$rc" "a transferred $mode answer should enqueue (idempotent=$idempotent)"
+      rec="$home/state/t1.inbox/001.msg"
+      grep -qxF "resolve-keys=$expected" "$rec" \
+        || fail "the $mode inbox record lost or duplicated its answer keys (idempotent=$idempotent)"
+      show=$(cd "$home" && tasks-axi show "$hold_id" --full)
+      assert_contains "$show" "state: done" "the transferred answer did not close its hold ledger"
+      assert_contains "$show" "Answer: go with option A" "the hold ledger lost the answer"
+      if grep -qF 'resolved [key=chat-choice]' "$home/state/t1.status"; then
+        fail "the transferred key was closed through the status ledger"
+      fi
+      if FM_STATE_OVERRIDE="$home/state" bash -c '
+        . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$3"
+      ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state" "$rec"; then
+        fail "answer-time bookkeeping acknowledged the transferred instruction"
+      fi
+      stamp=$(( $(date +%s) + 5 ))
+      printf 'resolved [key=%s] [at=%s]: acted on the answer\n' "$hold_id" "$stamp" >> "$home/state/t1.status"
+      if [ "$mode" = mixed ]; then
+        if FM_STATE_OVERRIDE="$home/state" bash -c '
+          . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$3"
+        ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state" "$rec"; then
+          fail "the mixed answer acknowledged before the worker resolved every key"
+        fi
+        printf 'resolved [key=api-shape] [at=%s]: implemented REST\n' "$stamp" >> "$home/state/t1.status"
+      fi
+      FM_STATE_OVERRIDE="$home/state" bash -c '
+        . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$3"
+      ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state" "$rec" \
+        || fail "worker resolution did not acknowledge the $mode answer (idempotent=$idempotent)"
+    done
+  done
+  pass "fm-send --resolve-key: transferred holds preserve deduplicated acknowledgement keys on both enqueue paths"
+}
+
 test_answer_send_closes_open_decision() {
   local dir fb log home rc out
   dir="$TMP_ROOT/closes"; mkdir -p "$dir"
@@ -914,6 +983,7 @@ test_decision_answer_partition_relocates_under_the_record() {
   pass "fm-send --resolve-key: a decision answer refuses the attended branch before sending, a blocked: key stays steering, and the away-posture record relocates the answer"
 }
 
+test_transferred_hold_keys_acknowledge_inbox
 test_answer_send_closes_open_decision
 test_answer_close_is_self_announced
 test_separate_resolve_key_answers_do_not_rewake
