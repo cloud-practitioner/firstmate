@@ -20,8 +20,8 @@
 #      acknowledgement resets the ladder for the next message.
 #   5. A real fm-watch.sh subprocess re-rings the doorbell for an unhandled
 #      aged message on an idle pane WITHOUT waking firstmate, extends the grace
-#      on a busy pane instead of counting strikes, treats a record the status
-#      proves acted on (resolved keys, correlated outcome) as acknowledged, stays silent on a healthy/empty inbox, surfaces unwritable ladder
+#      on a busy pane instead of counting strikes, stays silent on a healthy
+#      or empty inbox, surfaces unwritable ladder
 #      bookkeeping only while its record remains unhandled, and emits exactly
 #      one stale wake once the ring budget is spent.
 #   6. Dead panes: the doorbell line is a shell no-op when executed by a bare
@@ -991,32 +991,6 @@ test_watcher_busy_observation_survives_ack() {
   pass "watcher: successors and acknowledgements preserve the task pane's recent activity"
 }
 
-test_watcher_busy_record_switch_preserves_idle_grace() {
-  local dir state first second ladder
-  dir=$(setup_watch_case record-switch)
-  state="$dir/state"
-  printf 'BUSYTOKEN active\n' > "$dir/busy.capture"
-  first=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "answer A" "" api-shape)
-  second=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "unheard B")
-  age_path "$first"; age_path "$second"
-  status_line_after "$state" 'resolved [key=api-shape]' 'acted on A'
-  printf '002.msg\t3\t100\n' > "$state/t1.inbox/.ring-state"
-  ladder=$(cat "$state/t1.inbox/.ring-state")
-  status_line_after "$state" 'needs-decision [key=api-shape]' 'follow-up while busy'
-  busy_steer_check "$dir" "$dir/busy.capture" 60
-  [ "$(cat "$state/t1.inbox/.ring-state")" = "$ladder" ] || fail "observing A changed B's spent ladder"
-  status_line_after "$state" 'resolved [key=api-shape]' 'finished the follow-up'
-  busy_steer_check "$dir" "$(idle_capture "$dir")" 60
-  [ ! -s "$state/.wake-queue" ] || fail "record switch discarded recent pane activity"
-  [ ! -s "$dir/send.log" ] || fail "record switch rang before idle grace"
-  [ "$(cat "$state/t1.inbox/.ring-state")" = "$ladder" ] || fail "record switch consumed B's ladder"
-  age_busy_observation "$dir" 120
-  busy_steer_check "$dir" "$(idle_capture "$dir")" 60
-  [ "$(grep -cF "$second" "$state/.wake-queue")" = 1 ] || fail "B did not escalate after pane idle grace"
-  [ -f "$first" ] && [ -f "$second" ] || fail "record-switch recovery lost an instruction"
-  pass "watcher: A/B selection switches retain pane activity while preserving idle recovery"
-}
-
 test_watcher_busy_bookkeeping_failure_surfaces() {
   local dir
   dir=$(busy_case busy-unwritable)
@@ -1050,499 +1024,30 @@ test_watcher_retry_ignores_busy_bookkeeping() {
   pass "watcher: obsolete busy bookkeeping does not block or escalate a fire-and-forget retry"
 }
 
-# Status evidence that the worker already acted on an unhandled record.
-# A status line is stamped after the record's timestamp so the evidence is
-# strictly newer than the steer.
-status_line_after() {  # <state> <line-without-stamp-head> ... printed with a future stamp
-  printf '%s [at=%s]: %s\n' "$2" "$(( $(date +%s) + 5 ))" "$3" >> "$1/t1.status"
-}
-
-due_now() {  # <state>
-  FM_TASK_INBOX_GRACE_SECS=0 inbox_lib "$1" fm_task_inbox_due_action "$1" t1
-}
-
-test_resolved_keys_acknowledge_without_the_mv() {
-  local dir state rec
-  dir="$TMP_ROOT/ack-keys"; state="$dir/state"; mkdir -p "$state"
-  rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "go with REST" "" "api-shape,port")
-  age_path "$rec"
-  [ "$(fm_header_of "$rec" resolve-keys)" = "api-shape,port" ] || fail "the record lost its resolve-keys header"
-  [ "$(due_now "$state")" = "ring $rec" ] || fail "no evidence must leave the ladder untouched"
-  status_line_after "$state" "resolved [key=api-shape]" "acted"
-  [ "$(due_now "$state")" = "ring $rec" ] || fail "one of two keys resolved must not acknowledge"
-  status_line_after "$state" "resolved [key=port]" "acted"
-  [ "$(due_now "$state")" = quiet ] || fail "every key resolved by the worker did not acknowledge: $(due_now "$state")"
-  # A later reopen of a key means the worker has not finished with it.
-  status_line_after "$state" "needs-decision [key=port]" "again"
-  [ "$(due_now "$state")" = "ring $rec" ] || fail "a reopened key still acknowledged the record"
-  pass "inbox: a record is acknowledged when every resolve-key it names is resolved in the status afterwards"
-}
-
-fm_header_of() {  # <record> <name>
-  inbox_lib "$TMP_ROOT" fm_task_inbox_header_value "$1" "$2"
-}
-
-test_resolved_key_evidence_ignores_old_and_home_written_lines() {
-  local dir state rec
-  dir="$TMP_ROOT/ack-keys-provenance"; state="$dir/state"; mkdir -p "$state"
-  printf 'resolved [key=api-shape] [at=1000000000]: long before the steer\n' > "$state/t1.status"
-  rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "go with REST" "" "api-shape")
-  age_path "$rec"
-  [ "$(due_now "$state")" = "ring $rec" ] || fail "a resolved line older than the record acknowledged it"
-  # The answerer's own close (fm-send --resolve-key) is this home's bookkeeping,
-  # never proof the worker acted.
-  inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" \
-    "resolved [key=api-shape] [at=$(( $(date +%s) + 5 ))]: answered: go with REST" || true
-  [ "$(due_now "$state")" = "ring $rec" ] || fail "the answerer's own close acknowledged the record"
-  status_line_after "$state" "resolved [key=api-shape]" "the worker's own close"
-  [ "$(due_now "$state")" = quiet ] || fail "the worker's own resolved line did not acknowledge"
-  pass "inbox: old resolved lines and the answerer's own close never count as the worker acting"
-}
-
-test_same_second_reopening_requires_a_new_worker_resolution() {
-  local mode state rec stamp line
-  for mode in keyed note-head blocked unstamped owned invalid; do
-    state="$TMP_ROOT/same-second-$mode/state"; mkdir -p "$state"
-    rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "new answer" "" api-shape)
-    stamp=$(FM_STATE_OVERRIDE="$state" bash -c '
-      . "$1"; _fm_wake_require_classify; fm_utc_iso_to_epoch "$2"
-    ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$(fm_header_of "$rec" at)") || fail "could not read the answer timestamp"
-    printf 'resolved [key=api-shape] [at=%s]: earlier worker resolution\n' "$stamp" > "$state/t1.status"
-    case "$mode" in
-      keyed|owned) line="needs-decision [key=api-shape] [at=$stamp]: reopened" ;;
-      note-head) line="needs-decision [at=$stamp]: [key=api-shape] reopened" ;;
-      blocked) line="blocked [key=api-shape] [at=$stamp]: reopened" ;;
-      unstamped) line='needs-decision [key=api-shape]: reopened without a time tag' ;;
-      invalid) line="needs-decision [key=bad key] [at=$stamp]: invalid opening" ;;
-    esac
-    if [ "$mode" = owned ]; then
-      inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" "$line" || true
-    else
-      printf '%s\n' "$line" >> "$state/t1.status"
-    fi
-    inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" \
-      "resolved [key=api-shape] [at=$stamp]: answered: new answer" || true
-    if [ "$mode" = invalid ]; then
-      inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
-        || fail "an invalid opening discarded valid worker evidence"
-      continue
-    fi
-    age_path "$rec"
-    [ "$(due_now "$state")" = "ring $rec" ] \
-      || fail "same-second $mode reopening reused an earlier worker resolution"
-    printf 'resolved [key=api-shape] [at=%s]: worker read the new answer\n' "$stamp" >> "$state/t1.status"
-    [ "$(due_now "$state")" = quiet ] || fail "$mode reopening rejected the new worker resolution"
-  done
-  pass "inbox: equal-second reopenings invalidate earlier resolutions through shared transition semantics"
-}
-
-test_home_append_claim_precedes_visible_status() {
-  local failure kind dir state rec line stamp rc real_perl
-  real_perl=$(command -v perl) || fail "perl is required for the append boundary"
-  for failure in interrupted publication-failure; do
-    for kind in keys correlation; do
-      dir=$(setup_watch_case "claim-$failure-$kind"); state="$dir/state"
-      if [ "$kind" = keys ]; then
-        rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "new answer" "" api-shape)
-      else
-        rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X')
-      fi
-      age_path "$rec"
-      printf 'working: previous worker event\n' > "$state/t1.status"
-      inbox_lib "$state" fm_wake_status_mark_current "$state" "$state/t1.status" || fail "could not prime the status cursor"
-      stamp=$(( $(date +%s) + 5 ))
-      if [ "$kind" = keys ]; then line="resolved [key=api-shape] [at=$stamp]: answered: new answer";
-      else line="working corr=0123456789abcdef [at=$stamp]: home bookkeeping"; fi
-      cat > "$dir/fakebin/perl" <<'SH'
-#!/usr/bin/env bash
-"$FM_CLAIM_REAL_PERL" "$@"
-rc=$?
-if [ ! -e "$FM_CLAIM_HIT" ] && grep -qxF "$FM_CLAIM_LINE" "$FM_CLAIM_STATUS"; then
-  : > "$FM_CLAIM_HIT"
-  if [ "$FM_CLAIM_FAILURE" = interrupted ]; then kill -KILL "$PPID";
-  else mkdir "$FM_CLAIM_TMP"; fi
-fi
-exit "$rc"
-SH
-      chmod +x "$dir/fakebin/perl"
-      rc=0
-      PATH="$dir/fakebin:$PATH" FM_CLAIM_REAL_PERL="$real_perl" FM_CLAIM_STATUS="$state/t1.status" \
-        FM_CLAIM_LINE="$line" FM_CLAIM_HIT="$dir/hit" FM_CLAIM_FAILURE="$failure" FM_STATE_OVERRIDE="$state" \
-        bash -c '
-          . "$1"
-          export FM_CLAIM_TMP="$2/.t1.home-appends.tmp.$$"
-          fm_wake_status_append_self_announced "$2" "$2/t1.status" "$3"
-        ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$state" "$line" > "$dir/append.out" 2> "$dir/append.err" || rc=$?
-      [ "$rc" -ne 0 ] && [ -f "$dir/hit" ] || fail "the $failure append fault was not exercised"
-      grep -qxF "$line" "$state/t1.status" || fail "the $failure fault did not leave a visible sender line"
-      if inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec"; then
-        fail "unpublished $kind sender ownership acknowledged an instruction after $failure"
-      fi
-      [ "$(due_now "$state")" = "ring $rec" ] || fail "$failure suppressed normal delivery recovery"
-      if inbox_lib "$state" fm_wake_signal_seen_current "$state" "$state/t1.status"; then
-        fail "a pending ownership reservation suppressed status wake visibility"
-      fi
-    done
-  done
-  pass "inbox: interrupted and failed ownership publication leaves conservative claims before visible sender bytes"
-}
-
-test_failed_append_rolls_back_only_an_unwritten_claim() {
-  local state rec rc stamp
-  state="$TMP_ROOT/unwritten-claim/state"; mkdir -p "$state"
-  rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "new answer" "" api-shape)
-  printf 'working: prior event\n' > "$state/t1.status"
-  chmod 0400 "$state/t1.status"
-  rc=0
-  inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" \
-    'resolved [key=api-shape]: answered: not written' 2>/dev/null || rc=$?
-  chmod 0600 "$state/t1.status"
-  [ "$rc" -eq 2 ] || fail "a confirmed failed append did not report failure"
-  stamp=$(( $(date +%s) + 5 ))
-  printf 'resolved [key=api-shape] [at=%s]: genuine worker resolution\n' "$stamp" >> "$state/t1.status"
-  inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
-    || fail "an unwritten sender claim hid a genuine worker resolution"
-  pass "inbox: a confirmed zero-byte append failure restores earlier ownership"
-}
-
-test_concurrent_home_append_keeps_instruction_unheard() {
-  local delivery=$1 kind timing dir state rec line stamp rc owned expected mode
-  for kind in keys correlation; do
-    for timing in before after; do
-      dir=$(setup_watch_case "append-race-$delivery-$kind-$timing")
-      state="$dir/state"
-      mode=
-      [ "$delivery" != retry ] || mode=fire-and-forget
-      if [ "$kind" = keys ]; then
-        rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "use REST" "$mode" api-shape)
-      else
-        rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X' "$mode")
-      fi
-      age_path "$rec"
-      mkdir -p "$dir/config"
-      if [ "$delivery" = retry ]; then
-        : > "$dir/config/wait-no-turns"
-        inbox_lib "$state" fm_task_inbox_mark_retry "$state" t1 "$rec"
-        age_path "$state/t1.inbox/.retry-ring"
-      fi
-      printf 'working: initial worker line\n' > "$state/t1.status"
-      stamp=$(( $(date +%s) + 5 ))
-      if [ "$kind" = keys ]; then
-        line="resolved [key=api-shape] [at=$stamp]: answered: café REST"
-      else
-        line="working corr=0123456789abcdef [at=$stamp]: home bookkeeping"
-      fi
-      cat > "$dir/size-reader" <<'SH'
-#!/usr/bin/env bash
-count=$(cat "$FM_APPEND_RACE_COUNT" 2>/dev/null || printf 0)
-printf '%s\n' "$((count + 1))" > "$FM_APPEND_RACE_COUNT"
-size() {
-  if [ "$(uname -s)" = Darwin ]; then /usr/bin/stat -f %z "$1"; else stat -c %s "$1"; fi
-}
-if [ "$count" -eq 0 ]; then
-  before=$(size "$1")
-  if [ "$FM_APPEND_RACE_TIMING" = before ]; then
-    printf 'working [at=%s]: unrelated worker café before\n' "$FM_APPEND_RACE_STAMP" >> "$1"
-  fi
-  printf '%s\n' "$before"
-else
-  if [ "$count" -eq 1 ] && [ "$FM_APPEND_RACE_TIMING" = after ]; then
-    printf 'working [at=%s]: unrelated worker café after\n' "$FM_APPEND_RACE_STAMP" >> "$1"
-  fi
-  size "$1"
-fi
-SH
-      chmod +x "$dir/size-reader"
-      rc=0
-      FM_STATUS_SIZE_READER="$dir/size-reader" FM_APPEND_RACE_COUNT="$dir/size-count" \
-        FM_APPEND_RACE_TIMING="$timing" FM_APPEND_RACE_STAMP="$stamp" \
-        inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" "$line" || rc=$?
-      [ "$rc" -eq 1 ] || fail "a concurrent append must preserve foreign wake visibility (rc=$rc)"
-      if inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec"; then
-        fail "sender's concurrent $kind append acknowledged an unheard instruction"
-      fi
-      owned=$(FM_STATE_OVERRIDE="$state" bash -c '
-        . "$1"; _fm_wake_require_classify
-        while read -r start end; do
-          _fm_status_read_span "$2" "$start" "$((end - start))" || exit 1
-        done <<EOF
-$(status_home_appends_ranges "$2")
-EOF
-      ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$state/t1.status") || fail "could not read owned append ranges"
-      [ "$owned" = "$line" ] || fail "concurrent append ownership included foreign bytes or lost sender bytes"
-      if inbox_lib "$state" fm_wake_signal_seen_current "$state" "$state/t1.status"; then
-        fail "concurrent worker bytes were swallowed as home bookkeeping"
-      fi
-      expected="ring $rec"
-      [ "$delivery" != retry ] || expected="retry $rec"
-      [ "$(FM_CONFIG_OVERRIDE="$dir/config" due_now "$state")" = "$expected" ] \
-        || fail "concurrent $kind bookkeeping suppressed $delivery recovery"
-      FM_CONFIG_OVERRIDE="$dir/config" busy_steer_check "$dir" "$(idle_capture "$dir")"
-      [ "$(grep -cF 'Firstmate instruction waiting' "$dir/send.log")" = 1 ] \
-        || fail "concurrent bookkeeping suppressed an unheard $delivery doorbell"
-      if [ "$delivery" = retry ]; then
-        [ ! -e "$state/t1.inbox/.retry-ring" ] || fail "an unheard retry was not spent after delivery"
-        [ ! -s "$state/.wake-queue" ] || fail "an owed retry escalated"
-      else
-        printf '001.msg\t3\t100\n' > "$state/t1.inbox/.ring-state"
-        busy_steer_check "$dir" "$(idle_capture "$dir")"
-        grep -qF "$rec" "$state/.wake-queue" || fail "concurrent bookkeeping suppressed idle escalation"
-      fi
-      if [ "$kind" = keys ]; then
-        status_line_after "$state" 'resolved [key=api-shape]' 'worker acted'
-      else
-        status_line_after "$state" 'working corr=0123456789abcdef' 'worker spawned X'
-      fi
-      inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
-        || fail "exact sender ownership hid a later worker acknowledgement"
-    done
-  done
-  pass "inbox: exact sender append ownership survives concurrent growth for $delivery delivery"
-}
-
-test_partial_home_ownership_never_acknowledges() {
-  local kind state rec line stamp first_end foreign_end last_end ranges expected
-  local LC_ALL=C
-  for kind in keys correlation; do
-    state="$TMP_ROOT/partial-ownership-$kind/state"; mkdir -p "$state"
-    if [ "$kind" = keys ]; then
-      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "use REST" "" api-shape)
-    else
-      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X')
-    fi
-    stamp=$(( $(date +%s) + 5 ))
-    if [ "$kind" = keys ]; then line="resolved [key=api-shape] [at=$stamp]: home close";
-    else line="working corr=0123456789abcdef [at=$stamp]: home bookkeeping"; fi
-    printf '%s\n' "$line" > "$state/t1.status"
-    first_end=$(wc -c < "$state/t1.status" | tr -d ' ')
-    printf 'working [at=%s]: foreign worker line\n' "$stamp" >> "$state/t1.status"
-    foreign_end=$(wc -c < "$state/t1.status" | tr -d ' ')
-    printf 'working [at=%s]: another home line\n' "$stamp" >> "$state/t1.status"
-    last_end=$(wc -c < "$state/t1.status" | tr -d ' ')
-    ranges=$(FM_STATE_OVERRIDE="$state" bash -c '
-      . "$1"; _fm_wake_require_classify
-      status_home_appends_record "$2" "$3" "$4" || exit 1
-      status_home_appends_record "$2" 0 2 || exit 1
-      status_home_appends_ranges "$2"
-    ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$state/t1.status" "$foreign_end" "$last_end") || fail "could not record out-of-order ownership"
-    expected=$(printf '0\t2\n%s\t%s' "$foreign_end" "$last_end")
-    [ "$ranges" = "$expected" ] || fail "out-of-order ownership was not normalized"
-    if inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec"; then
-      fail "partial home ownership acknowledged $kind evidence"
-    fi
-    FM_STATE_OVERRIDE="$state" bash -c '
-      . "$1"; _fm_wake_require_classify
-      status_home_appends_record "$2" 2 "$3" && status_home_appends_covers "$2" 0 "$3"
-    ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$state/t1.status" "$first_end" || fail "adjacent sender ranges did not coalesce"
-    if [ "$kind" = keys ]; then status_line_after "$state" 'resolved [key=api-shape]' 'worker close';
-    else status_line_after "$state" 'working corr=0123456789abcdef' 'worker outcome'; fi
-    inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
-      || fail "normalized ownership hid the worker's $kind acknowledgement"
-  done
-  pass "inbox: partial home ownership excludes mixed lines and out-of-order ranges retain exact provenance"
-}
-
-test_correlated_status_acknowledges_without_the_mv() {
-  local dir state rec plain
-  dir="$TMP_ROOT/ack-corr"; state="$dir/state"; mkdir -p "$state"
-  rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 $'from firstmate corr=0123456789abcdef\nplease build X')
-  plain=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "no evidence here")
-  age_path "$rec"; age_path "$plain"
-  status_line_after "$state" "working corr=fedcba9876543210" "someone else's request"
-  [ "$(due_now "$state")" = "ring $rec" ] || fail "another request's corr token acknowledged the record"
-  status_line_after "$state" "working corr=0123456789abcdef" "spawned the requested worker"
-  inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
-    || fail "a correlated status line did not acknowledge"
-  [ -f "$rec" ] || fail "status acknowledgement moved its record"
-  [ "$(due_now "$state")" = "ring $plain" ] || fail "a record naming no evidence must fall back to the ladder"
-  pass "inbox: a correlated child status acknowledges a record, and a record naming no evidence falls back to the ladder"
-}
-
-test_acknowledged_predecessor_does_not_block_successors() {
-  local mode dir state rec next fire
-  for mode in keys correlation; do
-    dir=$(setup_watch_case "ack-successor-$mode")
-    state="$dir/state"
-    if [ "$mode" = keys ]; then
-      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "use REST" "" api-shape)
-      status_line_after "$state" 'resolved [key=api-shape]' 'acted'
-    else
-      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X')
-      status_line_after "$state" 'working corr=0123456789abcdef' 'spawned X'
-    fi
-    next=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "unheard successor")
-    age_path "$rec"; age_path "$next"
-    printf '001.msg\t3\t100\n' > "$state/t1.inbox/.ring-state"
-    printf '%s\n' "$(date +%s)" > "$state/t1.inbox/.busy-state"
-    printf '001.msg\n' > "$state/t1.inbox/.escalated"
-    [ "$(due_now "$state")" = "ring $next" ] \
-      || fail "$mode acknowledgement blocked an unheard successor"
-    busy_steer_check "$dir" "$(idle_capture "$dir")"
-    [ "$(cut -f1 "$state/t1.inbox/.ring-state")" = 002.msg ] \
-      || fail "$mode successor did not start its own ladder"
-    printf '002.msg\t3\t100\n' > "$state/t1.inbox/.ring-state"
-    busy_steer_check "$dir" "$(idle_capture "$dir")"
-    grep -qF "$next" "$state/.wake-queue" || fail "$mode successor lost idle recovery"
-    mv "$next" "$state/t1.inbox/handled/"
-    mkdir -p "$dir/config"
-    : > "$dir/config/wait-no-turns"
-    fire=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "one-shot successor" fire-and-forget)
-    inbox_lib "$state" fm_task_inbox_mark_retry "$state" t1 "$fire"
-    age_path "$state/t1.inbox/.retry-ring"
-    FM_CONFIG_OVERRIDE="$dir/config" busy_steer_check "$dir" "$(idle_capture "$dir")"
-    [ ! -e "$state/t1.inbox/.retry-ring" ] || fail "$mode acknowledgement hid the owed retry"
-    [ "$(grep -cF 'Firstmate instruction waiting' "$dir/send.log")" = 2 ] \
-      || fail "$mode acknowledgement blocked successor delivery"
-    [ "$(wc -l < "$state/.wake-queue" | tr -d ' ')" = 1 ] || fail "$mode acknowledgement caused an extra wake"
-    [ -f "$rec" ] || fail "$mode acknowledgement required moving the predecessor"
-    inbox_lib "$state" fm_task_inbox_mark_retry "$state" t1 "$rec"
-    FM_CONFIG_OVERRIDE="$dir/config" busy_steer_check "$dir" "$(idle_capture "$dir")"
-    [ ! -e "$state/t1.inbox/.retry-ring" ] || fail "$mode acknowledgement retained its own retry mark"
-    [ "$(grep -cF 'Firstmate instruction waiting' "$dir/send.log")" = 2 ] \
-      || fail "$mode acknowledged instruction was retried"
-  done
-  pass "inbox: acknowledged predecessors allow successor delivery, recovery, and owed retries without a move"
-}
-
-test_acknowledgement_selection_has_bounded_history_work() {
-  local kind selection dir state tail corr i stamp expected out reads ranges epochs folds lines
-  for kind in correlation keys; do
-    for selection in oldest due retry direct; do
-      dir="$TMP_ROOT/history-$kind-$selection"; state="$dir/state"; mkdir -p "$state" "$dir/config"
-      for i in 1 2 3 4 5 6 7 8 9 10; do
-        printf -v corr '%016x' "$i"
-        if [ "$kind" = keys ]; then
-          inbox_lib "$state" fm_task_inbox_write "$state" t1 "answer $i" "" "key-$i" >/dev/null || fail "could not enqueue keyed history fixture"
-        else
-          inbox_lib "$state" fm_task_inbox_write "$state" t1 "from firstmate corr=$corr: request $i" >/dev/null || fail "could not enqueue correlated history fixture"
-        fi
-      done
-      if [ "$selection" = retry ]; then
-        tail=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=ffffffffffffffff: unheard' fire-and-forget)
-        inbox_lib "$state" fm_task_inbox_mark_retry "$state" t1 "$tail"
-        age_path "$state/t1.inbox/.retry-ring"
-        : > "$dir/config/wait-no-turns"
-      else
-        tail=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=ffffffffffffffff: unheard')
-      fi
-      stamp=$(( $(date +%s) + 5 ))
-      printf 'needs-decision [key=other] [at=%s]: old question\nresolved [key=other] [at=%s]: closed\n' "$stamp" "$stamp" > "$state/t1.status"
-      i=0
-      while [ "$i" -lt 80 ]; do
-        printf 'working [at=%s]: historical event %s\n' "$stamp" "$i" >> "$state/t1.status"
-        i=$((i + 1))
-      done
-      for i in 1 2 3 4 5 6 7 8 9 10; do
-        printf -v corr '%016x' "$i"
-        if [ "$kind" = keys ]; then
-          printf 'resolved [key=key-%s] [at=%s]: acted\n' "$i" "$stamp" >> "$state/t1.status"
-        else
-          printf 'working corr=%s [at=%s]: spawned worker\n' "$corr" "$stamp" >> "$state/t1.status"
-        fi
-      done
-      inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" \
-        "working corr=ffffffffffffffff [at=$stamp]: answerer bookkeeping" || true
-      expected="ring $tail"
-      case "$selection" in
-        oldest) expected=$tail ;;
-        retry) expected="retry $tail" ;;
-        direct) expected=acknowledged ;;
-      esac
-      : > "$dir/reads"; : > "$dir/ranges"; : > "$dir/epochs"; : > "$dir/folds"
-      out=$(FM_CONFIG_OVERRIDE="$dir/config" FM_STATE_OVERRIDE="$state" FM_TASK_INBOX_GRACE_SECS=0 bash -c '
-        . "$1"
-        _fm_wake_require_classify
-        history_state=$2; history_dir=$3; selection=$4
-        for fn in status_line_at_epoch status_home_appends_ranges _fm_decision_fold_line; do
-          definition=$(declare -f "$fn")
-          eval "${definition/$fn/recorded_$fn}"
-        done
-        status_line_at_epoch() { printf "call\n" >> "$history_dir/epochs"; recorded_status_line_at_epoch "$@"; }
-        status_home_appends_ranges() { printf "call\n" >> "$history_dir/ranges"; recorded_status_home_appends_ranges "$@"; }
-        _fm_decision_fold_line() { printf "call\n" >> "$history_dir/folds"; recorded__fm_decision_fold_line "$@"; }
-        cat() {
-          for arg in "$@"; do
-            [ "$arg" != "$history_state/t1.status" ] || printf "read\n" >> "$history_dir/reads"
-          done
-          command cat "$@"
-        }
-        case "$selection" in
-          oldest) fm_task_inbox_oldest_unhandled "$history_state" t1 ;;
-          due|retry) fm_task_inbox_due_action "$history_state" t1 ;;
-          direct)
-            fm_task_inbox_status_acknowledged "$history_state" t1 "$history_state/t1.inbox/001.msg" && printf acknowledged
-            ;;
-        esac
-      ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$state" "$dir" "$selection" 2> "$dir/check.err") \
-        || fail "$kind $selection history check failed: $(cat "$dir/check.err")"
-      [ "$out" = "$expected" ] || fail "$kind $selection lost acknowledgement or home-append exclusion: $out"
-      reads=$(wc -l < "$dir/reads" | tr -d ' ')
-      ranges=$(wc -l < "$dir/ranges" | tr -d ' ')
-      epochs=$(wc -l < "$dir/epochs" | tr -d ' ')
-      folds=$(wc -l < "$dir/folds" | tr -d ' ')
-      lines=$(wc -l < "$state/t1.status" | tr -d ' ')
-      [ "$reads" -eq 1 ] && [ "$ranges" -eq 1 ] \
-        || fail "$kind $selection reread status or ownership history ($reads status reads, $ranges range reads)"
-      [ "$epochs" -eq 0 ] || fail "$kind $selection forked the timestamp parser per historical line"
-      [ "$folds" -le "$lines" ] || fail "$kind $selection folded decision history more than once"
-      [ "$kind" != correlation ] || [ "$folds" -eq 0 ] \
-        || fail "correlation-only $selection unnecessarily folded decisions"
-    done
-  done
-  pass "inbox: selection reuses one status and ownership snapshot without per-line parser forks or redundant folds"
-}
-
-test_acknowledgement_uses_shared_key_grammar() {
-  local kind dir state rec
-  for kind in default none correlation; do
-    dir="$TMP_ROOT/ack-grammar-$kind"; state="$dir/state"; mkdir -p "$state"
-    if [ "$kind" = correlation ]; then
-      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X')
-      status_line_after "$state" 'working [key=bad key] corr=0123456789abcdef' 'invalid key'
-    else
-      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "answer" "" "$kind")
-      status_line_after "$state" 'resolved [key=bad key]' 'invalid key'
-    fi
-    age_path "$rec"
-    [ "$(due_now "$state")" = "ring $rec" ] || fail "invalid key evidence acknowledged $kind"
-    case "$kind" in
-      default) status_line_after "$state" resolved 'keyless worker resolution' ;;
-      none) status_line_after "$state" resolved '[key=none] explicit none resolution' ;;
-      correlation) status_line_after "$state" 'working corr=0123456789abcdef' 'valid correlated outcome' ;;
-    esac
-    [ "$(due_now "$state")" = quiet ] || fail "shared key grammar did not acknowledge $kind"
-  done
-  pass "inbox: acknowledgement honors keyless default, stated keys, and invalid-key rejection"
-}
-
-test_correlation_acknowledges_despite_reopened_keys() {
-  local dir state rec
-  dir="$TMP_ROOT/ack-reopened-corr"; state="$dir/state"; mkdir -p "$state"
-  rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X' "" 'api-shape,port')
-  age_path "$rec"
-  status_line_after "$state" 'resolved [key=api-shape]' 'used REST'
-  status_line_after "$state" 'resolved [key=port]' 'used 9090'
-  status_line_after "$state" 'needs-decision [key=api-shape]' 'follow-up choice'
-  [ "$(due_now "$state")" = "ring $rec" ] || fail "a reopened key acknowledged without correlation"
-  status_line_after "$state" 'working corr=0123456789abcdef' 'spawned X'
-  status_line_after "$state" 'needs-decision [key=port]' 'another follow-up'
-  inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
-    || fail "reopened keys vetoed independent correlation evidence"
-  [ "$(due_now "$state")" = quiet ] || fail "correlated instruction re-entered its ladder"
-  pass "inbox: independent correlation acknowledges an instruction despite reopened decision keys"
-}
-
-test_watcher_status_acknowledged_record_is_quiet() {
-  local dir state rec
-  dir=$(setup_watch_case ack-status)
+test_only_handled_move_retires_inbox_records() {
+  local dir state first second stamp action
+  dir=$(setup_watch_case handled-only)
   state="$dir/state"
-  rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "go with REST" "" "api-shape")
-  age_path "$rec"
-  status_line_after "$state" "resolved [key=api-shape]" "acted"
+  first=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X')
+  second=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "next instruction")
+  age_path "$first"; age_path "$second"
+  stamp=$(( $(date +%s) + 5 ))
+  printf 'resolved [key=api-shape] [at=%s]: worker acted\nworking corr=0123456789abcdef [at=%s]: spawned child\n' \
+    "$stamp" "$stamp" > "$state/t1.status"
+  action=$(FM_TASK_INBOX_GRACE_SECS=0 inbox_lib "$state" fm_task_inbox_due_action "$state" t1)
+  [ "$action" = "ring $first" ] || fail "a status report retired an unhandled inbox record"
   busy_steer_check "$dir" "$(idle_capture "$dir")"
-  [ ! -s "$dir/send.log" ] || fail "an acknowledged record was re-rung"
-  [ ! -s "$state/.wake-queue" ] || fail "an acknowledged record escalated"
-  pass "watcher: a record the status proves acted on is neither re-rung nor escalated"
+  [ "$(grep -cF 'Firstmate instruction waiting' "$dir/send.log")" = 1 ] || fail "the unhandled record did not ring"
+  printf '001.msg\t3\t100\n' > "$state/t1.inbox/.ring-state"
+  busy_steer_check "$dir" "$(idle_capture "$dir")"
+  grep -qF "$first" "$state/.wake-queue" || fail "status reports suppressed idle-and-unhandled recovery"
+  mv "$first" "$state/t1.inbox/handled/"
+  action=$(FM_TASK_INBOX_GRACE_SECS=0 inbox_lib "$state" fm_task_inbox_due_action "$state" t1)
+  [ "$action" = "ring $second" ] || fail "the handled move did not advance selection"
+  mv "$second" "$state/t1.inbox/handled/"
+  action=$(FM_TASK_INBOX_GRACE_SECS=0 inbox_lib "$state" fm_task_inbox_due_action "$state" t1)
+  [ "$action" = quiet ] || fail "handled records retained delivery work"
+  pass "inbox: only handled moves retire records; idle unhandled records still ring and escalate"
 }
 
 test_watcher_successor_escalation_stays_quiet() {
@@ -1853,26 +1358,12 @@ test_watcher_ignores_busy_tokens_in_output codex || exit 1
 test_watcher_ignores_busy_tokens_in_output claude || exit 1
 test_watcher_observes_busy_during_every_grace
 test_watcher_busy_observation_survives_ack
-test_watcher_busy_record_switch_preserves_idle_grace
 test_watcher_busy_bookkeeping_failure_surfaces
 test_watcher_retry_ignores_busy_bookkeeping
 test_watcher_successor_escalation_stays_quiet dead
 test_watcher_successor_escalation_stays_quiet missing
 test_watcher_successor_escalation_stays_quiet unwritable
-test_resolved_keys_acknowledge_without_the_mv
-test_resolved_key_evidence_ignores_old_and_home_written_lines
-test_same_second_reopening_requires_a_new_worker_resolution
-test_home_append_claim_precedes_visible_status
-test_failed_append_rolls_back_only_an_unwritten_claim
-test_concurrent_home_append_keeps_instruction_unheard ordinary
-test_concurrent_home_append_keeps_instruction_unheard retry
-test_partial_home_ownership_never_acknowledges
-test_correlated_status_acknowledges_without_the_mv
-test_acknowledged_predecessor_does_not_block_successors
-test_acknowledgement_uses_shared_key_grammar
-test_acknowledgement_selection_has_bounded_history_work
-test_correlation_acknowledges_despite_reopened_keys
-test_watcher_status_acknowledged_record_is_quiet
+test_only_handled_move_retires_inbox_records
 test_watcher_quiet_on_healthy_inbox
 test_watcher_ack_silences_unwritable_ladder
 test_watcher_surfaces_unwritable_ladder

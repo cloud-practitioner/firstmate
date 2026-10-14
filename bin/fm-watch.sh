@@ -517,7 +517,7 @@ inbox_steer_escalate_unavailable() {  # <window> <task> <record>
 }
 
 # Steering-inbox loss detection, one cheap check per recorded window per poll.
-# bin/fm-task-inbox-lib.sh owns delivery, busy-grace, status-acknowledgement, retry, and escalation policy.
+# bin/fm-task-inbox-lib.sh owns delivery, busy-grace, retry, and escalation policy.
 # Endpoint and busy checks precede delivery so recovery never types into a busy,
 # dead, or missing worker; the ring helper protects pending composer text.
 # Normal retries keep the watcher blocking rather than waking firstmate.

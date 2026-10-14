@@ -117,72 +117,6 @@ drain_out() {  # <home>
   FM_STATE_OVERRIDE="$1/state" "$DRAIN" 2>/dev/null
 }
 
-test_transferred_hold_keys_acknowledge_inbox() {
-  command -v tasks-axi >/dev/null 2>&1 || { pass "skipped transferred-hold acknowledgement: tasks-axi not found"; return 0; }
-  local dir fb log home idempotent mode hold_id expected rec rc show stamp args
-  for idempotent in 0 1; do
-    for mode in alias held mixed; do
-      dir="$TMP_ROOT/transferred-$idempotent-$mode"; mkdir -p "$dir"
-      fb=$(make_stubs "$dir"); log="$dir/send.log"
-      home=$(setup_home "transferred-$idempotent-$mode")
-      mkdir -p "$home/data" "$home/config"
-      fm_test_tasks_toml "$home/.tasks.toml"
-      printf '## In flight\n\n## Queued\n\n## Done\n' > "$home/data/backlog.md"
-      fm_write_meta "$home/state/t1.meta" "window=sess:fm-t1" "kind=ship"
-      printf 'needs-decision [key=chat-choice]: pick option A or B\n' > "$home/state/t1.status"
-      hold_id=chat-choice
-      [ "$mode" != alias ] || hold_id=t1-decision-chat-choice
-      (
-        export PATH="$fb:$PATH" FM_HOME="$home" FM_ROOT_OVERRIDE="$home"
-        export FM_STATE_OVERRIDE="$home/state" FM_DATA_OVERRIDE="$home/data" FM_CONFIG_OVERRIDE="$home/config"
-        "$ROOT/bin/fm-captain-hold.sh" hold "$hold_id" --origin t1 --title "Choose the chat option" \
-          --reason "captain choice pending" --repo sample >/dev/null \
-          && "$ROOT/bin/fm-captain-hold.sh" complete t1 "$hold_id" >/dev/null
-      ) || fail "could not transfer the $mode decision to its captain-held task"
-      grep -qF 'captain-held [key=chat-choice]' "$home/state/t1.status" \
-        || fail "the hold fixture did not transfer its decision"
-      args=(t1 --resolve-key chat-choice)
-      expected=chat-choice
-      if [ "$mode" = mixed ]; then
-        printf 'needs-decision [key=api-shape]: pick REST or RPC\n' >> "$home/state/t1.status"
-        args+=(--resolve-key api-shape)
-        expected=chat-choice,api-shape
-      fi
-      FM_SEND_IDEMPOTENT="$idempotent" run_send "$fb" "$home" "$log" "${args[@]}" "go with option A"; rc=$?
-      expect_code 0 "$rc" "a transferred $mode answer should enqueue (idempotent=$idempotent)"
-      rec="$home/state/t1.inbox/001.msg"
-      grep -qxF "resolve-keys=$expected" "$rec" \
-        || fail "the $mode inbox record lost or duplicated its answer keys (idempotent=$idempotent)"
-      show=$(cd "$home" && tasks-axi show "$hold_id" --full)
-      assert_contains "$show" "state: done" "the transferred answer did not close its hold ledger"
-      assert_contains "$show" "Answer: go with option A" "the hold ledger lost the answer"
-      if grep -qF 'resolved [key=chat-choice]' "$home/state/t1.status"; then
-        fail "the transferred key was closed through the status ledger"
-      fi
-      if FM_STATE_OVERRIDE="$home/state" bash -c '
-        . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$3"
-      ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state" "$rec"; then
-        fail "answer-time bookkeeping acknowledged the transferred instruction"
-      fi
-      stamp=$(( $(date +%s) + 5 ))
-      printf 'resolved [key=chat-choice] [at=%s]: acted on the answer\n' "$stamp" >> "$home/state/t1.status"
-      if [ "$mode" = mixed ]; then
-        if FM_STATE_OVERRIDE="$home/state" bash -c '
-          . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$3"
-        ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state" "$rec"; then
-          fail "the mixed answer acknowledged before the worker resolved every key"
-        fi
-        printf 'resolved [key=api-shape] [at=%s]: implemented REST\n' "$stamp" >> "$home/state/t1.status"
-      fi
-      FM_STATE_OVERRIDE="$home/state" bash -c '
-        . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$3"
-      ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state" "$rec" \
-        || fail "worker resolution did not acknowledge the $mode answer (idempotent=$idempotent)"
-    done
-  done
-  pass "fm-send --resolve-key: transferred holds preserve original acknowledgement keys on both enqueue paths"
-}
-
 test_answer_send_closes_open_decision() {
   local dir fb log home rc out
   dir="$TMP_ROOT/closes"; mkdir -p "$dir"
@@ -201,15 +135,6 @@ test_answer_send_closes_open_decision() {
   grep -qF "go with REST" "$home/state/t1.inbox/001.msg" \
     || fail "the answer text should reach the worker's durable inbox record"
   assert_contains "$(cat "$log")" "Firstmate instruction waiting" "the doorbell should be rung for the answer"
-  # The record names the key it answers, but the answerer's own close is not
-  # proof the worker acted: only a later worker-written resolved line is.
-  grep -qxF 'resolve-keys=api-shape' "$home/state/t1.inbox/001.msg" \
-    || fail "the inbox record should name the key it answers:"$'\n'"$(cat "$home/state/t1.inbox/001.msg")"
-  if FM_STATE_OVERRIDE="$home/state" bash -c '
-    . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$2/t1.inbox/001.msg"
-  ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state"; then
-    fail "the answerer's own close acknowledged the record"
-  fi
   sed -E 's/ \[at=[0-9]+\]//' "$home/state/t1.status" | grep -qF 'resolved [key=api-shape]: answered: go with REST' \
     || fail "fm-send did not append the closing resolved line:"$'\n'"$(cat "$home/state/t1.status")"
   # The drain folded the worker's `working:` line but never listed it, so the
@@ -863,40 +788,6 @@ test_stamped_close_line_stays_within_the_status_line_cap() {
   pass "fm-send --resolve-key: a stamped close line stays inside the status-line cap"
 }
 
-test_failed_ownership_claim_keeps_delivery_recovery_active() {
-  local dir fb log home err rc rec diagnostic manual action
-  dir="$TMP_ROOT/ownership-failure"; mkdir -p "$dir"
-  fb=$(make_stubs "$dir"); log="$dir/send.log"; err="$dir/send.err"
-  home=$(setup_home ownership-failure)
-  fm_write_meta "$home/state/t1.meta" "window=sess:fm-t1" "kind=ship"
-  printf 'needs-decision [key=api-shape]: choose REST or RPC\n' > "$home/state/t1.status"
-  mkdir "$home/state/.t1.home-appends"
-  env PATH="$fb:$PATH" FM_ROOT_OVERRIDE="$home" FM_HOME="$home" FM_SEND_LOG="$log" FM_SEND_SETTLE=0 \
-    "$SEND" t1 --resolve-key api-shape "use REST" > /dev/null 2> "$err"; rc=$?
-  [ "$rc" -ne 0 ] || fail "a failed sender ownership claim was silently tolerated"
-  rec="$home/state/t1.inbox/001.msg"
-  [ -f "$rec" ] || fail "an ownership failure lost the delivered inbox record"
-  if grep -qF 'resolved [key=api-shape]' "$home/state/t1.status"; then
-    fail "a sender close became visible without an ownership claim"
-  fi
-  diagnostic=$(cat "$err")
-  assert_contains "$diagnostic" 'sender ownership' "ownership failure lacked a diagnostic"
-  action=$(FM_STATE_OVERRIDE="$home/state" FM_TASK_INBOX_GRACE_SECS=0 bash -c '
-    . "$1"; fm_task_inbox_due_action "$2" t1
-  ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state")
-  [ "$action" = "ring $rec" ] || fail "a failed ownership claim disabled the delivery ladder"
-  rmdir "$home/state/.t1.home-appends"
-  manual=${diagnostic#*Close it manually with: }
-  manual=${manual% - do not resend the answer.}
-  bash -c "$manual" || fail "the guarded ownership recovery command failed"
-  if FM_STATE_OVERRIDE="$home/state" bash -c '
-    . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$2/t1.inbox/001.msg"
-  ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state"; then
-    fail "manual sender recovery was misread as worker acknowledgement"
-  fi
-  pass "fm-send --resolve-key: ownership failure preserves the ladder and manual recovery uses the guarded append"
-}
-
 test_failed_close_recovery_command_is_shell_safe() {
   local dir fb log home err marker answer rc diagnostic manual out
   dir="$TMP_ROOT/manual-close"; mkdir -p "$dir"
@@ -1014,7 +905,6 @@ test_decision_answer_partition_relocates_under_the_record() {
   pass "fm-send --resolve-key: a decision answer refuses the attended branch before sending, a blocked: key stays steering, and the away-posture record relocates the answer"
 }
 
-test_transferred_hold_keys_acknowledge_inbox
 test_answer_send_closes_open_decision
 test_answer_close_is_self_announced
 test_separate_resolve_key_answers_do_not_rewake
@@ -1036,7 +926,6 @@ test_unrelated_writer_cannot_close_or_hijack_reserved_key
 test_unclosable_reserved_key_refuses_before_send
 test_long_decision_key_refuses_before_send
 test_stamped_close_line_stays_within_the_status_line_cap
-test_failed_ownership_claim_keeps_delivery_recovery_active
 test_failed_close_recovery_command_is_shell_safe
 test_remote_reserved_pending_reply_key_closes_locally
 test_decision_answer_partition_relocates_under_the_record

@@ -2553,8 +2553,8 @@ A throwaway scout was spawned through `bin/fm-spawn.sh --scout --harness omp --m
 
 `bin/fm-task-inbox-lib.sh` owns the busy observation and grace extension.
 
-A pane that reports active work through the semantic busy contract is never a delivery strike and never a stuck-busy wake: each due poll records the observation and the unhandled record's grace restarts from it, so a worker busy on the instruction it has not yet moved to `handled/` is neither rung nor escalated.
-An unheard doorbell escalates only after attempts on an idle pane, and a record whose resolve-keys or correlation token the task status shows as acted on is treated as acknowledged.
+A pane that reports active work through the semantic busy contract or verified current composer/status furniture is never a delivery strike and never a stuck-busy wake. Each active poll refreshes the task-scoped observation, so the idle grace survives record changes and watcher restarts.
+An unheard doorbell escalates only after delivery attempts on a pane that has been idle past the grace. Only moving the record into `handled/` acknowledges it; status reports do not retire inbox records.
 The former consecutive-busy-deferral budget no longer exists.
 
 `bin/fm-test-run.sh tests/fm-task-inbox.test.sh` pins the portable regressions, including idle-and-unhandled escalation.

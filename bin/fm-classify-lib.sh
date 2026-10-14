@@ -2191,11 +2191,11 @@ window_to_task() {
 #   v1
 #   ident=<file-ident>
 #   <start><TAB><end>
-# Ranges are half-open [start, end), stored in ascending offset order.
-# The only writer is fm_wake_status_append_self_announced, which reserves
-# ownership before publishing bytes and commits the exact append descriptor
-# span afterwards. Reservations end at FM_STATUS_HOME_APPEND_PENDING_END and
-# cannot suppress wakes. Adjacent and overlapping ranges coalesce under the lock.
+# Ranges are half-open [start, end), written in the order they were appended.
+# The only writer is fm_wake_status_append_self_announced, which records the
+# pre- and post-append size of an append-only log it just grew, so each new
+# start is at or after the last recorded end; a new range that begins exactly
+# where the last one ended extends that line instead of adding another.
 # status_home_appends_covers depends on that ascending order: it walks the
 # ledger once and ignores any range starting past the point it has reached, so
 # a ledger written out of order would refuse to prove coverage and fail toward
@@ -2205,8 +2205,6 @@ window_to_task() {
 # That read-merge-write serializes through bin/fm-wake-lib.sh's fm_lock_*
 # helpers, exactly as status_retire_presentation_task above does, so a caller
 # that touches this ledger must have sourced that library first.
-
-FM_STATUS_HOME_APPEND_PENDING_END=9223372036854775807
 
 status_home_appends_path() {  # <status-file>
   local f=$1 dir base
@@ -2243,15 +2241,13 @@ $rest
 EOF
 }
 
-status_home_appends_covers() {  # <status-file> <start> <end> [ranges]
-  local start=$2 end=$3 range_start range_end ranges
+status_home_appends_covers() {  # <status-file> <start> <end>
+  local start=$2 end=$3 range_start range_end
   case "$start:$end" in *[!0-9:]*) return 1 ;; esac
   [ "$end" -ge "$start" ] || return 1
-  if [ "$#" -ge 4 ]; then ranges=$4; else ranges=$(status_home_appends_ranges "$1"); fi
-  while IFS=$'\t' read -r range_start range_end; do
+  while IFS=$(printf '\t') read -r range_start range_end; do
     [ -n "$range_start" ] || continue
     case "$range_start:$range_end" in *[!0-9:]*) continue ;; esac
-    [ "$range_end" != "$FM_STATUS_HOME_APPEND_PENDING_END" ] || continue
     [ "$range_start" -le "$start" ] || continue
     if [ "$range_end" -gt "$start" ]; then
       start=$range_end
@@ -2260,24 +2256,9 @@ status_home_appends_covers() {  # <status-file> <start> <end> [ranges]
       return 0
     fi
   done <<EOF
-$ranges
+$(status_home_appends_ranges "$1")
 EOF
   [ "$start" -ge "$end" ]
-}
-
-status_home_appends_overlaps() {  # <status-file> <start> <end> [ranges]
-  local start=$2 end=$3 range_start range_end ranges
-  case "$start:$end" in *[!0-9:]*) return 1 ;; esac
-  [ "$end" -gt "$start" ] || return 1
-  if [ "$#" -ge 4 ]; then ranges=$4; else ranges=$(status_home_appends_ranges "$1"); fi
-  while IFS=$'\t' read -r range_start range_end; do
-    [ -n "$range_start" ] || continue
-    case "$range_start:$range_end" in *[!0-9:]*) continue ;; esac
-    [ "$range_start" -lt "$end" ] && [ "$range_end" -gt "$start" ] && return 0
-  done <<EOF
-$ranges
-EOF
-  return 1
 }
 
 status_home_appends_record() {  # <status-file> <start> <end>
@@ -2292,28 +2273,29 @@ status_home_appends_record() {  # <status-file> <start> <end>
   return "$rc"
 }
 
-_fm_status_home_appends_merge_locked() {  # <status-file> <ledger-path> <start-or-empty> <end> [ranges]
-  local f=$1 path=$2 start=$3 end=$4 ident tmp body ranges
+_fm_status_home_appends_merge_locked() {  # <status-file> <ledger-path> <start> <end>
+  local f=$1 path=$2 start=$3 end=$4 ident tmp line last='' body='' coalesced=0
   local LC_ALL=C
-  [ ! -L "$path" ] && { [ ! -e "$path" ] || [ -f "$path" ]; } || return 1
   ident=$(_fm_open_decisions_file_ident "$f") || return 1
-  if [ "$#" -ge 5 ]; then ranges=$5; else ranges=$(status_home_appends_ranges "$f"); fi
-  body=$({ printf '%s\n' "$ranges"; [ -z "$start" ] || printf '%s\t%s\n' "$start" "$end"; } \
-    | sort -n -k1,1 -k2,2 | perl -e '
-      my ($start, $end);
-      while (<STDIN>) {
-        my @range = split;
-        next unless @range == 2;
-        my ($a, $b) = @range;
-        if (!defined $start) { ($start, $end) = ($a, $b); next; }
-        if ($a <= $end) { $end = $b if $b > $end; next; }
-        print "$start\t$end\n";
-        ($start, $end) = ($a, $b);
-      }
-      print "$start\t$end\n" if defined $start;
-    ') || return 1
+  while IFS= read -r line; do
+    [ -n "$line" ] || continue
+    if [ -n "$last" ]; then body="${body}${last}"$'\n'; fi
+    last=$line
+  done <<EOF
+$(status_home_appends_ranges "$f")
+EOF
+  if [ -n "$last" ]; then
+    if [ "${last#*$'\t'}" = "$start" ]; then
+      last="${last%%$'\t'*}"$'\t'"$end"
+      coalesced=1
+    fi
+    body="${body}${last}"$'\n'
+  fi
+  if [ "$coalesced" -eq 0 ]; then
+    body="${body}${start}"$'\t'"${end}"$'\n'
+  fi
   tmp="$path.tmp.$$"
-  printf 'v1\nident=%s\n%s\n' "$ident" "$body" > "$tmp" || { rm -f "$tmp"; return 1; }
+  printf 'v1\nident=%s\n%s' "$ident" "$body" > "$tmp" || { rm -f "$tmp"; return 1; }
   mv -f "$tmp" "$path" || { rm -f "$tmp"; return 1; }
 }
 
