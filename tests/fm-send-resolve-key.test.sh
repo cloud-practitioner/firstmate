@@ -121,7 +121,7 @@ test_transferred_hold_keys_acknowledge_inbox() {
   command -v tasks-axi >/dev/null 2>&1 || { pass "skipped transferred-hold acknowledgement: tasks-axi not found"; return 0; }
   local dir fb log home idempotent mode hold_id expected rec rc show stamp args
   for idempotent in 0 1; do
-    for mode in held mixed alias; do
+    for mode in alias held mixed; do
       dir="$TMP_ROOT/transferred-$idempotent-$mode"; mkdir -p "$dir"
       fb=$(make_stubs "$dir"); log="$dir/send.log"
       home=$(setup_home "transferred-$idempotent-$mode")
@@ -142,14 +142,11 @@ test_transferred_hold_keys_acknowledge_inbox() {
       grep -qF 'captain-held [key=chat-choice]' "$home/state/t1.status" \
         || fail "the hold fixture did not transfer its decision"
       args=(t1 --resolve-key chat-choice)
-      expected=$hold_id
+      expected=chat-choice
       if [ "$mode" = mixed ]; then
         printf 'needs-decision [key=api-shape]: pick REST or RPC\n' >> "$home/state/t1.status"
         args+=(--resolve-key api-shape)
-        expected=api-shape,chat-choice
-      elif [ "$mode" = alias ]; then
-        printf 'needs-decision [key=%s]: confirm the chat follow-up\n' "$hold_id" >> "$home/state/t1.status"
-        args+=(--resolve-key "$hold_id")
+        expected=chat-choice,api-shape
       fi
       FM_SEND_IDEMPOTENT="$idempotent" run_send "$fb" "$home" "$log" "${args[@]}" "go with option A"; rc=$?
       expect_code 0 "$rc" "a transferred $mode answer should enqueue (idempotent=$idempotent)"
@@ -168,7 +165,7 @@ test_transferred_hold_keys_acknowledge_inbox() {
         fail "answer-time bookkeeping acknowledged the transferred instruction"
       fi
       stamp=$(( $(date +%s) + 5 ))
-      printf 'resolved [key=%s] [at=%s]: acted on the answer\n' "$hold_id" "$stamp" >> "$home/state/t1.status"
+      printf 'resolved [key=chat-choice] [at=%s]: acted on the answer\n' "$stamp" >> "$home/state/t1.status"
       if [ "$mode" = mixed ]; then
         if FM_STATE_OVERRIDE="$home/state" bash -c '
           . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$3"
@@ -183,7 +180,7 @@ test_transferred_hold_keys_acknowledge_inbox() {
         || fail "worker resolution did not acknowledge the $mode answer (idempotent=$idempotent)"
     done
   done
-  pass "fm-send --resolve-key: transferred holds preserve deduplicated acknowledgement keys on both enqueue paths"
+  pass "fm-send --resolve-key: transferred holds preserve original acknowledgement keys on both enqueue paths"
 }
 
 test_answer_send_closes_open_decision() {

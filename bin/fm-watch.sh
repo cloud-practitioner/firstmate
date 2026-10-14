@@ -527,22 +527,27 @@ inbox_steer_check() {  # <window> <task>
   local w=$1 task=$2 action verb rec count tail40 reason='' ring_rc backend agent_state
   action=$(fm_task_inbox_due_action "$STATE" "$task") || return 0
   verb=${action%% *}
-  [ "$verb" != quiet ] || return 0
   if [ "$verb" = retry ] && [ -n "$(status_own_open_decisions "$STATE/$task.status")" ]; then
     return 0
   fi
-  rec=${action#* }
   count=
   case "$verb" in
+    quiet)
+      rec=$(fm_task_inbox_oldest_unhandled "$STATE" "$task") || return 0
+      [ "$(cat "${rec%/*}/.escalated" 2>/dev/null || true)" != "${rec##*/}" ] || return 0
+      ;;
     escalate)
+      rec=${action#* }
       count=${rec##* }
       rec=${rec% *}
       ;;
+    *) rec=${action#* } ;;
   esac
   backend=$(window_backend "$w")
   agent_state=$(fm_backend_agent_state "$backend" "$w" "fm-$task" 2>/dev/null || true)
   case "$agent_state" in
     dead|missing)
+      [ "$verb" != quiet ] || return 0
       if [ "$verb" = retry ]; then
         fm_task_inbox_clear_retry "$STATE" "$task" "$rec" || true
       else
@@ -566,6 +571,7 @@ inbox_steer_check() {  # <window> <task>
       return 0
     fi
   fi
+  [ "$verb" != quiet ] || return 0
   case "$verb" in
     ring)
       ring_rc=0

@@ -838,6 +838,48 @@ test_watcher_codex_composer_defers_doorbell() (
   pass "watcher: Codex composer defers $mode without strikes and resumes recovery when idle"
 )
 
+test_watcher_observes_busy_during_every_grace() {
+  local phase dir rec check before seen
+  for phase in initial extended spacing; do
+    dir=$(busy_case "observe-$phase")
+    rec="$dir/state/t1.inbox/001.msg"
+    case "$phase" in
+      initial) touch "$rec" ;;
+      extended)
+        printf '001.msg\t3\t100\n' > "$dir/state/t1.inbox/.ring-state"
+        printf '001.msg\t%s\n' "$(( $(date +%s) - 30 ))" > "$dir/state/t1.inbox/.busy-state"
+        ;;
+      spacing)
+        printf '001.msg\t1\t%s\n' "$(( $(date +%s) - 30 ))" > "$dir/state/t1.inbox/.ring-state"
+        ;;
+    esac
+    for check in 1 2; do
+      before=$(date +%s)
+      busy_steer_check "$dir" "$dir/busy.capture" 60
+      seen=$(cut -f2 "$dir/state/t1.inbox/.busy-state" 2>/dev/null)
+      [ -n "$seen" ] && [ "$seen" -ge "$before" ] \
+        || fail "busy observation was not refreshed during $phase grace on check $check"
+      [ ! -s "$dir/send.log" ] || fail "busy work during $phase grace consumed a doorbell"
+      [ ! -s "$dir/state/.wake-queue" ] || fail "busy work during $phase grace escalated"
+      [ "$check" != 1 ] || age_busy_observation "$dir" 30
+    done
+    age_path "$rec"
+    printf '001.msg\t3\t100\n' > "$dir/state/t1.inbox/.ring-state"
+    busy_steer_check "$dir" "$(idle_capture "$dir")" 60
+    [ ! -s "$dir/state/.wake-queue" ] || fail "recently active $phase worker escalated before idle grace"
+    age_busy_observation "$dir" 120
+    busy_steer_check "$dir" "$(idle_capture "$dir")" 60
+    [ "$(grep -cF 'still unhandled after 3 doorbell delivery attempts with an idle pane' "$dir/state/.wake-queue")" = 1 ] \
+      || fail "$phase worker did not escalate after a full idle grace"
+    rm -f "$dir/state/t1.inbox/.busy-state"
+    mkdir "$dir/state/t1.inbox/.busy-state"
+    busy_steer_check "$dir" "$dir/busy.capture" 60
+    [ "$(wc -l < "$dir/state/.wake-queue" | tr -d ' ')" = 1 ] \
+      || fail "an already-escalated $phase instruction re-entered busy observation"
+  done
+  pass "watcher: every grace poll refreshes active work, and escalation waits for idle grace"
+}
+
 test_watcher_busy_observation_resets_on_ack() {
   local dir rec
   dir=$(busy_case busy-reset)
@@ -945,10 +987,97 @@ test_correlated_status_acknowledges_without_the_mv() {
   status_line_after "$state" "working corr=fedcba9876543210" "someone else's request"
   [ "$(due_now "$state")" = "ring $rec" ] || fail "another request's corr token acknowledged the record"
   status_line_after "$state" "working corr=0123456789abcdef" "spawned the requested worker"
-  [ "$(due_now "$state")" = quiet ] || fail "a correlated status line did not acknowledge"
-  mv "$rec" "$state/t1.inbox/handled/"
+  inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
+    || fail "a correlated status line did not acknowledge"
+  [ -f "$rec" ] || fail "status acknowledgement moved its record"
   [ "$(due_now "$state")" = "ring $plain" ] || fail "a record naming no evidence must fall back to the ladder"
   pass "inbox: a correlated child status acknowledges a record, and a record naming no evidence falls back to the ladder"
+}
+
+test_acknowledged_predecessor_does_not_block_successors() {
+  local mode dir state rec next fire
+  for mode in keys correlation; do
+    dir=$(setup_watch_case "ack-successor-$mode")
+    state="$dir/state"
+    if [ "$mode" = keys ]; then
+      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "use REST" "" api-shape)
+      status_line_after "$state" 'resolved [key=api-shape]' 'acted'
+    else
+      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X')
+      status_line_after "$state" 'working corr=0123456789abcdef' 'spawned X'
+    fi
+    next=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "unheard successor")
+    age_path "$rec"; age_path "$next"
+    printf '001.msg\t3\t100\n' > "$state/t1.inbox/.ring-state"
+    printf '001.msg\t%s\n' "$(date +%s)" > "$state/t1.inbox/.busy-state"
+    printf '001.msg\n' > "$state/t1.inbox/.escalated"
+    [ "$(due_now "$state")" = "ring $next" ] \
+      || fail "$mode acknowledgement blocked an unheard successor"
+    busy_steer_check "$dir" "$(idle_capture "$dir")"
+    [ "$(cut -f1 "$state/t1.inbox/.ring-state")" = 002.msg ] \
+      || fail "$mode successor did not start its own ladder"
+    printf '002.msg\t3\t100\n' > "$state/t1.inbox/.ring-state"
+    busy_steer_check "$dir" "$(idle_capture "$dir")"
+    grep -qF "$next" "$state/.wake-queue" || fail "$mode successor lost idle recovery"
+    mv "$next" "$state/t1.inbox/handled/"
+    mkdir -p "$dir/config"
+    : > "$dir/config/wait-no-turns"
+    fire=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "one-shot successor" fire-and-forget)
+    inbox_lib "$state" fm_task_inbox_mark_retry "$state" t1 "$fire"
+    age_path "$state/t1.inbox/.retry-ring"
+    FM_CONFIG_OVERRIDE="$dir/config" busy_steer_check "$dir" "$(idle_capture "$dir")"
+    [ ! -e "$state/t1.inbox/.retry-ring" ] || fail "$mode acknowledgement hid the owed retry"
+    [ "$(grep -cF 'Firstmate instruction waiting' "$dir/send.log")" = 2 ] \
+      || fail "$mode acknowledgement blocked successor delivery"
+    [ "$(wc -l < "$state/.wake-queue" | tr -d ' ')" = 1 ] || fail "$mode acknowledgement caused an extra wake"
+    [ -f "$rec" ] || fail "$mode acknowledgement required moving the predecessor"
+    inbox_lib "$state" fm_task_inbox_mark_retry "$state" t1 "$rec"
+    FM_CONFIG_OVERRIDE="$dir/config" busy_steer_check "$dir" "$(idle_capture "$dir")"
+    [ ! -e "$state/t1.inbox/.retry-ring" ] || fail "$mode acknowledgement retained its own retry mark"
+    [ "$(grep -cF 'Firstmate instruction waiting' "$dir/send.log")" = 2 ] \
+      || fail "$mode acknowledged instruction was retried"
+  done
+  pass "inbox: acknowledged predecessors allow successor delivery, recovery, and owed retries without a move"
+}
+
+test_acknowledgement_uses_shared_key_grammar() {
+  local kind dir state rec
+  for kind in default none correlation; do
+    dir="$TMP_ROOT/ack-grammar-$kind"; state="$dir/state"; mkdir -p "$state"
+    if [ "$kind" = correlation ]; then
+      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X')
+      status_line_after "$state" 'working [key=bad key] corr=0123456789abcdef' 'invalid key'
+    else
+      rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "answer" "" "$kind")
+      status_line_after "$state" 'resolved [key=bad key]' 'invalid key'
+    fi
+    age_path "$rec"
+    [ "$(due_now "$state")" = "ring $rec" ] || fail "invalid key evidence acknowledged $kind"
+    case "$kind" in
+      default) status_line_after "$state" resolved 'keyless worker resolution' ;;
+      none) status_line_after "$state" resolved '[key=none] explicit none resolution' ;;
+      correlation) status_line_after "$state" 'working corr=0123456789abcdef' 'valid correlated outcome' ;;
+    esac
+    [ "$(due_now "$state")" = quiet ] || fail "shared key grammar did not acknowledge $kind"
+  done
+  pass "inbox: acknowledgement honors keyless default, stated keys, and invalid-key rejection"
+}
+
+test_correlation_acknowledges_despite_reopened_keys() {
+  local dir state rec
+  dir="$TMP_ROOT/ack-reopened-corr"; state="$dir/state"; mkdir -p "$state"
+  rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X' "" 'api-shape,port')
+  age_path "$rec"
+  status_line_after "$state" 'resolved [key=api-shape]' 'used REST'
+  status_line_after "$state" 'resolved [key=port]' 'used 9090'
+  status_line_after "$state" 'needs-decision [key=api-shape]' 'follow-up choice'
+  [ "$(due_now "$state")" = "ring $rec" ] || fail "a reopened key acknowledged without correlation"
+  status_line_after "$state" 'working corr=0123456789abcdef' 'spawned X'
+  status_line_after "$state" 'needs-decision [key=port]' 'another follow-up'
+  inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
+    || fail "reopened keys vetoed independent correlation evidence"
+  [ "$(due_now "$state")" = quiet ] || fail "correlated instruction re-entered its ladder"
+  pass "inbox: independent correlation acknowledges an instruction despite reopened decision keys"
 }
 
 test_watcher_status_acknowledged_record_is_quiet() {
@@ -1259,6 +1388,7 @@ test_watcher_busy_again_defers_a_spent_ladder
 test_watcher_codex_composer_defers_doorbell escalate || exit 1
 test_watcher_codex_composer_defers_doorbell ring || exit 1
 test_watcher_codex_composer_defers_doorbell retry || exit 1
+test_watcher_observes_busy_during_every_grace
 test_watcher_busy_observation_resets_on_ack
 test_watcher_busy_bookkeeping_failure_surfaces
 test_watcher_retry_ignores_busy_bookkeeping
@@ -1268,6 +1398,9 @@ test_watcher_successor_escalation_stays_quiet unwritable
 test_resolved_keys_acknowledge_without_the_mv
 test_resolved_key_evidence_ignores_old_and_home_written_lines
 test_correlated_status_acknowledges_without_the_mv
+test_acknowledged_predecessor_does_not_block_successors
+test_acknowledgement_uses_shared_key_grammar
+test_correlation_acknowledges_despite_reopened_keys
 test_watcher_status_acknowledged_record_is_quiet
 test_watcher_quiet_on_healthy_inbox
 test_watcher_ack_silences_unwritable_ladder

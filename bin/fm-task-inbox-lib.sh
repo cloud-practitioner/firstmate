@@ -453,13 +453,13 @@ fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path>
     end=$((off + ${#line} + 1))
     epoch=$(status_line_at_epoch "$line") || { off=$end; continue; }
     if [ "$epoch" -ge "$at_epoch" ] && ! status_home_appends_covers "$status" "$off" "$end"; then
+      key=$(_fm_decision_key "$line") || { off=$end; continue; }
       if [ -n "$corr" ]; then
         case "$line" in
-          *"$corr"*) case "$(_fm_decision_key "$line" none)" in pending-reply-*) ;; *) found=1 ;; esac ;;
+          *"$corr"*) case "$key" in pending-reply-*) ;; *) found=1 ;; esac ;;
         esac
       fi
       if [ -n "$pending" ] && [ "$(status_line_verb "$line")" = "${FM_CLASSIFY_RESOLVE_VERB:-$FM_CLASSIFY_RESOLVE_VERB_DEFAULT}" ]; then
-        key=$(_fm_decision_key "$line" none) || key=none
         rest=
         for k in $pending; do
           [ "$k" = "$key" ] || rest="$rest $k"
@@ -471,6 +471,7 @@ fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path>
   done <<EOF
 $content
 EOF
+  [ "$found" -ne 1 ] || return 0
   if [ -n "$keys" ] && [ -z "${pending//[[:space:]]/}" ]; then
     for k in $keys; do
       case "$open" in
@@ -479,7 +480,7 @@ EOF
     done
     return 0
   fi
-  [ "$found" -eq 1 ]
+  return 1
 }
 
 # Oldest escalation-tracked unhandled record, or fail when none is due.
@@ -490,6 +491,7 @@ fm_task_inbox_oldest_unhandled() {  # <state-dir> <task-id>
     [ -e "$f" ] || continue
     fm_task_inbox_is_fire_and_forget "$f" && continue
     n=$(fm_task_inbox_seq_of "${f##*/}") || continue
+    fm_task_inbox_status_acknowledged "$1" "$2" "$f" && continue
     if [ -z "$best" ] || [ "$n" -lt "$best_n" ]; then
       best=$f
       best_n=$n
@@ -534,7 +536,8 @@ fm_task_inbox_due_action() {  # <state-dir> <task-id>
     # Absent, a mark is left untouched and the inbox stays quiet, as before.
     if [ -e "${FM_CONFIG_OVERRIDE:-${FM_HOME:-}/config}/wait-no-turns" ]; then
       base=$(cat "$dir/.retry-ring" 2>/dev/null || true)
-      if ! fm_task_inbox_seq_of "$base" >/dev/null || [ ! -f "$dir/$base" ]; then
+      if ! fm_task_inbox_seq_of "$base" >/dev/null || [ ! -f "$dir/$base" ] \
+        || fm_task_inbox_status_acknowledged "$1" "$2" "$dir/$base"; then
         rm -f "$dir/.retry-ring" 2>/dev/null || true
       elif [ "$(fm_path_age "$dir/.retry-ring")" -ge "$(fm_task_inbox_grace_secs)" ]; then
         printf 'retry %s' "$dir/$base"
@@ -553,10 +556,6 @@ fm_task_inbox_due_action() {  # <state-dir> <task-id>
   # A pane that reported active work restarts the grace from that observation.
   now=$(date +%s)
   if seen=$(fm_task_inbox_busy_seen "$1" "$2" "$base") && [ "$((now - seen))" -lt "$grace" ]; then
-    printf 'quiet'
-    return 0
-  fi
-  if fm_task_inbox_status_acknowledged "$1" "$2" "$oldest"; then
     printf 'quiet'
     return 0
   fi

@@ -1032,19 +1032,12 @@ else
       echo "error: steer not sent to $INBOX_TASK_ID: the task retired or changed endpoint during target resolution" >&2
       exit 1
     fi
-    INBOX_RESOLVE_KEYS=
-    for k in $RESOLVE_STATUS_KEYS $RESOLVE_HOLD_KEYS; do
-      case ",$INBOX_RESOLVE_KEYS," in
-      *,"$k",*) ;;
-      *) INBOX_RESOLVE_KEYS="${INBOX_RESOLVE_KEYS}${INBOX_RESOLVE_KEYS:+,}$k" ;;
-      esac
-    done
     if [ "${FM_SEND_IDEMPOTENT:-0}" = 1 ]; then
       INBOX_RECORD=$(fm_task_inbox_write_idempotent "$STATE" "$INBOX_TASK_ID" "$MESSAGE" \
-        "${FIRE_AND_FORGET_ID:+fire-and-forget}" "$INBOX_RESOLVE_KEYS") || inbox_write_rc=$?
+        "${FIRE_AND_FORGET_ID:+fire-and-forget}" "${RESOLVE_KEYS// /,}") || inbox_write_rc=$?
     else
       INBOX_RECORD=$(fm_task_inbox_write "$STATE" "$INBOX_TASK_ID" "$MESSAGE" \
-        "${FIRE_AND_FORGET_ID:+fire-and-forget}" "$INBOX_RESOLVE_KEYS") || inbox_write_rc=$?
+        "${FIRE_AND_FORGET_ID:+fire-and-forget}" "${RESOLVE_KEYS// /,}") || inbox_write_rc=$?
     fi
     if [ "${inbox_write_rc:-0}" -ne 0 ]; then
       fm_lock_release "$INBOX_META_LOCK"
