@@ -215,6 +215,8 @@ WATCH_HOME_EXISTED=0
 . "$SCRIPT_DIR/fm-pending-reply-lib.sh"
 # shellcheck source=bin/fm-busy-lib.sh
 . "$SCRIPT_DIR/fm-busy-lib.sh"
+# shellcheck source=bin/fm-composer-lib.sh
+. "$SCRIPT_DIR/fm-composer-lib.sh"
 # Steering-inbox loss detection: bin/fm-task-inbox-lib.sh owns the record,
 # doorbell, re-ring ladder, and unavailable-endpoint contracts; this watcher
 # supplies their live endpoint and busy checks plus wake emission
@@ -551,7 +553,8 @@ inbox_steer_check() {  # <window> <task>
   esac
   watcher_capture "$backend" "$w" 40 "$(window_label "$w")" || WATCHER_CAPTURE=
   tail40=$WATCHER_CAPTURE
-  if window_is_busy "$w" "$tail40"; then
+  if window_is_busy "$w" "$tail40" \
+    || printf '%s' "$tail40" | grep -v '^[[:space:]]*$' | tail -12 | fm_busy_lines_match "$(window_harness "$w")"; then
     # Active work is never a strike: record the observation so the grace
     # restarts from it (bin/fm-task-inbox-lib.sh), and never type into the pane.
     [ "$verb" != retry ] || return 0
