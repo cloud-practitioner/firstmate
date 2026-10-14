@@ -282,6 +282,62 @@ test_reminder_names_the_true_failing_condition() {
   pass "fm-guard stale banner: the reminder names the true failing condition and a resumed beat ends the lapse episode"
 }
 
+# A home or code root reached through a symlink: the live watcher records its
+# physical paths while the guard computes logical ones. The same watcher must
+# still read healthy, and a genuinely different watcher path must not.
+run_guard_symlinked() {  # <case-dir> <home-path> <guard-path>
+  FM_ROOT_OVERRIDE="$(case_root "$1")" \
+    FM_HOME="$2" \
+    FM_GUARD_GRACE=999 \
+    FM_SUPERVISION_MODEL=persistent \
+    "$3" 2>&1
+}
+
+record_symlink_case_watcher() {  # <case-dir> <pid> <recorded-home> <recorded-watch-path>
+  local home identity
+  home=$(case_home "$1")
+  identity=$(FM_STATE_OVERRIDE="$home/state" bash -c '. "$1"; fm_pid_identity "$2"' _ "$ROOT/bin/fm-wake-lib.sh" "$2") || return 1
+  mkdir -p "$home/state/.watch.lock"
+  printf '%s\n' "$2" > "$home/state/.watch.lock/pid"
+  printf '%s\n' "$3" > "$home/state/.watch.lock/fm-home"
+  printf '%s\n' "$4" > "$home/state/.watch.lock/watcher-path"
+  printf '%s\n' "$identity" > "$home/state/.watch.lock/pid-identity"
+  touch "$home/state/.last-watcher-beat"
+}
+
+test_symlinked_paths_do_not_read_as_a_missing_watcher() {
+  local dir home phys_home phys_root pid out
+  dir=$(make_guard_case symlinked-watcher-path)
+  home=$(case_home "$dir")
+  phys_home=$(cd "$home" && pwd -P)
+  phys_root=$(cd "$ROOT" && pwd -P)
+  ln -s "$phys_home" "$dir/home-link"
+  ln -s "$phys_root" "$dir/root-link"
+  sleep 60 &
+  pid=$!
+  record_symlink_case_watcher "$dir" "$pid" "$phys_home" "$phys_root/bin/fm-watch.sh" \
+    || fail "could not record the live watcher"
+  out=$(run_guard_symlinked "$dir" "$dir/home-link" "$dir/root-link/bin/fm-guard.sh")
+  [ -z "$out" ] || { kill "$pid" 2>/dev/null; fail "a live watcher recorded through physical paths read as down: $out"; }
+
+  # A genuinely different watcher path still does not match.
+  mkdir -p "$dir/other/bin"
+  : > "$dir/other/bin/fm-watch.sh"
+  record_symlink_case_watcher "$dir" "$pid" "$phys_home" "$(cd "$dir/other" && pwd -P)/bin/fm-watch.sh" \
+    || fail "could not record the different watcher"
+  out=$(run_guard_symlinked "$dir" "$dir/home-link" "$dir/root-link/bin/fm-guard.sh")
+  assert_contains "$out" "WATCHER DOWN - SUPERVISION IS OFF" "a different watcher path was accepted as this home's watcher"
+  # A different home still does not match either.
+  mkdir -p "$dir/elsewhere"
+  record_symlink_case_watcher "$dir" "$pid" "$(cd "$dir/elsewhere" && pwd -P)" "$phys_root/bin/fm-watch.sh" \
+    || fail "could not record the different home"
+  out=$(run_guard_symlinked "$dir" "$dir/home-link" "$dir/root-link/bin/fm-guard.sh")
+  assert_contains "$out" "watcher still down" "a different home was accepted as this home's watcher"
+  kill "$pid" 2>/dev/null || true
+  wait "$pid" 2>/dev/null || true
+  pass "fm-guard stale banner: a symlinked home or code root still matches its own watcher, and only that one"
+}
+
 test_x_mode_without_live_watcher_stays_alarm() {
   local dir home out
   dir=$(make_guard_case x-mode-no-live)
@@ -1000,6 +1056,7 @@ test_autoarm_long_turn_does_not_silence_other_models
 test_persistent_no_watcher_banner_names_missing_process
 test_persistent_no_watcher_episode_survives_beacon_touch
 test_fresh_beacon_without_live_watcher_stays_alarm
+test_symlinked_paths_do_not_read_as_a_missing_watcher
 test_reminder_names_the_true_failing_condition
 test_x_mode_without_live_watcher_stays_alarm
 test_healthy_recovery_rearms_next_stale_episode
