@@ -1676,16 +1676,17 @@ ${context.command}
     if (!(await enqueueDelivery(() => actingAsOwner(promptGeneration)))) return;
     if (promptGeneration !== generation || !currentMainSession || !collectCurrentMainDialog()) return;
 
-    // A custom start can open a processing turn, but is never captain dialog.
-    const prompt = "prompt" in event ? event.prompt : event.message.content;
-    processingOpenedThisRun = queuedProcessingContent !== null && prompt === queuedProcessingContent;
-    if (!("prompt" in event)) return;
-
-    // This event is Pi's authoritative complete current user prompt. At this
-    // point SessionManager still contains only the preceding dialog, so relying
-    // on getEntries() here loses the captain request the next wake may answer.
+    // This event is Pi's authoritative complete current prompt. At this point
+    // SessionManager still contains only the preceding dialog, so relying on
+    // getEntries() here loses the captain request that the next wake may answer.
     // Stage it verbatim and remember the future persisted index for turn_end's
     // duplicate suppression. Operational extension injections are not dialog.
+    processingOpenedThisRun =
+      event.messageType === "custom" &&
+      isProcessingCustomMessage(event.message) &&
+      queuedProcessingContent !== null &&
+      event.message.content === queuedProcessingContent;
+    if (event.messageType !== "user") return;
     const trimmed = event.prompt.trim();
     if (!trimmed || isOperationalUserText(trimmed)) return;
     const file = currentMainSession.getSessionFile() ?? "";
