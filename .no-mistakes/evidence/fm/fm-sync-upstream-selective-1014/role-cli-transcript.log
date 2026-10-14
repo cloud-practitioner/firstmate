@@ -1,0 +1,83 @@
+$ fm-role.sh report
+fm-role: user (default)
+exit=0
+$ fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5
+refused: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+exit=1
+$ fm-brief.sh denied firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5
+error: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+error: to let this home publish to github.com/cloud-practitioner/firstmate, write 'maintainer github.com/cloud-practitioner/firstmate' into /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/config/firstmate-role (docs/configuration.md "Firstmate role"), or pass --upstream-consent github.com/cloud-practitioner/firstmate for this one task with the captain's explicit approval
+exit=1
+$ fm-brief.sh consent firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5 --upstream-consent GitHub.COM/Cloud-Practitioner/FirstMate
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/data/consent/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+Persisted consent brief: Delivery contract: mode=direct-PR upstream-consent=github.com/cloud-practitioner/firstmate
+$ fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5 upstream-consent github.com/cloud-practitioner/firstmate
+authorized: task consent for github.com/cloud-practitioner/firstmate
+exit=0
+$ fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5
+refused: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+exit=1
+$ fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5
+refused: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+exit=1
+$ fm-role.sh report
+fm-role: maintainer github.com/cloud-practitioner/firstmate (local)
+exit=0
+$ fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5
+authorized: maintainer scope github.com/cloud-practitioner/firstmate
+exit=0
+$ fm-brief.sh maintainer firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/data/maintainer/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5
+refused: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+exit=1
+$ fm-spawn.sh nonship /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5 --scout --upstream-consent github.com/cloud-practitioner/firstmate
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home
+error: --upstream-consent applies only to ship spawns; a scout publishes nothing and a secondmate records no delivery contract
+exit=1
+$ fm-spawn.sh nonship /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5 --secondmate --upstream-consent github.com/cloud-practitioner/firstmate
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home
+error: --upstream-consent applies only to ship spawns; a scout publishes nothing and a secondmate records no delivery contract
+exit=1
+$ fm-brief.sh local firstmate --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/data/local/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ fm-brief.sh local-bad firstmate --mode local-only --upstream-consent github.com/cloud-practitioner/firstmate
+error: fm_dod_block: upstream consent authorizes a publication that local-only never performs; drop it
+exit=1
+$ fm-brief.sh spawn-denied firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5
+error: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+error: to let this home publish to github.com/cloud-practitioner/firstmate, write 'maintainer github.com/cloud-practitioner/firstmate' into /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/config/firstmate-role (docs/configuration.md "Firstmate role"), or pass --upstream-consent github.com/cloud-practitioner/firstmate for this one task with the captain's explicit approval
+exit=1
+$ fm-spawn.sh spawn-denied /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5 pi --mode direct-PR --yolo off
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home
+error: spawn refused for spawn-denied: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+error: to let this home publish to github.com/cloud-practitioner/firstmate, write 'maintainer github.com/cloud-practitioner/firstmate' into /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/config/firstmate-role (docs/configuration.md "Firstmate role"), or pass --upstream-consent github.com/cloud-practitioner/firstmate for this one task with the captain's explicit approval
+exit=1
+$ fm-spawn.sh consent /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5 pi --mode direct-PR --yolo off
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home
+error: upstream-consent mismatch for consent: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/data/consent/launch-brief.md records upstream-consent=github.com/cloud-practitioner/firstmate but this spawn passed none; correct the flag or re-scaffold the brief so the worker's contract and the task record agree
+exit=1
+$ fm-promote.sh promote --mode direct-PR --yolo off
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+warn: no registry at /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/data/projects.md; defaulting 01M4WAKYZW6KFBK2B9EM3WJZX5 to no-mistakes off
+error: promotion refused for promote: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+error: to let this home publish to github.com/cloud-practitioner/firstmate, write 'maintainer github.com/cloud-practitioner/firstmate' into /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/config/firstmate-role (docs/configuration.md "Firstmate role"), or pass --upstream-consent github.com/cloud-practitioner/firstmate for this one task with the captain's explicit approval
+exit=1
+$ fm-promote.sh promote --mode direct-PR --yolo off --upstream-consent github.com/cloud-practitioner/firstmate
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+warn: no registry at /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/data/projects.md; defaulting 01M4WAKYZW6KFBK2B9EM3WJZX5 to no-mistakes off
+promoted promote to ship mode=direct-PR yolo=off (teardown protection restored)
+wrote ship instructions for mode=direct-PR: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/data/promote/ship-instructions.md
+next: FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home bin/fm-send.sh fm-promote "$(cat /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/role-home/data/promote/ship-instructions.md)"
+exit=0
+Promoted persisted metadata: {"kind": "ship", "mode": "direct-PR", "upstream_consent": "github.com/cloud-practitioner/firstmate"}
+No remote publication was attempted. All checks used disposable FM_HOME.

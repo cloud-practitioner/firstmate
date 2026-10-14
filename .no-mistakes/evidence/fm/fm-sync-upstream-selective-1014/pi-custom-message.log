@@ -1,0 +1,11 @@
+Real Pi 1.2.0 session; tracked Firstmate branch and watcher extensions; local HTTP model endpoint; no operator credentials.
+before_agent_start {"messageType":"user","hasPrompt":true}
+before_agent_start {"messageType":"custom","hasPrompt":false,"customType":"lab-promptless"}
+Promptless custom delivery completed and produced: Local model reply 2
+before_agent_start {"messageType":"user","hasPrompt":true}
+before_agent_start {"messageType":"user","hasPrompt":true}
+before_agent_start {"messageType":"custom","hasPrompt":false,"customType":"fm-branch-process"}
+before_agent_start {"messageType":"custom","hasPrompt":false,"customType":"fm-branch-process"}
+Processing custom events: [{"messageType":"custom","hasPrompt":false,"customType":"lab-promptless"},{"messageType":"custom","hasPrompt":false,"customType":"fm-branch-process"},{"messageType":"custom","hasPrompt":false,"customType":"fm-branch-process"}]
+Outcome 1 survived away posture, was presented by a promptless processing custom run, and was acknowledged via fm_branch_processed.
+No extension exceptions. Local HTTP completions: 6

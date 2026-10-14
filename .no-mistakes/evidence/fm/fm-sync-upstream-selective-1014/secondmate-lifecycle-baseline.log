@@ -1,0 +1,53 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/l.bx6kzgnq
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/l.bx6kzgnq
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/tools/root/usr/bin/tmux -L fm-lab new-session -d -x 120 -y 40 -s primary -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5 -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/l.bx6kzgnq pi --no-extensions --no-skills --no-prompt-templates
+
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/tools/root/usr/bin/tmux -L fm-lab display-message -p -t primary pid=#{pane_pid} width=#{pane_width} height=#{pane_height} command=#{pane_current_command}
+pid=2228609 width=120 height=40 command=pi
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-a init -q -b main
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-a add bin .pi AGENTS.md .fm-secondmate-home
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-a -c user.name=lab -c user.email=lab@example.invalid commit -qm Disposable lab fixture
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-b init -q -b main
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-b add bin .pi AGENTS.md .fm-secondmate-home
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-b -c user.name=lab -c user.email=lab@example.invalid commit -qm Disposable lab fixture
+
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/liveness-baseline/bin/fm-bootstrap.sh
+NEEDS_GH_AUTH
+BOOTSTRAP_INFO: crew harness override active: pi
+BOOTSTRAP_INFO: tasks-axi available
+BOOTSTRAP_INFO: secondmate mate-a relaunched after recorded endpoint confidently missing (backend=tmux)
+SECONDMATE_LIVENESS: secondmate mate-b: respawn failed after recorded endpoint confidently missing: fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/l.bx6kzgnq
+SECONDMATE_SYNC: secondmate mate-a: skipped: 061bbe755803a508496ef5ac1ee873206495170b does not exist
+SECONDMATE_SYNC: secondmate mate-b: skipped: 061bbe755803a508496ef5ac1ee873206495170b does not exist
+fm-config-inherit: warning: skipped crew-harness for /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-a/config: destination does not allow inherited item (not gitignored or guard failed)
+fm-config-inherit: warning: skipped startup-memory-budget for /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-a/config: destination does not allow inherited item (not gitignored or guard failed)
+fm-config-inherit: warning: skipped crew-harness for /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-b/config: destination does not allow inherited item (not gitignored or guard failed)
+fm-config-inherit: warning: skipped startup-memory-budget for /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/live-mates/mate-b/config: destination does not allow inherited item (not gitignored or guard failed)
+exit=0
+Persisted mate-a relaunch ledger:
+1791953326	attempt
+1791953328	relaunched
+
+Persisted mate-b relaunch ledger:
+1791953326	attempt
+1791953326	failed
+
+Local HTTP model request: lab-model
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4WAKYZW6KFBK2B9EM3WJZX5/.validation/tools/root/usr/bin/tmux -L fm-lab kill-server
+
+exit=0
+Private tmux lab and disposable secondmate homes removed.
