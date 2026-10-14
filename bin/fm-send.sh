@@ -706,17 +706,22 @@ fm_send_close_resolved_keys() { # <answer-text>
   [ "${#close_lines[@]}" -gt 0 ] || return 0
   append_rc=0
   fm_wake_status_append_self_announced "$STATE" "$RESOLVE_STATUS_FILE" "${close_lines[@]}" || append_rc=$?
-  if [ "$append_rc" -eq 2 ]; then
-    printf -v manual_close_cmd ' %q' "${close_lines[@]}"
-    printf -v manual_close_cmd "printf '%%s\\n'%s >> %q" "$manual_close_cmd" "$RESOLVE_STATUS_FILE"
-    echo "error: the answer was delivered to $T, but the close for decision key(s) '$RESOLVE_STATUS_KEYS' could not be appended to $RESOLVE_STATUS_FILE. Close it manually with: $manual_close_cmd - do not resend the answer." >&2
+  if [ "$append_rc" -gt 1 ]; then
+    printf -v manual_close_cmd ' %q' "$STATE" "$RESOLVE_STATUS_FILE" "${close_lines[@]}"
+    printf -v manual_close_cmd 'FM_STATE_OVERRIDE=%q bash -c %q _ %q%s' "$STATE" \
+      '. "$1"; shift; fm_wake_status_append_self_announced "$@"; rc=$?; [ "$rc" -le 1 ]' \
+      "$SCRIPT_DIR/fm-wake-lib.sh" "$manual_close_cmd"
+    echo "error: the answer was delivered to $T, but the close for decision key(s) '$RESOLVE_STATUS_KEYS' could not be safely committed to $RESOLVE_STATUS_FILE with sender ownership; delivery recovery remains active. Close it manually with: $manual_close_cmd - do not resend the answer." >&2
     return 1
   fi
   still=$(status_open_decisions "$RESOLVE_STATUS_FILE")
   for k in $RESOLVE_STATUS_KEYS; do
     case "$still" in
     "$k"$'\t'* | *$'\n'"$k"$'\t'*)
-      printf -v manual_close_cmd "printf '%%s\\n' %q >> %q" "${close_lines[$i]}" "$RESOLVE_STATUS_FILE"
+      printf -v manual_close_cmd ' %q' "$STATE" "$RESOLVE_STATUS_FILE" "${close_lines[$i]}"
+      printf -v manual_close_cmd 'FM_STATE_OVERRIDE=%q bash -c %q _ %q%s' "$STATE" \
+        '. "$1"; shift; fm_wake_status_append_self_announced "$@"; rc=$?; [ "$rc" -le 1 ]' \
+        "$SCRIPT_DIR/fm-wake-lib.sh" "$manual_close_cmd"
       echo "error: the answer was delivered to $T, but decision key '$k' is still open in $RESOLVE_STATUS_FILE; it may have been reopened concurrently or the fold did not accept the close. Close it manually with: $manual_close_cmd - do not resend the answer." >&2
       return 1
       ;;

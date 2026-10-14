@@ -1099,6 +1099,112 @@ test_resolved_key_evidence_ignores_old_and_home_written_lines() {
   pass "inbox: old resolved lines and the answerer's own close never count as the worker acting"
 }
 
+test_same_second_reopening_requires_a_new_worker_resolution() {
+  local mode state rec stamp line
+  for mode in keyed note-head blocked unstamped owned invalid; do
+    state="$TMP_ROOT/same-second-$mode/state"; mkdir -p "$state"
+    rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "new answer" "" api-shape)
+    stamp=$(FM_STATE_OVERRIDE="$state" bash -c '
+      . "$1"; _fm_wake_require_classify; fm_utc_iso_to_epoch "$2"
+    ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$(fm_header_of "$rec" at)") || fail "could not read the answer timestamp"
+    printf 'resolved [key=api-shape] [at=%s]: earlier worker resolution\n' "$stamp" > "$state/t1.status"
+    case "$mode" in
+      keyed|owned) line="needs-decision [key=api-shape] [at=$stamp]: reopened" ;;
+      note-head) line="needs-decision [at=$stamp]: [key=api-shape] reopened" ;;
+      blocked) line="blocked [key=api-shape] [at=$stamp]: reopened" ;;
+      unstamped) line='needs-decision [key=api-shape]: reopened without a time tag' ;;
+      invalid) line="needs-decision [key=bad key] [at=$stamp]: invalid opening" ;;
+    esac
+    if [ "$mode" = owned ]; then
+      inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" "$line" || true
+    else
+      printf '%s\n' "$line" >> "$state/t1.status"
+    fi
+    inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" \
+      "resolved [key=api-shape] [at=$stamp]: answered: new answer" || true
+    if [ "$mode" = invalid ]; then
+      inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
+        || fail "an invalid opening discarded valid worker evidence"
+      continue
+    fi
+    age_path "$rec"
+    [ "$(due_now "$state")" = "ring $rec" ] \
+      || fail "same-second $mode reopening reused an earlier worker resolution"
+    printf 'resolved [key=api-shape] [at=%s]: worker read the new answer\n' "$stamp" >> "$state/t1.status"
+    [ "$(due_now "$state")" = quiet ] || fail "$mode reopening rejected the new worker resolution"
+  done
+  pass "inbox: equal-second reopenings invalidate earlier resolutions through shared transition semantics"
+}
+
+test_home_append_claim_precedes_visible_status() {
+  local failure kind dir state rec line stamp rc real_perl
+  real_perl=$(command -v perl) || fail "perl is required for the append boundary"
+  for failure in interrupted publication-failure; do
+    for kind in keys correlation; do
+      dir=$(setup_watch_case "claim-$failure-$kind"); state="$dir/state"
+      if [ "$kind" = keys ]; then
+        rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "new answer" "" api-shape)
+      else
+        rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=0123456789abcdef: build X')
+      fi
+      age_path "$rec"
+      printf 'working: previous worker event\n' > "$state/t1.status"
+      inbox_lib "$state" fm_wake_status_mark_current "$state" "$state/t1.status" || fail "could not prime the status cursor"
+      stamp=$(( $(date +%s) + 5 ))
+      if [ "$kind" = keys ]; then line="resolved [key=api-shape] [at=$stamp]: answered: new answer";
+      else line="working corr=0123456789abcdef [at=$stamp]: home bookkeeping"; fi
+      cat > "$dir/fakebin/perl" <<'SH'
+#!/usr/bin/env bash
+"$FM_CLAIM_REAL_PERL" "$@"
+rc=$?
+if [ ! -e "$FM_CLAIM_HIT" ] && grep -qxF "$FM_CLAIM_LINE" "$FM_CLAIM_STATUS"; then
+  : > "$FM_CLAIM_HIT"
+  if [ "$FM_CLAIM_FAILURE" = interrupted ]; then kill -KILL "$PPID";
+  else mkdir "$FM_CLAIM_TMP"; fi
+fi
+exit "$rc"
+SH
+      chmod +x "$dir/fakebin/perl"
+      rc=0
+      PATH="$dir/fakebin:$PATH" FM_CLAIM_REAL_PERL="$real_perl" FM_CLAIM_STATUS="$state/t1.status" \
+        FM_CLAIM_LINE="$line" FM_CLAIM_HIT="$dir/hit" FM_CLAIM_FAILURE="$failure" FM_STATE_OVERRIDE="$state" \
+        bash -c '
+          . "$1"
+          export FM_CLAIM_TMP="$2/.t1.home-appends.tmp.$$"
+          fm_wake_status_append_self_announced "$2" "$2/t1.status" "$3"
+        ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$state" "$line" > "$dir/append.out" 2> "$dir/append.err" || rc=$?
+      [ "$rc" -ne 0 ] && [ -f "$dir/hit" ] || fail "the $failure append fault was not exercised"
+      grep -qxF "$line" "$state/t1.status" || fail "the $failure fault did not leave a visible sender line"
+      if inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec"; then
+        fail "unpublished $kind sender ownership acknowledged an instruction after $failure"
+      fi
+      [ "$(due_now "$state")" = "ring $rec" ] || fail "$failure suppressed normal delivery recovery"
+      if inbox_lib "$state" fm_wake_signal_seen_current "$state" "$state/t1.status"; then
+        fail "a pending ownership reservation suppressed status wake visibility"
+      fi
+    done
+  done
+  pass "inbox: interrupted and failed ownership publication leaves conservative claims before visible sender bytes"
+}
+
+test_failed_append_rolls_back_only_an_unwritten_claim() {
+  local state rec rc stamp
+  state="$TMP_ROOT/unwritten-claim/state"; mkdir -p "$state"
+  rec=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 "new answer" "" api-shape)
+  printf 'working: prior event\n' > "$state/t1.status"
+  chmod 0400 "$state/t1.status"
+  rc=0
+  inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" \
+    'resolved [key=api-shape]: answered: not written' 2>/dev/null || rc=$?
+  chmod 0600 "$state/t1.status"
+  [ "$rc" -eq 2 ] || fail "a confirmed failed append did not report failure"
+  stamp=$(( $(date +%s) + 5 ))
+  printf 'resolved [key=api-shape] [at=%s]: genuine worker resolution\n' "$stamp" >> "$state/t1.status"
+  inbox_lib "$state" fm_task_inbox_status_acknowledged "$state" t1 "$rec" \
+    || fail "an unwritten sender claim hid a genuine worker resolution"
+  pass "inbox: a confirmed zero-byte append failure restores earlier ownership"
+}
+
 test_concurrent_home_append_keeps_instruction_unheard() {
   local delivery=$1 kind timing dir state rec line stamp rc owned expected mode
   for kind in keys correlation; do
@@ -1755,6 +1861,9 @@ test_watcher_successor_escalation_stays_quiet missing
 test_watcher_successor_escalation_stays_quiet unwritable
 test_resolved_keys_acknowledge_without_the_mv
 test_resolved_key_evidence_ignores_old_and_home_written_lines
+test_same_second_reopening_requires_a_new_worker_resolution
+test_home_append_claim_precedes_visible_status
+test_failed_append_rolls_back_only_an_unwritten_claim
 test_concurrent_home_append_keeps_instruction_unheard ordinary
 test_concurrent_home_append_keeps_instruction_unheard retry
 test_partial_home_ownership_never_acknowledges

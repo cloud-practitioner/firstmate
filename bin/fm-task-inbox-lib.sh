@@ -452,7 +452,7 @@ EOF
 # Open/closed semantics stay owned by bin/fm-classify-lib.sh.
 fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path> [content] [ranges] [open]
   local status="$1/$2.status" rec=$3 at_iso at_epoch keys corr body open line off end epoch key k verb matched
-  local LC_ALL=C pending rest content ranges
+  local LC_ALL=C pending='' content ranges resolve held
   [ -f "$status" ] && [ -f "$rec" ] || return 1
   _fm_wake_require_classify || return 1
   at_iso=$(fm_task_inbox_header_value "$rec" at) || return 1
@@ -462,17 +462,29 @@ fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path> [co
   corr=$(printf '%s' "$body" | grep -oE 'corr=[A-Fa-f0-9]{16}' 2>/dev/null | head -1 || true)
   [ -n "$keys" ] || [ -n "$corr" ] || return 1
   keys=${keys//,/ }
-  pending=$keys
+  for k in $keys; do pending="${pending}${k}"$'\tblocked\t\n'; done
+  resolve=${FM_CLASSIFY_RESOLVE_VERB:-$FM_CLASSIFY_RESOLVE_VERB_DEFAULT}
+  held=${FM_CLASSIFY_CAPTAIN_HELD_VERB:-$FM_CLASSIFY_CAPTAIN_HELD_VERB_DEFAULT}
   if [ "$#" -ge 4 ]; then content=$4; else content=$(cat "$status" 2>/dev/null) || return 1; fi
   if [ "$#" -ge 5 ]; then ranges=$5; else ranges=$(status_home_appends_ranges "$status"); fi
   off=0
   while IFS= read -r line || [ -n "$line" ]; do
     end=$((off + ${#line} + 1))
+    status_line_verb "$line" verb
+    case "$verb" in
+      needs-decision|blocked)
+        if [ -n "$keys" ]; then
+          key=$(_fm_decision_key "$line") || key=
+          case " $keys " in
+            *" $key "*) pending=$(_fm_decision_fold_line "$pending" "$line" "$resolve" "$held" unknown) ;;
+          esac
+        fi
+        ;;
+    esac
     _fm_status_at_epoch "$line" epoch || { off=$end; continue; }
     matched=0
     if [ -n "$corr" ]; then case "$line" in *"$corr"*) matched=1 ;; esac; fi
-    status_line_verb "$line" verb
-    if [ "$matched" -eq 0 ] && { [ -z "$pending" ] || [ "$verb" != "${FM_CLASSIFY_RESOLVE_VERB:-$FM_CLASSIFY_RESOLVE_VERB_DEFAULT}" ]; }; then
+    if [ "$matched" -eq 0 ] && { [ -z "$pending" ] || [ "$verb" != "$resolve" ]; }; then
       off=$end
       continue
     fi
@@ -481,19 +493,17 @@ fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path> [co
       if [ "$matched" -eq 1 ]; then
         case "$key" in pending-reply-*) ;; *) return 0 ;; esac
       fi
-      if [ -n "$pending" ] && [ "$verb" = "${FM_CLASSIFY_RESOLVE_VERB:-$FM_CLASSIFY_RESOLVE_VERB_DEFAULT}" ]; then
-        rest=
-        for k in $pending; do
-          [ "$k" = "$key" ] || rest="$rest $k"
-        done
-        pending=$rest
+      if [ -n "$pending" ] && [ "$verb" = "$resolve" ]; then
+        case " $keys " in
+          *" $key "*) pending=$(_fm_decision_fold_line "$pending" "$line" "$resolve" "$held" unknown) ;;
+        esac
       fi
     fi
     off=$end
   done <<EOF
 $content
 EOF
-  if [ -n "$keys" ] && [ -z "${pending//[[:space:]]/}" ]; then
+  if [ -n "$keys" ] && [ -z "$pending" ]; then
     if [ "$#" -ge 6 ]; then open=$6; else open=$(_fm_task_inbox_open_decisions "$status" "$content"); fi
     for k in $keys; do
       case "$open" in

@@ -863,6 +863,40 @@ test_stamped_close_line_stays_within_the_status_line_cap() {
   pass "fm-send --resolve-key: a stamped close line stays inside the status-line cap"
 }
 
+test_failed_ownership_claim_keeps_delivery_recovery_active() {
+  local dir fb log home err rc rec diagnostic manual action
+  dir="$TMP_ROOT/ownership-failure"; mkdir -p "$dir"
+  fb=$(make_stubs "$dir"); log="$dir/send.log"; err="$dir/send.err"
+  home=$(setup_home ownership-failure)
+  fm_write_meta "$home/state/t1.meta" "window=sess:fm-t1" "kind=ship"
+  printf 'needs-decision [key=api-shape]: choose REST or RPC\n' > "$home/state/t1.status"
+  mkdir "$home/state/.t1.home-appends"
+  env PATH="$fb:$PATH" FM_ROOT_OVERRIDE="$home" FM_HOME="$home" FM_SEND_LOG="$log" FM_SEND_SETTLE=0 \
+    "$SEND" t1 --resolve-key api-shape "use REST" > /dev/null 2> "$err"; rc=$?
+  [ "$rc" -ne 0 ] || fail "a failed sender ownership claim was silently tolerated"
+  rec="$home/state/t1.inbox/001.msg"
+  [ -f "$rec" ] || fail "an ownership failure lost the delivered inbox record"
+  if grep -qF 'resolved [key=api-shape]' "$home/state/t1.status"; then
+    fail "a sender close became visible without an ownership claim"
+  fi
+  diagnostic=$(cat "$err")
+  assert_contains "$diagnostic" 'sender ownership' "ownership failure lacked a diagnostic"
+  action=$(FM_STATE_OVERRIDE="$home/state" FM_TASK_INBOX_GRACE_SECS=0 bash -c '
+    . "$1"; fm_task_inbox_due_action "$2" t1
+  ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state")
+  [ "$action" = "ring $rec" ] || fail "a failed ownership claim disabled the delivery ladder"
+  rmdir "$home/state/.t1.home-appends"
+  manual=${diagnostic#*Close it manually with: }
+  manual=${manual% - do not resend the answer.}
+  bash -c "$manual" || fail "the guarded ownership recovery command failed"
+  if FM_STATE_OVERRIDE="$home/state" bash -c '
+    . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$2/t1.inbox/001.msg"
+  ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state"; then
+    fail "manual sender recovery was misread as worker acknowledgement"
+  fi
+  pass "fm-send --resolve-key: ownership failure preserves the ladder and manual recovery uses the guarded append"
+}
+
 test_failed_close_recovery_command_is_shell_safe() {
   local dir fb log home err marker answer rc diagnostic manual out
   dir="$TMP_ROOT/manual-close"; mkdir -p "$dir"
@@ -1002,6 +1036,7 @@ test_unrelated_writer_cannot_close_or_hijack_reserved_key
 test_unclosable_reserved_key_refuses_before_send
 test_long_decision_key_refuses_before_send
 test_stamped_close_line_stays_within_the_status_line_cap
+test_failed_ownership_claim_keeps_delivery_recovery_active
 test_failed_close_recovery_command_is_shell_safe
 test_remote_reserved_pending_reply_key_closes_locally
 test_decision_answer_partition_relocates_under_the_record
