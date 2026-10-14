@@ -1,3 +1,4 @@
+bash: line 4: fm_test_original_cleanup () { local d; fm_test_reap_watchers; fm_test_reap_procevent_homes; for d in ; do [ -n  ] && fm_test_remove_tree ; done; if [ -f /tmp/fm-targeted-fm-pr-bitbucket.v9Z0N9/tmp/.fm-test-cleanup.603036.c78kqr ]; then while IFS= read -r d; do [ -n  ] && fm_test_remove_tree ; done < /tmp/fm-targeted-fm-pr-bitbucket.v9Z0N9/tmp/.fm-test-cleanup.603036.c78kqr; rm -f /tmp/fm-targeted-fm-pr-bitbucket.v9Z0N9/tmp/.fm-test-cleanup.603036.c78kqr; fi }: No such file or directory
 ok - canonical Bitbucket Cloud pull request URLs parse
 ok - malformed Bitbucket URLs, other forges' shapes on bitbucket.org, and Data Center URLs are refused
 ok - the Bitbucket record read reports state and merged, refuses another record, and keeps the token out of argv
@@ -21,3 +22,4 @@ ok - fm-pr-merge re-reads the Bitbucket head immediately before merging and refu
 ok - fm-pr-merge quotes Bitbucket's refusal, leaves an unconfirmed merge armed, and fails without recording a landing whose head it did not verify
 ok - fm-pr-merge refuses a Bitbucket pull request that misses an approval, default-reviewer, changes-requested, or task merge check
 ok - fm-pr-merge reads a Bitbucket pull request back after its merge request got no response
+environment: line 28: fm_test_original_cleanup: command not found

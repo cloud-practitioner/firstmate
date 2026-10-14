@@ -1,0 +1,1660 @@
+Fixture-backed executable-interface transcripts; NOT live Bitbucket service evidence.
+Synthetic API credentials and responses are used by the existing targeted suite.
+
+=== check-arms ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/check-arms/wt
+project=<isolated-test-root>/check-arms/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== check-draft ===
+--- stdout ---
+
+--- stderr ---
+error: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is a draft pull request; a draft cannot be merged, so merge monitoring would wait for an event that cannot occur - mark it ready for review and arm again, or declare a wait instead of done if the draft is deliberate
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/check-draft/wt
+project=<isolated-test-root>/check-draft/project
+kind=ship
+mode=no-mistakes
+
+
+=== check-draft-lookup ===
+--- stdout ---
+
+--- stderr ---
+error: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is a draft pull request; a draft cannot be merged, so merge monitoring would wait for an event that cannot occur - mark it ready for review and arm again, or declare a wait instead of done if the draft is deliberate
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/check-draft-lookup/wt
+project=<isolated-test-root>/check-draft-lookup/project
+kind=ship
+mode=no-mistakes
+
+
+=== check-no-credential ===
+--- stdout ---
+
+--- stderr ---
+error: watching a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/check-no-credential/wt
+project=<isolated-test-root>/check-no-credential/project
+kind=ship
+mode=no-mistakes
+
+
+=== check-ready-lookup ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/check-ready-lookup/wt
+project=<isolated-test-root>/check-ready-lookup/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-allow-missing ===
+--- stdout ---
+
+--- stderr ---
+error: --allow-missing does not apply to Bitbucket, where a required build is a minimum count of successful builds rather than a named check that could be waived
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-allow-missing/wt
+project=<isolated-test-root>/merge-allow-missing/project
+kind=ship
+mode=no-mistakes
+
+
+=== merge-allow-red ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-allow-red/wt
+project=<isolated-test-root>/merge-allow-red/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-allow-red-away ===
+--- stdout ---
+
+--- stderr ---
+error: --allow-red is attended-only; while the away-posture record exists the green check is absolute
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-allow-red-away/wt
+project=<isolated-test-root>/merge-allow-red-away/project
+kind=ship
+mode=no-mistakes
+
+
+=== merge-allow-red-other ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - build 'flaky' is FAILED, not SUCCESSFUL
+error: these builds are not green: flaky
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-allow-red-other/wt
+project=<isolated-test-root>/merge-allow-red-other/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-approvals ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-approvals/wt
+project=<isolated-test-root>/merge-approvals/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-away ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-away/wt
+project=<isolated-test-root>/merge-away/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-away-async-202-landed ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-away-async-202-landed/wt
+project=<isolated-test-root>/merge-away-async-202-landed/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+--- bb/read-locks.log ---
+1 1
+1 1
+
+--- bb/archive-1.log ---
+fm-afk-contract: the away-posture record is locked by live process 1224507 (an in-flight merge, or another change to this record); nothing was changed
+
+--- bb/archive-2.log ---
+fm-afk-contract: the away-posture record is locked by live process 1224507 (an in-flight merge, or another change to this record); nothing was changed
+
+
+=== merge-away-async-202-unconfirmed ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+actionable: Bitbucket accepted the merge request for https://bitbucket.org/example-team/sample_repo/pull-requests/7 but its landed state could not be confirmed; the merge poll remains armed
+error: Bitbucket landing unconfirmed while away for https://bitbucket.org/example-team/sample_repo/pull-requests/7; no landed outcome is recorded; the merge poll remains armed
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-away-async-202-unconfirmed/wt
+project=<isolated-test-root>/merge-away-async-202-unconfirmed/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+--- bb/read-locks.log ---
+1 1
+1 1
+
+--- bb/archive-1.log ---
+fm-afk-contract: the away-posture record is locked by live process 1227369 (an in-flight merge, or another change to this record); nothing was changed
+
+--- bb/archive-2.log ---
+fm-afk-contract: the away-posture record is locked by live process 1227369 (an in-flight merge, or another change to this record); nothing was changed
+
+
+=== merge-away-async-555-landed ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-away-async-555-landed/wt
+project=<isolated-test-root>/merge-away-async-555-landed/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+--- bb/read-locks.log ---
+1 1
+1 1
+
+--- bb/archive-1.log ---
+fm-afk-contract: the away-posture record is locked by live process 1231026 (an in-flight merge, or another change to this record); nothing was changed
+
+--- bb/archive-2.log ---
+fm-afk-contract: the away-posture record is locked by live process 1231026 (an in-flight merge, or another change to this record); nothing was changed
+
+
+=== merge-away-async-555-unconfirmed ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+actionable: Bitbucket accepted the merge request for https://bitbucket.org/example-team/sample_repo/pull-requests/7 but its landed state could not be confirmed; the merge poll remains armed
+error: Bitbucket landing unconfirmed while away for https://bitbucket.org/example-team/sample_repo/pull-requests/7; no landed outcome is recorded; the merge poll remains armed
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-away-async-555-unconfirmed/wt
+project=<isolated-test-root>/merge-away-async-555-unconfirmed/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+--- bb/read-locks.log ---
+1 1
+1 1
+
+--- bb/archive-1.log ---
+fm-afk-contract: the away-posture record is locked by live process 1233668 (an in-flight merge, or another change to this record); nothing was changed
+
+--- bb/archive-2.log ---
+fm-afk-contract: the away-posture record is locked by live process 1233668 (an in-flight merge, or another change to this record); nothing was changed
+
+
+=== merge-away-red ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - build 'pipeline' is FAILED, not SUCCESSFUL
+error: these builds are not green: pipeline
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-away-red/wt
+project=<isolated-test-root>/merge-away-red/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-bad-arg ===
+--- stdout ---
+
+--- stderr ---
+error: extra merge argument '--fast-forward' does not apply to a Bitbucket pull request
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-bad-arg/wt
+project=<isolated-test-root>/merge-bad-arg/project
+kind=ship
+mode=no-mistakes
+
+
+=== merge-changes-requested ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - base branch main requires no requested changes, and changes are requested by bob
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-changes-requested/wt
+project=<isolated-test-root>/merge-changes-requested/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-declined ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - state is "DECLINED", not OPEN
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-declined/wt
+project=<isolated-test-root>/merge-declined/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-default-explicit ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-default-explicit/wt
+project=<isolated-test-root>/merge-default-explicit/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"rebase_fast_forward"}
+
+=== merge-default-missing ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - destination branch main reports no merge strategy this script knows as its default (got ""); name a strategy with --squash, --merge, --rebase, or --method, or fix the read
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-default-missing/wt
+project=<isolated-test-root>/merge-default-missing/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-default-reviewers ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-default-reviewers/wt
+project=<isolated-test-root>/merge-default-reviewers/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-default-reviewers-unreadable ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - the default reviewers for base branch main could not be read (HTTP 404), so their approvals cannot be counted
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-default-reviewers-unreadable/wt
+project=<isolated-test-root>/merge-default-reviewers-unreadable/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-default-squash ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-default-squash/wt
+project=<isolated-test-root>/merge-default-squash/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"squash"}
+
+=== merge-default-unknown ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - destination branch main reports no merge strategy this script knows as its default (got "octopus"); name a strategy with --squash, --merge, --rebase, or --method, or fix the read
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-default-unknown/wt
+project=<isolated-test-root>/merge-default-unknown/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-default-unreadable ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - the configured default merge strategy of destination branch main could not be read (HTTP 500); name a strategy with --squash, --merge, --rebase, or --method, or fix the read
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-default-unreadable/wt
+project=<isolated-test-root>/merge-default-unreadable/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-delete-branch ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-delete-branch/wt
+project=<isolated-test-root>/merge-delete-branch/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":true,"merge_strategy":"merge_commit"}
+
+=== merge-draft ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - the pull request is a draft, or its draft state could not be read
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-draft/wt
+project=<isolated-test-root>/merge-draft/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-drift-changes ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: the reviews of https://bitbucket.org/example-team/sample_repo/pull-requests/7 changed after verification (changes requested by {bob}); nothing was merged
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-drift-changes/wt
+project=<isolated-test-root>/merge-drift-changes/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-drift-dest ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: https://bitbucket.org/example-team/sample_repo/pull-requests/7 now targets release, not the verified destination branch main, so its merge checks were never read; nothing was merged
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-drift-dest/wt
+project=<isolated-test-root>/merge-drift-dest/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-drift-none ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-drift-none/wt
+project=<isolated-test-root>/merge-drift-none/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-drift-withdrawn ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: the reviews of https://bitbucket.org/example-team/sample_repo/pull-requests/7 changed after verification (approval withdrawn by {alice}); nothing was merged
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-drift-withdrawn/wt
+project=<isolated-test-root>/merge-drift-withdrawn/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-forge-refuses ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: Bitbucket refused the merge request for https://bitbucket.org/example-team/sample_repo/pull-requests/7 (HTTP 400)
+error: Bitbucket's own message follows, quoted: > You can't merge until you resolve all merge conflicts.
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-forge-refuses/wt
+project=<isolated-test-root>/merge-forge-refuses/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-moved ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: https://bitbucket.org/example-team/sample_repo/pull-requests/7 changed after verification (state OPEN, head bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa); nothing was merged
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-moved/wt
+project=<isolated-test-root>/merge-moved/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-no-credential ===
+--- stdout ---
+
+--- stderr ---
+error: merging a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-no-credential/wt
+project=<isolated-test-root>/merge-no-credential/project
+kind=ship
+mode=no-mistakes
+
+
+=== merge-ok ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-ok/wt
+project=<isolated-test-root>/merge-ok/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-rebase ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-rebase/wt
+project=<isolated-test-root>/merge-rebase/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"rebase_fast_forward"}
+
+=== merge-red ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - build 'pipeline' is FAILED, not SUCCESSFUL
+  - build 'deploy' is INPROGRESS, not SUCCESSFUL
+error: these builds are not green: pipeline, deploy
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-red/wt
+project=<isolated-test-root>/merge-red/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-required ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - base branch main requires 2 successful builds, and 1 reported at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-required/wt
+project=<isolated-test-root>/merge-required/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-required-model ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - base branch main requires 3 successful builds, and 1 reported at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-required-model/wt
+project=<isolated-test-root>/merge-required-model/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-restrictions-unreadable ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - the branch restrictions for base branch main could not be read (HTTP 403; reading them needs repository admin access), so an unmet merge check cannot be ruled out
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-restrictions-unreadable/wt
+project=<isolated-test-root>/merge-restrictions-unreadable/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-squash ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-squash/wt
+project=<isolated-test-root>/merge-squash/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"squash"}
+
+=== merge-tasks ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-tasks/wt
+project=<isolated-test-root>/merge-tasks/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-transport ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+actionable: the merge request for https://bitbucket.org/example-team/sample_repo/pull-requests/7 got no HTTP response, and the pull request reads back as MERGED at head aaaaaaaaaaaa; the merge poll remains armed
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-transport/wt
+project=<isolated-test-root>/merge-transport/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-type-met ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-type-met/wt
+project=<isolated-test-root>/merge-type-met/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-type-other-branch ===
+--- stdout ---
+armed: state/task-x1.check.sh
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is merged at the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-type-other-branch/wt
+project=<isolated-test-root>/merge-type-other-branch/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- state/task-x1.pr-poll-merge-notified ---
+fm-pr-poll-merge-notified-v1
+bitbucket
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-type-unmet ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: refusing to merge https://bitbucket.org/example-team/sample_repo/pull-requests/7
+  - base branch feature/login requires 2 successful builds, and 1 reported at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-type-unmet/wt
+project=<isolated-test-root>/merge-type-unmet/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+
+=== merge-unconfirmed ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+actionable: Bitbucket accepted the merge request for https://bitbucket.org/example-team/sample_repo/pull-requests/7 but its landed state could not be confirmed; the merge poll remains armed
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-unconfirmed/wt
+project=<isolated-test-root>/merge-unconfirmed/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== merge-wrong-head ===
+--- stdout ---
+armed: state/task-x1.check.sh
+
+--- stderr ---
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6K1Y86F00BN2X4CF5FDVX/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+verified: https://bitbucket.org/example-team/sample_repo/pull-requests/7 is open, with every unwaived build green and every verified merge check met at head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+error: https://bitbucket.org/example-team/sample_repo/pull-requests/7 merged, but it reads back at head bbbbbbbbbbbb, not the verified head aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa; the landed commits were never verified, so no landed outcome is recorded - review what landed in the destination branch
+
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/merge-wrong-head/wt
+project=<isolated-test-root>/merge-wrong-head/project
+kind=ship
+mode=no-mistakes
+pr=https://bitbucket.org/example-team/sample_repo/pull-requests/7
+pr_head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+--- state/task-x1.pr-poll ---
+bitbucket
+https://bitbucket.org/example-team/sample_repo/pull-requests/7
+bitbucket.org
+example-team/sample_repo
+7
+
+--- bb/merge-body.json ---
+{"type":"pullrequest","close_source_branch":false,"merge_strategy":"merge_commit"}
+
+=== poll ===
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/poll/wt
+project=<isolated-test-root>/poll/project
+kind=ship
+mode=no-mistakes
+
+
+=== pr-state ===
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/pr-state/wt
+project=<isolated-test-root>/pr-state/project
+kind=ship
+mode=no-mistakes
+
+
+=== record-read ===
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/record-read/wt
+project=<isolated-test-root>/record-read/project
+kind=ship
+mode=no-mistakes
+
+
+=== statuses-pages ===
+--- state/task-x1.meta ---
+window=fm-task-x1
+worktree=<isolated-test-root>/statuses-pages/wt
+project=<isolated-test-root>/statuses-pages/project
+kind=ship
+mode=no-mistakes
+
