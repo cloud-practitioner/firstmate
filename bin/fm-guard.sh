@@ -215,6 +215,11 @@ elif [ "$watcher_healthy" = false ]; then
   episode_key=$(fm_guard_stale_episode_key "$watcher_down_reason")
   episode_key=${episode_key%$'\n'}
   print_full_banner=0
+  if [ "$watcher_down_reason" = no-watcher ]; then
+    watcher_cause=$(printf 'no live watcher process holds this home lock (last beat: %s)' "$beacon_desc")
+  else
+    watcher_cause=$(printf 'no watcher has a fresh beacon (last beat: %s, grace %ss)' "$beacon_desc" "$GRACE")
+  fi
   if [ "$READ_ONLY" -eq 1 ]; then
     fm_guard_stale_banner_seen "$STATE" "$episode_key" || print_full_banner=1
   elif fm_guard_claim_stale_banner "$STATE" "$episode_key"; then
@@ -238,11 +243,6 @@ elif [ "$watcher_healthy" = false ]; then
     {
       printf '●%s\n' "$rule"
       printf '●  WATCHER DOWN - SUPERVISION IS OFF\n'
-      if [ "$watcher_down_reason" = no-watcher ]; then
-        watcher_cause=$(printf 'no live watcher process holds this home lock (last beat: %s)' "$beacon_desc")
-      else
-        watcher_cause=$(printf 'no watcher has a fresh beacon (last beat: %s, grace %ss)' "$beacon_desc" "$GRACE")
-      fi
       if [ "$in_flight" -gt 0 ]; then
         printf '●  %s task(s) in flight, but %s.\n' "$in_flight" "$watcher_cause"
       elif [ "$sources" -gt 0 ]; then
@@ -262,8 +262,8 @@ elif [ "$watcher_healthy" = false ]; then
       printf '●%s\n' "$rule"
     } >&2
   else
-    printf 'WARNING: watcher still down (same stale episode; last beat: %s, grace %ss) - full banner already printed this episode.\n' \
-      "$beacon_desc" "$GRACE" >&2
+    printf 'WARNING: watcher still down (same stale episode; %s) - full banner already printed this episode.\n' \
+      "$watcher_cause" >&2
   fi
 else
   # Healthy again while work is still in flight: end the episode so a later

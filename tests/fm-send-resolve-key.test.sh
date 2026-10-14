@@ -135,6 +135,15 @@ test_answer_send_closes_open_decision() {
   grep -qF "go with REST" "$home/state/t1.inbox/001.msg" \
     || fail "the answer text should reach the worker's durable inbox record"
   assert_contains "$(cat "$log")" "Firstmate instruction waiting" "the doorbell should be rung for the answer"
+  # The record names the key it answers, but the answerer's own close is not
+  # proof the worker acted: only a later worker-written resolved line is.
+  grep -qxF 'resolve-keys=api-shape' "$home/state/t1.inbox/001.msg" \
+    || fail "the inbox record should name the key it answers:"$'\n'"$(cat "$home/state/t1.inbox/001.msg")"
+  if FM_STATE_OVERRIDE="$home/state" bash -c '
+    . "$1"; fm_task_inbox_status_acknowledged "$2" t1 "$2/t1.inbox/001.msg"
+  ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$home/state"; then
+    fail "the answerer's own close acknowledged the record"
+  fi
   sed -E 's/ \[at=[0-9]+\]//' "$home/state/t1.status" | grep -qF 'resolved [key=api-shape]: answered: go with REST' \
     || fail "fm-send did not append the closing resolved line:"$'\n'"$(cat "$home/state/t1.status")"
   # The drain folded the worker's `working:` line but never listed it, so the

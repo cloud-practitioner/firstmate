@@ -28,7 +28,7 @@
 #   <task>.inbox/.seq.lock     serializes sequence allocation across writers
 #                              (the session and the away daemon)
 #   <task>.inbox/.ring-state   watcher re-ring ladder: "<msg>\t<count>\t<epoch>"
-#   <task>.inbox/.busy-state   consecutive busy deferrals: "<msg>\t<count>"
+#   <task>.inbox/.busy-state   last busy-pane observation: "<msg>\t<epoch>"
 #   <task>.inbox/.escalated    oldest-message name already surfaced as stale,
 #                              so later polls suppress another escalation
 #   <task>.inbox/.retry-ring   name of a fire-and-forget record still owed its
@@ -39,6 +39,9 @@
 #   at=<utc timestamp>
 #   delivery=fire-and-forget   present only when the re-ring ladder must ignore it
 #                              (it still gets one retry ring; see below)
+#   resolve-keys=<k1,k2>       present only when the steer answered those decision
+#                              keys (fm-send --resolve-key); evidence for the
+#                              status-acknowledgement check below
 #   --
 #   <exact message text; newlines are legal; a marked secondmate request keeps
 #    its from-firstmate marker and corr token verbatim in this body>
@@ -53,14 +56,21 @@
 # attempt may ring or be skipped to protect another draft in a proven pending
 # composer; an unsubmitted copy of this doorbell is retried. After
 # FM_TASK_INBOX_RING_MAX attempts without an acknowledgement it escalates. The
-# caller owns the busy and recovery-grade endpoint checks: due actions deferred
-# by a busy pane consume a separate durable consecutive-poll budget,
-# FM_TASK_INBOX_BUSY_MAX. At that bound the same escalation path surfaces a
-# stuck-busy reason without typing. A non-busy due check or acknowledgement resets
-# this budget. Fire-and-forget retries remain outside escalation. A positively
-# dead or missing endpoint skips delivery and the ladder and escalates directly.
-# This library owns the schedule, durable budgets, and escalation marker.
-# If delivery-attempt or busy-deferral bookkeeping fails while the record remains unhandled,
+# caller owns the busy and recovery-grade endpoint checks. A pane that reports
+# active work is never a strike: each such due poll records the observation
+# (fm_task_inbox_record_busy) and the grace restarts from it, so a worker busy
+# on the very instruction it has not yet moved to handled/ is neither rung nor
+# escalated. Only an unheard doorbell on an idle pane, idle for a full grace
+# period, spends attempts and escalates. A positively dead or missing endpoint
+# skips delivery and the ladder and escalates directly.
+# A record is also treated as acknowledged without the mv when the task status
+# proves the worker acted on it (fm_task_inbox_status_acknowledged): only
+# evidence the record itself names counts - every resolve-key it carries shows
+# as resolved by a worker-written status line after the record's timestamp, or
+# a worker-written status line after that timestamp carries a corr= token the
+# record body names. A record naming neither falls back to the ladder above.
+# This library owns the schedule, the busy observation, and the escalation marker.
+# If delivery-attempt or busy-observation bookkeeping fails while the record remains unhandled,
 # the caller surfaces that failure instead of retrying silently; a concurrently
 # removed inbox is a quiet no-op. Escalation deliberately queues the wake before
 # writing the deduplication marker: normal polls surface a message once, while a
@@ -90,7 +100,6 @@
 # Tunables (env):
 #   FM_TASK_INBOX_GRACE_SECS   default 90; delivery-attempt grace and spacing
 #   FM_TASK_INBOX_RING_MAX     default 3; delivery attempts before escalation
-#   FM_TASK_INBOX_BUSY_MAX     default 2; consecutive busy-deferred due polls before escalation
 
 _FM_TASK_INBOX_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Both dependencies are canonical lint roots in their own right. Keep them as
@@ -104,7 +113,6 @@ _FM_TASK_INBOX_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FM_TASK_INBOX_SCHEMA='fm-task-inbox.v1'
 FM_TASK_INBOX_GRACE_DEFAULT=90
 FM_TASK_INBOX_RING_MAX_DEFAULT=3
-FM_TASK_INBOX_BUSY_MAX_DEFAULT=2
 FM_TASK_INBOX_LOCK_WAIT_DEFAULT=5
 
 fm_task_inbox_grace_secs() {
@@ -119,38 +127,30 @@ fm_task_inbox_ring_max() {
   printf '%s' "$m"
 }
 
-fm_task_inbox_busy_max() {
-  local m=${FM_TASK_INBOX_BUSY_MAX:-$FM_TASK_INBOX_BUSY_MAX_DEFAULT}
-  case "$m" in ''|*[!0-9]*) m=$FM_TASK_INBOX_BUSY_MAX_DEFAULT ;; esac
-  # Check the length before numeric comparison so oversized input cannot overflow.
-  if [ "${#m}" -gt 9 ] || [ "$m" -eq 0 ]; then
-    m=$FM_TASK_INBOX_BUSY_MAX_DEFAULT
-  fi
-  printf '%s' "$m"
-}
-
-# Persist before returning the new count, so a fresh watcher continues the same
-# bounded wait. A removed or acknowledged record is a quiet no-op.
+# Record that the pane reported active work for this record, so the grace
+# restarts from now. Persisted so a fresh watcher continues the same wait. A
+# removed or acknowledged record is a quiet no-op.
 fm_task_inbox_record_busy() {  # <state-dir> <task-id> <record-path>
-  local dir base previous count
+  local dir base
   dir=$(fm_task_inbox_dir "$1" "$2")
   base=${3##*/}
-  { IFS=$(printf '\t') read -r previous count < "$dir/.busy-state"; } 2>/dev/null || true
-  [ "${previous:-}" = "$base" ] || count=0
-  case "${count:-}" in ''|*[!0-9]*) count=0 ;; esac
-  [ -f "$3" ] || { printf '0'; return 0; }
-  count=$((count + 1))
-  if ! { printf '%s\t%s\n' "$base" "$count" > "$dir/.busy-state"; } 2>/dev/null; then
-    [ -f "$3" ] || { printf '0'; return 0; }
+  [ -f "$3" ] || return 0
+  if ! { printf '%s\t%s\n' "$base" "$(date +%s)" > "$dir/.busy-state"; } 2>/dev/null; then
+    [ -f "$3" ] || return 0
     return 1
   fi
-  printf '%s' "$count"
 }
 
-fm_task_inbox_clear_busy() {  # <state-dir> <task-id>
-  local dir
+# Epoch of the last busy observation recorded for <record-base>; fails when the
+# marker is absent, malformed, or names another record.
+fm_task_inbox_busy_seen() {  # <state-dir> <task-id> <record-base>
+  local dir previous seen
   dir=$(fm_task_inbox_dir "$1" "$2")
-  rm -f "$dir/.busy-state" 2>/dev/null
+  { IFS=$(printf '\t') read -r previous seen < "$dir/.busy-state"; } 2>/dev/null || return 1
+  [ "${previous:-}" = "$3" ] || return 1
+  case "${seen:-}" in ''|*[!0-9]*) return 1 ;; esac
+  [ "${#seen}" -le 12 ] || return 1
+  printf '%s' "$seen"
 }
 
 fm_task_inbox_dir() {  # <state-dir> <task-id>
@@ -201,8 +201,8 @@ fm_task_inbox_lock_acquire() {  # <lock-path>
 
 # Write one record into the next sequence slot: temp-write, then atomic
 # rename. Prints the record path. Caller must hold .seq.lock.
-_fm_task_inbox_write_record_locked() {  # <inbox-dir> <text> [delivery-mode]
-  local dir=$1 text=$2 delivery_mode=${3:-} seq tmp rec status=0
+_fm_task_inbox_write_record_locked() {  # <inbox-dir> <text> [delivery-mode] [resolve-keys]
+  local dir=$1 text=$2 delivery_mode=${3:-} resolve_keys=${4:-} seq tmp rec status=0
   seq=$(fm_task_inbox_next_seq "$dir")
   rec="$dir/$seq.msg"
   tmp=$(mktemp "$dir/.staging.XXXXXX") || return 1
@@ -210,6 +210,7 @@ _fm_task_inbox_write_record_locked() {  # <inbox-dir> <text> [delivery-mode]
     printf 'schema=%s\n' "$FM_TASK_INBOX_SCHEMA"
     printf 'at=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
     [ "$delivery_mode" != fire-and-forget ] || printf 'delivery=fire-and-forget\n'
+    [ -z "$resolve_keys" ] || printf 'resolve-keys=%s\n' "$resolve_keys"
     printf -- '--\n'
     printf '%s' "$text"
   } > "$tmp" && mv "$tmp" "$rec" || status=1
@@ -219,13 +220,14 @@ _fm_task_inbox_write_record_locked() {  # <inbox-dir> <text> [delivery-mode]
 
 # Durably enqueue one steer: temp-write, then atomic rename into the next
 # sequence slot. Prints the record path. Fails without a partial record.
-fm_task_inbox_write() {  # <state-dir> <task-id> <text> [delivery-mode]
-  local state=$1 task=$2 text=$3 delivery_mode=${4:-} dir lock rec status=0
+# <resolve-keys> is the comma-separated decision keys this steer answers.
+fm_task_inbox_write() {  # <state-dir> <task-id> <text> [delivery-mode] [resolve-keys]
+  local state=$1 task=$2 text=$3 delivery_mode=${4:-} resolve_keys=${5:-} dir lock rec status=0
   dir=$(fm_task_inbox_dir "$state" "$task")
   mkdir -p "$dir/handled" || return 1
   lock="$dir/.seq.lock"
   fm_task_inbox_lock_acquire "$lock" || return 1
-  rec=$(_fm_task_inbox_write_record_locked "$dir" "$text" "$delivery_mode") || status=1
+  rec=$(_fm_task_inbox_write_record_locked "$dir" "$text" "$delivery_mode" "$resolve_keys") || status=1
   fm_lock_release "$lock"
   [ "$status" -eq 0 ] || return 1
   printf '%s' "$rec"
@@ -242,8 +244,8 @@ fm_task_inbox_write() {  # <state-dir> <task-id> <text> [delivery-mode]
 # secondmate request embeds a per-request correlation token in its body. The
 # local plane keeps plain fm_task_inbox_write: its outcome is synchronous, so
 # a repeated identical local steer is a deliberate new instruction.
-fm_task_inbox_write_idempotent() {  # <state-dir> <task-id> <text> [delivery-mode]
-  local state=$1 task=$2 text=$3 delivery_mode=${4:-} dir lock want have f rec='' status=0
+fm_task_inbox_write_idempotent() {  # <state-dir> <task-id> <text> [delivery-mode] [resolve-keys]
+  local state=$1 task=$2 text=$3 delivery_mode=${4:-} resolve_keys=${5:-} dir lock want have f rec='' status=0
   dir=$(fm_task_inbox_dir "$state" "$task")
   mkdir -p "$dir/handled" || return 1
   lock="$dir/.seq.lock"
@@ -288,7 +290,7 @@ fm_task_inbox_write_idempotent() {  # <state-dir> <task-id> <text> [delivery-mod
     status=1
   fi
   if [ "$status" -eq 0 ] && [ -z "$rec" ]; then
-    rec=$(_fm_task_inbox_write_record_locked "$dir" "$text" "$delivery_mode") || status=1
+    rec=$(_fm_task_inbox_write_record_locked "$dir" "$text" "$delivery_mode" "$resolve_keys") || status=1
   fi
   fm_lock_release "$lock"
   [ "$status" -eq 0 ] || return 1
@@ -409,6 +411,77 @@ fm_task_inbox_is_fire_and_forget() {  # <record-path>
   ' "$rec"
 }
 
+# One header value (<name>=<value> before the -- separator) of a record.
+fm_task_inbox_header_value() {  # <record-path> <name>
+  local line
+  [ -f "$1" ] || return 1
+  while IFS= read -r line; do
+    [ "$line" != -- ] || return 1
+    case "$line" in "$2="*) printf '%s' "${line#"$2="}"; return 0 ;; esac
+  done < "$1"
+  return 1
+}
+
+# 0 when the task status proves the worker already acted on this record, so a
+# pending mv to handled/ is no evidence of a lost doorbell. Only evidence the
+# record itself names is used, so the check never guesses:
+#   - every key in its resolve-keys header is closed by a status line the
+#     worker wrote (not this home's own bookkeeping, which fm-send's answer
+#     close is) stamped at or after the record, and is still closed now; or
+#   - a worker-written status line stamped at or after the record carries the
+#     corr=<16 hex> token the record body names (a correlated child outcome).
+# A record naming neither, or a status line with no readable stamp, proves nothing.
+# Open/closed semantics stay owned by bin/fm-classify-lib.sh.
+fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path>
+  local status="$1/$2.status" rec=$3 at_iso at_epoch keys corr body open line off end epoch key k
+  local LC_ALL=C pending found rest content
+  [ -f "$status" ] && [ -f "$rec" ] || return 1
+  _fm_wake_require_classify || return 1
+  at_iso=$(fm_task_inbox_header_value "$rec" at) || return 1
+  at_epoch=$(fm_utc_iso_to_epoch "$at_iso") || return 1
+  keys=$(fm_task_inbox_header_value "$rec" resolve-keys || true)
+  body=$(fm_task_inbox_body "$rec" 2>/dev/null || true)
+  corr=$(printf '%s' "$body" | grep -oE 'corr=[A-Fa-f0-9]{16}' 2>/dev/null | head -1 || true)
+  [ -n "$keys" ] || [ -n "$corr" ] || return 1
+  keys=${keys//,/ }
+  pending=$keys
+  found=0
+  open=$(status_open_decisions "$status")
+  content=$(cat "$status" 2>/dev/null) || return 1
+  off=0
+  while IFS= read -r line || [ -n "$line" ]; do
+    end=$((off + ${#line} + 1))
+    epoch=$(status_line_at_epoch "$line") || { off=$end; continue; }
+    if [ "$epoch" -ge "$at_epoch" ] && ! status_home_appends_covers "$status" "$off" "$end"; then
+      if [ -n "$corr" ]; then
+        case "$line" in
+          *"$corr"*) case "$(_fm_decision_key "$line" none)" in pending-reply-*) ;; *) found=1 ;; esac ;;
+        esac
+      fi
+      if [ -n "$pending" ] && [ "$(status_line_verb "$line")" = "${FM_CLASSIFY_RESOLVE_VERB:-$FM_CLASSIFY_RESOLVE_VERB_DEFAULT}" ]; then
+        key=$(_fm_decision_key "$line" none) || key=none
+        rest=
+        for k in $pending; do
+          [ "$k" = "$key" ] || rest="$rest $k"
+        done
+        pending=$rest
+      fi
+    fi
+    off=$end
+  done <<EOF
+$content
+EOF
+  if [ -n "$keys" ] && [ -z "${pending//[[:space:]]/}" ]; then
+    for k in $keys; do
+      case "$open" in
+        "$k"$'\t'*|*$'\n'"$k"$'\t'*) return 1 ;;
+      esac
+    done
+    return 0
+  fi
+  [ "$found" -eq 1 ]
+}
+
 # Oldest escalation-tracked unhandled record, or fail when none is due.
 fm_task_inbox_oldest_unhandled() {  # <state-dir> <task-id>
   local dir best='' best_n=0 f n
@@ -453,7 +526,7 @@ fm_task_inbox_clear_retry() {  # <state-dir> <task-id> <record-path>
 # An empty inbox also resets the ladder bookkeeping so the next message starts
 # a fresh ladder.
 fm_task_inbox_due_action() {  # <state-dir> <task-id>
-  local dir oldest base now grace max ladder rec_base count last
+  local dir oldest base now grace max ladder rec_base count last seen
   dir=$(fm_task_inbox_dir "$1" "$2")
   if ! oldest=$(fm_task_inbox_oldest_unhandled "$1" "$2"); then
     rm -f "$dir/.ring-state" "$dir/.escalated" "$dir/.busy-state" 2>/dev/null || true
@@ -474,6 +547,16 @@ fm_task_inbox_due_action() {  # <state-dir> <task-id>
   base=${oldest##*/}
   grace=$(fm_task_inbox_grace_secs)
   if [ "$(fm_path_age "$oldest")" -lt "$grace" ]; then
+    printf 'quiet'
+    return 0
+  fi
+  # A pane that reported active work restarts the grace from that observation.
+  now=$(date +%s)
+  if seen=$(fm_task_inbox_busy_seen "$1" "$2" "$base") && [ "$((now - seen))" -lt "$grace" ]; then
+    printf 'quiet'
+    return 0
+  fi
+  if fm_task_inbox_status_acknowledged "$1" "$2" "$oldest"; then
     printf 'quiet'
     return 0
   fi
@@ -498,7 +581,6 @@ EOF
     printf 'escalate %s %s' "$oldest" "$count"
     return 0
   fi
-  now=$(date +%s)
   if [ "$((now - last))" -lt "$grace" ]; then
     printf 'quiet'
     return 0

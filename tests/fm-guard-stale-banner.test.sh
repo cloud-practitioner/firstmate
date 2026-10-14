@@ -249,6 +249,39 @@ test_fresh_beacon_without_live_watcher_stays_alarm() {
   pass "fm-guard stale banner: a fresh beacon without a live watcher remains unhealthy"
 }
 
+# The reminder must name the condition that is actually failing: with a fresh
+# beacon the failure is a missing live watcher process, never a stale beacon, so
+# the reminder must not read as "no beat within grace".
+test_reminder_names_the_true_failing_condition() {
+  local dir home out1 out2
+  dir=$(make_guard_case reminder-cause)
+  home=$(case_home "$dir")
+  touch "$home/state/.last-watcher-beat"
+  out1=$(run_guard_case "$dir")
+  out2=$(run_guard_case "$dir")
+  assert_contains "$out1" "no live watcher process holds this home lock" \
+    "the full banner did not name the missing live watcher"
+  assert_contains "$out2" "full banner already printed this episode" \
+    "the second call should print the concise reminder"
+  assert_contains "$out2" "no live watcher process holds this home lock" \
+    "the reminder did not name the missing live watcher"
+  assert_not_contains "$out2" "grace 999s" \
+    "the reminder blamed the beacon grace although the beacon is fresh"
+  rm -f "$home/state/.last-watcher-beat"
+  out2=$(run_guard_case "$dir")
+  assert_contains "$out2" "WATCHER DOWN - SUPERVISION IS OFF" \
+    "a beacon lapse after a fresh-beacon episode must start a new episode with a full banner"
+  assert_contains "$out2" "no watcher has a fresh beacon" "the lapse banner did not name the stale beacon"
+  out1=$(run_guard_case "$dir")
+  assert_contains "$out1" "no watcher has a fresh beacon" "the lapse reminder did not name the stale beacon"
+  assert_contains "$out1" "grace 999s" "the lapse reminder lost its grace"
+  touch "$home/state/.last-watcher-beat"
+  out2=$(run_guard_case "$dir")
+  assert_contains "$out2" "WATCHER DOWN - SUPERVISION IS OFF" \
+    "beats resuming must end the stale-beacon episode, so the next outage warns in full"
+  pass "fm-guard stale banner: the reminder names the true failing condition and a resumed beat ends the lapse episode"
+}
+
 test_x_mode_without_live_watcher_stays_alarm() {
   local dir home out
   dir=$(make_guard_case x-mode-no-live)
@@ -967,6 +1000,7 @@ test_autoarm_long_turn_does_not_silence_other_models
 test_persistent_no_watcher_banner_names_missing_process
 test_persistent_no_watcher_episode_survives_beacon_touch
 test_fresh_beacon_without_live_watcher_stays_alarm
+test_reminder_names_the_true_failing_condition
 test_x_mode_without_live_watcher_stays_alarm
 test_healthy_recovery_rearms_next_stale_episode
 test_concurrent_same_episode_prints_one_full_banner

@@ -373,14 +373,8 @@ test_busy_inbox_escalation_reaches_supervision() {
   PATH="$dir/fakebin:$PATH" FM_FAKE_TMUX_CAPTURE="$pane" \
     stale_window_is_busy "$win" "$state" || fail "inbox consumer fixture is not busy"
   case "$variant" in
-    stuck)
-      detail="unread firstmate instruction: stuck-busy after 2 consecutive busy-deferred due doorbells; $state/$task.inbox/001.msg stays unhandled and no doorbell was typed; inspect the worker"
-      ;;
     write)
       detail="steering-inbox busy bookkeeping unwritable: $state/$task.inbox/.busy-state cannot be written while $state/$task.inbox/001.msg stays unhandled; inspect the inbox directory"
-      ;;
-    reset)
-      detail="steering-inbox busy bookkeeping unwritable: $state/$task.inbox/.busy-state cannot be reset after a non-busy check; inspect the inbox directory"
       ;;
   esac
   reason="stale: $win ($detail)"
@@ -3305,12 +3299,8 @@ test_unverifiable_identity_surfaces_without_marker
 test_status_read_failure_surfaces_without_advancing_seen
 test_catchall_advances_routine_then_surfaces_append
 test_escalation_buffer_failure_retains_wake_and_position
-test_busy_inbox_escalation_reaches_supervision stuck away
-test_busy_inbox_escalation_reaches_supervision stuck quiet
 test_busy_inbox_escalation_reaches_supervision write away
 test_busy_inbox_escalation_reaches_supervision write quiet
-test_busy_inbox_escalation_reaches_supervision reset away
-test_busy_inbox_escalation_reaches_supervision reset quiet
 test_busy_inbox_dispatch_preserves_other_stale_reasons
 test_catchall_buffer_failure_preserves_position
 test_durable_wake_failure_retains_entire_batch
