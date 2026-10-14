@@ -422,6 +422,25 @@ fm_task_inbox_header_value() {  # <record-path> <name>
   return 1
 }
 
+_fm_task_inbox_open_decisions() {
+  local status=$1 content=$2 line verb kind open='' resolve held
+  [ -f "$status" ] && [ -r "$status" ] && [ ! -L "$status" ] || return 0
+  kind=$(_fm_status_kind "$status")
+  resolve=${FM_CLASSIFY_RESOLVE_VERB:-$FM_CLASSIFY_RESOLVE_VERB_DEFAULT}
+  held=${FM_CLASSIFY_CAPTAIN_HELD_VERB:-$FM_CLASSIFY_CAPTAIN_HELD_VERB_DEFAULT}
+  while IFS= read -r line || [ -n "$line" ]; do
+    status_line_verb "$line" verb
+    case "$verb" in
+      needs-decision|blocked|done|failed|"$resolve"|"$held")
+        open=$(_fm_decision_fold_line "$open" "$line" "$resolve" "$held" "$kind")
+        ;;
+    esac
+  done <<EOF
+$content
+EOF
+  printf '%s' "$open"
+}
+
 # 0 when the task status proves the worker already acted on this record, so a
 # pending mv to handled/ is no evidence of a lost doorbell. Only evidence the
 # record itself names is used, so the check never guesses:
@@ -432,9 +451,9 @@ fm_task_inbox_header_value() {  # <record-path> <name>
 #     corr=<16 hex> token the record body names (a correlated child outcome).
 # A record naming neither, or a status line with no readable stamp, proves nothing.
 # Open/closed semantics stay owned by bin/fm-classify-lib.sh.
-fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path>
-  local status="$1/$2.status" rec=$3 at_iso at_epoch keys corr body open line off end epoch key k
-  local LC_ALL=C pending found rest content
+fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path> [content] [ranges] [open]
+  local status="$1/$2.status" rec=$3 at_iso at_epoch keys corr body open line off end epoch key k verb matched
+  local LC_ALL=C pending rest content ranges
   [ -f "$status" ] && [ -f "$rec" ] || return 1
   _fm_wake_require_classify || return 1
   at_iso=$(fm_task_inbox_header_value "$rec" at) || return 1
@@ -445,21 +464,25 @@ fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path>
   [ -n "$keys" ] || [ -n "$corr" ] || return 1
   keys=${keys//,/ }
   pending=$keys
-  found=0
-  open=$(status_open_decisions "$status")
-  content=$(cat "$status" 2>/dev/null) || return 1
+  if [ "$#" -ge 4 ]; then content=$4; else content=$(cat "$status" 2>/dev/null) || return 1; fi
+  if [ "$#" -ge 5 ]; then ranges=$5; else ranges=$(status_home_appends_ranges "$status"); fi
   off=0
   while IFS= read -r line || [ -n "$line" ]; do
     end=$((off + ${#line} + 1))
-    epoch=$(status_line_at_epoch "$line") || { off=$end; continue; }
-    if [ "$epoch" -ge "$at_epoch" ] && ! status_home_appends_covers "$status" "$off" "$end"; then
+    _fm_status_at_epoch "$line" epoch || { off=$end; continue; }
+    matched=0
+    if [ -n "$corr" ]; then case "$line" in *"$corr"*) matched=1 ;; esac; fi
+    status_line_verb "$line" verb
+    if [ "$matched" -eq 0 ] && { [ -z "$pending" ] || [ "$verb" != "${FM_CLASSIFY_RESOLVE_VERB:-$FM_CLASSIFY_RESOLVE_VERB_DEFAULT}" ]; }; then
+      off=$end
+      continue
+    fi
+    if [ "$epoch" -ge "$at_epoch" ] && ! status_home_appends_covers "$status" "$off" "$end" "$ranges"; then
       key=$(_fm_decision_key "$line") || { off=$end; continue; }
-      if [ -n "$corr" ]; then
-        case "$line" in
-          *"$corr"*) case "$key" in pending-reply-*) ;; *) found=1 ;; esac ;;
-        esac
+      if [ "$matched" -eq 1 ]; then
+        case "$key" in pending-reply-*) ;; *) return 0 ;; esac
       fi
-      if [ -n "$pending" ] && [ "$(status_line_verb "$line")" = "${FM_CLASSIFY_RESOLVE_VERB:-$FM_CLASSIFY_RESOLVE_VERB_DEFAULT}" ]; then
+      if [ -n "$pending" ] && [ "$verb" = "${FM_CLASSIFY_RESOLVE_VERB:-$FM_CLASSIFY_RESOLVE_VERB_DEFAULT}" ]; then
         rest=
         for k in $pending; do
           [ "$k" = "$key" ] || rest="$rest $k"
@@ -471,8 +494,8 @@ fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path>
   done <<EOF
 $content
 EOF
-  [ "$found" -ne 1 ] || return 0
   if [ -n "$keys" ] && [ -z "${pending//[[:space:]]/}" ]; then
+    if [ "$#" -ge 6 ]; then open=$6; else open=$(_fm_task_inbox_open_decisions "$status" "$content"); fi
     for k in $keys; do
       case "$open" in
         "$k"$'\t'*|*$'\n'"$k"$'\t'*) return 1 ;;
@@ -484,14 +507,24 @@ EOF
 }
 
 # Oldest escalation-tracked unhandled record, or fail when none is due.
-fm_task_inbox_oldest_unhandled() {  # <state-dir> <task-id>
-  local dir best='' best_n=0 f n
+fm_task_inbox_oldest_unhandled() {  # <state-dir> <task-id> [content] [ranges]
+  local dir best='' best_n=0 f n status="$1/$2.status" content ranges open='' open_loaded=0 keys
   dir=$(fm_task_inbox_dir "$1" "$2")
+  _fm_wake_require_classify || return 1
+  if [ "$#" -ge 3 ]; then content=$3; else content=$(cat "$status" 2>/dev/null) || content=; fi
+  if [ "$#" -ge 4 ]; then ranges=$4; else ranges=$(status_home_appends_ranges "$status"); fi
   for f in "$dir"/*.msg; do
     [ -e "$f" ] || continue
     fm_task_inbox_is_fire_and_forget "$f" && continue
     n=$(fm_task_inbox_seq_of "${f##*/}") || continue
-    fm_task_inbox_status_acknowledged "$1" "$2" "$f" && continue
+    if [ "$open_loaded" -eq 0 ]; then
+      keys=$(fm_task_inbox_header_value "$f" resolve-keys || true)
+      if [ -n "$keys" ]; then
+        open=$(_fm_task_inbox_open_decisions "$status" "$content")
+        open_loaded=1
+      fi
+    fi
+    fm_task_inbox_status_acknowledged "$1" "$2" "$f" "$content" "$ranges" "$open" && continue
     if [ -z "$best" ] || [ "$n" -lt "$best_n" ]; then
       best=$f
       best_n=$n
@@ -528,16 +561,19 @@ fm_task_inbox_clear_retry() {  # <state-dir> <task-id> <record-path>
 # An empty inbox also resets the ladder bookkeeping so the next message starts
 # a fresh ladder.
 fm_task_inbox_due_action() {  # <state-dir> <task-id>
-  local dir oldest base now grace max ladder rec_base count last seen
+  local dir oldest base now grace max ladder rec_base count last seen content ranges status="$1/$2.status"
   dir=$(fm_task_inbox_dir "$1" "$2")
-  if ! oldest=$(fm_task_inbox_oldest_unhandled "$1" "$2"); then
+  _fm_wake_require_classify || return 1
+  content=$(cat "$status" 2>/dev/null) || content=
+  ranges=$(status_home_appends_ranges "$status")
+  if ! oldest=$(fm_task_inbox_oldest_unhandled "$1" "$2" "$content" "$ranges"); then
     rm -f "$dir/.ring-state" "$dir/.escalated" "$dir/.busy-state" 2>/dev/null || true
     # The one retry ring exists only while config/wait-no-turns is present.
     # Absent, a mark is left untouched and the inbox stays quiet, as before.
     if [ -e "${FM_CONFIG_OVERRIDE:-${FM_HOME:-}/config}/wait-no-turns" ]; then
       base=$(cat "$dir/.retry-ring" 2>/dev/null || true)
       if ! fm_task_inbox_seq_of "$base" >/dev/null || [ ! -f "$dir/$base" ] \
-        || fm_task_inbox_status_acknowledged "$1" "$2" "$dir/$base"; then
+        || fm_task_inbox_status_acknowledged "$1" "$2" "$dir/$base" "$content" "$ranges"; then
         rm -f "$dir/.retry-ring" 2>/dev/null || true
       elif [ "$(fm_path_age "$dir/.retry-ring")" -ge "$(fm_task_inbox_grace_secs)" ]; then
         printf 'retry %s' "$dir/$base"

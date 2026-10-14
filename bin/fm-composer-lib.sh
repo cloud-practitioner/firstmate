@@ -449,6 +449,28 @@ fm_busy_lines_match() {  # [harness]
   [ -n "$regex" ] && printf '%s' "$lines" | grep -qiE "$regex"
 }
 
+fm_composer_status_is_busy() {
+  local harness=$1 screen=$2 row='' prompt glyph index
+  local status_re='^•[[:space:]]+.+[[:space:]]+\([0-9]+[smh]([[:space:]]+[0-9]+[smh])*[[:space:]]+•[[:space:]]+[^)]+\)$'
+  [ "$harness" = codex ] || return 1
+  _fm_composer_scan_screen "$screen" '' 1
+  _fm_composer_select_cursorless "$screen" || return 1
+  [ "$FM_COMPOSER_SELECTED_KIND" = bare ] || return 1
+  prompt=$(_fm_composer_screen_row "$FM_COMPOSER_SELECTED_FIRST" "$screen")
+  fm_composer_normalize_trim_var prompt
+  fm_composer_leading_agent_glyph_var glyph "$prompt" || return 1
+  [ "$glyph" = '›' ] || return 1
+  index=$((FM_COMPOSER_SELECTED_FIRST - 1))
+  while [ "$index" -ge 0 ]; do
+    row=$(_fm_composer_screen_row "$index" "$screen")
+    fm_composer_normalize_trim_var row
+    [ -z "$row" ] || break
+    index=$((index - 1))
+  done
+  [[ "$row" =~ $status_re ]] || return 1
+  printf '%s' "$row" | fm_busy_lines_match "$harness"
+}
+
 # The prompt glyphs, each declared exactly once (see THE SAFETY RULE above).
 # AGENT glyphs are a genuine empty agent composer on any row, bordered or bare.
 # SHELL glyphs are one only INSIDE a composer container; on a bare row they are

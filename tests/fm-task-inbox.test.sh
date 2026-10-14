@@ -779,7 +779,7 @@ test_watcher_codex_composer_defers_doorbell() (
   unset FM_BUSY_REGEX
   export PATH="$dir/fakebin:$PATH" FM_STATE_OVERRIDE="$dir/state" FM_SEND_LOG="$dir/send.log"
   export FM_FAKE_TMUX_CAPTURE="$dir/busy.capture" FM_TASK_INBOX_GRACE_SECS=60 FM_TASK_INBOX_RING_MAX=3
-  printf 'some output\nesc to interrupt\n' > "$dir/busy.capture"
+  printf 'some output\n\n• Working (6s • esc to interrupt)\n\n›\n\n? for shortcuts\n' > "$dir/busy.capture"
   if [ "$mode" = retry ]; then
     delivery=fire-and-forget
     mkdir -p "$dir/config"
@@ -836,6 +836,65 @@ test_watcher_codex_composer_defers_doorbell() (
   fi
   [ -f "$rec" ] || fail "Codex $mode lost its unhandled instruction"
   pass "watcher: Codex composer defers $mode without strikes and resumes recovery when idle"
+)
+
+test_watcher_ignores_busy_tokens_in_output() (
+  local mode shape dir rec delivery check
+  unset FM_BUSY_REGEX
+  for shape in token quoted stale; do
+    for mode in grace ring retry escalate; do
+      dir=$(setup_watch_case "output-token-$shape-$mode")
+      fm_write_meta "$dir/state/t1.meta" "window=sess:fm-t1" "kind=ship" "harness=codex"
+      export PATH="$dir/fakebin:$PATH" FM_STATE_OVERRIDE="$dir/state" FM_SEND_LOG="$dir/send.log"
+      export FM_FAKE_TMUX_CAPTURE="$dir/output.capture" FM_TASK_INBOX_GRACE_SECS=60 FM_TASK_INBOX_RING_MAX=3
+      case "$shape" in
+        token) printf 'the source contains esc to interrupt\nesc to interrupt\n›\n' ;;
+        quoted) printf '  printf "esc to interrupt"\n• Working (6s • esc to interrupt) was printed by a test\n›\n' ;;
+        stale) printf '• Working (6s • esc to interrupt)\n› previous request\nTest completed: esc to interrupt\n›\n' ;;
+      esac > "$dir/output.capture"
+      delivery=
+      if [ "$mode" = retry ]; then
+        delivery=fire-and-forget
+        mkdir -p "$dir/config"
+        : > "$dir/config/wait-no-turns"
+      fi
+      export FM_CONFIG_OVERRIDE="$dir/config"
+      rec=$(inbox_lib "$dir/state" fm_task_inbox_write "$dir/state" t1 "unheard instruction" "$delivery")
+      if [ "$mode" != grace ]; then age_path "$rec"; fi
+      case "$mode" in
+        ring) printf '001.msg\t1\t100\n' > "$dir/state/t1.inbox/.ring-state" ;;
+        escalate) printf '001.msg\t3\t100\n' > "$dir/state/t1.inbox/.ring-state" ;;
+        retry)
+          inbox_lib "$dir/state" fm_task_inbox_mark_retry "$dir/state" t1 "$rec"
+          age_path "$dir/state/t1.inbox/.retry-ring"
+          ;;
+      esac
+      for check in 1 2 3; do
+        bash -c '. "$1" && inbox_steer_check sess:fm-t1 t1' _ "$WATCH" > "$dir/check.out" 2>&1 \
+          || fail "$shape output check failed: $(cat "$dir/check.out")"
+        [ ! -e "$dir/state/t1.inbox/.busy-state" ] \
+          || fail "$shape output was treated as active composer furniture during $mode"
+      done
+      case "$mode" in
+        grace)
+          [ ! -s "$dir/send.log" ] && [ ! -s "$dir/state/.wake-queue" ] || fail "initial grace was lost"
+          age_path "$rec"
+          bash -c '. "$1" && inbox_steer_check sess:fm-t1 t1' _ "$WATCH" > "$dir/check.out" 2>&1
+          ;;
+        escalate)
+          [ "$(grep -cF 'unread firstmate instruction' "$dir/state/.wake-queue")" = 1 ] \
+            || fail "$shape output suppressed idle escalation"
+          [ ! -s "$dir/send.log" ] || fail "a spent ladder rang again"
+          continue
+          ;;
+        retry) [ ! -e "$dir/state/t1.inbox/.retry-ring" ] || fail "$shape output hid an owed retry" ;;
+      esac
+      [ "$(grep -cF 'Firstmate instruction waiting' "$dir/send.log")" = 1 ] \
+        || fail "$shape output suppressed $mode delivery"
+      [ ! -s "$dir/state/.wake-queue" ] || fail "$shape output caused an early wake"
+    done
+  done
+  pass "watcher: ordinary output cannot refresh busy grace or suppress delivery and idle recovery"
 )
 
 test_watcher_observes_busy_during_every_grace() {
@@ -1038,6 +1097,94 @@ test_acknowledged_predecessor_does_not_block_successors() {
       || fail "$mode acknowledged instruction was retried"
   done
   pass "inbox: acknowledged predecessors allow successor delivery, recovery, and owed retries without a move"
+}
+
+test_acknowledgement_selection_has_bounded_history_work() {
+  local kind selection dir state tail corr i stamp expected out reads ranges epochs folds lines
+  for kind in correlation keys; do
+    for selection in oldest due retry direct; do
+      dir="$TMP_ROOT/history-$kind-$selection"; state="$dir/state"; mkdir -p "$state" "$dir/config"
+      for i in 1 2 3 4 5 6 7 8 9 10; do
+        printf -v corr '%016x' "$i"
+        if [ "$kind" = keys ]; then
+          inbox_lib "$state" fm_task_inbox_write "$state" t1 "answer $i" "" "key-$i" >/dev/null || fail "could not enqueue keyed history fixture"
+        else
+          inbox_lib "$state" fm_task_inbox_write "$state" t1 "from firstmate corr=$corr: request $i" >/dev/null || fail "could not enqueue correlated history fixture"
+        fi
+      done
+      if [ "$selection" = retry ]; then
+        tail=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=ffffffffffffffff: unheard' fire-and-forget)
+        inbox_lib "$state" fm_task_inbox_mark_retry "$state" t1 "$tail"
+        age_path "$state/t1.inbox/.retry-ring"
+        : > "$dir/config/wait-no-turns"
+      else
+        tail=$(inbox_lib "$state" fm_task_inbox_write "$state" t1 'from firstmate corr=ffffffffffffffff: unheard')
+      fi
+      stamp=$(( $(date +%s) + 5 ))
+      printf 'needs-decision [key=other] [at=%s]: old question\nresolved [key=other] [at=%s]: closed\n' "$stamp" "$stamp" > "$state/t1.status"
+      i=0
+      while [ "$i" -lt 80 ]; do
+        printf 'working [at=%s]: historical event %s\n' "$stamp" "$i" >> "$state/t1.status"
+        i=$((i + 1))
+      done
+      for i in 1 2 3 4 5 6 7 8 9 10; do
+        printf -v corr '%016x' "$i"
+        if [ "$kind" = keys ]; then
+          printf 'resolved [key=key-%s] [at=%s]: acted\n' "$i" "$stamp" >> "$state/t1.status"
+        else
+          printf 'working corr=%s [at=%s]: spawned worker\n' "$corr" "$stamp" >> "$state/t1.status"
+        fi
+      done
+      inbox_lib "$state" fm_wake_status_append_self_announced "$state" "$state/t1.status" \
+        "working corr=ffffffffffffffff [at=$stamp]: answerer bookkeeping" || true
+      expected="ring $tail"
+      case "$selection" in
+        oldest) expected=$tail ;;
+        retry) expected="retry $tail" ;;
+        direct) expected=acknowledged ;;
+      esac
+      : > "$dir/reads"; : > "$dir/ranges"; : > "$dir/epochs"; : > "$dir/folds"
+      out=$(FM_CONFIG_OVERRIDE="$dir/config" FM_STATE_OVERRIDE="$state" FM_TASK_INBOX_GRACE_SECS=0 bash -c '
+        . "$1"
+        _fm_wake_require_classify
+        history_state=$2; history_dir=$3; selection=$4
+        for fn in status_line_at_epoch status_home_appends_ranges _fm_decision_fold_line; do
+          definition=$(declare -f "$fn")
+          eval "${definition/$fn/recorded_$fn}"
+        done
+        status_line_at_epoch() { printf "call\n" >> "$history_dir/epochs"; recorded_status_line_at_epoch "$@"; }
+        status_home_appends_ranges() { printf "call\n" >> "$history_dir/ranges"; recorded_status_home_appends_ranges "$@"; }
+        _fm_decision_fold_line() { printf "call\n" >> "$history_dir/folds"; recorded__fm_decision_fold_line "$@"; }
+        cat() {
+          for arg in "$@"; do
+            [ "$arg" != "$history_state/t1.status" ] || printf "read\n" >> "$history_dir/reads"
+          done
+          command cat "$@"
+        }
+        case "$selection" in
+          oldest) fm_task_inbox_oldest_unhandled "$history_state" t1 ;;
+          due|retry) fm_task_inbox_due_action "$history_state" t1 ;;
+          direct)
+            fm_task_inbox_status_acknowledged "$history_state" t1 "$history_state/t1.inbox/001.msg" && printf acknowledged
+            ;;
+        esac
+      ' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$state" "$dir" "$selection" 2> "$dir/check.err") \
+        || fail "$kind $selection history check failed: $(cat "$dir/check.err")"
+      [ "$out" = "$expected" ] || fail "$kind $selection lost acknowledgement or home-append exclusion: $out"
+      reads=$(wc -l < "$dir/reads" | tr -d ' ')
+      ranges=$(wc -l < "$dir/ranges" | tr -d ' ')
+      epochs=$(wc -l < "$dir/epochs" | tr -d ' ')
+      folds=$(wc -l < "$dir/folds" | tr -d ' ')
+      lines=$(wc -l < "$state/t1.status" | tr -d ' ')
+      [ "$reads" -eq 1 ] && [ "$ranges" -eq 1 ] \
+        || fail "$kind $selection reread status or ownership history ($reads status reads, $ranges range reads)"
+      [ "$epochs" -eq 0 ] || fail "$kind $selection forked the timestamp parser per historical line"
+      [ "$folds" -le "$lines" ] || fail "$kind $selection folded decision history more than once"
+      [ "$kind" != correlation ] || [ "$folds" -eq 0 ] \
+        || fail "correlation-only $selection unnecessarily folded decisions"
+    done
+  done
+  pass "inbox: selection reuses one status and ownership snapshot without per-line parser forks or redundant folds"
 }
 
 test_acknowledgement_uses_shared_key_grammar() {
@@ -1388,6 +1535,7 @@ test_watcher_busy_again_defers_a_spent_ladder
 test_watcher_codex_composer_defers_doorbell escalate || exit 1
 test_watcher_codex_composer_defers_doorbell ring || exit 1
 test_watcher_codex_composer_defers_doorbell retry || exit 1
+test_watcher_ignores_busy_tokens_in_output || exit 1
 test_watcher_observes_busy_during_every_grace
 test_watcher_busy_observation_resets_on_ack
 test_watcher_busy_bookkeeping_failure_surfaces
@@ -1400,6 +1548,7 @@ test_resolved_key_evidence_ignores_old_and_home_written_lines
 test_correlated_status_acknowledges_without_the_mv
 test_acknowledged_predecessor_does_not_block_successors
 test_acknowledgement_uses_shared_key_grammar
+test_acknowledgement_selection_has_bounded_history_work
 test_correlation_acknowledges_despite_reopened_keys
 test_watcher_status_acknowledged_record_is_quiet
 test_watcher_quiet_on_healthy_inbox

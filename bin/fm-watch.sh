@@ -559,7 +559,7 @@ inbox_steer_check() {  # <window> <task>
   watcher_capture "$backend" "$w" 40 "$(window_label "$w")" || WATCHER_CAPTURE=
   tail40=$WATCHER_CAPTURE
   if window_is_busy "$w" "$tail40" \
-    || printf '%s' "$tail40" | grep -v '^[[:space:]]*$' | tail -12 | fm_busy_lines_match "$(window_harness "$w")"; then
+    || fm_composer_status_is_busy "$(window_harness "$w")" "$tail40"; then
     # Active work is never a strike: record the observation so the grace
     # restarts from it (bin/fm-task-inbox-lib.sh), and never type into the pane.
     [ "$verb" != retry ] || return 0
