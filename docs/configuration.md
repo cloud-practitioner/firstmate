@@ -594,7 +594,8 @@ Write the primary home's file by hand; firstmate never grants itself a role, and
 Supported secondmate propagation writes or removes the inherited copy as described below.
 A malformed, unreadable, or symlinked file - including one with a second directive anywhere - resolves to user/operator; the role fails closed rather than guessing.
 
-Authority is also available for one task at a time: `--upstream-consent <host>/<owner>/<repo>` on `bin/fm-brief.sh`, `bin/fm-spawn.sh`, and `bin/fm-promote.sh` records the captain's explicit approval in the task's delivery contract and metadata without changing the home's role.
+Authority is also available for one task at a time through the captain's explicit approval without changing the home's role.
+The [brief](../bin/fm-brief.sh), [spawn](../bin/fm-spawn.sh), and [promotion](../bin/fm-promote.sh) headers own the `--upstream-consent` syntax and recording mechanics.
 Role is never inferred from GitHub identity, forge permissions, remotes, repository ownership, authentication state, environment, or CI.
 `bin/fm-role.sh report` prints the resolved role with no network call, and the session-start digest shows it in the HOME ROLE subsection.
 

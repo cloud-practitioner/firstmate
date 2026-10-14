@@ -359,7 +359,7 @@ The mirror never carries tool calls, tool results, operational injections, or th
 Mirroring happens at two points:
 
 - The idle path mirrors at main's turn end.
-- At `before_agent_start`, Pi's authoritative prompt is staged verbatim before SessionManager persists that user entry.
+- At a user-message `before_agent_start`, Pi's authoritative prompt is staged verbatim before SessionManager persists that user entry.
   The complete current captain message therefore precedes any branch wake accepted after that boundary.
   The later persisted copy is suppressed, and older dialog entries remain bounded.
 
@@ -579,6 +579,7 @@ A leftover `state/.afk` flag declines nothing.
 - Captain-verdict outcomes accumulate unprocessed in the outcome store.
   Their visible entries still persist, but no processing turn opens on the parked main.
   The request is re-checked against the record immediately before it would open and at every run boundary, so a request pending when the record appears is cancelled rather than delivered.
+  If a queued request reaches model context after the record appears, it is stripped; only a dedicated processing run identified by its matching custom message is aborted, never a run opened by a captain message.
   The first run boundary after the record is archived, ordinarily the captain's return message, presents the accumulated rows with a fresh triggered budget exactly as after any other gap.
   `bin/fm-afk-return.sh` lists them under "waiting on you".
 - Main's standing authority relocates to the branch, and nothing more.

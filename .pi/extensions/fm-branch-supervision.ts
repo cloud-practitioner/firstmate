@@ -16,7 +16,7 @@
 // presentUnprocessedOutcomes).
 // Main's captain/assistant dialog is mirrored into the branch as read-only
 // fm-main-mirror context from Pi's
-// before_agent_start prompt and at main's turn_end. Pi-only by construction: this
+// user-message before_agent_start prompt and at main's turn_end. Pi-only by construction: this
 // file lives in .pi/extensions, so no
 // other harness ever loads it. Supervision is default-on for every task once
 // this Pi session owns the fleet lock: no captain grant file is required.
@@ -1676,11 +1676,11 @@ ${context.command}
     if (!(await enqueueDelivery(() => actingAsOwner(promptGeneration)))) return;
     if (promptGeneration !== generation || !currentMainSession || !collectCurrentMainDialog()) return;
 
-    // This event is Pi's authoritative complete current prompt. At this point
-    // SessionManager still contains only the preceding dialog, so relying on
-    // getEntries() here loses the captain request that the next wake may answer.
-    // Stage it verbatim and remember the future persisted index for turn_end's
-    // duplicate suppression. Operational extension injections are not dialog.
+    // Only user-message starts carry Pi's complete current prompt, before
+    // SessionManager persists that entry. Stage it for the next wake's mirror
+    // and suppress the later persisted copy. Custom starts have no prompt:
+    // identify a dedicated processing run by its queued message so away-mode
+    // cancellation never aborts a run opened by the captain.
     processingOpenedThisRun =
       event.messageType === "custom" &&
       isProcessingCustomMessage(event.message) &&
@@ -1774,7 +1774,7 @@ ${context.command}
     });
   });
 
-  // before_agent_start stages Pi's authoritative in-flight prompt before
+  // A user-message before_agent_start stages the in-flight captain prompt before
   // SessionManager persists it. The dispatch handler then collects any newly
   // persisted dialog immediately before accepting a wake, so all context joins
   // the serialized chain before that wake's branch prompt. turn_end remains

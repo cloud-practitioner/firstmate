@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Spawn a direct report: a crewmate in a treehouse or Orca worktree, or a
 # secondmate in its isolated firstmate home.
-# Usage: fm-spawn.sh <task-id> <project-dir> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--branch-prefix <prefix>] [--base-branch <branch>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] [--herdr-resume-lock-wait]
+# Usage: fm-spawn.sh <task-id> <project-dir> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--branch-prefix <prefix>] [--base-branch <branch>] [--upstream-consent <host>/<owner>/<repo>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] [--herdr-resume-lock-wait]
 #        fm-spawn.sh <task-id> <project-dir> --scout [--base-branch <branch>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] [--herdr-resume-lock-wait]
 #        fm-spawn.sh <task-id> [<firstmate-home>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] --secondmate
 #   --mode and --yolo are this task's delivery contract, REQUIRED for every ship
@@ -48,6 +48,15 @@
 #   base_branch= in state/<id>.meta, which a relaunch reuses and later review and
 #   cleanup read; it is refused on secondmates and relaunches, and without it
 #   nothing changes.
+#   Publishing ship tasks on firstmate's own repository also require the
+#   authority described in docs/configuration.md "Firstmate role".
+#   --upstream-consent <host>/<owner>/<repo> records the captain's one-task
+#   approval without changing the home's role. It is normalized to lowercase
+#   and must match the brief's upstream-consent= token on its Delivery contract
+#   line, including agreement when neither carries consent. The spawn records
+#   it as upstream_consent= in state/<id>.meta; --relaunch reuses that value,
+#   rechecks publication authority, and refuses a consent override. The flag is
+#   refused on local-only, scout, and secondmate spawns.
 #   Ship/scout launches always put fm-dod-lib.sh's current worker role scope
 #   first in the private launch-brief overlay, including the exact task-owned
 #   steering inbox. This never rewrites a project's instruction files or a
