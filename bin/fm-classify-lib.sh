@@ -2191,11 +2191,10 @@ window_to_task() {
 #   v1
 #   ident=<file-ident>
 #   <start><TAB><end>
-# Ranges are half-open [start, end), written in the order they were appended.
+# Ranges are half-open [start, end), stored in ascending offset order.
 # The only writer is fm_wake_status_append_self_announced, which records the
-# pre- and post-append size of an append-only log it just grew, so each new
-# start is at or after the last recorded end; a new range that begins exactly
-# where the last one ended extends that line instead of adding another.
+# exact byte span from its append descriptor. Adjacent and overlapping ranges
+# coalesce under the ledger lock.
 # status_home_appends_covers depends on that ascending order: it walks the
 # ledger once and ignores any range starting past the point it has reached, so
 # a ledger written out of order would refuse to prove coverage and fail toward
@@ -2262,6 +2261,21 @@ EOF
   [ "$start" -ge "$end" ]
 }
 
+status_home_appends_overlaps() {  # <status-file> <start> <end> [ranges]
+  local start=$2 end=$3 range_start range_end ranges
+  case "$start:$end" in *[!0-9:]*) return 1 ;; esac
+  [ "$end" -gt "$start" ] || return 1
+  if [ "$#" -ge 4 ]; then ranges=$4; else ranges=$(status_home_appends_ranges "$1"); fi
+  while IFS=$'\t' read -r range_start range_end; do
+    [ -n "$range_start" ] || continue
+    case "$range_start:$range_end" in *[!0-9:]*) continue ;; esac
+    [ "$range_start" -lt "$end" ] && [ "$range_end" -gt "$start" ] && return 0
+  done <<EOF
+$ranges
+EOF
+  return 1
+}
+
 status_home_appends_record() {  # <status-file> <start> <end>
   local f=$1 start=$2 end=$3 path lock rc=0
   case "$start:$end" in *[!0-9:]*) return 1 ;; esac
@@ -2275,28 +2289,18 @@ status_home_appends_record() {  # <status-file> <start> <end>
 }
 
 _fm_status_home_appends_merge_locked() {  # <status-file> <ledger-path> <start> <end>
-  local f=$1 path=$2 start=$3 end=$4 ident tmp line last='' body='' coalesced=0
+  local f=$1 path=$2 start=$3 end=$4 ident tmp body
   local LC_ALL=C
   ident=$(_fm_open_decisions_file_ident "$f") || return 1
-  while IFS= read -r line; do
-    [ -n "$line" ] || continue
-    if [ -n "$last" ]; then body="${body}${last}"$'\n'; fi
-    last=$line
-  done <<EOF
-$(status_home_appends_ranges "$f")
-EOF
-  if [ -n "$last" ]; then
-    if [ "${last#*$'\t'}" = "$start" ]; then
-      last="${last%%$'\t'*}"$'\t'"$end"
-      coalesced=1
-    fi
-    body="${body}${last}"$'\n'
-  fi
-  if [ "$coalesced" -eq 0 ]; then
-    body="${body}${start}"$'\t'"${end}"$'\n'
-  fi
+  body=$({ status_home_appends_ranges "$f"; printf '%s\t%s\n' "$start" "$end"; } \
+    | sort -n -k1,1 -k2,2 | awk '
+      NR == 1 { start = $1; end = $2; next }
+      $1 <= end { if ($2 > end) end = $2; next }
+      { printf "%.0f\t%.0f\n", start, end; start = $1; end = $2 }
+      END { if (NR) printf "%.0f\t%.0f\n", start, end }
+    ') || return 1
   tmp="$path.tmp.$$"
-  printf 'v1\nident=%s\n%s' "$ident" "$body" > "$tmp" || { rm -f "$tmp"; return 1; }
+  printf 'v1\nident=%s\n%s\n' "$ident" "$body" > "$tmp" || { rm -f "$tmp"; return 1; }
   mv -f "$tmp" "$path" || { rm -f "$tmp"; return 1; }
 }
 

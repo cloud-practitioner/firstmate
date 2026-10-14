@@ -28,7 +28,7 @@
 #   <task>.inbox/.seq.lock     serializes sequence allocation across writers
 #                              (the session and the away daemon)
 #   <task>.inbox/.ring-state   watcher re-ring ladder: "<msg>\t<count>\t<epoch>"
-#   <task>.inbox/.busy-state   last busy-pane observation: "<msg>\t<epoch>"
+#   <task>.inbox/.busy-state   last busy-pane observation: "<epoch>"
 #   <task>.inbox/.escalated    oldest-message name already surfaced as stale,
 #                              so later polls suppress another escalation
 #   <task>.inbox/.retry-ring   name of a fire-and-forget record still owed its
@@ -127,27 +127,26 @@ fm_task_inbox_ring_max() {
   printf '%s' "$m"
 }
 
-# Record that the pane reported active work for this record, so the grace
-# restarts from now. Persisted so a fresh watcher continues the same wait. A
-# removed or acknowledged record is a quiet no-op.
-fm_task_inbox_record_busy() {  # <state-dir> <task-id> <record-path>
-  local dir base
+# Record that the task's pane reported active work, so the grace restarts from
+# now. Persisted so a fresh watcher continues the same wait. A removed inbox is
+# a quiet no-op.
+fm_task_inbox_record_busy() {  # <state-dir> <task-id>
+  local dir
   dir=$(fm_task_inbox_dir "$1" "$2")
-  base=${3##*/}
-  [ -f "$3" ] || return 0
-  if ! { printf '%s\t%s\n' "$base" "$(date +%s)" > "$dir/.busy-state"; } 2>/dev/null; then
-    [ -f "$3" ] || return 0
+  [ -d "$dir" ] || return 0
+  if ! { printf '%s\n' "$(date +%s)" > "$dir/.busy-state"; } 2>/dev/null; then
+    [ -d "$dir" ] || return 0
     return 1
   fi
 }
 
-# Epoch of the last busy observation recorded for <record-base>; fails when the
-# marker is absent, malformed, or names another record.
-fm_task_inbox_busy_seen() {  # <state-dir> <task-id> <record-base>
-  local dir previous seen
+# Epoch of the task pane's last busy observation; fails when the marker is
+# absent or malformed.
+fm_task_inbox_busy_seen() {  # <state-dir> <task-id>
+  local dir seen legacy_seen
   dir=$(fm_task_inbox_dir "$1" "$2")
-  { IFS=$(printf '\t') read -r previous seen < "$dir/.busy-state"; } 2>/dev/null || return 1
-  [ "${previous:-}" = "$3" ] || return 1
+  { IFS=$'\t' read -r seen legacy_seen < "$dir/.busy-state"; } 2>/dev/null || return 1
+  seen=${legacy_seen:-$seen}
   case "${seen:-}" in ''|*[!0-9]*) return 1 ;; esac
   [ "${#seen}" -le 12 ] || return 1
   printf '%s' "$seen"
@@ -477,7 +476,7 @@ fm_task_inbox_status_acknowledged() {  # <state-dir> <task-id> <record-path> [co
       off=$end
       continue
     fi
-    if [ "$epoch" -ge "$at_epoch" ] && ! status_home_appends_covers "$status" "$off" "$end" "$ranges"; then
+    if [ "$epoch" -ge "$at_epoch" ] && ! status_home_appends_overlaps "$status" "$off" "$end" "$ranges"; then
       key=$(_fm_decision_key "$line") || { off=$end; continue; }
       if [ "$matched" -eq 1 ]; then
         case "$key" in pending-reply-*) ;; *) return 0 ;; esac
@@ -563,11 +562,12 @@ fm_task_inbox_clear_retry() {  # <state-dir> <task-id> <record-path>
 fm_task_inbox_due_action() {  # <state-dir> <task-id>
   local dir oldest base now grace max ladder rec_base count last seen content ranges status="$1/$2.status"
   dir=$(fm_task_inbox_dir "$1" "$2")
+  grace=$(fm_task_inbox_grace_secs)
   _fm_wake_require_classify || return 1
   content=$(cat "$status" 2>/dev/null) || content=
   ranges=$(status_home_appends_ranges "$status")
   if ! oldest=$(fm_task_inbox_oldest_unhandled "$1" "$2" "$content" "$ranges"); then
-    rm -f "$dir/.ring-state" "$dir/.escalated" "$dir/.busy-state" 2>/dev/null || true
+    rm -f "$dir/.ring-state" "$dir/.escalated" 2>/dev/null || true
     # The one retry ring exists only while config/wait-no-turns is present.
     # Absent, a mark is left untouched and the inbox stays quiet, as before.
     if [ -e "${FM_CONFIG_OVERRIDE:-${FM_HOME:-}/config}/wait-no-turns" ]; then
@@ -575,7 +575,7 @@ fm_task_inbox_due_action() {  # <state-dir> <task-id>
       if ! fm_task_inbox_seq_of "$base" >/dev/null || [ ! -f "$dir/$base" ] \
         || fm_task_inbox_status_acknowledged "$1" "$2" "$dir/$base" "$content" "$ranges"; then
         rm -f "$dir/.retry-ring" 2>/dev/null || true
-      elif [ "$(fm_path_age "$dir/.retry-ring")" -ge "$(fm_task_inbox_grace_secs)" ]; then
+      elif [ "$(fm_path_age "$dir/.retry-ring")" -ge "$grace" ]; then
         printf 'retry %s' "$dir/$base"
         return 0
       fi
@@ -584,14 +584,13 @@ fm_task_inbox_due_action() {  # <state-dir> <task-id>
     return 0
   fi
   base=${oldest##*/}
-  grace=$(fm_task_inbox_grace_secs)
   if [ "$(fm_path_age "$oldest")" -lt "$grace" ]; then
     printf 'quiet'
     return 0
   fi
   # A pane that reported active work restarts the grace from that observation.
   now=$(date +%s)
-  if seen=$(fm_task_inbox_busy_seen "$1" "$2" "$base") && [ "$((now - seen))" -lt "$grace" ]; then
+  if seen=$(fm_task_inbox_busy_seen "$1" "$2") && [ "$((now - seen))" -lt "$grace" ]; then
     printf 'quiet'
     return 0
   fi

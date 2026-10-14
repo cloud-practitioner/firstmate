@@ -562,8 +562,8 @@ inbox_steer_check() {  # <window> <task>
     || fm_composer_status_is_busy "$(window_harness "$w")" "$tail40"; then
     # Active work is never a strike: record the observation so the grace
     # restarts from it (bin/fm-task-inbox-lib.sh), and never type into the pane.
-    [ "$verb" != retry ] || return 0
-    if ! fm_task_inbox_record_busy "$STATE" "$task" "$rec"; then
+    if ! fm_task_inbox_record_busy "$STATE" "$task"; then
+      [ "$verb" != retry ] || return 0
       [ -f "$rec" ] || return 0
       reason="stale: $w (steering-inbox busy bookkeeping unwritable: ${rec%/*}/.busy-state cannot be written while $rec stays unhandled; inspect the inbox directory)"
       verb=escalate

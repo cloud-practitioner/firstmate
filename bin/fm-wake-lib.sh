@@ -2626,8 +2626,8 @@ fm_wake_status_mark_current() {  # <state> <status-file>
 # Returns 0 appended and self-announced, 1 appended but left for the watcher
 # (the safe direction), 2 the append itself failed.
 fm_wake_status_append_self_announced() {  # <state> <status-file> <line>...
-  local state=$1 file=$2 line appended=0 pre_size='' pre_ident='' post_size post_ident
-  local classified folded lag span_rc=0
+  local state=$1 file=$2 line pre_size='' pre_ident='' post_size post_ident
+  local classified folded lag span_rc=0 append_range append_start append_end append_ident complete
   local LC_ALL=C stamped=()
   shift 2
   _fm_wake_require_classify || return 1
@@ -2638,15 +2638,36 @@ fm_wake_status_append_self_announced() {  # <state> <status-file> <line>...
     pre_size=$(_fm_status_file_size "$file") || pre_size=''
     pre_ident=$(_fm_open_decisions_file_ident "$file") || pre_ident=''
   fi
-  printf '%s\n' "${stamped[@]}" >> "$file" || return 2
+  append_range=$(printf '%s\n' "${stamped[@]}" | perl -MFcntl=:DEFAULT -e '
+    my ($path) = @ARGV;
+    sysopen(my $file, $path, O_WRONLY | O_APPEND | O_CREAT | O_NOFOLLOW, 0666) or exit 2;
+    binmode STDIN; binmode $file;
+    my @stat = stat $file or exit 2;
+    exit 2 unless -f _;
+    defined(sysseek($file, 0, 1)) or exit 2;
+    local $/;
+    my $bytes = <STDIN>;
+    defined($bytes) && length($bytes) or exit 2;
+    my $written = syswrite($file, $bytes);
+    defined($written) && $written > 0 or exit 2;
+    my $end = sysseek($file, 0, 1);
+    defined($end) or exit 2;
+    my $complete = $written == length($bytes) ? 1 : 0;
+    close($file) or $complete = 0;
+    printf "%s\t%s\t%s:%s\t%s", $end - $written, $end, $stat[0], $stat[1], $complete;
+  ' "$file") || return 2
+  IFS=$'\t' read -r append_start append_end append_ident complete <<EOF
+$append_range
+EOF
+  post_ident=$(_fm_open_decisions_file_ident "$file") || return 1
+  case "$post_ident" in "weak:$append_ident"|"strong:$append_ident:"*) ;; *) return 1 ;; esac
+  status_home_appends_record "$file" "$append_start" "$append_end" || return 1
+  [ "$complete" = 1 ] || return 2
   case "$pre_size" in ''|*[!0-9]*) return 1 ;; esac
   post_size=$(_fm_status_file_size "$file") || return 1
-  post_ident=$(_fm_open_decisions_file_ident "$file") || return 1
   case "$post_size" in ''|*[!0-9]*) return 1 ;; esac
   [ -n "$pre_ident" ] && [ "$post_ident" = "$pre_ident" ] || return 1
-  for line in "${stamped[@]}"; do appended=$((appended + ${#line} + 1)); done
-  [ "$post_size" -eq $((pre_size + appended)) ] || return 1
-  status_home_appends_record "$file" "$pre_size" "$post_size" || return 1
+  [ "$append_start" -eq "$pre_size" ] && [ "$post_size" -eq "$append_end" ] || return 1
   classified=$(fm_wake_signal_seen_size "$state" "$file")
   if [ "$classified" != "$pre_size" ]; then
     folded=$(status_open_decisions_cursor_offset "$file") || folded=0
