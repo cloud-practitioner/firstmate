@@ -1,241 +1,295 @@
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane get w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane get w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane get w1:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	session list --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane get w1:p1
-fm-lab-ownership-1252166-29972	agent get w1:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane read w1:p1 --source recent --lines 200
-fm-lab-ownership-1252166-29972	tab list --workspace w1
-fm-lab-ownership-1252166-29972	pane list --workspace w1
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	agent get w1:p2
-fm-lab-ownership-1252166-29972	tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/other --label fm-legacy --no-focus
-fm-lab-ownership-1252166-29972	pane list --workspace w1
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	agent get w1:p2
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	tab close w1:t2
-fm-lab-ownership-1252166-29972	tab list --workspace w1
-fm-remote	pane process-info --pane w1:p1
-fm-remote	status --json
-fm-remote	pane process-info --pane w1:p1
-fm-remote	pane process-info --pane w1:p1
-fm-remote	pane get w1:p1
-fm-remote	agent get w1:p1
-fm-remote	status --json
-fm-remote	pane process-info --pane w1:p1
-fm-remote	pane process-info --pane w1:p1
-fm-remote	status --json
-fm-remote	pane process-info --pane w1:p1
-fm-remote	pane read w1:p1 --source recent --lines 200
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	workspace list
-fm-lab-ownership-1252166-29972	workspace create --cwd /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/project --label firstmate --no-focus
-fm-lab-ownership-1252166-29972	tab list --workspace w2
-fm-lab-ownership-1252166-29972	tab create --workspace w2 --cwd /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/project --label fm-worker --no-focus
-fm-lab-ownership-1252166-29972	tab list --workspace w2
-fm-lab-ownership-1252166-29972	pane list --workspace w2
-fm-lab-ownership-1252166-29972	agent get w2:p1
-fm-lab-ownership-1252166-29972	pane close w2:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane run w2:p2 treehouse get
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane get w2:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane get w2:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane get w2:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane run w2:p2 cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-4949b8/1/project'
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane get w2:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane get w2:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane read w1:p2 --source recent --lines 200
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane read w2:p2 --source recent --lines 200
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane read w2:p2 --source recent --lines 200
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane run w2:p2 export GOTMPDIR=/tmp/fm-worker/gotmp
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane run w2:p2 export COMPACT_ADVISER_DISABLE=1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane run w2:p2 export FM_TASK_ID=worker
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane send-text w2:p2 . '/tmp/fm-worker+72a119f9b611bc3777366e0fff95adf63685129ae0377c7da8441b8763de52b7/launch.s1791923932.1256102.11963.sh'
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane send-keys w2:p2 enter
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane get w2:p2
-fm-lab-ownership-1252166-29972	agent get w2:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane get w2:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	workspace list
-fm-lab-ownership-1252166-29972	tab list --workspace w2
-fm-lab-ownership-1252166-29972	pane list --workspace w2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p2
-fm-lab-ownership-1252166-29972	tab create --workspace w2 --cwd /home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-4949b8/1/project --label fm-worker --no-focus
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane get w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane run w2:p3 cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4VCZ5SABZQ0DS1NRJYTK9W3/.test-live.hYwDb9/pool/.treehouse/project-4949b8/1/project'
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane get w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane get w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w1:p1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane read w1:p2 --source recent --lines 200
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane get w1:p2
-fm-lab-ownership-1252166-29972	pane read w2:p3 --source recent --lines 200
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane read w2:p3 --source recent --lines 200
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	agent get w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane run w2:p3 export GOTMPDIR=/tmp/fm-worker/gotmp
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane run w2:p3 export COMPACT_ADVISER_DISABLE=1
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane run w2:p3 export FM_TASK_ID=worker
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane send-text w2:p3 . '/tmp/fm-worker+72a119f9b611bc3777366e0fff95adf63685129ae0377c7da8441b8763de52b7/launch.s1791923939.1261080.31060.sh'
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane send-keys w2:p3 enter
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	api schema --json
-fm-lab-ownership-1252166-29972	session list --json
-fm-lab-ownership-1252166-29972	agent get w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane read w2:p3 --source visible --format ansi
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	agent get w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane read w2:p3 --source visible --format ansi
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	pane process-info --pane w2:p3
-fm-lab-ownership-1252166-29972	agent get w2:p3
-fm-lab-ownership-1252166-29972	status --json
-fm-lab-ownership-1252166-29972	status --json
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane get w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+pane read w1:p1 --source recent --lines 200 
+pane process-info --pane w1:p1 
+pane get w1:p1 
+agent get w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane get w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane get w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+status --json 
+session list --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+pane read w1:p1 --source recent --lines 200 
+status --json 
+api schema --json 
+session list --json 
+agent get w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+status --json 
+api schema --json 
+session list --json 
+agent get w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+tab list --workspace w1 
+tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF --label fm-legacy --no-focus 
+tab list --workspace w1 
+pane list --workspace w1 
+pane get w1:p2 
+pane get w1:p2 
+agent get w1:p2 
+tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF --label fm-legacy --no-focus 
+pane list --workspace w1 
+pane get w1:p2 
+pane get w1:p2 
+agent get w1:p2 
+pane get w1:p2 
+tab close w1:t2 
+tab list --workspace w1 
+status --json 
+status --json 
+workspace list 
+tab list --workspace w1 
+tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ/project --label fm-spawned --no-focus 
+status --json 
+pane run w1:p4 treehouse\ get 
+status --json 
+pane get w1:p4 
+status --json 
+pane get w1:p4 
+status --json 
+pane get w1:p4 
+status --json 
+pane run w1:p4 cd\ --\ \'/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/pool/.treehouse/project-02ea05/1/project\' 
+status --json 
+pane get w1:p4 
+pane process-info --pane w1:p4 
+pane get w1:p2 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p1 
+pane get w1:p2 
+pane get w1:p4 
+pane get w1:p1 
+status --json 
+status --json 
+status --json 
+pane process-info --pane w1:p1 
+pane get w1:p2 
+status --json 
+pane get w1:p2 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p4 
+pane get w1:p2 
+pane read w1:p4 --source recent --lines 200 
+status --json 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p1 
+status --json 
+pane read w1:p2 --source recent --lines 200 
+pane get w1:p2 
+pane get w1:p2 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p1 
+pane read w1:p1 --source recent --lines 200 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+status --json 
+status --json 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p1 
+pane read w1:p4 --source recent --lines 200 
+pane read w1:p1 --source recent --lines 200 
+status --json 
+status --json 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p1 
+status --json 
+status --json 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p1 
+status --json 
+status --json 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p1 
+agent get w1:p4 
+agent get w1:p1 
+status --json 
+pane process-info --pane w1:p4 
+pane run w1:p4 export\ GOTMPDIR=/tmp/fm-spawned/gotmp 
+status --json 
+pane process-info --pane w1:p4 
+pane run w1:p4 export\ COMPACT_ADVISER_DISABLE=1 
+status --json 
+pane process-info --pane w1:p4 
+pane run w1:p4 export\ FM_TASK_ID=spawned 
+status --json 
+pane process-info --pane w1:p4 
+pane send-text w1:p4 .\ \'/tmp/fm-spawned+3e6cd902bb81ea4071c9f1f12edc24744b34606fef2dcf253f85aba569b9e736/launch.s1791982552.1532479.7196.sh\' 
+status --json 
+pane process-info --pane w1:p4 
+pane send-keys w1:p4 enter 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p4 
+pane process-info --pane w1:p4 
+pane get w1:p4 
+status --json 
+pane process-info --pane w1:p4 
+pane get w1:p4 
+status --json 
+status --json 
+workspace list 
+tab list --workspace w1 
+tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/pool/.treehouse/project-02ea05/1/project --label fm-spawned --no-focus 
+status --json 
+pane get w1:p5 
+status --json 
+pane run w1:p5 cd\ --\ \'/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/pool/.treehouse/project-02ea05/1/project\' 
+status --json 
+pane get w1:p5 
+pane process-info --pane w1:p5 
+pane get w1:p2 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p5 
+pane get w1:p2 
+pane get w1:p1 
+status --json 
+status --json 
+status --json 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane get w1:p2 
+pane process-info --pane w1:p5 
+pane get w1:p5 
+pane get w1:p2 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p5 
+status --json 
+status --json 
+status --json 
+pane get w1:p2 
+pane read w1:p2 --source recent --lines 200 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p5 
+pane get w1:p2 
+pane read w1:p1 --source recent --lines 200 
+pane read w1:p5 --source recent --lines 200 
+pane get w1:p2 
+status --json 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p5 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p5 
+status --json 
+status --json 
+pane process-info --pane w1:p5 
+pane process-info --pane w1:p1 
+pane read w1:p5 --source recent --lines 200 
+pane read w1:p1 --source recent --lines 200 
+status --json 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p5 
+pane process-info --pane w1:p5 
+pane process-info --pane w1:p1 
+status --json 
+status --json 
+pane process-info --pane w1:p5 
+pane process-info --pane w1:p1 
+status --json 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p5 
+agent get w1:p5 
+agent get w1:p1 
+status --json 
+pane process-info --pane w1:p5 
+agent get w1:p5 
+status --json 
+pane process-info --pane w1:p5 
+pane run w1:p5 export\ GOTMPDIR=/tmp/fm-spawned/gotmp 
+status --json 
+pane process-info --pane w1:p5 
+pane run w1:p5 export\ COMPACT_ADVISER_DISABLE=1 
+status --json 
+pane process-info --pane w1:p5 
+pane run w1:p5 export\ FM_TASK_ID=spawned 
+status --json 
+pane process-info --pane w1:p5 
+pane send-text w1:p5 .\ \'/tmp/fm-spawned+3e6cd902bb81ea4071c9f1f12edc24744b34606fef2dcf253f85aba569b9e736/launch.s1791982557.1540964.21331.sh\' 
+status --json 
+pane process-info --pane w1:p5 
+pane send-keys w1:p5 enter 
+pane process-info --pane w1:p5 
+pane process-info --pane w1:p5 
+tab list --workspace w1 
+tab create --workspace w1 --cwd /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ/cleanup-worktree --label fm-cleanup --no-focus 
+pane process-info --pane w1:p6 
+pane process-info --pane w1:p6 
+pane get w1:p6 
+pane process-info --pane w1:p6 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+RACE_STOP after second ownership process read
+status --json 
+status --json 
+status --json 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+pane read w1:p1 --source visible --format ansi 
+status --json 
+pane process-info --pane w1:p1 
+agent get w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+pane process-info --pane w1:p1 
+status --json 
+pane process-info --pane w1:p1 
+pane read w1:p1 --source visible --format ansi 
+RACE_STOP after viewport, before lazy identity read
+status --json 

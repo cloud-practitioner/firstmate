@@ -1,0 +1,91 @@
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65dcc730b22091","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+{"id":"cli:tab:rename","result":{"tab":{"agent_status":"unknown","focused":true,"label":"fm-a","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"tab_info"}}
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":1529892,"foreground_processes":[{"argv":["/bin/zsh"],"cmdline":"/bin/zsh","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF","name":"zsh","pid":1529892}],"pane_id":"w1:p1","shell_pid":1529892},"type":"pane_process_info"}}
+original target=fm-lab-e:w1:p1 identity=proc:1529892:98dc3aa2-1c2a-4d4f-acab-2be9a15a9c5b:3437124
+actual portable fallback with unavailable proc=ps:1529892:Wed Oct 14 12:55:44 2026
+portable identity accepted: pid=1529892 ps=Wed Oct 14 12:55:44 2026 recorded=Wed Oct 14 12:55:45 2026
+
+SCENARIO reset: destroy session state, keep durable task metadata, reuse address and label/cwd
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65dcc731e95841","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+{"id":"cli:tab:rename","result":{"tab":{"agent_status":"unknown","focused":true,"label":"fm-a","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"tab_info"}}
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":1530349,"foreground_processes":[{"argv":["/bin/zsh"],"cmdline":"/bin/zsh","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF","name":"zsh","pid":1530349}],"pane_id":"w1:p1","shell_pid":1530349},"type":"pane_process_info"}}
+recycled target=fm-lab-e:w1:p1 old=proc:1529892:98dc3aa2-1c2a-4d4f-acab-2be9a15a9c5b:3437124 new=proc:1530349:98dc3aa2-1c2a-4d4f-acab-2be9a15a9c5b:3437251
+selected old task recovery state=missing
+operation=fm_backend_target_exists rc=1
+operation=fm_backend_capture rc=1
+operation=fm_backend_visible_capture rc=1
+operation=fm_backend_send_key rc=1
+operation=fm_backend_send_text_submit rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the requested message WILL still be sent.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: key 'Enter' not sent to fm-lab-e:w1:p1 (herdr send failed; tried meta=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ/state/a.meta; backend=from-meta)
+operation=env rc=1
+foreign draft unchanged and unexecuted; replacement identity preserved
+touch '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ/forbidden-input'%
+01M4X6RD5MP249BGX9S29RM3DF on  HEAD [?]
+❯ touch '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ/forbidden-input'
+touch '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ/forbidden-input'%
+01M4X6RD5MP249BGX9S29RM3DF on  HEAD [?]
+❯ touch '/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ/forbidden-input'
+SCENARIO push: stale paused claimant sorts before the bound blocked task
+accepted transition=w1:p1			blocked	
+stale: fm-lab-e:w1:p1 (herdr: agent blocked - waiting on human, escalated immediately, not via wedge timer)
+wake queue:
+1791982548	1	stale	fm-lab-e:w1:p1	stale: fm-lab-e:w1:p1 (herdr: agent blocked - waiting on human, escalated immediately, not via wedge timer)
+bound status offset=25; stale status marker absent
+
+SCENARIO streamed push: subscribed idle pane later becomes blocked
+streamed transition=w1:p1	w1		blocked	claude
+stale: fm-lab-e:w1:p1 (herdr: agent blocked - waiting on human, escalated immediately, not via wedge timer)
+stream bound status offset=57; stale status marker absent
+
+SCENARIO legacy husk: close-and-replace an identity-free dead pane
+legacy pane=w1:p2
+replacement pane=w1:p3
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF","pane_id":"w1:p3","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t3","terminal_id":"term_65dcc7348bcf33","workspace_id":"w1"},"type":"pane_info"}}
+
+SCENARIO spawn/relaunch: real custom shell worker publishes its pane root identity
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ/data/spawned/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+spawned spawned harness=sh kind=scout window=fm-lab-e:w1:p4 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/pool/.treehouse/project-02ea05/1/project
+fresh target=fm-lab-e:w1:p4 published=proc:1532838:98dc3aa2-1c2a-4d4f-acab-2be9a15a9c5b:3437636 live=proc:1532838:98dc3aa2-1c2a-4d4f-acab-2be9a15a9c5b:3437636
+{"id":"cli:pane:close","result":{"type":"ok"}}
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+spawned spawned harness=sh kind=scout window=fm-lab-e:w1:p5 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/pool/.treehouse/project-02ea05/1/project
+rebound target=fm-lab-e:w1:p5 published=proc:1542154:98dc3aa2-1c2a-4d4f-acab-2be9a15a9c5b:3438307 live=proc:1542154:98dc3aa2-1c2a-4d4f-acab-2be9a15a9c5b:3438307
+
+SCENARIO teardown: foreign process in recorded worktree blocks destructive cleanup
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+REFUSED: foreign herdr pane fm-lab-e:w1:p6 has a process in /home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/.v/fm-lab.0KsUZJ/cleanup-worktree; preserving its processes, worktree, and task cleanup records.
+operation=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4X6RD5MP249BGX9S29RM3DF/bin/fm-teardown.sh rc=1
+foreign pane=w1:p6 identity=proc:1544611:98dc3aa2-1c2a-4d4f-acab-2be9a15a9c5b:3438545; unlanded file and task metadata retained
+
+SCENARIO busy probe race: stop server after the running/ownership checks, before native status
+busy after stop-before-native-status=unknown
+
+SCENARIO passive probes: stopped server remains stopped
+composer=unknown
+busy=unknown
+operation=fm_backend_visible_capture rc=1
+server.running=false after all passive probes
+
+SCENARIO composer race: Pi-shaped terminal fixture, stop after viewport capture
+composer fixture baseline=empty
+composer after stop-after-viewport=unknown
+server.running=false after lazy composer identity read
+
+ALL CORE LIVE SCENARIOS PASSED
+cleanup exit=0; named lab removed; default-session tripwire verified

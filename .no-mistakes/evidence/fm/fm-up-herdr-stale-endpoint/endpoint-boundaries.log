@@ -1,4 +1,5 @@
 ok - dispatchers revalidate the selected binding at their internal boundary
+ok - viewport, composer and busy probes never start a stopped server, including lazy Pi identity reads
 ok - submit settlement and confirmation resets neither read nor modify foreign drafts
 ok - missing boot identity uses drift-tolerant ps, never partial proc
 ok - flat, projected, and recursive cleanup preserve foreign pane processes
@@ -13,4 +14,6 @@ ok - deferred husk cleanup preserves ownership changes while ordinary replacemen
 ok - published fresh and rebound launches guard text, Enter, and native session reads
 ok - proc component loss is unreadable unless another recorded component proves a mismatch
 ok - native reconnect levels and stream edges validate the selected home before wakes or marker changes
+ok - a failed Treehouse return does not fall back to deleting a worktree a foreign pane now uses
+ok - reconnect and stream push handling uses the bound claimant for waits, wakes, dedupe, and status bookkeeping
 ok - secondmate recovery cannot borrow a competing binding after a reset during lock acquisition
