@@ -450,25 +450,72 @@ fm_busy_lines_match() {  # [harness]
 }
 
 fm_composer_status_is_busy() {
-  local harness=$1 screen=$2 row='' prompt glyph index
+  local harness=$1 screen=$2 row='' prompt glyph='' index regex
   local status_re='^•[[:space:]]+.+[[:space:]]+\([0-9]+[smh]([[:space:]]+[0-9]+[smh])*[[:space:]]+•[[:space:]]+[^)]+\)$'
-  [ "$harness" = codex ] || return 1
+  case "$harness" in codex|kimi|claude|omp|devin) ;; *) return 1 ;; esac
   _fm_composer_scan_screen "$screen" '' 1
   _fm_composer_select_cursorless "$screen" || return 1
-  [ "$FM_COMPOSER_SELECTED_KIND" = bare ] || return 1
-  prompt=$(_fm_composer_screen_row "$FM_COMPOSER_SELECTED_FIRST" "$screen")
-  fm_composer_normalize_trim_var prompt
-  fm_composer_leading_agent_glyph_var glyph "$prompt" || return 1
-  [ "$glyph" = '›' ] || return 1
-  index=$((FM_COMPOSER_SELECTED_FIRST - 1))
-  while [ "$index" -ge 0 ]; do
-    row=$(_fm_composer_screen_row "$index" "$screen")
-    fm_composer_normalize_trim_var row
-    [ -z "$row" ] || break
-    index=$((index - 1))
-  done
-  [[ "$row" =~ $status_re ]] || return 1
-  printf '%s' "$row" | fm_busy_lines_match "$harness"
+  case "$FM_COMPOSER_SELECTED_KIND" in
+    bare)
+      prompt=$(_fm_composer_screen_row "$FM_COMPOSER_SELECTED_FIRST" "$screen")
+      fm_composer_normalize_trim_var prompt
+      fm_composer_leading_agent_glyph_var glyph "$prompt" || return 1
+      index=$((FM_COMPOSER_SELECTED_FIRST - 1))
+      ;;
+    box)
+      [ "$FM_COMPOSER_SELECTED_AMBIG" = 0 ] || return 1
+      glyph=$FM_COMPOSER_SCAN_BOX_GLYPH
+      index=$((FM_COMPOSER_SCAN_BOX_TOP - 1))
+      ;;
+    pi)
+      glyph=$FM_COMPOSER_SCAN_PI_GLYPH
+      index=$((FM_COMPOSER_SCAN_PI_OPEN - 1))
+      ;;
+    *) return 1 ;;
+  esac
+  case "$harness" in
+    codex)
+      [ "$FM_COMPOSER_SELECTED_KIND" = bare ] && [ "$glyph" = '›' ] || return 1
+      regex=$FM_DELIVERY_CODEX_BUSY_REGEX_DEFAULT
+      ;;
+    kimi)
+      [ "$FM_COMPOSER_SELECTED_KIND" = box ] || return 1
+      regex=$FM_DELIVERY_KIMI_BUSY_REGEX_DEFAULT
+      ;;
+    claude)
+      [ "$glyph" = '❯' ] || return 1
+      if [ "$FM_COMPOSER_SCAN_PI_PAIR_FOUND" = 1 ] \
+        && [ "$FM_COMPOSER_SELECTED_FIRST" -gt "$FM_COMPOSER_SCAN_PI_OPEN" ] \
+        && [ "$FM_COMPOSER_SELECTED_FIRST" -lt "$FM_COMPOSER_SCAN_PI_CLOSE" ]; then
+        index=$((FM_COMPOSER_SCAN_PI_OPEN - 1))
+      fi
+      regex=${FM_DELIVERY_CLAUDE_BUSY_REGEX_DEFAULT#*|}
+      ;;
+    omp)
+      [ "$FM_COMPOSER_SELECTED_KIND" = bare ] && [ "$glyph" = '❯' ] || return 1
+      row=$(_fm_composer_screen_row "$((FM_COMPOSER_SELECTED_LAST + 1))" "$screen")
+      _fm_composer_row_is_omp_status "$row" || return 1
+      regex=${FM_DELIVERY_OMP_BUSY_REGEX_DEFAULT#*|}
+      ;;
+    devin)
+      [ "$FM_COMPOSER_SELECTED_KIND" = bare ] && [ "$glyph" = '❭' ] || return 1
+      [ "$FM_COMPOSER_SELECTED_FIRST" -eq "$FM_COMPOSER_SELECTED_LAST" ] || return 1
+      row=$prompt
+      regex=${FM_DELIVERY_DEVIN_BUSY_REGEX_DEFAULT#*|}
+      ;;
+  esac
+  case "$harness" in
+    codex|kimi|claude)
+      while [ "$index" -ge 0 ]; do
+        row=$(_fm_composer_screen_row "$index" "$screen")
+        fm_composer_normalize_trim_var row
+        [ -z "$row" ] || break
+        index=$((index - 1))
+      done
+      ;;
+  esac
+  if [ "$harness" = codex ]; then [[ "$row" =~ $status_re ]] || return 1; fi
+  printf '%s' "$row" | grep -qiE "$regex"
 }
 
 # The prompt glyphs, each declared exactly once (see THE SAFETY RULE above).

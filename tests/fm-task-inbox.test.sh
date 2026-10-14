@@ -772,14 +772,17 @@ test_watcher_busy_again_defers_a_spent_ladder() {
   pass "watcher: a worker that is busy again is not escalated even with a spent ladder"
 }
 
-test_watcher_codex_composer_defers_doorbell() (
-  local mode=$1 dir rec delivery='' count=1 ladder check
-  dir=$(setup_watch_case "codex-composer-$mode")
-  fm_write_meta "$dir/state/t1.meta" "window=sess:fm-t1" "kind=ship" "harness=codex"
+test_watcher_composer_defers_doorbell() (
+  local mode=$1 harness=$2 dir rec delivery='' count=1 ladder check
+  dir=$(setup_watch_case "$harness-composer-$mode")
+  fm_write_meta "$dir/state/t1.meta" "window=sess:fm-t1" "kind=ship" "harness=$harness"
   unset FM_BUSY_REGEX
   export PATH="$dir/fakebin:$PATH" FM_STATE_OVERRIDE="$dir/state" FM_SEND_LOG="$dir/send.log"
   export FM_FAKE_TMUX_CAPTURE="$dir/busy.capture" FM_TASK_INBOX_GRACE_SECS=60 FM_TASK_INBOX_RING_MAX=3
-  printf 'some output\n\n• Working (6s • esc to interrupt)\n\n›\n\n? for shortcuts\n' > "$dir/busy.capture"
+  case "$harness" in
+    codex) printf 'some output\n\n• Working (6s • esc to interrupt)\n\n›\n\n? for shortcuts\n' ;;
+    kimi) printf 'some output\n\n  🌒 · Tip: Kimi is working\n╭────────────────────────╮\n│ >                      │\n╰────────────────────────╯\n' ;;
+  esac > "$dir/busy.capture"
   if [ "$mode" = retry ]; then
     delivery=fire-and-forget
     mkdir -p "$dir/config"
@@ -787,7 +790,7 @@ test_watcher_codex_composer_defers_doorbell() (
     export FM_CONFIG_OVERRIDE="$dir/config"
   fi
   rec=$(inbox_lib "$dir/state" fm_task_inbox_write "$dir/state" t1 "please continue" "$delivery")
-  age_path "$rec"
+  if [ "$mode" != grace ]; then age_path "$rec"; fi
   if [ "$mode" = retry ]; then
     inbox_lib "$dir/state" fm_task_inbox_mark_retry "$dir/state" t1 "$rec"
     age_path "$dir/state/t1.inbox/.retry-ring"
@@ -798,44 +801,45 @@ test_watcher_codex_composer_defers_doorbell() (
   ladder=$(cat "$dir/state/t1.inbox/.ring-state" 2>/dev/null || true)
   for check in 1 2 3; do
     bash -c '. "$1" && inbox_steer_check sess:fm-t1 t1' _ "$WATCH" > "$dir/check.out" 2>&1 \
-      || fail "Codex $mode check $check failed: $(cat "$dir/check.out")"
-    [ ! -s "$dir/state/.wake-queue" ] || fail "active Codex composer escalated during $mode check $check"
-    [ ! -s "$dir/send.log" ] || fail "active Codex composer was typed into during $mode check $check"
+      || fail "$harness $mode check $check failed: $(cat "$dir/check.out")"
+    [ ! -s "$dir/state/.wake-queue" ] || fail "active $harness composer escalated during $mode check $check"
+    [ ! -s "$dir/send.log" ] || fail "active $harness composer was typed into during $mode check $check"
     [ "$(cat "$dir/state/t1.inbox/.ring-state" 2>/dev/null || true)" = "$ladder" ] \
-      || fail "active Codex composer consumed a $mode delivery attempt"
+      || fail "active $harness composer consumed a $mode delivery attempt"
     if [ "$mode" = retry ]; then
-      [ -f "$dir/state/t1.inbox/.retry-ring" ] || fail "active Codex composer spent the retry"
+      [ -f "$dir/state/t1.inbox/.retry-ring" ] || fail "active $harness composer spent the retry"
     else
       [ "$(cut -f1 "$dir/state/t1.inbox/.busy-state" 2>/dev/null)" = 001.msg ] \
-        || fail "active Codex composer did not record its busy observation"
+        || fail "active $harness composer did not record its busy observation"
       [ "$(inbox_lib "$dir/state" fm_task_inbox_due_action "$dir/state" t1)" = quiet ] \
-        || fail "active Codex composer did not extend the grace"
+        || fail "active $harness composer did not extend the grace"
       age_busy_observation "$dir" 120
     fi
   done
+  age_path "$rec"
   export FM_FAKE_TMUX_CAPTURE
   FM_FAKE_TMUX_CAPTURE=$(idle_capture "$dir")
   for check in 1 2; do
     bash -c '. "$1" && inbox_steer_check sess:fm-t1 t1' _ "$WATCH" > "$dir/check.out" 2>&1 \
-      || fail "idle Codex $mode check failed: $(cat "$dir/check.out")"
+      || fail "idle $harness $mode check failed: $(cat "$dir/check.out")"
   done
   if [ "$mode" = escalate ]; then
-    [ ! -s "$dir/send.log" ] || fail "spent Codex ladder rang again"
+    [ ! -s "$dir/send.log" ] || fail "spent $harness ladder rang again"
     [ "$(grep -cF 'still unhandled after 3 doorbell delivery attempts with an idle pane' "$dir/state/.wake-queue")" = 1 ] \
-      || fail "idle Codex composer did not escalate exactly once past grace"
-    [ "$(cat "$dir/state/t1.inbox/.escalated")" = 001.msg ] || fail "Codex escalation was not recorded"
+      || fail "idle $harness composer did not escalate exactly once past grace"
+    [ "$(cat "$dir/state/t1.inbox/.escalated")" = 001.msg ] || fail "$harness escalation was not recorded"
   else
-    [ ! -s "$dir/state/.wake-queue" ] || fail "idle Codex $mode escalated prematurely"
+    [ ! -s "$dir/state/.wake-queue" ] || fail "idle $harness $mode escalated prematurely"
     [ "$(grep -cF 'Firstmate instruction waiting' "$dir/send.log")" = 1 ] \
-      || fail "idle Codex $mode did not ring exactly once"
+      || fail "idle $harness $mode did not ring exactly once"
     if [ "$mode" = retry ]; then
-      [ ! -e "$dir/state/t1.inbox/.retry-ring" ] || fail "idle Codex retry retained its mark"
+      [ ! -e "$dir/state/t1.inbox/.retry-ring" ] || fail "idle $harness retry retained its mark"
     else
-      [ "$(cut -f2 "$dir/state/t1.inbox/.ring-state")" = 2 ] || fail "idle Codex ring did not advance the ladder"
+      [ "$(cut -f2 "$dir/state/t1.inbox/.ring-state")" = 2 ] || fail "idle $harness ring did not advance the ladder"
     fi
   fi
-  [ -f "$rec" ] || fail "Codex $mode lost its unhandled instruction"
-  pass "watcher: Codex composer defers $mode without strikes and resumes recovery when idle"
+  [ -f "$rec" ] || fail "$harness $mode lost its unhandled instruction"
+  pass "watcher: $harness composer defers $mode without strikes and resumes recovery when idle"
 )
 
 test_watcher_ignores_busy_tokens_in_output() (
@@ -1532,9 +1536,14 @@ test_watcher_rerings_idle_pane_quietly
 test_watcher_busy_pane_extends_grace_without_strikes
 test_watcher_idle_past_grace_after_busy_still_rings_and_escalates
 test_watcher_busy_again_defers_a_spent_ladder
-test_watcher_codex_composer_defers_doorbell escalate || exit 1
-test_watcher_codex_composer_defers_doorbell ring || exit 1
-test_watcher_codex_composer_defers_doorbell retry || exit 1
+test_watcher_composer_defers_doorbell grace codex || exit 1
+test_watcher_composer_defers_doorbell escalate codex || exit 1
+test_watcher_composer_defers_doorbell ring codex || exit 1
+test_watcher_composer_defers_doorbell retry codex || exit 1
+test_watcher_composer_defers_doorbell grace kimi || exit 1
+test_watcher_composer_defers_doorbell escalate kimi || exit 1
+test_watcher_composer_defers_doorbell ring kimi || exit 1
+test_watcher_composer_defers_doorbell retry kimi || exit 1
 test_watcher_ignores_busy_tokens_in_output || exit 1
 test_watcher_observes_busy_during_every_grace
 test_watcher_busy_observation_resets_on_ack
