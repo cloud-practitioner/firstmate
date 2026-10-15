@@ -4,7 +4,8 @@
 # the empty|pending|pending-unproven|unknown verdict, shared by every
 # session-provider adapter (tmux via bin/fm-tmux-lib.sh, and
 # bin/backends/{herdr,orca,cmux,zellij}.sh) and by fm-spawn.sh's kimi
-# launch-readiness check.
+# launch-readiness check. fm-watch.sh also consumes the separate
+# fm_composer_status_is_busy activity predicate below.
 #
 # WHY THIS EXISTS (tasks fm-composer-shellglyph-safety and
 # fm-composer-thin-adapter-refactor-r1): the adapters each carried their own
@@ -336,7 +337,7 @@ fm_composer_strip_ghost() {
 }
 
 
-# --- Delivery-only rendered busy footers (backend-agnostic) -------------------
+# --- Rendered activity signatures (backend-agnostic) --------------------------
 #
 # These live here, in the ONE shared composer/delivery owner, rather than in any
 # single backend adapter, because every backend needs them for the SAME job:
@@ -345,12 +346,11 @@ fm_composer_strip_ghost() {
 # cmux, and orca run the same harnesses and face the same acknowledgement
 # problem.
 #
-# This is a DELIVERY guard, deliberately NOT a worker-state source. The semantic
-# busy contract - what firstmate records and supervises on - is owned by
-# bin/fm-busy-lib.sh, which forbids classifying a harness from rendered text.
-# Matching a footer to confirm a keystroke landed is a different question from
-# asking what a worker is doing, and the two must not be conflated.
-# Delivery-only rendered busy footers per harness. claude/codex: "esc to
+# fm_busy_lines_match is a DELIVERY guard, not a semantic worker-state source.
+# bin/fm-busy-lib.sh owns semantic classification and its source trust policy.
+# The separate fm_composer_status_is_busy predicate below reuses selected
+# signatures under its own composer-anchoring constraints.
+# Per-harness rendered signatures. claude/codex: "esc to
 # interrupt"; opencode: "esc interrupt"; pi: "Working..."; omp: "Working…"; grok: "Ctrl+c:cancel"; agy: "esc to cancel";
 # devin: "esc twice to interrupt" and its "❭ Guide Devin while it works" working composer.
 # Claude's current spinner has a rotating glyph and word, but every active-turn
@@ -447,6 +447,66 @@ fm_busy_lines_match() {  # [harness]
     esac
   fi
   [ -n "$regex" ] && printf '%s' "$lines" | grep -qiE "$regex"
+}
+
+# Positive current-composer activity evidence for inbox deferral only; never
+# semantic busy/idle truth or permission to type. Harness-specific anchoring
+# prevents ordinary output tokens from indefinitely postponing recovery.
+# Only built-in signatures are eligible, not FM_BUSY_REGEX overrides.
+# Unsupported or unproven shapes return 1.
+fm_composer_status_is_busy() {
+  local harness=$1 screen=$2 row='' prompt glyph='' index regex
+  local status_re='^•[[:space:]]+.+[[:space:]]+\([0-9]+[smh]([[:space:]]+[0-9]+[smh])*[[:space:]]+•[[:space:]]+[^)]+\)$'
+  case "$harness" in codex|kimi|omp|devin) ;; *) return 1 ;; esac
+  _fm_composer_scan_screen "$screen" '' 1
+  _fm_composer_select_cursorless "$screen" || return 1
+  case "$FM_COMPOSER_SELECTED_KIND" in
+    bare)
+      prompt=$(_fm_composer_screen_row "$FM_COMPOSER_SELECTED_FIRST" "$screen")
+      fm_composer_normalize_trim_var prompt
+      fm_composer_leading_agent_glyph_var glyph "$prompt" || return 1
+      index=$((FM_COMPOSER_SELECTED_FIRST - 1))
+      ;;
+    box)
+      [ "$FM_COMPOSER_SELECTED_AMBIG" = 0 ] || return 1
+      index=$((FM_COMPOSER_SCAN_BOX_TOP - 1))
+      ;;
+    *) return 1 ;;
+  esac
+  case "$harness" in
+    codex)
+      [ "$FM_COMPOSER_SELECTED_KIND" = bare ] && [ "$glyph" = '›' ] || return 1
+      regex=$FM_DELIVERY_CODEX_BUSY_REGEX_DEFAULT
+      ;;
+    kimi)
+      [ "$FM_COMPOSER_SELECTED_KIND" = box ] || return 1
+      regex=$FM_DELIVERY_KIMI_BUSY_REGEX_DEFAULT
+      ;;
+    omp)
+      [ "$FM_COMPOSER_SELECTED_KIND" = bare ] && [ "$glyph" = '❯' ] || return 1
+      row=$(_fm_composer_screen_row "$((FM_COMPOSER_SELECTED_LAST + 1))" "$screen")
+      _fm_composer_row_is_omp_status "$row" || return 1
+      regex=${FM_DELIVERY_OMP_BUSY_REGEX_DEFAULT#*|}
+      ;;
+    devin)
+      [ "$FM_COMPOSER_SELECTED_KIND" = bare ] && [ "$glyph" = '❭' ] || return 1
+      [ "$FM_COMPOSER_SELECTED_FIRST" -eq "$FM_COMPOSER_SELECTED_LAST" ] || return 1
+      row=$prompt
+      regex=${FM_DELIVERY_DEVIN_BUSY_REGEX_DEFAULT#*|}
+      ;;
+  esac
+  case "$harness" in
+    codex|kimi)
+      while [ "$index" -ge 0 ]; do
+        row=$(_fm_composer_screen_row "$index" "$screen")
+        fm_composer_normalize_trim_var row
+        [ -z "$row" ] || break
+        index=$((index - 1))
+      done
+      ;;
+  esac
+  if [ "$harness" = codex ]; then [[ "$row" =~ $status_re ]] || return 1; fi
+  printf '%s' "$row" | grep -qiE "$regex"
 }
 
 # The prompt glyphs, each declared exactly once (see THE SAFETY RULE above).

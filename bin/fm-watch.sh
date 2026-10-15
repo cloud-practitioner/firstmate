@@ -80,7 +80,7 @@
 #   stale: <window> (steering-inbox ladder bookkeeping unwritable: ...)
 #   stale: <window> (steering-inbox busy bookkeeping unwritable: ...)
 #                          steering-inbox recovery; bin/fm-task-inbox-lib.sh owns
-#                          delivery-attempt, busy-deferral, and unavailable-endpoint policy
+#                          delivery-attempt, busy-grace, and unavailable-endpoint policy
 #   check: <script>: <out> authenticated check output, always actionable
 #   check: process-event result captured: <keys>
 #                          a durably captured process-to-event result is queued
@@ -215,6 +215,8 @@ WATCH_HOME_EXISTED=0
 . "$SCRIPT_DIR/fm-pending-reply-lib.sh"
 # shellcheck source=bin/fm-busy-lib.sh
 . "$SCRIPT_DIR/fm-busy-lib.sh"
+# shellcheck source=bin/fm-composer-lib.sh
+. "$SCRIPT_DIR/fm-composer-lib.sh"
 # Steering-inbox loss detection: bin/fm-task-inbox-lib.sh owns the record,
 # doorbell, re-ring ladder, and unavailable-endpoint contracts; this watcher
 # supplies their live endpoint and busy checks plus wake emission
@@ -515,7 +517,7 @@ inbox_steer_escalate_unavailable() {  # <window> <task> <record>
 }
 
 # Steering-inbox loss detection, one cheap check per recorded window per poll.
-# bin/fm-task-inbox-lib.sh owns delivery, busy-deferral, retry, and escalation policy.
+# bin/fm-task-inbox-lib.sh owns delivery, busy-grace, retry, and escalation policy.
 # Endpoint and busy checks precede delivery so recovery never types into a busy,
 # dead, or missing worker; the ring helper protects pending composer text.
 # Normal retries keep the watcher blocking rather than waking firstmate.
@@ -525,22 +527,27 @@ inbox_steer_check() {  # <window> <task>
   local w=$1 task=$2 action verb rec count tail40 reason='' ring_rc backend agent_state
   action=$(fm_task_inbox_due_action "$STATE" "$task") || return 0
   verb=${action%% *}
-  [ "$verb" != quiet ] || return 0
   if [ "$verb" = retry ] && [ -n "$(status_own_open_decisions "$STATE/$task.status")" ]; then
     return 0
   fi
-  rec=${action#* }
   count=
   case "$verb" in
+    quiet)
+      rec=$(fm_task_inbox_oldest_unhandled "$STATE" "$task") || return 0
+      [ "$(cat "${rec%/*}/.escalated" 2>/dev/null || true)" != "${rec##*/}" ] || return 0
+      ;;
     escalate)
+      rec=${action#* }
       count=${rec##* }
       rec=${rec% *}
       ;;
+    *) rec=${action#* } ;;
   esac
   backend=$(window_backend "$w")
   agent_state=$(fm_backend_agent_state "$backend" "$w" "fm-$task" 2>/dev/null || true)
   case "$agent_state" in
     dead|missing)
+      [ "$verb" != quiet ] || return 0
       if [ "$verb" = retry ]; then
         fm_task_inbox_clear_retry "$STATE" "$task" "$rec" || true
       else
@@ -551,21 +558,20 @@ inbox_steer_check() {  # <window> <task>
   esac
   watcher_capture "$backend" "$w" 40 "$(window_label "$w")" || WATCHER_CAPTURE=
   tail40=$WATCHER_CAPTURE
-  if window_is_busy "$w" "$tail40"; then
-    [ "$verb" != retry ] || return 0
-    if ! count=$(fm_task_inbox_record_busy "$STATE" "$task" "$rec"); then
+  if window_is_busy "$w" "$tail40" \
+    || fm_composer_status_is_busy "$(window_harness "$w")" "$tail40"; then
+    # Active work is never a strike: record the observation so the grace
+    # restarts from it (bin/fm-task-inbox-lib.sh), and never type into the pane.
+    if ! fm_task_inbox_record_busy "$STATE" "$task"; then
+      [ "$verb" != retry ] || return 0
       [ -f "$rec" ] || return 0
       reason="stale: $w (steering-inbox busy bookkeeping unwritable: ${rec%/*}/.busy-state cannot be written while $rec stays unhandled; inspect the inbox directory)"
-    elif [ "$count" -ge "$(fm_task_inbox_busy_max)" ]; then
-      reason="stale: $w (unread firstmate instruction: stuck-busy after $count consecutive busy-deferred due doorbells; $rec stays unhandled and no doorbell was typed; inspect the worker)"
+      verb=escalate
     else
       return 0
     fi
-    verb=escalate
-  elif [ "$verb" != retry ] && ! fm_task_inbox_clear_busy "$STATE" "$task"; then
-    reason="stale: $w (steering-inbox busy bookkeeping unwritable: ${rec%/*}/.busy-state cannot be reset after a non-busy check; inspect the inbox directory)"
-    verb=escalate
   fi
+  [ "$verb" != quiet ] || return 0
   case "$verb" in
     ring)
       ring_rc=0

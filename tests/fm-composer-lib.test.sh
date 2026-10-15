@@ -1011,6 +1011,63 @@ test_selected_content_is_composer_scoped_and_wrap_normalized() {
   pass "fm_composer_extract_selected_content: scopes user content and excludes furniture"
 }
 
+test_verified_current_activity_is_harness_scoped() (
+  local locale phase screen harness
+  local box=$'╭────────────────────────╮\n│ >                      │\n╰────────────────────────╯'
+  unset FM_BUSY_REGEX
+  for locale in ambient C; do
+    [ "$locale" != C ] || export LC_ALL=C
+    for phase in 🌑 🌒 🌓 🌔 🌕 🌖 🌗 🌘; do
+      screen="transcript"$'\n\n'"  $phase · Tip: Kimi is working"$'\n'"$box"
+      fm_composer_status_is_busy kimi "$screen" || fail "Kimi $phase activity was rejected ($locale)"
+    done
+    for screen in \
+      $'ordinary response ending with 🌕\n'"$box" \
+      $'🌕 Full moon details\n'"$box" \
+      $'🌒·thinking\n'"$box" \
+      $'🌒 · thinking\nordinary output after the spinner\n'"$box" \
+      $'🌒 · thinking\n'"$box"$'\n\nnew output\n'"$box" \
+      '🌒 · thinking'; do
+      if fm_composer_status_is_busy kimi "$screen"; then fail "unanchored Kimi output counted as current activity ($locale)"; fi
+    done
+    screen=$'🌒 · thinking\n'"$box"
+    for harness in codex claude omp devin opencode pi pi-signed grok agy cursor muse gemini unknown ''; do
+      if fm_composer_status_is_busy "$harness" "$screen"; then fail "Kimi activity leaked into $harness ($locale)"; fi
+    done
+    screen=$'• Working (6s • esc to interrupt)\n\n›\n'
+    fm_composer_status_is_busy codex "$screen" || fail "Codex current activity was rejected ($locale)"
+    screen=$'source text: esc to interrupt\nesc to interrupt\n›\n'
+    if fm_composer_status_is_busy codex "$screen"; then fail "ordinary Codex output counted as activity ($locale)"; fi
+    for screen in \
+      $'Tests completed… (6s)\n\n❯\n' \
+      $'Tests completed… (6s)\n────────────────────\n❯\n────────────────────\n' \
+      $'Tests completed… (6s)\n╭────────────────────────╮\n│ ❯                      │\n╰────────────────────────╯' \
+      $'✳ Working… (6s)\n\n❯\n'; do
+      if fm_composer_status_is_busy claude "$screen"; then fail "Claude elapsed output counted as activity ($locale)"; fi
+    done
+    screen=$'esc to interrupt\n\n❯\n'
+    if fm_composer_status_is_busy claude "$screen"; then fail "Claude output token counted as activity ($locale)"; fi
+    screen=$'transcript\n\n❯\n ⠧ 11s  · ◔ GPT-6-Astra · ◫ 15.4%/272K'
+    fm_composer_status_is_busy omp "$screen" || fail "OMP current spinner furniture was rejected ($locale)"
+    screen=$'transcript\n\n❯\n π  · ◔ GPT-6-Astra · ◫ 15.4%/272K'
+    if fm_composer_status_is_busy omp "$screen"; then fail "idle OMP furniture counted as activity ($locale)"; fi
+    screen=$'transcript\n\n❭ Guide Devin while it works'
+    fm_composer_status_is_busy devin "$screen" || fail "Devin working composer was rejected ($locale)"
+    screen=$'❭ Guide Devin while it works\n\ncompleted output\n❭'
+    if fm_composer_status_is_busy devin "$screen"; then fail "old Devin composer counted as activity ($locale)"; fi
+    screen=$'Working...\n\n❯'
+    for harness in opencode pi pi-signed grok agy cursor muse gemini unknown ''; do
+      if fm_composer_status_is_busy "$harness" "$screen"; then fail "$harness accepted an unverified activity signal ($locale)"; fi
+    done
+    screen=$'not a verified spinner\n'"$box"
+    if FM_BUSY_REGEX='not a verified spinner' fm_composer_status_is_busy kimi "$screen"; then
+      fail "a regex override manufactured verified current activity ($locale)"
+    fi
+  done
+  pass "verified current activity reuses harness signals only at the current composer or status furniture"
+)
+
+test_verified_current_activity_is_harness_scoped || exit 1
 test_bare_shell_glyphs_are_unknown
 test_stripped_unbordered_content_uses_plain_content
 test_bare_shell_prompt_with_command_is_not_empty

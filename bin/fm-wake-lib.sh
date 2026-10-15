@@ -166,6 +166,27 @@ fm_watcher_lock_unheld() {
   [ -z "$pid" ]
 }
 
+# 0 when two recorded paths name the same place, even when one was recorded
+# through a symlinked directory and the other through its physical path. Literal
+# equality is the fast path. Otherwise directories are resolved with pwd -P;
+# non-directory paths must also have identical final components. An unresolvable
+# directory prevents a nonliteral match.
+fm_same_physical_path() {  # <path-a> <path-b>
+  local a=$1 b=$2 da db
+  [ -n "$a" ] && [ -n "$b" ] || return 1
+  [ "$a" = "$b" ] && return 0
+  if [ -d "$a" ] && [ -d "$b" ]; then
+    da=$(cd "$a" 2>/dev/null && pwd -P) || return 1
+    db=$(cd "$b" 2>/dev/null && pwd -P) || return 1
+    [ "$da" = "$db" ]
+    return
+  fi
+  [ "${a##*/}" = "${b##*/}" ] || return 1
+  da=$(cd "${a%/*}" 2>/dev/null && pwd -P) || return 1
+  db=$(cd "${b%/*}" 2>/dev/null && pwd -P) || return 1
+  [ "$da" = "$db" ]
+}
+
 FM_WATCHER_MATCHED_IDENTITY=
 fm_watcher_lock_matches_pid() {
   local state=$1 watch_path=$2 pid=$3 home=${4:-$FM_HOME} lockdir lock_home lock_path lock_identity current_identity
@@ -174,8 +195,8 @@ fm_watcher_lock_matches_pid() {
   lock_home=$(cat "$lockdir/fm-home" 2>/dev/null || true)
   lock_path=$(cat "$lockdir/watcher-path" 2>/dev/null || true)
   lock_identity=$(cat "$lockdir/pid-identity" 2>/dev/null || true)
-  [ "$lock_home" = "$home" ] || return 1
-  [ "$lock_path" = "$watch_path" ] || return 1
+  fm_same_physical_path "$lock_home" "$home" || return 1
+  fm_same_physical_path "$lock_path" "$watch_path" || return 1
   [ -n "$lock_identity" ] || return 1
   current_identity=$(fm_pid_identity "$pid") || return 1
   [ "$current_identity" = "$lock_identity" ] || return 1
