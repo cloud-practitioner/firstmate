@@ -1,2 +1,3 @@
-session=fm-lab-merge-check-2944221-5155
+session=fm-lab-merge9-1683856-7504
 fm-herdr-lab: fleet-state tripwire requires exactly one running default session
+prepare exit=1

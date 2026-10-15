@@ -1,0 +1,20 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/watcher-recovery
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/watcher-recovery
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-watch-checkpoint.sh --seconds 1
+checkpoint: no actionable wake within 1s
+[exit 124]
+$ bash -c '. "$1"; fm_wake_append check local-proof "check: disposable recovery proof"' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-wake-lib.sh
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-watch-checkpoint.sh --seconds 4
+check: rearm-resurface
+[exit 0]
+Persisted watcher-recovery/state/.watcher-down:
+announced:downtime:2184228.1792078219.ITSxAt
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-watch-checkpoint.sh --seconds 1
+checkpoint: no actionable wake within 1s
+[exit 124]
+Persisted watcher-recovery/state/.wake-queue:
+1792078220	1	check	local-proof	check: disposable recovery proof
+

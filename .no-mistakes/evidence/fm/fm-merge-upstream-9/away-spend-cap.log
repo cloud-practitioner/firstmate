@@ -1,0 +1,81 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/away-spend-cap
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/away-spend-cap
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh enter --words 'Do not publish; record the disposable away window.'
+Away posture recorded at 2026-10-15T15:30:16Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 4 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-15T15:30:16Z
+  expected return: not given
+  spend cap: 4 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    Do not publish; record the disposable away window.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh field spend_max_concurrent_workers
+4
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh archive
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/away-spend-cap/state/afk-contracts/1792078216.afk-contract
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh live-workers
+6
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh enter --words 'Keep existing workers within the current spend window.'
+Away posture recorded at 2026-10-15T15:30:17Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 6 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-15T15:30:17Z
+  expected return: not given
+  spend cap: 6 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    Keep existing workers within the current spend window.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh field spend_max_concurrent_workers
+6
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh enter --words 'Explicitly lower the disposable cap.' --spend 2
+fm-afk-contract: replaced the earlier away posture; its record is archived at /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/away-spend-cap/state/afk-contracts/1792078217-superseded-1792078217.afk-contract
+Away posture recorded at 2026-10-15T15:30:17Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 2 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-15T15:30:17Z
+  expected return: not given
+  spend cap: 2 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    Explicitly lower the disposable cap.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh field spend_max_concurrent_workers
+2
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh enter --words 'Invalid cap must not replace the mandate.' --spend 0
+fm-afk-contract: --spend must be a positive integer, got '0'
+[exit 2]
+Persisted away-spend-cap/state/.afk-contract:
+version: 2
+entered: 2026-10-15T15:30:17Z
+entered_epoch: 1792078217
+expected_return: -
+reach_channels: none
+reach_announced: No phone channel is configured; anything that needs you waits for your return.
+spend_max_concurrent_workers: 2
+confirmed: 2026-10-15T15:30:17Z
+confirmed_epoch: 1792078217
+words: |-
+  Explicitly lower the disposable cap.
+
+$ git init -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/away-spend-cap/projects/capped
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-spawn.sh queued-worker /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/away-spend-cap/projects/capped --mode local-only --yolo off --harness claude
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/away-spend-cap
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  7 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: spawn refused - the away-posture record caps concurrent workers at 2 and 6 ordinary task(s) are live in this home; task queued-worker stays queued for the captain's return or for a worker to finish (spend cap: bin/fm-afk-contract.sh)
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-afk-contract.sh archive
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/away-spend-cap/state/afk-contracts/1792078217.afk-contract
+[exit 0]

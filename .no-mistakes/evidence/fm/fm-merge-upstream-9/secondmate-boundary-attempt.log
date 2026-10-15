@@ -1,0 +1,4 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/boundary-main
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/boundary-main
+error: secondmate home cannot be inside the firstmate repo: /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/boundary-child
+secondmate fixture placement exit=1

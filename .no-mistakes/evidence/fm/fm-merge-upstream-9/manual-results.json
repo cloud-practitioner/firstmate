@@ -1,0 +1,44 @@
+[
+  {
+    "name": "away-spend-cap",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M50214HDFMDEF0MYNHAD98QW/away-spend-cap.log"
+  },
+  {
+    "name": "forgejo-delivery-contract",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M50214HDFMDEF0MYNHAD98QW/forgejo-delivery-contract.log"
+  },
+  {
+    "name": "upstream-authority",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M50214HDFMDEF0MYNHAD98QW/upstream-authority.log"
+  },
+  {
+    "name": "busy-incarnation",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M50214HDFMDEF0MYNHAD98QW/busy-incarnation.log"
+  },
+  {
+    "name": "git-hook-chaining",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M50214HDFMDEF0MYNHAD98QW/git-hook-chaining.log"
+  },
+  {
+    "name": "watcher-recovery",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M50214HDFMDEF0MYNHAD98QW/watcher-recovery.log"
+  },
+  {
+    "name": "unsupported-contributions",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M50214HDFMDEF0MYNHAD98QW/unsupported-contributions.log"
+  }
+]

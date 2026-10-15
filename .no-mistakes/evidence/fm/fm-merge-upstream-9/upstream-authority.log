@@ -1,0 +1,24 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/upstream-authority
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/upstream-authority
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-role.sh report
+fm-role: user (default)
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW
+refused: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW upstream-consent github.com/cloud-practitioner/firstmate
+authorized: task consent for github.com/cloud-practitioner/firstmate
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW upstream-consent github.com/kunchenguid/firstmate
+refused: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW upstream-consent github.com/unrelated/firstmate
+refused: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-role.sh report
+fm-role: maintainer github.com/cloud-practitioner/firstmate (local)
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-role.sh check /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW
+authorized: maintainer scope github.com/cloud-practitioner/firstmate
+[exit 0]

@@ -1,0 +1,33 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining
+[exit 0]
+$ git init -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/projects/repo
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-git-strip-ai-trailers.sh install /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/projects/repo
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-git-strip-ai-trailers.sh env-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/hook-env.sh
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/projects/repo add file.txt
+[exit 0]
+$ bash -c 'set -e; . "$1"; cd "$2"; git commit -m "fix: live hook chaining" --trailer "Co-authored-by: CommandCodeBot <noreply@commandcode.ai>" --trailer "Co-authored-by: Jane Doe <jane@example.invalid>"' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/hook-env.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/projects/repo
+[master (root-commit) baf68c2] fix: live hook chaining
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file.txt
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/projects/repo log -1 --format=fuller
+commit baf68c2dd7394af8d9e1ce33a17d04d8454ef5dc
+Author:     Live Validation <validation@example.invalid>
+AuthorDate: Thu Oct 15 15:30:18 2026 +0000
+Commit:     Live Validation <validation@example.invalid>
+CommitDate: Thu Oct 15 15:30:18 2026 +0000
+
+    fix: live hook chaining
+    
+    Co-authored-by: Jane Doe <jane@example.invalid>
+[exit 0]
+Persisted git-hook-chaining/projects/repo/hook-observed.txt:
+fixture-helper-not-a-credential
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-git-strip-ai-trailers.sh env-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/git-hook-chaining/invalid-env.sh
+error: invalid inherited GIT_CONFIG_COUNT
+[exit 1]

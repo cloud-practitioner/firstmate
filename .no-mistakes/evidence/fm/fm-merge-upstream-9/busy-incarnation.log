@@ -1,0 +1,19 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/busy-incarnation
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/busy-incarnation
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-busy-event.sh arm /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/busy-incarnation/state worker --state busy --source live-validation --event launch
+g1792078218.2183656.9296
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-busy-event.sh apply /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/busy-incarnation/state worker idle --gen g1792078218.2183656.9296 --source live-validation --event stop --turn-ended
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-busy-event.sh arm /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/busy-incarnation/state worker --state busy --source live-validation --event replacement
+g1792078218.2183738.14308
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-busy-event.sh apply /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/busy-incarnation/state worker idle --gen g1792078218.2183656.9296 --source late-hook --event stop --turn-ended
+error: stale busy-state gen for worker (event rejected)
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-busy-event.sh apply /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/busy-incarnation/state worker idle --gen g1792078218.2183738.14308 --source live-validation --event stop --turn-ended
+[exit 0]
+Persisted busy-incarnation/state/worker.busy-state:
+v1 gen=g1792078218.2183738.14308 seq=2 state=idle source=live-validation event=stop ts=1792078218
+

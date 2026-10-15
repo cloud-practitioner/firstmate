@@ -1,0 +1,59 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/unsupported-contributions
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/.live-test/manual/unsupported-contributions
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-contributions.sh poll
+[exit 0]
+Persisted unsupported-contributions/data/unsupported/contributions.json:
+{
+  "schema": "fm-contributions.v1",
+  "task": "unsupported",
+  "records": [
+    {
+      "url": "https://gitlab.example.invalid/org/repo/-/merge_requests/7",
+      "kind": "pr",
+      "checked_at": "2026-09-01T00:00:00Z",
+      "error": null,
+      "observation": null,
+      "verdict": null,
+      "pending": [],
+      "seen": [],
+      "notified": []
+    }
+  ]
+}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-contributions.sh pending
+[]
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-contributions.sh retire unsupported https://gitlab.example.invalid/org/repo/-/merge_requests/7 fleet 'No longer observable'
+fm-contributions: invalid retire actor 'fleet'; expected: captain
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-contributions.sh retire unsupported https://gitlab.example.invalid/org/repo/-/merge_requests/7 captain 'Disposable record retired by explicit authority'
+[exit 0]
+Persisted unsupported-contributions/data/unsupported/contributions.json:
+{
+  "schema": "fm-contributions.v1",
+  "task": "unsupported",
+  "records": [
+    {
+      "url": "https://gitlab.example.invalid/org/repo/-/merge_requests/7",
+      "kind": "pr",
+      "checked_at": "2026-09-01T00:00:00Z",
+      "error": null,
+      "observation": null,
+      "verdict": null,
+      "pending": [],
+      "seen": [],
+      "notified": [],
+      "retired": {
+        "actor": "captain",
+        "reason": "Disposable record retired by explicit authority",
+        "at": "2026-10-15T15:30:21Z"
+      }
+    }
+  ]
+}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M50214HDFMDEF0MYNHAD98QW/bin/fm-contributions.sh retire unsupported https://gitlab.example.invalid/org/repo/-/merge_requests/7 captain 'Must not overwrite original provenance'
+contributions: already retired https://gitlab.example.invalid/org/repo/-/merge_requests/7 for unsupported
+[exit 0]

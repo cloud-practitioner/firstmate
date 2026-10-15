@@ -1,0 +1,6 @@
+{
+  "name": "forgejo-live-merge",
+  "result": "pass",
+  "live": true,
+  "evidence": "/home/node/.no-mistakes/evidence/01M50214HDFMDEF0MYNHAD98QW/forgejo-live.log"
+}
