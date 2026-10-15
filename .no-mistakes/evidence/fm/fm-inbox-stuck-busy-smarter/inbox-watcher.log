@@ -1,0 +1,10 @@
+watcher: started pid=899009 (beacon fresh)
+watcher: FAILED - watcher cycle exited 143 without an actionable reason
+watcher: started pid=902518 (beacon fresh)
+check: rearm-resurface
+watcher: started pid=903900 (beacon fresh)
+stale: primary:fm-live (unread firstmate instruction: /home/node/.no-mistakes/evidence/01M4X5GE01TNGMZB209QY86PRS/l.urz94qro/state/live.inbox/002.msg still unhandled after 2 doorbell delivery attempts with an idle pane; inspect the worker)
+watcher: started pid=955545 (beacon fresh)
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4X5GE01TNGMZB209QY86PRS/bin/fm-watch-arm.sh: trap: line 2: unexpected EOF while looking for matching `)'
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4X5GE01TNGMZB209QY86PRS/bin/fm-watch-arm.sh: line 223: unexpected EOF while looking for matching `)'
+watcher: FAILED - no live watcher with a fresh beacon
