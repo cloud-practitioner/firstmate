@@ -771,6 +771,7 @@ test_watcher_busy_again_defers_a_spent_ladder() {
   pass "watcher: a worker that is busy again is not escalated even with a spent ladder"
 }
 
+# shellcheck disable=SC2030 # Fixture exports intentionally stay in this test's subshell.
 test_watcher_composer_defers_doorbell() (
   local mode=$1 harness=$2 dir rec delivery='' count=1 ladder check gen
   dir=$(setup_watch_case "$harness-composer-$mode")
@@ -789,7 +790,7 @@ test_watcher_composer_defers_doorbell() (
       || fail "could not record Claude semantic busy state"
   fi
   if [ "$mode" = retry ]; then
-    delivery=fire-and-forget
+    delivery='fire-and-forget'
     mkdir -p "$dir/config"
     : > "$dir/config/wait-no-turns"
     export FM_CONFIG_OVERRIDE="$dir/config"
@@ -851,6 +852,7 @@ test_watcher_composer_defers_doorbell() (
   pass "watcher: $harness composer defers $mode without strikes and resumes recovery when idle"
 )
 
+# shellcheck disable=SC2030,SC2031 # Each test subshell sets its own independent fixture exports.
 test_watcher_ignores_busy_tokens_in_output() (
   local harness=$1 mode shape dir rec delivery check shapes gen
   unset FM_BUSY_REGEX
@@ -881,7 +883,7 @@ test_watcher_ignores_busy_tokens_in_output() (
       fi
       delivery=
       if [ "$mode" = retry ]; then
-        delivery=fire-and-forget
+        delivery='fire-and-forget'
         mkdir -p "$dir/config"
         : > "$dir/config/wait-no-turns"
       fi
@@ -1190,11 +1192,13 @@ test_watcher_pays_fire_and_forget_retry_once() {
 # One watcher inbox check against an idle pane, through the production watcher
 # functions, so a status log the case writes is not also read as a wake.
 steer_check_once() {  # <case-dir>
+  # shellcheck disable=SC2031 # Earlier fixture PATH exports were intentionally subshell-local.
   PATH="$1/fakebin:$PATH" FM_STATE_OVERRIDE="$1/state" FM_SEND_LOG="$1/send.log" \
     FM_FAKE_TMUX_CAPTURE="$(idle_capture "$1")" FM_TASK_INBOX_GRACE_SECS=1 \
     bash -c '. "$1" && inbox_steer_check sess:fm-t1 t1' _ "$WATCH" >/dev/null 2>&1
 }
 
+# shellcheck disable=SC2031 # This case sets its own override, independent of earlier subshells.
 test_watcher_holds_retry_while_the_worker_decides() {
   local dir state log fire rings
   dir=$(setup_watch_case faf-retry-decision)
