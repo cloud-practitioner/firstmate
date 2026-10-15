@@ -88,6 +88,6 @@ The lab teardown's fleet-state tripwire passed and the `default` session was unc
 The portable regression drives ancestry evidence, rejects an unrelated process name, checks the single-press interrupt and rewind-picker tables, reads a captured composer screen with and without a Command Code identity (asserting the divergence), keeps typed text pending, checks both delivery signals independently, drives the busy mod's lifecycle with stale-generation and unconfigured-option rejection, and verifies worker-only launch, the per-process mod options, verified-only effort, and taste-state exclusion.
 `tests/fm-tmux-agent-liveness.test.sh` proves with real tmux processes that a `command-code` foreground reads alive and a blind cursor row still yields `empty` or `pending`, gated on that process identity.
 The live guard checks the launch brief, model, effort, identity, busy mod, user-hook coexistence, settings immutability, commit attribution, doorbell acknowledgement, idle and busy interruption, the rewind picker, exit, native resume, and relaunch.
-Zellij, Orca, and cmux were inspected through their existing backend-neutral delivery and key surfaces, not live-tested here; [harness support](../configuration.md#harness-support) owns the resulting launch restrictions.
-Orca's terminal API also lacks Escape delivery, so it cannot carry a Command Code interrupt.
+Zellij, Orca, and cmux were inspected through their existing backend-neutral delivery and key surfaces, not live-tested here; their composer reads carry no Command Code identity, so a steer there is not proven deliverable.
+Orca's existing lack of Escape delivery means a Command Code interrupt is refused there.
 macOS process naming was not observed.
