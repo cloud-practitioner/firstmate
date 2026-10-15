@@ -95,10 +95,10 @@
 # in the approved audit (Rovo's clean ACP stopReason lives outside the TUI
 # path firstmate drives, see references/harness/rovo.md; agy 1.2.0 exposes no
 # hook surface at all, see references/harness/agy.md); each is scoped to
-# its own harness= and can never classify another adapter. The delivery
-# guards in bin/fm-composer-lib.sh match rendered footers for submit
-# acknowledgement and away-mode supervisor injection only; neither is a
-# recorded worker state source.
+# its own harness= and can never classify another adapter.
+# bin/fm-composer-lib.sh owns the rendered delivery guards and the separate
+# composer-anchored inbox activity predicate; neither is a recorded worker
+# state source.
 #
 # The muse pull source is semantic, not rendered: it folds muse's own durable
 # session event log. It has no writer, no arm, and no gen, because

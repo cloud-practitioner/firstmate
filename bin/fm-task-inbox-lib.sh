@@ -57,7 +57,9 @@
 # active work is never a strike: each active poll records the observation
 # (fm_task_inbox_record_busy) and the grace restarts from it, so a worker busy
 # on the very instruction it has not yet moved to handled/ is neither rung nor
-# escalated. Only an unheard doorbell on an idle pane, idle for a full grace
+# escalated. The task-scoped observation survives record changes, handled/
+# moves, and watcher restarts. Active polls refresh it even within an existing
+# grace period. Only an unheard doorbell on an idle pane, idle for a full grace
 # period, spends attempts and escalates. A positively dead or missing endpoint
 # skips delivery and the ladder and escalates directly.
 # This library owns the schedule, the busy observation, and the escalation marker.

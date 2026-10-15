@@ -20,8 +20,9 @@
 # while that live Pi session provably owns continuity; any held but unhealthy
 # lock is down; under every
 # persistent-watcher harness a live identity-matched watcher with a fresh beacon
-# is required. The banner names the true failing condition (a missing live
-# watcher process vs a genuinely stale beacon). The full banner is emitted once
+# is required. Both the full banner and its reminder name the true failing
+# condition: a missing live watcher process (even with a fresh beat) or a
+# genuinely stale beacon with its age and grace. The full banner is emitted once
 # per distinct down-episode in this FM_HOME (keyed to the failing condition, not
 # the beacon mtime, which a healthy between-turns watcher advances every poll);
 # later guarded commands in the same episode print a one-line reminder instead.

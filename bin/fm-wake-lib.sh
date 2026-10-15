@@ -168,8 +168,9 @@ fm_watcher_lock_unheld() {
 
 # 0 when two recorded paths name the same place, even when one was recorded
 # through a symlinked directory and the other through its physical path. Literal
-# equality is the fast path; otherwise each side's directory is resolved with
-# pwd -P and the final component compared. Unresolvable paths never match.
+# equality is the fast path. Otherwise directories are resolved with pwd -P;
+# non-directory paths must also have identical final components. An unresolvable
+# directory prevents a nonliteral match.
 fm_same_physical_path() {  # <path-a> <path-b>
   local a=$1 b=$2 da db
   [ -n "$a" ] && [ -n "$b" ] || return 1

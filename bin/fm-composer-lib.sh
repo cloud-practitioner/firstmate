@@ -4,7 +4,8 @@
 # the empty|pending|pending-unproven|unknown verdict, shared by every
 # session-provider adapter (tmux via bin/fm-tmux-lib.sh, and
 # bin/backends/{herdr,orca,cmux,zellij}.sh) and by fm-spawn.sh's kimi
-# launch-readiness check.
+# launch-readiness check. fm-watch.sh also consumes the separate
+# fm_composer_status_is_busy activity predicate below.
 #
 # WHY THIS EXISTS (tasks fm-composer-shellglyph-safety and
 # fm-composer-thin-adapter-refactor-r1): the adapters each carried their own
@@ -336,7 +337,7 @@ fm_composer_strip_ghost() {
 }
 
 
-# --- Delivery-only rendered busy footers (backend-agnostic) -------------------
+# --- Rendered activity signatures (backend-agnostic) --------------------------
 #
 # These live here, in the ONE shared composer/delivery owner, rather than in any
 # single backend adapter, because every backend needs them for the SAME job:
@@ -345,12 +346,11 @@ fm_composer_strip_ghost() {
 # cmux, and orca run the same harnesses and face the same acknowledgement
 # problem.
 #
-# This is a DELIVERY guard, deliberately NOT a worker-state source. The semantic
-# busy contract - what firstmate records and supervises on - is owned by
-# bin/fm-busy-lib.sh, which forbids classifying a harness from rendered text.
-# Matching a footer to confirm a keystroke landed is a different question from
-# asking what a worker is doing, and the two must not be conflated.
-# Delivery-only rendered busy footers per harness. claude/codex: "esc to
+# fm_busy_lines_match is a DELIVERY guard, not a semantic worker-state source.
+# bin/fm-busy-lib.sh owns semantic classification and its source trust policy.
+# The separate fm_composer_status_is_busy predicate below reuses selected
+# signatures under its own composer-anchoring constraints.
+# Per-harness rendered signatures. claude/codex: "esc to
 # interrupt"; opencode: "esc interrupt"; pi: "Working..."; omp: "Working…"; grok: "Ctrl+c:cancel"; agy: "esc to cancel";
 # devin: "esc twice to interrupt" and its "❭ Guide Devin while it works" working composer.
 # Claude's current spinner has a rotating glyph and word, but every active-turn
@@ -449,6 +449,11 @@ fm_busy_lines_match() {  # [harness]
   [ -n "$regex" ] && printf '%s' "$lines" | grep -qiE "$regex"
 }
 
+# Positive current-composer activity evidence for inbox deferral only; never
+# semantic busy/idle truth or permission to type. Harness-specific anchoring
+# prevents ordinary output tokens from indefinitely postponing recovery.
+# Only built-in signatures are eligible, not FM_BUSY_REGEX overrides.
+# Unsupported or unproven shapes return 1.
 fm_composer_status_is_busy() {
   local harness=$1 screen=$2 row='' prompt glyph='' index regex
   local status_re='^•[[:space:]]+.+[[:space:]]+\([0-9]+[smh]([[:space:]]+[0-9]+[smh])*[[:space:]]+•[[:space:]]+[^)]+\)$'
