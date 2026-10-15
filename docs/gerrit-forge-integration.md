@@ -193,10 +193,10 @@ Read the modes as stopping points rather than as artifacts and they line up clea
 - `no-mistakes` runs the pipeline, then publishes.
 
 On that reading the forge composes with the two modes that publish and is meaningless on the one that does not.
-Permitting `local-only forge=gerrit` as an inert annotation while refusing `direct-PR forge=gerrit` would invert that composition: the refusal would land on the combination that has a meaning, and the permission on the combination that does not.
-`bin/fm-project-mode.sh` owns the enforced combinations, and `bin/fm-dod-lib.sh` owns their worker contracts.
+That inverts both rules the delivery-mode design currently carries, which permit `local-only forge=gerrit` as an annotation that changes nothing and refuse `direct-PR forge=gerrit` outright.
+The composition test says that is backwards on both counts: the refusal lands on the combination that has a meaning, and the permission on the combination that does not.
 
-Such a refusal reads as reasonable only because of the name.
+The refusal reads as reasonable only because of the name.
 "That mode's definition of done is a pull request this forge does not have" is a true statement about the string `direct-PR` and not about the stopping point it names, and section 2 is why those two came apart.
 
 The permission is not merely useless, which is worth being plain about, because an inert annotation in a brief is not inert at landing.
