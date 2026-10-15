@@ -1,0 +1,1 @@
+stale: primary:0 (blocked-on-prompt: Claude background-task exit picker)

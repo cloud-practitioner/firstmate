@@ -1,0 +1,5 @@
+ok - unsupported ownership stays silent and unmeasured; legacy errors clear without fabricated evidence
+ok - one HTTP 500 is retried once and a successful retry stays healthy
+ok - two transient failures wake once and name the failed read in the record
+ok - an HTTP 404 is reported without retrying
+ok - watcher keeps observer diagnostics separate from contribution wakes

@@ -1,0 +1,13 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.pQ9XU
+Checkpoint quiet exit=124
+checkpoint: no actionable wake within 2s
+Checkpoint announced exit=0
+check: rearm-resurface
+Announced recovery generation: announced:downtime:3498331.1792073311.1ZvLqS
+Checkpoint preserved exit=124
+checkpoint: no actionable wake within 2s
+Still-unacknowledged real wake queue:
+1792073311	1	check	retained	check: real durable wake retained for the captain
+Checkpoint appended exit=0
+check: rearm-resurface
+Real checkpoint retained the original generation without repeating recovery, then surfaced a new concurrent wake. Private primary and home removed.

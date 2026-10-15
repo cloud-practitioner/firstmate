@@ -1,0 +1,197 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/away
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/away
+exit=0
+$ bin/fm-afk-contract.sh live-workers
+6
+exit=0
+$ bin/fm-afk-contract.sh enter --words Keep existing work within the current lane; never publish upstream.
+Away posture recorded at 2026-10-15T14:07:23Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 6 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-15T14:07:23Z
+  expected return: not given
+  spend cap: 6 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    Keep existing work within the current lane; never publish upstream.
+exit=0
+$ bin/fm-afk-contract.sh field spend_max_concurrent_workers
+6
+exit=0
+$ bin/fm-spawn.sh queued-probe /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core --scout --harness claude
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/away
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  7 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: spawn refused - the away-posture record caps concurrent workers at 6 and 6 ordinary task(s) are live in this home; task queued-probe stays queued for the captain's return or for a worker to finish (spend cap: bin/fm-afk-contract.sh)
+exit=1
+$ bin/fm-afk-contract.sh archive
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/away/state/afk-contracts/1792073243.afk-contract
+exit=0
+$ bin/fm-afk-contract.sh enter --words Use normal empty-home floor.
+Away posture recorded at 2026-10-15T14:07:24Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 4 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-15T14:07:24Z
+  expected return: not given
+  spend cap: 4 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    Use normal empty-home floor.
+exit=0
+$ bin/fm-afk-contract.sh field spend_max_concurrent_workers
+4
+exit=0
+$ bin/fm-afk-contract.sh archive
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/away/state/afk-contracts/1792073244.afk-contract
+exit=0
+$ bin/fm-afk-contract.sh enter --spend 2 --words Explicit cap wins.
+Away posture recorded at 2026-10-15T14:07:24Z: hold-for-return only. No phone channel is configured; anything that needs you waits for your return. Your away instructions are recorded verbatim; the away session will carry them out where it can, and anything it is unsure of, or that needs you, waits for your return. Destructive, irreversible, and security-sensitive actions are never pre-authorizable, whatever the words say. Expected return: not given. Spend cap: 2 concurrent workers.
+Away posture (recorded):
+  entered: 2026-10-15T14:07:24Z
+  expected return: not given
+  spend cap: 2 concurrent workers
+  reach: hold-for-return only. No phone channel is configured; anything that needs you waits for your return.
+  your words (verbatim):
+    Explicit cap wins.
+exit=0
+$ bin/fm-afk-contract.sh field spend_max_concurrent_workers
+2
+exit=0
+$ bin/fm-afk-contract.sh archive
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/away/state/afk-contracts/1792073244.afk-contract
+exit=0
+$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git config user.name Disposable Hook Test
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git config user.email hook-test@example.invalid
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git config core.hooksPath .githooks
+exit=0
+$ bin/fm-git-strip-ai-trailers.sh install /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/launch-hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git
+exit=0
+$ bin/fm-git-strip-ai-trailers.sh env-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/launch-hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git-env.sh
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git add .
+exit=0
+$ bash -c source "$1"; git -C "$2" commit -q -F "$3" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git-env.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/message.txt
+Repository pre-commit inherited credential helper: disposable-fixture-helper
+Repository pre-commit inherited fixture value: keep-me
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git log -1 --format=%B
+Preserve inherited configuration
+
+Co-authored-by: Human Reviewer <human@example.invalid>
+
+exit=0
+$ git init --bare -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/remote.git
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git remote add origin /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/remote.git
+exit=0
+$ bash -c source "$1"; git -C "$2" push origin main _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git-env.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git
+Repository pre-push refuses this disposable push
+error: failed to push some refs to '/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/remote.git'
+exit=1
+$ git --git-dir /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/remote.git rev-parse --verify refs/heads/main
+fatal: Needed a single revision
+exit=128
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/contributions
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/contributions
+exit=0
+$ bin/fm-contributions.sh poll
+exit=0
+$ bin/fm-bearings-snapshot.sh --json
+{
+  "schema": "fm-bearings.v1",
+  "home": "core/contributions",
+  "generated": "2026-10-15T14:07:25Z",
+  "prs": "not_requested (run: /bearings include PRs)",
+  "contributions": {
+    "scope": "owned contributions per home",
+    "known": 1,
+    "checked": 0,
+    "counts": {
+      "captain": 0,
+      "fleet": 0,
+      "maintainer": 0,
+      "nobody": 0
+    },
+    "complete": false,
+    "proven_clear": false,
+    "unmeasured_homes": 0,
+    "unreadable_records": 0,
+    "unmeasured": 1,
+    "stale_verdicts": 0,
+    "missing_verdicts": 0,
+    "captain_omitted": 0,
+    "captain": []
+  },
+  "in_flight": [],
+  "secondmates": [],
+  "secondmate_reconcile": [],
+  "decisions_open": [],
+  "landed": [],
+  "gates": [
+    {
+      "id": "external",
+      "title": "External review",
+      "blocked_by": "-",
+      "reason": "-",
+      "owner": "(main)",
+      "filed": null
+    }
+  ],
+  "reports": [],
+  "recorded_prs": [],
+  "omitted": [
+    {
+      "surface": "backlog item bodies",
+      "reveal": "--fields bodies"
+    },
+    {
+      "surface": "task paths",
+      "reveal": "--fields paths"
+    },
+    {
+      "surface": "watch/steer actions",
+      "reveal": "--fields actions"
+    },
+    {
+      "surface": "healthy endpoint detail",
+      "reveal": "--fields endpoints"
+    },
+    {
+      "surface": "full scout-report inventory",
+      "reveal": "--all-reports"
+    },
+    {
+      "surface": "live PR discovery + checks",
+      "reveal": "--include-prs"
+    }
+  ]
+}
+exit=0
+Contribution coverage summary: {"scope": "owned contributions per home", "known": 1, "checked": 0, "counts": {"captain": 0, "fleet": 0, "maintainer": 0, "nobody": 0}, "complete": false, "proven_clear": false, "unmeasured_homes": 0, "unreadable_records": 0, "unmeasured": 1, "stale_verdicts": 0, "missing_verdicts": 0, "captain_omitted": 0, "captain": []}
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/brief
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/brief
+exit=0
+$ git rev-list --max-parents=0 HEAD
+ccdea30b8c89e5725695e35c54b414e5b3509b5d
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git fetch --quiet --no-tags /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51 ccdea30b8c89e5725695e35c54b414e5b3509b5d
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git remote set-url origin https://github.com/kunchenguid/firstmate.git
+exit=0
+$ bin/fm-brief.sh upstream-denied firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git
+error: this home runs as firstmate user/operator and holds no publication authority for github.com/kunchenguid/firstmate
+error: to let this home publish to github.com/kunchenguid/firstmate, write 'maintainer github.com/kunchenguid/firstmate' into /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/brief/config/firstmate-role (docs/configuration.md "Firstmate role"), or pass --upstream-consent github.com/kunchenguid/firstmate for this one task with the captain's explicit approval
+exit=1
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git remote set-url origin https://github.com/cloud-practitioner/firstmate.git
+exit=0
+$ bin/fm-brief.sh fork-target firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/git --upstream-consent github.com/cloud-practitioner/firstmate
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/core/brief/data/fork-target/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+Live assertions: cap default/count/floor/override and pre-allocation refusal; real Git commit kept inherited config/human trailer while stripping bot; repository pre-push blocked publication; unsupported URL remained unmeasured without a wake; upstream task refused without consent and fork task scaffolded.

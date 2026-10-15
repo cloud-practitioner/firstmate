@@ -1,0 +1,52 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge/fm
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge/fm
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/tools/forgejo --work-path /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge --config /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge/app.ini migrate
+2026/10/15 14:00:53 cmd/migrate.go:35:runMigrate() [I] AppPath: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/tools/forgejo
+2026/10/15 14:00:53 cmd/migrate.go:36:runMigrate() [I] AppWorkPath: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge
+2026/10/15 14:00:53 cmd/migrate.go:37:runMigrate() [I] Custom path: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge/custom
+2026/10/15 14:00:53 cmd/migrate.go:38:runMigrate() [I] Log path: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge/log
+2026/10/15 14:00:53 cmd/migrate.go:39:runMigrate() [I] Configuration file: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge/app.ini
+2026/10/15 14:00:53 ...3.3.3/command_run.go:274:run() [I] PING DATABASE sqlite3
+exit=0
+Runtime: forgejo version 12.0.4+gitea-1.22.0 (release name 12.0.4) built with GNU Make 4.4.1, go1.24.7 : bindata, timetzdata, sqlite, sqlite_unlock_notify
+Runtime: Version: [1m0.12.0[0m	golang: 1.25.7	go-sdk: v0.23.2
+Disposable tea login: localhost-only instance, worktree-local HOME.
+$ git clone --quiet --branch candidate http://localhost:57199/fixture/fixture-repo.git /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge/worktree
+exit=0
+$ bin/fm-pr-check.sh forge-live https://localhost/fixture/fixture-repo/pulls/1
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  2 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+armed: state/forge-live.check.sh
+exit=0
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge/fm/state/forge-live.check.sh
+exit=0
+$ bin/fm-pr-merge.sh forge-live https://localhost/fixture/fixture-repo/pulls/1
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+armed: state/forge-live.check.sh
+error: refusing to merge https://localhost/fixture/fixture-repo/pulls/1
+  - the combined commit status is "failure", not success
+exit=1
+Persisted API result after refusal: {"number": 1, "state": "open", "merged": false}
+$ bin/fm-pr-merge.sh forge-live https://localhost/fixture/fixture-repo/pulls/1
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+armed: state/forge-live.check.sh
+verified: https://localhost/fixture/fixture-repo/pulls/1 is open and mergeable, with a successful combined status at head b6b86a6e8050bbef0518a7eacf25f39453987fa3
+exit=0
+Merged API result: {"number": 1, "state": "closed", "merged": true, "merge_commit_sha": "ec7a1a382ddb761c2d5e5b8f18ea0a8bc90cb4a8"}
+Merge commit parents: ["04add4ea4fecb8208386489a10afa3224671c58a", "b6b86a6e8050bbef0518a7eacf25f39453987fa3"]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZWHVKH10H7VQ0P4VH5RD51/.live-test-lab/forge/fm/state/forge-live.check.sh
+merged
+exit=0
+Durable wake queue:
+1792072862	1	check	merged-forge-live-https://localhost/fixture/fixture-repo/pulls/1	check: merge landed: forge-live https://localhost/fixture/fixture-repo/pulls/1
+$ bin/fm-pr-check.sh ambiguous-login https://localhost/fixture/fixture-repo/pulls/1
+error: watching a Forgejo pull request at localhost requires exactly one 'tea login' registered for that host (see 'tea login list')
+exit=1
+Live assertions: red CI stayed open; green CI merged with two parents; durable wake recorded; ambiguous login refused without arming.
+Disposable Forgejo server stopped; fixture data removed.
