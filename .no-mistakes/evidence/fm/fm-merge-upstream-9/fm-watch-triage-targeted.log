@@ -1,0 +1,12 @@
+Selected existing behavioral tests: test_wedge_threshold_defers_to_a_backlog_captain_hold, test_paused_bg_job_until_timeout_rechecks_after_the_job_ends, test_exit_picker_stale_names_the_dialog, test_quoted_exit_picker_stays_ordinary_stale
+Product bin copy: unchanged; fixture homes outside that code root, inside gate worktree.
+$ test_wedge_threshold_defers_to_a_backlog_captain_hold
+ok - a backlog captain hold bounds the wedge ladder like a captain-held line, and stays silent while the captain is away
+$ test_paused_bg_job_until_timeout_rechecks_after_the_job_ends
+ok - until set to a background job's timeout rechecks the worker paused on it once the job must have ended
+$ test_exit_picker_stale_names_the_dialog
+ok - a pane on the exit picker is a named stale, from the one capture the poll already takes
+$ test_quoted_exit_picker_stays_ordinary_stale
+ok - picker text quoted above a composer stays an ordinary stale
+
+exit=0

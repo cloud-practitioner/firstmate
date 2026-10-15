@@ -1,0 +1,20 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/relaunch
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/relaunch
+[exit 0]
+$ bash -c . "$1/bin/fm-wake-lib.sh"; fm_lock_try_acquire "$2" || exit 1; echo ready; read -r done; fm_lock_release "$2" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/relaunch/state/.control-mate.lock
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-control.sh mate relaunch --note Competing lifecycle attempt
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/relaunch
+error: another lifecycle action is already running for task mate
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-spawn.sh mate --relaunch --harness claude
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/relaunch
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: another lifecycle action is already running for task mate
+[exit 1]
+The contended lifecycle left the secondmate metadata and active dialog byte-identical; no endpoint was touched.

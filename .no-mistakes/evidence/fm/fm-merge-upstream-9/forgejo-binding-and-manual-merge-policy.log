@@ -1,0 +1,7 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/forge
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/forge
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-project-mode.sh demo --forge
+direct-PR on
+[exit 0]
+ASSERTION FAILURE: AssertionError()

@@ -1,0 +1,15 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/forge
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/forge
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-project-mode.sh --forge demo
+forgejo
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-project-mode.sh demo
+direct-PR on
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-brief.sh forge-task demo --mode direct-PR --forge forgejo
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/forge/data/forge-task/brief.md (ship, mode=direct-PR forge=forgejo; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-brief.sh bad-local demo --mode local-only --forge forgejo
+error: fm-brief.sh --forge: forge=forgejo cannot ship mode=local-only - that mode publishes nothing, so a forge has no meaning there, and its landing would fast-forward local main with content the review server has never seen; ship no-mistakes or direct-PR, which publish through the forge
+[exit 1]

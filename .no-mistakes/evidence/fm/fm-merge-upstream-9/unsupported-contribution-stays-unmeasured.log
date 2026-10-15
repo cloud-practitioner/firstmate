@@ -1,0 +1,103 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/unsupported
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/unsupported
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-fleet-snapshot.sh --contribution-input
+{
+  "backlog": {
+    "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/unsupported/data/backlog.md",
+    "present": true,
+    "records": [
+      {
+        "state": "queued",
+        "captain_actionable": true,
+        "unresolved_blocker_ids": [],
+        "repo": "sample",
+        "requires_child_metadata": false,
+        "report_path": null,
+        "raw": "- [ ] unsupported - Filed https://gitlab.com/o/r/-/merge_requests/2 (repo: sample) (kind: ship) (hold: choose scope) (hold-kind: captain)",
+        "local_note": null,
+        "body_lines": [],
+        "merged": null,
+        "since": null,
+        "title": "Filed",
+        "current_role": "queued",
+        "hold_reason": "choose scope",
+        "blocked_reason": null,
+        "reported": null,
+        "kind": "ship",
+        "links": [
+          "https://gitlab.com/o/r/-/merge_requests/2"
+        ],
+        "blocked_by_ids": [],
+        "completion": {
+          "verb": null,
+          "date": null
+        },
+        "order": 1,
+        "done": null,
+        "structured": true,
+        "hold_bucket": "live",
+        "body_excerpt": null,
+        "hold_age_days": null,
+        "hold_set": null,
+        "priority": null,
+        "blocked_by": null,
+        "checked": false,
+        "id": "unsupported",
+        "hold_kind": "captain",
+        "pr_url": null,
+        "hold_until": null
+      }
+    ]
+  },
+  "tasks": []
+}
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-contributions.sh snapshot /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/unsupported/input.json --all
+{
+  "known": 1,
+  "checked": 0,
+  "counts": {
+    "captain": 0,
+    "fleet": 0,
+    "maintainer": 0,
+    "nobody": 0
+  },
+  "unmeasured": 1,
+  "complete": false,
+  "proven_clear": false,
+  "stale_verdicts": 0,
+  "missing_verdicts": 0,
+  "unreadable_records": 0,
+  "valid_until": 900,
+  "captain": [],
+  "captain_omitted": 0,
+  "rows": [
+    {
+      "task": "unsupported",
+      "url": "https://gitlab.com/o/r/-/merge_requests/2",
+      "kind": "pr",
+      "checked_at": null,
+      "checked": false,
+      "final": false,
+      "head": null,
+      "verdict": null,
+      "reviews": [],
+      "distinct_checks": 0,
+      "missing_verdicts": 0,
+      "pending_checks": 0,
+      "failed_checks": 0,
+      "stale_verdicts": 0,
+      "signals": [],
+      "actor": "unmeasured",
+      "reason": "unsupported forge; coverage is unmeasured",
+      "tasks": [
+        "unsupported"
+      ]
+    }
+  ]
+}
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-contributions.sh poll
+
+[exit 0]

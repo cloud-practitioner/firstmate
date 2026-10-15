@@ -1,3 +1,4 @@
+$ bash tests/fm-afk-contract.test.sh
 ok - the read-back renders the words verbatim beside the expected return, spend cap, and reach line
 ok - words preserve their final newline shape in storage and read-back
 ok - one enter call writes a version 2 record, announces hold-for-return only, reads it back without asking for a go, and every read subcommand reflects it
@@ -19,3 +20,5 @@ ok - new words over a live version 1 record archive it and write version 2 with 
 ok - enter and archive refuse while the record is locked, and proceed once it clears
 ok - a quiet record announces, refreshes, and reads back as a present captain holding nothing, while an away record keeps hold-for-return
 ok - an away entry over quiet mode records away, and a quiet entry never masks a standing away record
+
+exit=0

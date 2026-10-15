@@ -1,0 +1,58 @@
+[
+  {
+    "name": "away-cap-and-spawn-refusal",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M4ZZGKP3RXD7YF8SFH2KDVQJ/away-cap-and-spawn-refusal.log",
+    "reason": "Observed the actual executable interface and persisted outputs in an isolated lab."
+  },
+  {
+    "name": "watcher-recovery-once",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M4ZZGKP3RXD7YF8SFH2KDVQJ/watcher-recovery-once.log",
+    "reason": "Observed the actual executable interface and persisted outputs in an isolated lab."
+  },
+  {
+    "name": "fork-publication-authority",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M4ZZGKP3RXD7YF8SFH2KDVQJ/fork-publication-authority.log",
+    "reason": "Observed the actual executable interface and persisted outputs in an isolated lab."
+  },
+  {
+    "name": "git-hooks-preserve-config-and-human-trailers",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M4ZZGKP3RXD7YF8SFH2KDVQJ/git-hooks-preserve-config-and-human-trailers.log",
+    "reason": "Observed the actual executable interface and persisted outputs in an isolated lab."
+  },
+  {
+    "name": "stale-stop-cannot-idle-replacement",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M4ZZGKP3RXD7YF8SFH2KDVQJ/stale-stop-cannot-idle-replacement.log",
+    "reason": "Observed the actual executable interface and persisted outputs in an isolated lab."
+  },
+  {
+    "name": "forgejo-binding-and-invalid-mode-refusal",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M4ZZGKP3RXD7YF8SFH2KDVQJ/forgejo-binding-and-invalid-mode-refusal.log",
+    "reason": "Observed the actual executable interface and persisted outputs in an isolated lab."
+  },
+  {
+    "name": "unsupported-contribution-stays-unmeasured",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M4ZZGKP3RXD7YF8SFH2KDVQJ/unsupported-contribution-stays-unmeasured.log",
+    "reason": "Observed the actual executable interface and persisted outputs in an isolated lab."
+  },
+  {
+    "name": "concurrent-secondmate-relaunch-refuses-without-mutation",
+    "result": "pass",
+    "live": true,
+    "evidence": "/home/node/.no-mistakes/evidence/01M4ZZGKP3RXD7YF8SFH2KDVQJ/concurrent-secondmate-relaunch-refuses-without-mutation.log",
+    "reason": "Observed the actual executable interface and persisted outputs in an isolated lab."
+  }
+]

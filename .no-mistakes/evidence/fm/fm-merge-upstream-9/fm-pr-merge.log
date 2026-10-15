@@ -1,3 +1,4 @@
+$ bash tests/fm-pr-merge.test.sh
 ok - fm-pr-merge reports exact queue retry flags after a zero-exit false success
 ok - fm-pr-merge omits merge-queue retry guidance for a closed GitHub PR
 ok - fm-pr-merge aggregates agreeing merge-queue rules
@@ -63,10 +64,6 @@ ok - fm-pr-merge refuses a Forgejo head commit it cannot validate
 ok - fm-pr-merge refuses before recording anything when tea or jq is absent
 ok - fm-pr-merge never trusts tea api's exit status alone; a rejected merge is caught by the confirm read
 ok - fm-pr-merge retries a failed Forgejo confirmation read and persists the merge authority
-ok - fm-pr-merge maps --squash/--rebase to Forgejo's Do field, defaults to the repository's default merge style, and refuses any other extra argument
-ok - fm-pr-merge refuses a GitLab head override before recording state
-ok - a merge a secondmate home performs itself is reported upward exactly once
-ok - a locally routed secondmate home reports the landed PR into its parent's own channel
-ok - a landed GitLab merge request is reported upward on the same channel
-ok - a queued GitLab merge stays silent and leaves confirmation to the armed poll
-ok - a refused or failed merge reports no outcome
+
+TIMEOUT
+exit=124

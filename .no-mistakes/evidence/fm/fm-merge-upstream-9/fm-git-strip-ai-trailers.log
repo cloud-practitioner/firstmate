@@ -1,3 +1,4 @@
+$ bash tests/fm-git-strip-ai-trailers.test.sh
 ok - a Cursor --trailer commit object has no AI co-author and keeps the captain identity
 ok - the Command Code trailer a worker writes into its own message is stripped
 ok - a human Co-authored-by trailer survives next to a stripped Cursor trailer
@@ -18,3 +19,5 @@ ok - the repository's own hook keeps inherited GIT_CONFIG entries such as a scop
 ok - env-file writes the canonical hooks path so wrappers still chain the repository hook
 ok - commit-msg file mode strips the trailer and keeps the subject
 # all fm-git-strip-ai-trailers tests passed
+
+exit=0

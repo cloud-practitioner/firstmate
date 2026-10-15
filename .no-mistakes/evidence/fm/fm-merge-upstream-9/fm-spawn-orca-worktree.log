@@ -1,0 +1,4 @@
+$ bash tests/fm-spawn-orca-worktree.test.sh
+not ok - tmux is required for the Orca source locale regression
+
+exit=1

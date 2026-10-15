@@ -1,0 +1,43 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks
+[exit 0]
+$ git init -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/example
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-git-strip-ai-trailers.sh install /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/state/launch-hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/example
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-git-strip-ai-trailers.sh env-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/state/launch-hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/state/exports.sh
+
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/example add answer.txt
+
+[exit 0]
+$ bash -c . "$1"; git -C "$2" commit -m "Live hook check" --trailer "Co-authored-by: CommandCodeBot <noreply@commandcode.ai>" --trailer "Co-authored-by: Jane Doe <jane@example.invalid>" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/state/exports.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/example
+[master (root-commit) 091cc2c] Live hook check
+ 1 file changed, 1 insertion(+)
+ create mode 100644 answer.txt
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/example log -1 --format=full
+commit 091cc2ceb797b9e5f18cc7e160f8dc3f2ff83c24
+Author: Live Validation <validation@example.invalid>
+Commit: Live Validation <validation@example.invalid>
+
+    Live hook check
+    
+    Co-authored-by: Jane Doe <jane@example.invalid>
+[exit 0]
+Repository hook observed inherited credential.helper values:
+
+!printf disposable-helper
+
+$ git init -q --bare /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/disposable-remote.git
+
+[exit 0]
+$ bash -c . "$1"; git -C "$2" push "$3" HEAD:refs/heads/probe _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/state/exports.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/example /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/disposable-remote.git
+project pre-push guard refused disposable publication
+error: failed to push some refs to '/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/disposable-remote.git'
+[exit 1]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/hooks/projects/disposable-remote.git show-ref
+
+[exit 1]

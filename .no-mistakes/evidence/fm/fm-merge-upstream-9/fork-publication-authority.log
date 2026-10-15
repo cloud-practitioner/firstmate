@@ -1,0 +1,25 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority
+[exit 0]
+$ git clone -q --no-local --no-checkout /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/projects/firstmate
+
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/projects/firstmate remote set-url origin https://github.com/cloud-practitioner/firstmate.git
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-brief.sh unapproved firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/projects/firstmate
+error: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+error: to let this home publish to github.com/cloud-practitioner/firstmate, write 'maintainer github.com/cloud-practitioner/firstmate' into /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/config/firstmate-role (docs/configuration.md "Firstmate role"), or pass --upstream-consent github.com/cloud-practitioner/firstmate for this one task with the captain's explicit approval
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-brief.sh wrong-scope firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/projects/firstmate --upstream-consent github.com/kunchenguid/firstmate
+error: this home runs as firstmate user/operator and holds no publication authority for github.com/cloud-practitioner/firstmate
+error: to let this home publish to github.com/cloud-practitioner/firstmate, write 'maintainer github.com/cloud-practitioner/firstmate' into /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/config/firstmate-role (docs/configuration.md "Firstmate role"), or pass --upstream-consent github.com/cloud-practitioner/firstmate for this one task with the captain's explicit approval
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-brief.sh approved-fork firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/projects/firstmate --upstream-consent github.com/cloud-practitioner/firstmate --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/data/approved-fork/brief.md (ship, mode=direct-PR; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+Generated delivery contract:
+Delivery contract: mode=direct-PR upstream-consent=github.com/cloud-practitioner/firstmate
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-brief.sh approved-fork firstmate --mode direct-PR --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/projects/firstmate --upstream-consent github.com/cloud-practitioner/firstmate
+error: /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/authority/data/approved-fork/brief.md already exists
+[exit 1]

@@ -1,0 +1,14 @@
+tmux: not on PATH
+orca: not on PATH
+tea: not on PATH
+commandcode: not on PATH
+opencode: not on PATH
+herdr: /home/node/.local/bin/herdr
+claude: /home/node/.local/bin/claude
+$ bin/fm-herdr-lab.sh run fm-lab-isolation-probe session list --json
+{"sessions":[{"connection_error":"local socket name length exceeds capacity of sun_path of sockaddr_un","default":true,"name":"default","running":false,"session_dir":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/herdr-isolated-config/herdr","socket_path":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/herdr-isolated-config/herdr/herdr.sock"}]}
+exit=0
+$ bin/fm-herdr-lab.sh prepare fm-lab-isolation-probe
+fm-herdr-lab: fleet-state tripwire requires exactly one running default session
+exit=1
+The normal helper prepare/teardown probe succeeded earlier; that session was never provisioned. Named lab state would normally live under the operator Herdr config, outside the worktree. The XDG-isolated route above cannot satisfy the helper's required already-running-default tripwire. No default session was started, stopped, or changed. No harness login or credential files were changed.

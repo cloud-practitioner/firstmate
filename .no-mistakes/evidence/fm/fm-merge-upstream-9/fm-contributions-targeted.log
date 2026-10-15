@@ -1,0 +1,17 @@
+Selected existing behavioral tests: test_away_yolo_cross_home_is_fleet_work, test_expired_child_unsupported_forge_stays_unmeasured, test_home_summary_coverage, test_http_500_once_retries_without_waking, test_http_500_twice_records_the_failed_read, test_http_404_is_not_retried
+Product bin copy: unchanged; fixture homes outside that code root, inside gate worktree.
+$ test_away_yolo_cross_home_is_fleet_work
+actionable: PR https://github.com/o/r/pull/8 is registered but its ready line did not reach the parent channel (rc=3)
+ok - cross-home away yolo delivery is fleet work
+$ test_expired_child_unsupported_forge_stays_unmeasured
+ok - expired child unsupported-forge coverage remains unmeasured
+$ test_home_summary_coverage
+ok - parent consumes measured child coverage and refuses expired child silence
+$ test_http_500_once_retries_without_waking
+ok - one HTTP 500 is retried once and a successful retry stays healthy
+$ test_http_500_twice_records_the_failed_read
+ok - two transient failures wake once and name the failed read in the record
+$ test_http_404_is_not_retried
+ok - an HTTP 404 is reported without retrying
+
+exit=0

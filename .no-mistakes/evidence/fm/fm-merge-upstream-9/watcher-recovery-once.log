@@ -1,0 +1,25 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/recovery
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/recovery
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-watch-checkpoint.sh --seconds 1
+checkpoint: no actionable wake within 1s
+[exit 124]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-watch-checkpoint.sh --seconds 0
+error: --seconds must be greater than zero
+[exit 2]
+$ bash -c . "$1/bin/fm-wake-lib.sh"; fm_wake_append check buried "check: unacknowledged durable wake" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-watch-checkpoint.sh --seconds 5
+check: rearm-resurface
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-watch-checkpoint.sh --seconds 1
+checkpoint: no actionable wake within 1s
+[exit 124]
+Persisted queue after second checkpoint:
+1792075707	1	check	buried	check: unacknowledged durable wake
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-wake-drain.sh
+1792075707	1	check	buried	check: unacknowledged durable wake
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 675619.1792075707.lMYF72
+[exit 0]

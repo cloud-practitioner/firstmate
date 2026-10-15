@@ -1,0 +1,16 @@
+Selected existing behavioral tests: test_forgejo_url_resolves_and_merges, test_forgejo_combined_status_reads_every_page, test_forgejo_rejected_merge_is_never_trusted_by_exit_status, test_github_mergeable_unknown_retries_then_succeeds, test_allow_red_refused_on_forgejo, test_allow_missing_refused_on_forgejo
+Product bin copy: unchanged; fixture homes outside that code root, inside gate worktree.
+$ test_forgejo_url_resolves_and_merges
+ok - fm-pr-merge merges a Forgejo pull request through tea api instead of refusing it
+$ test_forgejo_combined_status_reads_every_page
+ok - fm-pr-merge reads every Forgejo combined-status page before merging
+$ test_forgejo_rejected_merge_is_never_trusted_by_exit_status
+ok - fm-pr-merge never trusts tea api's exit status alone; a rejected merge is caught by the confirm read
+$ test_github_mergeable_unknown_retries_then_succeeds
+ok - fm-pr-merge retries a bounded number of times when mergeable is UNKNOWN and merges once it resolves
+$ test_allow_red_refused_on_forgejo
+ok - fm-pr-merge refuses --allow-red on Forgejo
+$ test_allow_missing_refused_on_forgejo
+ok - fm-pr-merge refuses --allow-missing on Forgejo
+
+exit=0

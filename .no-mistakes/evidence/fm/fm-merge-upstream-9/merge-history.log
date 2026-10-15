@@ -1,0 +1,37 @@
+$ git show --no-patch --format=%H%n%P%n%s 64f746f
+64f746fb5bb50ad89c4c651ccbddd7ca07f9e408
+71019c365917666ca19398f8968e0d5815c6c87b 9b1ada0401f9fa7ea3ee07a8a7f005a99ce0de58
+Merge upstream firstmate main (9b1ada04) into the fork
+exit=0
+$ git merge-base --is-ancestor 71019c365917666ca19398f8968e0d5815c6c87b HEAD
+
+exit=0
+$ git merge-base --is-ancestor 9b1ada04 HEAD
+
+exit=0
+$ git log --format=%h %s e0d95ac7..9b1ada04
+9b1ada0 fix(bin): let a backlog captain hold bound the watcher's wedge escalation (#7338)
+4f77bb3 fix(bin): retry transient contribution forge reads once before waking (#7302)
+0aa7fac fix: put a read cue at the head of a context re-emit (#7298)
+a24f4cb feat(bin): add a verified Command Code (commandcode) crewmate/scout adapter (#6679)
+0fd0e82 fix(bin): have workers paused on their own background job set until to the job's timeout (#7240)
+33503ab ci: let a fork skip the push run and the macOS job by repository variable (#7260)
+819f1a4 fix(bin): guide completed-scout cleanup and permit stock lab supervision paths (#6965)
+9cd4a3b feat: set afk spend cap from live ordinary workers at entry (#7308)
+138cf11 fix(bin): report a worker parked on the exit picker as blocked-on-prompt (#6682)
+08f0a06 fix(bin): treat OpenCode's right-aligned cwd rail as composer furniture, including absolute paths (#7307)
+24f3a6b fix(spawn): scope Orca worker launch env to an opt-in tmux session (#6365)
+723f43c fix(bin): name the failing step when a contribution observation is unavailable (#6810)
+0397cb2 fix(bin): keep inherited Git config entries when installing the trailer-strip hooks path (#6341)
+8902857 fix: keep unsupported contribution URLs unmeasured (#7233)
+2911a3b feat: let a home declare authoritative external memory tiers (#6608)
+8c9c67d fix(pi): narrow before_agent_start events before reading prompt (#7248)
+7df545b fix: require explicit authority for Firstmate upstream contributions (#7172)
+6407052 fix: prevent concurrent secondmate relaunch races (#7154)
+20dcbf9 feat(bin): support Forgejo/Gitea as a forge via the tea CLI (#4395)
+a1ecefb fix: preserve announced recovery across Codex checkpoints (#4490)
+exit=0
+$ git rev-parse 71019c3:.pi/extensions/fm-branch-supervision.ts HEAD:.pi/extensions/fm-branch-supervision.ts
+0ed2e6ab76811e99e7e507be40a980a5d5b5ce9b
+0ed2e6ab76811e99e7e507be40a980a5d5b5ce9b
+exit=0

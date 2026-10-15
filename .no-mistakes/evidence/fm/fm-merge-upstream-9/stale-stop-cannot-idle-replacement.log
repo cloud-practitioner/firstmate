@@ -1,0 +1,20 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/busy
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/busy
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-busy-event.sh arm /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/busy/state worker --source claude-hook --event launch-brief
+g1792075714.686236.8946
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-busy-event.sh arm /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/busy/state worker --source claude-hook --event replacement-launch
+g1792075714.686277.15355
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-busy-event.sh apply /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/busy/state worker idle --gen g1792075714.686236.8946 --source claude-hook --event Stop --turn-ended
+error: stale busy-state gen for worker (event rejected)
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/bin/fm-busy-event.sh apply /home/node/.no-mistakes/worktrees/450411b3e67c/01M4ZZGKP3RXD7YF8SFH2KDVQJ/.test-validation/scenarios/busy/state worker idle --gen g1792075714.686277.15355 --source claude-hook --event Stop --turn-ended
+
+[exit 0]
+Persisted worker.turn-ended: 
+Persisted worker.busy-state: v1 gen=g1792075714.686277.15355 seq=2 state=idle source=claude-hook event=Stop ts=1792075714
+
+Persisted worker.busy-gen: g1792075714.686277.15355
+
