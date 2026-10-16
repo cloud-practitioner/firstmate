@@ -737,6 +737,73 @@ test_merge_reads_back_after_a_transport_failure() {
 
 test_url_parse_accepts_canonical_bitbucket_urls
 test_url_parse_refuses_malformed_bitbucket_urls
+test_merge_sends_a_caller_supplied_message_with_the_strategy() {
+  local case_dir rc=0 text=$'Add the thing\n\nFirst body line\nSecond "quoted" line'
+  case_dir=$(make_case merge-message)
+  printf '%s\n' "$text" > "$case_dir/message.txt"
+  run_merge "$case_dir" "$BB_URL" --message-file "$case_dir/message.txt" -- --squash || rc=$?
+  expect_code 0 "$rc" "merge-message: a message-bearing merge should succeed"$'\n'"$(cat "$case_dir/stderr")"
+  assert_equals squash "$(jq -r .merge_strategy "$case_dir/bb/merge-body.json")" "merge-message: the strategy was not sent with the message"
+  assert_equals "$text" "$(jq -r .message "$case_dir/bb/merge-body.json")" "merge-message: the message was not sent as the merge message"
+  assert_equals false "$(jq -r .close_source_branch "$case_dir/bb/merge-body.json")" "merge-message: the source branch default changed"
+  assert_grep "notice: merge message from $case_dir/message.txt: ${#text} bytes, sha256 " "$case_dir/stderr" \
+    "merge-message: the message was not named in the notice"
+  assert_grep ', subject: Add the thing' "$case_dir/stderr" "merge-message: the subject was not named in the notice"
+
+  # Without the option the body carries no message at all.
+  case_dir=$(make_case merge-message-absent)
+  run_merge "$case_dir" "$BB_URL" -- --squash || fail "merge-message-absent: should merge"
+  assert_equals '{"type":"pullrequest","close_source_branch":false,"merge_strategy":"squash"}' \
+    "$(cat "$case_dir/bb/merge-body.json")" "merge-message-absent: the merge body changed without the option"
+  pass "fm-pr-merge sends a caller-supplied message beside the Bitbucket merge strategy"
+}
+
+test_merge_message_refusals_never_reach_the_forge() {
+  local case_dir rc
+  # A strategy that creates no commit, named or read as the branch default.
+  case_dir=$(make_case merge-message-rebase)
+  printf 'Subject\n' > "$case_dir/message.txt"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" --message-file "$case_dir/message.txt" -- --rebase || rc=$?
+  expect_code 2 "$rc" "merge-message-rebase: a named rebase_fast_forward cannot carry a message"
+  assert_grep 'rebase_fast_forward merge strategy creates no commit' "$case_dir/stderr" "merge-message-rebase: refusal did not explain"
+  assert_absent "$case_dir/bb/merge-called" "merge-message-rebase: a merge was requested anyway"
+  assert_absent "$case_dir/bb/curl-argv.log" "merge-message-rebase: the forge was called before the refusal"
+
+  case_dir=$(make_case merge-message-default-ff)
+  printf 'Subject\n' > "$case_dir/message.txt"
+  printf '%s\n' '{"values":[{"name":"main","default_merge_strategy":"fast_forward"}]}' > "$case_dir/bb/branches.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" --message-file "$case_dir/message.txt" || rc=$?
+  expect_code 1 "$rc" "merge-message-default-ff: a fast_forward default cannot carry a message"
+  assert_grep 'fast_forward merge strategy creates no commit' "$case_dir/stderr" "merge-message-default-ff: refusal did not explain"
+  assert_absent "$case_dir/bb/merge-called" "merge-message-default-ff: a merge was requested anyway"
+
+  case_dir=$(make_case merge-message-conflict)
+  printf 'Subject\n' > "$case_dir/message.txt"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" --message-file "$case_dir/message.txt" -- --subject x || rc=$?
+  expect_code 1 "$rc" "merge-message-conflict: a subject flag has no Bitbucket meaning"
+  assert_absent "$case_dir/bb/merge-called" "merge-message-conflict: a merge was requested anyway"
+
+  case_dir=$(make_case merge-message-empty)
+  printf ' \n\n' > "$case_dir/message.txt"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" --message-file "$case_dir/message.txt" || rc=$?
+  expect_code 2 "$rc" "merge-message-empty: a whitespace-only message must refuse"
+  assert_absent "$case_dir/bb/curl-argv.log" "merge-message-empty: the forge was called before the refusal"
+
+  # The existing guards still refuse exactly as before beside a message.
+  case_dir=$(make_case merge-message-red)
+  printf 'Subject\n' > "$case_dir/message.txt"
+  printf '%s\n' '{"values":[{"key":"pipeline","name":"Pipeline #1","state":"FAILED"}],"pagelen":100,"page":1}' > "$case_dir/bb/statuses.json"
+  rc=0
+  run_merge "$case_dir" "$BB_URL" --message-file "$case_dir/message.txt" || rc=$?
+  expect_code 1 "$rc" "merge-message-red: a failed build must still refuse"
+  assert_absent "$case_dir/bb/merge-called" "merge-message-red: a merge was requested on a red pull request"
+  pass "fm-pr-merge --message-file refuses a Bitbucket merge that cannot carry the message before the merge request, and keeps its guards"
+}
+
 test_record_read_reports_state_and_merged
 test_statuses_read_follows_pagination_only_under_the_api_base
 test_check_records_full_head_and_arms_the_poll
@@ -757,3 +824,5 @@ test_merge_refuses_a_head_that_moved_before_the_request
 test_merge_reports_forge_refusal_unconfirmed_and_wrong_head
 test_merge_refuses_unmet_review_merge_checks
 test_merge_reads_back_after_a_transport_failure
+test_merge_sends_a_caller_supplied_message_with_the_strategy
+test_merge_message_refusals_never_reach_the_forge
