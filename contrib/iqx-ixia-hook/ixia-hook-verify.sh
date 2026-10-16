@@ -69,11 +69,11 @@ probe_commit() {
     # A subject starting with # under git commit -m is message text, not a comment.
     ixia_clean_git_env git -C "$repo" \
       -c "core.hooksPath=$repo/.git/hooks" -c user.name=ixia-verify -c user.email=ixia-verify@example.invalid \
-      -c commit.gpgsign=false commit -q --allow-empty -m '#VERIFY-2: hash subject' >/dev/null || return 1
+      -c commit.gpgsign=false commit -q --allow-empty --cleanup=whitespace -m '#VERIFY-2: hash subject' >/dev/null || return 1
   else
     ixia_clean_git_env git -C "$repo" \
       -c "core.hooksPath=$repo/.git/hooks" -c user.name=ixia-verify -c user.email=ixia-verify@example.invalid \
-      -c commit.gpgsign=false commit -q --allow-empty -F "$work/probe-msg" >/dev/null || return 1
+      -c commit.gpgsign=false commit -q --allow-empty --cleanup=whitespace -F "$work/probe-msg" >/dev/null || return 1
   fi
   ixia_clean_git_env git -C "$repo" log -1 --format=%B
 }

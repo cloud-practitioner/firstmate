@@ -31,11 +31,6 @@
 #   - Fails the commit (exit 1) when the message git will commit does not end
 #     with exactly one Ixia line, rather than letting a commit land without it.
 #
-# Limits: a hook cannot see the --cleanup flag when git is started through a
-# wrapper that hides its command line; and when GIT_EDITOR=: is exported to
-# an editor session, the editor template in the message file is what tells
-# the session apart from a no-editor commit.
-#
 # Install: copy to <clone>/.git/hooks/commit-msg with mode 755. Linked
 # worktrees, including every treehouse pool slot, resolve hooks from the
 # clone's common git directory, so one copy per clone covers every current and
@@ -60,48 +55,101 @@ git@bitbucket.org:iqxbusiness/* | git@bitbucket.org-*:iqxbusiness/* | \
 *) exit 0 ;;
 esac
 
-# The --cleanup value on the command line of the git process that runs this
-# hook (this hook is exec'd by git or by firstmate's chain, so it is our
-# parent); prints nothing when it cannot be seen.
-cleanup_flag() {
+parent_arguments() {
   if [ -r "/proc/$PPID/cmdline" ]; then
-    parent_args=$(tr '\0' '\n' <"/proc/$PPID/cmdline" 2>/dev/null)
-  else
-    parent_args=$(ps -o args= -p "$PPID" 2>/dev/null | tr ' ' '\n')
+    tr '\n\000' '\r\n' <"/proc/$PPID/cmdline"
+  elif command -v sysctl >/dev/null 2>&1; then
+    sysctl -bn "kern.procargs2.$PPID" 2>/dev/null | od -An -v -tu1 | awk '
+      { for (i = 1; i <= NF; i++) {
+          b = $i + 0
+          if (n++ < 4) { argc += b * (256 ^ (n - 1)); continue }
+          if (!path) { if (!b) path = 1; continue }
+          if (!started && !b) continue
+          started = 1
+          if (!b) { print arg; arg = ""; if (++args == argc) exit }
+          else arg = arg sprintf("%c", b == 10 ? 13 : b)
+      } }'
   fi
-  printf '%s\n' "$parent_args" | awk '
-    NR == 1 { n = $0; sub(/.*\//, "", n); if (n != "git" && n != "git.exe") exit; next }
-    want { print; exit }
-    /^--clea(n(up?)?)?$/ { want = 1; next }
-    /^--clea(n(up?)?)?=/ { sub(/^[^=]*=/, ""); print; exit }'
 }
 
-mode=$(cleanup_flag)
-if [ -z "$mode" ]; then
-  mode=$(git config --get commit.cleanup 2>/dev/null)
-fi
+mode=$(git config --get commit.cleanup 2>/dev/null || printf default)
+editor=1
+[ "${GIT_EDITOR-}" != : ] || editor=0
+verbose=$(git config --bool --get commit.verbose 2>/dev/null || printf false)
+options=$(parent_arguments | awk -v mode="$mode" -v editor="$editor" -v verbose="$verbose" '
+  BEGIN { names["message"] = "m"; names["file"] = "F"; names["reuse-message"] = "C"; names["fixup"] = "fixup" }
+  NR == 1 { n = $0; sub(/.*\//, "", n); if (n != "git" && n != "git.exe") exit; next }
+  skip { skip = 0; next }
+  !command {
+    if ($0 == "-c" || $0 == "-C" || $0 ~ /^--(config-env|git-dir|work-tree|namespace)$/) { skip = 1; next }
+    if ($0 == "commit") { command = 1; editor = 1 }
+    else if ($0 == "merge") command = 2
+    else if ($0 !~ /^-/) exit
+    next
+  }
+  operand {
+    if (operand == "cleanup") mode = $0
+    if (operand == "fixup") fixup_edit = ($0 ~ /^(amend|reword):/)
+    operand = ""; next
+  }
+  $0 == "--" { exit }
+  $0 == "--cleanup" { operand = "cleanup"; next }
+  /^--cleanup=/ { mode = substr($0, 11); next }
+  $0 == "--no-cleanup" { mode = "default"; next }
+  $0 == "--edit" { edit = 1; edited = 1; next }
+  $0 == "--no-edit" { edit = 0; edited = 1; next }
+  $0 == "--verbose" { verbose = "true"; next }
+  $0 == "--no-verbose" { verbose = "false"; next }
+  /^--(message|file|reuse-message)(=|$)/ {
+    name = $0; sub(/^--/, "", name); sub(/=.*/, "", name)
+    source[names[name]] = 1; if ($0 !~ /=/) operand = "skip"; next
+  }
+  /^--no-(message|file|reuse-message|fixup)$/ { name = substr($0, 6); source[names[name]] = 0; next }
+  /^--reedit-message(=|$)/ { if ($0 !~ /=/) operand = "skip"; next }
+  $0 == "--fixup" { source["fixup"] = 1; operand = "fixup"; next }
+  /^--fixup=/ { source["fixup"] = 1; fixup_edit = ($0 ~ /^--fixup=(amend|reword):/); next }
+  /^--(author|date|squash|template|trailer|pathspec-from-file)$/ { operand = "skip"; next }
+  /^-[^-]/ {
+    flags = substr($0, 2)
+    while (length(flags)) {
+      flag = substr(flags, 1, 1); flags = substr(flags, 2)
+      if (flag == "e") { edit = 1; edited = 1 }
+      if (flag == "v") verbose = "true"
+      if (flag ~ /^[mFcCt]$/) {
+        if (flag ~ /^[mFC]$/) source[flag] = 1
+        if (!length(flags)) operand = "skip"
+        break
+      }
+      if (flag == "S") break
+    }
+  }
+  END {
+    if (command == 1) editor = !(source["m"] || source["F"] || source["C"] || (source["fixup"] && !fixup_edit))
+    if (command == 2 && source["m"]) editor = 0
+    if (edited) editor = edit
+    print mode, editor, verbose
+  }
+')
+read -r mode editor verbose <<EOF
+$options
+EOF
 case $mode in
-strip | whitespace | verbatim | scissors) ;;
-*)
-  mode='strip'
-  if [ "${GIT_EDITOR-}" = : ]; then
-    mode=whitespace
-    # GIT_EDITOR=: is also what an exported no-op editor looks like. An editor
-    # session leaves git's template in the file, which always has a line that
-    # is just the comment character, so treat that as an editor session.
-    cc=$(git config --get core.commentChar 2>/dev/null)
-    case $cc in '' | auto | ????*) cc='#' ;; esac
-    if awk -v c="$cc" '$0 == c { f = 1 } END { exit !f }' "$msg"; then
-      mode='strip'
-    fi
-  fi
-  ;;
+strip | whitespace | verbatim) ;;
+scissors) [ "$editor" = 1 ] || mode='whitespace' ;;
+*) if [ "$editor" = 1 ]; then mode='strip'; else mode='whitespace'; fi ;;
 esac
+cut=0
+if [ "$mode" = scissors ] || [ "$verbose" = true ]; then cut=1; fi
+cc=$(git config --get-regexp '^core\.comment(char|string)$' 2>/dev/null | tail -n 1 | cut -d ' ' -f 2-)
+case $cc in '' | auto) cc='#' ;; esac
+scissors="$cc$SCISSORS"
 
-# The part of the file git keeps as message: everything before the scissors
-# line, then cleaned the way git cleans it for the chosen mode.
 head_part() {
-  awk -v s="$SCISSORS" 'length($0) >= length(s) && substr($0, length($0) - length(s) + 1) == s { exit } { print }' "$1"
+  if [ "$cut" = 1 ]; then
+    awk -v s="$scissors" '$0 == s { exit } { print }' "$1"
+  else
+    cat "$1"
+  fi
 }
 kept_message() {
   case $mode in
@@ -111,7 +159,7 @@ kept_message() {
   esac
 }
 
-if [ -z "$(kept_message "$msg" | tr -d ' \t\r\n')" ]; then
+if [ "$(kept_message "$msg" | wc -c)" -eq 0 ]; then
   exit 0
 fi
 
@@ -121,11 +169,9 @@ want=$(printf '%s' "$IXIA_LINE" | tr '[:upper:]' '[:lower:]')
 head_file="$work/head"
 tail_file="$work/tail"
 
-# Split at the scissors line; drop existing Ixia lines and trailing blank
-# lines from the head.
-if ! awk -v want="$want" -v s="$SCISSORS" -v headf="$head_file" -v tailf="$tail_file" '
+if ! awk -v want="$want" -v s="$scissors" -v truncate="$cut" -v headf="$head_file" -v tailf="$tail_file" '
   BEGIN { printf "" >headf; printf "" >tailf }
-  !cut && length($0) >= length(s) && substr($0, length($0) - length(s) + 1) == s { cut = 1 }
+  truncate && $0 == s { cut = 1 }
   cut { print >tailf; next }
   { line = tolower($0); sub(/[ \t\r]+$/, "", line); if (line == want) next }
   $0 ~ /^[ \t\r]*$/ { blank = blank $0 "\n"; next }
@@ -135,36 +181,24 @@ if ! awk -v want="$want" -v s="$SCISSORS" -v headf="$head_file" -v tailf="$tail_
   exit 1
 fi
 
-# Where git keeps # lines as text (every mode but strip), tell
-# interpret-trailers to use a comment character that no line starts with, so
-# the new line lands after them instead of before.
 comment_cfg=
-if [ "$mode" != strip ]; then
-  for c in ';' '@' '%' '~' '^' '&' '!' '|'; do
-    if ! awk -v c="$c" 'substr($0, 1, 1) == c { f = 1 } END { exit !f }' "$head_file"; then
-      comment_cfg=$c
-      break
-    fi
-  done
-  if [ -z "$comment_cfg" ]; then
-    echo "ixia commit-msg: no free comment character for $msg" >&2
-    exit 1
+for c in ';' '@' '%' '~' '^' '&' '!' '|'; do
+  if ! awk -v c="$c" 'substr($0, 1, 1) == c { f = 1 } END { exit !f }' "$head_file"; then
+    comment_cfg=$c
+    break
   fi
+done
+if [ -z "$comment_cfg" ]; then
+  echo "ixia commit-msg: no free comment character for $msg" >&2
+  exit 1
 fi
 
-if [ -n "$comment_cfg" ]; then
-  git -c "core.commentChar=$comment_cfg" interpret-trailers --in-place --no-divider --where end \
-    --if-exists add --if-missing add --trailer "$IXIA_LINE" "$head_file" || {
-    echo "ixia commit-msg: git interpret-trailers failed" >&2
-    exit 1
-  }
-else
-  git interpret-trailers --in-place --no-divider --where end \
-    --if-exists add --if-missing add --trailer "$IXIA_LINE" "$head_file" || {
-    echo "ixia commit-msg: git interpret-trailers failed" >&2
-    exit 1
-  }
-fi
+git -c "core.commentChar=$comment_cfg" -c "core.commentString=$comment_cfg" \
+  interpret-trailers --in-place --no-divider --where end \
+  --if-exists add --if-missing add --trailer "$IXIA_LINE" "$head_file" || {
+  echo "ixia commit-msg: git interpret-trailers failed" >&2
+  exit 1
+}
 
 if ! cat "$head_file" "$tail_file" >"$msg"; then
   echo "ixia commit-msg: could not rewrite $msg" >&2

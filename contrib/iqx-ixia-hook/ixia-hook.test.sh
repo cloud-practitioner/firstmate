@@ -16,7 +16,7 @@ INSTALL="$here/ixia-hook-install.sh"
 VERIFY="$here/ixia-hook-verify.sh"
 HOOK="$here/ixia-commit-msg-hook.sh"
 IXIA='Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>'
-SHA=9409a8799de6f07808dba656641929a758b395ba8b7084ac8c6aa56878837239
+SHA=38f1a257a1c1f12fb44329a652ece86a5d4e111ac11b2fca5c06b436cb7d2a38
 HOOK_V1="$here/previous/ixia-commit-msg-hook.v1.sh"
 SHA_V1=39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
 
@@ -174,6 +174,11 @@ check "verify leaves real clone untouched" test \
   "$(git -C "$H/projects/iqxa" count-objects | tr -d '\n')" = "$objs_before"
 check "verify works from a pane-style override" bash -c \
   'cd "$2" && GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0="$3" bash "$1" iqxa' _ "$VERIFY" "$H" "$TMP/pane-hooks"
+printf '[commit]\n\tcleanup = strip\n' >"$TMP/global-gitconfig"
+check "verify pins cleanup despite global configuration" bash -c \
+  'cd "$2" && GIT_CONFIG_GLOBAL="$3" bash "$1" iqxa' _ "$VERIFY" "$H" "$TMP/global-gitconfig"
+check "verify pins cleanup despite retained command-scope configuration" bash -c \
+  'cd "$2" && GIT_CONFIG_COUNT=2 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0="$3" GIT_CONFIG_KEY_1=commit.cleanup GIT_CONFIG_VALUE_1=strip bash "$1" iqxa' _ "$VERIFY" "$H" "$TMP/pane-hooks"
 
 for p in gh other plain; do
   rc=0
@@ -244,6 +249,23 @@ hash_commit() { # hash_commit <description> <expected rc> <expected body...> -- 
 }
 hash_commit "-m with # subject gets the line" 0 '#123 fix' -- -m '#123 fix'
 hash_commit "-m with # body line keeps it and gets the line" 0 'subj' '# note' -- -m 'subj' -m '# note'
+hash_commit "-m standalone comment character is text, not editor evidence" 0 '#123 fix' '#' -- -m '#123 fix' -m '#'
+hash_commit "last cleanup option wins over strip" 0 '#123 fix' -- --cleanup=strip --cleanup=whitespace -m '#123 fix'
+hash_commit "last cleanup option wins over whitespace" 1 -- --cleanup=whitespace --cleanup=strip -m '#123 fix'
+hash_commit "last separate cleanup option wins" 0 '#123 fix' -- --cleanup strip --cleanup whitespace -m '#123 fix'
+hash_commit "explicit default cleanup resets an earlier strip" 0 '#123 fix' -- --cleanup=strip --cleanup=default -m '#123 fix'
+hash_commit "negated cleanup resets an earlier strip" 0 '#123 fix' -- --cleanup=strip --no-cleanup -m '#123 fix'
+hash_commit "message operand is not a cleanup option" 0 '--cleanup=strip' '#123 fix' -- -m '--cleanup=strip' -m '#123 fix'
+hash_commit "multiline message operand is not a cleanup option" 0 'body' '--cleanup=strip' '#123 fix' -- -m $'body\n--cleanup=strip' -m '#123 fix'
+hash_commit "attached message operand is not a cleanup option" 0 '--cleanup=strip' '#123 fix' -- -m--cleanup=strip -m '#123 fix'
+printf '#file subject\n' >"$HC/--cleanup=strip"
+hash_commit "file operand is not a cleanup option" 0 '#file subject' -- -F --cleanup=strip
+rm "$HC/--cleanup=strip"
+GIT_EDITOR=: hash_commit "negated message source restores the editor default" 1 -- -m '#123 fix' --no-message
+GIT_EDITOR=: hash_commit "explicit edit wins over no-editor message source" 1 -- --edit -m '#123 fix'
+GIT_EDITOR=: hash_commit "last no-edit wins over edit" 0 '#123 fix' -- --edit --no-edit -m '#123 fix'
+GIT_EDITOR=: hash_commit "last edit wins over no-edit with no status template" 1 -- --no-edit --edit --no-status -m '#123 fix'
+hash_commit "short option cluster consumes its message operand" 0 '--cleanup=strip' '#123 fix' -- -qm '--cleanup=strip' -m '#123 fix'
 hash_commit "-m # subject with human trailer" 0 '#1 x' 'Signed-off-by: A <a@b.c>' -- -m '#1 x' -m 'Signed-off-by: A <a@b.c>'
 hash_commit "--cleanup=verbatim keeps # subject" 0 '#v' -- --cleanup=verbatim -m '#v'
 hash_commit "--cleanup=whitespace keeps # subject" 0 '#w' -- --cleanup=whitespace -m '#w'
@@ -257,6 +279,45 @@ hash_commit "commit.cleanup=strip drops # body" 0 'sub' -- -m 'sub' -m '#gone'
 git -C "$HC" config commit.cleanup verbatim
 hash_commit "commit.cleanup=verbatim keeps # subject" 0 '#cfgv' -- -m '#cfgv'
 git -C "$HC" config --unset commit.cleanup
+scissors='# ------------------------ >8 ------------------------'
+for cleanup in default whitespace verbatim scissors; do
+  args=()
+  if [ "$cleanup" != default ]; then args+=("--cleanup=$cleanup"); fi
+  hash_commit "$cleanup without editor keeps scissors and deduplicates below it" 0 'subject' "$scissors" 'body' -- "${args[@]}" -m "$(printf 'subject\n\n%s\nbody\n\n%s\n' "$scissors" "$IXIA")"
+done
+hash_commit "strip without scissors cleanup keeps the body below the comment" 0 'subject' 'body' -- --cleanup=strip -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+GIT_EDITOR=: hash_commit "scissors with editor cuts at the delimiter" 0 'subject' -- --edit --cleanup=scissors -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+GIT_EDITOR=: hash_commit "scissors with editor ignores a delimiter with a different prefix" 0 'subject' "x$scissors" 'body' -- --edit --cleanup=scissors -m "$(printf 'subject\n\nx%s\nbody\n' "$scissors")"
+GIT_EDITOR=: hash_commit "scissors with editor ignores a delimiter with an extra suffix" 0 'subject' "$scissors extra" 'body' -- --edit --cleanup=scissors -m "$(printf 'subject\n\n%s extra\nbody\n' "$scissors")"
+hash_commit "verbose cuts even with verbatim cleanup" 0 'subject' -- --verbose --cleanup=verbatim -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+git -C "$HC" config commit.verbose true
+hash_commit "configured verbose cuts the same boundary" 0 'subject' -- -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+hash_commit "no-verbose overrides configured verbose" 0 'subject' "$scissors" 'body' -- --no-verbose -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+git -C "$HC" config --unset commit.verbose
+git -C "$HC" config core.commentChar ';'
+custom_scissors='; ------------------------ >8 ------------------------'
+GIT_EDITOR=: hash_commit "scissors uses the configured comment character" 0 'subject' -- --edit --cleanup=scissors -m "$(printf 'subject\n\n%s\nbody\n' "$custom_scissors")"
+GIT_EDITOR=: hash_commit "default comment character is not the configured delimiter" 0 'subject' "$scissors" 'body' -- --edit --cleanup=scissors -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+git -C "$HC" config --unset core.commentChar
+git_version=$(git version | awk '{print $3}')
+case $git_version in
+0.* | 1.* | 2.[0-9].* | 2.[1-3][0-9].* | 2.4[0-4].*) ;;
+*)
+  git -C "$HC" config core.commentString '//'
+  GIT_EDITOR=: hash_commit "scissors uses the configured comment string" 0 'subject' -- --edit --cleanup=scissors -m $'subject\n\n// ------------------------ >8 ------------------------\nbody'
+  hash_commit "whitespace keeps comment-string scissors and the following body" 0 'subject' '// ------------------------ >8 ------------------------' 'body' -- --cleanup=whitespace -m $'subject\n\n// ------------------------ >8 ------------------------\nbody'
+  git -C "$HC" config --unset core.commentString
+  ;;
+esac
+hash_commit "verbatim whitespace-only message gets the line" 0 -- --cleanup=verbatim -m ' '
+printf '\n\n' >"$TMP/newline-message"
+hash_commit "verbatim newline-only file gets the line" 0 -- --cleanup=verbatim -F "$TMP/newline-message"
+printf '' >"$TMP/empty-message"
+hash_commit "verbatim empty file stays empty" 1 -- --cleanup=verbatim -F "$TMP/empty-message"
+for cleanup in strip whitespace scissors; do
+  hash_commit "$cleanup whitespace-only message stays empty" 1 -- "--cleanup=$cleanup" -m ' '
+  hash_commit "$cleanup newline-only file stays empty" 1 -- "--cleanup=$cleanup" -F "$TMP/newline-message"
+done
 hash_commit "amend -m with # subject" 0 '#amended' -- --amend -m '#amended'
 hash_commit "typed Ixia line not duplicated under # subject" 0 '#dup' -- -m '#dup' -m "$IXIA"
 export EDMSG
