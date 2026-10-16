@@ -882,6 +882,7 @@ test_merge_message_is_normalized_and_read_once() {
   path="$case_dir/message.txt"
   printf '\n  Caf\xc3\xa9  \r\n\r\n\r\nBody \xe2\x9c\x93  \r\n' > "$path"
   mv "$case_dir/fakebin/curl" "$case_dir/fakebin/curl-fixture"
+  # shellcheck disable=SC2016 # The generated curl wrapper expands these variables when executed.
   printf '%s\n' '#!/usr/bin/env bash' \
     'printf "changed after validation" > "$FM_TEST_MESSAGE_FILE"' \
     'exec "$(dirname "$0")/curl-fixture" "$@"' > "$case_dir/fakebin/curl"
