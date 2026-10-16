@@ -9,6 +9,9 @@
 set -euo pipefail
 
 here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
+# shellcheck source=contrib/iqx-ixia-hook/ixia-hook-lib.sh
+. "$here/ixia-hook-lib.sh"
+
 INSTALL="$here/ixia-hook-install.sh"
 VERIFY="$here/ixia-hook-verify.sh"
 HOOK="$here/ixia-commit-msg-hook.sh"
@@ -48,7 +51,7 @@ new_clone() { # new_clone <home> <name> <origin-url>
 }
 hook_of() { echo "$1/projects/$2/.git/hooks/commit-msg"; }
 
-check "bundled hook has the approved sha256" test "$(sha256sum "$HOOK" | awk '{print $1}')" = "$SHA"
+check "bundled hook has the approved sha256" test "$(ixia_sha256 "$HOOK")" = "$SHA"
 
 for s in "$INSTALL" "$VERIFY"; do
   check "$(basename "$s") --help exits 0" bash "$s" --help
@@ -102,11 +105,11 @@ H3=$(new_home h3)
 new_clone "$H3" iqxa 'git@bitbucket.org:iqxbusiness/iqxa.git'
 printf '#!/bin/sh\necho mine\n' >"$(hook_of "$H3" iqxa)"
 chmod 755 "$(hook_of "$H3" iqxa)"
-before=$(sha256sum "$(hook_of "$H3" iqxa)")
+before=$(ixia_sha256 "$(hook_of "$H3" iqxa)")
 rc=0
 out=$(cd "$H3" && bash "$INSTALL" iqxa) || rc=$?
 check "unrelated commit-msg refused" bash -c '[ "$1" = 1 ] && grep -q "^STOP iqxa:" <<<"$2"' _ "$rc" "$out"
-check "unrelated commit-msg left unchanged" test "$(sha256sum "$(hook_of "$H3" iqxa)")" = "$before"
+check "unrelated commit-msg left unchanged" test "$(ixia_sha256 "$(hook_of "$H3" iqxa)")" = "$before"
 
 printf '#!/bin/sh\n# ixia-commit-msg-hook v0\nexit 0\n' >"$TMP/marked-hook"
 cp "$TMP/marked-hook" "$(hook_of "$H3" iqxa)"
