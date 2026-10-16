@@ -1,0 +1,12 @@
+{
+  "v2-hash-subject-through-strip": "#123 v2 fixed\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n",
+  "linked-worktree-through-strip": "#pool slot commit\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n",
+  "human-trailers-and-duplicates-through-strip": "IQX-7: retain human authors\n\nBody  with spacing.\n\nMore body.\n\nCo-Authored-By: Jane Doe <jane@example.com>\nReviewed-by:  Bob <bob@example.com>\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n",
+  "verbatim-byte-contract": "Verbatim bytes\n\nBody  \t\n\nSigned-off-by:Alice <alice@example.com>\nReviewed-by:\t Bob <bob@example.com>  \nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n",
+  "cli-overrides-configured-strip": "#explicit CLI wins\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n",
+  "editor-comment-cleanup": "Editor subject\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n",
+  "editor-scissors": "Scissors subject\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n",
+  "verbatim-whitespace-is-nonempty": "Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n",
+  "merge-verbose-retains-body-through-strip": "Merge subject\n\n# ------------------------ >8 ------------------------\nRetained merge body\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n",
+  "amend-restores-after-documented-bypass": "Documented bypass\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n"
+}

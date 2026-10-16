@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Install from each home, upgrade exact v1 and restore # attribution after Firstmate strip",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Verify without mutating clones and commit through a linked pool worktree",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Deduplicate Ixia while retaining human trailers and verbatim non-Ixia bytes",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Respect editor and configured cleanup, preserve empty-commit aborts, and refuse auto delimiters",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Non-fast-forward merge retains scissors-looking body text before the final Ixia trailer",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Refuse non-IQX targets, path escapes, custom or symlink hooks, redirected hooks and altered copies",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Show --no-verify bypass and restore attribution with an ordinary amend",
+    "result": "pass",
+    "live": true
+  }
+]

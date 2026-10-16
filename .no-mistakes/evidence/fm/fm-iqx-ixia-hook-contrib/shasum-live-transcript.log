@@ -1,0 +1,686 @@
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ && git --version)
+git version 2.54.0
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git init -q --initial-branch=main --template=/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/empty-template)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git remote add origin git@bitbucket.org:iqxbusiness/fixture.git)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty -m 'initial fixture')
+[main (root-commit) 803a438] initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture && git init -q --initial-branch=main --template=/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/empty-template)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture && git remote add origin git@bitbucket.org:iqxbusiness/fixture.git)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture && git commit --allow-empty -m 'initial fixture')
+[main (root-commit) 803a438] initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture && git init -q --initial-branch=main --template=/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/empty-template)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture && git remote add origin git@bitbucket.org:iqxbusiness/fixture.git)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture && git commit --allow-empty -m 'initial fixture')
+[main (root-commit) 803a438] initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/bin/fm-git-strip-ai-trailers.sh install /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture)
+[exit 0]
+
+========== Install from each home, upgrade exact v1 and restore # attribution after Firstmate strip ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty -m '#123 v1 reproduction')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[main f9ac02c] #123 v1 reproduction
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git log -1 --format=%B)
+#123 v1 reproduction
+
+[exit 0]
+V1 regression reproduced: committed # subject has no Ixia trailer.
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx-fixture)
+FAIL iqx-fixture: hook is the superseded v1 hook; re-run ixia-hook-install.sh to upgrade it: /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fixture)
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+updated iqx-fixture -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 0]
+Installed digest: 059893ecfd18c79038ade24e3316a033487b6d11340291a9ac98e661825fcb60
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fixture)
+unchanged iqx-fixture -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fixture)
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+installed iqx-fixture -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 0]
+Installed digest: 059893ecfd18c79038ade24e3316a033487b6d11340291a9ac98e661825fcb60
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fixture)
+unchanged iqx-fixture -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fixture)
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+installed iqx-fixture -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 0]
+Installed digest: 059893ecfd18c79038ade24e3316a033487b6d11340291a9ac98e661825fcb60
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fixture)
+unchanged iqx-fixture -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty -m '#123 v2 fixed')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[main 4283883] #123 v2 fixed
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git cat-file commit HEAD)
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+parent f9ac02c1429ee3e3940dd0c75624c14416782d03
+author Ixia lab <lab@example.invalid> 1792153212 +0000
+committer Ixia lab <lab@example.invalid> 1792153212 +0000
+
+#123 v2 fixed
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for v2-hash-subject-through-strip: b'#123 v2 fixed\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+========== Verify without mutating clones and commit through a linked pool worktree ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git worktree add -b pool-slot /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pool-slot)
+Preparing worktree (new branch 'pool-slot')
+HEAD is now at 4283883 #123 v2 fixed
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+4283883b6eeb749ec77f2120f7593dbea291feae
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git reflog --all)
+4283883 refs/heads/main@{0}: commit: #123 v2 fixed
+f9ac02c refs/heads/main@{1}: commit: #123 v1 reproduction
+803a438 refs/heads/main@{2}: commit (initial): initial fixture
+4283883 refs/heads/pool-slot@{0}: branch: Created from HEAD
+4283883 HEAD@{0}: commit: #123 v2 fixed
+f9ac02c HEAD@{1}: commit: #123 v1 reproduction
+803a438 HEAD@{2}: commit (initial): initial fixture
+4283883 worktrees/pool-slot/HEAD@{0}: reset: moving to HEAD
+4283883 worktrees/pool-slot/HEAD@{1}: 
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git count-objects -v)
+count: 4
+size: 16
+in-pack: 0
+packs: 0
+size-pack: 0
+prune-packable: 0
+garbage: 0
+size-garbage: 0
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx-fixture)
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+ok iqx-fixture (2 worktrees share /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture/.git/hooks/commit-msg)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+4283883b6eeb749ec77f2120f7593dbea291feae
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git reflog --all)
+4283883 refs/heads/main@{0}: commit: #123 v2 fixed
+f9ac02c refs/heads/main@{1}: commit: #123 v1 reproduction
+803a438 refs/heads/main@{2}: commit (initial): initial fixture
+4283883 refs/heads/pool-slot@{0}: branch: Created from HEAD
+4283883 HEAD@{0}: commit: #123 v2 fixed
+f9ac02c HEAD@{1}: commit: #123 v1 reproduction
+803a438 HEAD@{2}: commit (initial): initial fixture
+4283883 worktrees/pool-slot/HEAD@{0}: reset: moving to HEAD
+4283883 worktrees/pool-slot/HEAD@{1}: 
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git count-objects -v)
+count: 4
+size: 16
+in-pack: 0
+packs: 0
+size-pack: 0
+prune-packable: 0
+garbage: 0
+size-garbage: 0
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pool-slot && git commit --allow-empty -m '#pool slot commit')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[pool-slot 24b44ac] #pool slot commit
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pool-slot && git cat-file commit HEAD)
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+parent 4283883b6eeb749ec77f2120f7593dbea291feae
+author Ixia lab <lab@example.invalid> 1792153213 +0000
+committer Ixia lab <lab@example.invalid> 1792153213 +0000
+
+#pool slot commit
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for linked-worktree-through-strip: b'#pool slot commit\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture && git rev-parse HEAD)
+803a4382e86b807f35390a86ee07c1e630a3d76a
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture && git reflog --all)
+803a438 refs/heads/main@{0}: commit (initial): initial fixture
+803a438 HEAD@{0}: commit (initial): initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture && git count-objects -v)
+count: 2
+size: 8
+in-pack: 0
+packs: 0
+size-pack: 0
+prune-packable: 0
+garbage: 0
+size-garbage: 0
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx-fixture)
+ok iqx-fixture (1 worktrees share /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture/.git/hooks/commit-msg)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture && git rev-parse HEAD)
+803a4382e86b807f35390a86ee07c1e630a3d76a
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture && git reflog --all)
+803a438 refs/heads/main@{0}: commit (initial): initial fixture
+803a438 HEAD@{0}: commit (initial): initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture && git count-objects -v)
+count: 2
+size: 8
+in-pack: 0
+packs: 0
+size-pack: 0
+prune-packable: 0
+garbage: 0
+size-garbage: 0
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture && git rev-parse HEAD)
+803a4382e86b807f35390a86ee07c1e630a3d76a
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture && git reflog --all)
+803a438 refs/heads/main@{0}: commit (initial): initial fixture
+803a438 HEAD@{0}: commit (initial): initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture && git count-objects -v)
+count: 2
+size: 8
+in-pack: 0
+packs: 0
+size-pack: 0
+prune-packable: 0
+garbage: 0
+size-garbage: 0
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx-fixture)
+ok iqx-fixture (1 worktrees share /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture/.git/hooks/commit-msg)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture && git rev-parse HEAD)
+803a4382e86b807f35390a86ee07c1e630a3d76a
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture && git reflog --all)
+803a438 refs/heads/main@{0}: commit (initial): initial fixture
+803a438 HEAD@{0}: commit (initial): initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/fab/projects/iqx-fixture && git count-objects -v)
+count: 2
+size: 8
+in-pack: 0
+packs: 0
+size-pack: 0
+prune-packable: 0
+garbage: 0
+size-garbage: 0
+[exit 0]
+
+========== Deduplicate Ixia while retaining human trailers and verbatim non-Ixia bytes ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty -m 'IQX-7: retain human authors
+
+Body  with spacing.
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+
+More body.
+
+Co-Authored-By: Jane Doe <jane@example.com>
+Reviewed-by:  Bob <bob@example.com>
+co-authored-by: ixia engineering (claude) <noreply@anthropic.com>  
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[main 3863764] IQX-7: retain human authors
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git cat-file commit HEAD)
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+parent 4283883b6eeb749ec77f2120f7593dbea291feae
+author Ixia lab <lab@example.invalid> 1792153213 +0000
+committer Ixia lab <lab@example.invalid> 1792153213 +0000
+
+IQX-7: retain human authors
+
+Body  with spacing.
+
+More body.
+
+Co-Authored-By: Jane Doe <jane@example.com>
+Reviewed-by:  Bob <bob@example.com>
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for human-trailers-and-duplicates-through-strip: b'IQX-7: retain human authors\n\nBody  with spacing.\n\nMore body.\n\nCo-Authored-By: Jane Doe <jane@example.com>\nReviewed-by:  Bob <bob@example.com>\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git log -1 '--format=%(trailers:only)')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+Co-Authored-By: Jane Doe <jane@example.com>
+Reviewed-by: Bob <bob@example.com>
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty --cleanup=verbatim -F /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/verbatim-msg)
+[main 0083a29] Verbatim bytes
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git cat-file commit HEAD)
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+parent 38637644d7c8a3a30ce57e7814ddd499e21478ef
+author Ixia lab <lab@example.invalid> 1792153213 +0000
+committer Ixia lab <lab@example.invalid> 1792153213 +0000
+
+Verbatim bytes
+
+Body  	
+
+Signed-off-by:Alice <alice@example.com>
+Reviewed-by:	 Bob <bob@example.com>  
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for verbatim-byte-contract: b'Verbatim bytes\n\nBody  \t\n\nSigned-off-by:Alice <alice@example.com>\nReviewed-by:\t Bob <bob@example.com>  \nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+========== Respect editor and configured cleanup, preserve empty-commit aborts, and refuse auto delimiters ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git config commit.cleanup strip)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty --cleanup=whitespace -m '#explicit CLI wins')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[main 2dfab53] #explicit CLI wins
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git cat-file commit HEAD)
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+parent 0083a29c3e6f310f8381a6155b1752592a0dcfeb
+author Ixia lab <lab@example.invalid> 1792153213 +0000
+committer Ixia lab <lab@example.invalid> 1792153213 +0000
+
+#explicit CLI wins
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for cli-overrides-configured-strip: b'#explicit CLI wins\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+2dfab53db209d91e9febe47d3e2024f2e23892e8
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty -m '#configured strip emptiness')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+Aborting commit due to empty commit message.
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+2dfab53db209d91e9febe47d3e2024f2e23892e8
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git config --unset commit.cleanup)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty)
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks', 'GIT_EDITOR': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/editor.sh'}
+[main facc959] Editor subject
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git cat-file commit HEAD)
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+parent 2dfab53db209d91e9febe47d3e2024f2e23892e8
+author Ixia lab <lab@example.invalid> 1792153213 +0000
+committer Ixia lab <lab@example.invalid> 1792153213 +0000
+
+Editor subject
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for editor-comment-cleanup: b'Editor subject\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty --edit --cleanup=scissors -m 'Scissors subject
+
+# ------------------------ >8 ------------------------
+Uncommitted patch text')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[main f2160bc] Scissors subject
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git cat-file commit HEAD)
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+parent facc959d662ca8264f420d7cbf5f9b81e61aaec8
+author Ixia lab <lab@example.invalid> 1792153213 +0000
+committer Ixia lab <lab@example.invalid> 1792153213 +0000
+
+Scissors subject
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for editor-scissors: b'Scissors subject\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+f2160bc5d11beb54e40f83fc938514b1439142dd
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty -m '')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+Aborting commit due to empty commit message.
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+f2160bc5d11beb54e40f83fc938514b1439142dd
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+f2160bc5d11beb54e40f83fc938514b1439142dd
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty -s -m '')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+Aborting commit due to empty commit message.
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+f2160bc5d11beb54e40f83fc938514b1439142dd
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+f2160bc5d11beb54e40f83fc938514b1439142dd
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty --cleanup=whitespace -m '  ')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+Aborting commit due to empty commit message.
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+f2160bc5d11beb54e40f83fc938514b1439142dd
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --allow-empty --cleanup=verbatim -m ' ')
+[main 6658bc1] Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git cat-file commit HEAD)
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+parent f2160bc5d11beb54e40f83fc938514b1439142dd
+author Ixia lab <lab@example.invalid> 1792153213 +0000
+committer Ixia lab <lab@example.invalid> 1792153213 +0000
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for verbatim-whitespace-is-nonempty: b'Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+6658bc1bd8de8b94ec8efb0d4d658006fa587951
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git -c core.commentChar=auto commit --allow-empty -m 'Refuse unresolved delimiter')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+warning: Support for 'core.commentChar=auto' is deprecated and will be removed in Git 3.0
+ixia commit-msg: automatic comment delimiters are unsupported; set an explicit core.commentChar or core.commentString
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-parse HEAD)
+6658bc1bd8de8b94ec8efb0d4d658006fa587951
+[exit 0]
+
+========== Non-fast-forward merge retains scissors-looking body text before the final Ixia trailer ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git switch -c merge-side)
+Switched to a new branch 'merge-side'
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git add side.txt)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit -m 'Side change')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[merge-side f881681] Side change
+ 1 file changed, 1 insertion(+)
+ create mode 100644 side.txt
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git switch main)
+Switched to branch 'main'
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git merge --no-ff --no-edit -v -m 'Merge subject
+
+# ------------------------ >8 ------------------------
+Retained merge body' merge-side)
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+Merge made by the 'ort' strategy.
+ side.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 side.txt
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git cat-file commit HEAD)
+tree 76bc1e1dac08c15a7e172757a6201f271fd45121
+parent 6658bc1bd8de8b94ec8efb0d4d658006fa587951
+parent f8816811f1ae5751916aff7fcf70cf7044449145
+author Ixia lab <lab@example.invalid> 1792153213 +0000
+committer Ixia lab <lab@example.invalid> 1792153213 +0000
+
+Merge subject
+
+# ------------------------ >8 ------------------------
+Retained merge body
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for merge-verbose-retains-body-through-strip: b'Merge subject\n\n# ------------------------ >8 ------------------------\nRetained merge body\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git rev-list --parents -n 1 HEAD)
+c6454edd1854d53c2a939189e465e32bde071655 6658bc1bd8de8b94ec8efb0d4d658006fa587951 f8816811f1ae5751916aff7fcf70cf7044449145
+[exit 0]
+
+========== Refuse non-IQX targets, path escapes, custom or symlink hooks, redirected hooks and altered copies ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/other && git init -q --initial-branch=main --template=/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/empty-template)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/other && git remote add origin git@bitbucket.org:otherorg/fixture.git)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/other && git commit --allow-empty -m 'initial fixture')
+[main (root-commit) f26814f] initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/spoof && git init -q --initial-branch=main --template=/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/empty-template)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/spoof && git remote add origin https://bitbucket.org.evil.invalid/iqxbusiness/fixture.git)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/spoof && git commit --allow-empty -m 'initial fixture')
+[main (root-commit) f26814f] initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/custom && git init -q --initial-branch=main --template=/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/empty-template)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/custom && git remote add origin git@bitbucket.org:iqxbusiness/fixture.git)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/custom && git commit --allow-empty -m 'initial fixture')
+[main (root-commit) f26814f] initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/redirected && git init -q --initial-branch=main --template=/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/empty-template)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/redirected && git remote add origin git@bitbucket.org:iqxbusiness/fixture.git)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/redirected && git commit --allow-empty -m 'initial fixture')
+[main (root-commit) f26814f] initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/symlinked && git init -q --initial-branch=main --template=/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/empty-template)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/symlinked && git remote add origin git@bitbucket.org:iqxbusiness/fixture.git)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/symlinked && git commit --allow-empty -m 'initial fixture')
+[main (root-commit) f26814f] initial fixture
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh other)
+STOP other: origin is 'git@bitbucket.org:otherorg/fixture.git', not bitbucket.org/iqxbusiness
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/other && git commit --allow-empty -m 'Non IQX stays unchanged')
+[main 2271c7c] Non IQX stays unchanged
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/other && git log -1 --format=%B)
+Non IQX stays unchanged
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh spoof)
+STOP spoof: origin is 'https://bitbucket.org.evil.invalid/iqxbusiness/fixture.git', not bitbucket.org/iqxbusiness
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/spoof && git commit --allow-empty -m 'Non IQX stays unchanged')
+[main 2271c7c] Non IQX stays unchanged
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/spoof && git log -1 --format=%B)
+Non IQX stays unchanged
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh custom)
+STOP custom: /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/custom/.git/hooks/commit-msg already exists and is neither this hook nor the v1 hook; not overwriting
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/redirected && git config core.hooksPath .custom-hooks)
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh redirected)
+STOP redirected: configuration sets core.hooksPath=.custom-hooks; the hook belongs there instead
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh symlinked)
+STOP symlinked: /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home/projects/symlinked/.git/hooks/commit-msg exists and is not a regular file; not overwriting
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh ../escape)
+STOP ../escape: not a plain project name
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh --home /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/guard-home custom)
+ixia-hook-install: unknown option --home
+[exit 2]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx-fixture)
+FAIL iqx-fixture: hook mode is 644, not 755 (a non-executable hook is skipped silently): /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fixture)
+unchanged iqx-fixture -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx-fixture)
+FAIL iqx-fixture: hook differs from the bundled hook: /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture/.git/hooks/commit-msg
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fixture)
+STOP iqx-fixture: /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/atc/projects/iqx-fixture/.git/hooks/commit-msg already exists and is neither this hook nor the v1 hook; not overwriting
+[exit 1]
+
+========== Show --no-verify bypass and restore attribution with an ordinary amend ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git add bypass-fixture.txt)
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --no-verify -m 'Documented bypass')
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[main fa0452b] Documented bypass
+ 1 file changed, 1 insertion(+)
+ create mode 100644 bypass-fixture.txt
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git log -1 --format=%B)
+Documented bypass
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git commit --amend --no-edit)
+environment: {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.hooksPath', 'GIT_CONFIG_VALUE_0': '/home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/pane-hooks'}
+[main 2b405c3] Documented bypass
+ Date: Fri Oct 16 12:20:14 2026 +0000
+ 1 file changed, 1 insertion(+)
+ create mode 100644 bypass-fixture.txt
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M526S0CQ1YZYNV875SKWGHDJ/.ixia-live-validation/live/iqxo/projects/iqx-fixture && git cat-file commit HEAD)
+tree 0a27365afb5f470fb070a5adfc33d60a348cfe12
+parent c6454edd1854d53c2a939189e465e32bde071655
+author Ixia lab <lab@example.invalid> 1792153214 +0000
+committer Ixia lab <lab@example.invalid> 1792153214 +0000
+
+Documented bypass
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+Persisted message for amend-restores-after-documented-bypass: b'Documented bypass\n\nCo-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>\n'
+
+Disposable live homes and repositories removed.
