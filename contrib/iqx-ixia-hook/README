@@ -1,0 +1,83 @@
+# IQX Ixia commit-msg hook (fork-only)
+
+This folder exists only in the personal fork cloud-practitioner/firstmate.
+It is for IQX Bitbucket repositories (`bitbucket.org/iqxbusiness`) only.
+It is never offered upstream and must not be part of any pull request to kunchenguid/firstmate.
+Nothing in `bin/`, the skills or `AGENTS.md` calls it; the operator runs it by hand.
+Because it is a separate folder, a merge from upstream never touches it, so it survives every upstream merge.
+
+## Why it exists
+
+Every commit message on an IQX Bitbucket repository must end with exactly one line:
+
+`Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>`
+
+Firstmate's commit-msg hook (`bin/fm-git-strip-ai-trailers.sh`) strips every AI attribution trailer, and that line names `noreply@anthropic.com`, so it is stripped too.
+The generated hook then runs the repository's own `.git/hooks/commit-msg` on the same message file.
+`ixia-commit-msg-hook.sh` is that repository hook: after the strip it removes any Ixia line already present and appends exactly one as the last trailer.
+It acts only when `remote.origin.url` names `bitbucket.org/iqxbusiness`, leaves an empty message alone so git still aborts, and never changes any other line.
+Its sha256 is `39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472`; both scripts refuse to run if the bundled copy differs.
+
+## Files
+
+- `ixia-commit-msg-hook.sh` - the hook; installed as `commit-msg`.
+- `ixia-hook-install.sh` - installs the hook into named clones of one firstmate home.
+- `ixia-hook-verify.sh` - checks the installation without committing in the real clone.
+- `ixia-hook-lib.sh` - helpers shared by the two scripts.
+- `ixia-hook.test.sh` - lab-repository test; run `bash contrib/iqx-ixia-hook/ixia-hook.test.sh`.
+  It lives here, not in `tests/`, so the repository's test inventory and CI do not pick it up.
+
+## Install and verify
+
+Both scripts take project names that exist as `projects/<name>` in a firstmate home.
+Run them from that home's root, or pass `--home <dir>`; call the copy of this folder in any checkout of the fork.
+
+```bash
+FORK=<checkout of cloud-practitioner/firstmate>
+cd <firstmate home>
+bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-install.sh" <project>...
+bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-verify.sh" <project>...
+```
+
+Per home, with that home's IQX clones (adjust the project lists to what is cloned):
+
+```bash
+bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-install.sh" --home <iqxo home> iqx.orchestration.online
+bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-verify.sh" --home <iqxo home> iqx.orchestration.online
+bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-install.sh" --home <atc home> iqx_atc_remedy
+bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-verify.sh" --home <atc home> iqx_atc_remedy
+bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-install.sh" --home <fab home> iqx-fab iqx-common iqx-fab_common
+bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-verify.sh" --home <fab home> iqx-fab iqx-common iqx-fab_common
+```
+
+What the install does:
+
+- It refuses a project that is not a git clone, or whose origin is not `bitbucket.org/iqxbusiness`.
+- It installs to the clone's real hooks directory as `commit-msg`, mode 755, ignoring a firstmate pane's own `core.hooksPath` override.
+  Linked worktrees, including every pool slot, share that one copy.
+- It refuses a clone whose configuration sets `core.hooksPath`.
+- It never overwrites a `commit-msg` that is not a previous copy of this hook, and re-running it changes nothing.
+- A `STOP` line means the project was left untouched; the exit code is 1 if any project stopped.
+
+What the verify does:
+
+- It checks the origin, the file, mode 755 (a non-executable repository hook is skipped silently by firstmate's chain), the sha256, and that every linked worktree resolves to the same hook.
+- It then makes a throwaway commit in a temporary repository with the same origin URL and a copy of the installed hook, and expects exactly one Ixia line, last, with human trailers kept.
+- It never writes to or commits in the real clone; every line must read `ok <project> ...`.
+
+## When to run it again
+
+- After any IQX project is added to a home, or re-cloned, or a home is re-seeded: `.git/hooks` is untracked, so a fresh clone has no hook.
+- After moving a clone to another path.
+
+## What it does not cover
+
+The hook only runs where git runs `commit-msg`, so these commits still lack the line:
+
+- The no-mistakes pipeline's own fix commits, which it makes with `--no-verify`.
+- `git commit --no-verify`, which also skips firstmate's strip.
+- `git cherry-pick` and `git revert`; run `git commit --amend --no-edit` afterwards.
+- An autosquash `squash!` fold, which leaves a second line mid-message; amend afterwards or add `--exec 'git commit --amend --no-edit'` to the rebase.
+- Bitbucket server-side merges, which write their own commit without local hooks.
+
+The merged result is covered by the squash-merge message rule: the squash commit message on the IQX repositories ends with the Ixia line.
