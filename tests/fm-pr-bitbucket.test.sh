@@ -801,6 +801,97 @@ test_merge_message_refusals_never_reach_the_forge() {
   pass "fm-pr-merge --message-file refuses a Bitbucket merge that cannot carry the message before the merge request, and keeps its guards"
 }
 
+test_merge_message_file_validation() {
+  local case_dir path name rc
+  local args=()
+  for name in empty whitespace missing directory oversize nul utf8 utf8-body novalue twice equals; do
+    case_dir=$(make_case "message-refuse-$name")
+    path="$case_dir/message.txt"
+    args=(--message-file "$path")
+    case "$name" in
+      empty) : > "$path" ;;
+      whitespace) printf ' \n\t\r\n  \n' > "$path" ;;
+      missing) ;;
+      directory) args=(--message-file "$case_dir") ;;
+      oversize) head -c 16385 /dev/zero | tr '\0' 'a' > "$path" ;;
+      nul) printf 'subject\0hidden' > "$path" ;;
+      utf8) printf 'caf\xe9\n' > "$path" ;;
+      utf8-body) printf 'Subject\n\ncaf\xe9\n' > "$path" ;;
+      novalue) args=(--message-file) ;;
+      twice) args=(--message-file "$path" --message-file "$path") ;;
+      equals) args=("--message-file=$path") ;;
+    esac
+    rc=0
+    run_merge "$case_dir" "$BB_URL" "${args[@]}" || rc=$?
+    expect_code 2 "$rc" "message-refuse-$name: an unusable file must refuse"
+    assert_grep 'error: --message-file' "$case_dir/stderr" "message-refuse-$name: refusal did not name the option"
+    assert_absent "$case_dir/bb/curl-argv.log" "message-refuse-$name: the forge was called"
+    assert_no_grep 'pr=' "$case_dir/state/task-x1.meta" "message-refuse-$name: metadata was recorded"
+    assert_absent "$case_dir/state/task-x1.check.sh" "message-refuse-$name: a merge poll was armed"
+  done
+  case_dir=$(make_case message-limit)
+  path="$case_dir/message.txt"
+  head -c 16384 /dev/zero | tr '\0' 'a' > "$path"
+  run_merge "$case_dir" "$BB_URL" --message-file "$path" || fail "message-limit: a message at the size bound should merge"
+  assert_equals "$(cat "$path")" "$(jq -r .message "$case_dir/bb/merge-body.json")" "message-limit: the full message was not sent"
+  pass "fm-pr-merge validates Bitbucket message files before recording or calling the forge and accepts the inclusive size bound"
+}
+
+test_merge_message_requires_utf8_validator() {
+  local case_dir path noiconv bindir entry name kind rc
+  case_dir=$(make_case message-no-iconv)
+  path="$case_dir/message.txt"
+  noiconv="$case_dir/noiconv"
+  mkdir -p "$noiconv"
+  while IFS= read -r bindir; do
+    [ -d "$bindir" ] || continue
+    for entry in "$bindir"/*; do
+      [ -e "$entry" ] || continue
+      name=${entry##*/}
+      [ "$name" != iconv ] || continue
+      [ -e "$noiconv/$name" ] || ln -s "$entry" "$noiconv/$name"
+    done
+  done < <(printf '%s\n' "$PATH" | tr ':' '\n')
+  if PATH="$noiconv" command -v iconv >/dev/null 2>&1; then
+    fail "message-no-iconv: the isolated search path still resolves iconv"
+  fi
+  for kind in invalid-subject invalid-body ascii unicode; do
+    case "$kind" in
+      invalid-subject) printf 'caf\xe9' > "$path" ;;
+      invalid-body) printf 'Subject\n\ncaf\xe9' > "$path" ;;
+      ascii) printf 'Subject' > "$path" ;;
+      unicode) printf 'Caf\xc3\xa9\n\nBody \xe2\x9c\x93' > "$path" ;;
+    esac
+    rc=0
+    PATH="$noiconv" run_merge "$case_dir" "$BB_URL" --message-file "$path" || rc=$?
+    expect_code 2 "$rc" "message-no-iconv-$kind: a message without a validator must refuse"
+    assert_grep 'error: --message-file requires iconv on PATH to validate UTF-8 text' "$case_dir/stderr" \
+      "message-no-iconv-$kind: refusal did not explain the missing validator"
+    assert_absent "$case_dir/bb/curl-argv.log" "message-no-iconv-$kind: the forge was called"
+    assert_no_grep 'pr=' "$case_dir/state/task-x1.meta" "message-no-iconv-$kind: metadata was recorded"
+    assert_absent "$case_dir/state/task-x1.check.sh" "message-no-iconv-$kind: a merge poll was armed"
+  done
+  PATH="$noiconv" run_merge "$case_dir" "$BB_URL" || fail "message-no-iconv: a merge without a message should not require iconv"
+  jq -e 'has("message") | not' "$case_dir/bb/merge-body.json" >/dev/null || fail "message-no-iconv: a message was added without the option"
+  pass "fm-pr-merge refuses unvalidated Bitbucket messages but needs no encoding validator without a message"
+}
+
+test_merge_message_is_normalized_and_read_once() {
+  local case_dir path text=$'Caf\xc3\xa9\n\nBody \xe2\x9c\x93'
+  case_dir=$(make_case message-read-once)
+  path="$case_dir/message.txt"
+  printf '\n  Caf\xc3\xa9  \r\n\r\n\r\nBody \xe2\x9c\x93  \r\n' > "$path"
+  mv "$case_dir/fakebin/curl" "$case_dir/fakebin/curl-fixture"
+  printf '%s\n' '#!/usr/bin/env bash' \
+    'printf "changed after validation" > "$FM_TEST_MESSAGE_FILE"' \
+    'exec "$(dirname "$0")/curl-fixture" "$@"' > "$case_dir/fakebin/curl"
+  chmod +x "$case_dir/fakebin/curl"
+  FM_TEST_MESSAGE_FILE="$path" run_merge "$case_dir" "$BB_URL" --message-file "$path" || fail "message-read-once: valid UTF-8 should merge"
+  assert_equals 'changed after validation' "$(cat "$path")" "message-read-once: the file was not changed during the forge read"
+  assert_equals "$text" "$(jq -r .message "$case_dir/bb/merge-body.json")" "message-read-once: normalization, Unicode, or the validated message changed"
+  pass "fm-pr-merge preserves normalized UTF-8 messages when the file changes after validation"
+}
+
 test_record_read_reports_state_and_merged
 test_statuses_read_follows_pagination_only_under_the_api_base
 test_check_records_full_head_and_arms_the_poll
@@ -823,3 +914,6 @@ test_merge_refuses_unmet_review_merge_checks
 test_merge_reads_back_after_a_transport_failure
 test_merge_sends_a_caller_supplied_message_with_the_strategy
 test_merge_message_refusals_never_reach_the_forge
+test_merge_message_file_validation
+test_merge_message_requires_utf8_validator
+test_merge_message_is_normalized_and_read_once

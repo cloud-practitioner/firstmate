@@ -186,51 +186,26 @@
 # because there is no established translation from a gh/glab-style flag into
 # a Forgejo API field yet.
 #
-# An optional --message-file <path>, parsed before the optional -- separator
-# like the other options, sets the merge commit message the caller supplies;
-# this script knows no message format of its own. The file is read exactly once,
-# before any state is recorded or any forge command runs, so a later change to
-# the file cannot alter what was validated. It must be a readable regular file
-# of valid UTF-8 text with no NUL byte, at most 16384 bytes (a bound chosen so a
-# message JSON-escaped into one curl argument still fits the kernel's
-# single-argument limit, and below Bitbucket's own 128 KiB message limit), and
-# not empty or whitespace-only after normalization: CRLF line endings become LF
-# and leading and trailing whitespace is dropped. The first line is the subject
-# and the text after it, minus its leading blank lines, is the body. Any
-# failure, and every case below where the chosen forge or merge method cannot
-# carry a message, refuses before the forge is called, because a message that
-# cannot be sent is never silently dropped. The refusal exits 2, except that a
-# Bitbucket destination default strategy that cannot carry it is reported with
-# the other live pre-merge refusals and exits 1. The option may be given once
-# and is refused when the extra args after -- already set the same field.
-# UTF-8 validation requires iconv on PATH whenever --message-file is used.
-# Where each forge takes it (the field names are from each forge's own API
-# docs: GitHub REST "Merge a pull request" and "gh pr merge", GitLab REST
-# "Merge a merge request" and "glab mr merge", Forgejo's MergePullRequestOption
-# swagger definition, Bitbucket Cloud's pullrequest_merge_parameters):
-#   GitHub:    gh --subject and --body, the empty body sent explicitly for a
-#              subject-only message; refused with a rebase merge, which
-#              creates no commit, or when the PR's isMergeQueueEnabled is true
-#              without a caller's --admin bypass, because gh queues that merge
-#              and GitHub ignores custom messages. Unreadable PR queue state
-#              also refuses unless --admin bypasses it. Extra args --subject/-t,
-#              --body/-b, or --body-file/-F conflict in any spelling or cluster.
-#   GitLab:    the whole text as glab --squash-message (squash_commit_message)
-#              when the project's squash_option and the MR's squash state,
-#              including an explicit --squash request, prove it will squash;
-#              otherwise --message (merge_commit_message) when merge_method
-#              creates a merge commit. Refused for fast-forward-only without
-#              squash, unreadable policy, or extra args --message/-m or
-#              --squash-message. Effective squashing is passed as --squash to
-#              satisfy glab's message flag requirement; a rebase flag alongside
-#              effective squashing refuses because glab makes them exclusive.
-#   Forgejo:   MergeTitleField for the subject and MergeMessageField for the
-#              body on the merge call; refused for the rebase and
-#              fast-forward-only styles, which create no commit.
-#   Bitbucket: the whole text as the merge request's message beside its
-#              merge_strategy; refused for fast_forward and rebase_fast_forward,
-#              whether named or read as the destination's default, which create
-#              no commit.
+# An optional --message-file <path>, parsed before the optional -- separator,
+# sets a caller-supplied merge commit message on Bitbucket Cloud only for now;
+# this script knows no message format of its own. GitHub, GitLab, and Forgejo
+# refuse this option before any forge call or metadata write.
+# The file is read exactly once before any state is recorded or any forge
+# command runs, so a later change cannot alter what was validated. It must be
+# a readable regular file of valid UTF-8 text with no NUL byte, at most 16384
+# bytes (below Bitbucket's 128 KiB message limit and small enough to fit the
+# kernel's single-argument limit after JSON escaping). UTF-8 validation requires
+# iconv on PATH; its absence refuses the option.
+# CRLF line endings become LF, leading and trailing whitespace is dropped,
+# trailing whitespace on the first line is removed, and blank lines between
+# that line and the remaining text become one blank line. Empty or
+# whitespace-only messages refuse.
+# The whole normalized text is sent as the Bitbucket merge API's message field
+# beside merge_strategy. fast_forward and rebase_fast_forward create no commit
+# to carry it, so they refuse whether named or read as the destination default.
+# Validation and unsupported-forge refusals exit 2; an incompatible destination
+# default is reported with the other live pre-merge refusals and exits 1.
+# The option may be given once, before --.
 # The message is not recorded in merge metadata because the existing task and
 # merge-authority records have fixed formats consumed by other scripts.
 #
@@ -380,6 +355,10 @@ while [ "$#" -gt 0 ]; do
     *) break ;;
   esac
 done
+if [ -n "$MESSAGE_FILE" ] && [ "$PROVIDER" != bitbucket ]; then
+  echo "error: --message-file is not supported on this forge yet ($PROVIDER); merge messages are Bitbucket-only" >&2
+  exit 2
+fi
 # --allow-red names one check run to waive, which only GitHub's per-check
 # reading can match. GitLab and Forgejo each collapse their checks into a
 # single head verdict - a head pipeline status and a combined commit status -
@@ -561,14 +540,11 @@ bitbucket_parse_merge_args() {
 }
 
 # The caller-supplied merge message, read once and normalized; the header owns
-# the contract. Sets MERGE_MESSAGE (the whole normalized text),
-# MERGE_MESSAGE_SUBJECT and MERGE_MESSAGE_BODY (possibly empty).
+# the contract. Sets MERGE_MESSAGE to the whole normalized text.
 MERGE_MESSAGE_MAX_BYTES=16384
 MERGE_MESSAGE=
-MERGE_MESSAGE_SUBJECT=
-MERGE_MESSAGE_BODY=
 merge_message_load() {  # <path>
-  local path=$1 raw='' rc=0 text rest first
+  local path=$1 raw='' rc=0 text rest first subject
   # Byte semantics for every length and pattern below.
   local LC_ALL=C
   if [ ! -f "$path" ] || [ ! -r "$path" ]; then
@@ -602,8 +578,8 @@ merge_message_load() {  # <path>
     echo "error: --message-file $path is empty or only whitespace" >&2
     return 1
   fi
-  MERGE_MESSAGE_SUBJECT=${text%%$'\n'*}
-  MERGE_MESSAGE_SUBJECT=${MERGE_MESSAGE_SUBJECT%"${MERGE_MESSAGE_SUBJECT##*[![:space:]]}"}
+  subject=${text%%$'\n'*}
+  subject=${subject%"${subject##*[![:space:]]}"}
   rest=
   case "$text" in *$'\n'*) rest=${text#*$'\n'} ;; esac
   # Drop the blank lines that separate the subject from the body.
@@ -612,117 +588,8 @@ merge_message_load() {  # <path>
     case "$first" in *[![:space:]]*) break ;; esac
     case "$rest" in *$'\n'*) rest=${rest#*$'\n'} ;; *) rest= ;; esac
   done
-  MERGE_MESSAGE_BODY=$rest
-  MERGE_MESSAGE=$MERGE_MESSAGE_SUBJECT
-  [ -z "$MERGE_MESSAGE_BODY" ] || MERGE_MESSAGE=$MERGE_MESSAGE$'\n\n'$MERGE_MESSAGE_BODY
-}
-
-# Refusals that need only the caller's own extra arguments: a field the
-# message would set that they already set, or a GitHub rebase merge, which
-# creates no commit to carry it. Single-dash arguments are short-option
-# clusters, so a cluster holding any of the letters is refused as a conflict
-# even where the letter takes a value.
-merge_message_reject_conflicts() {
-  local arg
-  case "$PROVIDER" in
-    github)
-      for arg in "$@"; do
-        case "$arg" in
-          --subject|--subject=*|--body|--body=*|--body-file|--body-file=*)
-            echo "error: --message-file sets the merge commit subject and body, so the extra merge arguments must not set them ('$arg')" >&2
-            return 1
-            ;;
-          --rebase)
-            echo "error: --message-file cannot be sent with a rebase merge, which creates no commit to carry it" >&2
-            return 1
-            ;;
-          --*) ;;
-          -*[tbF]*)
-            echo "error: --message-file sets the merge commit subject and body, so the extra merge arguments must not set them ('$arg')" >&2
-            return 1
-            ;;
-          -*r*)
-            echo "error: --message-file cannot be sent with a rebase merge, which creates no commit to carry it" >&2
-            return 1
-            ;;
-        esac
-      done
-      if [ "$(caller_merge_method "$@")" = rebase ]; then
-        echo "error: --message-file cannot be sent with a rebase merge, which creates no commit to carry it" >&2
-        return 1
-      fi
-      ;;
-    gitlab)
-      for arg in "$@"; do
-        case "$arg" in
-          --message|--message=*|--squash-message|--squash-message=*)
-            echo "error: --message-file sets the merge commit message, so the extra merge arguments must not set one ('$arg')" >&2
-            return 1
-            ;;
-          --*) ;;
-          -*m*)
-            echo "error: --message-file sets the merge commit message, so the extra merge arguments must not set one ('$arg')" >&2
-            return 1
-            ;;
-        esac
-      done
-      ;;
-  esac
-}
-
-FM_PR_GITLAB_MESSAGE_FIELD=
-gitlab_resolve_message_field() {
-  local mr_json=$1 project_json project_path field arg squash=false rebase=false
-  shift
-  for arg in "$@"; do
-    case "$arg" in
-      --squash) squash=true ;;
-      --squash=*) squash=${arg#*=} ;;
-      --rebase|--rebase=*) rebase=true ;;
-      --*) ;;
-      -*)
-        case "${arg%%=*}" in
-          *s)
-            squash=true
-            case "$arg" in *=*) squash=${arg#*=} ;; esac
-            ;;
-          *s*) squash=true ;;
-        esac
-        case "${arg%%=*}" in *r*) rebase=true ;; esac
-        ;;
-    esac
-  done
-  case "$squash" in
-    true|TRUE|True|t|T|1) squash=true ;;
-    false|FALSE|False|f|F|0) squash=false ;;
-    *)
-      echo "error: --message-file cannot be sent because the GitLab squash argument could not be interpreted" >&2
-      return 1
-      ;;
-  esac
-  project_path=$(jq -rn --arg path "$PR_PATH" '$path | @uri')
-  if ! project_json=$(GITLAB_HOST="$FM_PR_HOST" glab api "projects/$project_path" --hostname "$FM_PR_HOST" 2>/dev/null) \
-    || ! field=$(printf '%s' "$project_json" | jq -er --argjson mr "$mr_json" --argjson squash "$squash" '
-      if type == "object" and (.merge_method | IN("merge", "rebase_merge", "ff"))
-        and (.squash_option | IN("never", "always", "default_on", "default_off"))
-        and ($mr.squash | type) == "boolean" then
-        if .squash_option == "always" or (.squash_option != "never" and ($mr.squash or $squash))
-        then "squash-message"
-        elif .merge_method == "ff" then "no-commit"
-        else "message" end
-      else error("unreadable merge policy") end' 2>/dev/null); then
-    echo "error: --message-file cannot be sent because the GitLab merge and squash policy could not be determined" >&2
-    return 1
-  fi
-  if [ "$field" = no-commit ]; then
-    echo "error: --message-file cannot be sent because GitLab's fast-forward-only merge without squash creates no commit to carry it" >&2
-    return 1
-  fi
-  if [ "$field" = squash-message ] && [ "$rebase" = true ]; then
-    echo "error: --message-file cannot be sent for effective GitLab squashing with a rebase flag because glab requires --squash with --squash-message and makes --squash and --rebase exclusive" >&2
-    return 1
-  fi
-  FM_PR_GITLAB_MESSAGE_FIELD=$field
+  MERGE_MESSAGE=$subject
+  [ -z "$rest" ] || MERGE_MESSAGE=$MERGE_MESSAGE$'\n\n'$rest
 }
 
 # Prints why a Bitbucket strategy cannot carry a message; status 1 when it can.
@@ -736,15 +603,6 @@ bitbucket_message_strategy_refusal() {  # <strategy>
   return 1
 }
 
-# Forgejo styles that create no commit, so they cannot carry a message.
-forgejo_message_style_ok() {  # <style>
-  case "$1" in
-    merge|squash|rebase-merge) return 0 ;;
-  esac
-  echo "error: --message-file cannot be sent with the Forgejo '$1' merge style, which creates no commit to carry it" >&2
-  return 1
-}
-
 reject_repo_overrides "$@" || exit 1
 reject_head_overrides "$@" || exit 1
 reject_protected_forge_args "$@" || exit 1
@@ -752,8 +610,7 @@ if [ "$PROVIDER" = bitbucket ]; then
   bitbucket_parse_merge_args "$@" || exit 1
 fi
 if [ -n "$MESSAGE_FILE" ]; then
-  merge_message_reject_conflicts "$@" || exit 2
-  if [ "$PROVIDER" = bitbucket ] && message_refusal=$(bitbucket_message_strategy_refusal "$BITBUCKET_MERGE_STRATEGY"); then
+  if message_refusal=$(bitbucket_message_strategy_refusal "$BITBUCKET_MERGE_STRATEGY"); then
     echo "error: $message_refusal" >&2
     exit 2
   fi
@@ -988,9 +845,6 @@ FIELDS
     printf 'error: refusing to merge %s\n' "$URL" >&2
     printf '%s' "$refusals" >&2
     return 1
-  fi
-  if [ -n "$MESSAGE_FILE" ]; then
-    gitlab_resolve_message_field "$json" "$@" || return 2
   fi
   printf 'verified: %s is open and mergeable, with a successful pipeline at head %s\n' \
     "$URL" "$live_head" >&2
@@ -1802,27 +1656,6 @@ refuse_github_queue_while_away() {
   return 2
 }
 
-github_verify_message_queue() {
-  local arg admin=false json queued
-  for arg in "$@"; do
-    case "$arg" in
-      --admin) admin=true ;;
-      --admin=*) admin=${arg#*=} ;;
-    esac
-  done
-  case "$admin" in true|TRUE|True|t|T|1) return 0 ;; esac
-  if ! json=$(gh pr view "$URL" --json isMergeQueueEnabled 2>/dev/null) \
-    || ! queued=$(printf '%s' "$json" | jq -er '
-      if (.isMergeQueueEnabled | type) == "boolean" then (.isMergeQueueEnabled | tostring)
-      else error("unreadable PR queue state") end' 2>/dev/null); then
-    echo "error: --message-file cannot be sent because the GitHub PR's effective merge-queue state could not be determined" >&2
-    return 2
-  fi
-  [ "$queued" = false ] && return 0
-  echo "error: --message-file cannot be sent because gh would use GitHub's merge queue, which ignores custom commit messages" >&2
-  return 2
-}
-
 require_recorded_pr_identity() {
   local existing
   existing=$(grep '^pr=' "$META" | tail -1 | cut -d= -f2- || true)
@@ -2419,15 +2252,9 @@ case "$PROVIDER" in
     [ "$away_status" -eq 0 ] || exit "$away_status"
     refuse_github_queue_while_away || exit 2
     merge_status=0
-    message_args=()
-    if [ -n "$MESSAGE_FILE" ]; then
-      github_verify_message_queue "$@" || exit 2
-      message_args=(--subject="$MERGE_MESSAGE_SUBJECT" --body="$MERGE_MESSAGE_BODY")
-    fi
     merge_output=$(gh pr merge "$PR_NUMBER" --repo "$PR_OWNER/$PR_REPO" \
       --match-head-commit "$FM_PR_MERGE_HEAD" \
-      "${merge_args[@]+"${merge_args[@]}"}" \
-      "${message_args[@]+"${message_args[@]}"}" "$@" 2>&1) || merge_status=$?
+      "${merge_args[@]+"${merge_args[@]}"}" "$@" 2>&1) || merge_status=$?
     if [ "$merge_status" -eq 0 ]; then
       FM_PR_GITHUB_MERGE_ACCEPTED=true
       persist_accepted_merge_authority || exit 1
@@ -2467,9 +2294,7 @@ case "$PROVIDER" in
     fi
     ;;
   gitlab)
-    gitlab_status=0
-    gitlab_verify_mergeable "$@" || gitlab_status=$?
-    [ "$gitlab_status" -eq 0 ] || exit "$gitlab_status"
+    gitlab_verify_mergeable || exit 1
     # --sha binds the merge to the head this run verified, so a push that lands
     # in between is refused by GitLab instead of merged unverified. --yes only
     # skips the interactive confirmation, which no supervised run can answer;
@@ -2484,12 +2309,6 @@ case "$PROVIDER" in
     gitlab_merge_args=()
     if [ "$FM_PR_AWAY_POSTURE" = true ]; then
       gitlab_merge_args=(--auto-merge=false)
-    fi
-    if [ -n "$MESSAGE_FILE" ]; then
-      if [ "$FM_PR_GITLAB_MESSAGE_FIELD" = squash-message ]; then
-        gitlab_merge_args+=(--squash)
-      fi
-      gitlab_merge_args+=("--$FM_PR_GITLAB_MESSAGE_FIELD=$MERGE_MESSAGE")
     fi
     GITLAB_HOST="$FM_PR_HOST" glab mr merge "$PR_NUMBER" -R "$PROJECT_URL" \
       --sha "$FM_PR_MERGE_HEAD" --yes "$@" "${gitlab_merge_args[@]+"${gitlab_merge_args[@]}"}" || merge_status=$?
@@ -2571,14 +2390,6 @@ case "$PROVIDER" in
     forgejo_reject_unsupported_args "$@" || exit 1
     forgejo_method=$(caller_merge_method "$@")
     [ -n "$forgejo_method" ] || forgejo_method=$(forgejo_default_merge_style) || exit 1
-    forgejo_message_args=()
-    if [ -n "$MESSAGE_FILE" ]; then
-      forgejo_message_style_ok "$forgejo_method" || exit 2
-      forgejo_message_args=(-f "MergeTitleField=$MERGE_MESSAGE_SUBJECT")
-      if [ -n "$MERGE_MESSAGE_BODY" ]; then
-        forgejo_message_args+=(-f "MergeMessageField=$MERGE_MESSAGE_BODY")
-      fi
-    fi
     forgejo_verify_mergeable || exit 1
     # The away record is locked first, so this last presence and authority
     # read and the forge command below share one live-owner critical section.
@@ -2593,8 +2404,7 @@ case "$PROVIDER" in
     # directly through "tea api" instead.
     merge_output=$(tea api --login "$FORGEJO_LOGIN" --repo "$PR_OWNER/$PR_REPO" \
       -X POST "/repos/{owner}/{repo}/pulls/$PR_NUMBER/merge" \
-      -f "Do=$forgejo_method" -f "head_commit_id=$FM_PR_MERGE_HEAD" \
-      "${forgejo_message_args[@]+"${forgejo_message_args[@]}"}" 2>&1) || true
+      -f "Do=$forgejo_method" -f "head_commit_id=$FM_PR_MERGE_HEAD" 2>&1) || true
     # "tea api" reports an HTTP-level failure with exit status 0 (also
     # verified against a real instance), so that output is kept only for the
     # failure report below; the merge is judged solely by reading the pull

@@ -107,7 +107,7 @@ write_github_live_json() {
   local case_dir=$1 head=$2
   printf '%s\n' "$head" > "$case_dir/github-head"
   cat > "$case_dir/github-view.json" <<JSON
-{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","isMergeQueueEnabled":false,"statusCheckRollup":[{"__typename":"CheckRun","name":"ci","status":"COMPLETED","conclusion":"SUCCESS"}]}
+{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","statusCheckRollup":[{"__typename":"CheckRun","name":"ci","status":"COMPLETED","conclusion":"SUCCESS"}]}
 JSON
 }
 
@@ -115,7 +115,7 @@ write_github_red_json() {
   local case_dir=$1 head=$2 name=$3
   printf '%s\n' "$head" > "$case_dir/github-head"
   cat > "$case_dir/github-view.json" <<JSON
-{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","isMergeQueueEnabled":false,"statusCheckRollup":[{"__typename":"CheckRun","name":"$name","status":"COMPLETED","conclusion":"FAILURE"}]}
+{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","statusCheckRollup":[{"__typename":"CheckRun","name":"$name","status":"COMPLETED","conclusion":"FAILURE"}]}
 JSON
 }
 
@@ -150,7 +150,7 @@ write_github_rollup_json() {
   done
   printf '%s\n' "$head" > "$case_dir/github-head"
   cat > "$case_dir/github-view.json" <<JSON
-{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","isMergeQueueEnabled":false,"statusCheckRollup":[$rollup]}
+{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","statusCheckRollup":[$rollup]}
 JSON
 }
 
@@ -185,8 +185,6 @@ case "${1:-} ${2:-}" in
   "pr view")
     case " $* " in
       *statusCheckRollup*)
-        # A change to the message file after the merge was validated.
-        [ -z "${FM_TEST_MUTATE_FILE:-}" ] || printf 'changed after validation' > "$FM_TEST_MUTATE_FILE"
         if [ -n "${FM_TEST_GH_MERGEABLE_SEQUENCE:-}" ]; then
           call_n=$(( $(cat "$FM_TEST_GH_MERGEABLE_CALLS" 2>/dev/null || echo 0) + 1 ))
           printf '%s\n' "$call_n" > "$FM_TEST_GH_MERGEABLE_CALLS"
@@ -209,12 +207,6 @@ case "${1:-} ${2:-}" in
         fi
         exit 0
         ;;
-      *isMergeQueueEnabled*)
-        [ ! -e "$(dirname "$FM_TEST_GH_VIEW_JSON")/github-queue-view-fails" ] || exit 1
-        [ ! -e "$(dirname "$FM_TEST_GH_VIEW_JSON")/github-queue-view-empty" ] || exit 0
-        cat "$FM_TEST_GH_VIEW_JSON"
-        exit 0
-        ;;
       *headRefOid*)
         cat "$FM_TEST_GH_HEAD"
         exit 0
@@ -226,8 +218,6 @@ case "${1:-} ${2:-}" in
     esac
     ;;
   "pr merge")
-    # One argument per line, so a multi-line message stays readable exactly.
-    printf '<%s>\n' "$@" > "$(dirname "$FM_TEST_GH_LOG")/gh-merge-args"
     if [ -n "${FM_TEST_META_AT_MERGE:-}" ] && [ -f "${FM_STATE_OVERRIDE:-}/task-x1.meta" ]; then
       cat "$FM_STATE_OVERRIDE/task-x1.meta" > "$FM_TEST_META_AT_MERGE"
     fi
@@ -374,25 +364,7 @@ case "${1:-} ${2:-}" in
     fi
     exit 0
     ;;
-  "api projects/"*)
-    [ ! -e "$case_dir/glab-project-fails" ] || exit 1
-    cat "$case_dir/project.json"
-    exit 0
-    ;;
   "mr merge")
-    printf '<%s>\n' "$@" > "$case_dir/glab-merge-args"
-    squash=false squash_message=false
-    for arg in "$@"; do
-      case "$arg" in
-        --squash) squash=true ;;
-        --squash=*) squash=${arg#*=} ;;
-        --squash-message=*) squash_message=true ;;
-      esac
-    done
-    if [ "$squash_message" = true ] && [ "$squash" != true ]; then
-      echo 'error: --squash-message can only be used with --squash' >&2
-      exit 1
-    fi
     [ ! -e "$case_dir/glab-merge-fails" ] || { echo "error: mr merge failed" >&2 ; exit 1 ; }
     : > "$case_dir/glab-merge-called"
     exit 0
@@ -412,7 +384,7 @@ write_mr_json() {
   local file=$1 kv key value
   local state=opened detail=mergeable conflicts=false discussions=true
   local head=$MR_HEAD pipeline_sha=$MR_HEAD pipeline_status=success pipeline=present
-  local merge_when_pipeline_succeeds=false merge_after=null squash=false
+  local merge_when_pipeline_succeeds=false merge_after=null
   shift
   for kv in "$@"; do
     key=${kv%%=*}
@@ -428,7 +400,6 @@ write_mr_json() {
       pipeline) pipeline=$value ;;
       merge_when_pipeline_succeeds) merge_when_pipeline_succeeds=$value ;;
       merge_after) merge_after=$value ;;
-      squash) squash=$value ;;
       *) fail "write_mr_json: unknown field '$key'" ;;
     esac
   done
@@ -439,8 +410,8 @@ write_mr_json() {
     "$state" "$detail" "$conflicts" > "$file"
   printf '"blocking_discussions_resolved":%s,"sha":"%s","head_pipeline":%s,' \
     "$discussions" "$head" "$pipeline" >> "$file"
-  printf '"merge_when_pipeline_succeeds":%s,"merge_after":%s,"squash":%s}\n' \
-    "$merge_when_pipeline_succeeds" "$merge_after" "$squash" >> "$file"
+  printf '"merge_when_pipeline_succeeds":%s,"merge_after":%s}\n' \
+    "$merge_when_pipeline_succeeds" "$merge_after" >> "$file"
 }
 
 # tea mock recording every invocation, so a test can prove the login and
@@ -474,7 +445,7 @@ fi
 
 [ "${1:-}" = api ] || exit 0
 shift
-endpoint= do_value= head_commit_id= title= message= title_set=false message_set=false
+endpoint= do_value= head_commit_id=
 while [ $# -gt 0 ]; do
   case "$1" in
     -X) shift 2 ;;
@@ -483,8 +454,6 @@ while [ $# -gt 0 ]; do
       case "$2" in
         Do=*) do_value=${2#Do=} ;;
         head_commit_id=*) head_commit_id=${2#head_commit_id=} ;;
-        MergeTitleField=*) title=${2#MergeTitleField=}; title_set=true ;;
-        MergeMessageField=*) message=${2#MergeMessageField=}; message_set=true ;;
       esac
       shift 2
       ;;
@@ -524,8 +493,6 @@ case "$endpoint" in
     else
       : > "$log_dir/tea-merge-called"
       printf '%s\n' "$do_value" > "$log_dir/tea-merge-do"
-      [ "$title_set" = false ] || printf '%s' "$title" > "$log_dir/tea-merge-title"
-      [ "$message_set" = false ] || printf '%s' "$message" > "$log_dir/tea-merge-message"
       : > "$log_dir/tea-merged"
       printf '{}\n'
     fi
@@ -656,7 +623,6 @@ make_gitlab_case() {
   : > "$case_dir/glab.log"
   write_mr_json "$case_dir/mr.json" "$@"
   write_mr_json "$case_dir/mr-post.json" state=merged
-  printf '{"merge_method":"merge","squash_option":"default_off"}\n' > "$case_dir/project.json"
   printf '%s\n' "$case_dir"
 }
 
@@ -4529,530 +4495,43 @@ test_required_partial_reads_report_all_failures
 test_allow_red_refused_on_forgejo
 test_allow_missing_refused_on_forgejo
 
-# --message-file: a caller-supplied merge commit message, sent through each
-# forge's own field. The header of bin/fm-pr-merge.sh owns the contract.
-MSG_SUBJECT='Add the thing'
-MSG_BODY=$'First body line\nSecond body line'
-MSG_TEXT="$MSG_SUBJECT"$'\n\n'"$MSG_BODY"
-
-write_message_file() {  # <case-dir> <content> -> path on stdout
-  local case_dir=$1
-  printf '%s' "$2" > "$case_dir/message.txt"
-  printf '%s\n' "$case_dir/message.txt"
-}
-
-# The gh merge argument file for a squash merge of PR 15 at <head>, with the
-# given trailing args (each already in its logged form).
-expected_gh_args() {  # <head> <arg>...
-  local head=$1
-  shift
-  printf '<%s>\n' pr merge 15 --repo example/repo --match-head-commit "$head" --squash "$@"
-}
-
-new_github_message_case() {  # <name> -> case dir on stdout
-  local case_dir
-  case_dir=$(make_case "$1")
-  mkdir -p "$case_dir/wt"
-  add_gh_mocks "$case_dir" 2222222222222222222222222222222222222222
-  : > "$case_dir/gh-axi.log"
-  printf '%s\n' "$case_dir"
-}
-
-test_message_file_github_sends_subject_and_body() {
-  local case_dir path rc=0 head=2222222222222222222222222222222222222222
-  case_dir=$(new_github_message_case message-github)
-  path=$(write_message_file "$case_dir" "$MSG_TEXT"$'\n')
-  run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 0 "$rc" "message-github: a message-bearing merge should succeed"$'\n'"$(cat "$case_dir/stderr")"
-  assert_equals "$(expected_gh_args "$head" "--subject=$MSG_SUBJECT" "--body=$MSG_BODY")" \
-    "$(cat "$case_dir/gh-merge-args")" "message-github: the subject and body were not passed to gh"
-
-  # A subject-only message sends an explicitly empty body, so the message is the
-  # whole commit message rather than the forge's default body.
-  case_dir=$(new_github_message_case message-github-subject-only)
-  path=$(write_message_file "$case_dir" $'\n\n  Only a subject  \r\n\n')
-  run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" -- --merge \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-github-subject-only: should merge"
-  assert_equals "$(printf '<%s>\n' pr merge 15 --repo example/repo --match-head-commit "$head" '--subject=Only a subject' '--body=' --merge)" \
-    "$(cat "$case_dir/gh-merge-args")" "message-github-subject-only: the normalized subject or empty body was wrong"
-
-  # Without the option nothing about the merge changes.
-  case_dir=$(new_github_message_case message-github-absent)
-  : > "$case_dir/github-queue-view-fails"
-  run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-github-absent: should merge"
-  assert_equals "$(expected_gh_args "$head")" "$(cat "$case_dir/gh-merge-args")" \
-    "message-github-absent: the merge arguments changed without the option"
-  pass "fm-pr-merge --message-file sends the subject and body through gh and leaves a merge without it unchanged"
-}
-
-test_message_file_is_read_once_before_the_merge() {
-  local case_dir path rc=0
-  case_dir=$(new_github_message_case message-read-once)
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  FM_TEST_MUTATE_FILE="$path" run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 0 "$rc" "message-read-once: should merge"$'\n'"$(cat "$case_dir/stderr")"
-  [ "$(cat "$path")" = 'changed after validation' ] || fail "message-read-once: the file was not changed during the run"
-  assert_grep "--subject=$MSG_SUBJECT" "$case_dir/gh-merge-args" \
-    "message-read-once: a change after validation altered the sent message"
-  pass "fm-pr-merge --message-file reads the file once, before any forge call"
-}
-
-test_message_file_refusals_happen_before_anything_is_recorded() {
-  local case_dir path rc name content
-  for name in empty whitespace missing directory oversize nul utf8 utf8-body novalue twice equals; do
-    case_dir=$(new_github_message_case "message-refuse-$name")
-    path="$case_dir/message.txt"
-    rc=0
-    case "$name" in
-      empty) : > "$path"; run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" || rc=$? ;;
-      whitespace) printf ' \n\t\r\n  \n' > "$path"; run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" || rc=$? ;;
-      missing) run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$case_dir/absent.txt" || rc=$? ;;
-      directory) run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$case_dir" || rc=$? ;;
-      oversize)
-        head -c 16385 /dev/zero | tr '\0' 'a' > "$path"
-        run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" || rc=$?
-        ;;
-      nul) printf 'subject\0hidden' > "$path"; run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" || rc=$? ;;
-      utf8)
-        printf 'caf\xe9\n' > "$path"
-        run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" || rc=$?
-        ;;
-      utf8-body)
-        printf 'Subject\n\ncaf\xe9\n' > "$path"
-        run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" || rc=$?
-        ;;
-      novalue) run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file || rc=$? ;;
-      twice)
-        printf 'x\n' > "$path"
-        run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" --message-file "$path" || rc=$?
-        ;;
-      equals) printf 'x\n' > "$path"; run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 "--message-file=$path" || rc=$? ;;
-    esac > "$case_dir/stdout" 2> "$case_dir/stderr"
-    expect_code 2 "$rc" "message-refuse-$name: an unusable --message-file must refuse"$'\n'"$(cat "$case_dir/stderr")"
-    assert_grep 'error: --message-file' "$case_dir/stderr" "message-refuse-$name: the refusal did not name the option"
-    [ ! -s "$case_dir/gh.log" ] || fail "message-refuse-$name: a forge command ran despite the refusal"
-    assert_no_grep 'pr=' "$case_dir/state/task-x1.meta" "message-refuse-$name: PR metadata was recorded before the refusal"
-  done
-
-  # The size bound is inclusive: a message of exactly the limit is accepted.
-  case_dir=$(new_github_message_case message-limit)
-  path="$case_dir/message.txt"
-  head -c 16384 /dev/zero | tr '\0' 'a' > "$path"
-  run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-limit: a message of exactly the limit should merge"
-  content=$(cat "$path")
-  assert_grep "--subject=$content" "$case_dir/gh-merge-args" "message-limit: the full-size message was not sent"
-  pass "fm-pr-merge refuses a missing, unreadable, empty, binary, non-UTF-8, oversize, repeated or malformed --message-file before recording anything"
-}
-
-test_message_file_requires_utf8_validator() {
-  local case_dir path rc kind
-  local subject=$'Caf\xc3\xa9' body=$'Body \xe2\x9c\x93'
-  for kind in invalid-subject invalid-body ascii unicode; do
-    case_dir=$(new_github_message_case "message-no-iconv-$kind")
-    case "$kind" in
-      ascii) path=$(write_message_file "$case_dir" "$MSG_SUBJECT") ;;
-      unicode) path=$(write_message_file "$case_dir" "$subject"$'\n\n'"$body") ;;
-      invalid-subject) path=$(write_message_file "$case_dir" $'caf\xe9') ;;
-      invalid-body) path=$(write_message_file "$case_dir" $'Subject\n\ncaf\xe9') ;;
-    esac
-    mirror_path_without "$case_dir/noiconv" iconv "$case_dir/fakebin"
-    rc=0
-    PATH="$case_dir/noiconv" run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-      > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-    expect_code 2 "$rc" "message-no-iconv-$kind: a message without an encoding validator must refuse"$'\n'"$(cat "$case_dir/stderr")"
-    assert_grep 'error: --message-file requires iconv on PATH to validate UTF-8 text' "$case_dir/stderr" \
-      "message-no-iconv-$kind: refusal did not explain the missing validator"
-    [ ! -s "$case_dir/gh.log" ] || fail "message-no-iconv-$kind: a forge command ran without encoding validation"
-    assert_no_grep 'pr=' "$case_dir/state/task-x1.meta" "message-no-iconv-$kind: PR metadata was recorded"
-    assert_absent "$case_dir/state/task-x1.check.sh" "message-no-iconv-$kind: a merge poll was armed"
-  done
-
-  case_dir=$(new_github_message_case message-utf8-roundtrip)
-  path=$(write_message_file "$case_dir" "$subject"$'\n\n'"$body")
-  run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-utf8-roundtrip: valid UTF-8 should merge: $(cat "$case_dir/stderr")"
-  assert_equals "$(expected_gh_args 2222222222222222222222222222222222222222 "--subject=$subject" "--body=$body")" \
-    "$(cat "$case_dir/gh-merge-args")" "message-utf8-roundtrip: the Unicode subject or body changed"
-
-  case_dir=$(new_github_message_case message-no-iconv-no-message)
-  mirror_path_without "$case_dir/noiconv" iconv "$case_dir/fakebin"
-  PATH="$case_dir/noiconv" run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-no-iconv-no-message: a merge without a message should not require iconv: $(cat "$case_dir/stderr")"
-  assert_equals "$(expected_gh_args 2222222222222222222222222222222222222222)" \
-    "$(cat "$case_dir/gh-merge-args")" "message-no-iconv-no-message: merge arguments changed without a message"
-  pass "fm-pr-merge requires encoding validation for messages, preserves valid UTF-8, and needs no validator without a message"
-}
-
-test_message_file_refuses_conflicting_or_unsendable_github_args() {
-  local case_dir path rc arg
-  for arg in '--subject=x' '--body=x' '--body-file=x' '-t' '-b' '-F' '-st' '--rebase' '-r' '--method=rebase'; do
-    case_dir=$(new_github_message_case "message-github-conflict-${arg//[^a-z]/}")
-    path=$(write_message_file "$case_dir" "$MSG_TEXT")
-    rc=0
-    run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" -- "$arg" \
-      > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-    expect_code 2 "$rc" "message-github-conflict: '$arg' must refuse beside --message-file"
-    assert_grep 'error: --message-file' "$case_dir/stderr" "message-github-conflict: '$arg' refusal did not name the option"
-    [ ! -s "$case_dir/gh.log" ] || fail "message-github-conflict: gh ran despite '$arg'"
-    assert_no_grep 'pr=' "$case_dir/state/task-x1.meta" "message-github-conflict: PR metadata was recorded for '$arg'"
-  done
-  pass "fm-pr-merge --message-file refuses extra args that already set the subject or body, and a rebase merge"
-}
-
-test_message_file_keeps_every_github_guard() {
-  local case_dir path rc head=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  case_dir=$(make_case message-github-red)
-  mkdir -p "$case_dir/wt"
-  add_gh_mocks "$case_dir" "$head"
-  write_github_red_json "$case_dir" "$head" lint
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  rc=0
-  run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/80 --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 1 "$rc" "message-github-red: a red check must still refuse"
-  assert_grep "check 'lint' is not green" "$case_dir/stderr" "message-github-red: the red check was not named"
-  assert_no_grep 'pr merge' "$case_dir/gh.log" "message-github-red: gh pr merge ran on a red PR"
-
-  case_dir=$(new_github_message_case message-github-no-meta)
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  rm -f "$case_dir/state/task-x1.meta"
-  rc=0
-  run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 1 "$rc" "message-github-no-meta: missing task metadata must still refuse"
-  assert_grep 'task metadata is unavailable' "$case_dir/stderr" "message-github-no-meta: the refusal changed"
-
-  case_dir=$(new_github_message_case message-github-failed-merge)
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  printf '1\n' > "$case_dir/github-merge-rc"
-  rc=0
-  run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 1 "$rc" "message-github-failed-merge: a failed forge merge must still fail"
-  pass "fm-pr-merge --message-file leaves the verified-head, green-check, metadata and failed-merge guards as they were"
-}
-
-test_message_file_gitlab() {
-  local case_dir path rc=0 arg
-  case_dir=$(make_gitlab_case message-gitlab)
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  run_pr_merge "$case_dir" task-x1 "$MR_URL" --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 0 "$rc" "message-gitlab: should merge"$'\n'"$(cat "$case_dir/stderr")"
-  assert_equals "$(printf '<%s>\n' mr merge 7 -R "$MR_PROJECT_URL" --sha "$MR_HEAD" --yes "--message=$MSG_TEXT")" \
-    "$(cat "$case_dir/glab-merge-args")" "message-gitlab: the whole message was not sent as the merge commit message"
-
-  case_dir=$(make_gitlab_case message-gitlab-squash)
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  run_pr_merge "$case_dir" task-x1 "$MR_URL" --message-file "$path" -- --squash \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-gitlab-squash: should merge"
-  assert_equals "$(printf '<%s>\n' mr merge 7 -R "$MR_PROJECT_URL" --sha "$MR_HEAD" --yes --squash --squash "--squash-message=$MSG_TEXT")" \
-    "$(cat "$case_dir/glab-merge-args")" "message-gitlab-squash: a squash merge did not get the squash commit message"
-
-  for arg in --message=x -m --squash-message=x -sm; do
-    case_dir=$(make_gitlab_case "message-gitlab-conflict-${arg//[^a-z]/}")
-    path=$(write_message_file "$case_dir" "$MSG_TEXT")
-    rc=0
-    run_pr_merge "$case_dir" task-x1 "$MR_URL" --message-file "$path" -- "$arg" \
-      > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-    expect_code 2 "$rc" "message-gitlab-conflict: '$arg' must refuse beside --message-file"
-    [ ! -s "$case_dir/glab.log" ] || fail "message-gitlab-conflict: glab ran despite '$arg'"
-  done
-
-  case_dir=$(make_gitlab_case message-gitlab-red)
-  write_mr_json "$case_dir/mr.json" conflicts=true
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  rc=0
-  run_pr_merge "$case_dir" task-x1 "$MR_URL" --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 1 "$rc" "message-gitlab-red: a conflicted merge request must still refuse"
-  [ -z "$(glab_merge_line "$case_dir/glab.log")" ] || fail "message-gitlab-red: glab merged a refused merge request"
-  pass "fm-pr-merge --message-file sends the message through glab, as the squash message under --squash, and refuses a conflicting glab message flag"
-}
-
-test_message_file_forgejo() {
-  local case_dir path rc=0 style
-  case_dir=$(make_forgejo_case message-forgejo)
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  run_pr_merge "$case_dir" task-x1 "$FJ_URL" --message-file "$path" -- --squash \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 0 "$rc" "message-forgejo: should merge"$'\n'"$(cat "$case_dir/stderr")"
-  assert_equals squash "$(cat "$case_dir/tea-merge-do")" "message-forgejo: the method changed"
-  assert_equals "$MSG_SUBJECT" "$(cat "$case_dir/tea-merge-title")" "message-forgejo: MergeTitleField was not the subject"
-  assert_equals "$MSG_BODY" "$(cat "$case_dir/tea-merge-message")" "message-forgejo: MergeMessageField was not the body"
-
-  case_dir=$(make_forgejo_case message-forgejo-subject-only)
-  path=$(write_message_file "$case_dir" "$MSG_SUBJECT")
-  run_pr_merge "$case_dir" task-x1 "$FJ_URL" --message-file "$path" \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-forgejo-subject-only: should merge"
-  assert_equals "$MSG_SUBJECT" "$(cat "$case_dir/tea-merge-title")" "message-forgejo-subject-only: the subject was not sent"
-  assert_absent "$case_dir/tea-merge-message" "message-forgejo-subject-only: an empty body field was sent"
-
-  # A style that creates no commit cannot carry a message, whether named or
-  # read as the repository's default.
-  for style in rebase fast-forward-only; do
-    case_dir=$(make_forgejo_case "message-forgejo-default-$style")
-    printf '{"default_merge_style":"%s"}\n' "$style" > "$case_dir/tea-repo.json"
-    path=$(write_message_file "$case_dir" "$MSG_TEXT")
-    rc=0
-    run_pr_merge "$case_dir" task-x1 "$FJ_URL" --message-file "$path" \
-      > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-    expect_code 2 "$rc" "message-forgejo-default-$style: the $style style must refuse a message"
-    assert_grep "cannot be sent with the Forgejo '$style' merge style" "$case_dir/stderr" "message-forgejo-default-$style: refusal did not explain"
-    [ -z "$(tea_merge_line "$case_dir/tea.log")" ] || fail "message-forgejo-default-$style: a merge was attempted"
-  done
-  case_dir=$(make_forgejo_case message-forgejo-named-rebase)
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  rc=0
-  run_pr_merge "$case_dir" task-x1 "$FJ_URL" --message-file "$path" -- --rebase \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 2 "$rc" "message-forgejo-named-rebase: --rebase must refuse a message"
-  [ -z "$(tea_merge_line "$case_dir/tea.log")" ] || fail "message-forgejo-named-rebase: a merge was attempted"
-
-  # Forgejo takes no extra argument beyond a method, so a subject or body flag
-  # beside the message is refused as before.
-  case_dir=$(make_forgejo_case message-forgejo-conflict)
-  path=$(write_message_file "$case_dir" "$MSG_TEXT")
-  rc=0
-  run_pr_merge "$case_dir" task-x1 "$FJ_URL" --message-file "$path" -- --subject x \
-    > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-  expect_code 1 "$rc" "message-forgejo-conflict: a subject flag must refuse"
-  [ -z "$(tea_merge_line "$case_dir/tea.log")" ] || fail "message-forgejo-conflict: a merge was attempted"
-  pass "fm-pr-merge --message-file sends MergeTitleField and MergeMessageField through the Forgejo API and refuses styles that create no commit"
-}
-
-test_message_file_github_queue_policy() {
-  local case_dir path policy mode rc
+test_message_file_refuses_unsupported_forges() {
+  local case_dir path provider mode tool url rc
   local extra=()
-  for mode in attended auto; do
-    for policy in classic ruleset; do
-      case_dir=$(new_github_message_case "message-github-queue-$mode-$policy")
-      path=$(write_message_file "$case_dir" "$MSG_TEXT")
-      jq '.isMergeQueueEnabled = true' "$case_dir/github-view.json" > "$case_dir/view-next.json"
-      mv "$case_dir/view-next.json" "$case_dir/github-view.json"
-      if [ "$policy" = ruleset ]; then
-        printf 'merge_method=MERGE\n' > "$case_dir/github-rules"
-      fi
-      write_github_outcome "$case_dir" OPEN false true main
+  for provider in github gitlab forgejo; do
+    case "$provider" in
+      github) url=https://github.com/example/repo/pull/15 ;;
+      gitlab) url=$MR_URL ;;
+      forgejo) url=$FJ_URL ;;
+    esac
+    for mode in default explicit missing-file; do
+      case_dir=$(make_case "message-unsupported-$provider-$mode")
+      path="$case_dir/message.txt"
+      [ "$mode" = missing-file ] || printf 'Caller supplied message\n' > "$path"
+      for tool in gh gh-axi glab tea curl; do
+        printf '#!/usr/bin/env bash\nprintf "called\\n" >> "%s"\nexit 1\n' "$case_dir/forge-calls" > "$case_dir/fakebin/$tool"
+        chmod +x "$case_dir/fakebin/$tool"
+      done
       extra=()
-      [ "$mode" != auto ] || extra=(--attended-override -- --auto)
-      rc=0
-      run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-        "${extra[@]+"${extra[@]}"}" > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-      expect_code 2 "$rc" "message-github-queue-$mode-$policy: an unsendable message must refuse"$'\n'"$(cat "$case_dir/stderr")"
-      assert_grep 'error: --message-file cannot be sent' "$case_dir/stderr" "message-github-queue-$mode-$policy: refusal did not name the message"
-      assert_no_grep 'pr merge' "$case_dir/gh.log" "message-github-queue-$mode-$policy: a merge was submitted"
-    done
-  done
-  for policy in none plan-gated unreadable stale-ruleset; do
-    case_dir=$(new_github_message_case "message-github-queue-$policy")
-    path=$(write_message_file "$case_dir" "$MSG_TEXT")
-    case "$policy" in
-      plan-gated) printf 'Upgrade to GitHub Pro or make this repository public\n' > "$case_dir/github-rules-fail-body" ;;
-      unreadable) : > "$case_dir/github-rules-fail" ;;
-      stale-ruleset) printf 'merge_method=MERGE\n' > "$case_dir/github-rules" ;;
-    esac
-    run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-      --attended-override -- --auto > "$case_dir/stdout" 2> "$case_dir/stderr" \
-      || fail "message-github-queue-$policy: a queue-free message-bearing merge should succeed: $(cat "$case_dir/stderr")"
-    assert_equals "$(expected_gh_args 2222222222222222222222222222222222222222 "--subject=$MSG_SUBJECT" "--body=$MSG_BODY" --auto)" \
-      "$(cat "$case_dir/gh-merge-args")" "message-github-queue-$policy: the merge arguments changed"
-  done
-  for policy in missing null string read-fails empty; do
-    case_dir=$(new_github_message_case "message-github-queue-state-$policy")
-    path=$(write_message_file "$case_dir" "$MSG_TEXT")
-    case "$policy" in
-      missing) jq 'del(.isMergeQueueEnabled)' "$case_dir/github-view.json" > "$case_dir/view-next.json" ;;
-      null) jq '.isMergeQueueEnabled = null' "$case_dir/github-view.json" > "$case_dir/view-next.json" ;;
-      string) jq '.isMergeQueueEnabled = "false"' "$case_dir/github-view.json" > "$case_dir/view-next.json" ;;
-      read-fails) : > "$case_dir/github-queue-view-fails" ;;
-      empty) : > "$case_dir/github-queue-view-empty" ;;
-    esac
-    [ ! -f "$case_dir/view-next.json" ] || mv "$case_dir/view-next.json" "$case_dir/github-view.json"
-    rc=0
-    run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-      > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-    expect_code 2 "$rc" "message-github-queue-state-$policy: unreadable effective PR queue state must refuse"
-    assert_grep 'effective merge-queue state could not be determined' "$case_dir/stderr" "message-github-queue-state-$policy: refusal did not explain the missing evidence"
-    assert_no_grep 'pr merge' "$case_dir/gh.log" "message-github-queue-state-$policy: a merge was submitted"
-  done
-  pass "fm-pr-merge resolves message capability from the PR's effective merge-queue state, not ruleset rules"
-}
-
-test_message_file_github_queue_admin_bypass() {
-  local case_dir path spec expected flags rc index=0
-  local extra=()
-  for spec in '0 --admin' '0 --admin=true' '0 --admin=TRUE' '0 --admin=1' \
-    '2 --admin=false' '2 --admin=0' '2 --admin --admin=false' '0 --admin=false --admin'; do
-    index=$((index + 1))
-    read -r expected flags <<< "$spec"
-    read -r -a extra <<< "$flags"
-    case_dir=$(new_github_message_case "message-github-queue-admin-$index")
-    path=$(write_message_file "$case_dir" "$MSG_TEXT")
-    jq '.isMergeQueueEnabled = true' "$case_dir/github-view.json" > "$case_dir/view-next.json"
-    mv "$case_dir/view-next.json" "$case_dir/github-view.json"
-    printf 'merge_method=MERGE\n' > "$case_dir/github-rules"
-    rc=0
-    run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-      --attended-override -- "${extra[@]}" --merge > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-    expect_code "$expected" "$rc" "message-github-queue-admin-$index: $flags should match gh's administrative bypass"$'\n'"$(cat "$case_dir/stderr")"
-    if [ "$expected" -eq 0 ]; then
-      assert_equals "$(printf '<%s>\n' pr merge 15 --repo example/repo --match-head-commit 2222222222222222222222222222222222222222 "--subject=$MSG_SUBJECT" "--body=$MSG_BODY" "${extra[@]}" --merge)" \
-        "$(cat "$case_dir/gh-merge-args")" "message-github-queue-admin-$index: the bypass did not carry the message and verified head"
-    else
-      assert_no_grep 'pr merge' "$case_dir/gh.log" "message-github-queue-admin-$index: a queue-bound message was submitted"
-    fi
-  done
-  pass "fm-pr-merge carries messages through attended administrative queue bypasses and honors false or repeated admin flags"
-}
-
-test_message_file_keeps_github_away_queue_guard() {
-  local case_dir path policy mode rc
-  local extra=()
-  for mode in direct admin; do
-    for policy in queued unreadable; do
-      case_dir=$(new_github_message_case "message-github-away-queue-$mode-$policy")
-      path=$(write_message_file "$case_dir" "$MSG_TEXT")
-      if [ "$policy" = queued ]; then
-        printf 'merge_method=MERGE\n' > "$case_dir/github-rules"
-      else
-        : > "$case_dir/github-rules-fail"
-      fi
-      write_away_record "$case_dir" --words 'merge green work' || fail "message-github-away-queue-$mode-$policy: could not enter away mode"
-      extra=()
-      [ "$mode" != admin ] || extra=(--attended-override -- --admin --merge)
-      rc=0
-      run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
-        "${extra[@]+"${extra[@]}"}" > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-      expect_code 2 "$rc" "message-github-away-queue-$mode-$policy: the existing away queue guard must still refuse"
-      assert_grep 'merge-queue state does not prove an immediate merge' "$case_dir/stderr" "message-github-away-queue-$mode-$policy: the away guard was bypassed"
-      assert_no_grep 'pr merge' "$case_dir/gh.log" "message-github-away-queue-$mode-$policy: a merge was submitted"
-    done
-  done
-  pass "fm-pr-merge preserves the away-mode ruleset queue guard even for message-bearing administrative bypasses"
-}
-
-test_message_file_gitlab_effective_policy() {
-  local case_dir path spec method option squash flags field index=0
-  local extra=() expected=()
-  for spec in \
-    'merge default_off false - message' \
-    'rebase_merge default_off false - message' \
-    'merge default_on false - message' \
-    'merge default_on true - squash-message' \
-    'ff default_on true - squash-message' \
-    'merge default_off true - squash-message' \
-    'ff always false - squash-message' \
-    'rebase_merge always true - squash-message' \
-    'merge never true - message' \
-    'merge never false --squash message' \
-    'ff default_off false --squash squash-message' \
-    'ff default_off false --squash=true squash-message' \
-    'ff default_off false --squash=TRUE squash-message' \
-    'ff default_off false -s squash-message' \
-    'ff default_off false -ys squash-message' \
-    'ff default_off false -ys=true squash-message' \
-    'ff default_off true --squash=false squash-message' \
-    'merge default_off false --squash,--squash=false message' \
-    'ff default_off false --squash=false,--squash squash-message' \
-    'merge default_off false --rebase message' \
-    'merge default_off false --rebase=false message'; do
-    index=$((index + 1))
-    read -r method option squash flags field <<< "$spec"
-    case_dir=$(make_gitlab_case "message-gitlab-policy-$index" "squash=$squash")
-    printf '{"merge_method":"%s","squash_option":"%s"}\n' "$method" "$option" > "$case_dir/project.json"
-    path=$(write_message_file "$case_dir" "$MSG_TEXT")
-    extra=()
-    if [ "$flags" != - ]; then
-      read -r -a extra <<< "${flags//,/ }"
-    fi
-    run_pr_merge "$case_dir" task-x1 "$MR_URL" --message-file "$path" -- "${extra[@]+"${extra[@]}"}" \
-      > "$case_dir/stdout" 2> "$case_dir/stderr" \
-      || fail "message-gitlab-policy-$index: $spec should merge: $(cat "$case_dir/stderr")"
-    expected=(mr merge 7 -R "$MR_PROJECT_URL" --sha "$MR_HEAD" --yes "${extra[@]+"${extra[@]}"}")
-    [ "$field" != squash-message ] || expected+=(--squash)
-    expected+=("--$field=$MSG_TEXT")
-    assert_equals "$(printf '<%s>\n' "${expected[@]}")" "$(cat "$case_dir/glab-merge-args")" \
-      "message-gitlab-policy-$index: $spec selected the wrong message field or changed merge arguments"
-    assert_grep "GITLAB_HOST=$MR_HOST api projects/group%2Fsubgroup%2Fproject --hostname $MR_HOST" \
-      "$case_dir/glab.log" "message-gitlab-policy-$index: project policy was not read from the URL's instance"
-  done
-  pass "fm-pr-merge maps GitLab messages using effective project and MR policy without changing merge methods"
-}
-
-test_message_file_gitlab_policy_refusals() {
-  local case_dir path policy rc
-  local extra=()
-  for policy in ff-default-off ff-default-on ff-never unknown-method unknown-squash \
-    missing-method missing-squash missing-mr-squash invalid-mr-squash invalid-project unreadable-project \
-    squash-rebase squash-rebase-false squash-short-rebase; do
-    case_dir=$(make_gitlab_case "message-gitlab-refuse-$policy")
-    extra=()
-    case "$policy" in
-      ff-default-off) printf '{"merge_method":"ff","squash_option":"default_off"}\n' > "$case_dir/project.json" ;;
-      ff-default-on) printf '{"merge_method":"ff","squash_option":"default_on"}\n' > "$case_dir/project.json" ;;
-      ff-never)
-        printf '{"merge_method":"ff","squash_option":"never"}\n' > "$case_dir/project.json"
-        write_mr_json "$case_dir/mr.json" squash=true
-        extra=(--squash)
-        ;;
-      unknown-method) printf '{"merge_method":"unknown","squash_option":"default_off"}\n' > "$case_dir/project.json" ;;
-      unknown-squash) printf '{"merge_method":"merge","squash_option":"unknown"}\n' > "$case_dir/project.json" ;;
-      missing-method) printf '{"squash_option":"default_off"}\n' > "$case_dir/project.json" ;;
-      missing-squash) printf '{"merge_method":"merge"}\n' > "$case_dir/project.json" ;;
-      missing-mr-squash)
-        jq 'del(.squash)' "$case_dir/mr.json" > "$case_dir/mr-next.json"
-        mv "$case_dir/mr-next.json" "$case_dir/mr.json"
-        ;;
-      invalid-mr-squash) write_mr_json "$case_dir/mr.json" 'squash="false"' ;;
-      invalid-project) printf 'not JSON\n' > "$case_dir/project.json" ;;
-      unreadable-project) : > "$case_dir/glab-project-fails" ;;
-      squash-rebase|squash-rebase-false|squash-short-rebase)
-        write_mr_json "$case_dir/mr.json" squash=true
-        case "$policy" in
-          squash-rebase) extra=(--rebase) ;;
-          squash-rebase-false) extra=(--rebase=false) ;;
-          squash-short-rebase) extra=(-yr) ;;
+      if [ "$mode" = explicit ]; then
+        case "$provider" in
+          github) extra=(--attended-override -- --admin --merge) ;;
+          gitlab) extra=(-- --squash) ;;
+          forgejo) extra=(-- --rebase) ;;
         esac
-        ;;
-    esac
-    path=$(write_message_file "$case_dir" "$MSG_TEXT")
-    rc=0
-    run_pr_merge "$case_dir" task-x1 "$MR_URL" --message-file "$path" -- "${extra[@]+"${extra[@]}"}" \
-      > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
-    expect_code 2 "$rc" "message-gitlab-refuse-$policy: a message without a supported commit field must refuse"$'\n'"$(cat "$case_dir/stderr")"
-    assert_grep 'error: --message-file cannot be sent' "$case_dir/stderr" "message-gitlab-refuse-$policy: refusal did not name the message"
-    case "$policy" in
-      ff-*) assert_grep 'creates no commit' "$case_dir/stderr" "message-gitlab-refuse-$policy: refusal did not explain the missing commit" ;;
-      squash-*) assert_grep 'glab requires --squash' "$case_dir/stderr" "message-gitlab-refuse-$policy: refusal did not explain the CLI conflict" ;;
-      *) assert_grep 'policy could not be determined' "$case_dir/stderr" "message-gitlab-refuse-$policy: refusal did not explain the unreadable policy" ;;
-    esac
-    [ -z "$(glab_merge_line "$case_dir/glab.log")" ] || fail "message-gitlab-refuse-$policy: a merge was submitted"
+      fi
+      rc=0
+      run_pr_merge "$case_dir" task-x1 "$url" --message-file "$path" "${extra[@]+"${extra[@]}"}" \
+        > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
+      expect_code 2 "$rc" "message-unsupported-$provider-$mode: this forge must refuse the message option"
+      assert_grep "--message-file is not supported on this forge yet ($provider)" "$case_dir/stderr" \
+        "message-unsupported-$provider-$mode: refusal did not explain the unsupported forge"
+      assert_absent "$case_dir/forge-calls" "message-unsupported-$provider-$mode: a forge command ran"
+      assert_no_grep 'pr=' "$case_dir/state/task-x1.meta" "message-unsupported-$provider-$mode: metadata was recorded"
+      assert_absent "$case_dir/state/task-x1.check.sh" "message-unsupported-$provider-$mode: a merge poll was armed"
+    done
   done
-  case_dir=$(make_gitlab_case message-gitlab-no-message-policy)
-  : > "$case_dir/glab-project-fails"
-  run_pr_merge "$case_dir" task-x1 "$MR_URL" > "$case_dir/stdout" 2> "$case_dir/stderr" \
-    || fail "message-gitlab-no-message-policy: a merge without a message changed"
-  assert_no_grep ' api projects/' "$case_dir/glab.log" "message-gitlab-no-message-policy: policy was requested without a message"
-  assert_equals "$(printf '<%s>\n' mr merge 7 -R "$MR_PROJECT_URL" --sha "$MR_HEAD" --yes)" \
-    "$(cat "$case_dir/glab-merge-args")" "message-gitlab-no-message-policy: merge arguments changed without a message"
-  pass "fm-pr-merge refuses unsendable GitLab messages before submission and leaves merges without messages unchanged"
+  pass "fm-pr-merge refuses message files on GitHub, GitLab, and Forgejo before any forge call or metadata write"
 }
 
-test_message_file_github_sends_subject_and_body
-test_message_file_github_queue_policy
-test_message_file_github_queue_admin_bypass
-test_message_file_keeps_github_away_queue_guard
-test_message_file_gitlab_effective_policy
-test_message_file_gitlab_policy_refusals
-test_message_file_is_read_once_before_the_merge
-test_message_file_refusals_happen_before_anything_is_recorded
-test_message_file_requires_utf8_validator
-test_message_file_refuses_conflicting_or_unsendable_github_args
-test_message_file_keeps_every_github_guard
-test_message_file_gitlab
-test_message_file_forgejo
+test_message_file_refuses_unsupported_forges
