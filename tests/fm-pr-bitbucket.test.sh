@@ -746,9 +746,6 @@ test_merge_sends_a_caller_supplied_message_with_the_strategy() {
   assert_equals squash "$(jq -r .merge_strategy "$case_dir/bb/merge-body.json")" "merge-message: the strategy was not sent with the message"
   assert_equals "$text" "$(jq -r .message "$case_dir/bb/merge-body.json")" "merge-message: the message was not sent as the merge message"
   assert_equals false "$(jq -r .close_source_branch "$case_dir/bb/merge-body.json")" "merge-message: the source branch default changed"
-  assert_grep "notice: merge message from $case_dir/message.txt: ${#text} bytes, sha256 " "$case_dir/stderr" \
-    "merge-message: the message was not named in the notice"
-  assert_grep ', subject: Add the thing' "$case_dir/stderr" "merge-message: the subject was not named in the notice"
 
   # Without the option the body carries no message at all.
   case_dir=$(make_case merge-message-absent)
