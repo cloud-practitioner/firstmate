@@ -16,7 +16,7 @@ INSTALL="$here/ixia-hook-install.sh"
 VERIFY="$here/ixia-hook-verify.sh"
 HOOK="$here/ixia-commit-msg-hook.sh"
 IXIA='Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>'
-SHA=38f1a257a1c1f12fb44329a652ece86a5d4e111ac11b2fca5c06b436cb7d2a38
+SHA=3fa6e564eda1ffa16cdc3623df15878c59ab7cd8f9eff74b53255e112fc06685
 HOOK_V1="$here/previous/ixia-commit-msg-hook.v1.sh"
 SHA_V1=39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
 
@@ -214,6 +214,56 @@ git -C "$C" commit -q --allow-empty -m 'IQX-2: typed' -m "$IXIA"
 check "typed Ixia line is not duplicated" test "$(git -C "$C" log -1 --format=%B | grep -cxF "$IXIA")" = 1
 git -C "$C" commit -q --allow-empty --no-verify -m 'IQX-3: skipped'
 check_not "--no-verify skips the hook (documented gap)" bash -c 'git -C "$1" log -1 --format=%B | grep -qxF "$2"' _ "$C" "$IXIA"
+
+preserved_commit() {
+  local d=$1 rc=0
+  git -C "$C" -c commit.gpgsign=false commit -q --allow-empty --cleanup=verbatim -F "$TMP/preserve-input" >"$TMP/preserve-log" 2>&1 || rc=$?
+  if [ "$rc" != 0 ]; then fail "$d (exit $rc)"; return; fi
+  git -C "$C" cat-file commit HEAD | {
+    while IFS= read -r line; do [ -n "$line" ] || break; done
+    cat
+  } >"$TMP/preserve-actual"
+  check "$d" cmp -s "$TMP/preserve-expected" "$TMP/preserve-actual"
+}
+preserved_hook() {
+  local d=$1 cleanup=$2 rc=0
+  (cd "$C" && GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=commit.cleanup GIT_CONFIG_VALUE_0="$cleanup" \
+    GIT_EDITOR=true "$C/.git/hooks/commit-msg" "$TMP/preserve-input") >"$TMP/preserve-log" 2>&1 || rc=$?
+  if [ "$rc" != 0 ]; then fail "$d (exit $rc)"; return; fi
+  check "$d" cmp -s "$TMP/preserve-expected" "$TMP/preserve-input"
+}
+for trailers in \
+  'Signed-off-by:Alice <alice@example.com>' \
+  $'Signed-off-by:  Alice <alice@example.com> \t\nReviewed-by:\t Bob <bob@example.com>  ' \
+  $'X-Review:  odd\tspacing  \n\tfolded continuation  '; do
+  printf 'subject\n\n%s\n' "$trailers" >"$TMP/preserve-input"
+  { cat "$TMP/preserve-input"; printf '%s\n' "$IXIA"; } >"$TMP/preserve-expected"
+  preserved_commit "verbatim commit preserves trailer bytes: $trailers"
+done
+printf 'subject\r\n\r\nSigned-off-by:Alice <alice@example.com>\r\n' >"$TMP/preserve-input"
+{ cat "$TMP/preserve-input"; printf '%s\n' "$IXIA"; } >"$TMP/preserve-expected"
+preserved_commit "verbatim commit preserves CRLF trailer lines"
+printf 'subject\n\nbody  \t\n \t\nsecond paragraph  \n\n \t\n' >"$TMP/preserve-input"
+printf 'subject\n\nbody  \t\n \t\nsecond paragraph  \n\n%s\n' "$IXIA" >"$TMP/preserve-expected"
+preserved_commit "verbatim commit preserves body whitespace and trims only trailing blank lines"
+printf 'subject\n\nSigned-off-by:Alice <alice@example.com>' >"$TMP/preserve-input"
+{ cat "$TMP/preserve-input"; printf '\n%s\n' "$IXIA"; } >"$TMP/preserve-expected"
+preserved_hook "unterminated human trailer is preserved before the new line" verbatim
+printf 'subject\n\nbody without a final newline' >"$TMP/preserve-input"
+{ cat "$TMP/preserve-input"; printf '\n\n%s\n' "$IXIA"; } >"$TMP/preserve-expected"
+preserved_hook "unterminated body gets one blank separator without altering its bytes" verbatim
+printf 'subject\n\nSigned-off-by:Alice <alice@example.com>\n\n# comment  \t\n# final comment without newline' >"$TMP/preserve-input"
+printf 'subject\n\nSigned-off-by:Alice <alice@example.com>\n%s\n\n# comment  \t\n# final comment without newline' "$IXIA" >"$TMP/preserve-expected"
+preserved_hook "Ixia precedes a byte-preserved trailing comment section" strip
+printf 'subject\n\n# interior comment  \nbody  \n\n# final comment\n' >"$TMP/preserve-input"
+printf 'subject\n\n# interior comment  \nbody  \n\n%s\n\n# final comment\n' "$IXIA" >"$TMP/preserve-expected"
+preserved_hook "interior comments and body lines remain in place" strip
+printf 'subject\n\nSigned-off-by:Alice <alice@example.com>\n%s\npatch  \t\nlast patch line' '# ------------------------ >8 ------------------------' >"$TMP/preserve-input"
+printf 'subject\n\nSigned-off-by:Alice <alice@example.com>\n%s\n%s\npatch  \t\nlast patch line' "$IXIA" '# ------------------------ >8 ------------------------' >"$TMP/preserve-expected"
+preserved_hook "Ixia precedes a byte-preserved scissors section" scissors
+printf 'subject\n%s\n\nSigned-off-by:Alice <alice@example.com>\n%s \t\n\n' "$IXIA" 'co-authored-by: ixia engineering (claude) <noreply@anthropic.com>' >"$TMP/preserve-input"
+printf 'subject\n\nSigned-off-by:Alice <alice@example.com>\n%s\n' "$IXIA" >"$TMP/preserve-expected"
+preserved_hook "deduplication preserves every non-Ixia line" verbatim
 
 # --- subjects and comments starting with #, per git's cleanup mode ------------
 HC="$TMP/hash-clone"

@@ -16,9 +16,10 @@ Firstmate's commit-msg hook (`bin/fm-git-strip-ai-trailers.sh`) strips known AI 
 The generated hook then runs the repository's own `.git/hooks/commit-msg` on the same message file.
 `ixia-commit-msg-hook.sh` is that repository hook: after the strip it re-adds the Ixia trailer, subject to the limits below.
 It acts only when `remote.origin.url` names `bitbucket.org/iqxbusiness` and leaves a message that git will treat as empty alone so git still aborts.
-Human trailers are retained, but trailing blank lines and trailer formatting are not byte-preserved.
+Human trailers and all other non-Ixia lines are preserved byte-for-byte; only existing Ixia lines and trailing blank lines are removed.
+The hook uses `git interpret-trailers --parse` read-only to recognize a final trailer block, then appends Ixia directly to that block or after one blank line otherwise, before discarded comment and scissors sections.
 
-The current hook is v2, sha256 `38f1a257a1c1f12fb44329a652ece86a5d4e111ac11b2fca5c06b436cb7d2a38`; both scripts refuse to run if the bundled copy differs.
+The current hook is v2, sha256 `3fa6e564eda1ffa16cdc3623df15878c59ab7cd8f9eff74b53255e112fc06685`; both scripts refuse to run if the bundled copy differs.
 v2 judges the message the way git will commit it, so a subject or body line starting with `#` is handled correctly:
 - It works out git's cleanup mode: the last `--cleanup` flag when git's own argument list is available (Linux and macOS), else `commit.cleanup`, else strip when an editor is used and whitespace when it is not.
   Editor use is resolved from git's arguments, including explicit `--edit` and `--no-edit`, not from comment-looking message text.
@@ -36,7 +37,7 @@ The install script upgrades an exact v1 copy to v2.
 - `ixia-hook-install.sh` - installs the hook into named clones of one firstmate home.
 - `ixia-hook-verify.sh` - checks the installation without committing in the real clone.
 - `ixia-hook-lib.sh` - helpers shared by the two scripts.
-- `ixia-hook.test.sh` - lab-repository test, including the `#` cases and the v1 upgrade; run `bash contrib/iqx-ixia-hook/ixia-hook.test.sh`.
+- `ixia-hook.test.sh` - lab-repository test, including byte-preservation, the `#` cases and the v1 upgrade; run `bash contrib/iqx-ixia-hook/ixia-hook.test.sh`.
   It lives here, not in `tests/`, so the repository's test inventory and CI do not pick it up.
 
 ## Install and verify

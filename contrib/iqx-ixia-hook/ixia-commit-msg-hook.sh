@@ -25,7 +25,7 @@
 #   - Removes every existing Ixia line from the message part (any letter case,
 #     trailing blanks ignored; lines after git's scissors line are left alone)
 #     and any blank lines at the very end of the message part, then appends
-#     exactly one Ixia line as the last trailer with git interpret-trailers,
+#     exactly one Ixia line as the last trailer,
 #     so the line is never duplicated and lands before git's scissors section.
 #   - Never changes any other line, so human trailers stay exactly as written.
 #   - Fails the commit (exit 1) when the message git will commit does not end
@@ -169,13 +169,25 @@ want=$(printf '%s' "$IXIA_LINE" | tr '[:upper:]' '[:lower:]')
 head_file="$work/head"
 tail_file="$work/tail"
 
-if ! awk -v want="$want" -v s="$scissors" -v truncate="$cut" -v headf="$head_file" -v tailf="$tail_file" '
+if ! LC_ALL=C awk -v want="$want" -v s="$scissors" -v truncate="$cut" -v strip="$mode" -v comment="$cc" \
+  -v bytes="$(wc -c <"$msg")" -v headf="$head_file" -v tailf="$tail_file" '
   BEGIN { printf "" >headf; printf "" >tailf }
-  truncate && $0 == s { cut = 1 }
-  cut { print >tailf; next }
+  {
+    raw = $0 (offset + length($0) < bytes ? "\n" : "")
+    offset += length(raw)
+  }
+  truncate && !cut && $0 == s {
+    if (comments) printf "%s", pending >tailf
+    pending = ""; comments = 0; cut = 1
+  }
+  cut { printf "%s", raw >tailf; next }
   { line = tolower($0); sub(/[ \t\r]+$/, "", line); if (line == want) next }
-  $0 ~ /^[ \t\r]*$/ { blank = blank $0 "\n"; next }
-  { printf "%s", blank >headf; blank = ""; print >headf }
+  strip == "strip" && substr($0, 1, length(comment)) == comment {
+    pending = pending raw; comments = 1; next
+  }
+  $0 ~ /^[ \t\r]*$/ { pending = pending raw; next }
+  { printf "%s%s", pending, raw >headf; pending = ""; comments = 0 }
+  END { if (comments) printf "%s", pending >tailf }
 ' "$msg"; then
   echo "ixia commit-msg: could not split $msg" >&2
   exit 1
@@ -193,14 +205,21 @@ if [ -z "$comment_cfg" ]; then
   exit 1
 fi
 
-git -c "core.commentChar=$comment_cfg" -c "core.commentString=$comment_cfg" \
-  interpret-trailers --in-place --no-divider --where end \
-  --if-exists add --if-missing add --trailer "$IXIA_LINE" "$head_file" || {
+trailers=$(git -c "core.commentChar=$comment_cfg" -c "core.commentString=$comment_cfg" \
+  interpret-trailers --parse --no-divider "$head_file") || {
   echo "ixia commit-msg: git interpret-trailers failed" >&2
   exit 1
 }
+if [ -s "$head_file" ]; then
+  if [ "$(tail -c 1 "$head_file" | wc -l)" -eq 0 ]; then
+    printf '\n' >>"$head_file" || exit 1
+  fi
+  if [ -z "$trailers" ]; then
+    printf '\n' >>"$head_file" || exit 1
+  fi
+fi
 
-if ! cat "$head_file" "$tail_file" >"$msg"; then
+if ! printf '%s\n' "$IXIA_LINE" >>"$head_file" || ! cat "$head_file" "$tail_file" >"$msg"; then
   echo "ixia commit-msg: could not rewrite $msg" >&2
   exit 1
 fi
