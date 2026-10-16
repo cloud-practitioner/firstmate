@@ -1,0 +1,539 @@
+[
+  {
+    "name": "github-default",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://github.com/example/repo/pull/15",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/github-default/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "github-explicit",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://github.com/example/repo/pull/15",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/github-explicit/message.txt",
+      "--attended-override",
+      "--",
+      "--admin",
+      "--merge"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "github-missing-file",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://github.com/example/repo/pull/15",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/github-missing-file/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "gitlab-default",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://gitlab.example/group/project/-/merge_requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/gitlab-default/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (gitlab); merge messages are Bitbucket-only\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "gitlab-explicit",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://gitlab.example/group/project/-/merge_requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/gitlab-explicit/message.txt",
+      "--",
+      "--squash"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (gitlab); merge messages are Bitbucket-only\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "gitlab-missing-file",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://gitlab.example/group/project/-/merge_requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/gitlab-missing-file/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (gitlab); merge messages are Bitbucket-only\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "forgejo-default",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://forgejo.example/fixture/repo/pulls/9",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/forgejo-default/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (forgejo); merge messages are Bitbucket-only\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "forgejo-explicit",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://forgejo.example/fixture/repo/pulls/9",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/forgejo-explicit/message.txt",
+      "--",
+      "--rebase"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (forgejo); merge messages are Bitbucket-only\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "forgejo-missing-file",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://forgejo.example/fixture/repo/pulls/9",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/forgejo-missing-file/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (forgejo); merge messages are Bitbucket-only\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-empty",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-empty/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-empty/message.txt is empty or only whitespace\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-whitespace",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-whitespace/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-whitespace/message.txt is empty or only whitespace\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-missing",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-missing/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-missing/message.txt is not a readable regular file\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-directory",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-directory/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-directory/message.txt is not a readable regular file\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-fifo",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-fifo/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-fifo/message.txt is not a readable regular file\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-unreadable",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-unreadable/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-unreadable/message.txt is not a readable regular file\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-oversize",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-oversize/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-oversize/message.txt is larger than 16384 bytes\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-nul",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-nul/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-nul/message.txt contains a NUL byte or could not be read\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-bad-utf8-subject",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-bad-utf8-subject/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-bad-utf8-subject/message.txt is not valid UTF-8 text\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "validation-bad-utf8-body",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-bad-utf8-body/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-bad-utf8-body/message.txt is not valid UTF-8 text\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "syntax-no-value",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file requires a path\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "syntax-duplicate",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/syntax-duplicate/message.txt",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/syntax-duplicate/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file may be specified only once\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "syntax-equals",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/syntax-equals/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file requires a separate path argument\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "no-iconv-ascii",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/no-iconv-ascii/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file requires iconv on PATH to validate UTF-8 text\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "no-iconv-unicode",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/no-iconv-unicode/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file requires iconv on PATH to validate UTF-8 text\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "no-iconv-bad-subject",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/no-iconv-bad-subject/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file requires iconv on PATH to validate UTF-8 text\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "no-iconv-bad-body",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/no-iconv-bad-body/message.txt"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: --message-file requires iconv on PATH to validate UTF-8 text\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "strategy-rebase",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/strategy-rebase/message.txt",
+      "--",
+      "--rebase"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: the rebase_fast_forward merge strategy creates no commit to carry --message-file\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "strategy-fast-forward",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/strategy-fast-forward/message.txt",
+      "--",
+      "--method",
+      "fast_forward"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: the fast_forward merge strategy creates no commit to carry --message-file\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  },
+  {
+    "name": "strategy-rebase-method",
+    "command": [
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh",
+      "task-x1",
+      "https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7",
+      "--message-file",
+      "/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/strategy-rebase-method/message.txt",
+      "--",
+      "--method=rebase_fast_forward"
+    ],
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "error: the rebase_fast_forward merge strategy creates no commit to carry --message-file\n",
+    "state_unchanged": true,
+    "new_state_files": [],
+    "result": "pass",
+    "live": true,
+    "environment": "isolated home; genuine tools only; no forge tools, credentials, or operator configuration"
+  }
+]

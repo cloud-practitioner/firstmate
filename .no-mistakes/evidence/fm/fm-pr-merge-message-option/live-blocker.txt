@@ -1,0 +1,7 @@
+Bitbucket Cloud live validation boundary
+
+The product uses the fixed https://api.bitbucket.org/2.0 API base. The focused tests ran the real merge CLI with the repository-provided synthetic curl forge; their captured request bodies and CLI outputs are protocol evidence, NOT a live Bitbucket Cloud merge. A local replacement would likewise be a stub, not Bitbucket Cloud.
+
+NO_MISTAKES_BITBUCKET_EMAIL and NO_MISTAKES_BITBUCKET_API_TOKEN are set in the environment; their values were not inspected, used for network requests, or captured. No authorized disposable Bitbucket repository/PR was supplied, and the current worktree-only/no-shared-services boundary does not authorize creating or merging remote fixtures. No operator repositories, configuration, or credentials were accessed or changed.
+
+To complete the central live proof, authorize an isolated Bitbucket Cloud test repository and disposable PRs (including green/red checks and destination strategy settings), supply appropriately scoped test credentials, and explicitly permit remote fixture creation, merge, read-back, and teardown.

@@ -1,0 +1,18 @@
+
+TEST test_merge_sends_a_caller_supplied_message_with_the_strategy
+ok - fm-pr-merge sends a caller-supplied message beside the Bitbucket merge strategy
+
+TEST test_merge_message_refusals_never_reach_the_forge
+ok - fm-pr-merge --message-file refuses a Bitbucket merge that cannot carry the message before the merge request, and keeps its guards
+
+TEST test_merge_message_file_validation
+ok - fm-pr-merge validates Bitbucket message files before recording or calling the forge and accepts the inclusive size bound
+
+TEST test_merge_message_requires_utf8_validator
+ok - fm-pr-merge refuses unvalidated Bitbucket messages but needs no encoding validator without a message
+
+TEST test_merge_message_is_normalized_and_read_once
+ok - fm-pr-merge preserves normalized UTF-8 messages when the file changes after validation
+ok - all Bitbucket strategies preserve the supplied message or refuse before submission
+ok - fm-pr-merge re-reads the Bitbucket head immediately before merging and refuses a moved head
+ok - fm-pr-merge quotes Bitbucket's refusal, leaves an unconfirmed merge armed, and flags a landed head it did not verify

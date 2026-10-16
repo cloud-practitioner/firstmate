@@ -1,0 +1,118 @@
+Real fm-pr-merge.sh CLI; isolated homes and genuine tools; no remote forge access.
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://github.com/example/repo/pull/15 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/github-default/message.txt
+error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://github.com/example/repo/pull/15 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/github-explicit/message.txt --attended-override -- --admin --merge
+error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://github.com/example/repo/pull/15 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/github-missing-file/message.txt
+error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://gitlab.example/group/project/-/merge_requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/gitlab-default/message.txt
+error: --message-file is not supported on this forge yet (gitlab); merge messages are Bitbucket-only
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://gitlab.example/group/project/-/merge_requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/gitlab-explicit/message.txt -- --squash
+error: --message-file is not supported on this forge yet (gitlab); merge messages are Bitbucket-only
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://gitlab.example/group/project/-/merge_requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/gitlab-missing-file/message.txt
+error: --message-file is not supported on this forge yet (gitlab); merge messages are Bitbucket-only
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://forgejo.example/fixture/repo/pulls/9 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/forgejo-default/message.txt
+error: --message-file is not supported on this forge yet (forgejo); merge messages are Bitbucket-only
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://forgejo.example/fixture/repo/pulls/9 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/forgejo-explicit/message.txt -- --rebase
+error: --message-file is not supported on this forge yet (forgejo); merge messages are Bitbucket-only
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://forgejo.example/fixture/repo/pulls/9 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/forgejo-missing-file/message.txt
+error: --message-file is not supported on this forge yet (forgejo); merge messages are Bitbucket-only
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-empty/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-empty/message.txt is empty or only whitespace
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-whitespace/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-whitespace/message.txt is empty or only whitespace
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-missing/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-missing/message.txt is not a readable regular file
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-directory/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-directory/message.txt is not a readable regular file
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-fifo/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-fifo/message.txt is not a readable regular file
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-unreadable/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-unreadable/message.txt is not a readable regular file
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-oversize/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-oversize/message.txt is larger than 16384 bytes
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-nul/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-nul/message.txt contains a NUL byte or could not be read
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-bad-utf8-subject/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-bad-utf8-subject/message.txt is not valid UTF-8 text
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-bad-utf8-body/message.txt
+error: --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/validation-bad-utf8-body/message.txt is not valid UTF-8 text
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file
+error: --message-file requires a path
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/syntax-duplicate/message.txt --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/syntax-duplicate/message.txt
+error: --message-file may be specified only once
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/syntax-equals/message.txt
+error: --message-file requires a separate path argument
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/no-iconv-ascii/message.txt
+error: --message-file requires iconv on PATH to validate UTF-8 text
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/no-iconv-unicode/message.txt
+error: --message-file requires iconv on PATH to validate UTF-8 text
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/no-iconv-bad-subject/message.txt
+error: --message-file requires iconv on PATH to validate UTF-8 text
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/no-iconv-bad-body/message.txt
+error: --message-file requires iconv on PATH to validate UTF-8 text
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/strategy-rebase/message.txt -- --rebase
+error: the rebase_fast_forward merge strategy creates no commit to carry --message-file
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/strategy-fast-forward/message.txt -- --method fast_forward
+error: the fast_forward merge strategy creates no commit to carry --message-file
+exit=2; persisted state unchanged=True; pass
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/bin/fm-pr-merge.sh task-x1 https://bitbucket.org/fm-disposable-test/message-validation/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/live/strategy-rebase-method/message.txt -- --method=rebase_fast_forward
+error: the rebase_fast_forward merge strategy creates no commit to carry --message-file
+exit=2; persisted state unchanged=True; pass
+

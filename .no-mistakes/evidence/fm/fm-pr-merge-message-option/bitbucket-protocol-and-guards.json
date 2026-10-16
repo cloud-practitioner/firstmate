@@ -1,0 +1,307 @@
+{
+  "scope": "STUB-BASED ONLY: real product CLI, synthetic Bitbucket API; not live Cloud validation",
+  "cases": [
+    {
+      "case": "matrix-default-fast_forward",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nerror: refusing to merge https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7\n  - the fast_forward merge strategy creates no commit to carry --message-file\n",
+      "merge_requested": false,
+      "merge_poll_armed": true,
+      "landed_receipt": false
+    },
+    {
+      "case": "matrix-default-merge_commit",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "merge_commit",
+        "message": "Generic message\n\nQuoted \"text\", backslash \\ and Unicode: Café ✓"
+      }
+    },
+    {
+      "case": "matrix-default-rebase_fast_forward",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nerror: refusing to merge https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7\n  - the rebase_fast_forward merge strategy creates no commit to carry --message-file\n",
+      "merge_requested": false,
+      "merge_poll_armed": true,
+      "landed_receipt": false
+    },
+    {
+      "case": "matrix-default-rebase_merge",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "rebase_merge",
+        "message": "Generic message\n\nQuoted \"text\", backslash \\ and Unicode: Café ✓"
+      }
+    },
+    {
+      "case": "matrix-default-squash",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash",
+        "message": "Generic message\n\nQuoted \"text\", backslash \\ and Unicode: Café ✓"
+      }
+    },
+    {
+      "case": "matrix-default-squash_fast_forward",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash_fast_forward",
+        "message": "Generic message\n\nQuoted \"text\", backslash \\ and Unicode: Café ✓"
+      }
+    },
+    {
+      "case": "matrix-explicit-fast_forward",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "",
+      "stderr": "error: the fast_forward merge strategy creates no commit to carry --message-file\n",
+      "merge_requested": false,
+      "merge_poll_armed": false,
+      "landed_receipt": false
+    },
+    {
+      "case": "matrix-explicit-merge_commit",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "merge_commit",
+        "message": "Generic message\n\nQuoted \"text\", backslash \\ and Unicode: Café ✓"
+      }
+    },
+    {
+      "case": "matrix-explicit-rebase_fast_forward",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "",
+      "stderr": "error: the rebase_fast_forward merge strategy creates no commit to carry --message-file\n",
+      "merge_requested": false,
+      "merge_poll_armed": false,
+      "landed_receipt": false
+    },
+    {
+      "case": "matrix-explicit-rebase_merge",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "rebase_merge",
+        "message": "Generic message\n\nQuoted \"text\", backslash \\ and Unicode: Café ✓"
+      }
+    },
+    {
+      "case": "matrix-explicit-squash",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash",
+        "message": "Generic message\n\nQuoted \"text\", backslash \\ and Unicode: Café ✓"
+      }
+    },
+    {
+      "case": "matrix-explicit-squash_fast_forward",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash_fast_forward",
+        "message": "Generic message\n\nQuoted \"text\", backslash \\ and Unicode: Café ✓"
+      }
+    },
+    {
+      "case": "merge-forge-refuses",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\nerror: Bitbucket refused the merge request for https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 (HTTP 400)\nerror: Bitbucket's own message follows, quoted: > You can't merge until you resolve all merge conflicts.\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": false,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "merge_commit",
+        "message": "Guard regression message"
+      }
+    },
+    {
+      "case": "merge-message",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash",
+        "message": "Add the thing\n\nFirst body line\nSecond \"quoted\" line"
+      }
+    },
+    {
+      "case": "merge-message-absent",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "squash"
+      }
+    },
+    {
+      "case": "merge-message-red",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nerror: refusing to merge https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7\n  - build 'pipeline' is FAILED, not SUCCESSFUL\nerror: these builds are not green: pipeline\n",
+      "merge_requested": false,
+      "merge_poll_armed": true,
+      "landed_receipt": false
+    },
+    {
+      "case": "merge-moved",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\nerror: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 changed after verification (state OPEN, head 4dc2291e6969de1bf204fbdb53c9e57a8353d4e2, verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e); nothing was merged\n",
+      "merge_requested": false,
+      "merge_poll_armed": true,
+      "landed_receipt": false
+    },
+    {
+      "case": "merge-unconfirmed",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\nactionable: Bitbucket accepted the merge request for https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 but its landed state could not be confirmed; the merge poll remains armed\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": false,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "merge_commit",
+        "message": "Guard regression message"
+      }
+    },
+    {
+      "case": "merge-wrong-head",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\nactionable: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 merged, but it reads back at head 4dc2291e6969, not the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e; review what landed\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "merge_commit",
+        "message": "Guard regression message"
+      }
+    },
+    {
+      "case": "message-limit",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "merge_commit",
+        "message_summary": {
+          "utf8_bytes": 16384,
+          "sha256": "f3336bea752b5a28743033dd2c844a4a63fba08871aaee2586a2bf2d69be83a2"
+        }
+      }
+    },
+    {
+      "case": "message-read-once",
+      "live": false,
+      "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+      "stdout": "armed: state/task-x1.check.sh\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is merged at the verified head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "stderr": "●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n●  WATCHER DOWN - SUPERVISION IS OFF\n●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).\n●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n●  This is a supervision warning only; the guarded operation WILL still run.\n●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nverified: https://bitbucket.org/iqxbusiness/supplier_online_orchestration_api/pull-requests/7 is open, with every unwaived build green and every merge check met at head c2eac54c17a1ddc2633ad51b83e21e5fe888142e\n",
+      "merge_requested": true,
+      "merge_poll_armed": true,
+      "landed_receipt": true,
+      "submitted_request_body": {
+        "type": "pullrequest",
+        "close_source_branch": false,
+        "merge_strategy": "merge_commit",
+        "message": "Café\n\nBody ✓"
+      }
+    }
+  ]
+}

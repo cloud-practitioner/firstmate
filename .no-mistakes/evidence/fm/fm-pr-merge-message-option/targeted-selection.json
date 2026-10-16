@@ -1,0 +1,12 @@
+{
+  "fm-pr-bitbucket": [
+    "test_merge_sends_a_caller_supplied_message_with_the_strategy",
+    "test_merge_message_refusals_never_reach_the_forge",
+    "test_merge_message_file_validation",
+    "test_merge_message_requires_utf8_validator",
+    "test_merge_message_is_normalized_and_read_once"
+  ],
+  "fm-pr-merge": [
+    "test_message_file_refuses_unsupported_forges"
+  ]
+}

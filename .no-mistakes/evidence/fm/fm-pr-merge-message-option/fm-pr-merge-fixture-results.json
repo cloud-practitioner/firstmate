@@ -1,0 +1,101 @@
+[
+  {
+    "case": "message-unsupported-forgejo-default",
+    "live": false,
+    "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (forgejo); merge messages are Bitbucket-only\n",
+    "state/task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-forgejo-default/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-forgejo-default/project\nkind=ship\nmode=no-mistakes\n",
+    "merge_requested": false,
+    "merge_poll_armed": false,
+    "landed_receipt": false
+  },
+  {
+    "case": "message-unsupported-forgejo-explicit",
+    "live": false,
+    "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (forgejo); merge messages are Bitbucket-only\n",
+    "state/task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-forgejo-explicit/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-forgejo-explicit/project\nkind=ship\nmode=no-mistakes\n",
+    "merge_requested": false,
+    "merge_poll_armed": false,
+    "landed_receipt": false
+  },
+  {
+    "case": "message-unsupported-forgejo-missing-file",
+    "live": false,
+    "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (forgejo); merge messages are Bitbucket-only\n",
+    "state/task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-forgejo-missing-file/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-forgejo-missing-file/project\nkind=ship\nmode=no-mistakes\n",
+    "merge_requested": false,
+    "merge_poll_armed": false,
+    "landed_receipt": false
+  },
+  {
+    "case": "message-unsupported-github-default",
+    "live": false,
+    "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only\n",
+    "state/task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-github-default/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-github-default/project\nkind=ship\nmode=no-mistakes\n",
+    "merge_requested": false,
+    "merge_poll_armed": false,
+    "landed_receipt": false
+  },
+  {
+    "case": "message-unsupported-github-explicit",
+    "live": false,
+    "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only\n",
+    "state/task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-github-explicit/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-github-explicit/project\nkind=ship\nmode=no-mistakes\n",
+    "merge_requested": false,
+    "merge_poll_armed": false,
+    "landed_receipt": false
+  },
+  {
+    "case": "message-unsupported-github-missing-file",
+    "live": false,
+    "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only\n",
+    "state/task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-github-missing-file/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-github-missing-file/project\nkind=ship\nmode=no-mistakes\n",
+    "merge_requested": false,
+    "merge_poll_armed": false,
+    "landed_receipt": false
+  },
+  {
+    "case": "message-unsupported-gitlab-default",
+    "live": false,
+    "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (gitlab); merge messages are Bitbucket-only\n",
+    "state/task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-gitlab-default/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-gitlab-default/project\nkind=ship\nmode=no-mistakes\n",
+    "merge_requested": false,
+    "merge_poll_armed": false,
+    "landed_receipt": false
+  },
+  {
+    "case": "message-unsupported-gitlab-explicit",
+    "live": false,
+    "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (gitlab); merge messages are Bitbucket-only\n",
+    "state/task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-gitlab-explicit/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-gitlab-explicit/project\nkind=ship\nmode=no-mistakes\n",
+    "merge_requested": false,
+    "merge_poll_armed": false,
+    "landed_receipt": false
+  },
+  {
+    "case": "message-unsupported-gitlab-missing-file",
+    "live": false,
+    "scope": "real fm-pr-merge.sh against synthetic forge command stubs",
+    "stdout": "",
+    "stderr": "error: --message-file is not supported on this forge yet (gitlab); merge messages are Bitbucket-only\n",
+    "state/task-x1.meta": "window=fm-task-x1\nworktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-gitlab-missing-file/wt\nproject=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523GGJHNFXBFZ3AEB4RK0A8/.validation/tmp/fm-pr-merge-tests.NwvMOW/message-unsupported-gitlab-missing-file/project\nkind=ship\nmode=no-mistakes\n",
+    "merge_requested": false,
+    "merge_poll_armed": false,
+    "landed_receipt": false
+  }
+]

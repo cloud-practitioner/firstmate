@@ -1,0 +1,3 @@
+
+TEST test_message_file_refuses_unsupported_forges
+ok - fm-pr-merge refuses message files on GitHub, GitLab, and Forgejo before any forge call or metadata write
