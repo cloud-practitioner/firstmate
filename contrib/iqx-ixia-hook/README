@@ -19,13 +19,16 @@ It acts only when `remote.origin.url` names `bitbucket.org/iqxbusiness` and leav
 Human trailers and all other non-Ixia lines are preserved byte-for-byte; only existing Ixia lines and trailing blank lines are removed.
 The hook uses `git interpret-trailers --parse` read-only to recognize a final trailer block, then appends Ixia directly to that block or after one blank line otherwise, before discarded comment and scissors sections.
 
-The current hook is v2, sha256 `3fa6e564eda1ffa16cdc3623df15878c59ab7cd8f9eff74b53255e112fc06685`; both scripts refuse to run if the bundled copy differs.
+The current hook is v2, sha256 `d9c80f87916206d11bb42350a1d7ee521c38c93d46e5fc33b45f31cce7849f90`; both scripts refuse to run if the bundled copy differs.
 v2 judges the message the way git will commit it, so a subject or body line starting with `#` is handled correctly:
-- It works out git's cleanup mode: the last `--cleanup` flag when git's own argument list is available (Linux and macOS), else `commit.cleanup`, else strip when an editor is used and whitespace when it is not.
+- It works out git's cleanup mode from the last `--cleanup` flag, then `commit.cleanup`, then strip when an editor is used and whitespace when it is not.
+  Linux reads the parent's `/proc` argument list; macOS uses native `sysctl(3)` through Python 3, which must be on `PATH`. Argument-retrieval failure refuses the commit instead of guessing.
   Editor use is resolved from git's arguments, including explicit `--edit` and `--no-edit`, not from comment-looking message text.
 - Under `git commit -m` a `#` line is ordinary text and gets the Ixia line; under an editor or `--cleanup=strip` it is a comment, and a message of only comments is still left alone so git aborts.
-- Scissors sections are excluded only when git truncates them: verbose commits, or scissors cleanup with an editor, using the configured comment delimiter. Otherwise the marker and following text are ordinary message content.
-- Emptiness, deduplication, trailer placement and the final exactly-one-line check all use that same boundary; verbatim whitespace-only messages are nonempty.
+- Scissors sections are excluded only when git truncates them: verbose `git commit`, or scissors cleanup with an editor, using an explicit configured comment delimiter. Merge verbosity and `commit.verbose` do not truncate merge messages. Otherwise the marker and following text are ordinary message content.
+- `core.commentChar=auto` and `core.commentString=auto` (case-insensitive) are refused because the hook cannot establish Git's chosen delimiter; configure an explicit character or string instead.
+- Emptiness, deduplication, trailer placement and the final exactly-one-line check all use that same boundary; verbatim whitespace-only messages are nonempty. Non-verbatim `git commit` also treats messages consisting only of whitespace and exact `Signed-off-by: ` lines as empty; merges do not.
+- Both Git 2.50.1 and current Git honor `commit.cleanup` for merges; the hook retains that configuration and CLI overrides while using merge-specific verbosity and emptiness rules.
 
 v1 (sha256 `39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472`, kept in `previous/`) left a `git commit -m '#123 fix'` commit without the line.
 The install script upgrades an exact v1 copy to v2.

@@ -16,7 +16,7 @@ INSTALL="$here/ixia-hook-install.sh"
 VERIFY="$here/ixia-hook-verify.sh"
 HOOK="$here/ixia-commit-msg-hook.sh"
 IXIA='Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>'
-SHA=3fa6e564eda1ffa16cdc3623df15878c59ab7cd8f9eff74b53255e112fc06685
+SHA=d9c80f87916206d11bb42350a1d7ee521c38c93d46e5fc33b45f31cce7849f90
 HOOK_V1="$here/previous/ixia-commit-msg-hook.v1.sh"
 SHA_V1=39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
 
@@ -323,7 +323,20 @@ hash_commit "--cleanup=scissors keeps # subject" 0 '#sc' -- --cleanup=scissors -
 hash_commit "--cleanup=strip on only # lines aborts (empty)" 1 -- --cleanup=strip -m '#s'
 hash_commit "--cleanup strip (separate word) aborts" 1 -- --cleanup strip -m '#s'
 hash_commit "--cleanup=strip drops # body, keeps subject, gets the line" 0 'subj' -- --cleanup=strip -m 'subj' -m '# gone'
+for cleanup in strip whitespace scissors; do
+  hash_commit "$cleanup leaves an automatic sign-off-only message empty" 1 -- "--cleanup=$cleanup" -s -m ''
+  hash_commit "$cleanup leaves a typed sign-off-only message empty" 1 -- "--cleanup=$cleanup" -m 'Signed-off-by: lab <lab@example.invalid>'
+  GIT_EDITOR=: hash_commit "$cleanup leaves an edited sign-off-only message empty" 1 -- --edit --no-status "--cleanup=$cleanup" -s -m ''
+  printf 'Signed-off-by: A <a@example.invalid>\n\nSigned-off-by: B <b@example.invalid>\n' >"$TMP/signoffs"
+  hash_commit "$cleanup leaves a sign-off-only file empty" 1 -- "--cleanup=$cleanup" -F "$TMP/signoffs"
+  hash_commit "$cleanup keeps ordinary text with its sign-off" 0 subject 'Signed-off-by: lab <lab@example.invalid>' -- "--cleanup=$cleanup" -s -m subject
+done
+hash_commit "verbatim keeps a nonempty automatic sign-off" 0 'Signed-off-by: lab <lab@example.invalid>' -- --cleanup=verbatim -s -m ''
+hash_commit "a differently cased sign-off is message text" 0 'signed-off-by: lab <lab@example.invalid>' -- -m 'signed-off-by: lab <lab@example.invalid>'
+hash_commit "a no-space sign-off is message text" 0 'Signed-off-by:lab <lab@example.invalid>' -- -m 'Signed-off-by:lab <lab@example.invalid>'
+hash_commit "a folded continuation makes a sign-off message nonempty" 0 'Signed-off-by: lab <lab@example.invalid>' ' continuation' -- -m $'Signed-off-by: lab <lab@example.invalid>\n continuation'
 git -C "$HC" config commit.cleanup strip
+hash_commit "CLI whitespace overrides configured strip" 0 '#123 fix' -- --cleanup=whitespace -m '#123 fix'
 hash_commit "commit.cleanup=strip on only # lines aborts" 1 -- -m '#cfg'
 hash_commit "commit.cleanup=strip drops # body" 0 'sub' -- -m 'sub' -m '#gone'
 git -C "$HC" config commit.cleanup verbatim
@@ -386,6 +399,98 @@ git -C "$HC" commit -q --allow-empty --no-verify -m 'base-for-merge'
 git -C "$HC" checkout -q -b side && git -C "$HC" commit -q --allow-empty --no-verify -m side && git -C "$HC" checkout -q -
 git -C "$HC" merge -q --no-ff --no-edit side >/dev/null 2>&1
 check "merge --no-edit gets exactly one Ixia line" bash -c '[ "$(git -C "$1" log -1 --format=%B | grep -cxF "$2")" = 1 ]' _ "$HC" "$IXIA"
+merge_main=$(git -C "$HC" symbolic-ref --short HEAD)
+merge_case() {
+  local d=$1 erc=$2 rc=0 before
+  shift 2
+  local expect=()
+  while [ "$1" != -- ]; do expect+=("$1"); shift; done
+  shift
+  git -C "$HC" checkout -q side
+  git -C "$HC" commit -q --allow-empty --no-verify -m side
+  git -C "$HC" checkout -q "$merge_main"
+  before=$(git -C "$HC" rev-parse HEAD)
+  GIT_EDITOR=: git -C "$HC" merge -q --no-ff "$@" side >"$TMP/merge-log" 2>&1 || rc=$?
+  if [ "$rc" != "$erc" ]; then
+    fail "$d (exit $rc, wanted $erc)"
+  elif [ "$erc" = 0 ]; then
+    if msg_is "${expect[@]}"; then pass "$d"; else fail "$d (message wrong)"; fi
+  else
+    check "$d leaves HEAD unchanged" test "$(git -C "$HC" rev-parse HEAD)" = "$before"
+  fi
+  if [ -f "$HC/.git/MERGE_HEAD" ]; then git -C "$HC" merge --abort; fi
+}
+merge_case "merge -v retains the scissors marker and following body" 0 subject "$scissors" body -- --no-edit -v -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+merge_case "merge --verbose with verbatim retains the entire message" 0 subject "$scissors" body -- --no-edit --verbose --cleanup=verbatim -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+git -C "$HC" config commit.verbose true
+merge_case "merge ignores configured commit verbosity" 0 subject "$scissors" body -- --no-edit -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+git -C "$HC" config --unset commit.verbose
+merge_case "merge scissors cleanup still truncates with an editor" 0 subject -- --edit --cleanup=scissors -m "$(printf 'subject\n\n%s\nbody\n' "$scissors")"
+git -C "$HC" config commit.cleanup strip
+merge_case "merge honors configured cleanup" 0 body -- --no-edit -m '#123 fix' -m body
+merge_case "merge leaves a configured-strip comment-only message empty" 1 -- --no-edit -m '#123 fix'
+merge_case "merge cleanup flag overrides configured strip" 0 '#123 fix' -- --no-edit --cleanup=whitespace -m '#123 fix'
+git -C "$HC" config --unset commit.cleanup
+merge_case "merge keeps sign-off-only messages nonempty" 0 'Signed-off-by: lab <lab@example.invalid>' -- --no-edit -m 'Signed-off-by: lab <lab@example.invalid>'
+merge_case "merge strategy operands are not cleanup flags" 0 '#123 fix' -- --no-edit -s ort -m '#123 fix'
+for field in core.commentChar core.commentString; do
+  for value in auto AUTO AuTo; do
+    git -C "$HC" config "$field" "$value"
+    before=$(git -C "$HC" rev-parse HEAD)
+    for cleanup in strip whitespace scissors verbatim; do
+      GIT_EDITOR=: hash_commit "$field=$value refuses unresolved $cleanup cleanup" 1 -- --edit "--cleanup=$cleanup" -m '#123 fix'
+    done
+    check "$field=$value refusal leaves HEAD unchanged" test "$(git -C "$HC" rev-parse HEAD)" = "$before"
+    git -C "$HC" config --unset "$field"
+  done
+done
+git -C "$HC" config core.commentChar auto
+GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.commentString GIT_CONFIG_VALUE_0=';' hash_commit "an explicit later delimiter overrides auto" 0 '#123 fix' -- --cleanup=whitespace -m '#123 fix'
+git -C "$HC" config --unset core.commentChar
+
+if [ "$(uname -s)" = Linux ]; then
+  real_python=$(command -v python3)
+  mkdir "$TMP/darwin-bin"
+  printf '#!/bin/sh\nprintf "Darwin\\n"\n' >"$TMP/darwin-bin/uname"
+  printf '#!/bin/sh\nexec "%s" "%s" "$@"\n' "$real_python" "$TMP/darwin-sysctl.py" >"$TMP/darwin-bin/python3"
+  chmod 755 "$TMP/darwin-bin/uname" "$TMP/darwin-bin/python3"
+  cat >"$TMP/darwin-sysctl.py" <<'PY'
+import ctypes
+import os
+import struct
+import sys
+import types
+
+sys.argv = sys.argv[1:]
+pid = int(sys.argv[1])
+with open("/proc/{}/cmdline".format(pid), "rb") as stream:
+    arguments = stream.read().split(b"\0")[:-1]
+payload = (struct.pack("i", len(arguments)) + b"/usr/bin/git\0\0\0" +
+           b"\0".join(arguments) + b"\0TEST_ENV=--cleanup=strip\0")
+
+def sysctl(mib, count, buffer, size, new_value, new_size):
+    assert count == 3 and tuple(mib) == (1, 49, pid)
+    assert new_value is None and new_size == 0
+    if os.environ.get("IXIA_TEST_SYSCTL_FAIL"):
+        ctypes.set_errno(13)
+        return -1
+    assert size._obj.value >= len(payload)
+    ctypes.memmove(buffer, payload, len(payload))
+    size._obj.value = len(payload)
+    return 0
+
+ctypes.CDLL = lambda *args, **kwargs: types.SimpleNamespace(sysctl=sysctl)
+exec(compile(sys.stdin.buffer.read(), "<darwin-argument-reader>", "exec"))
+PY
+  git -C "$HC" config commit.cleanup strip
+  PATH="$TMP/darwin-bin:$PATH" hash_commit "Darwin sysctl argv overrides configured strip" 0 '#123 fix' -- --cleanup=whitespace -m '#123 fix'
+  PATH="$TMP/darwin-bin:$PATH" hash_commit "Darwin sysctl argv preserves multiline operands" 0 body '--cleanup=strip' '#123 fix' -- --cleanup=whitespace -m $'body\n--cleanup=strip' -m '#123 fix'
+  PATH="$TMP/darwin-bin:$PATH" hash_commit "Darwin sysctl argv preserves empty operands" 0 '#123 fix' -- --cleanup=whitespace -m '' -m '#123 fix'
+  before=$(git -C "$HC" rev-parse HEAD)
+  PATH="$TMP/darwin-bin:$PATH" IXIA_TEST_SYSCTL_FAIL=1 hash_commit "Darwin sysctl failure refuses instead of guessing" 1 -- --cleanup=whitespace -m '#123 fix'
+  check "argument retrieval failure leaves HEAD unchanged" test "$(git -C "$HC" rev-parse HEAD)" = "$before"
+  git -C "$HC" config --unset commit.cleanup
+fi
 
 echo
 if [ "$fails" -ne 0 ]; then

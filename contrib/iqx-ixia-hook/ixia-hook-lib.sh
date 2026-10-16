@@ -7,7 +7,7 @@
 #
 # Bash 3.2 compatible (no mapfile, no associative arrays, no ${var,,}).
 
-IXIA_HOOK_EXPECTED_SHA256='3fa6e564eda1ffa16cdc3623df15878c59ab7cd8f9eff74b53255e112fc06685'
+IXIA_HOOK_EXPECTED_SHA256='d9c80f87916206d11bb42350a1d7ee521c38c93d46e5fc33b45f31cce7849f90'
 # The previously approved v1 hook; the installer upgrades an exact copy of it.
 IXIA_HOOK_V1_SHA256='39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472'
 IXIA_HOOK_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)

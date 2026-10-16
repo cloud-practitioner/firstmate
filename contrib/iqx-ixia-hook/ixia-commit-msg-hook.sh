@@ -56,27 +56,55 @@ git@bitbucket.org:iqxbusiness/* | git@bitbucket.org-*:iqxbusiness/* | \
 esac
 
 parent_arguments() {
-  if [ -r "/proc/$PPID/cmdline" ]; then
-    tr '\n\000' '\r\n' <"/proc/$PPID/cmdline"
-  elif command -v sysctl >/dev/null 2>&1; then
-    sysctl -bn "kern.procargs2.$PPID" 2>/dev/null | od -An -v -tu1 | awk '
-      { for (i = 1; i <= NF; i++) {
-          b = $i + 0
-          if (n++ < 4) { argc += b * (256 ^ (n - 1)); continue }
-          if (!path) { if (!b) path = 1; continue }
-          if (!started && !b) continue
-          started = 1
-          if (!b) { print arg; arg = ""; if (++args == argc) exit }
-          else arg = arg sprintf("%c", b == 10 ? 13 : b)
-      } }'
-  fi
+  case $(uname -s) in
+  Linux) tr '\n\000' '\r\n' <"/proc/$PPID/cmdline" ;;
+  Darwin)
+    command -v python3 >/dev/null 2>&1 || {
+      echo "ixia commit-msg: macOS argument retrieval requires python3 on PATH" >&2
+      return 1
+    }
+    python3 - "$PPID" <<'PY'
+import ctypes
+import os
+import struct
+import sys
+
+libc = ctypes.CDLL(None, use_errno=True)
+libc.sysctl.argtypes = [ctypes.POINTER(ctypes.c_int), ctypes.c_uint,
+                       ctypes.c_void_p, ctypes.POINTER(ctypes.c_size_t),
+                       ctypes.c_void_p, ctypes.c_size_t]
+libc.sysctl.restype = ctypes.c_int
+mib = (ctypes.c_int * 3)(1, 49, int(sys.argv[1]))
+buffer = ctypes.create_string_buffer(os.sysconf("SC_ARG_MAX"))
+size = ctypes.c_size_t(len(buffer))
+if libc.sysctl(mib, 3, buffer, ctypes.byref(size), None, 0) != 0:
+    raise OSError(ctypes.get_errno(), "sysctl(KERN_PROCARGS2)")
+data = buffer.raw[:size.value]
+argc = struct.unpack_from("i", data)[0]
+start = data.index(b"\0", 4) + 1
+while start < len(data) and data[start] == 0:
+    start += 1
+arguments = data[start:].split(b"\0")[:argc]
+if argc < 1 or len(arguments) != argc or not arguments[0]:
+    raise ValueError("incomplete KERN_PROCARGS2 argument list")
+for argument in arguments:
+    sys.stdout.buffer.write(argument.replace(b"\n", b"\r") + b"\n")
+PY
+    ;;
+  *) return 1 ;;
+  esac
 }
+
+if ! parent_args=$(parent_arguments) || [ -z "$parent_args" ]; then
+  echo "ixia commit-msg: cannot read parent arguments; refusing to guess cleanup options" >&2
+  exit 1
+fi
 
 mode=$(git config --get commit.cleanup 2>/dev/null || printf default)
 editor=1
 [ "${GIT_EDITOR-}" != : ] || editor=0
 verbose=$(git config --bool --get commit.verbose 2>/dev/null || printf false)
-options=$(parent_arguments | awk -v mode="$mode" -v editor="$editor" -v verbose="$verbose" '
+options=$(printf '%s\n' "$parent_args" | awk -v mode="$mode" -v editor="$editor" -v verbose="$verbose" '
   BEGIN { names["message"] = "m"; names["file"] = "F"; names["reuse-message"] = "C"; names["fixup"] = "fixup" }
   NR == 1 { n = $0; sub(/.*\//, "", n); if (n != "git" && n != "git.exe") exit; next }
   skip { skip = 0; next }
@@ -108,13 +136,18 @@ options=$(parent_arguments | awk -v mode="$mode" -v editor="$editor" -v verbose=
   /^--reedit-message(=|$)/ { if ($0 !~ /=/) operand = "skip"; next }
   $0 == "--fixup" { source["fixup"] = 1; operand = "fixup"; next }
   /^--fixup=/ { source["fixup"] = 1; fixup_edit = ($0 ~ /^--fixup=(amend|reword):/); next }
-  /^--(author|date|squash|template|trailer|pathspec-from-file)$/ { operand = "skip"; next }
+  command == 1 && /^--(author|date|squash|template|trailer|pathspec-from-file)$/ { operand = "skip"; next }
+  command == 2 && /^--(strategy|strategy-option|into-name)$/ { operand = "skip"; next }
   /^-[^-]/ {
     flags = substr($0, 2)
     while (length(flags)) {
       flag = substr(flags, 1, 1); flags = substr(flags, 2)
       if (flag == "e") { edit = 1; edited = 1 }
       if (flag == "v") verbose = "true"
+      if (command == 2 && flag ~ /^[sX]$/) {
+        if (!length(flags)) operand = "skip"
+        break
+      }
       if (flag ~ /^[mFcCt]$/) {
         if (flag ~ /^[mFC]$/) source[flag] = 1
         if (!length(flags)) operand = "skip"
@@ -125,12 +158,15 @@ options=$(parent_arguments | awk -v mode="$mode" -v editor="$editor" -v verbose=
   }
   END {
     if (command == 1) editor = !(source["m"] || source["F"] || source["C"] || (source["fixup"] && !fixup_edit))
-    if (command == 2 && source["m"]) editor = 0
+    if (command == 2) {
+      if (source["m"] || source["F"]) editor = 0
+      verbose = "false"
+    }
     if (edited) editor = edit
-    print mode, editor, verbose
+    print mode, editor, verbose, command + 0
   }
 ')
-read -r mode editor verbose <<EOF
+read -r mode editor verbose caller <<EOF
 $options
 EOF
 case $mode in
@@ -141,7 +177,13 @@ esac
 cut=0
 if [ "$mode" = scissors ] || [ "$verbose" = true ]; then cut=1; fi
 cc=$(git config --get-regexp '^core\.comment(char|string)$' 2>/dev/null | tail -n 1 | cut -d ' ' -f 2-)
-case $cc in '' | auto) cc='#' ;; esac
+case $(printf '%s' "$cc" | tr '[:upper:]' '[:lower:]') in
+'') cc='#' ;;
+auto)
+  echo "ixia commit-msg: automatic comment delimiters are unsupported; set an explicit core.commentChar or core.commentString" >&2
+  exit 1
+  ;;
+esac
 scissors="$cc$SCISSORS"
 
 head_part() {
@@ -159,7 +201,12 @@ kept_message() {
   esac
 }
 
-if [ "$(kept_message "$msg" | wc -c)" -eq 0 ]; then
+if [ "$caller" = 1 ] && [ "$mode" != verbatim ]; then
+  message_bytes=$(kept_message "$msg" | LC_ALL=C sed '/^Signed-off-by: /d' | LC_ALL=C tr -d '[:space:]' | wc -c)
+else
+  message_bytes=$(kept_message "$msg" | wc -c)
+fi
+if [ "$message_bytes" -eq 0 ]; then
   exit 0
 fi
 
