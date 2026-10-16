@@ -186,6 +186,29 @@
 # because there is no established translation from a gh/glab-style flag into
 # a Forgejo API field yet.
 #
+# An optional --message-file <path>, parsed before the optional -- separator,
+# sets a caller-supplied merge commit message on Bitbucket Cloud only for now;
+# this script knows no message format of its own. GitHub, GitLab, and Forgejo
+# refuse this option before any forge call or metadata write.
+# The file is read exactly once before any state is recorded or any forge
+# command runs, so a later change cannot alter what was validated. It must be
+# a readable regular file of valid UTF-8 text with no NUL byte, at most 16384
+# bytes (below Bitbucket's 128 KiB message limit and small enough to fit the
+# kernel's single-argument limit after JSON escaping). UTF-8 validation requires
+# iconv on PATH; its absence refuses the option.
+# CRLF line endings become LF, leading and trailing whitespace is dropped,
+# trailing whitespace on the first line is removed, and the remaining text,
+# if any, is separated from that line by exactly one blank line. Empty or
+# whitespace-only messages refuse.
+# The whole normalized text is sent as the Bitbucket merge API's message field
+# beside merge_strategy. fast_forward and rebase_fast_forward create no commit
+# to carry it, so they refuse whether named or read as the destination default.
+# Validation and unsupported-forge refusals exit 2; an incompatible destination
+# default is reported with the other live pre-merge refusals and exits 1.
+# The option may be given once, before --.
+# The message is not recorded in merge metadata because the existing task and
+# merge-authority records have fixed formats consumed by other scripts.
+#
 # Before any forge merge, the task's existing per-task control lock
 # serializes the captain-hold check through the forge command. A still-held or
 # unreadable row refuses before that command, so a captain approval must be
@@ -225,7 +248,7 @@
 # explicit captain instruction and never skips the live green check, the
 # away-record read, or a captain hold.
 #
-# Usage: fm-pr-merge.sh <task-id> <pr-url> [--attended-override] [--allow-red <check-name>] [--allow-missing <check-name>] [-- <extra forge merge args>]
+# Usage: fm-pr-merge.sh <task-id> <pr-url> [--attended-override] [--allow-red <check-name>] [--allow-missing <check-name>] [--message-file <path>] [-- <extra forge merge args>]
 #
 # On GitLab and Bitbucket, this script confirms the MR or PR is actually merged
 # before reporting it;
@@ -287,6 +310,7 @@ shift 2
 ATTENDED_OVERRIDE=false
 ALLOW_RED=()
 ALLOW_MISSING=()
+MESSAGE_FILE=
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --attended-override)
@@ -317,10 +341,24 @@ while [ "$#" -gt 0 ]; do
       echo "error: --allow-missing requires a separate check name argument" >&2
       exit 2
       ;;
+    --message-file)
+      [ -n "${2:-}" ] || { echo "error: --message-file requires a path" >&2; exit 2; }
+      [ -z "$MESSAGE_FILE" ] || { echo "error: --message-file may be specified only once" >&2; exit 2; }
+      MESSAGE_FILE=$2
+      shift 2
+      ;;
+    --message-file=*)
+      echo "error: --message-file requires a separate path argument" >&2
+      exit 2
+      ;;
     --) shift; break ;;
     *) break ;;
   esac
 done
+if [ -n "$MESSAGE_FILE" ] && [ "$PROVIDER" != bitbucket ]; then
+  echo "error: --message-file is not supported on this forge yet ($PROVIDER); merge messages are Bitbucket-only" >&2
+  exit 2
+fi
 # --allow-red names one check run to waive, which only GitHub's per-check
 # reading can match. GitLab and Forgejo each collapse their checks into a
 # single head verdict - a head pipeline status and a combined commit status -
@@ -501,11 +539,82 @@ bitbucket_parse_merge_args() {
   esac
 }
 
+# The caller-supplied merge message, read once and normalized; the header owns
+# the contract. Sets MERGE_MESSAGE to the whole normalized text.
+MERGE_MESSAGE_MAX_BYTES=16384
+MERGE_MESSAGE=
+merge_message_load() {  # <path>
+  local path=$1 raw='' rc=0 text rest first subject
+  # Byte semantics for every length and pattern below.
+  local LC_ALL=C
+  if [ ! -f "$path" ] || [ ! -r "$path" ]; then
+    echo "error: --message-file $path is not a readable regular file" >&2
+    return 1
+  fi
+  # One read, bounded to one byte past the limit so an oversize file is seen as
+  # such without loading it whole. read -d '' stops at a NUL byte and then
+  # returns 0, which is how a binary file is told from text (status 1, EOF).
+  IFS= read -r -d '' raw < <(head -c "$((MERGE_MESSAGE_MAX_BYTES + 1))" -- "$path" 2>/dev/null) && rc=0 || rc=$?
+  if [ "$rc" -ne 1 ]; then
+    echo "error: --message-file $path contains a NUL byte or could not be read" >&2
+    return 1
+  fi
+  if [ "${#raw}" -gt "$MERGE_MESSAGE_MAX_BYTES" ]; then
+    echo "error: --message-file $path is larger than $MERGE_MESSAGE_MAX_BYTES bytes" >&2
+    return 1
+  fi
+  if ! command -v iconv >/dev/null 2>&1; then
+    echo "error: --message-file requires iconv on PATH to validate UTF-8 text" >&2
+    return 1
+  fi
+  if ! printf '%s' "$raw" | iconv -f UTF-8 -t UTF-8 >/dev/null 2>&1; then
+    echo "error: --message-file $path is not valid UTF-8 text" >&2
+    return 1
+  fi
+  text=${raw//$'\r\n'/$'\n'}
+  text=${text#"${text%%[![:space:]]*}"}
+  text=${text%"${text##*[![:space:]]}"}
+  if [ -z "$text" ]; then
+    echo "error: --message-file $path is empty or only whitespace" >&2
+    return 1
+  fi
+  subject=${text%%$'\n'*}
+  subject=${subject%"${subject##*[![:space:]]}"}
+  rest=
+  case "$text" in *$'\n'*) rest=${text#*$'\n'} ;; esac
+  # Drop the blank lines that separate the subject from the body.
+  while [ -n "$rest" ]; do
+    first=${rest%%$'\n'*}
+    case "$first" in *[![:space:]]*) break ;; esac
+    case "$rest" in *$'\n'*) rest=${rest#*$'\n'} ;; *) rest= ;; esac
+  done
+  MERGE_MESSAGE=$subject
+  [ -z "$rest" ] || MERGE_MESSAGE=$MERGE_MESSAGE$'\n\n'$rest
+}
+
+# Prints why a Bitbucket strategy cannot carry a message; status 1 when it can.
+bitbucket_message_strategy_refusal() {  # <strategy>
+  case "$1" in
+    fast_forward|rebase_fast_forward)
+      printf 'the %s merge strategy creates no commit to carry --message-file' "$1"
+      return 0
+      ;;
+  esac
+  return 1
+}
+
 reject_repo_overrides "$@" || exit 1
 reject_head_overrides "$@" || exit 1
 reject_protected_forge_args "$@" || exit 1
 if [ "$PROVIDER" = bitbucket ]; then
   bitbucket_parse_merge_args "$@" || exit 1
+fi
+if [ -n "$MESSAGE_FILE" ]; then
+  if message_refusal=$(bitbucket_message_strategy_refusal "$BITBUCKET_MERGE_STRATEGY"); then
+    echo "error: $message_refusal" >&2
+    exit 2
+  fi
+  merge_message_load "$MESSAGE_FILE" || exit 2
 fi
 
 FM_PR_GITHUB_AUTO_REQUESTED=false
@@ -1876,6 +1985,10 @@ bitbucket_verify_mergeable() {
 "
     fi
   fi
+  if [ -n "$MESSAGE_FILE" ] && message_refusal=$(bitbucket_message_strategy_refusal "$BITBUCKET_MERGE_STRATEGY"); then
+    refusals="$refusals  - $message_refusal
+"
+  fi
   if fm_pr_bitbucket_read_statuses "$PR_PATH" "$FM_PR_BITBUCKET_HEAD"; then
     statuses=$FM_PR_BITBUCKET_VALUES
   else
@@ -2224,9 +2337,10 @@ case "$PROVIDER" in
     [ "$away_status" -eq 0 ] || exit "$away_status"
     bitbucket_require_unmoved_head || exit 1
     bitbucket_merge_body=$(jq -cn --arg strategy "$BITBUCKET_MERGE_STRATEGY" \
-      --argjson close "$BITBUCKET_CLOSE_SOURCE_BRANCH" '
+      --argjson close "$BITBUCKET_CLOSE_SOURCE_BRANCH" --arg message "$MERGE_MESSAGE" '
       {type: "pullrequest", close_source_branch: $close}
-      + (if $strategy == "" then {} else {merge_strategy: $strategy} end)')
+      + (if $strategy == "" then {} else {merge_strategy: $strategy} end)
+      + (if $message == "" then {} else {message: $message} end)')
     FM_PR_BITBUCKET_MAX_TIME=120 fm_pr_bitbucket_request POST \
       "repositories/$PR_PATH/pullrequests/$PR_NUMBER/merge" "$bitbucket_merge_body" || true
     # 202 is an accepted merge still completing and 555 is Bitbucket's own merge

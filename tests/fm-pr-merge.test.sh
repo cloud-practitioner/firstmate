@@ -4494,3 +4494,44 @@ test_app_bound_required_status_context_matches_by_name
 test_required_partial_reads_report_all_failures
 test_allow_red_refused_on_forgejo
 test_allow_missing_refused_on_forgejo
+
+test_message_file_refuses_unsupported_forges() {
+  local case_dir path provider mode tool url rc
+  local extra=()
+  for provider in github gitlab forgejo; do
+    case "$provider" in
+      github) url=https://github.com/example/repo/pull/15 ;;
+      gitlab) url=$MR_URL ;;
+      forgejo) url=$FJ_URL ;;
+    esac
+    for mode in default explicit missing-file; do
+      case_dir=$(make_case "message-unsupported-$provider-$mode")
+      path="$case_dir/message.txt"
+      [ "$mode" = missing-file ] || printf 'Caller supplied message\n' > "$path"
+      for tool in gh gh-axi glab tea curl; do
+        printf '#!/usr/bin/env bash\nprintf "called\\n" >> "%s"\nexit 1\n' "$case_dir/forge-calls" > "$case_dir/fakebin/$tool"
+        chmod +x "$case_dir/fakebin/$tool"
+      done
+      extra=()
+      if [ "$mode" = explicit ]; then
+        case "$provider" in
+          github) extra=(--attended-override -- --admin --merge) ;;
+          gitlab) extra=(-- --squash) ;;
+          forgejo) extra=(-- --rebase) ;;
+        esac
+      fi
+      rc=0
+      run_pr_merge "$case_dir" task-x1 "$url" --message-file "$path" "${extra[@]+"${extra[@]}"}" \
+        > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
+      expect_code 2 "$rc" "message-unsupported-$provider-$mode: this forge must refuse the message option"
+      assert_grep "--message-file is not supported on this forge yet ($provider)" "$case_dir/stderr" \
+        "message-unsupported-$provider-$mode: refusal did not explain the unsupported forge"
+      assert_absent "$case_dir/forge-calls" "message-unsupported-$provider-$mode: a forge command ran"
+      assert_no_grep 'pr=' "$case_dir/state/task-x1.meta" "message-unsupported-$provider-$mode: metadata was recorded"
+      assert_absent "$case_dir/state/task-x1.check.sh" "message-unsupported-$provider-$mode: a merge poll was armed"
+    done
+  done
+  pass "fm-pr-merge refuses message files on GitHub, GitLab, and Forgejo before any forge call or metadata write"
+}
+
+test_message_file_refuses_unsupported_forges
