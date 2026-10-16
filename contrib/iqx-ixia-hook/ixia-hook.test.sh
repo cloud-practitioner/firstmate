@@ -55,6 +55,11 @@ for s in "$INSTALL" "$VERIFY"; do
   rc=0
   bash "$s" >/dev/null 2>&1 || rc=$?
   check "$(basename "$s") without projects exits 2" test "$rc" = 2
+  for option in --home --home="$TMP"; do
+    rc=0
+    bash "$s" "$option" "$TMP" iqxa >/dev/null 2>&1 || rc=$?
+    check "$(basename "$s") rejects $option (exit 2)" test "$rc" = 2
+  done
 done
 
 # --- install -----------------------------------------------------------------
@@ -65,22 +70,19 @@ new_clone "$H" gh 'git@github.com:someone/gh.git'
 new_clone "$H" other 'git@bitbucket.org:otherorg/x.git'
 mkdir -p "$H/projects/plain"
 
-out=$(bash "$INSTALL" --home "$H" iqxa iqxb) && rc=0 || rc=$?
+out=$(cd "$H" && bash "$INSTALL" iqxa iqxb) && rc=0 || rc=$?
 check "install two IQX clones exits 0" test "$rc" = 0
 check "install reports installed" grep -q '^installed iqxa ' <<<"$out"
 check "hook installed with approved bytes" cmp -s "$HOOK" "$(hook_of "$H" iqxa)"
 check "hook installed mode 755" test "$(stat -c %a "$(hook_of "$H" iqxa)" 2>/dev/null || stat -f %Lp "$(hook_of "$H" iqxa)")" = 755
 check "mixed-case org clone installed" test -x "$(hook_of "$H" iqxb)"
 
-out=$(bash "$INSTALL" --home "$H" iqxa) && rc=0 || rc=$?
+out=$(cd "$H" && bash "$INSTALL" iqxa) && rc=0 || rc=$?
 check "reinstall is idempotent (exit 0, unchanged)" bash -c '[ "$1" = 0 ] && grep -q "^unchanged iqxa " <<<"$2"' _ "$rc" "$out"
-
-# default home is the current directory
-check "default --home is the current directory" bash -c 'cd "$1" && bash "$2" iqxa' _ "$H" "$INSTALL"
 
 for p in gh other plain missing; do
   rc=0
-  out=$(bash "$INSTALL" --home "$H" "$p") || rc=$?
+  out=$(cd "$H" && bash "$INSTALL" "$p") || rc=$?
   check "install refuses $p (exit 1, STOP)" bash -c '[ "$1" = 1 ] && grep -q "^STOP $2:" <<<"$3"' _ "$rc" "$p" "$out"
 done
 check_not "refused clone got no hook" test -e "$(hook_of "$H" gh)"
@@ -91,7 +93,7 @@ H2=$(new_home h2)
 new_clone "$H2" iqxa 'git@bitbucket.org:iqxbusiness/iqxa.git'
 new_clone "$H2" gh 'git@github.com:someone/gh.git'
 rc=0
-bash "$INSTALL" --home "$H2" gh iqxa >/dev/null 2>&1 || rc=$?
+(cd "$H2" && bash "$INSTALL" gh iqxa) >/dev/null 2>&1 || rc=$?
 check "mixed run exits 1" test "$rc" = 1
 check "mixed run still installs the good clone" cmp -s "$HOOK" "$(hook_of "$H2" iqxa)"
 
@@ -102,19 +104,20 @@ printf '#!/bin/sh\necho mine\n' >"$(hook_of "$H3" iqxa)"
 chmod 755 "$(hook_of "$H3" iqxa)"
 before=$(sha256sum "$(hook_of "$H3" iqxa)")
 rc=0
-out=$(bash "$INSTALL" --home "$H3" iqxa) || rc=$?
+out=$(cd "$H3" && bash "$INSTALL" iqxa) || rc=$?
 check "unrelated commit-msg refused" bash -c '[ "$1" = 1 ] && grep -q "^STOP iqxa:" <<<"$2"' _ "$rc" "$out"
 check "unrelated commit-msg left unchanged" test "$(sha256sum "$(hook_of "$H3" iqxa)")" = "$before"
 
-# a previous copy (marker, other bytes) is updated
-printf '#!/bin/sh\n# ixia-commit-msg-hook v0\nexit 0\n' >"$(hook_of "$H3" iqxa)"
-out=$(bash "$INSTALL" --home "$H3" iqxa) && rc=0 || rc=$?
-check "previous copy is updated" bash -c '[ "$1" = 0 ] && grep -q "^updated iqxa " <<<"$2"' _ "$rc" "$out"
-check "updated copy has the approved bytes" cmp -s "$HOOK" "$(hook_of "$H3" iqxa)"
+printf '#!/bin/sh\n# ixia-commit-msg-hook v0\nexit 0\n' >"$TMP/marked-hook"
+cp "$TMP/marked-hook" "$(hook_of "$H3" iqxa)"
+out=$(cd "$H3" && bash "$INSTALL" iqxa) && rc=0 || rc=$?
+check "differing version-marked hook refused" bash -c '[ "$1" = 1 ] && grep -q "^STOP iqxa:" <<<"$2"' _ "$rc" "$out"
+check "version-marked hook left unchanged" cmp -s "$TMP/marked-hook" "$(hook_of "$H3" iqxa)"
 
 # a non-executable identical copy gets its mode fixed
+cp "$HOOK" "$(hook_of "$H3" iqxa)"
 chmod 644 "$(hook_of "$H3" iqxa)"
-bash "$INSTALL" --home "$H3" iqxa >/dev/null
+(cd "$H3" && bash "$INSTALL" iqxa) >/dev/null
 check "install repairs a 644 copy" test -x "$(hook_of "$H3" iqxa)"
 
 # repository core.hooksPath is refused
@@ -122,7 +125,7 @@ H4=$(new_home h4)
 new_clone "$H4" iqxa 'git@bitbucket.org:iqxbusiness/iqxa.git'
 git -C "$H4/projects/iqxa" config core.hooksPath .githooks
 rc=0
-out=$(bash "$INSTALL" --home "$H4" iqxa) || rc=$?
+out=$(cd "$H4" && bash "$INSTALL" iqxa) || rc=$?
 check "repository core.hooksPath refused" bash -c '[ "$1" = 1 ] && grep -q "core.hooksPath" <<<"$2"' _ "$rc" "$out"
 check_not "nothing written for hooksPath clone" test -e "$(hook_of "$H4" iqxa)"
 
@@ -130,8 +133,8 @@ check_not "nothing written for hooksPath clone" test -e "$(hook_of "$H4" iqxa)"
 H5=$(new_home h5)
 new_clone "$H5" iqxa 'git@bitbucket.org:iqxbusiness/iqxa.git'
 mkdir -p "$TMP/pane-hooks"
-GIT_CONFIG_COUNT=2 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0="$TMP/pane-hooks" \
-  GIT_CONFIG_KEY_1=user.name GIT_CONFIG_VALUE_1=pane bash "$INSTALL" --home "$H5" iqxa >/dev/null
+(cd "$H5" && GIT_CONFIG_COUNT=2 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0="$TMP/pane-hooks" \
+  GIT_CONFIG_KEY_1=user.name GIT_CONFIG_VALUE_1=pane bash "$INSTALL" iqxa) >/dev/null
 check "install ignores the pane hooks override" cmp -s "$HOOK" "$(hook_of "$H5" iqxa)"
 check_not "pane hooks directory untouched" test -e "$TMP/pane-hooks/commit-msg"
 
@@ -142,7 +145,7 @@ head_before=$(git -C "$H/projects/iqxa" rev-parse HEAD)
 reflog_before=$(git -C "$H/projects/iqxa" reflog --all | wc -l)
 objs_before=$(git -C "$H/projects/iqxa" count-objects | tr -d '\n')
 
-out=$(bash "$VERIFY" --home "$H" iqxa iqxb) && rc=0 || rc=$?
+out=$(cd "$H" && bash "$VERIFY" iqxa iqxb) && rc=0 || rc=$?
 check "verify passes installed clones" test "$rc" = 0
 check "verify counts worktrees sharing the hook" grep -q '^ok iqxa (3 worktrees share ' <<<"$out"
 check "verify leaves real clone untouched" test \
@@ -150,30 +153,30 @@ check "verify leaves real clone untouched" test \
   "$(git -C "$H/projects/iqxa" reflog --all | wc -l)" = "$reflog_before" -a \
   "$(git -C "$H/projects/iqxa" count-objects | tr -d '\n')" = "$objs_before"
 check "verify works from a pane-style override" bash -c \
-  'GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0="$3" bash "$1" --home "$2" iqxa' _ "$VERIFY" "$H" "$TMP/pane-hooks"
+  'cd "$2" && GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0="$3" bash "$1" iqxa' _ "$VERIFY" "$H" "$TMP/pane-hooks"
 
 for p in gh other plain; do
   rc=0
-  out=$(bash "$VERIFY" --home "$H" "$p") || rc=$?
+  out=$(cd "$H" && bash "$VERIFY" "$p") || rc=$?
   check "verify fails $p" bash -c '[ "$1" = 1 ] && grep -q "^FAIL $2:" <<<"$3"' _ "$rc" "$p" "$out"
 done
 
 H6=$(new_home h6)
 new_clone "$H6" none 'git@bitbucket.org:iqxbusiness/none.git'
-out=$(bash "$VERIFY" --home "$H6" none) && rc=0 || rc=$?
+out=$(cd "$H6" && bash "$VERIFY" none) && rc=0 || rc=$?
 check "verify fails a missing hook" bash -c '[ "$1" = 1 ] && grep -q "hook missing" <<<"$2"' _ "$rc" "$out"
 
 chmod 644 "$(hook_of "$H" iqxb)"
-out=$(bash "$VERIFY" --home "$H" iqxb) && rc=0 || rc=$?
+out=$(cd "$H" && bash "$VERIFY" iqxb) && rc=0 || rc=$?
 check "verify fails a 644 hook" bash -c '[ "$1" = 1 ] && grep -q "not 755" <<<"$2"' _ "$rc" "$out"
 chmod 755 "$(hook_of "$H" iqxb)"
 
 printf '\n# local edit\n' >>"$(hook_of "$H" iqxb)"
-out=$(bash "$VERIFY" --home "$H" iqxb) && rc=0 || rc=$?
+out=$(cd "$H" && bash "$VERIFY" iqxb) && rc=0 || rc=$?
 check "verify fails an altered hook" bash -c '[ "$1" = 1 ] && grep -q "differs" <<<"$2"' _ "$rc" "$out"
 
 git -C "$H/projects/iqxa" config core.hooksPath .githooks
-out=$(bash "$VERIFY" --home "$H" iqxa) && rc=0 || rc=$?
+out=$(cd "$H" && bash "$VERIFY" iqxa) && rc=0 || rc=$?
 check "verify fails a hooksPath clone" bash -c '[ "$1" = 1 ] && grep -q "core.hooksPath" <<<"$2"' _ "$rc" "$out"
 git -C "$H/projects/iqxa" config --unset core.hooksPath
 

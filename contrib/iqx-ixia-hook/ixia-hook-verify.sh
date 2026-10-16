@@ -5,9 +5,8 @@
 # Fork-only material for IQX Bitbucket repositories; see README in this
 # directory. Bash 3.2 compatible.
 #
-# Usage: ixia-hook-verify.sh [--home <dir>] <project>...
-#   --home <dir>  the firstmate home whose projects/ holds the clones
-#                 (default: the current directory)
+# Usage: ixia-hook-verify.sh <project>...
+# Run from the firstmate home root whose projects/ holds the clones.
 #   -h, --help    print this help
 #
 # For each project the script checks that projects/<project> is a clone whose
@@ -35,17 +34,10 @@ usage() {
   sed -n '2,/^set -euo/p' "${BASH_SOURCE[0]}" | sed '$d' | sed 's/^# \{0,1\}//'
 }
 
-home=.
 projects=()
 while [ $# -gt 0 ]; do
   case $1 in
   -h | --help) usage; exit 0 ;;
-  --home)
-    [ $# -ge 2 ] || { echo "ixia-hook-verify: --home needs a directory" >&2; exit 2; }
-    home=$2
-    shift 2
-    ;;
-  --home=*) home=${1#--home=}; shift ;;
   --) shift; while [ $# -gt 0 ]; do projects+=("$1"); shift; done ;;
   -*) echo "ixia-hook-verify: unknown option $1" >&2; exit 2 ;;
   *) projects+=("$1"); shift ;;
@@ -55,8 +47,7 @@ if [ "${#projects[@]}" -eq 0 ]; then
   echo "ixia-hook-verify: name at least one project (see --help)" >&2
   exit 2
 fi
-[ -d "$home" ] || { echo "ixia-hook-verify: home $home is not a directory" >&2; exit 2; }
-home=$(cd "$home" && pwd -P)
+home=$(pwd -P)
 ixia_check_source || exit 2
 
 work=$(mktemp -d "${TMPDIR:-/tmp}/ixia-hook-verify.XXXXXX")

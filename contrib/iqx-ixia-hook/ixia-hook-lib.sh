@@ -7,7 +7,6 @@
 #
 # Bash 3.2 compatible (no mapfile, no associative arrays, no ${var,,}).
 
-IXIA_HOOK_VERSION_MARKER='# ixia-commit-msg-hook v'
 IXIA_HOOK_EXPECTED_SHA256='39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472'
 IXIA_HOOK_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
 IXIA_HOOK_SRC="$IXIA_HOOK_DIR/ixia-commit-msg-hook.sh"
@@ -25,16 +24,9 @@ ixia_mode() {
   stat -c '%a' "$1" 2>/dev/null || stat -f '%Lp' "$1" 2>/dev/null
 }
 
-# True when the file is a previous copy of this hook (version marker in its
-# first three lines), whatever its other bytes.
-ixia_is_hook_copy() {
-  head -n 3 "$1" 2>/dev/null | grep -q "^$IXIA_HOOK_VERSION_MARKER"
-}
-
-# True when the bundled hook is present, carries the marker and parses.
+# True when the bundled hook is present, matches the approved sha256 and parses.
 ixia_check_source() {
   [ -f "$IXIA_HOOK_SRC" ] || { echo "STOP: bundled hook $IXIA_HOOK_SRC is missing" >&2; return 1; }
-  ixia_is_hook_copy "$IXIA_HOOK_SRC" || { echo "STOP: $IXIA_HOOK_SRC lacks the ixia-commit-msg-hook marker" >&2; return 1; }
   [ "$(ixia_sha256 "$IXIA_HOOK_SRC")" = "$IXIA_HOOK_EXPECTED_SHA256" ] ||
     { echo "STOP: $IXIA_HOOK_SRC does not match the approved sha256 $IXIA_HOOK_EXPECTED_SHA256" >&2; return 1; }
   sh -n "$IXIA_HOOK_SRC" || { echo "STOP: $IXIA_HOOK_SRC does not parse" >&2; return 1; }
