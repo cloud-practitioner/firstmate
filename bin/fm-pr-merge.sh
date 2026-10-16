@@ -197,8 +197,8 @@
 # kernel's single-argument limit after JSON escaping). UTF-8 validation requires
 # iconv on PATH; its absence refuses the option.
 # CRLF line endings become LF, leading and trailing whitespace is dropped,
-# trailing whitespace on the first line is removed, and blank lines between
-# that line and the remaining text become one blank line. Empty or
+# trailing whitespace on the first line is removed, and the remaining text,
+# if any, is separated from that line by exactly one blank line. Empty or
 # whitespace-only messages refuse.
 # The whole normalized text is sent as the Bitbucket merge API's message field
 # beside merge_strategy. fast_forward and rebase_fast_forward create no commit
