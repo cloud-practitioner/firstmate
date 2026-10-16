@@ -7,7 +7,9 @@
 #
 # Bash 3.2 compatible (no mapfile, no associative arrays, no ${var,,}).
 
-IXIA_HOOK_EXPECTED_SHA256='39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472'
+IXIA_HOOK_EXPECTED_SHA256='9409a8799de6f07808dba656641929a758b395ba8b7084ac8c6aa56878837239'
+# The previously approved v1 hook; the installer upgrades an exact copy of it.
+IXIA_HOOK_V1_SHA256='39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472'
 IXIA_HOOK_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
 IXIA_HOOK_SRC="$IXIA_HOOK_DIR/ixia-commit-msg-hook.sh"
 
@@ -24,7 +26,7 @@ ixia_mode() {
   stat -c '%a' "$1" 2>/dev/null || stat -f '%Lp' "$1" 2>/dev/null
 }
 
-# True when the bundled hook is present, matches the approved sha256 and parses.
+# True when the bundled hook is present, matches the approved (v2) sha256 and parses.
 ixia_check_source() {
   [ -f "$IXIA_HOOK_SRC" ] || { echo "STOP: bundled hook $IXIA_HOOK_SRC is missing" >&2; return 1; }
   [ "$(ixia_sha256 "$IXIA_HOOK_SRC")" = "$IXIA_HOOK_EXPECTED_SHA256" ] ||

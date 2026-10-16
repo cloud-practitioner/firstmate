@@ -12,9 +12,10 @@
 # For each project the script checks that projects/<project> is a clone whose
 # origin is bitbucket.org/iqxbusiness, that no configuration redirects its
 # hooks, that the real hooks directory holds commit-msg with mode 755 and the
-# bundled hook's sha256, that every linked worktree of the clone resolves to
+# bundled (v2) hook's sha256, that every linked worktree of the clone resolves to
 # the same hooks, and that the installed hook leaves exactly one Ixia line,
-# last, in a probe message. The probe is a throwaway commit in a temporary
+# last, in two probe messages (one with human trailers, one whose subject
+# starts with #). The probe is a throwaway commit in a temporary
 # repository (same origin URL, a copy of the installed hook); the real clone
 # is only read.
 #
@@ -54,8 +55,9 @@ work=$(mktemp -d "${TMPDIR:-/tmp}/ixia-hook-verify.XXXXXX")
 trap 'rm -rf "$work"' EXIT
 
 # Throwaway commit in a temporary repository: prints the resulting message.
+# Usage: probe_commit <hook> <origin> file|hash
 probe_commit() {
-  local hook=$1 origin=$2 repo="$work/probe-repo"
+  local hook=$1 origin=$2 kind=$3 repo="$work/probe-repo"
   rm -rf "$repo"
   mkdir -p "$repo"
   ixia_clean_git_env git -C "$repo" init -q || return 1
@@ -63,9 +65,16 @@ probe_commit() {
   mkdir -p "$repo/.git/hooks"
   cp "$hook" "$repo/.git/hooks/commit-msg" && chmod 755 "$repo/.git/hooks/commit-msg" || return 1
   printf 'VERIFY-1: probe\n\n%s\n%s\n\nMiddle line.\n' "$JANE" "$IXIA" >"$work/probe-msg"
-  ixia_clean_git_env git -C "$repo" \
-    -c "core.hooksPath=$repo/.git/hooks" -c user.name=ixia-verify -c user.email=ixia-verify@example.invalid \
-    -c commit.gpgsign=false commit -q --allow-empty -F "$work/probe-msg" >/dev/null || return 1
+  if [ "$kind" = hash ]; then
+    # A subject starting with # under git commit -m is message text, not a comment.
+    ixia_clean_git_env git -C "$repo" \
+      -c "core.hooksPath=$repo/.git/hooks" -c user.name=ixia-verify -c user.email=ixia-verify@example.invalid \
+      -c commit.gpgsign=false commit -q --allow-empty -m '#VERIFY-2: hash subject' >/dev/null || return 1
+  else
+    ixia_clean_git_env git -C "$repo" \
+      -c "core.hooksPath=$repo/.git/hooks" -c user.name=ixia-verify -c user.email=ixia-verify@example.invalid \
+      -c commit.gpgsign=false commit -q --allow-empty -F "$work/probe-msg" >/dev/null || return 1
+  fi
   ixia_clean_git_env git -C "$repo" log -1 --format=%B
 }
 
@@ -84,6 +93,8 @@ for p in "${projects[@]}"; do
       why="hook missing: $dest"
     elif [ ! -x "$dest" ] || [ "$(ixia_mode "$dest")" != 755 ]; then
       why="hook mode is $(ixia_mode "$dest"), not 755 (a non-executable hook is skipped silently): $dest"
+    elif [ "$(ixia_sha256 "$dest")" = "$IXIA_HOOK_V1_SHA256" ]; then
+      why="hook is the superseded v1 hook; re-run ixia-hook-install.sh to upgrade it: $dest"
     elif [ "$(ixia_sha256 "$dest")" != "$IXIA_HOOK_EXPECTED_SHA256" ]; then
       why="hook differs from the bundled hook: $dest"
     fi
@@ -105,7 +116,7 @@ $wtlist
 EOT
   fi
   if [ -z "$why" ]; then
-    if ! out=$(probe_commit "$dest" "$IXIA_ORIGIN"); then
+    if ! out=$(probe_commit "$dest" "$IXIA_ORIGIN" file); then
       why="probe commit failed"
     else
       kept=$(printf '%s\n' "$out" | sed '/^$/d')
@@ -113,6 +124,18 @@ EOT
         [ "$(printf '%s\n' "$kept" | grep -cxF "$IXIA")" != 1 ] ||
         ! printf '%s\n' "$kept" | grep -qxF "$JANE"; then
         why="probe result wrong: $(printf '%s' "$kept" | tr '\n' '|')"
+      fi
+    fi
+  fi
+  if [ -z "$why" ]; then
+    if ! out=$(probe_commit "$dest" "$IXIA_ORIGIN" hash); then
+      why="hash-subject probe commit failed"
+    else
+      kept=$(printf '%s\n' "$out" | sed '/^$/d')
+      if [ "$(printf '%s\n' "$kept" | tail -n 1)" != "$IXIA" ] ||
+        [ "$(printf '%s\n' "$kept" | grep -cxF "$IXIA")" != 1 ] ||
+        [ "$(printf '%s\n' "$kept" | head -n 1)" != '#VERIFY-2: hash subject' ]; then
+        why="hash-subject probe result wrong: $(printf '%s' "$kept" | tr '\n' '|')"
       fi
     fi
   fi

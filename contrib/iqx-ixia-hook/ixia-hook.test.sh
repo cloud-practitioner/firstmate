@@ -16,7 +16,9 @@ INSTALL="$here/ixia-hook-install.sh"
 VERIFY="$here/ixia-hook-verify.sh"
 HOOK="$here/ixia-commit-msg-hook.sh"
 IXIA='Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>'
-SHA=39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+SHA=9409a8799de6f07808dba656641929a758b395ba8b7084ac8c6aa56878837239
+HOOK_V1="$here/previous/ixia-commit-msg-hook.v1.sh"
+SHA_V1=39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
 
 TMP=$(mktemp -d "${TMPDIR:-/tmp}/ixia-hook-test.XXXXXX")
 trap 'chmod -R u+w "$TMP" 2>/dev/null || true; rm -rf "$TMP"' EXIT
@@ -51,7 +53,8 @@ new_clone() { # new_clone <home> <name> <origin-url>
 }
 hook_of() { echo "$1/projects/$2/.git/hooks/commit-msg"; }
 
-check "bundled hook has the approved sha256" test "$(ixia_sha256 "$HOOK")" = "$SHA"
+check "bundled hook has the approved v2 sha256" test "$(ixia_sha256 "$HOOK")" = "$SHA"
+check "kept v1 hook has the superseded v1 sha256" test "$(ixia_sha256 "$HOOK_V1")" = "$SHA_V1"
 
 for s in "$INSTALL" "$VERIFY"; do
   check "$(basename "$s") --help exits 0" bash "$s" --help
@@ -116,6 +119,20 @@ cp "$TMP/marked-hook" "$(hook_of "$H3" iqxa)"
 out=$(cd "$H3" && bash "$INSTALL" iqxa) && rc=0 || rc=$?
 check "differing version-marked hook refused" bash -c '[ "$1" = 1 ] && grep -q "^STOP iqxa:" <<<"$2"' _ "$rc" "$out"
 check "version-marked hook left unchanged" cmp -s "$TMP/marked-hook" "$(hook_of "$H3" iqxa)"
+
+# an exact v1 copy is upgraded to v2; a modified v1 copy is not
+cp "$HOOK_V1" "$(hook_of "$H3" iqxa)"
+chmod 755 "$(hook_of "$H3" iqxa)"
+out=$(cd "$H3" && bash "$VERIFY" iqxa) && rc=0 || rc=$?
+check "verify flags the v1 hook for upgrade" bash -c '[ "$1" = 1 ] && grep -q "v1 hook" <<<"$2"' _ "$rc" "$out"
+out=$(cd "$H3" && bash "$INSTALL" iqxa) && rc=0 || rc=$?
+check "exact v1 copy is updated" bash -c '[ "$1" = 0 ] && grep -q "^updated iqxa " <<<"$2"' _ "$rc" "$out"
+check "updated copy has the v2 bytes" cmp -s "$HOOK" "$(hook_of "$H3" iqxa)"
+out=$(cd "$H3" && bash "$INSTALL" iqxa) && rc=0 || rc=$?
+check "reinstall after upgrade is unchanged" bash -c '[ "$1" = 0 ] && grep -q "^unchanged iqxa " <<<"$2"' _ "$rc" "$out"
+{ cat "$HOOK_V1"; echo '# local edit'; } >"$(hook_of "$H3" iqxa)"
+out=$(cd "$H3" && bash "$INSTALL" iqxa) && rc=0 || rc=$?
+check "edited v1 copy refused" bash -c '[ "$1" = 1 ] && grep -q "^STOP iqxa:" <<<"$2"' _ "$rc" "$out"
 
 # a non-executable identical copy gets its mode fixed
 cp "$HOOK" "$(hook_of "$H3" iqxa)"
@@ -192,6 +209,72 @@ git -C "$C" commit -q --allow-empty -m 'IQX-2: typed' -m "$IXIA"
 check "typed Ixia line is not duplicated" test "$(git -C "$C" log -1 --format=%B | grep -cxF "$IXIA")" = 1
 git -C "$C" commit -q --allow-empty --no-verify -m 'IQX-3: skipped'
 check_not "--no-verify skips the hook (documented gap)" bash -c 'git -C "$1" log -1 --format=%B | grep -qxF "$2"' _ "$C" "$IXIA"
+
+# --- subjects and comments starting with #, per git's cleanup mode ------------
+HC="$TMP/hash-clone"
+git init -q "$HC"
+git -C "$HC" remote add origin 'git@bitbucket.org:iqxbusiness/hash.git'
+(cd "$TMP" && mkdir -p hash-home/projects && rm -rf hash-home/projects/hash && mv "$HC" hash-home/projects/hash)
+HC="$TMP/hash-home/projects/hash"
+cp "$HOOK" "$HC/.git/hooks/commit-msg"
+chmod 755 "$HC/.git/hooks/commit-msg"
+cat >"$TMP/ed.sh" <<'EDEOF'
+#!/bin/sh
+printf '%s\n' "$EDMSG" | cat - "$1" >"$1.new" && mv "$1.new" "$1"
+EDEOF
+chmod 755 "$TMP/ed.sh"
+
+# last_ok <expected body lines...>: the commit message, minus blank lines, equals them plus the Ixia line
+msg_is() {
+  local want="" l
+  for l in "$@"; do want="$want$l"$'\n'; done
+  want="$want$IXIA"$'\n'
+  [ "$(git -C "$HC" log -1 --format=%B | sed '/^$/d')" = "${want%$'\n'}" ]
+}
+hash_commit() { # hash_commit <description> <expected rc> <expected body...> -- <git commit args...>
+  local d=$1 erc=$2 rc=0
+  shift 2
+  local expect=()
+  while [ "$1" != -- ]; do expect+=("$1"); shift; done
+  shift
+  git -C "$HC" commit -q --allow-empty "$@" >/dev/null 2>&1 || rc=$?
+  if [ "$rc" != "$erc" ]; then fail "$d (exit $rc, wanted $erc)"; return; fi
+  if [ "$erc" = 0 ] && ! msg_is "${expect[@]}"; then fail "$d (message wrong: $(git -C "$HC" log -1 --format=%B | tr '\n' '|'))"; return; fi
+  pass "$d"
+}
+hash_commit "-m with # subject gets the line" 0 '#123 fix' -- -m '#123 fix'
+hash_commit "-m with # body line keeps it and gets the line" 0 'subj' '# note' -- -m 'subj' -m '# note'
+hash_commit "-m # subject with human trailer" 0 '#1 x' 'Signed-off-by: A <a@b.c>' -- -m '#1 x' -m 'Signed-off-by: A <a@b.c>'
+hash_commit "--cleanup=verbatim keeps # subject" 0 '#v' -- --cleanup=verbatim -m '#v'
+hash_commit "--cleanup=whitespace keeps # subject" 0 '#w' -- --cleanup=whitespace -m '#w'
+hash_commit "--cleanup=scissors keeps # subject" 0 '#sc' -- --cleanup=scissors -m '#sc'
+hash_commit "--cleanup=strip on only # lines aborts (empty)" 1 -- --cleanup=strip -m '#s'
+hash_commit "--cleanup strip (separate word) aborts" 1 -- --cleanup strip -m '#s'
+hash_commit "--cleanup=strip drops # body, keeps subject, gets the line" 0 'subj' -- --cleanup=strip -m 'subj' -m '# gone'
+git -C "$HC" config commit.cleanup strip
+hash_commit "commit.cleanup=strip on only # lines aborts" 1 -- -m '#cfg'
+hash_commit "commit.cleanup=strip drops # body" 0 'sub' -- -m 'sub' -m '#gone'
+git -C "$HC" config commit.cleanup verbatim
+hash_commit "commit.cleanup=verbatim keeps # subject" 0 '#cfgv' -- -m '#cfgv'
+git -C "$HC" config --unset commit.cleanup
+hash_commit "amend -m with # subject" 0 '#amended' -- --amend -m '#amended'
+hash_commit "typed Ixia line not duplicated under # subject" 0 '#dup' -- -m '#dup' -m "$IXIA"
+export EDMSG
+EDMSG=$'ed subject\n\n# user comment'
+GIT_EDITOR="$TMP/ed.sh" hash_commit "editor: # comment is stripped, line added" 0 'ed subject' -- 
+EDMSG=$'#ed subject only'
+GIT_EDITOR="$TMP/ed.sh" hash_commit "editor: only-comment message aborts" 1 -- 
+EDMSG=$'ed ver\n#kept'
+GIT_EDITOR="$TMP/ed.sh" hash_commit "editor: --cleanup=whitespace keeps # line before the Ixia line" 0 'ed ver' '#kept' '# Please enter the commit message for your changes. Lines starting' "# with '#' will be kept; you may remove them yourself if you want to." '# An empty message aborts the commit.' '#' '# On branch master' -- --cleanup=whitespace
+EDMSG=$'ed v subject'
+GIT_EDITOR="$TMP/ed.sh" hash_commit "editor: -v (scissors section) gets the line before the diff" 0 'ed v subject' -- -v
+GIT_EDITOR=: hash_commit "exported GIT_EDITOR=: with an empty editor template aborts" 1 -- 
+GIT_EDITOR=: hash_commit "GIT_EDITOR=: with -m # subject gets the line" 0 '#h' -- -m '#h'
+unset EDMSG
+git -C "$HC" commit -q --allow-empty --no-verify -m 'base-for-merge'
+git -C "$HC" checkout -q -b side && git -C "$HC" commit -q --allow-empty --no-verify -m side && git -C "$HC" checkout -q -
+git -C "$HC" merge -q --no-ff --no-edit side >/dev/null 2>&1
+check "merge --no-edit gets exactly one Ixia line" bash -c '[ "$(git -C "$1" log -1 --format=%B | grep -cxF "$2")" = 1 ]' _ "$HC" "$IXIA"
 
 echo
 if [ "$fails" -ne 0 ]; then

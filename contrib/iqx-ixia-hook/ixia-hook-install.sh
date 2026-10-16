@@ -13,11 +13,14 @@
 # whose origin is bitbucket.org/iqxbusiness, resolves the clone's real hooks
 # directory (an inherited command-scope core.hooksPath override, such as a
 # firstmate pane's own strip directory, is ignored), and installs the bundled
-# hook there as commit-msg, mode 755. It refuses any existing commit-msg with
-# different bytes and any clone whose configuration sets
+# hook there as commit-msg, mode 755. It replaces an existing commit-msg only
+# when it is byte-identical to the superseded v1 hook (sha256
+# 39c0d3c1...e8472), treats an identical copy as already installed, refuses
+# any other existing commit-msg and any clone whose configuration sets
 # core.hooksPath, and is idempotent.
 #
-# Output: one line per project - "installed", "unchanged",
+# Output: one line per project - "installed", "updated" (v1 upgraded to v2),
+# "unchanged",
 # "STOP <project>: <reason>" when refused without changes, or
 # "FAIL <project>: <reason>" when a write failed.
 # Exit: 0 every project is installed or unchanged; 1 any project refused or
@@ -62,23 +65,27 @@ for p in "${projects[@]}"; do
     continue
   fi
   dest="$IXIA_HOOKS_DIR/commit-msg"
+  action=installed
   if [ -e "$dest" ] || [ -L "$dest" ]; then
     if [ -L "$dest" ] || [ ! -f "$dest" ]; then
       echo "STOP $p: $dest exists and is not a regular file; not overwriting"
       rc=1
       continue
-    elif ! cmp -s "$IXIA_HOOK_SRC" "$dest"; then
-      echo "STOP $p: $dest already exists and is not identical to this hook; not overwriting"
+    elif cmp -s "$IXIA_HOOK_SRC" "$dest"; then
+      if [ "$(ixia_mode "$dest")" != 755 ] && ! chmod 755 "$dest"; then
+        echo "FAIL $p: could not set mode 755 on $dest"
+        rc=1
+        continue
+      fi
+      echo "unchanged $p -> $dest"
+      continue
+    elif [ "$(ixia_sha256 "$dest")" = "$IXIA_HOOK_V1_SHA256" ]; then
+      action=updated
+    else
+      echo "STOP $p: $dest already exists and is neither this hook nor the v1 hook; not overwriting"
       rc=1
       continue
     fi
-    if [ "$(ixia_mode "$dest")" != 755 ] && ! chmod 755 "$dest"; then
-      echo "FAIL $p: could not set mode 755 on $dest"
-      rc=1
-      continue
-    fi
-    echo "unchanged $p -> $dest"
-    continue
   fi
   if ! mkdir -p "$IXIA_HOOKS_DIR" || ! tmp=$(mktemp "$IXIA_HOOKS_DIR/.commit-msg.ixia.XXXXXX"); then
     echo "FAIL $p: cannot write under $IXIA_HOOKS_DIR"
@@ -86,7 +93,7 @@ for p in "${projects[@]}"; do
     continue
   fi
   if cp "$IXIA_HOOK_SRC" "$tmp" && chmod 755 "$tmp" && mv -f "$tmp" "$dest"; then
-    echo "installed $p -> $dest"
+    echo "$action $p -> $dest"
   else
     rm -f "$tmp"
     echo "FAIL $p: could not write $dest"
