@@ -23,8 +23,8 @@
 # "unchanged",
 # "STOP <project>: <reason>" when refused without changes, or
 # "FAIL <project>: <reason>" when a write failed.
-# Exit: 0 every project is installed or unchanged; 1 any project refused or
-# failed; 2 usage error or the bundled hook is unusable.
+# Exit: 0 every project is installed, updated or unchanged; 1 any project
+# refused or failed; 2 usage error or the bundled hook is unusable.
 set -euo pipefail
 
 here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
