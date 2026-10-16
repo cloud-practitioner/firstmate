@@ -107,7 +107,7 @@ write_github_live_json() {
   local case_dir=$1 head=$2
   printf '%s\n' "$head" > "$case_dir/github-head"
   cat > "$case_dir/github-view.json" <<JSON
-{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","statusCheckRollup":[{"__typename":"CheckRun","name":"ci","status":"COMPLETED","conclusion":"SUCCESS"}]}
+{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","isMergeQueueEnabled":false,"statusCheckRollup":[{"__typename":"CheckRun","name":"ci","status":"COMPLETED","conclusion":"SUCCESS"}]}
 JSON
 }
 
@@ -115,7 +115,7 @@ write_github_red_json() {
   local case_dir=$1 head=$2 name=$3
   printf '%s\n' "$head" > "$case_dir/github-head"
   cat > "$case_dir/github-view.json" <<JSON
-{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","statusCheckRollup":[{"__typename":"CheckRun","name":"$name","status":"COMPLETED","conclusion":"FAILURE"}]}
+{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","isMergeQueueEnabled":false,"statusCheckRollup":[{"__typename":"CheckRun","name":"$name","status":"COMPLETED","conclusion":"FAILURE"}]}
 JSON
 }
 
@@ -150,7 +150,7 @@ write_github_rollup_json() {
   done
   printf '%s\n' "$head" > "$case_dir/github-head"
   cat > "$case_dir/github-view.json" <<JSON
-{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","statusCheckRollup":[$rollup]}
+{"state":"OPEN","isDraft":false,"mergeable":"MERGEABLE","mergeStateStatus":"CLEAN","headRefOid":"$head","baseRefName":"main","isMergeQueueEnabled":false,"statusCheckRollup":[$rollup]}
 JSON
 }
 
@@ -207,6 +207,12 @@ case "${1:-} ${2:-}" in
             rm -f "$FM_STATE_OVERRIDE/.afk-contract"
           fi
         fi
+        exit 0
+        ;;
+      *isMergeQueueEnabled*)
+        [ ! -e "$(dirname "$FM_TEST_GH_VIEW_JSON")/github-queue-view-fails" ] || exit 1
+        [ ! -e "$(dirname "$FM_TEST_GH_VIEW_JSON")/github-queue-view-empty" ] || exit 0
+        cat "$FM_TEST_GH_VIEW_JSON"
         exit 0
         ;;
       *headRefOid*)
@@ -4573,6 +4579,7 @@ test_message_file_github_sends_subject_and_body() {
 
   # Without the option nothing about the merge changes.
   case_dir=$(new_github_message_case message-github-absent)
+  : > "$case_dir/github-queue-view-fails"
   run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 \
     > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-github-absent: should merge"
   assert_equals "$(expected_gh_args "$head")" "$(cat "$case_dir/gh-merge-args")" \
@@ -4821,24 +4828,18 @@ test_message_file_forgejo() {
 test_message_file_github_queue_policy() {
   local case_dir path policy mode rc
   local extra=()
-  for mode in attended auto away; do
-    for policy in merge squash rebase conflicting unknown unreadable; do
+  for mode in attended auto; do
+    for policy in classic ruleset; do
       case_dir=$(new_github_message_case "message-github-queue-$mode-$policy")
       path=$(write_message_file "$case_dir" "$MSG_TEXT")
-      case "$policy" in
-        merge) printf 'merge_method=MERGE\n' > "$case_dir/github-rules" ;;
-        squash) printf 'merge_method=SQUASH\n' > "$case_dir/github-rules" ;;
-        rebase) printf 'merge_method=REBASE\n' > "$case_dir/github-rules" ;;
-        conflicting) printf 'merge_method=MERGE\nmerge_method=SQUASH\n' > "$case_dir/github-rules" ;;
-        unknown) printf 'merge_method=UNKNOWN\n' > "$case_dir/github-rules" ;;
-        unreadable) : > "$case_dir/github-rules-fail" ;;
-      esac
-      extra=()
-      if [ "$mode" = auto ]; then
-        extra=(--attended-override -- --auto)
-      elif [ "$mode" = away ]; then
-        write_away_record "$case_dir" --words 'merge green work' || fail "message-github-queue-$mode-$policy: could not enter away mode"
+      jq '.isMergeQueueEnabled = true' "$case_dir/github-view.json" > "$case_dir/view-next.json"
+      mv "$case_dir/view-next.json" "$case_dir/github-view.json"
+      if [ "$policy" = ruleset ]; then
+        printf 'merge_method=MERGE\n' > "$case_dir/github-rules"
       fi
+      write_github_outcome "$case_dir" OPEN false true main
+      extra=()
+      [ "$mode" != auto ] || extra=(--attended-override -- --auto)
       rc=0
       run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
         "${extra[@]+"${extra[@]}"}" > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
@@ -4847,19 +4848,92 @@ test_message_file_github_queue_policy() {
       assert_no_grep 'pr merge' "$case_dir/gh.log" "message-github-queue-$mode-$policy: a merge was submitted"
     done
   done
-  for policy in none plan-gated; do
+  for policy in none plan-gated unreadable stale-ruleset; do
     case_dir=$(new_github_message_case "message-github-queue-$policy")
     path=$(write_message_file "$case_dir" "$MSG_TEXT")
-    if [ "$policy" = plan-gated ]; then
-      printf 'Upgrade to GitHub Pro or make this repository public\n' > "$case_dir/github-rules-fail-body"
-    fi
+    case "$policy" in
+      plan-gated) printf 'Upgrade to GitHub Pro or make this repository public\n' > "$case_dir/github-rules-fail-body" ;;
+      unreadable) : > "$case_dir/github-rules-fail" ;;
+      stale-ruleset) printf 'merge_method=MERGE\n' > "$case_dir/github-rules" ;;
+    esac
     run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
       --attended-override -- --auto > "$case_dir/stdout" 2> "$case_dir/stderr" \
       || fail "message-github-queue-$policy: a queue-free message-bearing merge should succeed: $(cat "$case_dir/stderr")"
     assert_equals "$(expected_gh_args 2222222222222222222222222222222222222222 "--subject=$MSG_SUBJECT" "--body=$MSG_BODY" --auto)" \
       "$(cat "$case_dir/gh-merge-args")" "message-github-queue-$policy: the merge arguments changed"
   done
-  pass "fm-pr-merge refuses message-bearing GitHub merges when a queue is required or unreadable in every posture"
+  for policy in missing null string read-fails empty; do
+    case_dir=$(new_github_message_case "message-github-queue-state-$policy")
+    path=$(write_message_file "$case_dir" "$MSG_TEXT")
+    case "$policy" in
+      missing) jq 'del(.isMergeQueueEnabled)' "$case_dir/github-view.json" > "$case_dir/view-next.json" ;;
+      null) jq '.isMergeQueueEnabled = null' "$case_dir/github-view.json" > "$case_dir/view-next.json" ;;
+      string) jq '.isMergeQueueEnabled = "false"' "$case_dir/github-view.json" > "$case_dir/view-next.json" ;;
+      read-fails) : > "$case_dir/github-queue-view-fails" ;;
+      empty) : > "$case_dir/github-queue-view-empty" ;;
+    esac
+    [ ! -f "$case_dir/view-next.json" ] || mv "$case_dir/view-next.json" "$case_dir/github-view.json"
+    rc=0
+    run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
+      > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
+    expect_code 2 "$rc" "message-github-queue-state-$policy: unreadable effective PR queue state must refuse"
+    assert_grep 'effective merge-queue state could not be determined' "$case_dir/stderr" "message-github-queue-state-$policy: refusal did not explain the missing evidence"
+    assert_no_grep 'pr merge' "$case_dir/gh.log" "message-github-queue-state-$policy: a merge was submitted"
+  done
+  pass "fm-pr-merge resolves message capability from the PR's effective merge-queue state, not ruleset rules"
+}
+
+test_message_file_github_queue_admin_bypass() {
+  local case_dir path spec expected flags rc index=0
+  local extra=()
+  for spec in '0 --admin' '0 --admin=true' '0 --admin=TRUE' '0 --admin=1' \
+    '2 --admin=false' '2 --admin=0' '2 --admin --admin=false' '0 --admin=false --admin'; do
+    index=$((index + 1))
+    read -r expected flags <<< "$spec"
+    read -r -a extra <<< "$flags"
+    case_dir=$(new_github_message_case "message-github-queue-admin-$index")
+    path=$(write_message_file "$case_dir" "$MSG_TEXT")
+    jq '.isMergeQueueEnabled = true' "$case_dir/github-view.json" > "$case_dir/view-next.json"
+    mv "$case_dir/view-next.json" "$case_dir/github-view.json"
+    printf 'merge_method=MERGE\n' > "$case_dir/github-rules"
+    rc=0
+    run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
+      --attended-override -- "${extra[@]}" --merge > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
+    expect_code "$expected" "$rc" "message-github-queue-admin-$index: $flags should match gh's administrative bypass"$'\n'"$(cat "$case_dir/stderr")"
+    if [ "$expected" -eq 0 ]; then
+      assert_equals "$(printf '<%s>\n' pr merge 15 --repo example/repo --match-head-commit 2222222222222222222222222222222222222222 "--subject=$MSG_SUBJECT" "--body=$MSG_BODY" "${extra[@]}" --merge)" \
+        "$(cat "$case_dir/gh-merge-args")" "message-github-queue-admin-$index: the bypass did not carry the message and verified head"
+    else
+      assert_no_grep 'pr merge' "$case_dir/gh.log" "message-github-queue-admin-$index: a queue-bound message was submitted"
+    fi
+  done
+  pass "fm-pr-merge carries messages through attended administrative queue bypasses and honors false or repeated admin flags"
+}
+
+test_message_file_keeps_github_away_queue_guard() {
+  local case_dir path policy mode rc
+  local extra=()
+  for mode in direct admin; do
+    for policy in queued unreadable; do
+      case_dir=$(new_github_message_case "message-github-away-queue-$mode-$policy")
+      path=$(write_message_file "$case_dir" "$MSG_TEXT")
+      if [ "$policy" = queued ]; then
+        printf 'merge_method=MERGE\n' > "$case_dir/github-rules"
+      else
+        : > "$case_dir/github-rules-fail"
+      fi
+      write_away_record "$case_dir" --words 'merge green work' || fail "message-github-away-queue-$mode-$policy: could not enter away mode"
+      extra=()
+      [ "$mode" != admin ] || extra=(--attended-override -- --admin --merge)
+      rc=0
+      run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
+        "${extra[@]+"${extra[@]}"}" > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
+      expect_code 2 "$rc" "message-github-away-queue-$mode-$policy: the existing away queue guard must still refuse"
+      assert_grep 'merge-queue state does not prove an immediate merge' "$case_dir/stderr" "message-github-away-queue-$mode-$policy: the away guard was bypassed"
+      assert_no_grep 'pr merge' "$case_dir/gh.log" "message-github-away-queue-$mode-$policy: a merge was submitted"
+    done
+  done
+  pass "fm-pr-merge preserves the away-mode ruleset queue guard even for message-bearing administrative bypasses"
 }
 
 test_message_file_gitlab_effective_policy() {
@@ -4971,6 +5045,8 @@ test_message_file_gitlab_policy_refusals() {
 
 test_message_file_github_sends_subject_and_body
 test_message_file_github_queue_policy
+test_message_file_github_queue_admin_bypass
+test_message_file_keeps_github_away_queue_guard
 test_message_file_gitlab_effective_policy
 test_message_file_gitlab_policy_refusals
 test_message_file_is_read_once_before_the_merge

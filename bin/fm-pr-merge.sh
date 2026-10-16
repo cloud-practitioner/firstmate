@@ -210,10 +210,11 @@
 # swagger definition, Bitbucket Cloud's pullrequest_merge_parameters):
 #   GitHub:    gh --subject and --body, the empty body sent explicitly for a
 #              subject-only message; refused with a rebase merge, which
-#              creates no commit, when the base requires a merge queue (which
-#              ignores custom messages) or its queue policy cannot be read,
-#              and with extra args --subject/-t, --body/-b, or --body-file/-F,
-#              in any spelling or short-option cluster.
+#              creates no commit, or when the PR's isMergeQueueEnabled is true
+#              without a caller's --admin bypass, because gh queues that merge
+#              and GitHub ignores custom messages. Unreadable PR queue state
+#              also refuses unless --admin bypasses it. Extra args --subject/-t,
+#              --body/-b, or --body-file/-F conflict in any spelling or cluster.
 #   GitLab:    the whole text as glab --squash-message (squash_commit_message)
 #              when the project's squash_option and the MR's squash state,
 #              including an explicit --squash request, prove it will squash;
@@ -1790,18 +1791,35 @@ persist_accepted_merge_authority() {
 # 404, or an unrelated 403) stays unreadable and refuses the merge. The merge
 # stays synchronous (--auto is refused earlier) and every other gate still
 # applies.
-refuse_unsupported_github_queue() {
-  [ "$FM_PR_AWAY_POSTURE" = true ] || [ -n "$MESSAGE_FILE" ] || return 0
+refuse_github_queue_while_away() {
+  [ "$FM_PR_AWAY_POSTURE" = true ] || return 0
   # Accepted confused-agent-grade limitation, as in bin/fm-lease-lib.sh, not an
   # oversight: a queue rule or PR base change after this preflight can still
   # enqueue the merge, which can land after its away authority lapses.
   github_read_queue_method
   [ "$FM_PR_GITHUB_QUEUE_STATUS" = none ] && return 0
-  if [ -n "$MESSAGE_FILE" ]; then
-    echo "error: --message-file cannot be sent because GitHub's base branch requires a merge queue or its queue policy could not be determined; merge queues ignore custom commit messages" >&2
+  echo "error: GitHub merge refused while away because the base branch's merge-queue state does not prove an immediate merge; nothing was handed to the forge" >&2
+  return 2
+}
+
+github_verify_message_queue() {
+  local arg admin=false json queued
+  for arg in "$@"; do
+    case "$arg" in
+      --admin) admin=true ;;
+      --admin=*) admin=${arg#*=} ;;
+    esac
+  done
+  case "$admin" in true|TRUE|True|t|T|1) return 0 ;; esac
+  if ! json=$(gh pr view "$URL" --json isMergeQueueEnabled 2>/dev/null) \
+    || ! queued=$(printf '%s' "$json" | jq -er '
+      if (.isMergeQueueEnabled | type) == "boolean" then (.isMergeQueueEnabled | tostring)
+      else error("unreadable PR queue state") end' 2>/dev/null); then
+    echo "error: --message-file cannot be sent because the GitHub PR's effective merge-queue state could not be determined" >&2
     return 2
   fi
-  echo "error: GitHub merge refused while away because the base branch's merge-queue state does not prove an immediate merge; nothing was handed to the forge" >&2
+  [ "$queued" = false ] && return 0
+  echo "error: --message-file cannot be sent because gh would use GitHub's merge queue, which ignores custom commit messages" >&2
   return 2
 }
 
@@ -2399,10 +2417,11 @@ case "$PROVIDER" in
     away_status=0
     require_current_away_authority || away_status=$?
     [ "$away_status" -eq 0 ] || exit "$away_status"
-    refuse_unsupported_github_queue || exit 2
+    refuse_github_queue_while_away || exit 2
     merge_status=0
     message_args=()
     if [ -n "$MESSAGE_FILE" ]; then
+      github_verify_message_queue "$@" || exit 2
       message_args=(--subject="$MERGE_MESSAGE_SUBJECT" --body="$MERGE_MESSAGE_BODY")
     fi
     merge_output=$(gh pr merge "$PR_NUMBER" --repo "$PR_OWNER/$PR_REPO" \
