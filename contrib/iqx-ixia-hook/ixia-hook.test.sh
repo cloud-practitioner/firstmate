@@ -16,7 +16,7 @@ INSTALL="$here/ixia-hook-install.sh"
 VERIFY="$here/ixia-hook-verify.sh"
 HOOK="$here/ixia-commit-msg-hook.sh"
 IXIA='Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>'
-SHA=d9c80f87916206d11bb42350a1d7ee521c38c93d46e5fc33b45f31cce7849f90
+SHA=059893ecfd18c79038ade24e3316a033487b6d11340291a9ac98e661825fcb60
 HOOK_V1="$here/previous/ixia-commit-msg-hook.v1.sh"
 SHA_V1=39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
 
@@ -258,6 +258,18 @@ preserved_hook "Ixia precedes a byte-preserved trailing comment section" strip
 printf 'subject\n\n# interior comment  \nbody  \n\n# final comment\n' >"$TMP/preserve-input"
 printf 'subject\n\n# interior comment  \nbody  \n\n%s\n\n# final comment\n' "$IXIA" >"$TMP/preserve-expected"
 preserved_hook "interior comments and body lines remain in place" strip
+for spec in 'core.commentChar=#' 'core.commentChar=;' 'core.commentString=//'; do
+  field=${spec%%=*}
+  comment=${spec#*=}
+  git -C "$C" config "$field" "$comment"
+  printf 'subject\n\nCo-Authored-By: Jane <jane@example.com>\n%s reviewer note\nReviewed-by: Bob <bob@example.com>\n' "$comment" >"$TMP/preserve-input"
+  { cat "$TMP/preserve-input"; printf '%s\n' "$IXIA"; } >"$TMP/preserve-expected"
+  preserved_hook "strip parsing preserves the trailer block and raw bytes with $spec" strip
+  git -C "$C" config --unset "$field"
+done
+printf 'subject\n\n; text\n@ text\n%% text\n~ text\n^ text\n& text\n! text\n| text\n' >"$TMP/preserve-input"
+{ cat "$TMP/preserve-input"; printf '\n%s\n' "$IXIA"; } >"$TMP/preserve-expected"
+preserved_hook "strip parsing needs no alternate comment character" strip
 printf 'subject\n\nSigned-off-by:Alice <alice@example.com>\n%s\npatch  \t\nlast patch line' '# ------------------------ >8 ------------------------' >"$TMP/preserve-input"
 printf 'subject\n\nSigned-off-by:Alice <alice@example.com>\n%s\n%s\npatch  \t\nlast patch line' "$IXIA" '# ------------------------ >8 ------------------------' >"$TMP/preserve-expected"
 preserved_hook "Ixia precedes a byte-preserved scissors section" scissors
@@ -298,6 +310,7 @@ hash_commit() { # hash_commit <description> <expected rc> <expected body...> -- 
   pass "$d"
 }
 hash_commit "-m with # subject gets the line" 0 '#123 fix' -- -m '#123 fix'
+hash_commit "fully spelled --message with # subject gets the line" 0 '#123 fix' -- --message='#123 fix'
 hash_commit "-m with # body line keeps it and gets the line" 0 'subj' '# note' -- -m 'subj' -m '# note'
 hash_commit "-m standalone comment character is text, not editor evidence" 0 '#123 fix' '#' -- -m '#123 fix' -m '#'
 hash_commit "last cleanup option wins over strip" 0 '#123 fix' -- --cleanup=strip --cleanup=whitespace -m '#123 fix'
@@ -386,6 +399,11 @@ hash_commit "typed Ixia line not duplicated under # subject" 0 '#dup' -- -m '#du
 export EDMSG
 EDMSG=$'ed subject\n\n# user comment'
 GIT_EDITOR="$TMP/ed.sh" hash_commit "editor: # comment is stripped, line added" 0 'ed subject' -- 
+EDMSG=$'ed trailers\n\nCo-Authored-By: Jane <jane@example.com>\n# reviewer note\nReviewed-by: Bob <bob@example.com>'
+GIT_EDITOR="$TMP/ed.sh" hash_commit "editor: strip keeps human trailers around an interior comment" 0 'ed trailers' 'Co-Authored-By: Jane <jane@example.com>' 'Reviewed-by: Bob <bob@example.com>' --
+check "edited human trailers remain in Git's final trailer block" test \
+  "$(git -C "$HC" log -1 --format=%B | git -C "$HC" interpret-trailers --parse)" = \
+  "$(printf 'Co-Authored-By: Jane <jane@example.com>\nReviewed-by: Bob <bob@example.com>\n%s\n' "$IXIA")"
 EDMSG=$'#ed subject only'
 GIT_EDITOR="$TMP/ed.sh" hash_commit "editor: only-comment message aborts" 1 -- 
 EDMSG=$'ed ver\n#kept'
@@ -433,6 +451,10 @@ merge_case "merge cleanup flag overrides configured strip" 0 '#123 fix' -- --no-
 git -C "$HC" config --unset commit.cleanup
 merge_case "merge keeps sign-off-only messages nonempty" 0 'Signed-off-by: lab <lab@example.invalid>' -- --no-edit -m 'Signed-off-by: lab <lab@example.invalid>'
 merge_case "merge strategy operands are not cleanup flags" 0 '#123 fix' -- --no-edit -s ort -m '#123 fix'
+merge_case "merge strip keeps human trailers around an interior comment" 0 subject 'Co-Authored-By: Jane <jane@example.com>' 'Reviewed-by: Bob <bob@example.com>' -- --no-edit --cleanup=strip -m $'subject\n\nCo-Authored-By: Jane <jane@example.com>\n# reviewer note\nReviewed-by: Bob <bob@example.com>'
+check "merged human trailers remain in Git's final trailer block" test \
+  "$(git -C "$HC" log -1 --format=%B | git -C "$HC" interpret-trailers --parse)" = \
+  "$(printf 'Co-Authored-By: Jane <jane@example.com>\nReviewed-by: Bob <bob@example.com>\n%s\n' "$IXIA")"
 for field in core.commentChar core.commentString; do
   for value in auto AUTO AuTo; do
     git -C "$HC" config "$field" "$value"

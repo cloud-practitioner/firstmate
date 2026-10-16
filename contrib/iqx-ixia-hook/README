@@ -19,9 +19,9 @@ It acts only when `remote.origin.url` names `bitbucket.org/iqxbusiness` and leav
 Human trailers and all other non-Ixia lines are preserved byte-for-byte; only existing Ixia lines and trailing blank lines are removed.
 The hook uses `git interpret-trailers --parse` read-only to recognize a final trailer block, then appends Ixia directly to that block or after one blank line otherwise, before discarded comment and scissors sections.
 
-The current hook is v2, sha256 `d9c80f87916206d11bb42350a1d7ee521c38c93d46e5fc33b45f31cce7849f90`; both scripts refuse to run if the bundled copy differs.
+The current hook is v2, sha256 `059893ecfd18c79038ade24e3316a033487b6d11340291a9ac98e661825fcb60`; both scripts refuse to run if the bundled copy differs.
 v2 judges the message the way git will commit it, so a subject or body line starting with `#` is handled correctly:
-- It works out git's cleanup mode from the last `--cleanup` flag, then `commit.cleanup`, then strip when an editor is used and whitespace when it is not.
+- With fully spelled long options or supported short options, it works out git's cleanup mode from the last `--cleanup` flag, then `commit.cleanup`, then strip when an editor is used and whitespace when it is not.
   Linux reads the parent's `/proc` argument list; macOS uses native `sysctl(3)` through Python 3, which must be on `PATH`. Argument-retrieval failure refuses the commit instead of guessing.
   Editor use is resolved from git's arguments, including explicit `--edit` and `--no-edit`, not from comment-looking message text.
 - Under `git commit -m` a `#` line is ordinary text and gets the Ixia line; under an editor or `--cleanup=strip` it is a comment, and a message of only comments is still left alone so git aborts.
@@ -94,7 +94,7 @@ What the verify does:
 
 ## What it does not cover
 
-The hook cannot guarantee the required line in these cases, because git skips `commit-msg` or because the hook cannot see how git was started:
+The hook cannot guarantee the required line in these cases, because git skips `commit-msg` or the invocation falls outside the supported resolver interface:
 
 - The no-mistakes pipeline's own fix commits, which it makes with `--no-verify`.
 - `git commit --no-verify`, which also skips firstmate's strip.
@@ -102,5 +102,6 @@ The hook cannot guarantee the required line in these cases, because git skips `c
 - An autosquash `squash!` fold, which leaves a second line mid-message; amend afterwards or add `--exec 'git commit --amend --no-edit'` to the rebase.
 - Bitbucket server-side merges, which write their own commit without local hooks.
 - Cleanup or editor options the hook cannot read from git's argument list (for example, git started through a wrapper that hides its arguments), when they differ from configuration or the `GIT_EDITOR` fallback for that commit.
+- Abbreviated long options, including cleanup, editor/verbosity, message-source, negated, and operand-taking options. Git accepts abbreviations that this hook does not resolve: `git commit --mess='#123 fix'`, or `git -c commit.cleanup=strip commit --clea=whitespace -m '#123 fix'`, can commit without Ixia. Use fully spelled long options (`--message`, `--cleanup=whitespace`, etc.) or supported short forms such as `-m` instead.
 
 The merged result is covered by the squash-merge message rule: the squash commit message on the IQX repositories ends with the Ixia line.

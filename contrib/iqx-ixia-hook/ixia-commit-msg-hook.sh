@@ -240,20 +240,23 @@ if ! LC_ALL=C awk -v want="$want" -v s="$scissors" -v truncate="$cut" -v strip="
   exit 1
 fi
 
-comment_cfg=
-for c in ';' '@' '%' '~' '^' '&' '!' '|'; do
-  if ! awk -v c="$c" 'substr($0, 1, 1) == c { f = 1 } END { exit !f }' "$head_file"; then
-    comment_cfg=$c
-    break
+set --
+if [ "$mode" != strip ]; then
+  comment_cfg=
+  for c in ';' '@' '%' '~' '^' '&' '!' '|'; do
+    if ! awk -v c="$c" 'substr($0, 1, 1) == c { f = 1 } END { exit !f }' "$head_file"; then
+      comment_cfg=$c
+      break
+    fi
+  done
+  if [ -z "$comment_cfg" ]; then
+    echo "ixia commit-msg: no free comment character for $msg" >&2
+    exit 1
   fi
-done
-if [ -z "$comment_cfg" ]; then
-  echo "ixia commit-msg: no free comment character for $msg" >&2
-  exit 1
+  set -- -c "core.commentChar=$comment_cfg" -c "core.commentString=$comment_cfg"
 fi
 
-trailers=$(git -c "core.commentChar=$comment_cfg" -c "core.commentString=$comment_cfg" \
-  interpret-trailers --parse --no-divider "$head_file") || {
+trailers=$(git "$@" interpret-trailers --parse --no-divider "$head_file") || {
   echo "ixia commit-msg: git interpret-trailers failed" >&2
   exit 1
 }
