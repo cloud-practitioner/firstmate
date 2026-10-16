@@ -1,0 +1,48 @@
+ok - bundled hook has the approved sha256
+ok - ixia-hook-install.sh --help exits 0
+ok - ixia-hook-install.sh without projects exits 2
+ok - ixia-hook-install.sh rejects --home (exit 2)
+ok - ixia-hook-install.sh rejects --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-test-baseline.AqxHBY/ixia-hook-test.aCyU0j (exit 2)
+ok - ixia-hook-verify.sh --help exits 0
+ok - ixia-hook-verify.sh without projects exits 2
+ok - ixia-hook-verify.sh rejects --home (exit 2)
+ok - ixia-hook-verify.sh rejects --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-test-baseline.AqxHBY/ixia-hook-test.aCyU0j (exit 2)
+ok - install two IQX clones exits 0
+ok - install reports installed
+ok - hook installed with approved bytes
+ok - hook installed mode 755
+ok - mixed-case org clone installed
+ok - reinstall is idempotent (exit 0, unchanged)
+ok - install refuses gh (exit 1, STOP)
+ok - install refuses other (exit 1, STOP)
+ok - install refuses plain (exit 1, STOP)
+ok - install refuses missing (exit 1, STOP)
+ok - refused clone got no hook
+ok - refused plain dir got no hooks
+ok - mixed run exits 1
+ok - mixed run still installs the good clone
+ok - unrelated commit-msg refused
+ok - unrelated commit-msg left unchanged
+ok - differing version-marked hook refused
+ok - version-marked hook left unchanged
+ok - install repairs a 644 copy
+ok - repository core.hooksPath refused
+ok - nothing written for hooksPath clone
+ok - install ignores the pane hooks override
+ok - pane hooks directory untouched
+ok - verify passes installed clones
+ok - verify counts worktrees sharing the hook
+ok - verify leaves real clone untouched
+ok - verify works from a pane-style override
+ok - verify fails gh
+ok - verify fails other
+ok - verify fails plain
+ok - verify fails a missing hook
+ok - verify fails a 644 hook
+ok - verify fails an altered hook
+ok - verify fails a hooksPath clone
+ok - plain commit ends with exactly one Ixia line
+ok - typed Ixia line is not duplicated
+ok - --no-verify skips the hook (documented gap)
+
+all checks passed

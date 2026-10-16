@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Install from each home, reinstall safely and restore hooks after re-clone",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Refuse non-IQX targets and every differing or non-regular existing hook",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Respect hook routing boundaries and reject a changed approved bundle",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Verify shared linked-worktree hooks without changing clone state; diagnose drift",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Commit through the real Firstmate strip-and-chain path, retaining human content",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Preserve empty-message abort and reproduce explicitly accepted bypass gaps",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Run the documented lab test with shasum and no GNU sha256sum",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Merge unrelated upstream changes and use the preserved fork-only hook tooling",
+    "result": "pass",
+    "live": true
+  }
+]

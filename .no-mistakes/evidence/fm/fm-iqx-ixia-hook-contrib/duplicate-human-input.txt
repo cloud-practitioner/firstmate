@@ -1,0 +1,13 @@
+IQX-102: retain human trailers
+
+Body with punctuation: = & < >.
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+Co-Authored-By: Jane Doe <jane@example.com>
+co-authored-by: ixia engineering (claude) <noreply@anthropic.com>  
+
+Middle line stays here.
+
+Reviewed-by: Reviewer <reviewer@example.com>
+Co-Authored-By: Codex <noreply@openai.com>
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>

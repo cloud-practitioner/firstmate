@@ -1,0 +1,914 @@
+
+========== Install from each home, reinstall safely and restore hooks after re-clone ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online remote add origin git@bitbucket.org:iqxbusiness/iqxo.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx.orchestration.online)
+installed iqx.orchestration.online -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg
+[exit 0]
+CONFIRMED: iqx.orchestration.online: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: iqx.orchestration.online: installed mode 755
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx.orchestration.online)
+unchanged iqx.orchestration.online -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg
+[exit 0]
+CONFIRMED: iqxo: identical copies reported unchanged
+CONFIRMED: reinstall preserved approved bytes
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/atc/projects/iqx_atc_remedy init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/atc/projects/iqx_atc_remedy remote add origin https://bitbucket.org/IQXBusiness/atc.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/atc/projects/iqx_atc_remedy -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/atc && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx_atc_remedy)
+installed iqx_atc_remedy -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/atc/projects/iqx_atc_remedy/.git/hooks/commit-msg
+[exit 0]
+CONFIRMED: iqx_atc_remedy: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: iqx_atc_remedy: installed mode 755
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/atc && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx_atc_remedy)
+unchanged iqx_atc_remedy -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/atc/projects/iqx_atc_remedy/.git/hooks/commit-msg
+[exit 0]
+CONFIRMED: atc: identical copies reported unchanged
+CONFIRMED: reinstall preserved approved bytes
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab remote add origin ssh://git@bitbucket.org:7999/iqxbusiness/fab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-common init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-common remote add origin git@bitbucket.org-work:iqxbusiness/common.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-common -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab_common init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab_common remote add origin https://lab@bitbucket.org/iqxbusiness/fab-common.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab_common -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fab iqx-common iqx-fab_common)
+installed iqx-fab -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab/.git/hooks/commit-msg
+installed iqx-common -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-common/.git/hooks/commit-msg
+installed iqx-fab_common -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab_common/.git/hooks/commit-msg
+[exit 0]
+CONFIRMED: iqx-fab: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: iqx-fab: installed mode 755
+CONFIRMED: iqx-common: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: iqx-common: installed mode 755
+CONFIRMED: iqx-fab_common: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: iqx-fab_common: installed mode 755
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fab iqx-common iqx-fab_common)
+unchanged iqx-fab -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab/.git/hooks/commit-msg
+unchanged iqx-common -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-common/.git/hooks/commit-msg
+unchanged iqx-fab_common -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab_common/.git/hooks/commit-msg
+[exit 0]
+CONFIRMED: fab: identical copies reported unchanged
+CONFIRMED: reinstall preserved approved bytes
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-fab)
+unchanged iqx-fab -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab/.git/hooks/commit-msg
+[exit 0]
+CONFIRMED: iqx-fab: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: iqx-fab: installed mode 755
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS clone -q --no-local /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/iqx-fab /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/recloned)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/recloned remote set-url origin git@bitbucket.org:iqxbusiness/recloned.git)
+
+[exit 0]
+CONFIRMED: new clone does not inherit commit-msg hook
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh recloned)
+FAIL recloned: hook missing: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/recloned/.git/hooks/commit-msg
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh recloned)
+installed recloned -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/recloned/.git/hooks/commit-msg
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh recloned)
+ok recloned (1 worktrees share /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab/projects/recloned/.git/hooks/commit-msg)
+[exit 0]
+CONFIRMED: recloned: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: recloned: installed mode 755
+
+========== Refuse non-IQX targets and every differing or non-regular existing hook ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/good init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/good remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/good -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/github init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/github remote add origin git@github.com:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/github -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh github)
+STOP github: origin is 'git@github.com:iqxbusiness/lab.git', not bitbucket.org/iqxbusiness
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh github)
+FAIL github: origin is 'git@github.com:iqxbusiness/lab.git', not bitbucket.org/iqxbusiness
+[exit 1]
+CONFIRMED: github: refused clone unchanged
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/other-org init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/other-org remote add origin git@bitbucket.org:someone/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/other-org -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh other-org)
+STOP other-org: origin is 'git@bitbucket.org:someone/lab.git', not bitbucket.org/iqxbusiness
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh other-org)
+FAIL other-org: origin is 'git@bitbucket.org:someone/lab.git', not bitbucket.org/iqxbusiness
+[exit 1]
+CONFIRMED: other-org: refused clone unchanged
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/lookalike-host init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/lookalike-host remote add origin https://bitbucket.org.evil.invalid/iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/lookalike-host -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh lookalike-host)
+STOP lookalike-host: origin is 'https://bitbucket.org.evil.invalid/iqxbusiness/lab.git', not bitbucket.org/iqxbusiness
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh lookalike-host)
+FAIL lookalike-host: origin is 'https://bitbucket.org.evil.invalid/iqxbusiness/lab.git', not bitbucket.org/iqxbusiness
+[exit 1]
+CONFIRMED: lookalike-host: refused clone unchanged
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/lookalike-org init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/lookalike-org remote add origin git@bitbucket.org:iqxbusiness-lookalike/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/lookalike-org -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh lookalike-org)
+STOP lookalike-org: origin is 'git@bitbucket.org:iqxbusiness-lookalike/lab.git', not bitbucket.org/iqxbusiness
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh lookalike-org)
+FAIL lookalike-org: origin is 'git@bitbucket.org:iqxbusiness-lookalike/lab.git', not bitbucket.org/iqxbusiness
+[exit 1]
+CONFIRMED: lookalike-org: refused clone unchanged
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh plain)
+STOP plain: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/plain is not the top level of a git clone
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh missing)
+STOP missing: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/missing is not a git clone
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh ../escape)
+STOP ../escape: not a plain project name
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh .)
+STOP .: not a plain project name
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh ..)
+STOP ..: not a plain project name
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh github good)
+STOP github: origin is 'git@github.com:iqxbusiness/lab.git', not bitbucket.org/iqxbusiness
+installed good -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/good/.git/hooks/commit-msg
+[exit 1]
+CONFIRMED: good: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: good: installed mode 755
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/custom init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/custom remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/custom -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh custom)
+STOP custom: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/custom/.git/hooks/commit-msg already exists and is not identical to this hook; not overwriting
+[exit 1]
+CONFIRMED: custom: existing different commit-msg bytes and metadata untouched
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/marked init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/marked remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/marked -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh marked)
+STOP marked: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/marked/.git/hooks/commit-msg already exists and is not identical to this hook; not overwriting
+[exit 1]
+CONFIRMED: marked: existing different commit-msg bytes and metadata untouched
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/symlink init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/symlink remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/symlink -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh symlink)
+STOP symlink: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/symlink/.git/hooks/commit-msg exists and is not a regular file; not overwriting
+[exit 1]
+CONFIRMED: symlink: existing non-regular destination untouched
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/broken-link init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/broken-link remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/broken-link -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh broken-link)
+STOP broken-link: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/broken-link/.git/hooks/commit-msg exists and is not a regular file; not overwriting
+[exit 1]
+CONFIRMED: broken-link: existing non-regular destination untouched
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/directory init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/directory remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/directory -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh directory)
+STOP directory: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals/projects/directory/.git/hooks/commit-msg exists and is not a regular file; not overwriting
+[exit 1]
+CONFIRMED: directory: existing non-regular destination untouched
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh --help)
+ixia-hook-install.sh - install the Ixia commit-msg hook into named IQX
+Bitbucket clones of one firstmate home.
+
+Fork-only material for IQX Bitbucket repositories; see README in this
+directory. Bash 3.2 compatible.
+
+Usage: ixia-hook-install.sh <project>...
+Run from the firstmate home root whose projects/ holds the clones.
+  -h, --help    print this help
+
+For each project the script requires projects/<project> to be a git clone
+whose origin is bitbucket.org/iqxbusiness, resolves the clone's real hooks
+directory (an inherited command-scope core.hooksPath override, such as a
+firstmate pane's own strip directory, is ignored), and installs the bundled
+hook there as commit-msg, mode 755. It refuses any existing commit-msg with
+different bytes and any clone whose configuration sets
+core.hooksPath, and is idempotent.
+
+Output: one line per project - "installed", "unchanged" or
+"STOP <project>: <reason>" when the project was left untouched.
+Exit: 0 every project is installed or unchanged; 1 any project refused or
+failed; 2 usage error or the bundled hook is unusable.
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh)
+ixia-hook-install: name at least one project (see --help)
+[exit 2]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh --home /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab good)
+ixia-hook-install: unknown option --home
+[exit 2]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab good)
+ixia-hook-install: unknown option --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab
+[exit 2]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh --help)
+ixia-hook-verify.sh - verify the Ixia commit-msg hook in named IQX
+Bitbucket clones of one firstmate home, without creating a commit in them.
+
+Fork-only material for IQX Bitbucket repositories; see README in this
+directory. Bash 3.2 compatible.
+
+Usage: ixia-hook-verify.sh <project>...
+Run from the firstmate home root whose projects/ holds the clones.
+  -h, --help    print this help
+
+For each project the script checks that projects/<project> is a clone whose
+origin is bitbucket.org/iqxbusiness, that no configuration redirects its
+hooks, that the real hooks directory holds commit-msg with mode 755 and the
+bundled hook's sha256, that every linked worktree of the clone resolves to
+the same hooks, and that the installed hook leaves exactly one Ixia line,
+last, in a probe message. The probe is a throwaway commit in a temporary
+repository (same origin URL, a copy of the installed hook); the real clone
+is only read.
+
+Output: "ok <project> (<n> worktrees share <hook>)" or "FAIL <project>:
+<reason>" per project. Exit: 0 every project ok; 1 any failure; 2 usage
+error or the bundled hook is unusable.
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh)
+ixia-hook-verify: name at least one project (see --help)
+[exit 2]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh --home /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab good)
+ixia-hook-verify: unknown option --home
+[exit 2]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/refusals && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab good)
+ixia-hook-verify: unknown option --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/fab
+[exit 2]
+
+========== Respect hook routing boundaries and reject a changed approved bundle ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/pane-safe init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/pane-safe remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/pane-safe -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh pane-safe)
+installed pane-safe -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/pane-safe/.git/hooks/commit-msg
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh pane-safe)
+ok pane-safe (1 worktrees share /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/pane-safe/.git/hooks/commit-msg)
+[exit 0]
+CONFIRMED: pane-safe: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: pane-safe: installed mode 755
+CONFIRMED: pane hooks override directory unchanged
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/local-config init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/local-config remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/local-config -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/local-config config core.hooksPath .alternate-hooks)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh local-config)
+STOP local-config: configuration sets core.hooksPath=.alternate-hooks; the hook belongs there instead
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh local-config)
+FAIL local-config: configuration sets core.hooksPath=.alternate-hooks; the hook belongs there instead
+[exit 1]
+CONFIRMED: local hooksPath: refused without writes
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/global-config init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/global-config remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/global-config -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh global-config)
+STOP global-config: configuration sets core.hooksPath=.alternate-hooks; the hook belongs there instead
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh global-config)
+FAIL global-config: configuration sets core.hooksPath=.alternate-hooks; the hook belongs there instead
+[exit 1]
+CONFIRMED: global hooksPath: refused without writes
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/worktree-config init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/worktree-config remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/worktree-config -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/worktree-config config extensions.worktreeConfig true)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/worktree-config config --worktree core.hooksPath .alternate-hooks)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh worktree-config)
+STOP worktree-config: configuration sets core.hooksPath=.alternate-hooks; the hook belongs there instead
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh worktree-config)
+FAIL worktree-config: configuration sets core.hooksPath=.alternate-hooks; the hook belongs there instead
+[exit 1]
+CONFIRMED: worktree hooksPath: refused without writes
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/tamper-destination init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/tamper-destination remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides/projects/tamper-destination -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/tampered-contrib/ixia-hook-install.sh tamper-destination)
+STOP: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/tampered-contrib/ixia-commit-msg-hook.sh does not match the approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+[exit 2]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/overrides && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/tampered-contrib/ixia-hook-verify.sh tamper-destination)
+STOP: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/tampered-contrib/ixia-commit-msg-hook.sh does not match the approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+[exit 2]
+CONFIRMED: changed bundle rejected before any target changes
+
+========== Verify shared linked-worktree hooks without changing clone state; diagnose drift ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online worktree add -q -b pool-0 /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online worktree add -q -b pool-1 '/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool slot 2')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx.orchestration.online)
+ok iqx.orchestration.online (3 worktrees share /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg)
+[exit 0]
+CONFIRMED: main clone and both pool worktrees share the installed hook
+CONFIRMED: verify left all clone/worktree files, modes, mtimes, refs, reflogs, objects and index unchanged
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online config extensions.worktreeConfig true)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C '/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool slot 2' config --worktree core.hooksPath .elsewhere)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx.orchestration.online)
+FAIL iqx.orchestration.online: worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool slot 2 resolves hooks ? (configuration sets core.hooksPath=.elsewhere; the hook belongs there instead)
+[exit 1]
+CONFIRMED: per-worktree redirect detected
+CONFIRMED: failed verify also leaves clone untouched
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C '/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool slot 2' config --worktree --unset core.hooksPath)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx.orchestration.online)
+FAIL iqx.orchestration.online: hook mode is 644, not 755 (a non-executable hook is skipped silently): /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx.orchestration.online)
+FAIL iqx.orchestration.online: hook mode is 775, not 755 (a non-executable hook is skipped silently): /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx.orchestration.online)
+FAIL iqx.orchestration.online: hook differs from the bundled hook: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx.orchestration.online)
+FAIL iqx.orchestration.online: hook missing: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx.orchestration.online)
+installed iqx.orchestration.online -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx.orchestration.online)
+ok iqx.orchestration.online (3 worktrees share /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg)
+[exit 0]
+
+========== Commit through the real Firstmate strip-and-chain path, retaining human content ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/bin/fm-git-strip-ai-trailers.sh install /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/launch-hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/bin/fm-git-strip-ai-trailers.sh env-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/launch-hooks /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pane-env.sh)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 -c commit.gpgsign=false commit --allow-empty -F /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/direct-duplicate.msg)
+[pool-0 f971515] IQX-100: direct hook duplicate removal
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 log -1 --format=%B)
+IQX-100: direct hook duplicate removal
+
+Body stays.
+
+Co-Authored-By: Jane Doe <jane@example.com>
+
+Middle line.
+
+Reviewed-by: Reviewer <reviewer@example.com>
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+CONFIRMED: repository hook alone removes canonical, lowercase and trailing-space duplicates
+CONFIRMED: repository hook alone retains human trailers and intervening body text
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/bin/fm-git-strip-ai-trailers.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/plain-strip-only.msg)
+
+[exit 0]
+Standalone Firstmate strip output:
+IQX-101: plain commit
+
+Body line stays intact.
+
+CONFIRMED: Firstmate strip removes AI lines before chaining
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash -c '. /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pane-env.sh; git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 -c commit.gpgsign=false commit --allow-empty -F /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/plain.msg')
+[pool-0 7745ff5] IQX-101: plain commit
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 log -1 --format=%B)
+IQX-101: plain commit
+
+Body line stays intact.
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+CONFIRMED: actual commit object ends with exactly one canonical Ixia line
+CONFIRMED: subject, body and human trailer lines are unchanged and ordered after strip + chain
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/bin/fm-git-strip-ai-trailers.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/duplicate-human-strip-only.msg)
+
+[exit 0]
+Standalone Firstmate strip output:
+IQX-102: retain human trailers
+
+Body with punctuation: = & < >.
+
+Co-Authored-By: Jane Doe <jane@example.com>
+
+Middle line stays here.
+
+Reviewed-by: Reviewer <reviewer@example.com>
+
+CONFIRMED: Firstmate strip removes AI lines before chaining
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash -c '. /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pane-env.sh; git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 -c commit.gpgsign=false commit --allow-empty -F /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/duplicate-human.msg')
+[pool-0 b4db699] IQX-102: retain human trailers
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 log -1 --format=%B)
+IQX-102: retain human trailers
+
+Body with punctuation: = & < >.
+
+Co-Authored-By: Jane Doe <jane@example.com>
+
+Middle line stays here.
+
+Reviewed-by: Reviewer <reviewer@example.com>
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+[exit 0]
+CONFIRMED: actual commit object ends with exactly one canonical Ixia line
+CONFIRMED: subject, body and human trailer lines are unchanged and ordered after strip + chain
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online remote set-url origin https://bitbucket.org/not-iqx/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 && sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/non-iqx.msg)
+
+[exit 0]
+CONFIRMED: non-IQX direct hook invocation leaves message bytes identical
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 -c commit.gpgsign=false commit --allow-empty -m 'OTHER-2: no attribution')
+[pool-0 5925801] OTHER-2: no attribution
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 log -1 --format=%B)
+OTHER-2: no attribution
+[exit 0]
+CONFIRMED: ordinary non-IQX commit is not attributed
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online remote set-url origin git@bitbucket.org:iqxbusiness/iqxo.git)
+
+[exit 0]
+
+========== Preserve empty-message abort and reproduce explicitly accepted bypass gaps ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 && sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/empty.msg)
+
+[exit 0]
+CONFIRMED: empty input stays byte-for-byte unchanged
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 rev-parse HEAD)
+5925801b1799843117ba1eacae0188f595fd1cc4
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 commit --allow-empty -F /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/empty.msg)
+Aborting commit due to empty commit message.
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 rev-parse HEAD)
+5925801b1799843117ba1eacae0188f595fd1cc4
+[exit 0]
+CONFIRMED: Git aborts empty message without adding a commit
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 && sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/iqxo/projects/iqx.orchestration.online/.git/hooks/commit-msg)
+ixia commit-msg: no commit message file given
+[exit 1]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash -c '. /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pane-env.sh; git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 -c commit.gpgsign=false commit --allow-empty -m '"'"'#123 fix'"'"'')
+[pool-0 514bfc0] #123 fix
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 log -1 --format=%B)
+#123 fix
+[exit 0]
+CONFIRMED: documented gap reproduced without changing approved hook
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash -c '. /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pane-env.sh; git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 -c commit.gpgsign=false commit --allow-empty --no-verify -m '"'"'IQX-103: bypass accepted gap'"'"'')
+[pool-0 49c9ecc] IQX-103: bypass accepted gap
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pool-slot-1 log -1 --format=%B)
+IQX-103: bypass accepted gap
+[exit 0]
+CONFIRMED: documented gap reproduced without changing approved hook
+CONFIRMED: approved source and installed hook bytes still match pinned digest
+
+========== Run the documented lab test with shasum and no GNU sha256sum ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash -c 'command -v shasum; if command -v sha256sum; then exit 1; fi')
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/tools-with-shasum-only/shasum
+[exit 0]
+
+Retrieve pre-fix test: git show 2c9335a:contrib/iqx-ixia-hook/ixia-hook.test.sh
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pre-portability-fix/ixia-hook.test.sh)
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pre-portability-fix/ixia-hook.test.sh: line 51: sha256sum: command not found
+not ok - bundled hook has the approved sha256
+ok - ixia-hook-install.sh --help exits 0
+ok - ixia-hook-install.sh without projects exits 2
+ok - ixia-hook-install.sh rejects --home (exit 2)
+ok - ixia-hook-install.sh rejects --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/tmp/ixia-hook-test.DJo64h (exit 2)
+ok - ixia-hook-verify.sh --help exits 0
+ok - ixia-hook-verify.sh without projects exits 2
+ok - ixia-hook-verify.sh rejects --home (exit 2)
+ok - ixia-hook-verify.sh rejects --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/tmp/ixia-hook-test.DJo64h (exit 2)
+ok - install two IQX clones exits 0
+ok - install reports installed
+ok - hook installed with approved bytes
+ok - hook installed mode 755
+ok - mixed-case org clone installed
+ok - reinstall is idempotent (exit 0, unchanged)
+ok - install refuses gh (exit 1, STOP)
+ok - install refuses other (exit 1, STOP)
+ok - install refuses plain (exit 1, STOP)
+ok - install refuses missing (exit 1, STOP)
+ok - refused clone got no hook
+ok - refused plain dir got no hooks
+ok - mixed run exits 1
+ok - mixed run still installs the good clone
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/pre-portability-fix/ixia-hook.test.sh: line 105: sha256sum: command not found
+[exit 127]
+CONFIRMED: pre-fix test really fails on PATH with shasum but no sha256sum
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/contrib/iqx-ixia-hook/ixia-hook.test.sh)
+ok - bundled hook has the approved sha256
+ok - ixia-hook-install.sh --help exits 0
+ok - ixia-hook-install.sh without projects exits 2
+ok - ixia-hook-install.sh rejects --home (exit 2)
+ok - ixia-hook-install.sh rejects --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/tmp/ixia-hook-test.xI8vAI (exit 2)
+ok - ixia-hook-verify.sh --help exits 0
+ok - ixia-hook-verify.sh without projects exits 2
+ok - ixia-hook-verify.sh rejects --home (exit 2)
+ok - ixia-hook-verify.sh rejects --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/tmp/ixia-hook-test.xI8vAI (exit 2)
+ok - install two IQX clones exits 0
+ok - install reports installed
+ok - hook installed with approved bytes
+ok - hook installed mode 755
+ok - mixed-case org clone installed
+ok - reinstall is idempotent (exit 0, unchanged)
+ok - install refuses gh (exit 1, STOP)
+ok - install refuses other (exit 1, STOP)
+ok - install refuses plain (exit 1, STOP)
+ok - install refuses missing (exit 1, STOP)
+ok - refused clone got no hook
+ok - refused plain dir got no hooks
+ok - mixed run exits 1
+ok - mixed run still installs the good clone
+ok - unrelated commit-msg refused
+ok - unrelated commit-msg left unchanged
+ok - differing version-marked hook refused
+ok - version-marked hook left unchanged
+ok - install repairs a 644 copy
+ok - repository core.hooksPath refused
+ok - nothing written for hooksPath clone
+ok - install ignores the pane hooks override
+ok - pane hooks directory untouched
+ok - verify passes installed clones
+ok - verify counts worktrees sharing the hook
+ok - verify leaves real clone untouched
+ok - verify works from a pane-style override
+ok - verify fails gh
+ok - verify fails other
+ok - verify fails plain
+ok - verify fails a missing hook
+ok - verify fails a 644 hook
+ok - verify fails an altered hook
+ok - verify fails a hooksPath clone
+ok - plain commit ends with exactly one Ixia line
+ok - typed Ixia line is not duplicated
+ok - --no-verify skips the hook (documented gap)
+
+all checks passed
+[exit 0]
+
+========== Merge unrelated upstream changes and use the preserved fork-only hook tooling ==========
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow init -q -b upstream-main)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow add README.md)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow commit -q -m 'Upstream base')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow checkout -q -b personal-fork)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow add contrib)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow commit -q -m 'Keep approved hook in personal fork only')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow checkout -q upstream-main)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow add README.md bin)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow commit -q -m 'Unrelated upstream changes')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow checkout -q personal-fork)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow merge --no-edit upstream-main)
+Merge made by the 'ort' strategy.
+ README.md             | 2 +-
+ bin/upstream-addition | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+ create mode 100644 bin/upstream-addition
+[exit 0]
+CONFIRMED: upstream merge retained every contrib file byte-for-byte
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/post-merge-home/projects/merged init -q)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/post-merge-home/projects/merged remote add origin git@bitbucket.org:iqxbusiness/lab.git)
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS && git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/post-merge-home/projects/merged -c commit.gpgsign=false commit -q --allow-empty -m 'Seed disposable clone')
+
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/post-merge-home && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow/contrib/iqx-ixia-hook/ixia-hook-install.sh merged)
+installed merged -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/post-merge-home/projects/merged/.git/hooks/commit-msg
+[exit 0]
+
+$ (cd /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/post-merge-home && bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/merge-workflow/contrib/iqx-ixia-hook/ixia-hook-verify.sh merged)
+ok merged (1 worktrees share /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i/post-merge-home/projects/merged/.git/hooks/commit-msg)
+[exit 0]
+CONFIRMED: merged: installed approved sha256 39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472
+CONFIRMED: merged: installed mode 755
+
+Removed disposable lab: /home/node/.no-mistakes/worktrees/450411b3e67c/01M523AZA1Z7G4KMXJS24DB4VS/.ixia-live.5hqj6m6i
