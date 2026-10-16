@@ -17,8 +17,9 @@
 # different bytes and any clone whose configuration sets
 # core.hooksPath, and is idempotent.
 #
-# Output: one line per project - "installed", "unchanged" or
-# "STOP <project>: <reason>" when the project was left untouched.
+# Output: one line per project - "installed", "unchanged",
+# "STOP <project>: <reason>" when refused without changes, or
+# "FAIL <project>: <reason>" when a write failed.
 # Exit: 0 every project is installed or unchanged; 1 any project refused or
 # failed; 2 usage error or the bundled hook is unusable.
 set -euo pipefail

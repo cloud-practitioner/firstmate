@@ -4,7 +4,7 @@ This folder exists only in the personal fork cloud-practitioner/firstmate.
 It is for IQX Bitbucket repositories (`bitbucket.org/iqxbusiness`) only.
 It is never offered upstream and must not be part of any pull request to kunchenguid/firstmate.
 Nothing in `bin/`, the skills or `AGENTS.md` calls it; the operator runs it by hand.
-Because it is a separate folder, a merge from upstream never touches it, so it survives every upstream merge.
+Upstream merges normally retain this fork-only folder; if upstream ever introduces the same path, preserve this contribution when resolving the merge.
 
 ## Why it exists
 
@@ -12,10 +12,11 @@ Every commit message on an IQX Bitbucket repository must end with exactly one li
 
 `Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>`
 
-Firstmate's commit-msg hook (`bin/fm-git-strip-ai-trailers.sh`) strips every AI attribution trailer, and that line names `noreply@anthropic.com`, so it is stripped too.
+Firstmate's commit-msg hook (`bin/fm-git-strip-ai-trailers.sh`) strips known AI attribution trailers, and that line names `noreply@anthropic.com`, so it is stripped too.
 The generated hook then runs the repository's own `.git/hooks/commit-msg` on the same message file.
-`ixia-commit-msg-hook.sh` is that repository hook: after the strip it removes any Ixia line already present and appends exactly one as the last trailer.
-It acts only when `remote.origin.url` names `bitbucket.org/iqxbusiness`, leaves an empty message alone so git still aborts, and never changes any other line.
+`ixia-commit-msg-hook.sh` is that repository hook: after the strip it re-adds the Ixia trailer, subject to the limits below.
+It acts only when `remote.origin.url` names `bitbucket.org/iqxbusiness` and leaves an empty message alone so git still aborts.
+Human trailers are retained, but trailing blank lines and trailer formatting are not byte-preserved.
 Its sha256 is `39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472`; both scripts refuse to run if the bundled copy differs.
 
 ## Files
@@ -30,10 +31,10 @@ Its sha256 is `39c0d3c156f1b8ba404dcd5797874947b22c07e82ed06ff15f5f6837a19e8472`
 ## Install and verify
 
 Both scripts take project names that exist as `projects/<name>` in a firstmate home.
-Run them from that home's root; call the copy of this folder in any checkout of the fork.
+Run them from that home's root; set `FORK` to the absolute path of a checkout of the fork so it still resolves after changing directories.
 
 ```bash
-FORK=<checkout of cloud-practitioner/firstmate>
+FORK="/absolute/path/to/cloud-practitioner/firstmate"
 cd <firstmate home>
 bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-install.sh" <project>...
 bash "$FORK/contrib/iqx-ixia-hook/ixia-hook-verify.sh" <project>...
@@ -60,7 +61,8 @@ What the install does:
   Linked worktrees, including every pool slot, share that one copy.
 - It refuses a clone whose configuration sets `core.hooksPath`.
 - It installs only when `commit-msg` is absent, treats an identical copy as already installed (repairing its mode to 755 if needed), and refuses any other existing `commit-msg`.
-- A `STOP` line means the project was left untouched; the exit code is 1 if any project stopped.
+
+For output and exit codes, see `ixia-hook-install.sh --help`.
 
 What the verify does:
 
@@ -75,7 +77,7 @@ What the verify does:
 
 ## What it does not cover
 
-The hook only runs where git runs `commit-msg`, so these commits still lack the line:
+The hook cannot guarantee the required line in these cases, either because git skips `commit-msg` or because of the approved hook's message handling:
 
 - The no-mistakes pipeline's own fix commits, which it makes with `--no-verify`.
 - `git commit --no-verify`, which also skips firstmate's strip.
