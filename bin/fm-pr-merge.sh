@@ -203,6 +203,7 @@
 # Bitbucket destination default strategy that cannot carry it is reported with
 # the other live pre-merge refusals and exits 1. The option may be given once
 # and is refused when the extra args after -- already set the same field.
+# UTF-8 validation requires iconv on PATH whenever --message-file is used.
 # Where each forge takes it (the field names are from each forge's own API
 # docs: GitHub REST "Merge a pull request" and "gh pr merge", GitLab REST
 # "Merge a merge request" and "glab mr merge", Forgejo's MergePullRequestOption
@@ -585,8 +586,11 @@ merge_message_load() {  # <path>
     echo "error: --message-file $path is larger than $MERGE_MESSAGE_MAX_BYTES bytes" >&2
     return 1
   fi
-  if command -v iconv >/dev/null 2>&1 \
-    && ! printf '%s' "$raw" | iconv -f UTF-8 -t UTF-8 >/dev/null 2>&1; then
+  if ! command -v iconv >/dev/null 2>&1; then
+    echo "error: --message-file requires iconv on PATH to validate UTF-8 text" >&2
+    return 1
+  fi
+  if ! printf '%s' "$raw" | iconv -f UTF-8 -t UTF-8 >/dev/null 2>&1; then
     echo "error: --message-file $path is not valid UTF-8 text" >&2
     return 1
   fi

@@ -4595,7 +4595,7 @@ test_message_file_is_read_once_before_the_merge() {
 
 test_message_file_refusals_happen_before_anything_is_recorded() {
   local case_dir path rc name content
-  for name in empty whitespace missing directory oversize nul utf8 novalue twice equals; do
+  for name in empty whitespace missing directory oversize nul utf8 utf8-body novalue twice equals; do
     case_dir=$(new_github_message_case "message-refuse-$name")
     path="$case_dir/message.txt"
     rc=0
@@ -4610,8 +4610,11 @@ test_message_file_refusals_happen_before_anything_is_recorded() {
         ;;
       nul) printf 'subject\0hidden' > "$path"; run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" || rc=$? ;;
       utf8)
-        command -v iconv >/dev/null 2>&1 || continue
         printf 'caf\xe9\n' > "$path"
+        run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" || rc=$?
+        ;;
+      utf8-body)
+        printf 'Subject\n\ncaf\xe9\n' > "$path"
         run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" || rc=$?
         ;;
       novalue) run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file || rc=$? ;;
@@ -4636,6 +4639,45 @@ test_message_file_refusals_happen_before_anything_is_recorded() {
   content=$(cat "$path")
   assert_grep "--subject=$content" "$case_dir/gh-merge-args" "message-limit: the full-size message was not sent"
   pass "fm-pr-merge refuses a missing, unreadable, empty, binary, non-UTF-8, oversize, repeated or malformed --message-file before recording anything"
+}
+
+test_message_file_requires_utf8_validator() {
+  local case_dir path rc kind
+  local subject=$'Caf\xc3\xa9' body=$'Body \xe2\x9c\x93'
+  for kind in invalid-subject invalid-body ascii unicode; do
+    case_dir=$(new_github_message_case "message-no-iconv-$kind")
+    case "$kind" in
+      ascii) path=$(write_message_file "$case_dir" "$MSG_SUBJECT") ;;
+      unicode) path=$(write_message_file "$case_dir" "$subject"$'\n\n'"$body") ;;
+      invalid-subject) path=$(write_message_file "$case_dir" $'caf\xe9') ;;
+      invalid-body) path=$(write_message_file "$case_dir" $'Subject\n\ncaf\xe9') ;;
+    esac
+    mirror_path_without "$case_dir/noiconv" iconv "$case_dir/fakebin"
+    rc=0
+    PATH="$case_dir/noiconv" run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
+      > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
+    expect_code 2 "$rc" "message-no-iconv-$kind: a message without an encoding validator must refuse"$'\n'"$(cat "$case_dir/stderr")"
+    assert_grep 'error: --message-file requires iconv on PATH to validate UTF-8 text' "$case_dir/stderr" \
+      "message-no-iconv-$kind: refusal did not explain the missing validator"
+    [ ! -s "$case_dir/gh.log" ] || fail "message-no-iconv-$kind: a forge command ran without encoding validation"
+    assert_no_grep 'pr=' "$case_dir/state/task-x1.meta" "message-no-iconv-$kind: PR metadata was recorded"
+    assert_absent "$case_dir/state/task-x1.check.sh" "message-no-iconv-$kind: a merge poll was armed"
+  done
+
+  case_dir=$(new_github_message_case message-utf8-roundtrip)
+  path=$(write_message_file "$case_dir" "$subject"$'\n\n'"$body")
+  run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 --message-file "$path" \
+    > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-utf8-roundtrip: valid UTF-8 should merge: $(cat "$case_dir/stderr")"
+  assert_equals "$(expected_gh_args 2222222222222222222222222222222222222222 "--subject=$subject" "--body=$body")" \
+    "$(cat "$case_dir/gh-merge-args")" "message-utf8-roundtrip: the Unicode subject or body changed"
+
+  case_dir=$(new_github_message_case message-no-iconv-no-message)
+  mirror_path_without "$case_dir/noiconv" iconv "$case_dir/fakebin"
+  PATH="$case_dir/noiconv" run_pr_merge "$case_dir" task-x1 https://github.com/example/repo/pull/15 \
+    > "$case_dir/stdout" 2> "$case_dir/stderr" || fail "message-no-iconv-no-message: a merge without a message should not require iconv: $(cat "$case_dir/stderr")"
+  assert_equals "$(expected_gh_args 2222222222222222222222222222222222222222)" \
+    "$(cat "$case_dir/gh-merge-args")" "message-no-iconv-no-message: merge arguments changed without a message"
+  pass "fm-pr-merge requires encoding validation for messages, preserves valid UTF-8, and needs no validator without a message"
 }
 
 test_message_file_refuses_conflicting_or_unsendable_github_args() {
@@ -4933,6 +4975,7 @@ test_message_file_gitlab_effective_policy
 test_message_file_gitlab_policy_refusals
 test_message_file_is_read_once_before_the_merge
 test_message_file_refusals_happen_before_anything_is_recorded
+test_message_file_requires_utf8_validator
 test_message_file_refuses_conflicting_or_unsendable_github_args
 test_message_file_keeps_every_github_guard
 test_message_file_gitlab
