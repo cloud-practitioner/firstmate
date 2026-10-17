@@ -2264,13 +2264,8 @@ EOF
 #                 and its tab from `pane get`/`tab list`).
 #   no-agent    - `pane get` succeeds (the pane structurally exists) but `agent
 #                 get` responds with error code agent_not_found: nothing is
-#                 registered in it - exactly what a herdr session-layout restore
-#                 produces (verified empirically: `session stop` + fresh `herdr
-#                 server` restart leaves the pane alive, agent_status "unknown",
-#                 agent get -> agent_not_found - docs/herdr-backend.md "ID
-#                 stability across a server restart"), and what a future
-#                 `resume_agents_on_restore = false` restore would produce too
-#                 (a plain shell, never an agent).
+#                 registered in it. For restored-layout behavior, see
+#                 docs/herdr-backend.md "Husks after a server restart".
 #   stale-agent - `agent get` reports a registered agent_status (working, idle,
 #                 done, or blocked) but fm_backend_herdr_pane_process_state
 #                 proves the pane is shell-only: the registered agent's process
@@ -2631,13 +2626,10 @@ fm_backend_herdr_agent_state() {  # <target> [expected-label]
 # verdict. For a recovery that is about to RE-CREATE an endpoint, this is the
 # read that decides whether there is anything to re-create at all.
 #
-# fm_backend_herdr_agent_state maps a positively STOPPED session server to
-# `missing` (issue #4091), which is correct for "no agent is running" but is
-# NOT evidence the endpoint was destroyed: stopping and restarting a named
-# Herdr server preserves workspace, tab, pane, and label ids (docs/herdr-backend.md
-# "Restart and liveness behavior") - only the harness processes and their
-# registrations die. So `missing` there means unreachable right now, and a
-# caller that rebound on it would abandon a pane that was about to come back.
+# `missing` from a positively STOPPED server proves no agent is running,
+# not that the recorded endpoint will stay absent. Recheck after startup
+# before rebinding; docs/herdr-backend.md "Husks after a server restart" owns
+# the saved-layout versus empty-session behavior.
 #
 # Only the RECORDED session's server is ensured, never a workspace or tab.
 # The restored address must still pass the recorded-endpoint ownership check
