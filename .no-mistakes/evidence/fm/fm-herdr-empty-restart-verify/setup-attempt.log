@@ -1,0 +1,7 @@
+=== Initial Herdr session ===
+{"client":{"version":"0.9.5","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-empty"},"server":{"status":"running","running":true,"version":"0.9.5","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/fm-config/herdr/sessions/fm-lab-empty/herdr.sock","session":"fm-lab-empty","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+old_container=fm-lab-empty:w1 old_tab=w1:t2 old_pane=w1:p2 identity=proc:2462152:98dc3aa2-1c2a-4d4f-acab-2be9a15a9c5b:32822885
+{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[{"active_tab_id":"w1:t2","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}]}}
+unknown option: w1:p2
+=== Guarded lab teardown ===
+teardown_exit=2

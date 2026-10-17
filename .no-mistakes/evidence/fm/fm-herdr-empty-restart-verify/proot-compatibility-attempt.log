@@ -1,0 +1,6 @@
+/fm-main
+/fm-alpha
+scaffolded: /fm-main/data/alpha/brief.md (secondmate charter)
+mv: cannot move '/fm-alpha/data/projects.md.tmp.2565758' to '/fm-alpha/data/projects.md': No such file or directory
+=== Guarded secondmate lab teardown ===
+teardown_exit=1

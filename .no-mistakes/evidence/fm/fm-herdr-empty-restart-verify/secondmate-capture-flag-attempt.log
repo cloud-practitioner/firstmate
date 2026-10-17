@@ -1,0 +1,20 @@
+/fm-main
+/fm-alpha
+scaffolded: /fm-main/data/alpha/brief.md (secondmate charter)
+home=/fm-alpha
+/fm-beta
+scaffolded: /fm-main/data/beta/brief.md (secondmate charter)
+home=/fm-beta
+=== Initial real Claude secondmates ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /fm-main
+warning: secondmate alpha sync skipped before launch: primary default-branch commit cannot be resolved
+spawned alpha harness=claude kind=secondmate mode=secondmate yolo=off window=fm-lab-empty:w1:p2 worktree=/fm-alpha
+alpha: alive at fm-lab-empty:w1:p2
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /fm-main
+warning: secondmate beta sync skipped before launch: primary default-branch commit cannot be resolved
+spawned beta harness=claude kind=secondmate mode=secondmate yolo=off window=fm-lab-empty:w2:p2 worktree=/fm-beta
+beta: alive at fm-lab-empty:w2:p2
+{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[{"active_tab_id":"w1:t2","agent_status":"blocked","focused":true,"label":"2ndmate-alpha","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"},{"active_tab_id":"w2:t2","agent_status":"working","focused":false,"label":"2ndmate-beta","number":2,"pane_count":1,"tab_count":1,"workspace_id":"w2"}]}}
+unknown option: --pane
+=== Guarded secondmate lab teardown ===
+teardown_exit=2

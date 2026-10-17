@@ -1,0 +1,11 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M55ZEBSTEQDE51HBJ3XNZ6TR/.test-herdr-runtime/primary
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M55ZEBSTEQDE51HBJ3XNZ6TR/.test-herdr-runtime/mate-alpha
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M55ZEBSTEQDE51HBJ3XNZ6TR/.test-herdr-runtime/primary/data/alpha/brief.md (secondmate charter)
+home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M55ZEBSTEQDE51HBJ3XNZ6TR/.test-herdr-runtime/mate-alpha
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M55ZEBSTEQDE51HBJ3XNZ6TR/.test-herdr-runtime/mate-beta
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M55ZEBSTEQDE51HBJ3XNZ6TR/.test-herdr-runtime/primary/data/beta/brief.md (secondmate charter)
+home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M55ZEBSTEQDE51HBJ3XNZ6TR/.test-herdr-runtime/mate-beta
+=== Initial real Claude secondmates ===
+error: refusing fleet lifecycle from inside a no-mistakes gate worktree (/home/node/.no-mistakes/repos/450411b3e67c.git)
+=== Guarded secondmate lab teardown ===
+teardown_exit=3
