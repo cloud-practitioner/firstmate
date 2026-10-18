@@ -459,7 +459,7 @@ Any of these preserves the candidate and lets session startup continue with at m
 
 ### Operational compromises
 
-- Grouping is best-effort; only an exact same-identity version 2 binding survives a Herdr restart in place.
+- Grouping is best-effort; only an exact same-identity version 2 binding can survive a Herdr restart in place, and only when Herdr restores its saved layout.
 - A failed journal publication or projected workspace create stops that spawn instead of falling back flat.
   So a Herdr create failure surfaces as a spawn failure in every Herdr home, rather than only in homes that opted in.
   Every earlier degradation on the fresh projected-create path (no session server, contended presentation lock, absent or ambiguous parent) still warns and continues flat.
@@ -672,9 +672,12 @@ No Herdr-specific copy of that protocol exists.
 
 ### Husks after a server restart
 
-Stopping and restarting a named Herdr server preserves workspace, tab, pane, and label ids.
+Stopping and restarting a named Herdr server restores the layout saved in that session's directory, which preserves workspace, tab, pane, and label ids.
 The underlying harness processes and live agent registrations do not survive.
 A restored same-labeled tab with a missing pane or no registered agent is a husk.
+
+When that saved layout (`session.json` and `session-snapshots/`) is moved aside before the server starts, the session instead comes back with no workspaces and no husks, and new ids restart from `w1`.
+Every recorded endpoint is then either absent or held by an unrelated pane, as [Endpoints from a previous session](#endpoints-from-a-previous-session) describes.
 
 Create first applies the [recorded-endpoint ownership policy](#endpoints-from-a-previous-session).
 For eligible husks, it replaces only a confidently dead or no-agent pane, creates the replacement before closing the old tab, and refuses live or unknown states.
