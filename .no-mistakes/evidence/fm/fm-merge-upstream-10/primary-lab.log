@@ -1,0 +1,391 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06
+[exit 0]
+$ tmux -L fm-lab new-session -d -s primary -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06 claude
+[exit 0]
+$ tmux -L fm-lab capture-pane -p -t primary
+
+ ▐▛███▛█   Claude Code v2.1.304
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ Try "how do I log an error?"
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+[exit 0]
+$ tmux -L fm-lab send-keys -t primary -l Isolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use Bash exactly once to run `printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME"`. Then reply only LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.
+[exit 0]
+$ tmux -L fm-lab send-keys -t primary Enter
+[exit 0]
+$ tmux -L fm-lab capture-pane -p -t primary
+
+ ▐▛███▛█   Claude Code v2.1.304
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+❯ Isolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use
+  Bash exactly once to run printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME". Then reply
+  only LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+✢ Finagling…
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+[exit 0]
+$ tmux -L fm-lab capture-pane -p -t primary
+
+ ▐▛███▛█   Claude Code v2.1.304
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+❯ Isolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use
+  Bash exactly once to run printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME". Then reply
+  only LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.
+
+  Running 1 shell command…
+  ⎿  $ printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+✢ Slithering… (3s · ↓ 29 tokens)
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 6% used
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+[exit 0]
+$ tmux -L fm-lab capture-pane -p -t primary
+
+ ▐▛███▛█   Claude Code v2.1.304
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+❯ Isolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use
+  Bash exactly once to run printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME". Then reply
+  only LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.
+
+● Printing resolved harness and lab home
+  ⎿  $ printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+✢ Slithering… (5s · ↓ 39 tokens)
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 6% used
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+[exit 0]
+$ tmux -L fm-lab capture-pane -p -t primary
+
+ ▐▛███▛█   Claude Code v2.1.304
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+❯ Isolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use
+  Bash exactly once to run printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME". Then reply
+  only LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.
+
+● Printing resolved harness and lab home · 3s
+  ⎿  $ printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+✢ Slithering… (7s · ↓ 39 tokens)
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 6% used
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+[exit 0]
+$ tmux -L fm-lab capture-pane -p -t primary
+
+ ▐▛███▛█   Claude Code v2.1.304
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+❯ Isolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use
+  Bash exactly once to run printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME". Then reply
+  only LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.
+
+● Bash(printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME")
+  ⎿  LAB_HARNESS=claude
+     LAB_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh-axi.log (+0 -0)
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh.log (+0 -0)
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/github-rules (+0 -0)
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stderr (+0 -0)
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stdout (+0 -0)
+  ⎿  … 18 more files changed
+  ⎿  Allowed by auto mode classifier
+
+● LAB_CHECK_COMPLETE
+
+✻ Cogitated for 9s · done 2:44 PM
+
+
+
+
+
+
+
+
+
+
+                     tmux detected · scroll with PgUp/PgDn · or add 'set -g mouse on' to ~/.tmux.conf for wheel scroll
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 7% used
+  ⏵⏵ auto mode on (shift+tab to cycle)
+[exit 0]
+$ tmux -L fm-lab capture-pane -p -e -t primary
+
+[38;5;174m ▐[48;5;16m▛███▛█[39m[49m   [1mClaude Code[0m[39m[49m [38;5;246mv2.1.304
+[38;5;174m▝▜[48;5;16m█████[49m█▀[39m  [38;5;246mOpus 5.5 with high effort · Claude Team
+[38;5;174m ▝▝   ▝▝ [39m  [38;5;246m~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+[48;5;237m❯ [38;5;231mIsolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use [39m
+  [38;5;231mBash exactly once to run [38;5;153mprintf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME"[38;5;231m. Then reply[39m
+  [38;5;231monly LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.[39m
+
+[38;5;114m[49m●[39m [1mBash[0m[39m[49m(printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME")
+[38;5;246m  ⎿  [39mLAB_HARNESS=claude
+     LAB_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06
+[38;5;246m  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh-axi.log[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh.log[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/github-rules[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stderr[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stdout[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  … 18 more files changed
+  ⎿  Allowed by auto mode classifier[39m
+
+[38;5;231m●[39m LAB_CHECK_COMPLETE
+
+[38;5;246m✻[39m [38;5;246mCogitated for 9s · done 2:44 PM
+
+
+
+
+
+
+
+
+[39m
+
+                     [38;5;246mtmux detected · scroll with PgUp/PgDn · or add 'set -g mouse on' to ~/.tmux.conf for wheel scroll
+[38;5;244m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[39m❯ 
+[38;5;244m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[39m  [38;5;246mOpus 5.5 | ctx: 7% used
+[39m  [38;5;220m⏵⏵ auto mode on[38;5;246m (shift+tab to cycle)[39m
+[exit 0]
+$ tmux -L fm-lab capture-pane -p -e -t primary
+
+[38;5;174m ▐[48;5;16m▛███▛█[39m[49m   [1mClaude Code[0m[39m[49m [38;5;246mv2.1.304
+[38;5;174m▝▜[48;5;16m█████[49m█▀[39m  [38;5;246mOpus 5.5 with high effort · Claude Team
+[38;5;174m ▝▝   ▝▝ [39m  [38;5;246m~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+[48;5;237m❯ [38;5;231mIsolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use [39m
+  [38;5;231mBash exactly once to run [38;5;153mprintf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME"[38;5;231m. Then reply[39m
+  [38;5;231monly LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.[39m
+
+[38;5;114m[49m●[39m [1mBash[0m[39m[49m(printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME")
+[38;5;246m  ⎿  [39mLAB_HARNESS=claude
+     LAB_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06
+[38;5;246m  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh-axi.log[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh.log[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/github-rules[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stderr[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stdout[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  … 18 more files changed
+  ⎿  Allowed by auto mode classifier[39m
+
+[38;5;231m●[39m LAB_CHECK_COMPLETE
+
+[38;5;246m✻[39m [38;5;246mCogitated for 9s · done 2:44 PM
+
+
+
+
+
+
+
+
+[39m
+
+                     [38;5;246mtmux detected · scroll with PgUp/PgDn · or add 'set -g mouse on' to ~/.tmux.conf for wheel scroll
+[38;5;244m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[39m❯ 
+[38;5;244m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[39m  [38;5;246mOpus 5.5 | ctx: 7% used
+[39m  [38;5;220m⏵⏵ auto mode on[38;5;246m (shift+tab to cycle)[39m
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/remote.git init -q --bare -b main
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/project init -q -b main
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/project commit -q --allow-empty -m base
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/project remote add origin /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/remote.git
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/project push -q origin main
+[exit 0]
+$ git clone -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/project /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/worker
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/worker remote set-url origin /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/remote.git
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/worker checkout -qb fm/live-ready
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/worker commit -q --allow-empty -m only in disposable worker
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/worker rev-parse HEAD
+852f4e0596991937c3daf28f61a446c5299a1b83
+[exit 0]
+$ tmux -L fm-lab display-message -p -t primary #{socket_path}
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/tmux/tmux-1000/fm-lab
+[exit 0]
+$ tmux -L fm-lab display-message -p -t primary #{window_id}
+@0
+[exit 0]
+$ bin/fm-busy-event.sh arm /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/state live-ready --state idle --source fm-recovery --event confirmed-idle-lab
+g1792507448.3117820.12234
+[exit 0]
+$ bin/fm-crew-state.sh live-ready
+state: paused · source: status-log · PROD deploy watch, checks green on TEST
+[exit 0]
+$ bin/fm-crew-state.sh live-ready
+state: blocked · source: status-log · named head 852f4e0596991937c3daf28f61a446c5299a1b83 is unreachable outside the worker copy
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/worker push -q origin HEAD:refs/heads/fm/live-ready
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06/worker fetch -q origin
+[exit 0]
+$ bin/fm-crew-state.sh live-ready
+state: done · source: status-log · PR https://bitbucket.org/team/repo/pull-requests/7 checks green
+[exit 0]
+$ tmux -L fm-lab kill-server
+[exit 0]
+{"result": "pass", "reason": "Real Claude primary executed the real harness detector in the marked lab.", "crew_state_result": "pass", "crew_state_reason": "Real idle Claude pane: incidental PROD text stays paused; Bitbucket checks-green note is blocked until named HEAD is preserved on a real local remote."}

@@ -1,0 +1,203 @@
+ok - bundled hook has the approved v2 sha256
+ok - kept v1 hook has the superseded v1 sha256
+ok - ixia-hook-install.sh --help exits 0
+ok - ixia-hook-install.sh without projects exits 2
+ok - ixia-hook-install.sh rejects --home (exit 2)
+ok - ixia-hook-install.sh rejects --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/tmp/ixia-hook-test.GszRYt (exit 2)
+ok - ixia-hook-verify.sh --help exits 0
+ok - ixia-hook-verify.sh without projects exits 2
+ok - ixia-hook-verify.sh rejects --home (exit 2)
+ok - ixia-hook-verify.sh rejects --home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/tmp/ixia-hook-test.GszRYt (exit 2)
+ok - install two IQX clones exits 0
+ok - install reports installed
+ok - hook installed with approved bytes
+ok - hook installed mode 755
+ok - mixed-case org clone installed
+ok - reinstall is idempotent (exit 0, unchanged)
+ok - install refuses gh (exit 1, STOP)
+ok - install refuses other (exit 1, STOP)
+ok - install refuses plain (exit 1, STOP)
+ok - install refuses missing (exit 1, STOP)
+ok - refused clone got no hook
+ok - refused plain dir got no hooks
+ok - mixed run exits 1
+ok - mixed run still installs the good clone
+ok - unrelated commit-msg refused
+ok - unrelated commit-msg left unchanged
+ok - differing version-marked hook refused
+ok - version-marked hook left unchanged
+ok - verify flags the v1 hook for upgrade
+ok - exact v1 copy is updated
+ok - updated copy has the v2 bytes
+ok - reinstall after upgrade is unchanged
+ok - edited v1 copy refused
+ok - install repairs a 644 copy
+ok - repository core.hooksPath refused
+ok - nothing written for hooksPath clone
+ok - install ignores the pane hooks override
+ok - pane hooks directory untouched
+ok - verify passes installed clones
+ok - verify counts worktrees sharing the hook
+ok - verify leaves real clone untouched
+ok - verify works from a pane-style override
+ok - verify pins cleanup despite global configuration
+ok - verify pins cleanup despite retained command-scope configuration
+ok - verify fails gh
+ok - verify fails other
+ok - verify fails plain
+ok - verify fails a missing hook
+ok - verify fails a 644 hook
+ok - verify fails an altered hook
+ok - verify fails a hooksPath clone
+ok - plain commit ends with exactly one Ixia line
+ok - typed Ixia line is not duplicated
+ok - --no-verify skips the hook (documented gap)
+ok - verbatim commit preserves trailer bytes: Signed-off-by:Alice <alice@example.com>
+ok - verbatim commit preserves trailer bytes: Signed-off-by:  Alice <alice@example.com> 	
+Reviewed-by:	 Bob <bob@example.com>  
+ok - verbatim commit preserves trailer bytes: X-Review:  odd	spacing  
+	folded continuation  
+ok - verbatim commit preserves CRLF trailer lines
+ok - verbatim commit preserves body whitespace and trims only trailing blank lines
+ok - unterminated human trailer is preserved before the new line
+ok - unterminated body gets one blank separator without altering its bytes
+ok - Ixia precedes a byte-preserved trailing comment section
+ok - interior comments and body lines remain in place
+ok - strip parsing preserves the trailer block and raw bytes with core.commentChar=#
+ok - strip parsing preserves the trailer block and raw bytes with core.commentChar=;
+ok - strip parsing preserves the trailer block and raw bytes with core.commentString=//
+ok - strip parsing needs no alternate comment character
+ok - Ixia precedes a byte-preserved scissors section
+ok - deduplication preserves every non-Ixia line
+ok - -m with # subject gets the line
+ok - fully spelled --message with # subject gets the line
+ok - -m with # body line keeps it and gets the line
+ok - -m standalone comment character is text, not editor evidence
+ok - last cleanup option wins over strip
+ok - last cleanup option wins over whitespace
+ok - last separate cleanup option wins
+ok - explicit default cleanup resets an earlier strip
+ok - negated cleanup resets an earlier strip
+ok - message operand is not a cleanup option
+ok - multiline message operand is not a cleanup option
+ok - attached message operand is not a cleanup option
+ok - file operand is not a cleanup option
+ok - negated message source restores the editor default
+ok - explicit edit wins over no-editor message source
+ok - last no-edit wins over edit
+ok - last edit wins over no-edit with no status template
+ok - short option cluster consumes its message operand
+ok - -m # subject with human trailer
+ok - --cleanup=verbatim keeps # subject
+ok - --cleanup=whitespace keeps # subject
+ok - --cleanup=scissors keeps # subject
+ok - --cleanup=strip on only # lines aborts (empty)
+ok - --cleanup strip (separate word) aborts
+ok - --cleanup=strip drops # body, keeps subject, gets the line
+ok - strip leaves an automatic sign-off-only message empty
+ok - strip leaves a typed sign-off-only message empty
+ok - strip leaves an edited sign-off-only message empty
+ok - strip leaves a sign-off-only file empty
+ok - strip keeps ordinary text with its sign-off
+ok - whitespace leaves an automatic sign-off-only message empty
+ok - whitespace leaves a typed sign-off-only message empty
+ok - whitespace leaves an edited sign-off-only message empty
+ok - whitespace leaves a sign-off-only file empty
+ok - whitespace keeps ordinary text with its sign-off
+ok - scissors leaves an automatic sign-off-only message empty
+ok - scissors leaves a typed sign-off-only message empty
+ok - scissors leaves an edited sign-off-only message empty
+ok - scissors leaves a sign-off-only file empty
+ok - scissors keeps ordinary text with its sign-off
+ok - verbatim keeps a nonempty automatic sign-off
+ok - a differently cased sign-off is message text
+ok - a no-space sign-off is message text
+ok - a folded continuation makes a sign-off message nonempty
+ok - CLI whitespace overrides configured strip
+ok - commit.cleanup=strip on only # lines aborts
+ok - commit.cleanup=strip drops # body
+ok - commit.cleanup=verbatim keeps # subject
+ok - default without editor keeps scissors and deduplicates below it
+ok - whitespace without editor keeps scissors and deduplicates below it
+ok - verbatim without editor keeps scissors and deduplicates below it
+ok - scissors without editor keeps scissors and deduplicates below it
+ok - strip without scissors cleanup keeps the body below the comment
+ok - scissors with editor cuts at the delimiter
+ok - scissors with editor ignores a delimiter with a different prefix
+ok - scissors with editor ignores a delimiter with an extra suffix
+ok - verbose cuts even with verbatim cleanup
+ok - configured verbose cuts the same boundary
+ok - no-verbose overrides configured verbose
+ok - scissors uses the configured comment character
+ok - default comment character is not the configured delimiter
+ok - scissors uses the configured comment string
+ok - whitespace keeps comment-string scissors and the following body
+ok - verbatim whitespace-only message gets the line
+ok - verbatim newline-only file gets the line
+ok - verbatim empty file stays empty
+ok - strip whitespace-only message stays empty
+ok - strip newline-only file stays empty
+ok - whitespace whitespace-only message stays empty
+ok - whitespace newline-only file stays empty
+ok - scissors whitespace-only message stays empty
+ok - scissors newline-only file stays empty
+ok - amend -m with # subject
+ok - typed Ixia line not duplicated under # subject
+ok - editor: # comment is stripped, line added
+ok - editor: strip keeps human trailers around an interior comment
+ok - edited human trailers remain in Git's final trailer block
+ok - editor: only-comment message aborts
+ok - editor: --cleanup=whitespace keeps # line before the Ixia line
+ok - editor: -v (scissors section) gets the line before the diff
+ok - exported GIT_EDITOR=: with an empty editor template aborts
+ok - GIT_EDITOR=: with -m # subject gets the line
+ok - merge --no-edit gets exactly one Ixia line
+ok - merge -v retains the scissors marker and following body
+ok - merge --verbose with verbatim retains the entire message
+ok - merge ignores configured commit verbosity
+ok - merge scissors cleanup still truncates with an editor
+ok - merge honors configured cleanup
+ok - merge leaves a configured-strip comment-only message empty leaves HEAD unchanged
+ok - merge cleanup flag overrides configured strip
+ok - merge keeps sign-off-only messages nonempty
+ok - merge strategy operands are not cleanup flags
+ok - merge strip keeps human trailers around an interior comment
+ok - merged human trailers remain in Git's final trailer block
+ok - core.commentChar=auto refuses unresolved strip cleanup
+ok - core.commentChar=auto refuses unresolved whitespace cleanup
+ok - core.commentChar=auto refuses unresolved scissors cleanup
+ok - core.commentChar=auto refuses unresolved verbatim cleanup
+ok - core.commentChar=auto refusal leaves HEAD unchanged
+ok - core.commentChar=AUTO refuses unresolved strip cleanup
+ok - core.commentChar=AUTO refuses unresolved whitespace cleanup
+ok - core.commentChar=AUTO refuses unresolved scissors cleanup
+ok - core.commentChar=AUTO refuses unresolved verbatim cleanup
+ok - core.commentChar=AUTO refusal leaves HEAD unchanged
+ok - core.commentChar=AuTo refuses unresolved strip cleanup
+ok - core.commentChar=AuTo refuses unresolved whitespace cleanup
+ok - core.commentChar=AuTo refuses unresolved scissors cleanup
+ok - core.commentChar=AuTo refuses unresolved verbatim cleanup
+ok - core.commentChar=AuTo refusal leaves HEAD unchanged
+ok - core.commentString=auto refuses unresolved strip cleanup
+ok - core.commentString=auto refuses unresolved whitespace cleanup
+ok - core.commentString=auto refuses unresolved scissors cleanup
+ok - core.commentString=auto refuses unresolved verbatim cleanup
+ok - core.commentString=auto refusal leaves HEAD unchanged
+ok - core.commentString=AUTO refuses unresolved strip cleanup
+ok - core.commentString=AUTO refuses unresolved whitespace cleanup
+ok - core.commentString=AUTO refuses unresolved scissors cleanup
+ok - core.commentString=AUTO refuses unresolved verbatim cleanup
+ok - core.commentString=AUTO refusal leaves HEAD unchanged
+ok - core.commentString=AuTo refuses unresolved strip cleanup
+ok - core.commentString=AuTo refuses unresolved whitespace cleanup
+ok - core.commentString=AuTo refuses unresolved scissors cleanup
+ok - core.commentString=AuTo refuses unresolved verbatim cleanup
+ok - core.commentString=AuTo refusal leaves HEAD unchanged
+ok - an explicit later delimiter overrides auto
+ok - Darwin sysctl argv overrides configured strip
+ok - Darwin sysctl argv preserves multiline operands
+ok - Darwin sysctl argv preserves empty operands
+ok - Darwin sysctl failure refuses instead of guessing
+ok - argument retrieval failure leaves HEAD unchanged
+
+all checks passed

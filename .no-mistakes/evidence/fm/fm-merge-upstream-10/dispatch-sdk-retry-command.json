@@ -1,0 +1,16 @@
+{
+  "command": [
+    "bin/fm-test-run.sh",
+    "--jobs",
+    "1",
+    "--per-script-timeout-secs",
+    "1500",
+    "--json",
+    "/home/node/.no-mistakes/evidence/01M5CS8Z14AJ6WRYGCEP0JMSHD/dispatch-sdk-retry-timing.json",
+    "tests/fm-spawn-dispatch-profile.test.sh",
+    "tests/fm-pi-branch-extension.test.sh"
+  ],
+  "TMPDIR": "/tmp",
+  "FM_PI_PACKAGE_DIR": "/workspaces/wp/.pi/install/releases/1.3.0/node_modules/@earendil-works/pi-coding-agent",
+  "reason": "Correct the incompatible worktree-local secondmate fixture path, and exercise real Pi renderer cases against the already-installed SDK at the explicitly supplied path instead of skipping them."
+}

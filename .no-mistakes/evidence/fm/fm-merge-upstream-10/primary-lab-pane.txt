@@ -1,0 +1,40 @@
+
+ ▐▛███▛█   Claude Code v2.1.304
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+❯ Isolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use
+  Bash exactly once to run printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME". Then reply
+  only LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.
+
+● Bash(printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME")
+  ⎿  LAB_HARNESS=claude
+     LAB_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh-axi.log (+0 -0)
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh.log (+0 -0)
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/github-rules (+0 -0)
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stderr (+0 -0)
+  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stdout (+0 -0)
+  ⎿  … 18 more files changed
+  ⎿  Allowed by auto mode classifier
+
+● LAB_CHECK_COMPLETE
+
+✻ Cogitated for 9s · done 2:44 PM
+
+
+
+
+
+
+
+
+
+
+                     tmux detected · scroll with PgUp/PgDn · or add 'set -g mouse on' to ~/.tmux.conf for wheel scroll
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 7% used
+  ⏵⏵ auto mode on (shift+tab to cycle)

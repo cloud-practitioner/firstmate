@@ -1,0 +1,36 @@
+FM_TEST_BEGIN 2026-10-20T14:40:29Z tests/fm-git-push-guard.test.sh family=unclassified expected_gate_skip=none
+ok - push guard: origin, origin's URL, and a remote aliasing origin's URL are all refused
+ok - push guard: the backup remote takes only backup/<id>, never the task branch or prefix
+ok - push guard: with an empty task prefix the bare task branch is still refused anywhere
+ok - push guard: the repository's own pre-push hook runs after the guard passes and still blocks
+ok - push guard: an unreadable guard file refuses every push
+# all fm-git-push-guard tests passed
+FM_TEST_END 2026-10-20T14:40:31Z tests/fm-git-push-guard.test.sh exit=0 duration_ms=1873 gate_skip=false
+FM_TEST_BEGIN 2026-10-20T14:40:31Z tests/fm-backend-tmux-smoke.test.sh family=backend-dispatch expected_gate_skip=none
+@4
+ok - real tmux: fm_backend_tmux_create_task creates a window and refuses a duplicate
+ok - real tmux: fm_backend_tmux_send_text_line sends literal text and submits with Enter
+ok - real tmux: fm_backend_tmux_send_literal + fm_backend_tmux_send_key Enter submit as two separate steps
+ok - real tmux: fm_backend_tmux_capture's -S -N bound trims old history for a small window and reaches it for a large one
+ok - real tmux: fm_backend_tmux_resolve_bare_selector (list-live) finds the created window by name
+ok - real tmux: fm_backend_tmux_resolve_bare_selector fails for a window that does not exist
+ok - real tmux: fm_backend_target_exists finds an existing window
+ok - real tmux: fm_backend_target_exists finds an existing pane
+ok - real tmux: fm_backend_target_exists accepts bare and session-scoped window ids
+ok - real tmux: fm_backend_target_exists accepts window indexes including firstmate:0
+ok - real tmux: fm_backend_target_exists accepts index.pane targets
+ok - real tmux: fm_backend_target_exists accepts a bare session and explicit exact markers
+ok - real tmux: fm_backend_target_exists anchors the session name
+ok - real tmux: fm_backend_target_exists rejects malformed targets
+ok - real tmux: fm_backend_tmux_send_key withholds a key from a gone prefix target
+ok - real tmux: a gone dotted window reads absent beside its undotted neighbor
+ok - real tmux: fm_backend_target_exists rejects a killed window while another session stays alive
+ok - real tmux: fm_backend_target_exists rejects a missing session while another session stays alive
+ok - real tmux: kill removes the window and the readable session inventory authoritatively classifies it missing
+FM_TEST_END 2026-10-20T14:40:33Z tests/fm-backend-tmux-smoke.test.sh exit=0 duration_ms=1819 gate_skip=false
+FM_TEST_SUMMARY total=2 failed=0 skipped_gate=0 duration_ms=3859
+FM_TEST_SUMMARY_FAMILY family=backend-dispatch count=1 duration_ms=1819 failed=0
+FM_TEST_SUMMARY_FAMILY family=unclassified count=1 duration_ms=1873 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-git-push-guard.test.sh duration_ms=1873
+FM_TEST_SLOWEST rank=2 script=tests/fm-backend-tmux-smoke.test.sh duration_ms=1819
+fm-test-run: wrote timing artifact: /home/node/.no-mistakes/evidence/01M5CS8Z14AJ6WRYGCEP0JMSHD/native-timing.json

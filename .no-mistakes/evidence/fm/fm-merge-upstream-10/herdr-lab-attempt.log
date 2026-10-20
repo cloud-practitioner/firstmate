@@ -1,0 +1,7 @@
+$ herdr --version
+herdr 0.9.5
+[exit 0]
+$ bin/fm-herdr-lab.sh prepare fm-lab-merge-upstream-2733537-2245
+fm-herdr-lab: fleet-state tripwire requires exactly one running default session
+[exit 1]
+Stopped at prepare refusal; no provision, run, default-session creation, or fleet-pane call was made. Removed isolated Herdr home.

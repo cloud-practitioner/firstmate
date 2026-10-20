@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="820" viewBox="0 0 1240 820">
+<rect width="1240" height="820" fill="#151515"/>
+<text x="16" y="24" fill="#ababab" font-family="monospace" font-size="13">Real Claude primary terminal capture — monochrome replay, 120×40. Not a Herdr UI screenshot.</text>
+<text x="16" y="50" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="68" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"> ▐▛███▛█   Claude Code v2.1.304</text>
+<text x="16" y="86" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">▝▜██████▀  Opus 5.5 with high effort · Claude Team</text>
+<text x="16" y="104" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"> ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD</text>
+<text x="16" y="122" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="140" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="158" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">❯ Isolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use</text>
+<text x="16" y="176" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  Bash exactly once to run printf &quot;LAB_HARNESS=&quot;; bash bin/fm-harness.sh; printf &quot;LAB_HOME=%s\n&quot; &quot;$FM_HOME&quot;. Then reply</text>
+<text x="16" y="194" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  only LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.</text>
+<text x="16" y="212" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="230" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">● Bash(printf &quot;LAB_HARNESS=&quot;; bash bin/fm-harness.sh; printf &quot;LAB_HOME=%s\n&quot; &quot;$FM_HOME&quot;)</text>
+<text x="16" y="248" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  ⎿  LAB_HARNESS=claude</text>
+<text x="16" y="266" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">     LAB_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06</text>
+<text x="16" y="284" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh-axi.log (+0 -0)</text>
+<text x="16" y="302" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh.log (+0 -0)</text>
+<text x="16" y="320" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/github-rules (+0 -0)</text>
+<text x="16" y="338" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stderr (+0 -0)</text>
+<text x="16" y="356" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  ⎿  Created .test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stdout (+0 -0)</text>
+<text x="16" y="374" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  ⎿  … 18 more files changed</text>
+<text x="16" y="392" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  ⎿  Allowed by auto mode classifier</text>
+<text x="16" y="410" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="428" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">● LAB_CHECK_COMPLETE</text>
+<text x="16" y="446" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="464" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">✻ Cogitated for 9s · done 2:44 PM</text>
+<text x="16" y="482" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="500" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="518" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="536" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="554" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="572" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="590" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="608" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="626" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="644" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve"></text>
+<text x="16" y="662" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">                     tmux detected · scroll with PgUp/PgDn · or add &#x27;set -g mouse on&#x27; to ~/.tmux.conf for wheel scroll</text>
+<text x="16" y="680" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</text>
+<text x="16" y="698" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">❯ </text>
+<text x="16" y="716" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</text>
+<text x="16" y="734" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  Opus 5.5 | ctx: 7% used</text>
+<text x="16" y="752" fill="#ededed" font-family="DejaVu Sans Mono, monospace" font-size="14" xml:space="preserve">  ⏵⏵ auto mode on (shift+tab to cycle)</text>
+</svg>

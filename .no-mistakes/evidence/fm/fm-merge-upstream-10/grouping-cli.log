@@ -1,0 +1,20 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/groups/home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/groups/home
+[exit 0]
+$ bin/fm-herdr-groups.sh plan
+[exit 0]
+$ bin/fm-herdr-groups.sh plan
+build-1	alpha-group	problem	002.alpha-group.2.build-1	002.alpha-group
+other-1	fallback	done	001.fallback.4.other-1	001.fallback
+urgent-1	urgent	needs-captain	003.urgent.1.urgent-1	003.urgent
+[exit 0]
+$ bin/fm-herdr-groups.sh order-key urgent-1 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/groups/alpha
+003.urgent
+[exit 0]
+$ bin/fm-herdr-groups.sh sidebar-config --apply /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/groups/herdr.toml
+appended the project-group sidebar rows to /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/groups/herdr.toml (backup: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/groups/herdr.toml.bak-1792507577); run `herdr server reload-config` to apply them
+[exit 0]
+$ bin/fm-herdr-groups.sh sidebar-config --apply /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/groups/herdr.toml
+fm-herdr-groups: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.test-lab/groups/herdr.toml already defines Herdr sidebar rows; merge the suggested rows by hand (fm-herdr-groups.sh sidebar-config prints them)
+[exit 1]
+Effective TOML fields parsed successfully; original theme preserved; second apply refused without mutation. This is the public offline planning/configuration surface, NOT proof of Herdr rendering or live sync.

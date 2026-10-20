@@ -1,0 +1,22 @@
+[
+  "bin/fm-test-run.sh",
+  "--jobs",
+  "1",
+  "--per-script-timeout-secs",
+  "420",
+  "--json",
+  "/home/node/.no-mistakes/evidence/01M5CS8Z14AJ6WRYGCEP0JMSHD/targeted-timing.json",
+  "tests/fm-pr-merge.test.sh",
+  "tests/fm-pr-state.test.sh",
+  "tests/fm-pr-bitbucket.test.sh",
+  "tests/fm-spawn-pool-base-freshen.test.sh",
+  "tests/fm-spawn-dispatch-profile.test.sh",
+  "tests/fm-brief.test.sh",
+  "tests/fm-captain-hold-lifecycle.test.sh",
+  "tests/fm-remote-job.test.sh",
+  "tests/fm-branch-supervision.test.sh",
+  "tests/fm-pi-branch-extension.test.sh",
+  "tests/fm-self-repo-role.test.sh",
+  "tests/fm-polytoken-harness.test.sh",
+  "tests/fm-dod-lib.test.sh"
+]

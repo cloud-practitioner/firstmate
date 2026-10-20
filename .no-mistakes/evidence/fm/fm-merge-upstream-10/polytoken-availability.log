@@ -1,0 +1,16 @@
+$ command -v polytoken; test -x bin/polytoken
+[exit 1]
+$ npm view polytoken name version description repository.url --json
+{
+  "name": "polytoken",
+  "version": "2.0.0",
+  "description": "Efficient database indexing for geospatial queries",
+  "repository.url": "git+https://github.com/zipscene/polytoken.git"
+}
+npm notice
+npm notice New major version of npm available! 11.19.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+[exit 0]
+No production configuration or credential stores were read or copied. No login, license acceptance, or provider credential was fabricated.

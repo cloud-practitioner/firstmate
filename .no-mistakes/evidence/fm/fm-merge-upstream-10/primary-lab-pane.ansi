@@ -1,0 +1,40 @@
+
+[38;5;174m ▐[48;5;16m▛███▛█[39m[49m   [1mClaude Code[0m[39m[49m [38;5;246mv2.1.304
+[38;5;174m▝▜[48;5;16m█████[49m█▀[39m  [38;5;246mOpus 5.5 with high effort · Claude Team
+[38;5;174m ▝▝   ▝▝ [39m  [38;5;246m~/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD
+
+
+[48;5;237m❯ [38;5;231mIsolated validation only. Do not run session-start, spawn, delegate, no-mistakes, git, or access other homes. Use [39m
+  [38;5;231mBash exactly once to run [38;5;153mprintf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME"[38;5;231m. Then reply[39m
+  [38;5;231monly LAB_CHECK_COMPLETE. This is a disposable marked lab; do not modify any files.[39m
+
+[38;5;114m[49m●[39m [1mBash[0m[39m[49m(printf "LAB_HARNESS="; bash bin/fm-harness.sh; printf "LAB_HOME=%s\n" "$FM_HOME")
+[38;5;246m  ⎿  [39mLAB_HARNESS=claude
+     LAB_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.l.63f8xu06
+[38;5;246m  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh-axi.log[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/gh.log[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/github-rules[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stderr[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  [39mCreated [1m.test-lab/retry/tmp/fm-pr-merge-tests.XayWaA/secondmate-merge-local/stdout[0m[39m[49m [38;5;246m(+0 -0)
+  ⎿  … 18 more files changed
+  ⎿  Allowed by auto mode classifier[39m
+
+[38;5;231m●[39m LAB_CHECK_COMPLETE
+
+[38;5;246m✻[39m [38;5;246mCogitated for 9s · done 2:44 PM
+
+
+
+
+
+
+
+
+[39m
+
+                     [38;5;246mtmux detected · scroll with PgUp/PgDn · or add 'set -g mouse on' to ~/.tmux.conf for wheel scroll
+[38;5;244m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[39m❯ 
+[38;5;244m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[39m  [38;5;246mOpus 5.5 | ctx: 7% used
+[39m  [38;5;220m⏵⏵ auto mode on[38;5;246m (shift+tab to cycle)[39m

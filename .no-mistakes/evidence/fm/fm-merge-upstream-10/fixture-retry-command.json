@@ -1,0 +1,15 @@
+{
+  "command": [
+    "bin/fm-test-run.sh",
+    "--jobs",
+    "1",
+    "--per-script-timeout-secs",
+    "1500",
+    "--json",
+    "/home/node/.no-mistakes/evidence/01M5CS8Z14AJ6WRYGCEP0JMSHD/fixture-retry-timing.json",
+    "tests/fm-captain-hold-lifecycle.test.sh",
+    "tests/fm-brief.test.sh"
+  ],
+  "temporary_directory": "/tmp (incidental, self-cleaning repository test fixtures)",
+  "reason": "Repository forbids secondmate homes inside the code repository, and hidden worktree-local tmp components invalidate the intentionally literal Git branch-prefix fixture. Both selected scripts are proven-isolated in the canonical runner inventory."
+}

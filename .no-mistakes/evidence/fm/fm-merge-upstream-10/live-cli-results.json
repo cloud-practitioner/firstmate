@@ -1,0 +1,22 @@
+[
+  {
+    "name": "IQX hook survives the merge and composes with the current Firstmate strip; empty/non-IQX operations refuse",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Bitbucket CI-ready registration refuses an unpreserved head, then arms only after a real local push and fetch",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Merge-message and no-pipeline options refuse unsupported providers, no-commit strategies, and empty messages before network mutation",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "External-review push guard blocks shared-origin and task-branch publication but permits the configured durable backup ref",
+    "result": "pass",
+    "live": true
+  }
+]

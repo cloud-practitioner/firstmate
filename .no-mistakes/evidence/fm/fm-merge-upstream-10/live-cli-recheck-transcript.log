@@ -1,0 +1,170 @@
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo init -q -b main
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo remote add origin https://bitbucket.org/iqxbusiness/disposable-validation.git
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-demo
+installed iqx-demo -> /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo/.git/hooks/commit-msg
+[exit 0]
+$ bash bin/fm-git-strip-ai-trailers.sh install /tmp/fm-lab.9exxcudw/generated-hooks /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo add file
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo -c core.hooksPath=/tmp/fm-lab.9exxcudw/generated-hooks commit -m #123 retain hash subject
+
+Signed-off-by: Human Reviewer <human@example.invalid>
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+Co-Authored-By: Claude <noreply@anthropic.com>
+[main (root-commit) d1b842d] #123 retain hash subject
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo show -s --format=%B
+#123 retain hash subject
+
+Signed-off-by: Human Reviewer <human@example.invalid>
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo rev-parse HEAD
+d1b842d0db57dfd245cb069b1f0298da23c40892
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo -c core.hooksPath=/tmp/fm-lab.9exxcudw/generated-hooks commit --allow-empty --cleanup=strip -m # comments only
+Aborting commit due to empty commit message.
+[exit 1]
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo rev-parse HEAD
+d1b842d0db57dfd245cb069b1f0298da23c40892
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx-demo
+ok iqx-demo (1 worktrees share /tmp/fm-lab.9exxcudw/hook-home/projects/iqx-demo/.git/hooks/commit-msg)
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/non-iqx init -q -b main
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/hook-home/projects/non-iqx remote add origin https://github.com/example/disposable.git
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/contrib/iqx-ixia-hook/ixia-hook-install.sh non-iqx
+STOP non-iqx: origin is 'https://github.com/example/disposable.git', not bitbucket.org/iqxbusiness
+[exit 1]
+$ bin/fm-lab-home.sh create /tmp/fm-lab.9exxcudw/pr-home
+/tmp/fm-lab.9exxcudw/pr-home
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/remote.git init --bare -q -b main
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/project init -q -b main
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/project commit --allow-empty -qm base
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/project remote add origin /tmp/fm-lab.9exxcudw/remote.git
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/project push -q origin main
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD clone -q /tmp/fm-lab.9exxcudw/project /tmp/fm-lab.9exxcudw/worker
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker remote set-url origin /tmp/fm-lab.9exxcudw/remote.git
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker checkout -qb fm/bitbucket
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker commit --allow-empty -qm head initially exists only in disposable worker
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker rev-parse HEAD
+a7f3109d5f9361d714d03587587a67061a75d905
+[exit 0]
+$ bin/fm-lab-home.sh create /tmp/fm-lab.9exxcudw/pre-fix-home
+/tmp/fm-lab.9exxcudw/pre-fix-home
+[exit 0]
+$ /tmp/fm-lab.9exxcudw/pre-fix-product/bin/fm-pr-check.sh bitbucket https://bitbucket.org/team/repo/pull-requests/7
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /tmp/fm-lab.9exxcudw/pre-fix-product/.pi/extensions/fm-primary-turnend-guard.ts -e /tmp/fm-lab.9exxcudw/pre-fix-product/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+armed: state/bitbucket.check.sh
+[exit 0]
+REGRESSION REPRODUCED: the pre-fix executable armed the poll while named HEAD existed only in the disposable worker. The target must refuse the identical request below.
+$ bin/fm-pr-check.sh bitbucket https://bitbucket.org/team/repo/pull-requests/7
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5CS8Z14AJ6WRYGCEP0JMSHD/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: named head a7f3109d5f9361d714d03587587a67061a75d905 is unreachable outside the worker copy
+[exit 1]
+$ git -C /tmp/fm-lab.9exxcudw/worker push -q origin HEAD:refs/heads/fm/bitbucket
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker fetch -q origin
+[exit 0]
+$ bin/fm-pr-check.sh bitbucket https://bitbucket.org/team/repo/pull-requests/7
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+armed: state/bitbucket.check.sh
+[exit 0]
+$ git --git-dir /tmp/fm-lab.9exxcudw/remote.git show-ref
+a7f3109d5f9361d714d03587587a67061a75d905 refs/heads/fm/bitbucket
+0646420186b43fd66c5e4abd77bca978f8927b69 refs/heads/main
+[exit 0]
+Persisted task metadata after durable-head acceptance:
+window=unused-validation-endpoint
+worktree=/tmp/fm-lab.9exxcudw/worker
+project=/tmp/fm-lab.9exxcudw/project
+kind=ship
+mode=no-mistakes
+harness=claude
+pr=https://bitbucket.org/team/repo/pull-requests/7
+$ bin/fm-pr-merge.sh bitbucket https://bitbucket.org/team/repo/pull-requests/7 --message-file /tmp/fm-lab.9exxcudw/merge-message.txt -- --rebase
+error: the rebase_fast_forward merge strategy creates no commit to carry --message-file
+[exit 2]
+$ bin/fm-pr-merge.sh bitbucket https://github.com/example/repo/pull/7 --message-file /tmp/fm-lab.9exxcudw/merge-message.txt
+error: --message-file is not supported on this forge yet (github); merge messages are Bitbucket-only
+[exit 2]
+$ bin/fm-pr-merge.sh bitbucket https://bitbucket.org/team/repo/pull-requests/7 --allow-no-pipeline
+error: --allow-no-pipeline applies only to GitLab, where it waives a merge request that has no head pipeline at all
+[exit 2]
+$ bin/fm-pr-merge.sh bitbucket https://bitbucket.org/team/repo/pull-requests/7 --message-file /tmp/fm-lab.9exxcudw/empty-message.txt
+error: --message-file /tmp/fm-lab.9exxcudw/empty-message.txt is empty or only whitespace
+[exit 2]
+$ git -C /tmp/fm-lab.9exxcudw/backup.git init --bare -q -b main
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker remote add backup /tmp/fm-lab.9exxcudw/backup.git
+[exit 0]
+$ bin/fm-git-push-guard.sh write /tmp/fm-lab.9exxcudw/push-guard /tmp/fm-lab.9exxcudw/worker fm/bitbucket fm/ backup backup/
+[exit 0]
+$ bin/fm-git-strip-ai-trailers.sh install --push-guard /tmp/fm-lab.9exxcudw/push-guard /tmp/fm-lab.9exxcudw/push-hooks /tmp/fm-lab.9exxcudw/worker
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker commit --allow-empty -qm external review snapshot
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker rev-parse HEAD
+dfa81dfbfdeef8d9f04c2060a4ef1e7d301f1309
+[exit 0]
+$ git --git-dir /tmp/fm-lab.9exxcudw/remote.git rev-parse refs/heads/fm/bitbucket
+a7f3109d5f9361d714d03587587a67061a75d905
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker -c core.hooksPath=/tmp/fm-lab.9exxcudw/push-hooks push origin HEAD:refs/heads/forbidden
+fm-git-push-guard: refused: this project's review tool uploads its own snapshot, so nothing is ever pushed to origin; upload with the review tool your Definition of done names
+error: failed to push some refs to '/tmp/fm-lab.9exxcudw/remote.git'
+[exit 1]
+$ git --git-dir /tmp/fm-lab.9exxcudw/remote.git rev-parse --verify refs/heads/forbidden
+fatal: Needed a single revision
+[exit 128]
+$ git --git-dir /tmp/fm-lab.9exxcudw/remote.git rev-parse refs/heads/fm/bitbucket
+a7f3109d5f9361d714d03587587a67061a75d905
+[exit 0]
+$ git -C /tmp/fm-lab.9exxcudw/worker -c core.hooksPath=/tmp/fm-lab.9exxcudw/push-hooks push backup HEAD:refs/heads/fm/bitbucket
+fm-git-push-guard: refused: refs/heads/fm/bitbucket is your task branch, which is never pushed to any remote on this project; push a durable copy to refs/heads/backup/<task-id> on backup instead
+error: failed to push some refs to '/tmp/fm-lab.9exxcudw/backup.git'
+[exit 1]
+$ git -C /tmp/fm-lab.9exxcudw/worker -c core.hooksPath=/tmp/fm-lab.9exxcudw/push-hooks push backup HEAD:refs/heads/backup/bitbucket
+To /tmp/fm-lab.9exxcudw/backup.git
+ * [new branch]      HEAD -> backup/bitbucket
+[exit 0]
+$ git --git-dir /tmp/fm-lab.9exxcudw/backup.git rev-parse refs/heads/backup/bitbucket
+dfa81dfbfdeef8d9f04c2060a4ef1e7d301f1309
+[exit 0]
+$ git --git-dir /tmp/fm-lab.9exxcudw/remote.git show-ref
+a7f3109d5f9361d714d03587587a67061a75d905 refs/heads/fm/bitbucket
+0646420186b43fd66c5e4abd77bca978f8927b69 refs/heads/main
+[exit 0]
+$ git --git-dir /tmp/fm-lab.9exxcudw/backup.git show-ref
+dfa81dfbfdeef8d9f04c2060a4ef1e7d301f1309 refs/heads/backup/bitbucket
+[exit 0]

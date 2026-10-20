@@ -1,0 +1,6 @@
+{
+  "result": "pass",
+  "reason": "Real Claude primary executed the real harness detector in the marked lab.",
+  "crew_state_result": "pass",
+  "crew_state_reason": "Real idle Claude pane: incidental PROD text stays paused; Bitbucket checks-green note is blocked until named HEAD is preserved on a real local remote."
+}

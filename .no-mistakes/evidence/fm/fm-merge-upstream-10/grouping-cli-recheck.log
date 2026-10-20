@@ -1,0 +1,20 @@
+$ bin/fm-lab-home.sh create /tmp/fm-groups-check-rrpdqnxy/home
+/tmp/fm-groups-check-rrpdqnxy/home
+[exit 0]
+$ bin/fm-herdr-groups.sh plan
+[exit 0]
+$ bin/fm-herdr-groups.sh plan
+build-1	alpha-group	problem	002.alpha-group.2.build-1	002.alpha-group
+other-1	fallback	done	001.fallback.4.other-1	001.fallback
+urgent-1	urgent	needs-captain	003.urgent.1.urgent-1	003.urgent
+[exit 0]
+$ bin/fm-herdr-groups.sh order-key urgent-1 /tmp/fm-groups-check-rrpdqnxy/alpha
+003.urgent
+[exit 0]
+$ bin/fm-herdr-groups.sh sidebar-config --apply /tmp/fm-groups-check-rrpdqnxy/herdr.toml
+appended the project-group sidebar rows to /tmp/fm-groups-check-rrpdqnxy/herdr.toml (backup: /tmp/fm-groups-check-rrpdqnxy/herdr.toml.bak-1792509279); run `herdr server reload-config` to apply them
+[exit 0]
+$ bin/fm-herdr-groups.sh sidebar-config --apply /tmp/fm-groups-check-rrpdqnxy/herdr.toml
+fm-herdr-groups: /tmp/fm-groups-check-rrpdqnxy/herdr.toml already defines Herdr sidebar rows; merge the suggested rows by hand (fm-herdr-groups.sh sidebar-config prints them)
+[exit 1]
+Effective TOML fields parsed successfully; original theme preserved; second apply refused without mutation. This is the public offline planning/configuration surface, NOT proof of Herdr rendering or live sync.
