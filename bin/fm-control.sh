@@ -20,15 +20,14 @@
 # NO generic raw-key entry point here; fm-send remains the only way to send an
 # agent something to read.
 #
-#   interrupt  Use the harness's verified interrupt transport. The agent
+#   interrupt  Deliver the harness's verified interrupt sequence. The agent
 #              keeps running. Postcondition: delivery succeeded, the endpoint
 #              still exists, and the agent is still alive where the backend can
 #              classify that. Cancellation is confirmed only from an adapter-
-#              owned acknowledgement and otherwise reported unconfirmed.
-#              Delivery alone never proves semantic idle. Polytoken's typed
-#              REST settle and busy close are owned by bin/fm-polytoken-lib.sh;
-#              Devin cancellation invalidates busy state to unknown because its
-#              native hooks emit no cancellation close, not as a success claim.
+#              owned acknowledgement and otherwise reported unconfirmed. Busy
+#              state is never rewritten as proof of the action. Devin
+#              cancellation invalidates it to unknown because its native hooks
+#              emit no cancellation close; this is not a success claim.
 #              An adapter whose repeated interrupt key does something else on
 #              an idle agent (Devin's revert picker) sends its later presses
 #              only after the first press rendered a running turn, and
@@ -115,8 +114,8 @@
 # Fail-closed boundaries:
 #   - An unverified harness, or a harness whose control mechanics are unknown,
 #     is refused rather than guessed at.
-#   - For key-based interrupts, a backend that cannot deliver the harness's
-#     interrupt key is refused (Orca's terminal API has no Escape).
+#   - A backend that cannot deliver the harness's interrupt key is refused
+#     (Orca's terminal API has no Escape).
 #   - `exit` and `relaunch` require a backend with a recovery-grade agent-state
 #     classifier (tmux, herdr), because without one the "the agent stopped"
 #     postcondition cannot be proven. zellij, orca, and cmux are refused rather

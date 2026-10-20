@@ -18,9 +18,9 @@ The router owns the crewmate/scout-only boundary; primary and secondmate integra
 | Effort flag | None separate: `fm_polytoken_model_ref` in `bin/fm-polytoken-lib.sh` owns nearest-level mapping into `<model>(<effort>)`; task metadata retains the requested axis. |
 | Model discovery | `polytoken print models` (one selectable reference per line); `polytoken models` for the full human report. |
 | Marker | None; the daemon's anchored `polytoken` comm in tool-subprocess ancestry identifies the adapter (a tool subprocess's parent IS the daemon, verified live), and a structural polytoken ancestor outranks foreign inherited markers. |
-| Trust dialogs | `fm_polytoken_write_config` in `../../../../../bin/fm-polytoken-lib.sh` owns the generated permission posture; the first-start license dialog requires an operator decision - `--accept-license-terms` is never passed, and the readiness gate fails loudly on a pane that never starts processing its brief. |
+| Trust dialogs | None at launch: the permission posture comes from the generated config dir's `default_permission_matcher: bypass`, and the first-start license dialog requires an operator decision - `--accept-license-terms` is never passed, and the readiness gate fails loudly on a pane that never starts processing its brief. |
 | Imported config | The worktree `.polytoken/` project layer (hooks and facets) plus the generated per-task config dir, which fully replaces the global config (verified live: a `version: 4`-only project config.yaml fails startup with zero providers, and no `--global-config-dir` reaches the daemon). |
-| Commit attribution | Follows the shared [commit-attribution policy](../../../../../docs/configuration.md#commit-attribution), including its opt-out. |
+| Commit attribution | The shared `state/<id>.git-hooks` commit-msg strip covers polytoken like every launched runtime. |
 
 ## Worker lifecycle limits
 

@@ -370,12 +370,12 @@ The `data/secondmates.md` line contract is owned by the [`secondmate-provisionin
 
 ## Delivery modes are explicit per task
 
-`no-mistakes` tasks validate through the pipeline, `direct-PR` tasks publish through their registered forge without that pipeline, and `local-only` tasks stay local until firstmate performs an approved fast-forward merge.
+`no-mistakes` tasks run the full validation pipeline, `direct-PR` tasks open PRs without that pipeline, and `local-only` tasks stay local until firstmate performs an approved fast-forward merge.
 Each task's mode and `yolo` merge posture are firstmate's decision at intake.
 The mode is passed explicitly to `bin/fm-brief.sh`, and both values are passed explicitly to `bin/fm-spawn.sh` and `bin/fm-promote.sh`; each command refuses to guess the values it consumes.
 A ship brief records its mode as a fixed machine-readable line and the spawn refuses to launch on a different one, so the worker's instructions and the recorded task delivery cannot diverge.
 `bin/fm-dod-lib.sh` is the one owner of that mode's definition of done, rendered into a generated ship brief, the ship instructions a promoted scout receives, and that scout's own `brief.md` so a later relaunch reads the same contract, so a promoted worker cannot be handed a weaker contract than a briefed one.
-It also owns acceptance of ship-ready reports, including the named-head reachability gate and the [external-review alternative](external-review-forge.md).
+It also owns the named-head reachability gate that refuses a ship `done:` while that head exists only in the worker's disposable copy, testing the named head rather than whether some branch moved.
 `bin/fm-crew-state.sh`, `bin/fm-pr-check.sh`, and the secondmate ledger-first publisher call that same gate before treating a ship `done:` as ready.
 It is also the one owner of the no-mistakes `--intent` contract those workers follow.
 `data/projects.md` records each project's standing posture and optional `+yolo` merge flag as the captain's default and as context for that decision, including the conditional `no-mistakes-prod-only` policy; a ship spawn that drops below the registered rigor prints a deviation notice and continues.
@@ -405,7 +405,7 @@ A GitHub queue-rule or PR-base change after the queue-free preflight can still e
 These are accepted limitations, not oversights; durable authority, landing re-verification, and child-lock handoff are outside this boundary.
 `bin/fm-afk-contract.sh` owns the lock contract, while `tests/fm-afk-contract.test.sh` and `tests/fm-pr-merge.test.sh` pin the serialization and fail-closed merge behavior.
 A `https://<host>/<path>/-/merge_requests/<n>` URL (see [docs/gitlab-merge-watch.md](gitlab-merge-watch.md)) invokes `glab mr merge <n> -R https://<host>/<path>`, so the instance comes from the URL, and adds no merge-method flag because the project's own merge method applies.
-[`bin/fm-pr-merge.sh`](../bin/fm-pr-merge.sh)'s header owns GitLab's live-head verification, head binding, and attended-only no-pipeline exception.
+That path merges only after one live read of the merge request confirms it is open, mergeable, conflict-free, with blocking discussions resolved and a successful pipeline at the current head, and it binds the merge to that verified head; recorded metadata is never the authority for those conditions because a rebase leaves it stale.
 A `https://bitbucket.org/<workspace>/<repository>/pull-requests/<n>` Bitbucket Cloud URL is recorded, watched, read, and merged through the Bitbucket REST API with `curl` and `jq`, under the no-mistakes pipeline's own Bitbucket credential ([`configuration.md`](configuration.md) owns it).
 That path merges only after live reads confirm the pull request is open and not a draft, every unwaived commit status at the current head is successful, and it meets every merge check the destination branch's restrictions require: the successful-build count, the approval and default-reviewer approval counts, no requested changes, and every task resolved.
 Bitbucket enforces those checks itself only where the workspace turns enforcement on, so the script verifies them rather than relying on the merge request to refuse; an unreadable restriction set refuses, `--allow-red` waives only a named failed build, and `--allow-missing` does not apply because Bitbucket requires a count of builds rather than named checks.

@@ -138,9 +138,8 @@ fm_control_interrupt_transport() {  # <harness>
   esac
 }
 
-# The key that cancels a running turn for a key-transport adapter. Escape for
-# each except grok, whose Esc only moves focus to the scrollback; grok cancels
-# on Ctrl+C. REST interrupts use fm_control_interrupt_transport above.
+# The key that cancels a running turn. Escape for every adapter except grok,
+# whose Esc only moves focus to the scrollback; grok cancels on Ctrl+C.
 # gemini names its own key in the running turn's status row
 # (`(esc to cancel, <n>s)`), and a single Escape was verified to cancel it.
 # rovo cancels on a single Escape too, printing "Agent cancelled" (verified,

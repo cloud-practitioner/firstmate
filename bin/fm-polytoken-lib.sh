@@ -55,9 +55,8 @@
 #     ended.
 #   - The TUI has no interrupt chord: `submit-prompt` is the only Enter action
 #     in Prompt scope, a single Escape does nothing in Prompt scope, and
-#     Escape Escape opens the rewind picker. Interrupt rides the REST API;
-#     the exit command is owned by bin/fm-control-lib.sh, not this REST path.
-#     Firstmate never sends interrupt keys to a polytoken pane.
+#     Escape Escape opens the rewind picker. Control verbs ride the REST API
+#     and firstmate never sends interrupt keys to a polytoken pane.
 #   - There is no verified composer-clear key (Ctrl+Shift+Y copies the prompt
 #     but leaves it in the composer, verified live), so text is only ever
 #     typed into a composer proven empty, and Enter while a turn runs queues

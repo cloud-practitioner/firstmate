@@ -578,7 +578,7 @@
 # after the TUI attaches), its busy wiring is the worktree `.polytoken/hooks.json`
 # binding the verified pre_user_prompt / pre_model_turn (open) and stop (close)
 # events to a generated no-argv writer (handlers receive no argv, verified live),
-# and its interrupt rides the daemon REST API with the session id, port, and
+# and its control verbs ride the daemon REST API with the session id, port, and
 # credential recorded into task metadata after launch through
 # `polytoken sessions --format json`. The license dialog is a BLOCKER by captain
 # decision (2026-10-07): `--accept-license-terms` is never passed, and the
