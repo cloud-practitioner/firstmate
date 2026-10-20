@@ -259,6 +259,7 @@ test_ci_ready_requires_pr_reference() {
     'paused: PROD deploy watch, checks green on TEST' \
     'paused: checks green on TEST, PROPERTIES watch' \
     'PR checks green' \
+    'PR https://bitbucket.org/team/repo/pull-requests/7 checks pending' \
     'PR #12 checks pending'; do
     if fm_dod_note_reports_ci_ready "$note"; then
       fail "non-CI-ready note accepted: $note"
@@ -267,6 +268,8 @@ test_ci_ready_requires_pr_reference() {
   for note in \
     'PR https://github.com/o/r/pull/5 checks green' \
     'checks green: https://github.com/o/r/pull/5' \
+    'PR https://bitbucket.org/team/repo/pull-requests/7 checks green' \
+    'checks green: https://bitbucket.org/team/repo/pull-requests/7' \
     'PR #12 checks green' \
     'checks green: PR#12' \
     'https://gitlab.com/o/r/-/merge_requests/5 checks green' \
@@ -275,6 +278,29 @@ test_ci_ready_requires_pr_reference() {
       || fail "CI-ready PR reference rejected: $note"
   done
   pass "CI-ready notes require checks green and an actual PR reference"
+}
+
+test_bitbucket_ci_ready_requires_durable_head() {
+  local repo wt sha reason rc mode line
+  repo="$TMP_ROOT/bitbucket-repo"
+  wt="$TMP_ROOT/bitbucket-wt"
+  fm_git_worktree "$repo" "$wt" fm/bitbucket
+  git -C "$wt" commit -q --allow-empty -m 'only in the disposable copy'
+  sha=$(git -C "$wt" rev-parse HEAD)
+  line='done: PR https://bitbucket.org/team/repo/pull-requests/7 checks green'
+  for mode in no-mistakes ''; do
+    reason=$(accept_done ship "$mode" "$wt" "$repo" "$line")
+    rc=$?
+    [ "$rc" -eq 1 ] || fail "Bitbucket CI-ready done accepted an unpushed head in mode '$mode'"
+    assert_contains "$reason" "named head $sha is unreachable outside the worker copy" \
+      "Bitbucket refusal did not name the unpushed commit"
+  done
+  git -C "$wt" update-ref refs/remotes/origin/fm/bitbucket "$sha"
+  for mode in no-mistakes ''; do
+    accept_done ship "$mode" "$wt" "$repo" "$line" \
+      || fail "Bitbucket CI-ready done refused a durable head in mode '$mode'"
+  done
+  pass "Bitbucket CI-ready done requires a durable named head"
 }
 
 test_ci_ready_variants_are_gated() {
@@ -459,6 +485,7 @@ test_merge_marker_binds_to_the_named_pr
 test_forge_recorded_head_is_accepted_without_local_object
 test_direct_pr_recorded_head_does_not_cover_unpushed_commit
 test_ci_ready_requires_pr_reference
+test_bitbucket_ci_ready_requires_durable_head
 test_ci_ready_variants_are_gated
 test_keyed_and_spaced_done_lines_are_gated
 test_local_only_linked_branch_is_accepted
