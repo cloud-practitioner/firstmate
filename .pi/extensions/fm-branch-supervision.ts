@@ -16,7 +16,7 @@
 // presentUnprocessedOutcomes).
 // Main's captain/assistant dialog is mirrored into the branch as read-only
 // fm-main-mirror context from Pi's
-// user-message before_agent_start prompt and at main's turn_end. Pi-only by construction: this
+// before_agent_start prompt and at main's turn_end. Pi-only by construction: this
 // file lives in .pi/extensions, so no
 // other harness ever loads it. Supervision is default-on for every task once
 // this Pi session owns the fleet lock: no captain grant file is required.
@@ -96,6 +96,8 @@ import {
   ToolExecutionComponent,
   VERSION,
   type AgentSession,
+  type BeforeAgentStartEvent,
+  type MessageStartEvent,
   type ExtensionAPI,
   type ExtensionCommandContext,
   type ToolDefinition,
@@ -230,6 +232,14 @@ function offerEligible(offer: BranchDispatchOffer): boolean {
   return offer.eligible === true;
 }
 
+// Identify the supported custom trigger before prompt-only SDKs can narrow it
+// to never. The message type comes from the public SDK in both releases.
+function isCustomBeforeAgentStart(event: BeforeAgentStartEvent): event is BeforeAgentStartEvent & {
+  message: Extract<MessageStartEvent["message"], { role: "custom" }>;
+} {
+  return !("prompt" in event) && "message" in event;
+}
+
 function isProcessingCustomMessage(message: { role?: string; customType?: string }): boolean {
   return message.role === "custom" && message.customType === PROCESSING_MESSAGE_TYPE;
 }
@@ -267,10 +277,9 @@ type FollowMainResolution =
 // come from Pi's own getSupportedThinkingLevels/clampThinkingLevel, so this
 // array exists for exactly one job the type system cannot do at runtime:
 // rejecting a hand-edited pin token Pi would not recognize at all. The
-// assertion below fails the tracked strict typecheck against the INSTALLED Pi
-// package (tests/fm-pi-primary-types.test.sh) the moment Pi adds or removes a
-// level, in either direction, so the list cannot drift into a stale Firstmate
-// catalog.
+// assertion below fails compilation if the SDK's types add or remove a level,
+// in either direction, so this list cannot drift from the checked vocabulary.
+// tests/fm-pi-primary-types.test.sh owns the checked SDK matrix.
 const BRANCH_EFFORT_LEVELS = ["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const;
 type DeclaredBranchEffort = (typeof BRANCH_EFFORT_LEVELS)[number];
 const piOwnsTheEffortVocabulary: [DeclaredBranchEffort] extends [BranchEffort]
@@ -1670,24 +1679,26 @@ ${context.command}
   // synchronous read it replaces did. The generation is captured before that
   // await so a session replaced while it runs cannot be staged into.
   pi.on?.("before_agent_start", async (event, ctx) => {
+    if (isCustomBeforeAgentStart(event)) {
+      processingOpenedThisRun = queuedProcessingContent !== null &&
+        isProcessingCustomMessage(event.message) && event.message.content === queuedProcessingContent;
+      return;
+    }
+    if (!("prompt" in event)) return;
     rememberMainModel(ctx);
     currentMainSession = ctx?.sessionManager ?? null;
     const promptGeneration = generation;
     if (!(await enqueueDelivery(() => actingAsOwner(promptGeneration)))) return;
     if (promptGeneration !== generation || !currentMainSession || !collectCurrentMainDialog()) return;
 
-    // Only user-message starts carry Pi's complete current prompt, before
-    // SessionManager persists that entry. Stage it for the next wake's mirror
-    // and suppress the later persisted copy. Custom starts have no prompt:
-    // identify a dedicated processing run by its queued message so away-mode
-    // cancellation never aborts a run opened by the captain.
-    processingOpenedThisRun =
-      event.messageType === "custom" &&
-      isProcessingCustomMessage(event.message) &&
-      queuedProcessingContent !== null &&
-      event.message.content === queuedProcessingContent;
-    if (event.messageType !== "user") return;
-    const trimmed = event.prompt.trim();
+    // For user messages this event is Pi's authoritative complete current prompt. At this point
+    // SessionManager still contains only the preceding dialog, so relying on
+    // getEntries() here loses the captain request that the next wake may answer.
+    // Stage it verbatim and remember the future persisted index for turn_end's
+    // duplicate suppression. Operational extension injections are not dialog.
+    const prompt = event.prompt;
+    processingOpenedThisRun = queuedProcessingContent !== null && prompt === queuedProcessingContent;
+    const trimmed = prompt.trim();
     if (!trimmed || isOperationalUserText(trimmed)) return;
     const file = currentMainSession.getSessionFile() ?? "";
     const index = mirrorCollection.collectAnchor?.index ?? currentMainSession.getEntries().length;
@@ -1774,7 +1785,7 @@ ${context.command}
     });
   });
 
-  // A user-message before_agent_start stages the in-flight captain prompt before
+  // before_agent_start stages Pi's authoritative in-flight prompt before
   // SessionManager persists it. The dispatch handler then collects any newly
   // persisted dialog immediately before accepting a wake, so all context joins
   // the serialized chain before that wake's branch prompt. turn_end remains
