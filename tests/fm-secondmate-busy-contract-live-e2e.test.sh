@@ -105,7 +105,7 @@ spawn_mate() {  # <case> <id> <harness> <sleeper-dir> <shim-dir>
     HOME="$user_home" CLAUDE_CONFIG_DIR='' \
     FM_STATE_OVERRIDE="$primary/state" FM_DATA_OVERRIDE="$primary/data" \
     FM_PROJECTS_OVERRIDE="$primary/projects" FM_CONFIG_OVERRIDE="$primary/config" \
-    FM_SPAWN_NO_GUARD=1 \
+    FM_SPAWN_NO_GUARD=1 FM_LIVE_CLAUDE_SHIM="$sleeper" \
     env -u TMUX -u TMUX_PANE \
     PATH="$sleeper:$shim:$PATH" \
     "$ROOT/bin/fm-spawn.sh" "$id" "$sm" "$harness" --secondmate

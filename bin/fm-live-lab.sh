@@ -42,8 +42,8 @@
 #                    TREEHOUSE_ROOT points into <lab-root>, so a worker's pool
 #                    never lands in ~/.treehouse, and DISABLE_AUTOUPDATER=1
 #                    keeps Claude Code from replacing the shared binary under
-#                    a running lab, as every live run does (tests/lib.sh). On
-#                    Claude the lab also installs bin/fm-live-claude.sh's shim
+#                    a running lab, as every live run does (tests/lib.sh). The
+#                    lab also installs bin/fm-live-claude.sh's shim
 #                    (<lab-root>/claude-shim, first on every lab process's
 #                    PATH), so a lab Claude runs with a scratch HOME and
 #                    ~/.local and cannot touch the host's installed launcher.
@@ -174,6 +174,7 @@ lab_env_base() {
   printf '%s\n' "HOME=$HOME" "USER=${USER:-$(id -un)}" "LOGNAME=${USER:-$(id -un)}" \
     "PATH=${CLAUDE_SHIM:+$CLAUDE_SHIM:}$PATH" "SHELL=${SHELL:-/bin/zsh}" "TERM=xterm-256color" "LANG=${LANG:-en_US.UTF-8}" \
     "TMUX_TMPDIR=$TMUX_DIR" "TREEHOUSE_ROOT=$ROOT/treehouse" "FM_BACKEND=tmux" "DISABLE_AUTOUPDATER=1"
+  [ -z "${CLAUDE_SHIM:-}" ] || printf '%s\n' "FM_LIVE_CLAUDE_SHIM=$CLAUDE_SHIM"
   [ -z "${CLAUDE_DIR:-}" ] || printf '%s\n' "CLAUDE_CONFIG_DIR=$CLAUDE_DIR"
 }
 
@@ -490,7 +491,7 @@ cmd_up() {
   case "$CLAUDE_DIR" in ''|/*) ;; *) die "CLAUDE_CONFIG_DIR must be an absolute path" ;; esac
   CLAUDE_STORE="${CLAUDE_DIR:-$HOME}/.claude.json"
   [ -z "$root" ] || [ ! -e "$root" ] || die "refusing '$root': a lab root must not exist yet"
-  for tool in git tmux jq node python3 shasum "$harness"; do
+  for tool in git tmux jq node python3 shasum claude "$harness"; do
     command -v "$tool" >/dev/null 2>&1 || die "$tool is required and was not found on PATH"
   done
 
@@ -507,10 +508,7 @@ cmd_up() {
   GATE="$LAB/data/$WORKER_ID/gate"
   PI_TRUST_BEFORE=$(digest "$PI_TRUST_STORE")
   treehouse_listing | sort > "$ROOT/.treehouse-before"
-  CLAUDE_SHIM=
-  if [ "$harness" = claude ]; then
-    CLAUDE_SHIM=$("$SCRIPT_DIR/fm-live-claude.sh" shim "$ROOT/claude-shim") || die "cannot install the live Claude shim"
-  fi
+  CLAUDE_SHIM=$("$SCRIPT_DIR/fm-live-claude.sh" shim "$ROOT/claude-shim") || die "cannot install the live Claude shim"
   {
     echo "$RECORD_TOKEN"
     echo "harness=$harness"

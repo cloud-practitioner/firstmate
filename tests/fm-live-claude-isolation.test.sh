@@ -31,6 +31,7 @@ cat > "$HOST/.local/share/claude/versions/9.9.9" <<'SH'
   printf 'argv0=%s\n' "$(basename "$0")"
   printf 'home=%s\n' "$HOME"
   printf 'path=%s\n' "$PATH"
+  printf 'shim=%s\n' "${FM_LIVE_CLAUDE_SHIM:-unset}"
   printf 'autoupdater=%s\n' "${DISABLE_AUTOUPDATER:-unset}"
   printf 'updates=%s\n' "${DISABLE_UPDATES:-unset}"
   printf 'xdg_data=%s\n' "${XDG_DATA_HOME:-unset}"
@@ -55,6 +56,7 @@ cp "$0" "$XDG_DATA_HOME/claude/versions/9.9.9" 2>/dev/null || true
 ln -sfn "$XDG_DATA_HOME/claude/versions/9.9.9" "$HOME/.local/bin/claude"
 if [ "${FM_STUB_CLEANUP:-}" = 1 ]; then rm -rf "$XDG_DATA_HOME/claude"; fi
 if [ -n "${FM_STUB_NESTED:-}" ]; then FM_STUB_UPDATER= FM_STUB_NESTED= claude --nested; fi
+if [ -n "${FM_STUB_SCRIPT:-}" ]; then exec env FM_STUB_SCRIPT= bash "$FM_STUB_SCRIPT"; fi
 exit 0
 SH
 chmod +x "$HOST/.local/share/claude/versions/9.9.9"
@@ -202,13 +204,24 @@ assert_contains "$out" "shim=unset" "no claude installed means no shim"
 case_dir="$TMP_ROOT/spawn"
 home="$case_dir/home"; proj="$case_dir/proj"; wt="$case_dir/wt"; launchlog="$case_dir/launch.log"
 fakebin=$(make_spawn_fakebin "$case_dir/fake" gh gh-axi)
+ln -s "$(command -v node)" "$fakebin/node"
 fm_test_spawn_home "$home" claude
 fm_git_worktree "$proj" "$wt" "wt-live-claude"
 fm_test_spawn_brief "$home" LC-1
 : > "$launchlog"
-FM_LIVE_CLAUDE_SHIM="$SHIM" FM_FAKE_LAUNCH_LOG="$launchlog" \
-  fm_test_run_spawn "$home" "$wt" "$fakebin" LC-1 "$proj" --mode no-mistakes --yolo off >/dev/null 2>&1 \
-  || fail "the claude spawn must stage its launch command"
+spawn_script="$case_dir/spawn.test.sh"
+{
+  printf '#!/usr/bin/env bash\nset -u\n'
+  printf '. %q\n' "$ROOT/tests/fixtures.sh"
+  printf 'fm_test_run_spawn'
+  printf ' %q' "$home" "$wt" "$fakebin" LC-1 "$proj" --mode no-mistakes --yolo off
+  printf '\n'
+} > "$spawn_script"
+: > "$LOG"
+out=$(runenv FM_FAKE_LAUNCH_LOG="$launchlog" FM_STUB_SCRIPT="$spawn_script" FM_STUB_UPDATER=rogue FM_STUB_CLEANUP=1 \
+  "$SHIM/claude" --primary 2>&1) \
+  || fail "an absolute-shim primary without an inherited marker must stage its spawn: $out"
+assert_equals "$SHIM" "$(logval shim 1)" "the absolute-shim primary must export its shim identity"
 launch=$(cat "$launchlog")
 [ -n "$launch" ] || fail "no claude launch command was captured"
 : > "$LOG"
@@ -219,7 +232,7 @@ assert_equals "$LAUNCHER_BEFORE" "$(launcher)" "a claude pane spawned from a liv
 assert_equals "$STATE_BEFORE" "$(host_state)" "a spawned claude pane must not change ~/.local"
 case "$(logval home)" in "$SHIM"/homes/*) ;; *) fail "the spawned claude must run in the shim's scratch HOME, saw: $(logval home)" ;; esac
 assert_equals 1 "$(logval autoupdater)" "the spawned claude must run with the updater off"
-pass "fm-spawn carries the shim into a claude pane built without the gate's PATH"
+pass "an absolute-shim primary restores the marker and guards a daemon-built claude pane"
 
 # A spawn outside a live scenario is unchanged.
 : > "$launchlog"
@@ -237,5 +250,39 @@ fm_test_spawn_brief "$home" LC-2
 [ -s "$launchlog" ] || fail "no ordinary launch command was captured"
 case "$(cat "$launchlog")" in *"$SHIM"*) fail "an ordinary spawn must not mention the shim" ;; esac
 pass "an ordinary spawn is unchanged"
+
+lab_source="$TMP_ROOT/lab-source"
+fm_git_init_commit "$lab_source"
+lab_fakebin=$(fm_fakebin "$TMP_ROOT/lab-tools")
+fm_fake_exit0 "$lab_fakebin" jq node python3 pi
+cat > "$lab_fakebin/tmux" <<'SH'
+#!/usr/bin/env bash
+case "$*" in *new-session*) ;; *) exit 1 ;; esac
+printf '%s\n' "${FM_LIVE_CLAUDE_SHIM:-unset}" > "$TREEHOUSE_ROOT/../lab-shim"
+FM_STUB_LOG="$TREEHOUSE_ROOT/../claude.log" FM_STUB_UPDATER=rogue FM_STUB_CLEANUP=1 claude --lab-probe || exit 2
+exit 1
+SH
+chmod +x "$lab_fakebin/tmux"
+for lab_harness in claude pi; do
+  for helper in worker mate; do
+    lab="$TMP_ROOT/lab-$lab_harness-$helper"
+    out=$(runenv PATH="$lab_fakebin:$HOST_REAL/.local/bin:/usr/bin:/bin" \
+      "$ROOT/bin/fm-live-lab.sh" up --harness "$lab_harness" "--$helper" --source "$lab_source" "$lab" 2>&1)
+    lab_rc=$?
+    runenv PATH="$lab_fakebin:/usr/bin:/bin" "$ROOT/bin/fm-lab-home.sh" teardown "$lab/home" \
+      || fail "the non-live lab must release its unused tmux directory"
+    expect_code 1 "$lab_rc" "the lab fixture must stop before starting a real backend: $out"
+    assert_contains "$out" "cannot start the lab tmux server" "the lab fixture reached the clean process environment"
+    assert_equals "$lab/claude-shim" "$(cat "$lab/lab-shim")" "$lab_harness --$helper must propagate the lab shim identity"
+    case "$(LOG="$lab/claude.log" logval home)" in
+      "$lab/claude-shim"/homes/*) ;;
+      *) fail "$lab_harness --$helper must guard Claude from the shared lab environment" ;;
+    esac
+    assert_equals 1 "$(LOG="$lab/claude.log" logval autoupdater)" "$lab_harness --$helper must disable the updater"
+    assert_equals "$LAUNCHER_BEFORE" "$(launcher)" "$lab_harness --$helper must not change the host launcher"
+    assert_equals "$STATE_BEFORE" "$(host_state)" "$lab_harness --$helper must not change the host ~/.local"
+  done
+done
+pass "Claude and Pi labs guard their shared process environment with either helper enabled"
 
 assert_equals "$LAUNCHER_BEFORE" "$(launcher)" "the fake host launcher is intact at the end"

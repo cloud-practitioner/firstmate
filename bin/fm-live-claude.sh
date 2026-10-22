@@ -144,7 +144,7 @@ run_shim() {
   export HOME="$sb" XDG_DATA_HOME="$sb/.local/share" XDG_STATE_HOME="$sb/.local/state" XDG_CACHE_HOME="$sb/.cache"
   unset XDG_BIN_HOME
   export DISABLE_AUTOUPDATER=1 DISABLE_UPDATES=1
-  export PATH="$shimdir${newpath:+:$newpath}"
+  export FM_LIVE_CLAUDE_SHIM="$shimdir" PATH="$shimdir${newpath:+:$newpath}"
   exec -a claude "$shimdir/real/claude" "$@"
 }
 
