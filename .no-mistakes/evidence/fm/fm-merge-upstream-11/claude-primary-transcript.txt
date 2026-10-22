@@ -1,0 +1,108 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l
+
+[exit 0]
+
+$ tmux -L fm-lab new-session -d -s primary -n fm-live -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l claude
+
+[exit 0]
+
+$ tmux -L fm-lab capture-pane -p -t primary
+
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ Try "refactor fm-pr-check.sh"
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary -l Reply exactly FIRSTMATE_LAB_READY. Do not use tools, change files, or run lifecycle operations. This is an isolated smoke test.
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary Enter
+
+[exit 0]
+
+$ tmux -L fm-lab capture-pane -p -S -100 -t primary
+
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ
+
+
+❯ Reply exactly FIRSTMATE_LAB_READY. Do not use tools, change files, or run lifecycle operations. This is an isolated
+  smoke test.
+
+● FIRSTMATE_LAB_READY
+
+✻ Cogitated for 2s · done 1:11 AM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     tmux detected · scroll with PgUp/PgDn · or add 'set -g mouse on' to ~/.tmux.conf for wheel scroll
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 6% used
+  ⏵⏵ auto mode on (shift+tab to cycle)
+
+[exit 0]
+
+$ tmux -L fm-lab kill-server
+
+[exit 0]

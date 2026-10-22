@@ -1,0 +1,74 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/live/home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/live/home
+[exit 0]
+
+$ bin/fm-capacity.sh
+capacity: free_lanes=unknown reason=no-target lanes=0 target=none secondmates=0 load1=4.41 cores=6 mem_free_pct=23 disk_free_mb=943262
+Lanes: 0 running, no target set (config/lane-capacity absent).
+Host: load 4.41 on 6 cores, memory free 23%, disk free 943262 MB.
+[exit 0]
+
+$ bin/fm-capacity.sh
+capacity: free_lanes=2 reason=ok lanes=2 target=4 secondmates=1 load1=4.41 cores=6 mem_free_pct=23 disk_free_mb=943262
+Lanes: 2 running of 4 target, 2 open.
+Secondmates: 1 (hold no lane).
+Host: load 4.41 on 6 cores, memory free 23%, disk free 943262 MB.
+[exit 0]
+
+$ bin/fm-capacity.sh
+capacity: free_lanes=unknown reason=invalid-target lanes=2 target=invalid secondmates=1 load1=4.41 cores=6 mem_free_pct=23 disk_free_mb=943262
+Lanes: 2 running, target unreadable (config/lane-capacity must hold one non-negative integer).
+Secondmates: 1 (hold no lane).
+Host: load 4.41 on 6 cores, memory free 23%, disk free 943262 MB.
+fm-capacity: config/lane-capacity must hold one non-negative integer
+[exit 1]
+
+$ bin/fm-harness.sh secondmate audit
+claude
+[exit 0]
+
+$ bin/fm-harness.sh secondmate-model audit
+sonnet
+[exit 0]
+
+$ bin/fm-harness.sh secondmate-effort audit
+low
+[exit 0]
+
+$ bin/fm-harness.sh secondmate other
+codex
+[exit 0]
+
+$ bin/fm-harness.sh secondmate audit
+claude
+[exit 0]
+
+$ bin/fm-harness.sh secondmate other
+error: config/secondmate-harness line 3: duplicate 'mate audit:' override (already set on line 2)
+[exit 1]
+
+$ bin/fm-harness.sh secondmate-model other
+error: config/secondmate-harness line 3: duplicate 'mate audit:' override (already set on line 2)
+[exit 1]
+
+$ bin/fm-harness.sh secondmate-effort other
+error: config/secondmate-harness line 3: duplicate 'mate audit:' override (already set on line 2)
+[exit 1]
+
+$ bin/fm-brief.sh lab-ship lab-project --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/live/home/data/lab-ship/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+
+$ bin/fm-brief.sh lab-scout lab-project --scout --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/live/home/data/lab-scout/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+
+$ bash -c . ./bin/fm-backend.sh; fm_backend_name
+tmux[exit 0]
+
+$ bash -c . ./bin/fm-backend.sh; fm_backend_name
+paseo[exit 0]
+
+$ bash -c . ./bin/fm-backend.sh; fm_backend_source paseo; fm_backend_paseo_tool_check
+error: backend=paseo selected but the 'paseo' CLI was not found on PATH or at /Applications/Paseo.app/Contents/Resources/bin/paseo (https://paseo.sh)
+[exit 1]

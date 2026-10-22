@@ -1,0 +1,9 @@
+Before merge (dc1235ef implementation), targeted explicit-no-run regression:
+not ok - explicit no-run answer falls through to the current status (missing: 'state: working')
+--- output ---
+state: unknown · source: run-step · complete same-branch run inventory unreadable; run ids: 
+baseline_exit=1
+
+Merge head implementation, same regression:
+ok - runs_on_current_branch: 0 makes a capped overview fall through to crew-state sources
+target_exit=0

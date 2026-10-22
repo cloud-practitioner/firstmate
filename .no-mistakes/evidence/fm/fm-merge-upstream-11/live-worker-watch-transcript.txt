@@ -1,0 +1,194 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l
+
+[exit 0]
+
+$ tmux -L fm-lab new-session -d -s primary -n fm-live -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l claude
+
+[exit 0]
+
+$ tmux -L fm-lab display-message -p -t primary #{socket_path},#{pid},0
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l/tmux/tmux-1000/fm-lab,2464640,0
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary -l This is a disposable lab verification. Use one Bash tool call with timeout 90000 to execute exactly the following command. Do not read or modify any other files and do not start any pipeline or fleet operations. Command: printf 'blocked [key=lab-wait]: waiting for test operator\n' > "$FM_HOME/state/live.status"; /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/bin/fm-busy-event.sh arm "$FM_HOME/state" live; sleep 70
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary Enter
+
+[exit 0]
+
+$ tmux -L fm-lab capture-pane -p -S -100 -t primary
+
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ
+
+
+❯ This is a disposable lab verification. Use one Bash tool call with timeout 90000 to execute exactly the following
+  command. Do not read or modify any other files and do not start any pipeline or fleet operations. Command: printf
+  'blocked [key=lab-wait]: waiting for test operator\n' > "$FM_HOME/state/live.status";
+  /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/bin/fm-busy-event.sh arm "$FM_HOME/state"
+  live; sleep 70
+
+● Writing lab blocked status, arm busy event, waiting 70s
+  ⎿  $ printf 'blocked [key=lab-wait]: waiting for test operator\n' > "$FM_HOME/state/live.status";
+     /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/bin/fm-busy-event.sh arm "$FM_HOME/state"
+     live; sleep 70
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+✽ Unfurling… (5s · ↓ 309 tokens)
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 6% used
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+[exit 0]
+
+$ bin/fm-crew-state.sh live
+state: working · source: pane · harness busy (fm-spawn)
+
+[exit 0]
+
+WATCH first-blocker exit=0
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l/state/live.status
+
+$ bin/fm-wake-drain.sh
+1792631936	2	signal	live.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l/state/live.status
+wake annotation: latest wake-EVENT observed at drain, not current state: live.status: blocked [key=lab-wait]: waiting for test operator
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+live [key=lab-wait] blocked: waiting for test operator
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 2471045.1792631936.h8dMNC
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 4s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  After draining queued wakes, repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+
+[exit 0]
+
+$ bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 2471045.1792631936.h8dMNC
+
+[exit 0]
+
+WATCH opted-in-wait exit=-15
+
+WAIT DEFERRAL LOG
+[2026-10-22T01:19:01+0000] absorbed busy (no completed turn) timer reset: primary:fm-live
+[2026-10-22T01:19:05+0000] absorbed busy (no completed turn) (declared blocker explains the quiet, idle 4s): primary:fm-live
+[2026-10-22T01:19:09+0000] absorbed busy (no completed turn) (declared blocker explains the quiet, idle 4s): primary:fm-live
+
+WATCH opted-out-wait-0 exit=0
+check: rearm-resurface
+
+$ bin/fm-wake-drain.sh
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+live [key=lab-wait] blocked: waiting for test operator
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 0 --recovery-generation 2476097.1792631952.sNHrA6
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 3s ago)) - full banner already printed this episode.
+
+[exit 0]
+
+$ bin/fm-wake-drain.sh --ack-through 0 --recovery-generation 2476097.1792631952.sNHrA6
+
+[exit 0]
+
+WATCH opted-out-wait-1 exit=0
+stale: primary:fm-live (idle 11s, possible wedge, escalation 1)
+
+$ bin/fm-wake-drain.sh
+1792631961	3	stale	primary:fm-live	stale: primary:fm-live (idle 11s, possible wedge, escalation 1)
+OPEN DECISIONS (still open, folded from the durable status logs - not just the latest line):
+live [key=lab-wait] blocked: waiting for test operator
+OPEN DECISIONS: close one by answering it: bin/fm-send.sh <task> --resolve-key <key> '<answer>'
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 3 --recovery-generation 2493476.1792631961.O1P2NZ
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 2s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+
+[exit 0]
+
+$ bin/fm-wake-drain.sh --ack-through 3 --recovery-generation 2493476.1792631961.O1P2NZ
+
+[exit 0]
+
+$ bin/fm-send.sh live --resolve-key lab-wait Test operator supplied the answer; finish the wait and return LAB_WAIT_RESOLVED.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 4s ago)) - full banner already printed this episode.
+
+[exit 0]
+
+RESOLVED STATUS
+blocked [key=lab-wait]: waiting for test operator
+resolved [key=lab-wait] [at=1792631965]: answered: Test operator supplied the answer; finish the wait and return LAB_WAIT_RESOLVED.
+
+$ tmux -L fm-lab capture-pane -p -S -100 -t primary
+
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ
+
+
+❯ This is a disposable lab verification. Use one Bash tool call with timeout 90000 to execute exactly the following
+  command. Do not read or modify any other files and do not start any pipeline or fleet operations. Command: printf
+  'blocked [key=lab-wait]: waiting for test operator\n' > "$FM_HOME/state/live.status";
+  /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/bin/fm-busy-event.sh arm "$FM_HOME/state"
+  live; sleep 70
+
+  Writing lab blocked status, arm busy event, waiting 70s · 34s
+  ⎿  $ printf 'blocked [key=lab-wait]: waiting for test operator\n' > "$FM_HOME/state/live.status";
+     /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/bin/fm-busy-event.sh arm "$FM_HOME/state"
+     live; sleep 70 (34s · 2 lines)
+     (ctrl+b ctrl+b (twice) to run in background)
+
+❯ : Firstmate instruction waiting: list "$FM_TASK_INBOX"/*.msg in your 'live.inbox' steering inbox, read and act on
+  each in numeric order, then mv each into its handled/.
+  ctrl+x ctrl+s to send now
+
+
+
+
+
+
+
+
+
+
+
+
+✢ Unfurling… (39s · ↓ 327 tokens)
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ Press up to edit queued messages
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 6% used
+  ⏵⏵ auto mode on (shift+tab to cycle)
+
+[exit 0]
+
+$ tmux -L fm-lab kill-server
+
+[exit 0]

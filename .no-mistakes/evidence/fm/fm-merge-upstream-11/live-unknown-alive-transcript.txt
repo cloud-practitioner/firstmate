@@ -1,0 +1,130 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l
+
+[exit 0]
+
+$ tmux -L fm-lab new-session -d -s primary -n fm-live -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l claude -p --allowedTools Bash -- Disposable lab verification: execute one Bash tool call with timeout 90000, exactly: printf 'working: observing a long foreground tool call\n' > "$FM_HOME/state/live.status"; /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/bin/fm-busy-event.sh arm "$FM_HOME/state" live --state unknown; sleep 80. Do not inspect or change any other files, use no other tools, and do not perform fleet or pipeline operations. After the command completes respond LAB_DONE.
+
+[exit 0]
+
+$ tmux -L fm-lab display-message -p -t primary #{socket_path},#{pid},0
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l/tmux/tmux-1000/fm-lab,2603147,0
+
+[exit 0]
+
+$ tmux -L fm-lab capture-pane -p -S -80 -t primary
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[exit 0]
+
+$ bin/fm-crew-state.sh live
+state: unknown · source: pane · harness state unavailable (unknown fm-spawn)
+
+[exit 0]
+
+WATCH status-event exit=0
+signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l/state/live.status
+
+$ bin/fm-wake-drain.sh
+1792632111	2	signal	live.status	signal: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l/state/live.status
+wake annotation: latest wake-EVENT observed at drain, not current state: live.status: working: observing a long foreground tool call
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 2620530.1792632111.Q4jBbf
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 6s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  After draining queued wakes, repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+
+[exit 0]
+
+$ bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 2620530.1792632111.Q4jBbf
+
+[exit 0]
+
+WATCH first-stale-0 exit=0
+stale: primary:fm-live
+
+$ bin/fm-wake-drain.sh
+1792632121	3	stale	primary:fm-live	stale: primary:fm-live
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 3 --recovery-generation 2632842.1792632121.7w2Wmi
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 3s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+
+[exit 0]
+
+$ bin/fm-wake-drain.sh --ack-through 3 --recovery-generation 2632842.1792632121.7w2Wmi
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary -l lab viewport change (not submitted)
+
+[exit 0]
+
+WATCH bounded-successor exit=-15
+
+LIVE UNKNOWN-ALIVE TRIAGE
+[2026-10-22T01:22:08+0000] absorbed non-terminal stale (declared wait or open captain call already re-surfaced this window): primary:fm-live
+[2026-10-22T01:22:09+0000] absorbed non-terminal stale timer reset: primary:fm-live
+
+$ bin/fm-wake-drain.sh
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 0 --recovery-generation 2640229.1792632131.3Tunpg
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 3s ago)) - full banner already printed this episode.
+
+[exit 0]
+
+$ bin/fm-wake-drain.sh --ack-through 0 --recovery-generation 2640229.1792632131.3Tunpg
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary -l  another viewport change
+
+[exit 0]
+
+WATCH no-progress-0 exit=0
+stale: primary:fm-live
+
+$ tmux -L fm-lab kill-server
+
+[exit 0]

@@ -1,0 +1,187 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l
+
+[exit 0]
+
+$ tmux -L fm-lab new-session -d -s primary -n fm-live -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l claude
+
+[exit 0]
+
+$ tmux -L fm-lab display-message -p -t primary #{socket_path},#{pid},0
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/l/tmux/tmux-1000/fm-lab,2907988,0
+
+[exit 0]
+
+$ tmux -L fm-lab capture-pane -p -t primary
+
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ Try "how does herdr.sh work?"
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary -l Disposable lab verification. Run exactly one Bash command: `printf 'working: implementation continues before validation\n' > "$FM_HOME/state/live.status"; /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/bin/fm-busy-event.sh arm "$FM_HOME/state" live --state idle`. Do not use other tools or inspect any other files. Do not initialize, run or control a pipeline. Then reply exactly LAB_IDLE_READY.
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary Enter
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary Enter
+
+[exit 0]
+
+$ tmux -L fm-lab capture-pane -p -S -100 -t primary
+
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ
+
+
+❯ Disposable lab verification. Run exactly one Bash command: printf 'working: implementation continues before
+  validation\n' > "$FM_HOME/state/live.status";
+  /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/bin/fm-busy-event.sh arm "$FM_HOME/state"
+  live --state idle. Do not use other tools or inspect any other files. Do not initialize, run or control a pipeline.
+  Then reply exactly LAB_IDLE_READY.
+
+  Ran 1 shell command
+
+● LAB_IDLE_READY
+
+✻ Cogitated for 11s · done 1:27 AM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     tmux detected · scroll with PgUp/PgDn · or add 'set -g mouse on' to ~/.tmux.conf for wheel scroll
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5 | ctx: 7% used
+  ⏵⏵ auto mode on (shift+tab to cycle)
+
+[exit 0]
+
+$ bash -c cd "$1" && no-mistakes axi status _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/nm-read/repo
+current_branch: fm/no-run
+runs_on_current_branch: 0
+runs: 0 runs yet in this repository
+help[1]: "Run no-mistakes axi run --intent \"the user's goal\" --yes to validate the current branch"
+
+[exit 0]
+
+$ bin/fm-crew-state.sh live
+state: working · source: status-log · implementation continues before validation
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary -l Still the same disposable test. Execute exactly one Bash command: `printf 'done: PR https://bitbucket.org/disposable/lab/pull-requests/7 checks green\n' >> "$FM_HOME/state/live.status"`. Do not contact the forge, do not initialize or control any pipeline, and do not use other tools. Then reply LAB_REPORT_WRITTEN.
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary Enter
+
+[exit 0]
+
+$ tmux -L fm-lab send-keys -t primary Enter
+
+[exit 0]
+
+$ bin/fm-crew-state.sh live
+state: blocked · source: status-log · named head 1fbcc67c726997ac3796be72cf9959fb3890b402 is unreachable outside the worker copy
+
+[exit 0]
+
+$ git init --bare -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/nm-read/durable.git
+
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/nm-read/repo remote add origin file:///home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/nm-read/durable.git
+
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/nm-read/repo push -q origin HEAD:refs/heads/fm/no-run
+
+[exit 0]
+
+$ git --git-dir=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/nm-read/durable.git show-ref
+1fbcc67c726997ac3796be72cf9959fb3890b402 refs/heads/fm/no-run
+
+[exit 0]
+
+$ bin/fm-crew-state.sh live
+state: done · source: status-log · PR https://bitbucket.org/disposable/lab/pull-requests/7 checks green
+
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/nm-read/repo -c user.name=Lab -c user.email=lab@example.invalid -c core.hooksPath=/dev/null commit --allow-empty -qm unpushed follow-up
+
+[exit 0]
+
+$ bin/fm-crew-state.sh live
+state: blocked · source: status-log · named head 8ce05936b294d2a355b0a4a353d4fcf296d9764d is unreachable outside the worker copy
+
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/nm-read/repo push -q origin HEAD:refs/heads/fm/no-run
+
+[exit 0]
+
+$ bin/fm-crew-state.sh live
+state: done · source: status-log · PR https://bitbucket.org/disposable/lab/pull-requests/7 checks green
+
+[exit 0]
+
+$ tmux -L fm-lab kill-server
+
+[exit 0]

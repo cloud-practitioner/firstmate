@@ -1,0 +1,75 @@
+$ git show -s --format=%P HEAD
+dc1235ef0e8609d5280e5c06afc44cec9fef1182 83b70ef49e33eff529f574618415997c8ef67518
+[exit 0]
+
+$ git rev-list --count a65dceee..83b70ef4
+12
+[exit 0]
+
+$ git merge-base --is-ancestor dc1235ef HEAD
+[exit 0]
+
+$ git merge-base --is-ancestor 83b70ef4 HEAD
+[exit 0]
+
+$ git diff --name-status dc1235ef HEAD -- contrib/iqx-ixia-hook bin/fm-pr-check.sh bin/fm-pr-merge.sh bin/fm-pr-poll.sh bin/fm-pr-lib.sh bin/fm-dod-lib.sh
+[exit 0]
+
+$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab config user.name Disposable Lab
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab config user.email lab@example.invalid
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab remote add origin https://bitbucket.org/iqxbusiness/disposable-lab
+[exit 0]
+
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/contrib/iqx-ixia-hook/ixia-hook-install.sh iqx-lab
+installed iqx-lab -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab/.git/hooks/commit-msg
+[exit 0]
+
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/contrib/iqx-ixia-hook/ixia-hook-verify.sh iqx-lab
+ok iqx-lab (1 worktrees share /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab/.git/hooks/commit-msg)
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab commit -q --allow-empty -m #123 preserve fork contribution
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab log -1 --format=%B
+#123 preserve fork contribution
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab commit -q --allow-empty --amend --no-edit
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/hook-home/projects/iqx-lab log -1 --format=%B
+#123 preserve fork contribution
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+
+[exit 0]
+
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/fm-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/fm-home
+[exit 0]
+
+$ bash -c . ./bin/fm-nm-run-lib.sh; fm_nm_run_bounded "$PWD" 10 daemon status; printf "state_db="; fm_nm_state_db "$PWD"
+  ○ daemon not running
+state_db=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/nm-chosen/state.sqlite
+[exit 0]
+
+$ bash -c . ./bin/fm-nm-run-lib.sh; fm_nm_run_bounded "$PWD" 10 daemon status; printf "state_db="; fm_nm_state_db "$PWD"
+  ○ daemon not running
+state_db=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/nm-explicit/state.sqlite
+[exit 0]
+
+$ bash -c . ./bin/fm-nm-run-lib.sh; fm_nm_run_bounded "$PWD" 10 daemon status; printf "state_db="; fm_nm_state_db "$PWD"
+  ○ daemon not running
+state_db=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/contracts/account/.no-mistakes/state.sqlite
+[exit 0]

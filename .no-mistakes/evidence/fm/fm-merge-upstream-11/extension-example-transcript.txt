@@ -1,0 +1,49 @@
+not-autohandled: example-file (left for the handler; still unacknowledged)
+
+--- LIVE FILE-SIGNAL REGISTRATION ---
+registered: example-file (file-signal from org.firstmate.example.file-signal@1.0.0)
+owner-token: sha256:13781c392bd7030669803aaee224f272e895f32e69f23be074786edf0d7b901c
+retire: bin/fm-procevent.sh retire example-file --if-owner sha256:13781c392bd7030669803aaee224f272e895f32e69f23be074786edf0d7b901c
+--- CAPTURED RESULT ---
+build 42 completed successfully
+
+--- CLASSIFICATION ---
+file-signal
+{
+  "capabilities": [
+    {
+      "adapter_names": [
+        "file-signal"
+      ],
+      "name": "process-event-adapter",
+      "version": 1
+    }
+  ],
+  "consents": {
+    "artifact_references": true,
+    "credential_store": false,
+    "network": false,
+    "task_metadata": false,
+    "trusted_same_user_code": true
+  },
+  "entrypoint": "file-signal.mjs",
+  "entrypoint_sha256": "sha256:fa90eeea9f90e84afe07cd44797216fdd6196c0aefd9f0d3add25f2354eff82a",
+  "extension_id": "org.firstmate.example.file-signal",
+  "extension_version": "1.0.0",
+  "host_protocol": 1,
+  "manifest_sha256": "sha256:bc8f76ad0cb19e6d9e492eb3cab4c983938f57f40ea75def895d184274f7e32c",
+  "package_digest": "sha256:a670d3f1353bbfa659564b86f6af7783cd47d32ae9a04e7962b28aedf5bc0e76",
+  "package_root": "/tmp/fm-extension-binding.FplKrk/homes/example/data/extensions/packages/org.firstmate.example.file-signal/1.0.0/a670d3f1353bbfa659564b86f6af7783cd47d32ae9a04e7962b28aedf5bc0e76",
+  "schema": "firstmate.extension-binding.v1",
+  "source": {
+    "kind": "local-directory",
+    "path": "/tmp/fm-extension-binding.FplKrk/packages/file-signal-example"
+  },
+  "timeout_ms": 300000
+}
+ok - the shipped file-signal package is a runnable end-to-end external adapter
+not-autohandled: example-symlinked (left for the handler; still unacknowledged)
+ok - a home reached through a symlinked ancestor captures external evidence normally
+ok - handshake execution rejects and reaps foreground descendants
+
+all extension-binding tests passed

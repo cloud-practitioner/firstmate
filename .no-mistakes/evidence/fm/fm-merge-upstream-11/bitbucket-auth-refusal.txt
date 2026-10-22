@@ -1,0 +1,7 @@
+$ bin/fm-pr-check.sh auth https://bitbucket.org/disposable/lab/pull-requests/7
+error: watching a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit=1
+
+$ bin/fm-pr-merge.sh auth https://bitbucket.org/disposable/lab/pull-requests/7 --message-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GHQMB7G72JF2G9DKCS76SJ/.test-phase/pr-auth/merge-message.txt
+error: merging a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+exit=1
