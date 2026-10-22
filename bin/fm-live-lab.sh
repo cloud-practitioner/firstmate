@@ -40,13 +40,12 @@
 #                    in a lab), started from an empty environment so no inherited
 #                    TMUX, Herdr, or Pi marker reaches a lab process.
 #                    TREEHOUSE_ROOT points into <lab-root>, so a worker's pool
-#                    never lands in ~/.treehouse, and DISABLE_AUTOUPDATER=1
-#                    keeps Claude Code from replacing the shared binary under
-#                    a running lab, as every live run does (tests/lib.sh). The
-#                    lab also installs bin/fm-live-claude.sh's shim
-#                    (<lab-root>/claude-shim, first on every lab process's
-#                    PATH), so a lab Claude runs with a scratch HOME and
-#                    ~/.local and cannot touch the host's installed launcher.
+#                    never lands in ~/.treehouse. Every lab requires an
+#                    installed claude, even with a Pi primary and no helpers,
+#                    and installs bin/fm-live-claude.sh's shim at
+#                    <lab-root>/claude-shim, first on every lab process's PATH.
+#                    That script's header owns the launcher-isolation contract
+#                    for the primary and any Claude workers or second mates.
 #                    A set CLAUDE_CONFIG_DIR (absolute) is passed to every lab
 #                    process. up records the Claude store, Pi trust store, and
 #                    ~/.treehouse it selected, so check and down use those same

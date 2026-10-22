@@ -448,12 +448,10 @@ fi
 # no-mistakes gate worktree instead of being refused by
 # bin/fm-gate-refuse-lib.sh.
 #
-# Every path that lets a live run proceed also exports DISABLE_AUTOUPDATER=1 and,
-# when a claude is installed, puts bin/fm-live-claude.sh's shim first on PATH
-# (and exports FM_LIVE_CLAUDE_SHIM, which bin/fm-spawn.sh carries into a spawned
-# claude pane), so a live Claude runs with the updater off and a scratch HOME,
-# XDG dirs, and ~/.local, and can never rewrite the host's installed launcher.
-# That script's header owns the contract.
+# Every path that lets a live run proceed exports DISABLE_AUTOUPDATER=1 and,
+# when claude is installed, installs bin/fm-live-claude.sh's shim first on PATH
+# with FM_LIVE_CLAUDE_SHIM set for spawned panes; that script's header owns the
+# launcher-isolation contract.
 
 fm_live_gate() {
   local policy=$1 vars=$2

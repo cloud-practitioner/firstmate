@@ -101,7 +101,7 @@ Every such check needs two tests, because they fail for different reasons:
 - A live guard in the `live-harness-optin` family (`bin/fm-test-run.sh`) that exercises every INSTALLED harness for real and fails naming the harness and version.
   Report an absent harness explicitly rather than passing silently over it, and refuse a pass that checked nothing.
   Open it with `fm_live_gate` from `tests/lib.sh`, which is the single owner of that decision: a guard that spends no model tokens runs by default wherever its tools are installed, a guard that submits prompts stays opt-in, and its own variable or `FM_LIVE` forces it on (an absent tool then fails rather than skips) or off.
-  It also puts `bin/fm-live-claude.sh`'s shim in front of any installed `claude`, so a live Claude runs with the updater off and a scratch HOME and `~/.local`; never start a real Claude in a scenario outside it, because sandboxing only XDG or `CLAUDE_CONFIG_DIR` still lets Claude's native updater re-point the host's `~/.local/bin/claude`.
+  Before any real Claude scenario, follow the launcher-isolation contract in [`bin/fm-live-claude.sh`](../../../bin/fm-live-claude.sh)'s header.
   The portable serial CI lane has no credentials and installs the public Pi package, so token-free guards exercise the available Pi surfaces while unavailable tools capability-skip; run a prompt-submitting guard after every harness upgrade and before trusting refreshed per-harness evidence.
 
 Record the dated per-harness result in `docs/verification/runtime-backends.md`, and point at the live guard as the command that refreshes it, rather than leaving a version-scoped observation to rot into a false claim.

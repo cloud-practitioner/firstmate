@@ -327,8 +327,7 @@ pass "real herdr: current_path reads the pane's live cwd"
 # --- busy_state on a real claude harness (verified in herdr-verification-p2.md) ---
 
 if [ "${FM_HERDR_SMOKE_REAL_CLAUDE:-0}" = 1 ] && command -v claude >/dev/null 2>&1; then
-  # A real Claude only ever runs behind bin/fm-live-claude.sh's shim (updater off,
-  # scratch HOME and ~/.local), never against the host's installed launcher.
+  # Follow bin/fm-live-claude.sh's launcher-isolation contract for the real turn.
   CLAUDE_SHIM_SCRATCH=$(mktemp -d "${TMPDIR:-/tmp}/fm-herdr-smoke-claude.XXXXXX")
   claude_shim=$("$ROOT/bin/fm-live-claude.sh" shim "$CLAUDE_SHIM_SCRATCH") || fail "could not install the live Claude shim"
   fm_backend_herdr_send_literal "$TARGET" "DISABLE_AUTOUPDATER=1 CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 '$claude_shim/claude' --dangerously-skip-permissions --settings '{\"feedbackDrafts\":\"off\"}' --print 'say the word HERDRSMOKEOK and nothing else'"

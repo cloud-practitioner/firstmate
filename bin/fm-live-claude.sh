@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # fm-live-claude.sh - the single owner of running a REAL Claude Code inside a
-# live or end-to-end scenario without letting it reach the host's installed
-# launcher.
+# live or end-to-end scenario with updater-path isolation for the host's
+# installed launcher.
 #
 # Usage:
 #   fm-live-claude.sh shim <dir>
@@ -16,22 +16,28 @@
 #     runs.
 #   - HOME is a scratch directory under <dir>/homes: a symlink mirror of the
 #     caller's HOME (so the normal login, settings, trust, and transcripts under
-#     ~/.claude and ~/.claude.json behave as they do today) with its own EMPTY
-#     .local and .cache. XDG_DATA_HOME, XDG_STATE_HOME, and XDG_CACHE_HOME point
-#     inside it and XDG_BIN_HOME is unset. The host ~/.local, where Claude's
-#     native installer keeps its launcher (~/.local/bin/claude) and its
-#     versions, is therefore not reachable even if something ignores the
-#     updater switches.
+#     ~/.claude and ~/.claude.json behave as they do today) with private
+#     .local and .cache directories. XDG_DATA_HOME, XDG_STATE_HOME, and
+#     XDG_CACHE_HOME point inside it and XDG_BIN_HOME is unset. The host ~/.local,
+#     where Claude's native installer keeps its launcher (~/.local/bin/claude)
+#     and its versions, is therefore not an updater destination even if something
+#     ignores the updater switches.
 #   - PATH starts with <dir>, and the caller's ~/.local/bin entry is replaced by
 #     the scratch ~/.local/bin, a mirror of it whose claude is this shim.
 #   - the real binary is exec'd under the name claude, so process names and
 #     argv[0] stay what a real launch shows.
+# Each guarded invocation exports FM_LIVE_CLAUDE_SHIM=<dir>, including an
+# absolute-path launch without an inherited marker, so later fm-spawn.sh calls
+# can restore the shim in daemon-created panes whose PATH did not inherit it.
 # The shim refuses to run if the scratch HOME is, or resolves to, the caller's.
+# This is updater-path isolation, not a filesystem sandbox: mirrored HOME
+# entries still share the caller's files, including credentials and transcripts.
 #
-# Why this exists: a scenario that sandboxed only XDG_DATA_HOME (the host HOME
-# stayed real) let Claude's native updater re-point the host ~/.local/bin/claude
-# at the scenario's scratch versions directory, which the scenario's cleanup
-# then deleted, leaving the host `claude` a dangling symlink.
+# Sandboxing only XDG_DATA_HOME or CLAUDE_CONFIG_DIR leaves the native updater
+# able to re-point the host ~/.local/bin/claude at a disposable versions folder;
+# cleanup can then leave the host launcher dangling. In a manual scenario, never
+# create, re-point, or delete anything under the real ~/.local, and check that
+# readlink ~/.local/bin/claude is unchanged before and after the scenario.
 # tests/lib.sh's fm_live_gate and bin/fm-live-lab.sh install this shim for every
 # live scenario they open, bin/fm-spawn.sh carries it into a spawned claude
 # pane, and .no-mistakes.yaml's Test instructions name it for an agent that

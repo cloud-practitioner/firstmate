@@ -147,7 +147,7 @@ A fixture may shorten a production timeout to keep a failure path prompt, but ne
 Where a case's assertion is not about the timeout itself, give that window headroom over the measured loaded cost, and bound the test's own waiting with iteration-counted poll loops, which stretch under load where a wall-clock budget does not.
 Tests that need a real optional backend or an explicit opt-in (real herdr/zellij/cmux smoke tests, the live Pi regression) skip themselves and print the tool or environment gate needed to enable them, so the portable suite remains safe on machines without those tools.
 The [Herdr backend guide](docs/herdr-backend.md#destructive-lab-safety) owns the lane's isolation boundary, while [runtime backend verification](docs/verification/runtime-backends.md#herdr) owns active empirical evidence; live harness credential tests remain opt-in.
-A live scenario that starts a real Claude runs it through `bin/fm-live-claude.sh`'s shim, which `fm_live_gate` and `bin/fm-live-lab.sh` install, so the host's `~/.local/bin/claude` launcher is never reachable; `tests/fm-live-claude-isolation.test.sh` is the regression.
+For live Claude scenarios, follow the launcher-isolation contract in [`bin/fm-live-claude.sh`](bin/fm-live-claude.sh)'s header.
 
 ## Questions
 
