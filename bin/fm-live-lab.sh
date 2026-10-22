@@ -42,7 +42,11 @@
 #                    TREEHOUSE_ROOT points into <lab-root>, so a worker's pool
 #                    never lands in ~/.treehouse, and DISABLE_AUTOUPDATER=1
 #                    keeps Claude Code from replacing the shared binary under
-#                    a running lab, as every live run does (tests/lib.sh).
+#                    a running lab, as every live run does (tests/lib.sh). On
+#                    Claude the lab also installs bin/fm-live-claude.sh's shim
+#                    (<lab-root>/claude-shim, first on every lab process's
+#                    PATH), so a lab Claude runs with a scratch HOME and
+#                    ~/.local and cannot touch the host's installed launcher.
 #                    A set CLAUDE_CONFIG_DIR (absolute) is passed to every lab
 #                    process. up records the Claude store, Pi trust store, and
 #                    ~/.treehouse it selected, so check and down use those same
@@ -157,6 +161,7 @@ load_lab() {  # <root>: refuse anything up did not build, then load its record
   CLAUDE_STORE=$(rec_get "$ROOT" claude_store)
   PI_TRUST_STORE=$(rec_get "$ROOT" pi_trust_store)
   TREEHOUSE_DIR=$(rec_get "$ROOT" treehouse_dir)
+  CLAUDE_SHIM=$(rec_get "$ROOT" claude_shim)
 }
 
 lab_tmux() {
@@ -167,7 +172,7 @@ lab_tmux() {
 # The empty-environment base every lab process starts from.
 lab_env_base() {
   printf '%s\n' "HOME=$HOME" "USER=${USER:-$(id -un)}" "LOGNAME=${USER:-$(id -un)}" \
-    "PATH=$PATH" "SHELL=${SHELL:-/bin/zsh}" "TERM=xterm-256color" "LANG=${LANG:-en_US.UTF-8}" \
+    "PATH=${CLAUDE_SHIM:+$CLAUDE_SHIM:}$PATH" "SHELL=${SHELL:-/bin/zsh}" "TERM=xterm-256color" "LANG=${LANG:-en_US.UTF-8}" \
     "TMUX_TMPDIR=$TMUX_DIR" "TREEHOUSE_ROOT=$ROOT/treehouse" "FM_BACKEND=tmux" "DISABLE_AUTOUPDATER=1"
   [ -z "${CLAUDE_DIR:-}" ] || printf '%s\n' "CLAUDE_CONFIG_DIR=$CLAUDE_DIR"
 }
@@ -502,6 +507,10 @@ cmd_up() {
   GATE="$LAB/data/$WORKER_ID/gate"
   PI_TRUST_BEFORE=$(digest "$PI_TRUST_STORE")
   treehouse_listing | sort > "$ROOT/.treehouse-before"
+  CLAUDE_SHIM=
+  if [ "$harness" = claude ]; then
+    CLAUDE_SHIM=$("$SCRIPT_DIR/fm-live-claude.sh" shim "$ROOT/claude-shim") || die "cannot install the live Claude shim"
+  fi
   {
     echo "$RECORD_TOKEN"
     echo "harness=$harness"
@@ -519,6 +528,7 @@ cmd_up() {
     echo "claude_store=$CLAUDE_STORE"
     echo "pi_trust_store=$PI_TRUST_STORE"
     echo "treehouse_dir=$TREEHOUSE_DIR"
+    echo "claude_shim=$CLAUDE_SHIM"
   } > "$ROOT/$RECORD_NAME"
   echo "lab: $ROOT (tear down with: $0 down $ROOT)"
 

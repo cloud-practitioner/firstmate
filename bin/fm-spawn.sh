@@ -6229,6 +6229,13 @@ LAUNCH="export COMPACT_ADVISER_DISABLE=1; $LAUNCH"
 if [ -n "${DISABLE_AUTOUPDATER:-}" ]; then
   LAUNCH="export DISABLE_AUTOUPDATER=$(shell_quote "$DISABLE_AUTOUPDATER"); $LAUNCH"
 fi
+# Likewise carry the live-harness gate's Claude shim (bin/fm-live-claude.sh, which
+# owns the contract) into a claude launch, so the pane's claude runs with a
+# scratch HOME and ~/.local even when a pre-existing backend daemon built the
+# pane without the gate's PATH.
+if [ "$HARNESS" = claude ] && [ -n "${FM_LIVE_CLAUDE_SHIM:-}" ] && [ -x "$FM_LIVE_CLAUDE_SHIM/claude" ]; then
+  LAUNCH="export PATH=$(shell_quote "$FM_LIVE_CLAUDE_SHIM"):\"\$PATH\"; $LAUNCH"
+fi
 if [ -z "$SPAWN_TRACEPARENT" ] && [ "$RELAUNCH" -eq 1 ]; then
   LAUNCH="unset TRACEPARENT; $LAUNCH"
 fi

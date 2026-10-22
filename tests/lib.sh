@@ -448,9 +448,12 @@ fi
 # no-mistakes gate worktree instead of being refused by
 # bin/fm-gate-refuse-lib.sh.
 #
-# Every path that lets a live run proceed also exports DISABLE_AUTOUPDATER=1,
-# so a live harness invocation never lets Claude Code's auto-updater rewrite
-# the installed binary out from under the host.
+# Every path that lets a live run proceed also exports DISABLE_AUTOUPDATER=1 and,
+# when a claude is installed, puts bin/fm-live-claude.sh's shim first on PATH
+# (and exports FM_LIVE_CLAUDE_SHIM, which bin/fm-spawn.sh carries into a spawned
+# claude pane), so a live Claude runs with the updater off and a scratch HOME,
+# XDG dirs, and ~/.local, and can never rewrite the host's installed launcher.
+# That script's header owns the contract.
 
 fm_live_gate() {
   local policy=$1 vars=$2
@@ -515,7 +518,19 @@ fm_live_gate() {
   done
 
   export DISABLE_AUTOUPDATER=1
+  fm_live_claude_guard
   return 0
+}
+
+# fm_live_claude_guard: install bin/fm-live-claude.sh's shim for this run (idempotent).
+fm_live_claude_guard() {
+  local dir owner
+  command -v claude >/dev/null 2>&1 || return 0
+  case ":$PATH:" in *":${FM_LIVE_CLAUDE_SHIM:-/nonexistent}:"*) return 0 ;; esac
+  dir=$(fm_test_tmproot fm-live-claude-shim) || fail "fm_live_gate: cannot create the Claude shim directory"
+  owner="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/bin/fm-live-claude.sh"
+  "$owner" shim "$dir" >/dev/null || fail "fm_live_gate: cannot install the live Claude shim"
+  export FM_LIVE_CLAUDE_SHIM="$dir" PATH="$dir:$PATH"
 }
 
 # --- fakebin / PATH shims ---------------------------------------------------
