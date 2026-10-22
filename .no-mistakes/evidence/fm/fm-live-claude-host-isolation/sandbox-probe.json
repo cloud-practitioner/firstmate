@@ -1,0 +1,63 @@
+{
+  "kind": "non-live public CLI behavior probe; fixture engine, never real Claude",
+  "command": "python3 /home/node/.no-mistakes/evidence/01M5GVXJC6CT9JTBDTZCKVK98P/sandbox-probe.py",
+  "shim_creation_stdout": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim",
+  "host_before": {
+    "launcher_target": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/host/.local/share/claude/versions/fixture",
+    "launcher_resolves": true,
+    "version_sha256": "dfde40a5b0a3f1d7bb318060eecc3e30a7eec0fada391faaa5d845487ba92e7a"
+  },
+  "unguarded_xdg_only_control": {
+    "launcher_target": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/xdg-only/claude/versions/ephemeral",
+    "launcher_resolves": false,
+    "version_sha256": "dfde40a5b0a3f1d7bb318060eecc3e30a7eec0fada391faaa5d845487ba92e7a"
+  },
+  "guarded_host_after_rogue_update_and_nested_launch": {
+    "launcher_target": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/host/.local/share/claude/versions/fixture",
+    "launcher_resolves": true,
+    "version_sha256": "dfde40a5b0a3f1d7bb318060eecc3e30a7eec0fada391faaa5d845487ba92e7a"
+  },
+  "guarded_primary_environment": {
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_UPDATES": "1",
+    "FM_LIVE_CLAUDE_SHIM": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim",
+    "HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027",
+    "PATH": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim:/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027/.local/bin:/usr/bin:/bin",
+    "XDG_BIN_HOME": null,
+    "XDG_CACHE_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027/.cache",
+    "XDG_DATA_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027/.local/share",
+    "XDG_STATE_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027/.local/state",
+    "args": [
+      "--rogue",
+      "--nested",
+      "--absolute-shim-primary"
+    ],
+    "fixture_login_visible": true
+  },
+  "nested_engine_environment": {
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_UPDATES": "1",
+    "FM_LIVE_CLAUDE_SHIM": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim",
+    "HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027",
+    "PATH": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim:/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027/.local/bin:/usr/bin:/bin",
+    "XDG_BIN_HOME": null,
+    "XDG_CACHE_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027/.cache",
+    "XDG_DATA_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027/.local/share",
+    "XDG_STATE_HOME": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/shim/homes/358603027/.local/state",
+    "args": [
+      "--nested-child"
+    ],
+    "fixture_login_visible": true
+  },
+  "tampered_scratch_home_refusal": {
+    "exit": 1,
+    "stderr": "fm-live-claude: refusing: the scratch HOME would be the caller's HOME (/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/host)",
+    "engine_ran": false,
+    "host_after": {
+      "launcher_target": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GVXJC6CT9JTBDTZCKVK98P/.test-isolation-validation/manual/host/.local/share/claude/versions/fixture",
+      "launcher_resolves": true,
+      "version_sha256": "dfde40a5b0a3f1d7bb318060eecc3e30a7eec0fada391faaa5d845487ba92e7a"
+    }
+  },
+  "assertions": "all passed; intentionally synthetic, not live-Claude validation"
+}

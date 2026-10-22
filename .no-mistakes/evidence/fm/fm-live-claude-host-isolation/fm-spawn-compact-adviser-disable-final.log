@@ -1,0 +1,19 @@
+Command: bin/fm-test-run.sh --jobs 1 tests/fm-spawn-compact-adviser-disable.test.sh
+Environment: worktree-isolated HOME, toolchain ephemeral TMPDIR=/tmp, FM_LIVE=0, FM_TEST_SKIP_ORPHAN_REAP=1; inherited fleet, Herdr/tmux identity, forge and model credentials removed.
+Setup correction: fixture secondmate homes must be outside the source repository; only incidental self-cleaning toolchain temp files use /tmp.
+FM_TEST_BEGIN 2026-10-22T04:18:01Z tests/fm-spawn-compact-adviser-disable.test.sh family=backend-dispatch expected_gate_skip=none
+ok - ship launch with no allowlist starts its agent with the compact-adviser switch on
+ok - ship launch under an enabled allowlist keeps the compact-adviser switch through the cleared environment
+ok - the launch command sets the switch on its own, whichever allowlist posture is in force
+ok - a secondmate launch carries the compact-adviser switch in both allowlist postures
+ok - ship and secondmate launches export their absolute steering inbox as FM_TASK_INBOX
+ok - relaunch rebuilds the compact-adviser switch for the replacement agent in both allowlist postures
+ok - a compound raw launch-command still starts its agent with the compact-adviser switch on
+ok - ship and secondmate launches start their agent without snapshot-scoped variables a pane carries
+ok - launches preserve legitimate unmarked path overrides in both allowlist postures
+ok - spawn clears snapshot-scoped variables from its own environment before any backend call
+ok - relaunch starts the replacement agent without snapshot-scoped variables a pane carries
+FM_TEST_END 2026-10-22T04:19:51Z tests/fm-spawn-compact-adviser-disable.test.sh exit=0 duration_ms=110712 gate_skip=false
+FM_TEST_SUMMARY total=1 failed=0 skipped_gate=0 duration_ms=110766
+FM_TEST_SUMMARY_FAMILY family=backend-dispatch count=1 duration_ms=110712 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-spawn-compact-adviser-disable.test.sh duration_ms=110712

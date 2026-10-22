@@ -1,0 +1,20 @@
+Command: bin/fm-test-run.sh --jobs 1 tests/fm-live-gate.test.sh
+Environment: isolated worktree HOME/TMPDIR, FM_LIVE=0; inherited fleet, Herdr/tmux identity, forge and model credentials removed.
+FM_TEST_BEGIN 2026-10-22T04:16:07Z tests/fm-live-gate.test.sh family=standalone expected_gate_skip=none
+ok - a default-on guard runs wherever its tools are installed
+ok - an absent tool is a named capability skip, not a silent pass
+ok - a prompt-submitting guard stays off until it is asked for
+ok - a guard's own variable turns it on
+ok - a demanded run refuses to pass as a skip
+ok - FM_LIVE switches the whole family
+ok - a guard's own setting wins over FM_LIVE
+ok - any entry point of a multi-mode guard turns it on
+ok - the shared gate carries the gate-refusal bypass into every live guard
+ok - a proceeding live run exports DISABLE_AUTOUPDATER=1
+ok - DISABLE_AUTOUPDATER rides fm-spawn's claude launch through to the harness pane
+ok - DISABLE_AUTOUPDATER is embedded in the launch so a daemon-built pane keeps it
+ok - all 44 live guards refuse together on FM_LIVE=0
+FM_TEST_END 2026-10-22T04:16:25Z tests/fm-live-gate.test.sh exit=0 duration_ms=17336 gate_skip=false
+FM_TEST_SUMMARY total=1 failed=0 skipped_gate=0 duration_ms=17512
+FM_TEST_SUMMARY_FAMILY family=standalone count=1 duration_ms=17336 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-live-gate.test.sh duration_ms=17336
