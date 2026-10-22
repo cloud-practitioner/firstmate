@@ -3,7 +3,7 @@ Mode: omp (Oh My Pi) extension background wake.
 When this session owns supervision and away mode is not active:
 1. Drain first with `bin/fm-wake-drain.sh`.
    After handling all emitted wakes and reconciling open decisions and unread status lines, run the exact `--ack-through` command printed as `WAKE_ACK_REQUIRED`; until then the work remains durable for idempotent re-handling after interruption.
-2. Confirm the omp primary loaded both tracked project extensions; omp has no project-trust gate.
+2. Confirm the omp primary auto-loaded both project extensions from `.omp/extensions/`; omp has no project-trust gate, so a plain `omp` started with this home as its working directory loads them with no dialog.
    If `bin/fm-session-start.sh` reported the omp extensions as not loaded, __FM_OMP_RESTART_LONG__.
 3. Initial process cycle only: make the one required `fm_watch_arm_omp` call; if startup already owned the fleet lock, this is an ownership-based no-op.
    Use `/fm-watch-arm-omp` only as a human-entered fallback.
@@ -27,4 +27,4 @@ The Pi supervision branch (`docs/pi-supervision-branch.md`) is Pi's in-process c
 
 The turn-end guard extension lives at `__FM_OMP_TURNEND_EXT__`.
 The watcher extension lives at `__FM_OMP_EXT__`.
-`bin/fm-session-start.sh` reports when the running omp session has not loaded both required extensions.
+Both are tracked, project-local `.omp/extensions/*.ts` files that omp auto-discovers from this home with no trust dialog; `bin/fm-session-start.sh` reports when the running omp session has not loaded both required extensions.
