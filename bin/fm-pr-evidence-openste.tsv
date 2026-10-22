@@ -1,0 +1,996 @@
+# Unapproved words from the OpenSTE word list v1.01 (MIT, (c) 2026 openSTE.org), used only for warnings.
+# Format: word<TAB>up to four suggested replacements. Source: stuffbucket/vale third_party/openste (sha 19f01781). See bin/fm-pr-evidence-openste.LICENSE.
+abandon	stop
+able	can,possible
+abnormal	unusual,incorrect
+abnormality	defect
+abrasive	
+abrupt	sudden,suddenly
+absence	none,not,no
+absent	missing,no
+absolutely	fully
+absorption	absorb
+abundant	large
+abut	touch
+accelerate	increase,faster
+acceptable	permitted,satisfactory,serviceable
+acceptance	accept
+accessible	access
+accommodate	let
+accomplish	do,complete,or use a more specific command verb
+accumulate	collect
+accumulation	number,collect
+accuracy	precision
+achieve	get
+acquire	get
+act	use a specific action verb
+activate	start,operate,connect
+active	on,in operation
+activity	work
+addition	add
+additional	more
+adequate	enough
+adhere	bond,obey
+adjacent	
+adjoining	next to
+admit	let
+adopt	use
+advance	forward,set
+adverse	bad (adjective). note: give accurate and correct conditions if possible
+advisable	recommend
+advise	tell,recommend
+affect	effect (noun). note: be specific if possible
+aggravate	increase
+ahead	forward
+aid	help
+aim	point
+alert	tell
+alignment	align
+allocate	give
+allow	let
+allowable	permitted,approved
+already	in progress,no other,before now,before this. note: you can frequently omit this word and not change the meaning of your sentence
+alter	change
+alteration	change
+alternate	alternative,each second,then
+alternately	in one ... and then in the other
+alternatively	alternative
+amendment	change
+among	in
+analyze	analysis
+anchor	attach
+annotation	write
+annunciate	show
+another	one more,different,add,again
+anticlockwise	counterclockwise
+anxious	worry,feel stress,show stress,have stress
+any	one,no
+anytime	when
+apparent	see,find
+appearance	think,for ... be
+application	apply
+appoint	tell
+approach	go
+appropriate	applicable,correct
+approve	approval
+arise	cause,happen
+arrange	put
+arrangement	configuration,prepare
+arrive	get
+article	object
+ascertain	make sure
+assess	calculate,estimate
+assessment	calculate,estimate
+assign	give
+assist	help
+assistance	help
+associated	correct,related,its,their
+assume	think
+assure	make sure
+attachment	attach
+attain	get
+attempt	try
+attendance	near
+audible	hear,listen
+authentic	accurate
+authorized	approved
+avert	prevent
+avoid	prevent,do not
+aware	know,tell
+back	rear
+badly	incorrectly,unsatisfactorily,decrease
+bared	bare
+base	bottom,use
+begin	start
+beginning	start,source
+beneath	below
+beside	next to
+beware	be careful
+beyond	more than
+big	large
+bind	freely,wind around
+blank	cap
+blend	mix
+block	cause a blockage
+blot	dry
+blunted	blunt
+bolt	bolt
+both	the two
+bottom	touch
+bounds	limit
+brace	hold,strong
+branch	divide
+breadth	width
+brightness	intensity,bright
+bring	move,put
+broadcast	transmit
+brush	brush
+build	assemble,structure
+bump	hit
+burst	break
+butt	touch
+calculation	calculate
+call	tell
+cap	cap
+capability	function,can
+capable	approved,can
+capture	lock on
+care	precaution,careful,carefully
+carry	transmit
+case	condition
+categorize	category
+caution	tell
+cautiously	carefully
+cease	stop
+center	center
+centralize	center,neutral
+certain	sure,some,specified
+certify	write,approval
+channel	send
+characteristic	property,quality
+circa	approximately
+circle	around
+circulate	supply
+classification	class
+cleanliness	clean
+click	select,click
+clip	cut,clip
+close	near
+closely	carefully
+coat	layer
+coating	layer
+code	identify,code
+coincide	align
+coincident	synchronized
+collapse	close
+colored	color
+combine	mix,put together
+combustible	flammable
+commence	start
+commencement	start
+common	same,usual,general,standard
+communication	speak,hear
+comparison	compare
+compile	make,record,collect
+completely	fully
+completion	end,complete
+complicated	not easy,complex
+comply	obey
+compose	be,be together,include
+comprehensive	full
+comprise	have,contain
+compulsory	mandatory
+compute	calculate
+concentrate	all
+concern	applicable
+conclusion	end,result
+concurrently	at the same time
+conduct	do
+confirm	make sure
+conflict	different,agree
+conform	agree,adapt
+conformance	agree
+conformity	agree
+consecutive	one after the other
+consecutively	one after the other
+consequence	because of
+consider	think
+considerable	large,important,dangerous
+consistent	agree,the same as
+construct	assemble
+consult	speak,speak together,speak about
+consume	absorb
+contact	touch,speak
+contaminant	contamination
+contaminated	dirty,contamination
+contiguous	next to
+conventional	standard
+conversant	know
+converse	opposite
+convert	change
+convey	move
+coordinate	synchronized
+correctness	precision
+correspond	agree,same,different
+corresponding	related
+corrode	corrosion
+corrosive	can cause corrosion
+couple	connect,attach
+cover	include,have,cover
+crack	open,crack
+critical	very important,careful
+current	applicable,at this time,newest
+curvature	bend,curve,radius
+customize	adapt
+damage	damage
+damp	moist
+dangerously	dangerous
+deactivate	stop,disconnect,isolate
+deadly	kill
+decide	choose,decision
+deep	depth
+define	calculate,give,specified
+delay	interval,immediately,after
+delete	erase,remove,delete
+delicate	easily damaged
+deliver	supply
+delivery	supply
+demand	mandatory
+denote	show
+dent	dent
+depend	if
+deplete	decrease
+deposit	particle,contamination
+depress	push
+depressurize	pressure
+describe	explain,give information about,give details about
+deselect	clear,cancel
+design	have
+desire	want,think is best
+desired	necessary,correct,want,think is best
+destroy	unserviceable
+detach	disconnect,disengage,remove
+detail	give,refer
+detect	find,sense
+determine	find,give,choose,calculate
+detrimental	dangerous,damage
+develop	start,cause
+deviate	obey
+devise	make,find
+diagnose	find
+differ	different
+differentiate	identify
+difficulty	not easily,not easy
+dilute	mix,add
+dim	decrease
+diminish	decrease
+dip	momentarily
+direct	point
+discharge	release,go
+discontinue	stop
+discover	find
+discrepancy	difference
+discuss	speak,speak together,speak about
+disinfect	disinfectant
+dismantle	disassemble
+dispatch	send
+disperse	remove
+displace	move
+disposition	location,instruction
+disregard	ignore
+distinct	clear
+distinctly	clearly
+distribute	apply,supply
+distribution	supply
+disturb	move,change
+double	two
+doubt	not sure,think
+downward	down
+drag	pull,drag
+draw	make,pull
+drift	move
+duration	during
+early	before,short
+earth	ground
+ease	carefully remove,carefully move,easily,easy
+efficacious	good
+efficient	satisfactory
+efficiently	satisfactorily
+either	one of the two
+elapse	time,after,interval
+eliminate	remove,stop,prevent
+emit	from
+employ	use
+enable	let
+encircle	around
+enclosed	closed
+encounter	there is,there are,find
+enforce	obey
+enlarge	larger,increase
+ensue	cause
+ensure	make sure
+entail	must
+entire	full,all of
+entirely	fully
+equip	install
+equipped	have
+erect	assemble,become stable
+erratic	irregular
+escape	release
+essential	necessary,must
+establish	make sure
+evaluate	examine,analysis
+evaluation	examine,analysis
+evaporate	dry
+even	smooth,same,flat,flush
+evenly	gradually,equally
+eventually	some time
+every	all,each,interval
+evidence	show,find,indication,sign
+evident	find
+exact	correct,accurate
+exactly	accurately,fully,correct
+examination	examine,find
+exceed	more than
+except	but
+exception	but
+exceptional	unusual
+exceptionally	unusually
+excess	too much,more than,unwanted
+excessive	too much,more than
+excessively	too much,more than
+exchange	interchange,replace
+exclude	not include,not use
+excluding	without
+execute	do
+exempt	no,not show
+exercise	be careful,make sure
+exert	apply
+exhaustive	all,full
+exist	be
+expect	possible
+expose	get
+extent	depth,length,width
+exterior	external
+extra	more
+extract	remove
+extreme	very high,very bad
+extremely	very
+face	point,turn
+facilitate	help,make ... easier
+factor	cause
+fail	if ... not,failure,unsatisfactory
+failed	defective,unserviceable
+failure	if ... not. note: failure is a technical name when it means a performance error or loss of serviceability
+faint	dim,intensity (noun). note: see also bright (adjective)
+false	incorrect
+falter	smoothly,constant
+familiar	know
+fashion	procedure
+fasten	attach,connect
+fatal	kill
+faulty	defective,incorrect,unserviceable,unsatisfactory
+fear	make sure,think
+feasible	possible,cannot
+feature	have
+feed	put,supply
+few	small number. note: if possible. give a specific number
+file	remove
+filing	particle
+film	layer
+filter	filter
+final	last
+finding	result
+fine	small
+finger-tighten	tighten with your fingers
+finish	complete
+firmly	tightly
+fit	install,attach,correct
+fix	attach,set,repair,install
+flatness	flat
+flatten	flat
+flaw	damage,defective (adjective). note: be as specific as possible
+flood	use too much
+fluctuate	constant
+focus	focus
+following	these,follow
+forbidden	not permitted
+force	push,force
+foreign	unwanted
+form	shape,be
+fortify	strong
+fragile	easily damaged
+fresh	clean,new
+fulfill	obey
+function	operate,move
+fundamental	important
+furnish	give,supply
+further	more
+gain	get,increase
+gap	clearance,distance,space
+garble	clear,clearly
+gaseous	gas
+gather	collect
+gauge	measure
+gear	equipment
+generally	usually
+generate	be,give,supply
+generous	
+generously	
+gentle	carefully,lightly
+gently	carefully,lightly
+genuine	correct
+gleam	shiny
+glitch	error,failure,unserviceable
+gloss	shiny
+glow	be
+glue	bond,attach
+gouge	gouge
+govern	control
+grab	use,hold
+gradual	gradually
+graduated	graduation
+graph	graph
+grasp	hold
+grave	dangerous
+grease	lubricate,grease
+great	large,more than,very
+greatly	very much
+grip	hold
+grow	become
+guard	guard
+guide	put,move
+halt	stop
+halve	half
+hamper	difficult
+hand-tight	tighten with your hand
+hand-tighten	tighten with your hand
+handle	move,touch,careful,decision
+harden	hard
+harm	injury
+harmful	dangerous,damage
+harmonize	agree,align,harmony
+haul	move
+hazard	dangerous
+hazardous	dangerous
+heighten	increase
+helpful	help
+hesitation	smoothly,correctly,immediately
+highly	very
+hinder	prevent
+hinge	turn
+hitch	connect
+hoist	lift
+hold	hold
+house	contain
+however	but
+huge	large
+hum	hum
+hurt	injury
+identical	same
+immediate	immediately
+immerse	put fully into
+immobilize	prevent,lock
+impact	hit,effect
+impair	operate incorrectly,cause damage,decrease
+imperative	necessary,must
+implement	do
+implementation	do
+impossible	not possible,cannot
+impression	think
+improper	incorrect
+improperly	incorrectly
+improve	better
+impurity	unwanted material,contamination
+inactive	no effect,not in operation
+inadvertent	accidental
+inadvertently	accidentally
+including	thru,with
+incompatible	not compatible
+incomplete	full,not completed,all
+incorporate	include,have
+incorporation	include
+incur	cause
+independent	independently
+indicate	show
+induce	cause
+ineffective	unserviceable,unsatisfactory,not operate
+inflammable	flammable
+inform	tell
+inhale	breathe
+inhibit	prevent
+initiate	start
+inject	put
+injection	put
+injure	injury
+inoperative	off,not operate
+insert	put,engage
+inside	inner,in,into
+inspect	examine,inspection
+instead	alternative
+insufficient	not enough
+insure	make sure
+intact	not damaged
+integral	part
+interconnect	connect
+interfere	hit,catch,touch,interference
+interference	hit,catch,touch
+interior	internally
+intermediate	middle,between (preposition). note: give the limits
+interrupt	stop
+intersect	intersection
+investigate	find,investigation
+inward	inner,in
+irregularity	defect,irregular,unusual
+isolation	isolate
+jam	freely
+job	work
+join	bond,attach,connect
+jolt	shake
+just	immediately,only (adjective). note: you can frequently omit this word and not change the meaning of your sentence
+keyed	refer,key
+kind	type
+kink	kink
+knock	hit
+label	identify,label
+lack	not enough
+last	continue
+later	different,after,when (conjunction). note: give the time
+lay	put
+lead	put
+leave	keep,stop,let,ignore
+lengthen	increase
+lethal	kill
+liberal	large,thick
+liberally	large,thick
+little	small,small quantity
+log	record
+loop	loop
+lose	decrease
+lost	decrease,not find
+lowermost	bottom
+lukewarm	warm
+magnetized	magnetic
+main	primary
+maintain	keep,hold,maintenance
+major	primary
+maladjusted	incorrectly adjusted
+manipulate	move,adjust
+manner	be,configuration,method,procedure
+manufacture	make
+mask	apply
+match	align,agree
+matter	material
+may	can,possibly
+medium	moderate
+meet	engage,touch
+mention	give
+mesh	engage
+metallic	metal
+meteorological	weather
+mid	middle
+mild	weak
+minimize	minimum
+minor	small
+miscellaneous	other,all
+mix	mixture
+modify	change
+moisten	moist
+momentary	momentarily
+motion	movement
+mount	install,attach,put
+nearly	almost
+need	necessary,must,important,better
+neither	none of the two
+neutralize	neutral
+never	do not
+next	then
+noisy	noise
+nor	not
+normal	usual,correct
+normally	usually,correctly
+note	record
+notify	tell
+observe	monitor,see,obey
+obstruct	catch,prevent,blockage
+obstructed	blocked,clogged
+obstruction	blockage
+obtain	get
+occur	happen
+often	frequently,in most situations
+oil	lubricate,oil
+oil-free	oil
+once	one time,when
+opaque	not transparent
+operable	operate
+operational	serviceable,operate
+opportunity	
+origin	source
+original	initial,first
+originate	source
+otherwise	if not,differently
+outline	give general information
+outside	external,outer,near
+outward	out
+over	above,along,on,across
+overfill	too much
+overfull	too full
+overhaul	overhaul
+overheat	too hot
+overtighten	tighten too much,too tight,too tightly
+pack	put,fill
+paraphrase	with different words,use different words
+partial	not total,not completed
+per	for each,refer
+periodically	interval (noun). note: give the value
+permissible	permitted
+permit	let
+persist	continue
+persistent	continuous
+pierced	holes
+place	position,area,put
+plot	plot
+plug	connect,plug
+poor	unsatisfactory,defective,unserviceable
+pop	open,out
+portion	piece,part
+position	put,set
+potential	possible (adjective,adverb)
+pour	put
+power	supply power
+practice	procedure
+precautionary	precaution
+precede	before
+precise	accurate
+precisely	accurately
+preferable	recommend
+preferably	recommend
+preheat	temperature
+preload	load
+prelubricate	lubricate
+premature	before
+prematurely	before
+preparation	prepare
+prescribed	specified
+presence	be
+present	be,give,show
+preserve	protection,preservation
+preset	set
+press	select,push
+preventive	prevent
+previous	before
+previously	before
+primarily	primary
+principal	primary
+priority	important,before
+probability	risk
+proceed	continue
+process	send,process,procedure,during
+product	material
+profile	contour
+program	order
+progress	continue,continue (verb) note: also refer to in progress (adverb)
+progressive	gradually
+progressively	gradually
+prohibit	prevent,tell not to
+prolonged	long
+prompt	immediately
+propagation	increase
+proper	correct
+properly	correctly
+proportional	relation,proportion
+proportionally	relation
+protect	prevent,protection
+protrude	above,out
+provide	give,supply
+provided	if
+providing	if
+proximity	near
+pump	pump
+puncture	hole
+purge	remove
+purify	clean
+qualified	approved,ability
+quantity	amount,length
+quarterly	interval
+questionable	not sure
+quick	quickly
+quit	go,stop
+raise	lift,increase,retract
+rapid	fast
+rapidly	quickly
+re-	note: in general,use the word again (adverb) or back (adverb) with the basic word to replace words that have "re-" as a prefix
+reach	get,touch,at
+reactivate	operate,start
+reading	indication
+readjust	adjust
+ready	prepare
+real	correct,agree
+rearmost	rear
+reason	cause,why,because of,purpose
+reassemble	assemble
+rebuild	assemble
+recess	recess
+recharge	charge,fill,pressurize
+recheck	examine,measure,check
+reclaim	repair
+recleat	cleat
+reclose	close
+recommendation	recommend
+recondition	repair,overhaul
+reconstruction	repair
+recover	collect
+rectify	correct
+recur	happen
+reduce	decrease
+referenced	given
+refill	fill
+reflect	reflection
+register	show
+regrease	apply,more
+regulate	control,adjust
+regulation	adjustment,control
+reinforce	make stronger
+reinstall	install again
+reinstallation	installation
+rejection	reject
+relate	related
+relay	send
+relevant	related,their,its
+relieve	release
+remain	stay
+remnant	remaining
+removable	remove
+render	make
+renew	new
+renovate	repair,new
+repack	put,fill
+repaint	paint
+repairable	repair
+repeat	again
+repeated	again and again
+repeatedly	again and again
+replenish	fill,add,refuel
+reposition	move,set back
+represent	show
+repressurize	pressurize
+request	ask ... to,write
+require	necessary,must
+reseal	seal
+reset	set
+residual	remaining
+residue	remaining
+respective	related,correct
+respectively	related
+respond	result
+responsible	responsibility,the person who
+rest	remaining,be,put
+restart	start
+restore	repair,back
+restrain	hold,stop
+restrict	decrease,only
+resume	start,continue
+retain	keep
+retouch	apply,paint
+retractable	retract
+return	back
+reusable	use
+reuse	use
+reveal	show
+reverse	opposite
+review	inspection,check,examine
+rewind	wind
+rework	change the structure of
+rig	adjust
+right-hand	right
+rinse	flush
+ripped	damaged
+rise	increase
+rotary	turn
+rotate	turn
+rotation	turn
+rotational	turn
+roughen	rough
+roughness	rough
+round	circular
+route	routing,put
+routine	usual
+running	flush
+safety-wire	lock
+sample	sample
+saturate	soak
+save	keep
+scan	examine,scan,quickly look
+scored	score
+scrap	discard
+scrape	scraper
+scratched	scratch
+screw	turn,screw
+scrub	brush
+search	examine
+secure	tight,safe,correctly,attach
+securely	correctly,safely,tight
+security	correctly
+seek	get
+seem	appearance
+separable	disassemble,disconnect
+separate	disconnect,not connected,isolated,not attached
+sequence	order
+service	servicing
+serviceability	serviceable
+setup	configuration,set up
+sever	cut
+several	some,many (adjective). note: if these alternatives are not sufficient,give the range,quantity
+shall	must
+sharply	quickly,suddenly
+shield	prevent,protection
+shift	move
+shorten	decrease
+should	must,if
+sideways	side
+sight	view,look
+significant	
+signing	sign
+silence	stop
+similar	almost the same,equivalent,like
+simultaneous	at the same time
+simultaneously	at the same time
+single	one
+situated	install
+size	dimension
+slide	move
+slight	small,light
+slightly	small
+sluggish	slow
+snag	catch
+snap	click,move quickly,break
+soften	soft
+solve	solution
+soon	time (noun). note: give the time if possible
+space	distance
+spacing	distance
+sparingly	amount
+specifically	specially
+speech	voice
+spin	turn
+splash	get
+split	divide,break,damaged
+spot	mark,stain,find
+spread	apply
+spring	move
+stability	stable
+stabilization	stable
+stabilize	stable
+stage	step
+stained	dirty,stain
+stamp	stamp
+stand	stay
+state	condition,tell,say
+station	put
+stationary	stable,stop
+steadily	continuously
+steady	stable
+still	stay,continue
+stir	mix
+store	keep,storage
+straighten	straight
+strike	hit
+style	be,configuration,method,procedure
+subject	apply
+submerge	put
+submit	send
+substitute	alternative,replace,equivalent
+successful	correct
+sufficient	enough
+suitable	applicable,correct
+suitably	enough
+support	support,hold
+surplus	unwanted
+surrounding	next to,around
+survey	examine,inspection
+suspect	think
+swap	interchange
+sweep	scan
+swing	move,calibrate
+switch	set
+synchronize	adjust
+take	remove,read,get,necessary
+talk	speak
+tape	tape
+taped	record
+taut	tension
+teach	train,show how to
+tear	damage
+technique	procedure,method
+terminate	stop
+thin	liquid
+thorough	full
+thoroughly	fully
+thread	put,turn
+threaded	thread
+throughout	during
+tie	attach
+till	until
+time	time
+tip	point,tilt
+toward	to,direction
+trace	find
+track	monitor
+trained	approved
+transfer	movement,supply,move
+transition	change
+transport	send
+trapped	caught
+trigger	cause,start
+trim	cut,adjust
+trip	open,release
+triple	three
+troubleshoot	troubleshooting
+true	correct,agree
+twice	two
+unable	cannot
+unauthorized	not approved
+undamaged	not damaged
+under	below,in,less than
+underneath	below
+underside	bottom
+undertake	
+undue	unwanted
+uneven	equal,rough
+uniform	constant,equal
+uniformly	equally
+unintentional	accidental
+unintentionally	accidentally
+unload	remove,release,load
+unnecessary	not necessary
+unplug	disconnect,plug
+unprotected	protection
+unreel	unwind
+unrestricted	free
+unsafe	dangerous
+unstable	stable
+unused	new
+upon	on,when
+upper	maximum,top
+upward	up
+urgently	immediately
+usage	use
+using	use,with
+utilization	use
+utilize	use
+valid	correct,applicable
+validity	correct,applicable
+variable	change,adjust
+various	different
+vary	change
+verbal	tell,hear
+verify	make sure
+via	through
+vicinity	next to,near
+view	see
+vigorous	force
+vigorously	force
+visible	see,view
+vital	important
+warm	warm
+warn	tell,warning
+wash	clean note: give the nrocedure. if possible,clean (verb). note: give the procedure if possible
+watertight	seal
+way	be,configuration,method,procedure
+weakness	weak
+well	correctly,good,fully
+whenever	when
+whether	if
+whichever	that
+whilst	while
+whoever	who
+whole	full,all
+wholly	fully
+whose	note: use a different construction
+within	in,in ... or less,in less than
+withstand	resistant
+work	work
+wrong	incorrect
+wrongly	incorrectly
+yet	but,time
+zero	zero

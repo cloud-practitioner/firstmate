@@ -1284,6 +1284,26 @@ test_wait_no_turns_absent_keeps_the_previous_brief() {
   pass "fm-brief: without config/wait-no-turns the brief and drive text stay as they were"
 }
 
+test_pr_evidence_gate_adds_the_evidence_class_only_when_enabled() {
+  local home brief
+  home="$TMP_ROOT/evidence-gate"
+  mkdir -p "$home/data" "$home/config"
+  FM_HOME="$home" "$ROOT/bin/fm-brief.sh" ev-off some-proj --mode no-mistakes >/dev/null 2>&1 \
+    || fail "fm-brief.sh ship scaffold exited non-zero without config/pr-evidence"
+  assert_no_grep "## Evidence class" "$home/data/ev-off/brief.md" "the gate off still added the evidence subsection"
+  printf '* enforce\n' > "$home/config/pr-evidence"
+  FM_HOME="$home" "$ROOT/bin/fm-brief.sh" ev-on some-proj --mode no-mistakes >/dev/null 2>&1 \
+    || fail "fm-brief.sh ship scaffold exited non-zero with config/pr-evidence"
+  brief="$home/data/ev-on/brief.md"
+  assert_grep "## Evidence class" "$brief" "the gate on did not scaffold the evidence subsection"
+  assert_grep "{EVIDENCE}" "$brief" "the gate on did not leave the placeholder for firstmate"
+  assert_grep "Evidence for review (hard rule)" "$brief" "the gate on did not add the worker evidence contract"
+  FM_HOME="$home" "$ROOT/bin/fm-brief.sh" ev-scout some-proj --scout >/dev/null 2>&1 \
+    || fail "fm-brief.sh scout scaffold exited non-zero with config/pr-evidence"
+  assert_no_grep "## Evidence class" "$home/data/ev-scout/brief.md" "a scout brief gained the evidence subsection"
+  pass "fm-brief: the evidence subsection and contract appear only for a ship when config/pr-evidence enables the project"
+}
+
 test_worker_role_scope() {
   local kind home brief
   home="$TMP_ROOT/worker-role"
@@ -1702,3 +1722,4 @@ test_branch_prefix_is_refused_where_it_does_not_apply
 test_branch_prefix_value_is_validated
 test_branch_prefix_command_is_shell_safe
 test_crewmate_scaffolds_forbid_pool_administration
+test_pr_evidence_gate_adds_the_evidence_class_only_when_enabled

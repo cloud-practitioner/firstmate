@@ -1,0 +1,633 @@
+#!/usr/bin/env bash
+# PR evidence gate: before-and-after evidence for every PR the captain reviews.
+#
+# fork-only (cloud-practitioner/firstmate); never offered upstream.
+#
+# The captain reviews a PR from its evidence: screenshots of the behaviour
+# before and after the change, with the differences marked and the purpose
+# written in ASD-STE100 Simplified Technical English. This script turns that
+# rule into code that refuses, in the way workos/case turns its invariants into
+# gates. It prints [FAIL] lines with FIX lines, and it exits non-zero.
+#
+# The rule
+#   - Intake: firstmate declares the change kind in the ship brief under
+#     `## Evidence class`: ui, api, ui+api, or `none: <reason>`. The brief
+#     scaffold holds the placeholder {EVIDENCE}; bin/fm-spawn.sh refuses it
+#     while it is unfilled and records `evidence=<kind>` (and `evidence_reason=`)
+#     in state/<id>.meta. A worker can add a kind and never remove one.
+#   - UI evidence: a before image and an after image with the differences
+#     marked, and the purpose in plain English.
+#   - API evidence: the same two images, drawn from a captured HTTP exchange
+#     that shows the request headers, request body, response headers, response
+#     body, status code, and status message. Secret values are masked first.
+#   - One dedicated PR comment, written by the worker's account, holds the
+#     purposes, the images, the exchange text, and one fenced
+#     `fm-pr-evidence-v1` JSON manifest. The images are forge attachments.
+#   - `check` refuses unless every image shows on the forge's own rendered page,
+#     downloads as an image that matches the manifest hash, carries drawn marks
+#     (the exact colour #FF2D95, presence only), and the manifest head equals
+#     the PR head. "Uploaded" is not "displaying": PRs 35 and 38 of the fork hold
+#     image lines that GitHub renders as nothing.
+#   - A project `require` line, and the firstmate repository itself, never allow
+#     `none`.
+#   - A waiver needs the captain's own words, is refused in away mode, and is
+#     posted on the PR.
+#   - A task without `evidence=` in its record (made before the gate) passes
+#     with a notice; `list-unevidenced` lists those PRs for the captain.
+#
+# Usage: fm-pr-evidence.sh <command> ...
+#   enabled <project>                     exit 0 when config/pr-evidence enables the project
+#   intake <brief> <project> [<proj-dir>] print the evidence= meta lines for a spawn, or refuse
+#   brief-block <task-id>                 print the worker's evidence contract for the brief
+#   check <task-id> <pr-url>              the gate; bin/fm-pr-check.sh calls it for arming and merge
+#   publish <task-id> <pr-url> <items.json>
+#                                         validate, upload, post the one comment, then check
+#   capture-ui --out <txt> -- <command>   run a command and keep a masked terminal transcript
+#   capture-api --out <json> [-X M] [--header 'N: V']... [--body-file F] <url>
+#                                         run one HTTP call and keep a masked six-part exchange
+#   annotate-ui (--image <png> --mark x,y,w,h,label ... | --text <txt> [--against <txt>])
+#               --purpose <text> [--label <text>]... --out <png>
+#   annotate-api --sidecar <json> --against <json> --purpose <text> [--label <text>] --out <png>
+#   ste [--kind purpose|label|steps] (--text <t> | --file <f>)
+#                                         the plain-English check on its own
+#   waive <task-id> <pr-url> --words <captain's words>
+#                                         record a waiver; refused in away mode
+#   list-unevidenced                      list PRs opened before the gate
+#
+# Items file for publish (paths are relative to the file or absolute):
+#   {"items":[{"id":"save-button","kind":"ui","purpose":"...",
+#              "before":{"image":"b.png"},"after":{"image":"a.png"},
+#              "labels":["Button is now blue"]},
+#             {"id":"create-order","kind":"api","purpose":"...",
+#              "before":{"image":"b.png","sidecar":"b.json"},
+#              "after":{"image":"a.png","sidecar":"a.json"},"labels":["..."]}],
+#    "none_reason":null}
+#
+# Config: docs/configuration.md "PR evidence gate" owns config/pr-evidence.
+# The helper bin/fm-pr-evidence-lib.py holds the pure parts: the plain-English
+# check, masking, mark counting, rendering, comment composition, and the verifier.
+# Notices and refusals go to stderr. Exit 0 is a pass or a skip with a notice,
+# 1 is a refusal, 2 is a usage error.
+# Test-only overrides: FM_PR_EVIDENCE_GH (the gh binary), FM_PR_EVIDENCE_GH_FALLBACKS
+# (the gh paths tried after PATH), and FM_PR_EVIDENCE_BITBUCKET_API (the API base).
+set -eu
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+FM_ROOT="${FM_ROOT_OVERRIDE:-$(cd "$SCRIPT_DIR/.." && pwd)}"
+FM_HOME="${FM_HOME:-${FM_ROOT_OVERRIDE:-$FM_ROOT}}"
+STATE="${FM_STATE_OVERRIDE:-$FM_HOME/state}"
+CONFIG_DIR="${FM_CONFIG_OVERRIDE:-$FM_HOME/config}"
+CONFIG_FILE="$CONFIG_DIR/pr-evidence"
+LIB_PY="$SCRIPT_DIR/fm-pr-evidence-lib.py"
+
+# shellcheck source=bin/fm-pr-lib.sh
+. "$SCRIPT_DIR/fm-pr-lib.sh"
+[ -z "${FM_PR_EVIDENCE_BITBUCKET_API:-}" ] || FM_PR_BITBUCKET_API=$FM_PR_EVIDENCE_BITBUCKET_API
+
+WORK=
+cleanup() {
+  [ -z "$WORK" ] || rm -rf -- "$WORK"
+}
+trap cleanup EXIT
+trap 'exit 1' HUP INT TERM
+
+say() { printf '%s\n' "$*" >&2; }
+fail_line() {  # <what> <fix>
+  printf '[FAIL] %s\nFIX: %s\n' "$1" "$2" >&2
+}
+need_tools() {
+  local missing=''
+  command -v python3 >/dev/null 2>&1 || missing="python3"
+  command -v jq >/dev/null 2>&1 || missing="${missing:+$missing, }jq"
+  command -v curl >/dev/null 2>&1 || missing="${missing:+$missing, }curl"
+  [ -z "$missing" ] || {
+    fail_line "the evidence gate needs $missing on PATH" "install $missing, then run the command again"
+    return 1
+  }
+}
+
+meta_get() {  # <meta-file> <key>
+  grep "^$2=" "$1" 2>/dev/null | tail -1 | cut -d= -f2- || true
+}
+
+# Sets CFG_JSON, CFG_ENABLED, CFG_REQUIRE, CFG_BITBUCKET, CFG_BANNED for a project.
+CFG_JSON='{}'
+CFG_ENABLED=0
+CFG_REQUIRE=0
+CFG_BITBUCKET=0
+CFG_BANNED=
+load_config() {  # <project>
+  CFG_JSON='{}'
+  CFG_ENABLED=0
+  CFG_REQUIRE=0
+  CFG_BITBUCKET=0
+  CFG_BANNED=
+  [ -f "$CONFIG_FILE" ] || return 0
+  need_tools || return 1
+  CFG_JSON=$(python3 "$LIB_PY" config "$CONFIG_FILE" "$1") || return 1
+  if [ "$(printf '%s' "$CFG_JSON" | jq -r '.errors | length')" != 0 ]; then
+    fail_line "config/pr-evidence is not valid: $(printf '%s' "$CFG_JSON" | jq -r '.errors[0]')" \
+      "fix the line in $CONFIG_FILE (docs/configuration.md \"PR evidence gate\")"
+    return 1
+  fi
+  [ "$(printf '%s' "$CFG_JSON" | jq -r .enabled)" != true ] || CFG_ENABLED=1
+  [ "$(printf '%s' "$CFG_JSON" | jq -r .require)" != true ] || CFG_REQUIRE=1
+  [ "$(printf '%s' "$CFG_JSON" | jq -r .bitbucket)" != true ] || CFG_BITBUCKET=1
+  CFG_BANNED=$(printf '%s' "$CFG_JSON" | jq -r '.banned | join(",")')
+}
+
+# A project that always needs evidence: a `require` line, or the firstmate repository.
+project_requires_evidence() {  # <project-dir>
+  [ "$CFG_REQUIRE" != 1 ] || return 0
+  [ -n "${1:-}" ] && [ -d "$1" ] || return 1
+  # shellcheck source=bin/fm-role-lib.sh
+  . "$SCRIPT_DIR/fm-role-lib.sh"
+  fm_role_self_repo "$1" "$FM_ROOT" >/dev/null 2>&1
+}
+
+# ---- gh resolution ---------------------------------------------------------
+
+GH=
+resolve_gh_read() {
+  # Keep a gh that resolve_gh_attach already picked; publish reads and uploads with one gh.
+  [ -z "$GH" ] || return 0
+  if [ -n "${FM_PR_EVIDENCE_GH:-}" ]; then
+    GH=$FM_PR_EVIDENCE_GH
+    return 0
+  fi
+  GH=$(command -v gh 2>/dev/null) || {
+    fail_line "gh is not on PATH" "install the GitHub CLI and log in, then run the command again"
+    return 1
+  }
+}
+# Uploads need gh 2.99 or newer, which has `pr comment --attach`. An older gh can
+# shadow a newer one on PATH, so every candidate is tried and the first that
+# accepts the flag wins.
+resolve_gh_attach() {
+  local c
+  if [ -n "${FM_PR_EVIDENCE_GH:-}" ]; then
+    GH=$FM_PR_EVIDENCE_GH
+    return 0
+  fi
+  while IFS= read -r c; do
+    [ -x "$c" ] || continue
+    if "$c" pr comment --help 2>&1 | grep -q -- '--attach'; then
+      GH=$c
+      return 0
+    fi
+  done <<EOF
+$(type -ap gh 2>/dev/null; for c in ${FM_PR_EVIDENCE_GH_FALLBACKS-/usr/bin/gh /usr/local/bin/gh /opt/homebrew/bin/gh}; do printf '%s\n' "$c"; done)
+EOF
+  fail_line "no gh with 'pr comment --attach' was found (gh 2.99 or newer)" \
+    "install a newer gh (for example /usr/bin/gh) or set FM_PR_EVIDENCE_GH to it; an older gh earlier on PATH hides the new one"
+  return 1
+}
+
+# ---- config-facing commands ------------------------------------------------
+
+cmd_enabled() {
+  [ "$#" -eq 1 ] || { say "usage: fm-pr-evidence.sh enabled <project>"; return 2; }
+  [ -f "$CONFIG_FILE" ] || return 1
+  load_config "$1" || return 2
+  [ "$CFG_ENABLED" = 1 ]
+}
+
+cmd_intake() {
+  [ "$#" -ge 2 ] || { say "usage: fm-pr-evidence.sh intake <brief> <project> [<project-dir>]"; return 2; }
+  local brief=$1 project=$2 dir=${3:-} body line value reason
+  [ -f "$CONFIG_FILE" ] || return 0
+  load_config "$project" || return 1
+  [ "$CFG_ENABLED" = 1 ] || return 0
+  # shellcheck source=bin/fm-brief-heading-lib.sh
+  . "$SCRIPT_DIR/fm-brief-heading-lib.sh"
+  if ! fm_brief_task_heading_present "$brief" "## Evidence class"; then
+    fail_line "the brief has no '## Evidence class' subsection, and the evidence gate is on for $project" \
+      "scaffold the brief again with bin/fm-brief.sh and fill the subsection with ui, api, ui+api, or none: <reason>"
+    return 1
+  fi
+  body=$(fm_brief_task_heading_body "$brief" "## Evidence class")
+  line=$(printf '%s\n' "$body" | sed -n '/[^[:space:]]/{s/^[[:space:]]*//;s/[[:space:]]*$//;p;q;}')
+  case "$line" in
+    ''|'{EVIDENCE}')
+      fail_line "the brief's '## Evidence class' is not filled" "write ui, api, ui+api, or none: <reason> under it"
+      return 1
+      ;;
+    ui|api|ui+api|api+ui)
+      value=$line
+      [ "$value" != api+ui ] || value=ui+api
+      printf 'evidence=%s\n' "$value"
+      ;;
+    none:*)
+      reason=${line#none:}
+      reason=$(printf '%s' "$reason" | sed 's/^[[:space:]]*//')
+      if [ -z "$reason" ]; then
+        fail_line "the evidence class none has no reason" "write none: <reason in plain English>"
+        return 1
+      fi
+      if project_requires_evidence "$dir"; then
+        fail_line "the evidence class none is not allowed for $project (it always needs evidence)" \
+          "declare ui (terminal screenshots of the changed behaviour) or api in the brief"
+        return 1
+      fi
+      need_tools || return 1
+      python3 "$LIB_PY" ste --kind purpose --text "$reason" --banned "$CFG_BANNED" --no-vocab >&2 || return 1
+      printf 'evidence=none\nevidence_reason=%s\n' "$(printf '%s' "$reason" | tr '\n' ' ')"
+      ;;
+    *)
+      fail_line "the evidence class '$line' is not valid" "write ui, api, ui+api, or none: <reason>"
+      return 1
+      ;;
+  esac
+}
+
+cmd_brief_block() {
+  [ "$#" -eq 1 ] || { say "usage: fm-pr-evidence.sh brief-block <task-id>"; return 2; }
+  local ev=$SCRIPT_DIR/fm-pr-evidence.sh
+  cat <<EOF
+
+# Evidence for review (hard rule)
+This project's PRs need before and after evidence. The gate refuses a PR without it.
+Your evidence class is in the \`## Evidence class\` subsection above and in \`evidence=\` of your task record. You may add a kind. You may not remove one.
+Use \`$ev\`. Its header has the exact commands.
+1. Take the before evidence before you change anything. Keep all evidence files under your task temp root.
+2. UI evidence: capture the screen (a screenshot, or \`capture-ui\` for terminal output) before and after. Mark the differences with \`annotate-ui\`.
+3. API evidence: capture the HTTP exchange with \`capture-api\` before and after. It shows the request headers, request body, response headers, response body, status code, and status message. It masks secrets. Draw the image with \`annotate-api\`.
+4. Write the purpose of each item in ASD-STE100 Simplified Technical English: short plain sentences, about 20 words or fewer, one idea each, active voice, no idioms, no semicolons, no contractions, no abbreviations. \`$ev ste\` checks your text.
+5. Write an items file and run \`$ev publish $1 <pr-url> <items.json>\` after the PR exists (with no-mistakes: after CI is green). It posts the one evidence comment and then runs the gate.
+6. The gate checks that every image shows on the PR page, matches its hash, and has marks drawn in the colour #FF2D95. If the PR head moves later, publish again.
+7. Report the final PR-ready \`done\` only after \`publish\` prints \`[PASS]\`. The first \`done\` that hands off to no-mistakes needs no evidence. Never put real secrets, tokens, or personal data in an image.
+EOF
+}
+
+# ---- forge reads -----------------------------------------------------------
+
+PR_HEAD=
+PR_AUTHORS_JSON='[]'
+PR_FILES_JSON='[]'
+PR_COMMENTS_JSON='[]'
+
+read_github() {  # <owner/repo> <number>
+  local path=$1 number=$2 pr actor
+  resolve_gh_read || return 1
+  pr=$("$GH" api "repos/$path/pulls/$number" 2>/dev/null) || {
+    fail_line "the PR cannot be read from GitHub" "check that gh is logged in and the PR exists"
+    return 1
+  }
+  PR_HEAD=$(printf '%s' "$pr" | jq -r '.head.sha // empty')
+  actor=$("$GH" api user --jq .login 2>/dev/null || true)
+  PR_AUTHORS_JSON=$(printf '%s' "$pr" | jq -c --arg actor "$actor" '[.user.login, $actor] | map(select(. != null and . != "")) | unique')
+  PR_FILES_JSON=$("$GH" api --paginate --slurp "repos/$path/pulls/$number/files?per_page=100" 2>/dev/null \
+    | jq -c '[.[][] | .filename]') || {
+    fail_line "the changed files of the PR cannot be read" "check that gh is logged in"
+    return 1
+  }
+  PR_COMMENTS_JSON=$("$GH" api --paginate --slurp -H 'Accept: application/vnd.github.full+json' \
+    "repos/$path/issues/$number/comments?per_page=100" 2>/dev/null \
+    | jq -c '[.[][] | {id: (.id | tostring), author: .user.login, body: .body, html: .body_html, updated: .updated_at}]') || {
+    fail_line "the PR comments cannot be read" "check that gh is logged in"
+    return 1
+  }
+}
+
+read_bitbucket() {  # <workspace/repo> <number>
+  local path=$1 number=$2 head
+  fm_pr_bitbucket_request GET "repositories/$path/pullrequests/$number" || {
+    fail_line "the PR cannot be read from Bitbucket" "check NO_MISTAKES_BITBUCKET_EMAIL and NO_MISTAKES_BITBUCKET_API_TOKEN"
+    return 1
+  }
+  head=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -r '.source.commit.hash // empty')
+  PR_AUTHORS_JSON=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -c '[.author.account_id] | map(select(. != null))')
+  PR_HEAD=$(fm_pr_bitbucket_resolve_commit "$path" "$head" 2>/dev/null || true)
+  if fm_pr_bitbucket_request GET "user"; then
+    PR_AUTHORS_JSON=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -c --argjson a "$PR_AUTHORS_JSON" '$a + [.account_id] | map(select(. != null)) | unique')
+  fi
+  fm_pr_bitbucket_get_all "repositories/$path/pullrequests/$number/diffstat?pagelen=100" || {
+    fail_line "the changed files of the PR cannot be read" "check the Bitbucket credential"
+    return 1
+  }
+  PR_FILES_JSON=$(printf '%s' "$FM_PR_BITBUCKET_VALUES" | jq -c '[.[] | (.new.path // .old.path)]')
+  fm_pr_bitbucket_get_all "repositories/$path/pullrequests/$number/comments?pagelen=100" || {
+    fail_line "the PR comments cannot be read" "check the Bitbucket credential"
+    return 1
+  }
+  PR_COMMENTS_JSON=$(printf '%s' "$FM_PR_BITBUCKET_VALUES" \
+    | jq -c '[.[] | {id: (.id | tostring), author: .user.account_id, body: .content.raw, html: .content.html, updated: .updated_on}]')
+}
+
+# ---- the gate --------------------------------------------------------------
+
+cmd_check() {
+  [ "$#" -eq 2 ] || { say "usage: fm-pr-evidence.sh check <task-id> <pr-url>"; return 2; }
+  local id=$1 raw=$2 meta project_dir project evidence reason require rc
+  if ! { fm_pr_task_id_valid "$id" && fm_pr_url_parse "$raw"; }; then
+    say "error: invalid PR evidence check request"
+    return 2
+  fi
+  [ -f "$CONFIG_FILE" ] || return 0
+  meta="$STATE/$id.meta"
+  [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run the check for a task of this home"; return 1; }
+  [ "$(meta_get "$meta" kind)" = ship ] || return 0
+  project_dir=$(meta_get "$meta" project)
+  project=$(basename "$project_dir")
+  load_config "$project" || return 1
+  [ "$CFG_ENABLED" = 1 ] || return 0
+  evidence=$(meta_get "$meta" evidence)
+  if [ -z "$evidence" ]; then
+    say "notice: evidence gate not applied: task $id predates it (no evidence= in its task record); the captain may ask for a retrofit (fm-pr-evidence.sh list-unevidenced)"
+    return 0
+  fi
+  if [ -f "$STATE/$id.evidence-waiver" ]; then
+    say "notice: evidence gate waived for $id by the captain's words recorded in state/$id.evidence-waiver"
+    return 0
+  fi
+  case "$FM_PR_PROVIDER" in
+    github) ;;
+    bitbucket)
+      if [ "$CFG_BITBUCKET" != 1 ]; then
+        say "notice: evidence gate not applied: the Bitbucket arm is off (add 'bitbucket on' to config/pr-evidence after the sandbox proof)"
+        return 0
+      fi
+      ;;
+    *)
+      say "notice: evidence gate not applied: $FM_PR_PROVIDER pull requests are not supported"
+      return 0
+      ;;
+  esac
+  need_tools || return 1
+  if [ "$FM_PR_PROVIDER" = github ]; then
+    read_github "$FM_PR_PATH" "$FM_PR_NUMBER" || return 1
+  else
+    read_bitbucket "$FM_PR_PATH" "$FM_PR_NUMBER" || return 1
+  fi
+  if [ -z "$PR_HEAD" ]; then
+    fail_line "the PR head cannot be read" "check the forge credential, then run the check again"
+    return 1
+  fi
+  require=false
+  if project_requires_evidence "$project_dir"; then require=true; fi
+  reason=$(meta_get "$meta" evidence_reason)
+  WORK=$(mktemp -d "$STATE/.pr-evidence.XXXXXX") || return 1
+  jq -n --arg head "$PR_HEAD" --arg provider "$FM_PR_PROVIDER" --arg repo "$FM_PR_PATH" --arg url "$FM_PR_URL" \
+    --argjson authors "$PR_AUTHORS_JSON" --argjson files "$PR_FILES_JSON" \
+    '{head: $head, provider: $provider, repo: $repo, url: $url, authors: $authors, files: $files}' > "$WORK/pr.json"
+  printf '%s\n' "$PR_COMMENTS_JSON" > "$WORK/comments.json"
+  jq -n --arg declared "$evidence" --arg reason "$reason" --argjson require "$require" \
+    --argjson globs "$(printf '%s' "$CFG_JSON" | jq -c .globs)" \
+    --argjson banned "$(printf '%s' "$CFG_JSON" | jq -c .banned)" \
+    '{declared: $declared, none_reason: $reason, require: $require, globs: $globs, banned: $banned}' \
+    > "$WORK/rules.json"
+  rc=0
+  python3 "$LIB_PY" verify --work "$WORK" --cache "$STATE/$id.evidence-ok" >&2 || rc=$?
+  return "$rc"
+}
+
+# ---- publish ---------------------------------------------------------------
+
+bb_upload() {  # <workspace/repo> <file> <name>
+  local path=$1 file=$2 name=$3 credential out code
+  credential="$NO_MISTAKES_BITBUCKET_EMAIL:$NO_MISTAKES_BITBUCKET_API_TOKEN"
+  credential=${credential//\\/\\\\}
+  credential=${credential//\"/\\\"}
+  out=$(printf 'user = "%s"\n' "$credential" \
+    | curl -q -sS -K - -X POST --connect-timeout 10 --max-time 120 -w '\n%{http_code}' \
+      -F "files=@$file;filename=$name" "$FM_PR_BITBUCKET_API/repositories/$path/downloads" 2>/dev/null) || return 1
+  code=${out##*$'\n'}
+  case "$code" in 2??) return 0 ;; esac
+  return 1
+}
+
+cmd_publish() {
+  [ "$#" -eq 3 ] || { say "usage: fm-pr-evidence.sh publish <task-id> <pr-url> <items.json>"; return 2; }
+  local id=$1 raw=$2 items=$3 meta project evidence reason out new_id line path alt name body
+  local -a attach=() compose_extra=()
+  if ! { fm_pr_task_id_valid "$id" && fm_pr_url_parse "$raw"; }; then
+    say "error: invalid PR evidence publish request"
+    return 2
+  fi
+  [ -f "$items" ] || { fail_line "the items file $items does not exist" "write the items file (see the header of fm-pr-evidence.sh)"; return 1; }
+  meta="$STATE/$id.meta"
+  [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run publish for a task of this home"; return 1; }
+  project=$(basename "$(meta_get "$meta" project)")
+  load_config "$project" || return 1
+  evidence=$(meta_get "$meta" evidence)
+  if [ -z "$evidence" ]; then
+    fail_line "task $id has no evidence= declaration" "firstmate must declare the evidence class for the task first"
+    return 1
+  fi
+  reason=$(meta_get "$meta" evidence_reason)
+  [ -z "$reason" ] || compose_extra=(--default-none-reason "$reason")
+  need_tools || return 1
+  case "$FM_PR_PROVIDER" in
+    github)
+      resolve_gh_attach || return 1
+      read_github "$FM_PR_PATH" "$FM_PR_NUMBER" || return 1
+      ;;
+    bitbucket)
+      if [ "$CFG_BITBUCKET" != 1 ]; then
+        fail_line "the Bitbucket arm is off" "add 'bitbucket on' to config/pr-evidence after the sandbox proof"
+        return 1
+      fi
+      read_bitbucket "$FM_PR_PATH" "$FM_PR_NUMBER" || return 1
+      ;;
+    *) fail_line "$FM_PR_PROVIDER pull requests are not supported" "use a GitHub or Bitbucket PR"; return 1 ;;
+  esac
+  [ -n "$PR_HEAD" ] || { fail_line "the PR head cannot be read" "check the forge credential"; return 1; }
+  WORK=$(mktemp -d "$STATE/.pr-evidence.XXXXXX") || return 1
+  python3 "$LIB_PY" compose --items "$items" --head "$PR_HEAD" --declared "$evidence" \
+    --provider "$FM_PR_PROVIDER" --repo "$FM_PR_PATH" --number "$FM_PR_NUMBER" --banned "$CFG_BANNED" \
+    --out "$WORK" "${compose_extra[@]+"${compose_extra[@]}"}" >&2 || return 1
+  if [ "$FM_PR_PROVIDER" = github ]; then
+    while IFS=$'\t' read -r path alt name; do
+      [ -z "$path" ] || attach+=(--attach "$path#$alt")
+    done < "$WORK/attach.tsv"
+    out=$("$GH" pr comment "$FM_PR_URL" --body-file "$WORK/comment.md" "${attach[@]+"${attach[@]}"}") || {
+      fail_line "gh could not post the evidence comment" "check that gh is logged in with write access and is version 2.99 or newer"
+      return 1
+    }
+    new_id=${out##*issuecomment-}
+  else
+    while IFS=$'\t' read -r path alt name; do
+      [ -n "$path" ] || continue
+      bb_upload "$FM_PR_PATH" "$path" "$name" || {
+        fail_line "the image $name could not be uploaded to the repository Downloads area" "check the Bitbucket credential scope write:repository:bitbucket"
+        return 1
+      }
+    done < "$WORK/attach.tsv"
+    body=$(jq -Rs '{content: {raw: .}}' < "$WORK/comment.md")
+    fm_pr_bitbucket_request POST "repositories/$FM_PR_PATH/pullrequests/$FM_PR_NUMBER/comments" "$body" || {
+      fail_line "the evidence comment could not be posted to Bitbucket" "check the Bitbucket credential"
+      return 1
+    }
+    new_id=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -r '.id | tostring')
+  fi
+  say "posted: evidence comment $new_id on $FM_PR_URL"
+  # One dedicated comment: remove this account's older evidence comments.
+  while IFS= read -r line; do
+    { [ -n "$line" ] && [ "$line" != "$new_id" ]; } || continue
+    if [ "$FM_PR_PROVIDER" = github ]; then
+      "$GH" api -X DELETE "repos/$FM_PR_PATH/issues/comments/$line" >/dev/null 2>&1 || true
+    else
+      fm_pr_bitbucket_request DELETE "repositories/$FM_PR_PATH/pullrequests/$FM_PR_NUMBER/comments/$line" >/dev/null 2>&1 || true
+    fi
+  done <<EOF
+$(printf '%s' "$PR_COMMENTS_JSON" | jq -r --argjson a "$PR_AUTHORS_JSON" '.[] | select(.author as $x | $a | index($x)) | select((.body // "") | contains("```fm-pr-evidence-v1")) | .id')
+EOF
+  rm -f -- "$STATE/$id.evidence-ok"
+  rm -rf -- "$WORK"
+  WORK=
+  cmd_check "$id" "$FM_PR_URL"
+}
+
+# ---- capture helpers -------------------------------------------------------
+
+cmd_capture_ui() {
+  local out='' rc=0 raw
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --out) out=${2:?}; shift 2 ;;
+      --) shift; break ;;
+      *) say "usage: fm-pr-evidence.sh capture-ui --out <txt> -- <command> [args...]"; return 2 ;;
+    esac
+  done
+  [ -n "$out" ] && [ "$#" -gt 0 ] || { say "usage: fm-pr-evidence.sh capture-ui --out <txt> -- <command> [args...]"; return 2; }
+  need_tools || return 1
+  WORK=$(mktemp -d) || return 1
+  raw="$WORK/raw"
+  "$@" > "$raw" 2>&1 || rc=$?
+  python3 "$LIB_PY" capture-text --raw "$raw" --command "$*" --rc "$rc" --out "$out"
+}
+
+cmd_capture_api() {
+  local out='' method=GET body='' url='' cfg line
+  local -a headers=() args=()
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --out) out=${2:?}; shift 2 ;;
+      -X) method=${2:?}; shift 2 ;;
+      --header) headers+=("${2:?}"); shift 2 ;;
+      --body-file) body=${2:?}; shift 2 ;;
+      -*) say "usage: fm-pr-evidence.sh capture-api --out <json> [-X M] [--header 'N: V']... [--body-file F] <url>"; return 2 ;;
+      *) url=$1; shift ;;
+    esac
+  done
+  [ -n "$out" ] && [ -n "$url" ] || { say "usage: fm-pr-evidence.sh capture-api --out <json> [-X M] [--header 'N: V']... [--body-file F] <url>"; return 2; }
+  need_tools || return 1
+  WORK=$(mktemp -d) || return 1
+  cfg="$WORK/curl.cfg"
+  : > "$cfg"
+  chmod 0600 "$cfg"
+  for line in "${headers[@]+"${headers[@]}"}"; do
+    line=${line//\\/\\\\}
+    printf 'header = "%s"\n' "${line//\"/\\\"}" >> "$cfg"
+  done
+  args=(-q -sS -v -K "$cfg" -X "$method" -D "$WORK/resp.hdr" -o "$WORK/resp.body" --max-time 30)
+  [ -z "$body" ] || args+=(--data-binary "@$body")
+  curl "${args[@]}" "$url" 2> "$WORK/verbose" || {
+    fail_line "the HTTP call failed: $(tail -n 1 "$WORK/verbose" | sed 's/[Aa]uthorization.*//')" "check the URL and the network, then capture again"
+    return 1
+  }
+  python3 "$LIB_PY" sidecar-build --verbose "$WORK/verbose" --resp-headers "$WORK/resp.hdr" --resp-body "$WORK/resp.body" \
+    --method "$method" --url "$url" --out "$out" ${body:+--req-body "$body"}
+  python3 "$LIB_PY" scan-sidecar "$out" >&2
+}
+
+# ---- waiver and retrofit list ----------------------------------------------
+
+cmd_waive() {
+  local id raw words='' meta project now body
+  [ "$#" -ge 2 ] || { say "usage: fm-pr-evidence.sh waive <task-id> <pr-url> --words <captain's words>"; return 2; }
+  id=$1
+  raw=$2
+  shift 2
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --words) words=${2:?}; shift 2 ;;
+      *) say "usage: fm-pr-evidence.sh waive <task-id> <pr-url> --words <captain's words>"; return 2 ;;
+    esac
+  done
+  if ! { fm_pr_task_id_valid "$id" && fm_pr_url_parse "$raw"; }; then
+    say "error: invalid waiver request"
+    return 2
+  fi
+  if [ -e "$STATE/.afk" ]; then
+    fail_line "a waiver is refused in away mode" "wait for the captain to return and say the waiver in their own words"
+    return 1
+  fi
+  if [ "$(printf '%s' "$words" | wc -w | tr -d ' ')" -lt 4 ]; then
+    fail_line "a waiver needs the captain's own words (at least 4 words)" "pass the captain's words exactly as written in the chat"
+    return 1
+  fi
+  meta="$STATE/$id.meta"
+  [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run the waiver for a task of this home"; return 1; }
+  project=$(basename "$(meta_get "$meta" project)")
+  load_config "$project" || return 1
+  need_tools || return 1
+  now=$(date +%s)
+  body="Evidence gate waived for this PR by the captain. The captain's words: ${words}"
+  case "$FM_PR_PROVIDER" in
+    github)
+      resolve_gh_read || return 1
+      "$GH" pr comment "$FM_PR_URL" --body "$body" >/dev/null || { fail_line "the waiver could not be posted on the PR" "check that gh is logged in"; return 1; }
+      ;;
+    bitbucket)
+      fm_pr_bitbucket_request POST "repositories/$FM_PR_PATH/pullrequests/$FM_PR_NUMBER/comments" \
+        "$(jq -n --arg raw "$body" '{content: {raw: $raw}}')" \
+        || { fail_line "the waiver could not be posted on the PR" "check the Bitbucket credential"; return 1; }
+      ;;
+    *) fail_line "$FM_PR_PROVIDER pull requests are not supported" "use a GitHub or Bitbucket PR"; return 1 ;;
+  esac
+  umask 077
+  printf 'at=%s\nurl=%s\nwords=%s\n' "$now" "$FM_PR_URL" "$(printf '%s' "$words" | tr '\n' ' ')" > "$STATE/$id.evidence-waiver"
+  say "waived: $id (recorded in state/$id.evidence-waiver and posted on the PR)"
+}
+
+cmd_list_unevidenced() {
+  local f id project url count=0
+  if [ ! -f "$CONFIG_FILE" ]; then
+    say "notice: config/pr-evidence is absent, so the evidence gate is off in this home"
+    return 0
+  fi
+  need_tools || return 1
+  for f in "$STATE"/*.meta; do
+    [ -f "$f" ] || continue
+    [ "$(meta_get "$f" kind)" = ship ] || continue
+    url=$(meta_get "$f" pr)
+    [ -n "$url" ] || continue
+    [ -z "$(meta_get "$f" evidence)" ] || continue
+    id=$(basename "$f" .meta)
+    project=$(basename "$(meta_get "$f" project)")
+    load_config "$project" || return 1
+    [ "$CFG_ENABLED" = 1 ] || continue
+    if [ "$count" -eq 0 ]; then
+      say "These open PRs were made before the evidence gate. They pass with a notice. Pick the ones to retrofit."
+    fi
+    count=$((count + 1))
+    printf '%s %s %s\n' "$id" "$project" "$url"
+  done
+  [ "$count" -gt 0 ] || say "No open PRs lack an evidence declaration."
+}
+
+# ---- dispatch --------------------------------------------------------------
+
+usage() {
+  sed -n '2,/^set -eu$/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//'
+}
+
+cmd=${1:-}
+[ "$#" -eq 0 ] || shift
+case "$cmd" in
+  enabled) cmd_enabled "$@" ;;
+  intake) cmd_intake "$@" ;;
+  brief-block) cmd_brief_block "$@" ;;
+  check) cmd_check "$@" ;;
+  publish) cmd_publish "$@" ;;
+  capture-ui) cmd_capture_ui "$@" ;;
+  capture-api) cmd_capture_api "$@" ;;
+  annotate-ui) need_tools && python3 "$LIB_PY" annotate-ui "$@" ;;
+  annotate-api) need_tools && python3 "$LIB_PY" annotate-api "$@" ;;
+  ste) need_tools && python3 "$LIB_PY" ste "$@" ;;
+  waive) cmd_waive "$@" ;;
+  list-unevidenced) cmd_list_unevidenced "$@" ;;
+  -h|--help|help) usage ;;
+  *) usage >&2; exit 2 ;;
+esac

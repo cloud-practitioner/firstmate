@@ -14,6 +14,9 @@
 # charters still use a single `{TASK}` charter fill. Firstmate may adjust other
 # sections when the task genuinely deviates (e.g. working an existing external
 # PR instead of shipping a new one).
+# When config/pr-evidence enables the project (bin/fm-pr-evidence.sh, fork-only), a
+# ship brief also scaffolds `## Evidence class` with the placeholder {EVIDENCE}, which
+# firstmate fills with ui, api, ui+api, or none: <reason>, and the worker's evidence contract.
 # Usage: fm-brief.sh <task-id> <repo-name> --mode <no-mistakes|direct-PR|local-only> [--branch-prefix <prefix>] [--base-branch <branch>] [--forge <none|gerrit|forgejo|external> [--shape squash]] [--project <dir>] [--upstream-consent <host>/<owner>/<repo>] [--herdr-lab]
 #        fm-brief.sh <task-id> <repo-name> --scout [--base-branch <branch>] [--herdr-lab]
 #        fm-brief.sh <task-id> --secondmate {<project>...|--no-projects}
@@ -763,6 +766,16 @@ case "$MODE" in
 esac
 RULE1=$(fm_ship_rule_one "$MODE" "$ID" "$BRANCH" "$FORGE" "$BASE_BRANCH") || exit 1
 DOD=$(fm_dod_block "$MODE" "$ID" "$BRANCH" "$FORGE" "$BASE_BRANCH" "$UPSTREAM_CONSENT") || exit 1
+# Fork-only PR evidence gate (bin/fm-pr-evidence.sh): when config/pr-evidence enables
+# this project, the brief gains an `## Evidence class` subsection that firstmate fills
+# at intake ({EVIDENCE}) and the worker's evidence contract after the Definition of done.
+if "$SCRIPT_DIR/fm-pr-evidence.sh" enabled "$REPO" >/dev/null 2>&1; then
+  TASK_SECTION="$TASK_SECTION
+
+## Evidence class
+{EVIDENCE}"
+  DOD="$DOD$("$SCRIPT_DIR/fm-pr-evidence.sh" brief-block "$ID")" || exit 1
+fi
 
 cat > "$BRIEF" <<EOF
 You are a crewmate: an autonomous worker agent managed by firstmate. Work on your own; do not wait for a human.

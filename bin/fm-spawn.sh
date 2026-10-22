@@ -852,6 +852,7 @@ BRANCH_PREFIX_SET=0
 BASE_BRANCH=
 BASE_BRANCH_SET=0
 UPSTREAM_CONSENT=
+EVIDENCE_META=
 UPSTREAM_CONSENT_SET=0
 TRACEPARENT_SET=0
 RELAUNCH=0
@@ -3601,6 +3602,12 @@ if [ "$KIND" = ship ] || [ "$KIND" = scout ]; then
       fi
     fi
   fi
+  # Fork-only PR evidence gate (bin/fm-pr-evidence.sh): record the evidence class the
+  # brief declares as evidence= in the task record. Without config/pr-evidence this is
+  # a no-op; a relaunch keeps the recorded value.
+  if [ "$KIND" = ship ] && [ "$RELAUNCH" -eq 0 ] && [ -e "$CONFIG/pr-evidence" ]; then
+    EVIDENCE_META=$(FM_HOME=$FM_HOME FM_CONFIG_OVERRIDE=$CONFIG "$SCRIPT_DIR/fm-pr-evidence.sh" intake "$BRIEF" "$(basename "$PROJ_ABS")" "$PROJ_ABS") || exit 1
+  fi
   if [ "$RELAUNCH" -eq 1 ]; then
     BASE_BRANCH=$(fm_meta_get "$RELAUNCH_META" base_branch)
   elif [ "$BASE_BRANCH_SET" -eq 1 ]; then
@@ -5874,6 +5881,8 @@ preserve_relaunch_meta() {
   echo "tasktmp=$TASK_TMP"
   [ -z "$BASE_BRANCH" ] || echo "base_branch=$BASE_BRANCH"
   [ -z "$UPSTREAM_CONSENT" ] || echo "upstream_consent=$UPSTREAM_CONSENT"
+  # Fork-only evidence class (bin/fm-pr-evidence.sh), read by the PR evidence gate.
+  [ -z "$EVIDENCE_META" ] || printf '%s\n' "$EVIDENCE_META"
   # Read by bin/fm-dod-lib.sh's ready-report gate; absent on every other forge.
   [ "$EXTERNAL_REVIEW" = 0 ] || echo "forge=external"
   [ -z "$EXTERNAL_BACKUP_REMOTE" ] || echo "backup_remote=$EXTERNAL_BACKUP_REMOTE"

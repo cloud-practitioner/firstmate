@@ -133,7 +133,39 @@ test_spawn_installs_the_guard_and_records_the_task() {
   pass "forge=external spawn: installs the push guard even under keep-ai-trailers and records forge and backup in the task record"
 }
 
+# The fork-only PR evidence gate (bin/fm-pr-evidence.sh) reads `## Evidence class` at spawn
+# and records evidence= in the task record that bin/fm-pr-check.sh reads.
+test_spawn_records_the_declared_evidence_class() {
+  local id out status meta
+  id=ev-refuse-r1
+  make_case evrefuse "$id" "direct-PR"
+  sed -i.bak 's/^Delivery contract: mode=direct-PR forge=external$/Delivery contract: mode=direct-PR/' "$HOME_DIR/data/$id/brief.md"
+  sed -i.bak 's/^# Definition of done$/## Evidence class\n{EVIDENCE}\n\n# Definition of done/' "$HOME_DIR/data/$id/brief.md"
+  printf '* enforce\n' > "$HOME_DIR/config/pr-evidence"
+  out=$(run_spawn "$id" --mode direct-PR --yolo off); status=$?
+  refused_before_launch "$id" "a spawn with the evidence class unfilled" "is not filled" "$out" "$status"
+
+  id=ev-launch-r1
+  make_case evlaunch "$id" "direct-PR"
+  sed -i.bak 's/^Delivery contract: mode=direct-PR forge=external$/Delivery contract: mode=direct-PR/' "$HOME_DIR/data/$id/brief.md"
+  sed -i.bak 's/^# Definition of done$/## Evidence class\nui+api\n\n# Definition of done/' "$HOME_DIR/data/$id/brief.md"
+  printf '* enforce\n' > "$HOME_DIR/config/pr-evidence"
+  out=$(run_spawn "$id" --mode direct-PR --yolo off); status=$?
+  expect_code 0 "$status" "a spawn with a filled evidence class should launch"$'\n'"$out"
+  meta="$HOME_DIR/state/$id.meta"
+  assert_grep 'evidence=ui+api' "$meta" "the spawn did not record the declared evidence class"
+
+  id=ev-off-r1
+  make_case evoff "$id" "direct-PR"
+  sed -i.bak 's/^Delivery contract: mode=direct-PR forge=external$/Delivery contract: mode=direct-PR/' "$HOME_DIR/data/$id/brief.md"
+  out=$(run_spawn "$id" --mode direct-PR --yolo off); status=$?
+  expect_code 0 "$status" "a spawn without config/pr-evidence should launch"$'\n'"$out"
+  assert_no_grep 'evidence=' "$HOME_DIR/state/$id.meta" "the gate off still recorded an evidence class"
+  pass "spawn: the declared evidence class is required and recorded when config/pr-evidence enables the project, and ignored otherwise"
+}
+
 test_spawn_refusals_before_launch
 test_spawn_installs_the_guard_and_records_the_task
+test_spawn_records_the_declared_evidence_class
 
 echo "# all fm-spawn-external-review tests passed"
