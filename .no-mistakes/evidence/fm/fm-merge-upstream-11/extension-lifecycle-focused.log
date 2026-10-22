@@ -1,0 +1,5 @@
+ok - lifecycle wrappers use Bash without shell interpolation and preserve failure mapping
+ok - POSIX lifecycle Bash resolution ignores an exported BASH
+ok - an absent home-local registry is inert, state-free, and ignores project/environment discovery
+
+Focused lifecycle-shell checks completed

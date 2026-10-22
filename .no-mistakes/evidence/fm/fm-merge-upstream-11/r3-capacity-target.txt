@@ -1,0 +1,4 @@
+capacity: free_lanes=2 reason=ok lanes=2 target=4 secondmates=1 load1=4.15 cores=6 mem_free_pct=29 disk_free_mb=942885
+Lanes: 2 running of 4 target, 2 open.
+Secondmates: 1 (hold no lane).
+Host: load 4.15 on 6 cores, memory free 29%, disk free 942885 MB.

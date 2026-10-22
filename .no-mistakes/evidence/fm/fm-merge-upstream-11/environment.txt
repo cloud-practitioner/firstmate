@@ -1,0 +1,14 @@
+Named Herdr lab prepare: fm-lab-merge-validation-83084-29682
+prepare_exit=0
+
+Host: Linux
+
+Runtime availability:
+tmux: absent from PATH
+paseo: absent from PATH
+/home/node/.local/bin/treehouse
+/home/node/.local/bin/no-mistakes
+/usr/bin/sqlite3
+/usr/bin/cc
+/usr/bin/make
+/usr/bin/pkg-config

@@ -1,0 +1,59 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.sHr3Ug
+
+=== Real endpoint semantic state ===
+state: unknown · source: pane · harness state unavailable (unknown missing)
+recovery_grade_agent_alive=alive
+
+=== First unknown-but-alive sight remains actionable ===
+watch_first_exit=0
+stale: primary:fm-monitor
+
+=== New rendered hash while progress is recent: repeat alarm bounded ===
+repeat_observation: pid=1879928 count=3 output_bytes=0 beacon_exists=yes
+repeat_watcher_still_running=yes completed_polls=3 repeat_output_empty=yes
+
+=== Adversarial: liveness without recent progress must alarm again ===
+no_progress_exit=0
+stale: primary:fm-monitor
+
+=== Actual terminal inspected ===
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ validation text not submitted changed viewport
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5
+  ⏵⏵ auto mode on (shift+tab to cycle)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

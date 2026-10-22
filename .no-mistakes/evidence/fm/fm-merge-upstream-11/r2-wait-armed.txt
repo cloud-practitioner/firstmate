@@ -1,0 +1,2 @@
+watcher: started pid=2740001 (beacon fresh)
+stale: primary:fm-head-probe (idle 63s, waiting 33s - declared blocker, awaiting firstmate - its own newest line reports a blocker, rechecked on a long cadence not a wedge; clear the reported blocker and close it with fm-send --resolve-key)

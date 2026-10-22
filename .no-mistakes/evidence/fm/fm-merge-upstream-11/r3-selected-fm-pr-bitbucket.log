@@ -1,0 +1,4 @@
+ok - fm-pr-merge sends a caller-supplied message beside the Bitbucket merge strategy
+ok - fm-pr-merge --message-file refuses a Bitbucket merge that cannot carry the message before the merge request, and keeps its guards
+ok - fm-pr-merge validates Bitbucket message files before recording or calling the forge and accepts the inclusive size bound
+ok - fm-pr-merge preserves normalized UTF-8 messages when the file changes after validation

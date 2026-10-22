@@ -1,0 +1,2 @@
+watcher: started pid=2753839 (beacon fresh)
+stale: primary:fm-head-probe (idle 62s, possible wedge, escalation 1)

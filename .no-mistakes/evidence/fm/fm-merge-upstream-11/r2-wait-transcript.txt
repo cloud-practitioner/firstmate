@@ -1,0 +1,15 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.CuUWl0
+
+=== Endpoint has a declared active-job recovery record ===
+state: working · source: pane · harness busy (fm-recovery)
+
+=== Home watch.env overrides the ambient 30-second poll; worker-wait is armed ===
+watcher: started pid=2740001 (beacon fresh)
+stale: primary:fm-head-probe (idle 63s, waiting 33s - declared blocker, awaiting firstmate - its own newest line reports a blocker, rechecked on a long cadence not a wedge; clear the reported blocker and close it with fm-send --resolve-key)
+elapsed_seconds=3
+
+=== Adversarial: removing the opt-in restores the wedge ladder ===
+watcher: started pid=2753839 (beacon fresh)
+stale: primary:fm-head-probe (idle 62s, possible wedge, escalation 1)
+
+The semantic active-job event was disposable input data, not a model-execution claim. Both watcher runs used real commands and a real live CLI endpoint.

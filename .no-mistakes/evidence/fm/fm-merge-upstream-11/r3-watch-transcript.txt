@@ -1,0 +1,17 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.r1ebeE
+
+=== Real endpoint semantic state ===
+state: unknown · source: pane · harness state unavailable (unknown missing)
+recovery_grade_agent_alive=alive
+
+=== First unknown-but-alive sight remains actionable ===
+watch_first_exit=0
+stale: primary:fm-monitor
+
+=== New rendered hash while progress is recent: repeat alarm bounded ===
+repeat_observation: pid=3136110 count=3 output_bytes=0 beacon_exists=yes
+repeat_watcher_still_running=yes completed_polls=3 repeat_output_empty=yes
+
+=== Adversarial: liveness without recent progress must alarm again ===
+no_progress_exit=124
+Terminated

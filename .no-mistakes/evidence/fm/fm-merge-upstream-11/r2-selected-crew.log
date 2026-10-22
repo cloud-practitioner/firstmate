@@ -1,0 +1,6 @@
+ok - runs_on_current_branch: 0 makes a capped overview fall through to crew-state sources
+ok - ci-ready status log beats monitoring run
+ok - stale checks-green status log does not mask CI relapse
+ok - terminal passed run reads open, declined, and merged Bitbucket PR state
+ok - terminal passed run reports an unreadable Bitbucket PR as unknown
+ok - moved remote branch without the named head is current-state blocked

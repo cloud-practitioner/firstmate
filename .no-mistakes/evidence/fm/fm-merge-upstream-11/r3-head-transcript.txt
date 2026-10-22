@@ -1,0 +1,11 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.Mcs9x2
+
+=== Real idle endpoint, explicitly reconciled through the recovery event writer ===
+alive
+=== Adversarial: a green Bitbucket report must not hide an unpreserved head ===
+state: blocked · source: status-log · named head 6c722533d9a82a08fd3033c9f1fae5e7ed79f464 is unreachable outside the worker copy
+
+=== Preserve the named head to a disposable local bare remote ===
+state: done · source: status-log · PR https://bitbucket.org/iqxbusiness/disposable/pull-requests/1 CI-ready, checks green
+
+No real forge read, write, PR, or pipeline was used. The task remained detached, so crew-state had no pipeline branch to query.

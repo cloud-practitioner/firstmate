@@ -1,0 +1,16 @@
+=== Install the preserved fork-only hook in a disposable home ===
+installed iqx -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.test-live/hook-home/projects/iqx/.git/hooks/commit-msg
+
+=== Real commit keeps a # subject and appends exactly one Ixia trailer ===
+#123 validation subject
+
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+
+
+=== Comment-only strip-cleanup commit must refuse without moving HEAD ===
+Aborting commit due to empty commit message.
+empty_commit_exit=1 head_unchanged=yes
+
+=== Non-IQX origin must not receive the Ixia trailer ===
+Non-IQX validation subject
+

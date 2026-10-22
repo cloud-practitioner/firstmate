@@ -1,0 +1,12 @@
+
+SELECTED: test_home_resolver_finds_a_workspace_home_when_nm_home_is_unset
+ok - a configured resolver supplies the no-mistakes home for reads when NM_HOME is unset
+
+SELECTED: test_explicit_nm_home_wins_over_the_resolver
+ok - an explicit NM_HOME always wins and the resolver is not called
+
+SELECTED: test_unusable_resolver_answers_keep_the_ambient_home
+ok - an absent or unusable resolver leaves every read on the ambient home
+
+SELECTED: test_home_resolver_scope_is_host_reads_and_run_abort
+ok - the resolver applies to host reads and axi abort --run only

@@ -1,0 +1,8 @@
+uname=Linux
+session=fm-lab-r2-isolation-2388957-20637
+fm-herdr-lab: fleet-state tripwire requires exactly one running default session
+prepare_exit=1
+No lab server was provisioned: the isolated namespace has no running default-session tripwire.
+Native harness availability: omp: absent from PATH
+grok: absent from PATH
+paseo: absent from PATH

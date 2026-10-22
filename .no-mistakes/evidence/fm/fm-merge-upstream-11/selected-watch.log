@@ -1,0 +1,12 @@
+
+SELECTED: test_unknown_alive_stale_is_bounded_after_its_first_alarm
+ok - an unknown-but-alive pane with progress evidence alarms once per bounded pause-resurface window
+
+SELECTED: test_unknown_alive_stale_without_progress_keeps_surfacing
+ok - an unknown-but-alive pane without progress evidence keeps surfacing every new hash
+
+SELECTED: test_wedge_threshold_defers_to_a_worker_blocker
+ok - in an armed home a worker's own open newest blocker or decision is deferred to the bounded recheck, and a newer line, a resolved line, a reserved key, or a newer acknowledged inbox record keeps the ladder
+
+SELECTED: test_wedge_threshold_worker_wait_is_off_until_armed
+ok - with config/wedge-defer-worker-wait absent a worker blocker keeps the byte-identical wedge reason

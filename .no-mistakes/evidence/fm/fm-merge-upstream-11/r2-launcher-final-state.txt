@@ -1,0 +1,4 @@
+Final read-only observation
+lrwxrwxrwx 1 node node 47 Oct 22 02:49 /home/node/.local/bin/claude -> /home/node/.local/share/claude/versions/2.1.307
+launcher_target_executable=yes
+No agent command repaired the external launcher. Its final target differs from the transient broken lab target.

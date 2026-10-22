@@ -1,0 +1,1 @@
+skip: paseo CLI not found on PATH or at the bundle path

@@ -1,0 +1,23 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.GoLR8Q
+
+=== Install IQX hook in an isolated clone ===
+installed iqx -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.GoLR8Q/projects/iqx/.git/hooks/commit-msg
+unchanged iqx -> /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.GoLR8Q/projects/iqx/.git/hooks/commit-msg
+
+=== Actual committed message ===
+#123 preserve fork hook
+
+Reviewed-by: Human Reviewer <human@example.invalid>
+Co-Authored-By: Ixia Engineering (Claude) <noreply@anthropic.com>
+
+
+=== Install refuses an unrelated origin without changing it ===
+STOP other: origin is 'https://example.invalid/other.git', not bitbucket.org/iqxbusiness
+unrelated_origin_exit=1 hook_created=no
+
+=== Emitted OMP supervision contract ===
+OMP supervision output captured; native OMP is not invoked.
+
+=== Bitbucket credential refusal before a merge ===
+error: merging a Bitbucket pull request requires the NO_MISTAKES_BITBUCKET_EMAIL environment variable, the NO_MISTAKES_BITBUCKET_API_TOKEN environment variable
+no_credential_merge_exit=1

@@ -1,0 +1,5 @@
+capacity: free_lanes=0 reason=cpu lanes=2 target=4 secondmates=1 load1=18.69 cores=6 mem_free_pct=13 disk_free_mb=943210
+Lanes: 2 running of 4 target, 0 open.
+Secondmates: 1 (hold no lane).
+Host: load 18.69 on 6 cores, memory free 13%, disk free 943210 MB.
+Constrained: cpu - hold new dispatch until it clears.

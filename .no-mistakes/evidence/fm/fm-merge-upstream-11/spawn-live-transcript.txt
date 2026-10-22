@@ -1,0 +1,73 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.WSz0Y0
+
+=== Real primary CLI (120x40) ===
+
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ Try "edit fm-backend-herdr-presentation-e2e.test.sh to..."
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+=== Scaffold real scout ===
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.WSz0Y0/data/runtime-probe/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+=== Spawn real Claude scout with private Treehouse pool ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.WSz0Y0
+spawned runtime-probe harness=claude kind=scout window=default:wW:p2 worktree=/home/node/.treehouse/disposable-b92b86/1/disposable
+
+=== Published task metadata ===
+window=default:wW:p2
+endpoint_task_id=runtime-probe
+worktree=/home/node/.treehouse/disposable-b92b86/1/disposable
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.WSz0Y0/projects/disposable
+harness=claude
+kind=scout
+tasktmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.WSz0Y0/state/runtime-probe.tasktmp
+model=sonnet
+effort=default
+busy_gen=g1792635208.616985.30943
+spawn_gen=s1792635209.596142.32124
+backend=herdr
+herdr_session=default
+herdr_workspace_id=wW
+herdr_tab_id=wW:t2
+herdr_pane_id=wW:p2
+herdr_process_identity=proc:605712:4da799c5-ca83-4b8c-98ee-db07bd4fa477:5616798
+tasktmp_mode=700 gotmp_exists=yes
+
+=== Real worker terminal ===
+can't find window: fm-runtime-probe

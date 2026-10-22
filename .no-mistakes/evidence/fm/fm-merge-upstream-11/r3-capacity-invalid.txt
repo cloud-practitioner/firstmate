@@ -1,0 +1,5 @@
+capacity: free_lanes=unknown reason=invalid-target lanes=2 target=invalid secondmates=1 load1=4.15 cores=6 mem_free_pct=29 disk_free_mb=942885
+Lanes: 2 running, target unreadable (config/lane-capacity must hold one non-negative integer).
+Secondmates: 1 (hold no lane).
+Host: load 4.15 on 6 cores, memory free 29%, disk free 942885 MB.
+fm-capacity: config/lane-capacity must hold one non-negative integer

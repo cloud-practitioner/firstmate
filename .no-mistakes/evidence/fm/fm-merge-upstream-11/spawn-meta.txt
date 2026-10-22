@@ -1,0 +1,11 @@
+window=primary:fm-runtime-probe
+endpoint_task_id=runtime-probe
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.eHar9i/pool/.treehouse/disposable-828710/1/disposable
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.eHar9i/projects/disposable
+harness=claude
+kind=scout
+tasktmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.eHar9i/state/runtime-probe.tasktmp
+model=sonnet
+effort=default
+busy_gen=g1792635387.755926.14167
+spawn_gen=s1792635387.753950.16640

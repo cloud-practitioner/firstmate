@@ -1,0 +1,6 @@
+capacity: free_lanes=unknown reason=invalid-target lanes=2 target=invalid secondmates=1 load1=18.69 cores=6 mem_free_pct=13 disk_free_mb=943210
+Lanes: 2 running, target unreadable (config/lane-capacity must hold one non-negative integer).
+Secondmates: 1 (hold no lane).
+Host: load 18.69 on 6 cores, memory free 13%, disk free 943210 MB.
+Constrained: cpu - hold new dispatch until it clears.
+fm-capacity: config/lane-capacity must hold one non-negative integer

@@ -1,0 +1,26 @@
+=== Submitted merge topology ===
+569dbec967e0c0327a7fa198804bcb7d02bd225f
+parents: dc1235ef0e8609d5280e5c06afc44cec9fef1182 83b70ef49e33eff529f574618415997c8ef67518
+Merge upstream firstmate main (83b70ef4) into the fork
+
+=== Planned upstream range ===
+12
+83b70ef4 fix(bin): point non-checkout omp homes at fm <project> relaunch (#7155)
+3847411b fix(composer): recognize Grok approval-titled borders (#6132)
+2c93247f fix(bin): honor explicit no-run verdict in crew-state (#5888)
+8eb9be51 fix(bin): bound repeat stale alarms for unknown-but-alive progressing panes (#7437)
+f1ef0294 feat(bin): add fm-capacity.sh to report open lanes and host headroom (#6973)
+0e82f3ee feat: support per-mate secondmate runtime pins (#6917)
+97316301 feat(brief): forbid leading cd in generated scout and ship briefs (#7481)
+5db719de feat(bin): defer wedge escalation for a worker's own open blocked/needs-decision line (#7361)
+bb57c8fd feat(bin): add an opt-in no-mistakes home resolver for host reads (#7348)
+4ae3aaf0 fix(extension): launch lifecycle helpers through verified Bash (#7563)
+9d76aa8e fix(skills): keep recovery-skill triggers inside Claude Code's listing budget (#7545) (#7558)
+3eabd356 feat(bin): add Paseo as an experimental session backend (#4728)
+
+=== Both input histories are ancestors of final head ===
+dc1235ef retained
+83b70ef4 retained
+
+=== Fork-only runtime surfaces unchanged from fork base ===
+fork_surface_diff_exit=0

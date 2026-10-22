@@ -1,0 +1,3 @@
+ok - a configured resolver supplies the no-mistakes home for reads when NM_HOME is unset
+ok - an explicit NM_HOME always wins and the resolver is not called
+ok - an absent or unusable resolver leaves every read on the ambient home

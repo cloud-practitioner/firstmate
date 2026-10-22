@@ -1,0 +1,163 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE
+
+=== Real primary CLI (120x40) ===
+
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ Try "fix typecheck errors"
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+=== Scaffold real scout ===
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/data/runtime-probe/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+=== Spawn real Claude scout with private Treehouse pool ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE
+spawned runtime-probe harness=claude kind=scout window=primary:fm-runtime-probe worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/pool/.treehouse/disposable-071a2a/1/disposable
+
+=== Published task metadata ===
+window=primary:fm-runtime-probe
+endpoint_task_id=runtime-probe
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/pool/.treehouse/disposable-071a2a/1/disposable
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/projects/disposable
+harness=claude
+kind=scout
+tasktmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/state/runtime-probe.tasktmp
+model=sonnet
+effort=default
+busy_gen=g1792635319.697072.3598
+spawn_gen=s1792635320.690824.30255
+tasktmp_mode=700 gotmp_exists=yes
+
+=== Real worker terminal ===
+bash-5.2$ treehouse get
+A new version of treehouse is available: v3.1.4 → v3.1.5
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/pool/.treehouse/dispos
+able-071a2a/1/disposable. Type 'exit' to return.
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c
+/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/pool/.treehouse/disposable-071a2a/1/disposable'
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ export GOTMPDIR='/home/node/.no-mistakes/worktrees/45
+0411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/state/runtime-probe.tasktmp/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+export FM_TASK_ID=runtime-probe
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ export FM_TASK_ID=runtime-probe
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ . '/tmp/fm-runtime-probe+e9b599a24524c86aa2fe068c628f
+f83b65184d3fc8f53cc6e6631c03762447df/launch.s1792635320.690824.30255.sh'
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Allow external CLAUDE.md file imports?
+
+  This project's CLAUDE.md or .claude/rules imports files outside the current working directory. Never allow this for
+  third-party repositories.
+
+  External imports:
+    /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/AGENTS.md
+
+  Important: Only use Claude Code with files you trust. Accessing untrusted files may pose security risks
+  https://code.claude.com/docs/en/security
+
+  ❯ No, disable external imports
+    Yes, allow external imports
+
+  Enter to confirm · Esc to cancel
+
+
+
+
+
+
+
+=== End-user peek and current-state read ===
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+bash-5.2$ treehouse get
+A new version of treehouse is available: v3.1.4 → v3.1.5
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/pool/.treehouse/dispos
+able-071a2a/1/disposable. Type 'exit' to return.
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c
+/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/pool/.treehouse/disposable-071a2a/1/disposable'
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ export GOTMPDIR='/home/node/.no-mistakes/worktrees/45
+0411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE/state/runtime-probe.tasktmp/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+export FM_TASK_ID=runtime-probe
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ export FM_TASK_ID=runtime-probe
+node ➜ ~/.../.treehouse/disposable-071a2a/1/disposable (88dae77) $ . '/tmp/fm-runtime-probe+e9b599a24524c86aa2fe068c628f
+f83b65184d3fc8f53cc6e6631c03762447df/launch.s1792635320.690824.30255.sh'
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Allow external CLAUDE.md file imports?
+
+  This project's CLAUDE.md or .claude/rules imports files outside the current working directory. Never allow this for
+  third-party repositories.
+
+  External imports:
+    /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/AGENTS.md
+
+  Important: Only use Claude Code with files you trust. Accessing untrusted files may pose security risks
+  https://code.claude.com/docs/en/security
+
+  ❯ No, disable external imports
+    Yes, allow external imports
+
+  Enter to confirm · Esc to cancel
+
+
+
+
+
+
+state: unknown · source: pane · harness state unavailable (unknown launch-prompt)
+
+=== Teardown disposable scout ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.UttaSE
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+fm-captain-hold: origin runtime-probe has no completed captain-call inventory
+REFUSED: scout task runtime-probe has not passed the captain-call completion gate.
+Inventory its report and any visual review through bin/fm-captain-hold.sh before teardown.

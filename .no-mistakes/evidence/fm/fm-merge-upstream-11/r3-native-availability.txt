@@ -1,0 +1,7 @@
+platform=Linux session=fm-lab-r3-isolation-3816710-3534
+fm-herdr-lab: fleet-state tripwire requires exactly one running default session
+prepare_exit=1
+No provision or run was attempted after refused prepare.
+paseo: absent from PATH
+omp: absent from PATH
+grok: absent from PATH

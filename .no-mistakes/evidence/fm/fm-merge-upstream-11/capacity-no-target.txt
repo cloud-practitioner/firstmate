@@ -1,0 +1,3 @@
+capacity: free_lanes=unknown reason=no-target lanes=0 target=none secondmates=0 load1=18.74 cores=6 mem_free_pct=14 disk_free_mb=943220
+Lanes: 0 running, no target set (config/lane-capacity absent).
+Host: load 18.74 on 6 cores, memory free 14%, disk free 943220 MB.

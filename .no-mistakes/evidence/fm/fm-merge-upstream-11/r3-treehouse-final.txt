@@ -1,0 +1,3 @@
+treehouse_original_and_local_copy
+986070d93ad08babdb12aecb4d84adc4c0a2e68e05a83a4c45f51f67d24d7d85  /home/node/.local/bin/treehouse
+986070d93ad08babdb12aecb4d84adc4c0a2e68e05a83a4c45f51f67d24d7d85  .test-live/bin/treehouse

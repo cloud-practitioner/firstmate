@@ -1,0 +1,12 @@
+=== Available harness CLIs (PATH only) ===
+/home/node/.local/bin/claude
+grok: unavailable
+omp: unavailable
+/workspaces/wp/.pi/bin/pi
+codex: unavailable
+
+=== Herdr fully worktree-local lab attempt ===
+fm-herdr-lab: fleet-state tripwire requires exactly one running default session
+prepare_exit=1
+
+The isolated XDG namespace has no running default session. The helper requires that real tripwire, and this phase may not provision or alter a default session. Normal named-session state would live outside the worktree; no named lab was provisioned.

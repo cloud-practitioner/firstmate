@@ -1,0 +1,25 @@
+Live-validation setup safety incident (not an identified product regression)
+
+The host shell exported FM_BACKEND=herdr. The first disposable-home driver started a real Claude primary on a private tmux socket but initially failed to pin the fm-spawn invocation's backend. Firstmate correctly applied its documented explicit-environment precedence and the test accidentally spawned a scout on the default Herdr session. This violated the validation runbook and workspace boundary.
+
+The initial product transcript is spawn-live-transcript.txt. Its published metadata identifies:
+  task: runtime-probe
+  backend/session: herdr/default
+  workspace: wW
+  tab: wW:t2
+  pane: wW:p2
+  process binding: proc:605712:4da799c5-ca83-4b8c-98ee-db07bd4fa477:5616798
+  out-of-worktree pool slot: /home/node/.treehouse/disposable-b92b86/1/disposable
+  original disposable home: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.WSz0Y0
+
+Containment:
+- No additional default-session lifecycle calls, inventory reads, or pane sends were issued after detecting the routing error.
+- The test-created shell identity was verified from /proc start ticks before signalling only that shell and its descendants (initial PIDs 605712, 612106, 612470, 626484).
+- SIGTERM was insufficient initially. An identity-checked follow-up found only the test-created root shell remaining and killed PID 605712 with SIGKILL. A following ps check found none of the four recorded PIDs.
+- The disposable home inside the worktree was removed.
+- No external pool files were intentionally inspected or removed and no default Herdr container cleanup was attempted, because both are outside the test agent's permitted boundary.
+
+Operator action required before accepting this validation step:
+Verify whether default-session workspace wW/tab wW:t2/pane wW:p2 and the named external Treehouse slot have residual state; clean up only confirmed test-created residue. The agent has NOT verified those resources absent and does not claim a clean fleet-state tripwire after the accidental default-session launch.
+
+Subsequent retries explicitly set FM_BACKEND=tmux and --backend tmux, retained all home and Treehouse paths inside the worktree, and killed only the private tmux servers during cleanup. spawn-tmux-final-transcript.txt records successful real launch, peek, busy-state reconciliation, and guarded teardown. watch-live-transcript.txt records successful live watcher scenarios. These successful retries do not erase the earlier safety incident.

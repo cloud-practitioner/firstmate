@@ -1,0 +1,33 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.Mtxici
+
+=== Bind and verify shipped file-signal adapter through actual Bash lifecycle ===
+bound: org.firstmate.example.file-signal@1.0.0
+binding: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.Mtxici/config/extensions.d/org.firstmate.example.file-signal.json
+binding-digest: sha256:a3a05af90c3efbb27e28d8104b072c1840ab52ec76527b294f285bb3fb16aa8d
+package: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.Mtxici/data/extensions/packages/org.firstmate.example.file-signal/1.0.0/a670d3f1353bbfa659564b86f6af7783cd47d32ae9a04e7962b28aedf5bc0e76
+package-digest: sha256:a670d3f1353bbfa659564b86f6af7783cd47d32ae9a04e7962b28aedf5bc0e76
+verified: process-event-adapter/1 (file-signal)
+verified: org.firstmate.example.file-signal@1.0.0 sha256:a670d3f1353bbfa659564b86f6af7783cd47d32ae9a04e7962b28aedf5bc0e76
+
+=== Register a real external file event ===
+registered: build-observer (file-signal from org.firstmate.example.file-signal@1.0.0)
+owner-token: sha256:3444891d57e53967d1d427aba54014ddde667ca85b25ccf6d97c6c0a59536fb8
+retire: bin/fm-procevent.sh retire build-observer --if-owner sha256:3444891d57e53967d1d427aba54014ddde667ca85b25ccf6d97c6c0a59536fb8
+
+=== Captured evidence and actual lifecycle output ===
+not-autohandled: build-observer (left for the handler; still unacknowledged)
+retired: build-observer (adapter classified the captured result terminal)
+captured: ./build-observer.1.result
+
+build 42 completed successfully
+
+file-signal
+terminal_source_retired=yes
+retired: build-observer
+
+=== Acknowledge the captured event and retire the binding ===
+handled: build-observer 1
+retired-binding: org.firstmate.example.file-signal sha256:a3a05af90c3efbb27e28d8104b072c1840ab52ec76527b294f285bb3fb16aa8d
+retained-at: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.Mtxici/data/extensions/retired-bindings/org.firstmate.example.file-signal/a3a05af90c3efbb27e28d8104b072c1840ab52ec76527b294f285bb3fb16aa8d.json
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.Mtxici/data/extensions/packages/org.firstmate.example.file-signal/1.0.0/a670d3f1353bbfa659564b86f6af7783cd47d32ae9a04e7962b28aedf5bc0e76/firstmate-extension.json': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.Mtxici/data/extensions/packages/org.firstmate.example.file-signal/1.0.0/a670d3f1353bbfa659564b86f6af7783cd47d32ae9a04e7962b28aedf5bc0e76/file-signal.mjs': Permission denied

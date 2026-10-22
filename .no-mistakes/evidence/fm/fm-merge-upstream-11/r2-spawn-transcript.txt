@@ -1,0 +1,202 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s
+
+=== Real primary CLI (120x40) ===
+
+ ▐▛███▛█   Claude Code v2.1.307
+▝▜██████▀  Opus 5.5 with high effort · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                      ● high · /effort
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ Try "how do I log an error?"
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Opus 5.5
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+=== Scaffold real scout ===
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/data/runtime-probe/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+=== Spawn real Claude scout with private Treehouse pool ===
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s
+spawned runtime-probe harness=claude kind=scout window=primary:fm-runtime-probe worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/pool/.treehouse/disposable-4d5cb6/1/disposable
+
+Worker uses a disposable Claude config: no normal-login or operator trust-store mutations. Authenticated model execution is not claimed.
+
+=== Published task metadata ===
+window=primary:fm-runtime-probe
+endpoint_task_id=runtime-probe
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/pool/.treehouse/disposable-4d5cb6/1/disposable
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/projects/disposable
+harness=claude
+kind=scout
+tasktmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/state/runtime-probe.tasktmp
+model=sonnet
+effort=default
+busy_gen=g1792636367.1605232.4348
+spawn_gen=s1792636368.1603345.30151
+tasktmp_mode=700 gotmp_exists=yes
+
+=== Real worker terminal ===
+bash-5.2$ treehouse get
+A new version of treehouse is available: v3.1.4 → v3.1.5
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/pool/.treehouse/dispos
+able-4d5cb6/1/disposable. Type 'exit' to return.
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c
+/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/pool/.treehouse/disposable-4d5cb6/1/disposable'
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ export GOTMPDIR='/home/node/.no-mistakes/worktrees/45
+0411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/state/runtime-probe.tasktmp/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+export FM_TASK_ID=runtime-probe
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ export FM_TASK_ID=runtime-probe
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ . '/tmp/fm-runtime-probe+bf30b141c173286cfa681ff993aa
+164a4db90a65117f67b4b5a15938b20b329b/launch.s1792636368.1603345.30151.sh'
+Welcome to Claude Code v2.1.307
+..........................................................
+
+     *                                       █████▓▓░
+                                 *         ███▓░     ░░
+            ░░░░░░                        ███▓░
+    ░░░   ░░░░░░░░░░                      ███▓░
+   ░░░░░░░░░░░░░░░░░░░    *                ██▓░░      ▓
+                                             ░▓▓███▓▓░
+ *                                 ░░░░
+                                 ░░░░░░░░
+                               ░░░░░░░░░░░░░░░░
+       █████████                                        *
+      ██▄█████▄██                        *
+       █████████      *
+.......█ █   █ █..........................................
+
+ Let's get started.
+
+ Choose the text style that looks best with your terminal
+ To change this later, run /theme
+
+     Auto (match terminal)
+ ❯ ✔ Dark mode
+     Light mode
+     Dark mode (colorblind-friendly)
+     Light mode (colorblind-friendly)
+     Dark mode (ANSI colors only)
+     Light mode (ANSI colors only)
+
+ ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+  1  function greet() {
+  2 -  console.log("Hello, World!");
+  2 +  console.log("Hello, Claude!");
+  3  }
+ ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+  Syntax theme: Monokai Extended (ctrl+t to disable)
+
+
+=== End-user peek and current-state read ===
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+bash-5.2$ treehouse get
+A new version of treehouse is available: v3.1.4 → v3.1.5
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/pool/.treehouse/dispos
+able-4d5cb6/1/disposable. Type 'exit' to return.
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c
+/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/pool/.treehouse/disposable-4d5cb6/1/disposable'
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ export GOTMPDIR='/home/node/.no-mistakes/worktrees/45
+0411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/state/runtime-probe.tasktmp/gotmp'
+export COMPACT_ADVISER_DISABLE=1
+export FM_TASK_ID=runtime-probe
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ export FM_TASK_ID=runtime-probe
+node ➜ ~/.../.treehouse/disposable-4d5cb6/1/disposable (585aa18) $ . '/tmp/fm-runtime-probe+bf30b141c173286cfa681ff993aa
+164a4db90a65117f67b4b5a15938b20b329b/launch.s1792636368.1603345.30151.sh'
+Welcome to Claude Code v2.1.307
+..........................................................
+
+     *                                       █████▓▓░
+                                 *         ███▓░     ░░
+            ░░░░░░                        ███▓░
+    ░░░   ░░░░░░░░░░                      ███▓░
+   ░░░░░░░░░░░░░░░░░░░    *                ██▓░░      ▓
+                                             ░▓▓███▓▓░
+ *                                 ░░░░
+                                 ░░░░░░░░
+                               ░░░░░░░░░░░░░░░░
+       █████████                                        *
+      ██▄█████▄██                        *
+       █████████      *
+.......█ █   █ █..........................................
+
+ Let's get started.
+
+ Choose the text style that looks best with your terminal
+ To change this later, run /theme
+
+     Auto (match terminal)
+ ❯ ✔ Dark mode
+     Light mode
+     Dark mode (colorblind-friendly)
+     Light mode (colorblind-friendly)
+     Dark mode (ANSI colors only)
+     Light mode (ANSI colors only)
+
+ ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+  1  function greet() {
+  2 -  console.log("Hello, World!");
+  2 +  console.log("Hello, Claude!");
+  3  }
+ ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+  Syntax theme: Monokai Extended (ctrl+t to disable)
+
+state: working · source: pane · harness busy (fm-spawn)
+
+=== Teardown disposable scout ===
+complete: runtime-probe captain-call inventory reviewed
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for runtime-probe: 1603821 1607548
+teardown: force-killing leaked worktree process(es) for runtime-probe: 1603821
+A new version of treehouse is available: v3.1.4 → v3.1.5
+Run "treehouse update" to update
+
+🌳 Worktree returned to pool.
+teardown runtime-probe complete (window primary:fm-runtime-probe, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/pool/.treehouse/disposable-4d5cb6/1/disposable)
+Backlog: runtime-probe just finished (this home keeps no markdown backlog at /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/data/backlog.md). Update /home/node/.no-mistakes/worktrees/450411b3e67c/01M5GMXRP8TEGYK8ZJPXTCW65Z/.l.1Itv2s/data/backlog.md - move runtime-probe to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+recorded_tasktmp_removed=yes task_meta_removed=yes
