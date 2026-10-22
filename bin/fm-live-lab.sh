@@ -40,9 +40,12 @@
 #                    in a lab), started from an empty environment so no inherited
 #                    TMUX, Herdr, or Pi marker reaches a lab process.
 #                    TREEHOUSE_ROOT points into <lab-root>, so a worker's pool
-#                    never lands in ~/.treehouse, and DISABLE_AUTOUPDATER=1
-#                    keeps Claude Code from replacing the shared binary under
-#                    a running lab, as every live run does (tests/lib.sh).
+#                    never lands in ~/.treehouse. Every lab requires an
+#                    installed claude, even with a Pi primary and no helpers,
+#                    and installs bin/fm-live-claude.sh's shim at
+#                    <lab-root>/claude-shim, first on every lab process's PATH.
+#                    That script's header owns the launcher-isolation contract
+#                    for the primary and any Claude workers or second mates.
 #                    A set CLAUDE_CONFIG_DIR (absolute) is passed to every lab
 #                    process. up records the Claude store, Pi trust store, and
 #                    ~/.treehouse it selected, so check and down use those same
@@ -157,6 +160,7 @@ load_lab() {  # <root>: refuse anything up did not build, then load its record
   CLAUDE_STORE=$(rec_get "$ROOT" claude_store)
   PI_TRUST_STORE=$(rec_get "$ROOT" pi_trust_store)
   TREEHOUSE_DIR=$(rec_get "$ROOT" treehouse_dir)
+  CLAUDE_SHIM=$(rec_get "$ROOT" claude_shim)
 }
 
 lab_tmux() {
@@ -167,8 +171,9 @@ lab_tmux() {
 # The empty-environment base every lab process starts from.
 lab_env_base() {
   printf '%s\n' "HOME=$HOME" "USER=${USER:-$(id -un)}" "LOGNAME=${USER:-$(id -un)}" \
-    "PATH=$PATH" "SHELL=${SHELL:-/bin/zsh}" "TERM=xterm-256color" "LANG=${LANG:-en_US.UTF-8}" \
+    "PATH=${CLAUDE_SHIM:+$CLAUDE_SHIM:}$PATH" "SHELL=${SHELL:-/bin/zsh}" "TERM=xterm-256color" "LANG=${LANG:-en_US.UTF-8}" \
     "TMUX_TMPDIR=$TMUX_DIR" "TREEHOUSE_ROOT=$ROOT/treehouse" "FM_BACKEND=tmux" "DISABLE_AUTOUPDATER=1"
+  [ -z "${CLAUDE_SHIM:-}" ] || printf '%s\n' "FM_LIVE_CLAUDE_SHIM=$CLAUDE_SHIM"
   [ -z "${CLAUDE_DIR:-}" ] || printf '%s\n' "CLAUDE_CONFIG_DIR=$CLAUDE_DIR"
 }
 
@@ -485,7 +490,7 @@ cmd_up() {
   case "$CLAUDE_DIR" in ''|/*) ;; *) die "CLAUDE_CONFIG_DIR must be an absolute path" ;; esac
   CLAUDE_STORE="${CLAUDE_DIR:-$HOME}/.claude.json"
   [ -z "$root" ] || [ ! -e "$root" ] || die "refusing '$root': a lab root must not exist yet"
-  for tool in git tmux jq node python3 shasum "$harness"; do
+  for tool in git tmux jq node python3 shasum claude "$harness"; do
     command -v "$tool" >/dev/null 2>&1 || die "$tool is required and was not found on PATH"
   done
 
@@ -502,6 +507,7 @@ cmd_up() {
   GATE="$LAB/data/$WORKER_ID/gate"
   PI_TRUST_BEFORE=$(digest "$PI_TRUST_STORE")
   treehouse_listing | sort > "$ROOT/.treehouse-before"
+  CLAUDE_SHIM=$("$SCRIPT_DIR/fm-live-claude.sh" shim "$ROOT/claude-shim") || die "cannot install the live Claude shim"
   {
     echo "$RECORD_TOKEN"
     echo "harness=$harness"
@@ -519,6 +525,7 @@ cmd_up() {
     echo "claude_store=$CLAUDE_STORE"
     echo "pi_trust_store=$PI_TRUST_STORE"
     echo "treehouse_dir=$TREEHOUSE_DIR"
+    echo "claude_shim=$CLAUDE_SHIM"
   } > "$ROOT/$RECORD_NAME"
   echo "lab: $ROOT (tear down with: $0 down $ROOT)"
 

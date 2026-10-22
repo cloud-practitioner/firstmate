@@ -694,6 +694,7 @@ mkdir -p "$FAKEBIN"
 cat > "$FAKEBIN/claude" <<'SH'
 #!/usr/bin/env bash
 sleep 1.5
+printf '%s\n%s\n%s\n' "$HOME" "${DISABLE_AUTOUPDATER:-unset}" "$PATH" > "$FM_HOME/../claude-launch-env"
 if node -e 'const [s,k]=process.argv.slice(1);const j=JSON.parse(require("node:fs").readFileSync(s,"utf8"));process.exit(j.projects?.[k]?.hasTrustDialogAccepted===true?0:1)' "$HOME/.claude.json" "$FM_HOME"; then
   echo present > "$FM_HOME/../claude-launch-trust"
 else
@@ -722,6 +723,11 @@ wait "$RIVAL" 2>/dev/null || true
 assert_equals dropped "$(cat "$TMP_ROOT/rival-dropped" 2>/dev/null)" "rival dropped primary trust once"
 assert_equals present "$(cat "$U/claude-launch-trust" 2>/dev/null)" "primary launched trusted after the rival write"
 assert_contains "$out" "ok trust: $U/home is trusted in the Claude store" "readiness sees primary trust"
+# The primary ran behind the live Claude shim: scratch HOME, updater off, shim first on PATH.
+U_REAL=$(cd -P "$U" && pwd -P)
+assert_equals "$U_REAL/claude-shim/homes" "$(dirname "$(sed -n 1p "$U/claude-launch-env")")" "the lab primary runs in a scratch HOME under the lab's shim"
+assert_equals 1 "$(sed -n 2p "$U/claude-launch-env")" "the lab primary runs with the updater off"
+case "$(sed -n 3p "$U/claude-launch-env")" in "$U_REAL/claude-shim:"*) ;; *) fail "the lab shim must lead the primary's PATH" ;; esac
 out=$("$LIVE_LAB" down "$U" 2>&1)
 expect_code 0 "$?" "down removes the up-built lab: $out"
 pass "up re-registers primary trust after a concurrent Claude write"

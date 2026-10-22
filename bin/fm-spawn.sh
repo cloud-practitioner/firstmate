@@ -6255,6 +6255,12 @@ LAUNCH="export COMPACT_ADVISER_DISABLE=1; $LAUNCH"
 if [ -n "${DISABLE_AUTOUPDATER:-}" ]; then
   LAUNCH="export DISABLE_AUTOUPDATER=$(shell_quote "$DISABLE_AUTOUPDATER"); $LAUNCH"
 fi
+# Carry the scenario's Claude shim ahead of a pre-existing backend daemon's
+# PATH, which may not have inherited it. bin/fm-live-claude.sh owns the
+# launcher-isolation contract.
+if [ "$HARNESS" = claude ] && [ -n "${FM_LIVE_CLAUDE_SHIM:-}" ] && [ -x "$FM_LIVE_CLAUDE_SHIM/claude" ]; then
+  LAUNCH="export PATH=$(shell_quote "$FM_LIVE_CLAUDE_SHIM"):\"\$PATH\"; $LAUNCH"
+fi
 if [ -z "$SPAWN_TRACEPARENT" ] && [ "$RELAUNCH" -eq 1 ]; then
   LAUNCH="unset TRACEPARENT; $LAUNCH"
 fi

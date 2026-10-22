@@ -101,11 +101,14 @@ spawn_mate() {  # <case> <id> <harness> <sleeper-dir> <shim-dir>
   mkdir -p "$case_dir" "$user_home"
   fm_test_spawn_home "$primary" "$harness"
   seed_home "$sm" "$id"
+  # Scope the propagated shim to the sleeper for this spawn, so a daemon pane
+  # cannot resolve the guarded real Claude ahead of the brief interceptor.
+  # The separate prompt-free launch still uses the gate's guarded executable.
   FM_BACKEND=tmux FM_ROOT_OVERRIDE="$ROOT" FM_HOME="$primary" \
     HOME="$user_home" CLAUDE_CONFIG_DIR='' \
     FM_STATE_OVERRIDE="$primary/state" FM_DATA_OVERRIDE="$primary/data" \
     FM_PROJECTS_OVERRIDE="$primary/projects" FM_CONFIG_OVERRIDE="$primary/config" \
-    FM_SPAWN_NO_GUARD=1 \
+    FM_SPAWN_NO_GUARD=1 FM_LIVE_CLAUDE_SHIM="$sleeper" \
     env -u TMUX -u TMUX_PANE \
     PATH="$sleeper:$shim:$PATH" \
     "$ROOT/bin/fm-spawn.sh" "$id" "$sm" "$harness" --secondmate
