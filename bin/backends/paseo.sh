@@ -587,9 +587,8 @@ fm_backend_paseo_send_text_submit() { # <target> <text> <retries> <enter-sleep> 
     "$target" "$retries" "$sleep_s" "$expected_label"
 }
 
-# fm_backend_paseo_kill: close the task's terminal TAB, best-effort (mirrors
-# every other backend's `kill` `|| true` contract), then retire the shared
-# per-project workspace if that was its last tab. An already-gone tab stays
+# fm_backend_paseo_kill: close the task's terminal TAB, best-effort, then retire
+# the shared per-project workspace if that was its last tab. An already-gone tab stays
 # quiet but still retires its recorded workspace; retire holds back while
 # any tab, agent, other title, or Firstmate itself uses it.
 fm_backend_paseo_kill() { # <target> [unused] [expected-label]

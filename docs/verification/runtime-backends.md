@@ -346,6 +346,7 @@ Claude, Codex, OpenCode, Pi, pi-signed, Grok, Kimi, Cursor, and Muse share that 
 A reported close failure costs teardown every durable record of the task, so what each backend's close actually returns was measured before that status was given any authority.
 Verified on 2026-09-14 with tmux 3.7c by driving `fm_backend_kill` against real tmux endpoints, and the Orca arm by driving `fm_backend_orca_kill` under a search path with no `orca` on it.
 Zellij and cmux were not driven with their CLIs absent; the table below states what those arms report today rather than claiming a measurement.
+The Paseo row likewise records adapter inspection, not a live close-failure measurement.
 
 ```sh
 tests/fm-teardown-endpoint-safety.test.sh
@@ -371,9 +372,10 @@ The refusal is reached only through a close that could not do its job, and each 
 | orca | 0, silent | 1 when a missing CLI means no close was attempted; 0 for a close command that failed after the CLI accepted it |
 | zellij | 0, silent | 0, not yet distinguishable |
 | cmux | 0, silent | 0, not yet distinguishable |
+| paseo | 0, silent | 0, best-effort close; failure is not yet distinguishable |
 | herdr | 0, silent | 0 from this arm; `bin/fm-teardown.sh` gates every Herdr record removal on `fm_backend_herdr_endpoint_confirmed_gone` instead |
 
-The three arms that still report 0 need a presence re-read taken after their own close, and the close-then-read timing that re-read depends on cannot be established without the real Zellij, Orca, and cmux binaries.
+The four arms that still report 0 need a presence re-read taken after their own close, and the close-then-read timing that re-read depends on needs live verification against each backend.
 Guessing it is what a refusal must never rest on: a gate that refused an already-exited session would break ordinary cleanup on every task, which is a worse failure than the stranded endpoint it would be trying to prevent.
 tmux's re-read is deliberately exact - `=session` plus a whole-line window-name match - because a prefix match would read a neighboring window as this window's survivor, which is the same exactness the cleanup identity boundary above already requires.
 It is also deliberately conservative about the read itself, sharing `fm_backend_tmux_window_inventory` with `fm_backend_tmux_agent_state` so both mean the same thing by an absent session: only a definitive missing-session, missing-server, or connect-error response proves the window gone.
@@ -2185,7 +2187,7 @@ The portable classifier regression is `tests/fm-backend-cmux.test.sh`.
 
 ## Paseo
 
-The current compatibility floor is Paseo 0.8, and the active live evidence uses Paseo 0.8.0 on macOS.
+The current compatibility floor is Paseo 0.8; the active macOS live evidence below includes Paseo 0.8.0 and the separately noted 0.9.2 checks.
 The bundled CLI was found at `/Applications/Paseo.app/Contents/Resources/bin/paseo`, and the daemon was already healthy on `127.0.0.1:6767` (`paseo status`).
 
 Real live checks used a throwaway project directory, its shared `firstmate` workspace, and `fm-test-` scoped probe terminals, torn down (project included) at the end of the pass.

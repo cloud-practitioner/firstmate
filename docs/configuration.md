@@ -545,7 +545,7 @@ Without overrides, backend detection uses `$TMUX_PANE` first, then `HERDR_ENV=1`
 That keeps a tmux pane nested inside herdr on the tmux transport, matching the runtime backend's innermost-first rule.
 Target detection uses `FM_SUPERVISOR_TARGET`, then `$TMUX_PANE`, then `"${HERDR_SESSION:-default}:${HERDR_PANE_ID}"` under herdr, then the legacy `firstmate:0` tmux fallback with a warning.
 
-Selecting any other supervisor backend, including `zellij`, `orca`, or `cmux`, refuses at daemon startup instead of trying tmux injection primitives against a non-tmux pane.
+Selecting any other supervisor backend refuses at daemon startup instead of trying tmux injection primitives against a non-tmux pane.
 
 ## Away-mode wedge alarm channels (config/wedge-alarm)
 
@@ -636,7 +636,8 @@ The home cannot be derived from a task copy's `no-mistakes` remote, because ever
 The file's first line is the absolute path of an executable the site provides; Firstmate calls it with the task copy's path as its only argument and never interprets the layout itself.
 When the resolver exits successfully within 5 seconds and prints exactly one line naming an existing directory by absolute path, that directory is exported as `NM_HOME` for that one call.
 
-Only host-side reads use it: current-state reads, pipeline-spend recording, the custody check, and teardown's parked-run lookup and `axi abort --run`, which read `axi status`, the `axi` overview, `axi logs`, `runs`, `daemon status`, and the state database.
+Host-side inspection uses it for current state, pipeline-spend recording, custody checks, and teardown's parked-run lookup through `axi status`, the `axi` overview, `axi logs`, `runs`, `daemon status`, and the state database.
+Teardown's run-targeted `axi abort --run` also uses it so cleanup addresses the same home as the lookup.
 It never starts a daemon and never changes how runs are launched or driven, account routing, or no-mistakes' own `config.yaml`.
 An explicit non-empty `NM_HOME` always wins and the resolver is not called.
 With the file absent, a first line that is not an absolute executable path, or a resolver that fails, times out, or prints anything else, every read uses the ambient home exactly as without the file.
@@ -645,11 +646,11 @@ The file is a home-local site choice and is not inherited by secondmate homes; `
 ## Lane capacity (config/lane-capacity)
 
 The optional local, gitignored `config/lane-capacity` file holds one non-negative integer: how many ship and scout lanes this home should run at once.
-`bin/fm-capacity.sh` reads it to report how many lanes are open for queued work, alongside running lanes, 1-minute load against logical cores, free memory, and free disk.
+`bin/fm-capacity.sh` reads it to report how many lanes are open for queued work, alongside occupied lane counts, 1-minute load against logical cores, free memory, and free disk.
 With the file absent the report prints counts and host figures only, never invents a target, and never advises holding dispatch; a malformed value is reported as invalid rather than guessed.
 Persistent secondmates hold no lane.
 The file is a per-machine choice and is not inherited by secondmate homes.
-The script's header owns the output line, the host-constraint thresholds, and the probe fallbacks.
+The script's header owns metadata-based lane counting, the output line, the host-constraint thresholds, and the probe fallbacks.
 
 ## Turn-end pane-churn absorb (config/turnend-churn-absorb)
 
@@ -888,7 +889,7 @@ claude, codex, opencode, pi, pi-signed, grok, kimi, cursor, and omp are empirica
 
 ### Harness restrictions and credentials
 
-`fm-spawn.sh` refuses kimi on cmux and Orca at preflight, because answering Kimi's folder-trust dialog needs a verified viewport-only capture those backends lack; [its adapter reference](../.agents/skills/harness-adapters/references/harness/kimi.md#readiness-gated-start) owns the trust-dialog handling.
+[Kimi's adapter reference](../.agents/skills/harness-adapters/references/harness/kimi.md#readiness-gated-start) owns its viewport-only backend eligibility and trust-dialog handling.
 A cursor secondmate or primary runs the tracked project-scope `.cursor/hooks.json` in its own home and must be launched with `--trust`, or no project hook loads; [`docs/supervision-protocols/cursor.md`](supervision-protocols/cursor.md) owns its supervision protocol.
 
 Cursor typed-submit confirmation is verified on tmux and Herdr only.
@@ -942,7 +943,8 @@ When it is absent or contains `default`, crewmates mirror the firstmate's own ha
 
 ### Choose the secondmate harness
 
-`config/secondmate-harness` is a separate local, gitignored file containing the adapter the primary uses to launch secondmate agents, optionally followed by model and effort tokens on the same line. The file belongs to the primary, is not inherited by secondmate homes, and secondmates do not launch secondmates.
+`config/secondmate-harness` is a separate local, gitignored file containing the adapter the primary uses to launch secondmate agents, optionally followed by model and effort tokens on the same line.
+The file belongs to the primary, is not inherited by secondmate homes, and secondmates do not launch secondmates.
 Without a `mate <secondmate-id>:` declaration, the first non-empty, non-comment line supplies the default, parsed as `<harness> [<model>] [<effort>]`; later lines and additional tokens retain their legacy ignored behavior.
 With an override declaration, at most one non-empty, non-comment line without that prefix supplies the default.
 Any number of override lines can pin named secondmates rather than the whole home:
@@ -975,7 +977,7 @@ The regression coverage is in [`fm-secondmate-harness.test.sh`](../tests/fm-seco
 
 An explicit harness argument to `fm-spawn.sh` still overrides either config file for that spawn only.
 An explicit `--model` or `--effort` overrides the matching token from `config/secondmate-harness`; for a local route, an explicit harness or raw launch command starts with clean model and effort defaults unless those flags are also passed.
-An explicit harness also bypasses reading the pin file during spawn or control-plane relaunch, so malformed unused pin configuration cannot block that override. A relaunch supplying explicit `--harness`, `--model`, and `--effort` therefore does not read this configuration.
+An explicit harness also bypasses reading the pin file during spawn or control-plane relaunch, so malformed unused pin configuration cannot block that override.
 
 Remote secondmate routes accept verified harness adapters only and reject raw launch commands.
 When `config/crew-dispatch.json` exists, crewmate and scout spawns require an explicit resolved harness instead of automatically falling back to `config/crew-harness`.
