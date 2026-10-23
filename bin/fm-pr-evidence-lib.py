@@ -198,7 +198,7 @@ def ste_check(text, kind, banned=(), vocab=None):
 def cmd_ste(args):
     text = args.text if args.text is not None else open(args.file, encoding="utf-8").read()
     banned = args.banned.split(",") if args.banned else []
-    vocab = load_vocab(args.vocab or os.path.join(HERE, "fm-pr-evidence-openste.tsv"))
+    vocab = load_vocab(os.path.join(HERE, "fm-pr-evidence-openste.tsv"))
     fails, warns = ste_check(text, args.kind, banned, None if args.no_vocab else vocab)
     f = Findings()
     for item in fails:
@@ -273,16 +273,21 @@ def mask_text(text):
                     if DENY_NAME_RE.search(k) else fields(v) for k, v in value.items()}
         if isinstance(value, list):
             return [fields(v) for v in value]
+        if isinstance(value, str):
+            return mask_text(value)
         return value
 
     try:
         data = json.loads(text)
     except ValueError:
         data = None
-    if isinstance(data, (dict, list)):
+    if isinstance(data, (dict, list, str)):
         masked = fields(data)
-        if masked != data:
-            text = json.dumps(masked, ensure_ascii=False)
+        return json.dumps(masked, ensure_ascii=False) if masked != data else text
+    headers = re.compile(r"(?im)(?<![\w-])((?:" + "|".join(re.escape(name) for name in DENY_HEADERS)
+                         + r")[ \t]*:[ \t]*)([^\r\n]*(?:\r?\n[ \t]+[^\r\n]*)*)")
+    text = headers.sub(lambda match: match[1] + (match[2] if MASK_RE.fullmatch(match[2].strip())
+                                               else mask_token(match[2])), text)
     for pattern in SECRET_PATTERNS[:-1]:
         text = pattern.sub(lambda match: mask_token(match.group(0)), text)
     sensitive = r"[\w.-]*(?:" + DENY_NAME_RE.pattern + r"|sig|jwt)[\w.-]*"
@@ -1283,7 +1288,6 @@ def main(argv):
     p.add_argument("--text")
     p.add_argument("--file")
     p.add_argument("--banned")
-    p.add_argument("--vocab")
     p.add_argument("--no-vocab", action="store_true")
     p.set_defaults(fn=cmd_ste)
 

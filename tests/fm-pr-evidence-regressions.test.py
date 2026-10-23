@@ -73,6 +73,62 @@ class EvidenceRegressions(unittest.TestCase):
             self.assertNotIn("short-secret", out.read_text())
             self.assertIn("exit status 0", out.read_text())
 
+    def test_complete_secret_headers_are_masked_in_free_text(self):
+        credential = '0123456789abcdef0123456789abcdef01234567'
+        headers = ('Authorization: Token ' + credential,
+                   'Proxy-Authorization: Custom first-part ' + credential,
+                   'Authorization: Token\r\n\t' + credential,
+                   'Cookie: theme=light; sid=' + credential,
+                   'Set-Cookie: theme=light; sid=' + credential + '; HttpOnly',
+                   'X-API-Key: first-part ' + credential,
+                   'Authorization: ***masked (5 chars)*** ' + credential,
+                   'Cookie: ***masked (11 chars)***; sid=' + credential)
+        for header in headers:
+            variants = (header, '> ' + header + '\r\nAccept: application/json\r\n',
+                        'curl -H "' + header + '" https://example.test',
+                        json.dumps({'body': header, 'message': 'public text'}), json.dumps(header))
+            for value in variants:
+                with self.subTest(value=value):
+                    masked = ev.mask_text(value)
+                    self.assertNotIn(credential, masked)
+                    self.assertEqual(masked, ev.mask_text(masked))
+                    if value.startswith(('{', '"')):
+                        json.loads(masked)
+                    for side in ('request', 'response'):
+                        data = exchange()
+                        data[side]['body'] = value
+                        self.assertTrue(ev.sidecar_problems(data))
+                        masked_data = ev.mask_sidecar(copy.deepcopy(data))
+                        self.assertNotIn(credential, json.dumps(masked_data))
+                        self.assertFalse(ev.sidecar_problems(masked_data))
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            raw, out = tmp / 'raw', tmp / 'captured'
+            raw.write_text('\n'.join(headers) + '\npublic text\n')
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command='curl -H "' + headers[0] + '"', rc=0))
+            self.assertNotIn(credential, out.read_text())
+            self.assertIn('public text', out.read_text())
+            def render(lines, marked, labels, purpose, path):
+                self.assertNotIn(credential, '\n'.join(lines))
+                Path(path).write_bytes(b'masked image')
+            args = argparse.Namespace(image=None, text=str(raw), against=None, mark_line=[0], label=None,
+                                      purpose='The tool hides the header values.', out=str(tmp / 'out.png'))
+            with patch.object(ev, 'render_text_with_marks', side_effect=render), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, ev.cmd_annotate_ui(args))
+
+    def test_standalone_english_checker_uses_only_the_shipped_vocabulary(self):
+        import subprocess
+        command = ['python3', str(ROOT / 'bin/fm-pr-evidence-lib.py'), 'ste', '--text', 'The system will abandon the task.']
+        result = subprocess.run(command, capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn("word 'abandon' is not approved; try stop", result.stdout)
+        with tempfile.TemporaryDirectory() as tmp:
+            vocab = Path(tmp) / 'custom.tsv'
+            vocab.write_text('system\ttool\n')
+            result = subprocess.run(command + ['--vocab', str(vocab)], capture_output=True, text=True)
+            self.assertEqual(2, result.returncode)
+            self.assertIn('--vocab', result.stderr)
+
     def test_authorization_codes_are_masked_in_every_exchange_field(self):
         code = 'a1b2c3d4e5f6a1b2c3d4'
         url = 'https://app.example/callback?code=' + code

@@ -688,7 +688,9 @@ Multiple evidence comments by the PR author refuse, and publication refuses if a
 An image line right after a closing `</details>` line does not show on GitHub, so the gate refuses it.
 When the declared kind and the changed files disagree, the gate refuses and names the files.
 A task with no `evidence=` (made before the gate) passes with a notice.
-`bin/fm-pr-evidence.sh list-unevidenced` lists those PRs so the captain can pick retrofits.
+`bin/fm-pr-evidence.sh list-unevidenced` reads their current state from GitHub or Bitbucket and lists only PRs that are still open.
+Closed or merged PRs remain in task history but are not retrofit candidates; an unreadable forge state makes the list command refuse.
+The missing-declaration notice does not depend on an activation cutoff or a separate grandfathered-PR set.
 
 **Plain English.**
 The check refuses text that is empty, too long, or has too many sentences, and text with semicolons, contractions, abbreviations, long dashes, or banned words.
@@ -696,6 +698,7 @@ All strict rules also apply inside quotes and backticks, including purposes, dra
 It warns about passive voice, progressive and perfect tenses, more than one idea per sentence, and words that the OpenSTE word list does not approve.
 Warnings show on the PR.
 The word list in `bin/fm-pr-evidence-openste.tsv` is the MIT-licensed OpenSTE list.
+The standalone checker uses this shipped list and accepts no vocabulary-file override.
 The repository holds no ASD-derived dictionary.
 
 **Waivers.**

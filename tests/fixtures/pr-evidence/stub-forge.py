@@ -98,7 +98,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 pr = STATE["prs"].get(self.key(*m.groups()))
                 if not pr:
                     return self.send(404, {"message": "Not Found"})
-                return self.send(200, {"head": {"sha": pr["head"]}, "user": {"login": pr["author"]}, "state": "open"})
+                return self.send(200, {"head": {"sha": pr["head"]}, "user": {"login": pr["author"]}, "state": pr["state"].lower()})
             m = re.match(r"^/gh/repos/([^/]+)/([^/]+)/pulls/(\d+)/files$", path)
             if m:
                 pr = STATE["prs"].get(self.key(*m.groups()), {"files": []})
@@ -128,7 +128,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                         {"id": c["id"], "user": {"account_id": c["user"]["login"]},
                          "content": {"raw": c["body"], "html": c["html"]}, "updated_on": c["updated"]}
                         for c in STATE["comments"].get(key, [])]})
-                return self.send(200, {"id": int(m.group(3)), "state": "OPEN", "author": {"account_id": pr["author"]},
+                return self.send(200, {"id": int(m.group(3)), "state": pr["state"].upper(), "author": {"account_id": pr["author"]},
                                        "source": {"commit": {"hash": pr["head"][:12]}}})
             m = re.match(r"^/bb/2\.0/repositories/([^/]+)/([^/]+)/commit/([0-9a-f]+)$", path)
             if m:
@@ -179,7 +179,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             if path == "/_admin/pr":
                 data = json.loads(raw)
                 STATE["prs"][data["key"]] = {"head": data["head"], "author": data.get("author", "worker"),
-                                             "files": data.get("files", [])}
+                                             "files": data.get("files", []), "state": data.get("state", "OPEN")}
                 STATE["comments"].setdefault(data["key"], [])
                 return self.send(200, {})
             if path == "/_admin/comment":

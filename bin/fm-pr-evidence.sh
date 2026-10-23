@@ -649,7 +649,7 @@ cmd_waive() {
 }
 
 cmd_list_unevidenced() {
-  local f id project url forge rc count=0
+  local f id project url forge rc pr state count=0
   if [ ! -e "$CONFIG_FILE" ] && [ ! -L "$CONFIG_FILE" ]; then
     say "notice: config/pr-evidence is absent, so the evidence gate is off in this home"
     return 0
@@ -669,6 +669,28 @@ cmd_list_unevidenced() {
     rc=0
     evidence_eligible "$project" "$(meta_get "$f" mode)" "${forge:-none}" "$(meta_get "$f" project)" "$FM_PR_PROVIDER" || rc=$?
     case "$rc" in 0) ;; 1) continue ;; *) return 1 ;; esac
+    if [ "$FM_PR_PROVIDER" = github ]; then
+      resolve_gh_read || return 1
+      pr=$("$GH" api "repos/$FM_PR_PATH/pulls/$FM_PR_NUMBER" 2>/dev/null) || {
+        fail_line "the current PR state cannot be read: $url" "check the forge credential and run list-unevidenced again"
+        return 1
+      }
+    else
+      fm_pr_bitbucket_request GET "repositories/$FM_PR_PATH/pullrequests/$FM_PR_NUMBER" || {
+        fail_line "the current PR state cannot be read: $url" "check the forge credential and run list-unevidenced again"
+        return 1
+      }
+      pr=$FM_PR_BITBUCKET_BODY
+    fi
+    state=$(printf '%s' "$pr" | jq -er '.state | strings | ascii_upcase') || {
+      fail_line "the current PR state is unavailable: $url" "check the forge response and run list-unevidenced again"
+      return 1
+    }
+    case "$state" in
+      OPEN) ;;
+      CLOSED|MERGED|DECLINED|SUPERSEDED) continue ;;
+      *) fail_line "the current PR state is not recognized: $url" "check the forge response and run list-unevidenced again"; return 1 ;;
+    esac
     if [ "$count" -eq 0 ]; then
       say "These open PRs were made before the evidence gate. They pass with a notice. Pick the ones to retrofit."
     fi
