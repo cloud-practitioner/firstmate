@@ -25,27 +25,92 @@ def exchange():
 
 
 class EvidenceRegressions(unittest.TestCase):
-    def test_sidecar_capture_keeps_headers_with_optional_whitespace(self):
+    def capture_sidecar(self, verbose, response, method="GET", request_body=None):
         with tempfile.TemporaryDirectory() as tmp:
             tmp = Path(tmp)
-            headers = "Accept: application/json\r\nX-Mode:new\r\nX-Tab:\tvalue\t\r\nX-Empty:\r\nX-Url:https://example.test/items\r\n"
-            (tmp / "verbose").write_text(
-                "* Connected\n> GET http://example.test/items HTTP/1.1\n" +
-                "".join("> " + line + "\n" for line in headers.splitlines()) + "> \n")
-            (tmp / "response").write_text("HTTP/1.1 100 Continue\r\n\r\nHTTP/1.1 200 OK\r\n" + headers + "\r\n")
+            (tmp / "verbose").write_text(verbose)
+            (tmp / "response").write_text(response)
             (tmp / "body").write_text("{}")
             out = tmp / "sidecar.json"
-            self.assertEqual(0, ev.main([
-                "sidecar-build", "--verbose", str(tmp / "verbose"), "--resp-headers", str(tmp / "response"),
-                "--resp-body", str(tmp / "body"), "--method", "GET", "--url", "http://example.test/items",
-                "--out", str(out)]))
-            data = json.loads(out.read_text())
-            expected = [["Accept", "application/json"], ["X-Mode", "new"], ["X-Tab", "value"],
-                        ["X-Empty", ""], ["X-Url", "https://example.test/items"]]
-            for side in ("request", "response"):
-                self.assertEqual(expected, data[side]["headers"], side)
-            self.assertEqual(200, data["response"]["status"])
-            self.assertEqual("OK", data["response"]["reason"])
+            args = ["sidecar-build", "--verbose", str(tmp / "verbose"), "--resp-headers", str(tmp / "response"),
+                    "--resp-body", str(tmp / "body"), "--method", method,
+                    "--url", "https://example.test/items", "--out", str(out)]
+            if request_body is not None:
+                (tmp / "request-body").write_text(request_body)
+                args += ["--req-body", str(tmp / "request-body")]
+            self.assertEqual(0, ev.main(args))
+            with contextlib.redirect_stdout(io.StringIO()) as log:
+                self.assertEqual(0, ev.main(["scan-sidecar", str(out)]), log.getvalue())
+            return json.loads(out.read_text())
+
+    def test_sidecar_capture_keeps_headers_with_optional_whitespace(self):
+        headers = "Accept: application/json\r\nX-Mode:new\r\nX-Tab:\tvalue\t\r\nX-Empty:\r\nX-Url:https://example.test/items\r\n"
+        data = self.capture_sidecar(
+            "* Connected\n> GET /items HTTP/1.1\n" +
+            "".join("> " + line + "\n" for line in headers.splitlines()) + "> \n",
+            "HTTP/1.1 100 Continue\r\n\r\nHTTP/1.1 200 OK\r\n" + headers + "\r\n")
+        expected = [["Accept", "application/json"], ["X-Mode", "new"], ["X-Tab", "value"],
+                    ["X-Empty", ""], ["X-Url", "https://example.test/items"]]
+        for side in ("request", "response"):
+            self.assertEqual(expected, data[side]["headers"], side)
+        self.assertEqual(200, data["response"]["status"])
+        self.assertEqual("OK", data["response"]["reason"])
+
+    def test_sidecar_capture_selects_the_api_request_after_connect(self):
+        proxy_request = ("* Connected to proxy\n> CONNECT example.test:443 HTTP/1.1\n"
+                         "> Host: example.test:443\n> Proxy-Connection: Keep-Alive\n"
+                         "> Proxy-Authorization: Basic cHJveHk6c2VjcmV0\n> \n"
+                         "< HTTP/1.1 200 Connection established\n< \n* TLS connection established\n")
+        proxy_response = "HTTP/1.1 200 Connection established\r\nX-Proxy: tunnel\r\n\r\n"
+        for version in ("1.1", "2", "3"):
+            for proxied in (False, True):
+                with self.subTest(version=version, proxied=proxied):
+                    data = self.capture_sidecar(
+                        (proxy_request if proxied else "") +
+                        "> POST /items HTTP/" + version + "\n> Host: example.test\n"
+                        "> Accept: application/json\n> X-Protocol: prefer HTTP/2\n> X-Mode: old\n> X-Mode: new\n"
+                        "> Authorization: Basic dXNlcjpzZWNyZXQ=\n> \n* Request sent\n",
+                        (proxy_response if proxied else "") +
+                        "HTTP/" + version + " 201\r\nContent-Type: application/json\r\n\r\n",
+                        method="POST", request_body='{"name":"new"}')
+                    self.assertEqual([["Host", "example.test"], ["Accept", "application/json"],
+                                      ["X-Protocol", "prefer HTTP/2"], ["X-Mode", "old"], ["X-Mode", "new"],
+                                      ["Authorization", ev.mask_token("Basic dXNlcjpzZWNyZXQ=")]],
+                                     data["request"]["headers"])
+                    self.assertEqual("POST", data["request"]["method"])
+                    self.assertEqual("https://example.test/items", data["request"]["url"])
+                    self.assertEqual('{"name":"new"}', data["request"]["body"])
+                    self.assertEqual({"status": 201, "reason": "Created",
+                                      "headers": [["Content-Type", "application/json"]], "body": "{}"},
+                                     data["response"])
+                    self.assertNotIn("Proxy-", "\n".join(ev.sidecar_lines(data)))
+                    self.assertNotIn("dXNlcjpzZWNyZXQ=", json.dumps(data))
+
+    def test_sidecar_capture_retains_only_final_response_headers_and_trailers(self):
+        interim = ("HTTP/1.1 200 Connection established\r\nX-Proxy: tunnel\r\n\r\n"
+                   "HTTP/1.1 100 Continue\r\nX-Interim: waiting\r\n\r\n"
+                   "HTTP/1.1 103 Early Hints\r\nLink: </old>; rel=preload\r\n\r\n")
+        final = ("HTTP/1.1 200 All done\r\nContent-Type: application/json\r\n"
+                 "Transfer-Encoding: chunked\r\nTrailer: X-Result, Set-Cookie\r\nX-Result: initial\r\n\r\n")
+        trailers = "X-Result:final\r\nX-Empty:\r\nSet-Cookie: sid=short-secret\r\n"
+        for prefix in ("", interim):
+            for trailer_end in ("", "\r\n"):
+                with self.subTest(interim=bool(prefix), trailer_end=trailer_end):
+                    data = self.capture_sidecar(
+                        "> GET /items HTTP/1.1\n> Host: example.test\n> \n",
+                        prefix + final + trailers + trailer_end)
+                    self.assertEqual(200, data["response"]["status"])
+                    self.assertEqual("All done", data["response"]["reason"])
+                    self.assertEqual([["Content-Type", "application/json"], ["Transfer-Encoding", "chunked"],
+                                      ["Trailer", "X-Result, Set-Cookie"], ["X-Result", "initial"],
+                                      ["X-Result", "final"], ["X-Empty", ""],
+                                      ["Set-Cookie", ev.mask_token("sid=short-secret")]],
+                                     data["response"]["headers"])
+                    rendered = "\n".join(ev.sidecar_lines(data))
+                    self.assertIn("X-Result: final", rendered)
+                    self.assertNotIn("X-Proxy", rendered)
+                    self.assertNotIn("X-Interim", rendered)
+                    self.assertNotIn("short-secret", json.dumps(data))
 
     def test_sensitive_fields_are_masked_and_rejected_on_both_sides(self):
         for side in ("request", "response"):

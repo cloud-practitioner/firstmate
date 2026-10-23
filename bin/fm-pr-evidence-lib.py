@@ -430,15 +430,23 @@ def cmd_sidecar_build(args):
             if sep and re.fullmatch(r"[!#$%&'*+.^_`|~0-9A-Za-z-]+", name):
                 out.append([name, value.strip(" \t")])
         return out
-    req_headers = headers(line[2:] for line in read(args.verbose).splitlines() if line.startswith("> "))
-    blocks = [b for b in re.split(r"\r?\n\r?\n", read(args.resp_headers).strip()) if b.strip()]
-    last = blocks[-1].splitlines() if blocks else []
+    def last_message(lines, start):
+        message = []
+        for line in lines:
+            if re.fullmatch(start, line):
+                message = [line]
+            elif message:
+                message.append(line)
+        return message
+    request = last_message((line[2:] for line in read(args.verbose).splitlines() if line.startswith("> ")),
+                           r"[!#$%&'*+.^_`|~0-9A-Za-z-]+\s+\S+\s+HTTP/\S+")
+    req_headers = headers(request[1:])
+    last = last_message(read(args.resp_headers).splitlines(), r"HTTP/\S+\s+\d{3}(?:\s.*)?")
     status, reason = 0, ""
     if last:
-        match = re.match(r"HTTP/\S+\s+(\d{3})\s*(.*)$", last[0].strip())
-        if match:
-            status = int(match.group(1))
-            reason = match.group(2).strip() or status_reason(status)
+        parts = last[0].split(None, 2)
+        status = int(parts[1])
+        reason = parts[2].strip() if len(parts) > 2 else status_reason(status)
     resp_headers = headers(last[1:])
     data = {
         "v": 1,
