@@ -769,7 +769,7 @@ test_promote_requires_evidence_intake() {
   printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nInspect the output.\n## Evidence class\nui\n' > "$C/home/data/t1/brief.md"
   mv "$C/home/config/pr-evidence" "$C/home/config/pr-evidence.saved"
   ln -s missing-config "$C/home/config/pr-evidence"
-  out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode local-only --yolo off 2>&1); rc=$?
+  out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode direct-PR --yolo off 2>&1); rc=$?
   expect_code 1 "$rc" "promotion must refuse a dangling evidence configuration"
   assert_contains "$out" 'configuration cannot be read' "promotion must use shared config validation"
   assert_grep 'kind=scout' "$C/home/state/t1.meta" "a dangling config must retain the scout state"
@@ -782,13 +782,13 @@ test_promote_requires_evidence_intake() {
   mv "$C/home/config/pr-evidence.saved" "$C/home/config/pr-evidence"
   for value in '{EVIDENCE}' 'api+ui' 'sideways'; do
     printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nInspect the output.\n## Evidence class\n%s\n' "$value" > "$C/home/data/t1/brief.md"
-    out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode local-only --yolo off 2>&1); rc=$?
+    out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode direct-PR --yolo off 2>&1); rc=$?
     expect_code 1 "$rc" "promotion must reject $value (got: $out)"
     assert_grep 'kind=scout' "$C/home/state/t1.meta" "refusal must retain the scout state"
     assert_absent "$C/home/data/t1/ship-instructions.md" "refusal must publish no ship instructions"
   done
   printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nInspect the output.\n## Evidence class\nnone: Only a comment changed in the file.\n' > "$C/home/data/t1/brief.md"
-  out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode local-only --yolo off 2>&1); rc=$?
+  out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode direct-PR --yolo off 2>&1); rc=$?
   expect_code 0 "$rc" "promotion with a valid declaration (got: $out)"
   assert_grep 'kind=ship' "$C/home/state/t1.meta" "promotion must switch to ship"
   assert_grep 'evidence=none' "$C/home/state/t1.meta" "promotion must record evidence"
@@ -926,7 +926,7 @@ test_strict_english_in_quotes_refuses() {
 }
 
 test_comment_cleanup_and_image_freshness() {
-  local out rc provider phase hash image
+  local out rc provider phase hash image comments writes
   for provider in github bitbucket; do
     new_case "fresh-$provider" '* enforce' 'bitbucket on'
     if [ "$provider" = bitbucket ]; then
@@ -940,6 +940,17 @@ test_comment_cleanup_and_image_freshness() {
     write_task t1 ui
     ui_items
     out=$(current_ev publish t1 "$PRURL" "$C/ev/items.json") || fail "initial $provider publish failed: $out"
+    comments=$(comments_json)
+    writes=$(curl -sS -X POST "$STUB/_admin/state" | jq -c .writes)
+    cp "$C/home/state/t1.meta" "$C/original.meta"
+    stub_post /_admin/actor '{"github":"captain","bitbucket":"acct-captain"}'
+    out=$(current_ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+    stub_post /_admin/actor '{}'
+    expect_code 1 "$rc" "$provider must refuse publication by another account"
+    assert_contains "$out" 'only the PR author may publish' "publisher identity must be checked before mutation"
+    assert_equals "$comments" "$(comments_json)" "an ineligible publisher must preserve the worker's evidence"
+    assert_equals "$writes" "$(curl -sS -X POST "$STUB/_admin/state" | jq -c .writes)" "an ineligible publisher must not upload, post, or delete"
+    cmp -s "$C/original.meta" "$C/home/state/t1.meta" || fail "an ineligible publisher changed task metadata"
     stub_post /_admin/delete-failure '{"enabled":true}'
     out=$(current_ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
     stub_post /_admin/delete-failure '{"enabled":false}'
@@ -989,7 +1000,24 @@ test_spawn_refuses_dangling_evidence_config() {
   expect_code 1 "$rc" "fresh ship spawn must refuse dangling evidence config (got: $out)"
   assert_contains "$out" 'configuration cannot be read' "spawn must use shared config validation"
   assert_absent "$C/home/state/$id.meta" "a dangling config must not create grandfathered task metadata"
-  pass "fm-pr-evidence: fresh ship intake refuses dangling configuration before launch"
+  rm "$C/home/data/$id/brief.md"
+  out=$(FM_HOME="$C/home" "$ROOT/bin/fm-brief.sh" "$id" proj --mode local-only --project "$C/proj" 2>&1); rc=$?
+  expect_code 0 "$rc" "local-only scaffolding must ignore the PR gate (got: $out)"
+  assert_not_contains "$(< "$C/home/data/$id/brief.md")" '## Evidence class' "local-only scaffolding must not request an evidence class"
+  assert_not_contains "$(< "$C/home/data/$id/brief.md")" '# Evidence for review (hard rule)' "local-only scaffolding must not emit the PR-publication contract"
+  python3 - "$C/home/data/$id/brief.md" <<'PY'
+from pathlib import Path
+import sys
+path = Path(sys.argv[1])
+path.write_text(path.read_text().replace('{TASK}', 'Fix the output.').replace('{FIRSTMATE_SPEC}', 'Change the output.'))
+PY
+  rm "$C/home/config/pr-evidence"
+  printf '* enforce\n' > "$C/home/config/pr-evidence"
+  out=$(FM_BACKEND=tmux fm_test_run_spawn "$C/home" "$C/pool" "$fakebin" "$id" "$C/proj" --backend tmux --mode local-only --yolo off); rc=$?
+  expect_code 0 "$rc" "local-only spawning must not require PR evidence (got: $out)"
+  assert_grep 'mode=local-only' "$C/home/state/$id.meta" "the local-only delivery mode must be retained"
+  assert_no_grep 'evidence=' "$C/home/state/$id.meta" "local-only spawning must not record an evidence declaration"
+  pass "fm-pr-evidence: PR intake refuses bad config while local-only scaffolding and spawning skip the gate"
 }
 
 test_typographic_contractions_refuse_at_public_interfaces() {
@@ -1048,6 +1076,91 @@ PY
   pass "fm-pr-evidence: live auth inputs are restored only at the isolated invocation boundary"
 }
 
+test_local_only_promotion_and_evidence_commands() {
+  local out rc
+  new_case local-promote
+  mkdir -p "$C/root/bin" "$C/home/data/t1"
+  printf '#!/bin/sh\nexit 0\n' > "$C/root/bin/fm-guard.sh"
+  printf '#!/bin/sh\nprintf "none\\n"\n' > "$C/root/bin/fm-project-mode.sh"
+  chmod +x "$C/root/bin/"*.sh
+  write_task t1 '' 'kind=scout'
+  printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nInspect the output.\n' > "$C/home/data/t1/brief.md"
+  rm "$C/home/config/pr-evidence"
+  ln -s missing-config "$C/home/config/pr-evidence"
+  out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode local-only --yolo off 2>&1); rc=$?
+  expect_code 0 "$rc" "local-only promotion must not perform PR evidence intake (got: $out)"
+  assert_grep 'mode=local-only' "$C/home/state/t1.meta" "promotion must retain local-only delivery"
+  assert_no_grep 'evidence=' "$C/home/state/t1.meta" "local-only promotion must not create an evidence declaration"
+  assert_not_contains "$(< "$C/home/data/t1/ship-instructions.md")" '## Evidence class' "local-only promotion must not request an evidence class"
+  assert_not_contains "$(< "$C/home/data/t1/ship-instructions.md")" '# Evidence for review (hard rule)' "the current worker must not receive the PR-evidence contract"
+  assert_not_contains "$(< "$C/home/data/t1/brief.md")" '# Evidence for review (hard rule)' "a relaunched worker must not receive the PR-evidence contract"
+  out=$(ev brief-block t1); rc=$?
+  expect_code 0 "$rc" "local-only tasks have no PR-evidence brief block"
+  assert_equals '' "$out" "no PR-publication instructions may be emitted for a local-only task"
+  out=$(ev check t1 "$PRURL"); rc=$?
+  expect_code 0 "$rc" "local-only checks must skip the PR gate"
+  printf '{"items":[]}\n' > "$C/ev/items.json"
+  out=$(ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+  expect_code 1 "$rc" "local-only tasks must not publish evidence"
+  assert_contains "$out" 'local-only tasks do not publish PR evidence' "local-only delivery has no evidence publication path"
+  out=$(ev waive t1 "$PRURL" --words 'Waive the evidence for this PR please'); rc=$?
+  expect_code 1 "$rc" "local-only tasks must not publish a waiver"
+  assert_equals 0 "$(comments_json | jq length)" "local-only evidence commands must never post PR comments"
+  rm "$C/home/config/pr-evidence"
+  printf '* enforce\n' > "$C/home/config/pr-evidence"
+  printf 'pr=%s\n' "$PRURL" >> "$C/home/state/t1.meta"
+  out=$(ev list-unevidenced); rc=$?
+  expect_code 0 "$rc" "local-only tasks must not be evidence retrofit candidates"
+  assert_not_contains "$out" 't1 proj ' "local-only tasks must be excluded from the retrofit list"
+  pass "fm-pr-evidence: local-only promotion and task commands have no PR-evidence obligation"
+}
+
+test_authorization_code_capture_is_masked() {
+  local out rc code=a1b2c3d4e5f6a1b2c3d4
+  new_case authorization-code
+  out=$(ev capture-api --out "$C/ev/cap.json" "$STUB/oauth?code=$code"); rc=$?
+  expect_code 0 "$rc" "OAuth redirect capture must succeed without exposing its code (got: $out)"
+  assert_equals 302 "$(jq -r .response.status "$C/ev/cap.json")" "the HTTP status code must remain visible"
+  assert_not_contains "$(< "$C/ev/cap.json")" "$code" "authorization codes must be masked in URLs and Location headers"
+  assert_contains "$(jq -r .request.url "$C/ev/cap.json")" 'code=***masked' "the authorization-code query parameter must be masked"
+  assert_contains "$(jq -r '.response.headers[] | select(.[0] == "Location") | .[1]' "$C/ev/cap.json")" 'code=***masked' "the redirect Location must be masked"
+  out=$(python3 "$LIB" scan-sidecar "$C/ev/cap.json"); rc=$?
+  expect_code 0 "$rc" "the masked redirect must pass its sidecar scan (got: $out)"
+  pass "fm-pr-evidence: captured authorization-code redirects retain status and hide credentials"
+}
+
+test_fenced_payload_images_are_literal() {
+  local provider out rc body id
+  for provider in github bitbucket; do
+    new_case "literal-$provider" '* enforce' 'bitbucket on'
+    if [ "$provider" = bitbucket ]; then
+      PRN=$((PRN + 1)); PRKEY="ws/repo/$PRN"; PRURL="https://bitbucket.org/ws/repo/pull-requests/$PRN"
+      stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD1\",\"author\":\"acct-worker\",\"files\":[]}"
+    fi
+    literal_ev() {
+      FM_PR_EVIDENCE_BITBUCKET_API="$STUB/bb/2.0" NO_MISTAKES_BITBUCKET_EMAIL=bot@example.invalid \
+        NO_MISTAKES_BITBUCKET_API_TOKEN=synthetic-token ev "$@"
+    }
+    write_task t1 ui+api
+    uiapi_items
+    jq '.response.body = "{\"body\":\"![preview](https://example.test/image.png)\"}"' "$C/ev/b.json" > "$C/ev/literal.json"
+    mv "$C/ev/literal.json" "$C/ev/b.json"
+    out=$(literal_ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+    expect_code 0 "$rc" "$provider must preserve image-shaped payload text without treating it as a screenshot (got: $out)"
+    body=$(comments_json | jq -r '.[0].body')
+    assert_contains "$body" 'https://example.test/image.png' "the literal HTTP payload must not be deleted"
+    id=$(comments_json | jq -r '.[0].id')
+    stub_post /_admin/replace "$(jq -n --arg key "$PRKEY" --arg id "$id" --arg body "$body" --argjson c "$(comments_json | jq '.[0]')" '{key:$key,id:$id,body:($body + "\n![external](https://example.test/visible.png)\n"),html:$c.html}')"
+    out=$(literal_ev check t1 "$PRURL"); rc=$?
+    expect_code 1 "$rc" "$provider must still refuse an actual external screenshot reference"
+    assert_contains "$out" 'not hosted' "visible images must still face the hosting rule"
+  done
+  pass "fm-pr-evidence: fenced HTTP payloads are literal while visible image hosting remains enforced"
+}
+
+test_local_only_promotion_and_evidence_commands
+test_authorization_code_capture_is_masked
+test_fenced_payload_images_are_literal
 test_spawn_refuses_dangling_evidence_config
 test_typographic_contractions_refuse_at_public_interfaces
 test_live_inputs_are_restored_only_for_an_opted_in_invocation

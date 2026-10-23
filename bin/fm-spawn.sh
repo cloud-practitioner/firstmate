@@ -3605,7 +3605,7 @@ if [ "$KIND" = ship ] || [ "$KIND" = scout ]; then
   # Fork-only PR evidence gate (bin/fm-pr-evidence.sh): record the evidence class the
   # brief declares as evidence= in the task record. Without config/pr-evidence this is
   # a no-op; a relaunch keeps the recorded value.
-  if [ "$KIND" = ship ] && [ "$RELAUNCH" -eq 0 ]; then
+  if [ "$KIND" = ship ] && [ "$RELAUNCH" -eq 0 ] && [ "$MODE" != local-only ]; then
     EVIDENCE_META=$(FM_HOME=$FM_HOME FM_CONFIG_OVERRIDE=$CONFIG "$SCRIPT_DIR/fm-pr-evidence.sh" intake "$BRIEF" "$(basename "$PROJ_ABS")" "$PROJ_ABS") || exit 1
   fi
   if [ "$RELAUNCH" -eq 1 ]; then

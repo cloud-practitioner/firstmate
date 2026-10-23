@@ -655,10 +655,12 @@ Firstmate turns the gate on in each home after this change merges; code alone do
 Exceptions require a waiver with the captain's words, not a project disable line.
 
 **Intake.**
-When the gate is on for a project, `bin/fm-brief.sh` adds `## Evidence class` with the placeholder `{EVIDENCE}` to the ship brief.
+The gate covers PR delivery only, not `local-only` work.
+When the gate is on for a project, `bin/fm-brief.sh` adds `## Evidence class` with the placeholder `{EVIDENCE}` to a PR-delivery ship brief.
+Local-only briefs, spawns and promotions skip evidence intake and the PR-publication contract; they record no evidence declaration.
 Firstmate fills it with `ui`, `api`, `ui+api`, or `none: <reason in plain English>`.
 `bin/fm-spawn.sh` refuses an unfilled or invalid value and records `evidence=` (and `evidence_reason=`) in the task record.
-`bin/fm-promote.sh` applies the same intake to the scout brief before promotion and includes the evidence contract in the ship instructions.
+`bin/fm-promote.sh` applies the same intake to the scout brief before promotion to PR delivery and includes the evidence contract in the ship instructions.
 A `none` is refused for a `require` project and for the firstmate repository.
 A worker can add a kind and never remove one.
 Publication retains the union of intake kinds and previously published kinds in the task record and comment.
@@ -668,6 +670,7 @@ Publication retains the union of intake kinds and previously published kinds in 
 The merge path also checks evidence against the exact SHA submitted for merge.
 Enforced GitHub merges refuse auto-merge and merge queues.
 Enforced Bitbucket merges refuse because its merge API cannot bind an expected head.
+Publication checks the authenticated forge account against the PR author before any uploads, metadata changes or comment replacement.
 The gate refuses unless the PR holds one evidence comment by the PR author with these parts:
 
 - A before image and an after image for each required kind, with the differences marked in the exact colour `#FF2D95`.

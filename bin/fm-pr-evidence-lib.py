@@ -307,7 +307,7 @@ def mask_text(text):
             if changed:
                 text = ET.tostring(root, encoding="unicode")
     assignment = re.compile(
-        r"(?i)(?<![\w-])((?:[\"']?" + sensitive + r"[\"']?\s*[:=]\s*|--" + sensitive + r"\s+))"
+        r"(?i)(?<![\w-])((?:[\"']?(?:" + sensitive + r"|code(?=\s*=))[\"']?\s*[:=]\s*|--" + sensitive + r"\s+))"
         r"(\*\*\*masked \(\d+ chars\)\*\*\*|\"(?:\\.|[^\"\\])*\"|'[^']*'|[^\s&,;<>]+)")
 
     def assigned(match):
@@ -1223,7 +1223,7 @@ def glob_match(path, pattern):
 
 
 def verify_images(f, pr, comment, body, shas, needed, base_fix):
-    raw_urls = MD_IMG_RE.findall(body)
+    raw_urls = MD_IMG_RE.findall(FENCE_RE.sub("", body))
     repo = pr.get("repo", "")
     if pr.get("provider") == "bitbucket":
         ok_re = re.compile(r"^https://bitbucket\.org/%s/downloads/[^/\s]+$" % re.escape(repo))

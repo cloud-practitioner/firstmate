@@ -247,6 +247,8 @@ cmd_intake() {
 
 cmd_brief_block() {
   [ "$#" -eq 1 ] || { say "usage: fm-pr-evidence.sh brief-block <task-id>"; return 2; }
+  fm_pr_task_id_valid "$1" || return 2
+  [ "$(meta_get "$STATE/$1.meta" mode)" != local-only ] || return 0
   local ev=$SCRIPT_DIR/fm-pr-evidence.sh
   cat <<EOF
 
@@ -327,6 +329,7 @@ cmd_check() {
   [ -e "$CONFIG_FILE" ] || [ -L "$CONFIG_FILE" ] || return 0
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run the check for a task of this home"; return 1; }
+  [ "$(meta_get "$meta" mode)" != local-only ] || return 0
   [ "$(meta_get "$meta" kind)" = ship ] || return 0
   project_dir=$(meta_get "$meta" project)
   project=$(basename "$project_dir")
@@ -415,7 +418,7 @@ bb_upload() {  # <workspace/repo> <file> <name>
 
 cmd_publish() {
   [ "$#" -eq 3 ] || { say "usage: fm-pr-evidence.sh publish <task-id> <pr-url> <items.json>"; return 2; }
-  local id=$1 raw=$2 items=$3 meta project evidence reason out new_id line path alt name body lock updated
+  local id=$1 raw=$2 items=$3 meta project evidence reason out new_id line path alt name body lock updated publisher
   local -a attach=() compose_extra=()
   if ! { fm_pr_task_id_valid "$id" && fm_pr_url_parse "$raw"; }; then
     say "error: invalid PR evidence publish request"
@@ -424,6 +427,10 @@ cmd_publish() {
   [ -f "$items" ] || { fail_line "the items file $items does not exist" "write the items file (see the header of fm-pr-evidence.sh)"; return 1; }
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run publish for a task of this home"; return 1; }
+  if [ "$(meta_get "$meta" mode)" = local-only ]; then
+    fail_line "local-only tasks do not publish PR evidence" "complete the local-only delivery contract instead"
+    return 1
+  fi
   project=$(basename "$(meta_get "$meta" project)")
   load_config "$project" || return 1
   evidence=$(meta_get "$meta" evidence)
@@ -438,6 +445,7 @@ cmd_publish() {
     github)
       resolve_gh_attach || return 1
       read_github "$FM_PR_PATH" "$FM_PR_NUMBER" || return 1
+      publisher=$("$GH" api user --jq .login 2>/dev/null) || publisher=
       ;;
     bitbucket)
       if [ "$CFG_BITBUCKET" != 1 ]; then
@@ -445,9 +453,17 @@ cmd_publish() {
         return 1
       fi
       read_bitbucket "$FM_PR_PATH" "$FM_PR_NUMBER" || return 1
+      publisher=
+      if fm_pr_bitbucket_request GET user; then
+        publisher=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -r '.account_id // empty') || publisher=
+      fi
       ;;
     *) fail_line "$FM_PR_PROVIDER pull requests are not supported" "use a GitHub or Bitbucket PR"; return 1 ;;
   esac
+  if [ -z "$publisher" ] || ! printf '%s' "$PR_AUTHORS_JSON" | jq -e --arg publisher "$publisher" 'length == 1 and .[0] == $publisher' >/dev/null; then
+    fail_line "only the PR author may publish evidence" "log in as the PR author and run publish again"
+    return 1
+  fi
   [ -n "$PR_HEAD" ] || { fail_line "the PR head cannot be read" "check the forge credential"; return 1; }
   WORK=$(mktemp -d "$STATE/.pr-evidence.XXXXXX") || return 1
   printf '%s\n' "$PR_COMMENTS_JSON" > "$WORK/comments.json"
@@ -589,6 +605,10 @@ cmd_waive() {
   fi
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run the waiver for a task of this home"; return 1; }
+  if [ "$(meta_get "$meta" mode)" = local-only ]; then
+    fail_line "local-only tasks do not need PR evidence waivers" "complete the local-only delivery contract instead"
+    return 1
+  fi
   project=$(basename "$(meta_get "$meta" project)")
   load_config "$project" || return 1
   need_tools || return 1
@@ -622,6 +642,7 @@ cmd_list_unevidenced() {
   for f in "$STATE"/*.meta; do
     [ -f "$f" ] || continue
     [ "$(meta_get "$f" kind)" = ship ] || continue
+    [ "$(meta_get "$f" mode)" != local-only ] || continue
     url=$(meta_get "$f" pr)
     [ -n "$url" ] || continue
     [ -z "$(meta_get "$f" evidence)" ] || continue

@@ -73,6 +73,27 @@ class EvidenceRegressions(unittest.TestCase):
             self.assertNotIn("short-secret", out.read_text())
             self.assertIn("exit status 0", out.read_text())
 
+    def test_authorization_codes_are_masked_in_every_exchange_field(self):
+        code = 'a1b2c3d4e5f6a1b2c3d4'
+        url = 'https://app.example/callback?code=' + code
+        form = 'grant_type=authorization_code&code=' + code
+        for side in ('request', 'response'):
+            for field in ('headers', 'body', 'url'):
+                if field == 'url' and side != 'request':
+                    continue
+                with self.subTest(side=side, field=field):
+                    data = exchange()
+                    data[side][field] = [['Location', url]] if field == 'headers' else form if field == 'body' else url
+                    self.assertTrue(ev.sidecar_problems(data))
+                    masked = ev.mask_sidecar(copy.deepcopy(data))
+                    self.assertNotIn(code, json.dumps(masked))
+                    self.assertFalse(ev.sidecar_problems(masked))
+                    self.assertEqual(masked, ev.mask_sidecar(copy.deepcopy(masked)))
+        for text in ('code=' + code, 'curl --data "' + form + '"', url):
+            self.assertNotIn(code, ev.mask_text(text))
+        for text in ('{"code": 302}', 'STATUS CODE: 302', 'postcode=12345'):
+            self.assertEqual(text, ev.mask_text(text))
+
     def test_sensitive_xml_attributes_preserve_public_siblings(self):
         from xml.etree import ElementTree as ET
         body = '<root><token value="short-secret" hint="correct-horse"/><name value="public"/></root>'

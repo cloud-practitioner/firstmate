@@ -19,7 +19,8 @@ import re
 import sys
 import threading
 
-STATE = {"prs": {}, "comments": {}, "next": 100, "bb_auth": 0}
+STATE = {"prs": {}, "comments": {}, "next": 100, "bb_auth": 0,
+         "github_actor": "worker", "bitbucket_actor": "acct-worker", "writes": []}
 LOCK = threading.Lock()
 IMG_DIR = sys.argv[2]
 PORT = [0]
@@ -107,7 +108,10 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 return self.send(200, [dict(c, body_html=c["html"], updated_at=c["updated"])
                                        for c in STATE["comments"].get(self.key(*m.groups()), [])])
             if path == "/gh/user":
-                return self.send(200, {"login": "worker"})
+                return self.send(200, {"login": STATE["github_actor"]})
+            if path == "/oauth":
+                return self.send(302, b"return to the application", "text/plain", {
+                    "Location": "https://app.example/callback?code=a1b2c3d4e5f6a1b2c3d4"})
             m = re.match(r"^/bb/2\.0/repositories/([^/]+)/([^/]+)/pullrequests/(\d+)(/diffstat|/comments)?$", path)
             if m:
                 if not self.headers.get("Authorization", "").startswith("Basic "):
@@ -133,7 +137,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                         return self.send(200, {"hash": pr["head"]})
                 return self.send(404, {})
             if path == "/bb/2.0/user":
-                return self.send(200, {"account_id": "acct-worker"})
+                return self.send(200, {"account_id": STATE["bitbucket_actor"]})
             m = re.match(r"^/bb/dl/([^/]+)/([^/]+)/(.+)$", path)
             if m:
                 return self.send(302, b"", "text/plain", {"Location": base() + "/img/" + m.group(3)})
@@ -142,6 +146,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def do_DELETE(self):
         path = self.path.split("?")[0]
         with LOCK:
+            STATE["writes"].append(["DELETE", path])
             if STATE.get("delete_fail"):
                 return self.send(503, {"error": "delete unavailable"})
             m = re.match(r"^/gh/repos/([^/]+)/([^/]+)/issues/comments/(\d+)$", path)
@@ -161,6 +166,13 @@ class Handler(http.server.BaseHTTPRequestHandler):
         path = self.path.split("?")[0]
         raw = self.read_body()
         with LOCK:
+            if path == "/_admin/actor":
+                data = json.loads(raw)
+                STATE["github_actor"] = data.get("github", "worker")
+                STATE["bitbucket_actor"] = data.get("bitbucket", "acct-worker")
+                return self.send(200, {})
+            if path.startswith(("/gh/", "/bb/")):
+                STATE["writes"].append(["POST", path])
             if path == "/_admin/delete-failure":
                 STATE["delete_fail"] = json.loads(raw)["enabled"]
                 return self.send(200, {})
@@ -189,7 +201,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                     c["updated"] = data["updated"]
                 return self.send(200, {})
             if path == "/_admin/state":
-                return self.send(200, {"comments": STATE["comments"], "bb_auth": STATE["bb_auth"]})
+                return self.send(200, {"comments": STATE["comments"], "bb_auth": STATE["bb_auth"], "writes": STATE["writes"]})
             m = re.match(r"^/gh/repos/([^/]+)/([^/]+)/issues/(\d+)/comments$", path)
             if m:
                 key = self.key(*m.groups())
@@ -210,7 +222,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                     return base() + "/img/" + assets.get(uid, "missing") + ".png"
                 STATE["next"] += 1
                 STATE["comments"].setdefault(key, []).append({
-                    "id": str(STATE["next"]), "user": {"login": "worker"}, "body": body,
+                    "id": str(STATE["next"]), "user": {"login": STATE["github_actor"]}, "body": body,
                     "html": render(body, img_url), "updated": "2026-10-22T01:00:00Z"})
                 return self.send(201, {"id": STATE["next"], "html_url": "https://github.com/%s/pull/%s#issuecomment-%d" % (
                     "/".join(m.groups()[:2]), m.group(3), STATE["next"])})
@@ -238,7 +250,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                     return base() + "/bb/dl/%s/%s/%s" % mm.groups() if mm else ref
                 STATE["next"] += 1
                 STATE["comments"].setdefault(key, []).append({
-                    "id": str(STATE["next"]), "user": {"login": "acct-worker"}, "body": body,
+                    "id": str(STATE["next"]), "user": {"login": STATE["bitbucket_actor"]}, "body": body,
                     "html": render(body, bb_img), "updated": "2026-10-22T01:00:00Z"})
                 return self.send(201, {"id": STATE["next"]})
         return self.send(404, {})
