@@ -2,6 +2,7 @@
 import argparse
 import contextlib
 import copy
+import http.server
 import importlib.util
 import io
 import json
@@ -9,6 +10,7 @@ import os
 import shlex
 from pathlib import Path
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -55,6 +57,94 @@ class EvidenceRegressions(unittest.TestCase):
             self.assertEqual(expected, data[side]["headers"], side)
         self.assertEqual(200, data["response"]["status"])
         self.assertEqual("OK", data["response"]["reason"])
+
+    def test_sidecar_capture_unfolds_headers_before_masking(self):
+        for indent in (" ", "\t", " \t"):
+            with self.subTest(indent=indent):
+                public = ("Link: </items?page=2>;\r\n" + indent + 'rel="next"\r\n' +
+                          "X-Empty:\r\n" + indent + "value\r\n" +
+                          "X-Note: first\r\n" + indent + "part: second\r\n" + indent + "last\r\n")
+                request_headers = ("Host: example.test\r\n" + public + "Authorization: Basic\r\n" +
+                                   indent + "dXNlcjpzZWNyZXQ=\r\n")
+                response = ("HTTP/1.1 200 OK\r\n" + public + "Set-Cookie: sid=short-secret;\r\n" +
+                            indent + "HttpOnly\r\n\r\nX-Result: first\r\n" + indent + "second\r\n" +
+                            "X-API-Key: short\r\n" + indent + "secret\r\n\r\n")
+                data = self.capture_sidecar(
+                    "> GET /items HTTP/1.1\n" +
+                    "".join("> " + line + "\n" for line in request_headers.splitlines()) + "> \n", response)
+                expected = [["Link", '</items?page=2>; rel="next"'], ["X-Empty", "value"],
+                            ["X-Note", "first part: second last"]]
+                self.assertEqual([["Host", "example.test"]] + expected +
+                                 [["Authorization", ev.mask_token("Basic dXNlcjpzZWNyZXQ=")]],
+                                 data["request"]["headers"])
+                self.assertEqual(expected + [["Set-Cookie", ev.mask_token("sid=short-secret; HttpOnly")],
+                                            ["X-Result", "first second"],
+                                            ["X-API-Key", ev.mask_token("short secret")]],
+                                 data["response"]["headers"])
+                rendered = "\n".join(ev.sidecar_lines(data))
+                self.assertEqual(2, rendered.count('Link: </items?page=2>; rel="next"'))
+                self.assertIn("X-Result: first second", rendered)
+                for secret in ("dXNlcjpzZWNyZXQ=", "short-secret", "short secret"):
+                    self.assertNotIn(secret, json.dumps(data))
+
+    def test_api_capture_handles_head_without_a_response_body(self):
+        import subprocess
+        requests = []
+        payload = b'{"result":"new"}'
+
+        class Handler(http.server.BaseHTTPRequestHandler):
+            def log_message(self, *args):
+                pass
+
+            def do_GET(self):
+                body = self.rfile.read(int(self.headers.get("Content-Length", "0"))).decode()
+                requests.append((self.command, self.path, body, self.headers.get("X-Test")))
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(payload)))
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                if self.command != "HEAD":
+                    self.wfile.write(payload)
+
+            def do_HEAD(self):
+                self.do_GET()
+
+            def do_POST(self):
+                self.do_GET()
+
+        with tempfile.TemporaryDirectory() as tmp, http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler) as server:
+            tmp = Path(tmp)
+            env = dict(os.environ, FM_HOME=str(tmp / "home"), FM_ROOT_OVERRIDE=str(ROOT), TMPDIR=str(tmp),
+                       NO_PROXY="*", no_proxy="*")
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                url = "http://127.0.0.1:%d/items" % server.server_port
+                for method in ("HEAD", "GET", "POST"):
+                    with self.subTest(method=method):
+                        out = tmp / (method + ".json")
+                        args = ["bash", str(ROOT / "bin/fm-pr-evidence.sh"), "capture-api", "--out", str(out),
+                                "--header", "X-Test: capture"]
+                        if method != "GET":
+                            args += ["-X", method]
+                        if method == "POST":
+                            (tmp / "request-body").write_text('{"name":"new"}')
+                            args += ["--body-file", str(tmp / "request-body")]
+                        result = subprocess.run(args + [url], env=env, capture_output=True, text=True, timeout=5)
+                        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                        data = json.loads(out.read_text())
+                        self.assertEqual(method, data["request"]["method"])
+                        self.assertEqual(url, data["request"]["url"])
+                        self.assertEqual('{"name":"new"}' if method == "POST" else "", data["request"]["body"])
+                        self.assertEqual(200, data["response"]["status"])
+                        self.assertEqual("OK", data["response"]["reason"])
+                        self.assertIn(["Content-Length", str(len(payload))], data["response"]["headers"])
+                        self.assertEqual("" if method == "HEAD" else payload.decode(), data["response"]["body"])
+            finally:
+                server.shutdown()
+                thread.join()
+        self.assertEqual([("HEAD", "/items", "", "capture"), ("GET", "/items", "", "capture"),
+                          ("POST", "/items", '{"name":"new"}', "capture")], requests)
 
     def test_sidecar_capture_selects_the_api_request_after_connect(self):
         proxy_request = ("* Connected to proxy\n> CONNECT example.test:443 HTTP/1.1\n"

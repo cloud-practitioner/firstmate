@@ -424,11 +424,16 @@ def cmd_sidecar_build(args):
         with open(path, "rb") as fh:
             return fh.read().decode("utf-8", "replace")
     def headers(lines):
-        out = []
+        out, current = [], None
         for line in lines:
+            if line.startswith((" ", "\t")) and current is not None:
+                current[1] = (current[1] + " " + line.strip(" \t")).strip(" \t")
+                continue
+            current = None
             name, sep, value = line.partition(":")
             if sep and re.fullmatch(r"[!#$%&'*+.^_`|~0-9A-Za-z-]+", name):
-                out.append([name, value.strip(" \t")])
+                current = [name, value.strip(" \t")]
+                out.append(current)
         return out
     def last_message(lines, start):
         message = []

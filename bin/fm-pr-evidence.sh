@@ -573,11 +573,13 @@ cmd_capture_api() {
     printf 'header = "%s"\n' "${line//\"/\\\"}" >> "$cfg"
   done
   args=(-q -sS -v -K "$cfg" -X "$method" -D "$WORK/resp.hdr" -o "$WORK/resp.body" --max-time 30)
+  [ "$method" != HEAD ] || args+=(--head)
   [ -z "$body" ] || args+=(--data-binary "@$body")
   curl "${args[@]}" "$url" 2> "$WORK/verbose" || {
     fail_line "the HTTP call failed: $(tail -n 1 "$WORK/verbose" | sed 's/[Aa]uthorization.*//')" "check the URL and the network, then capture again"
     return 1
   }
+  [ "$method" != HEAD ] || : > "$WORK/resp.body"
   python3 "$LIB_PY" sidecar-build --verbose "$WORK/verbose" --resp-headers "$WORK/resp.hdr" --resp-body "$WORK/resp.body" \
     --method "$method" --url "$url" --out "$out" ${body:+--req-body "$body"}
   python3 "$LIB_PY" scan-sidecar "$out" >&2
