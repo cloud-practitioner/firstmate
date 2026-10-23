@@ -147,6 +147,8 @@ poll_wedge_round() {
   if ! wait_for_exit "$pid" 100; then
     reap "$pid"; fail "watcher did not exit on wedge round: $(cat "$out")"
   fi
+  grep -E '^stale: .*possible wedge, escalation [1-9][0-9]*([,;)]|$)' "$out" >/dev/null \
+    || fail "wedge round did not report a numbered escalation: $(cat "$out")"
   ack_stopped_cycle "$state" || fail "wedge round ack failed"
 }
 
@@ -298,6 +300,8 @@ test_wedge_cap_disabled_by_default() {
     if ! wait_for_exit "$pid" 100; then
       reap "$pid"; fail "wedge round $n (default config) failed to exit"
     fi
+    grep -E "^stale: .*possible wedge, escalation $n([,;)]|$)" "$out" >/dev/null \
+      || fail "default-config round $n did not report escalation $n: $(cat "$out")"
     grep -F "PERMANENTLY-WEDGED" "$out" >/dev/null && fail "default-config round $n fired PERMANENTLY-WEDGED - cap should be disabled"
     [ ! -e "$state/.wedge-permanent-$key" ] || fail "default-config wrote the window-scoped cap marker (cap must stay inert)"
     ack_stopped_cycle "$state" || fail "default-config round $n ack failed"
@@ -442,6 +446,8 @@ test_wedge_cap_window_marker_silences_hash_churning_busy_pane() {
     if ! wait_for_exit "$pid" 100; then
       reap "$pid"; fail "churning round $n failed to exit: $(cat "$out")"
     fi
+    grep -E "^stale: .*possible wedge, escalation $n([,;)]|$)" "$out" >/dev/null \
+      || fail "churning round $n did not report escalation $n: $(cat "$out")"
     ack_stopped_cycle "$state" || fail "churning round $n ack failed"
     n=$((n + 1))
   done
@@ -700,7 +706,10 @@ test_wedge_cap_validates_invalid_overrides() {
     if ! wait_for_exit "$pid" 100; then
       reap "$pid"; fail "round $n (garbage override) failed to exit"
     fi
+    grep -E "^stale: .*possible wedge, escalation $n([,;)]|$)" "$out" >/dev/null \
+      || fail "garbage override round $n did not report escalation $n: $(cat "$out")"
     grep -F "PERMANENTLY-WEDGED" "$out" >/dev/null && fail "garbage override round $n fired PERMANENTLY-WEDGED - validation did not fall back to 0"
+    ack_stopped_cycle "$state" || fail "garbage override round $n ack failed"
     n=$((n + 1))
   done
   unset FM_FAKE_CREW_STATE
@@ -1887,7 +1896,7 @@ test_wedge_cap_reports_gone_endpoint_on_terminal_override_route() {
     FM_STATE_OVERRIDE="$state" FM_CREW_STATE_BIN="$fakebin/fm-crew-state.sh" \
     FM_WATCH_HANDLING_SUCCESSOR=1 \
     FM_STALE_ESCALATE_SECS=1 FM_POLL=1 FM_SIGNAL_GRACE=1 \
-    FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 FM_WEDGE_MAX_ESCALATIONS=$max \
+    FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 FM_WEDGE_MAX_ESCALATIONS="$max" \
     PATH="$fakebin:$PATH" \
     "$WATCH" > "$out" &
   pid=$!
@@ -1908,7 +1917,7 @@ test_wedge_cap_reports_gone_endpoint_on_terminal_override_route() {
     FM_STATE_OVERRIDE="$state" FM_CREW_STATE_BIN="$fakebin/fm-crew-state.sh" \
     FM_WATCH_HANDLING_SUCCESSOR=1 \
     FM_STALE_ESCALATE_SECS=1 FM_POLL=1 FM_SIGNAL_GRACE=1 \
-    FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 FM_WEDGE_MAX_ESCALATIONS=$max \
+    FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 FM_WEDGE_MAX_ESCALATIONS="$max" \
     PATH="$fakebin:$PATH" \
     "$WATCH" > "$out" &
   pid=$!

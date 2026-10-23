@@ -216,7 +216,7 @@ printf 'v1 gen=g1 seq=1 state=busy source=fm-spawn event=turn_start ts=%s\n' "$(
 touch -d '5 seconds ago' "$STATE/$TASK.meta" 2>/dev/null \
   || perl -e 'utime(time()-5, time()-5, $ARGV[0])' "$STATE/$TASK.meta"
 
-# watcher_cycle <label>: one real watcher cycle against the lab home, run with
+# watcher_cycle <label> <expected-escalation-or-0>: one real watcher cycle, run with
 # the cap bound in $MAX and the tmux socket pointed at the lab. Records its exit
 # status and the reason line it printed, then drains and acknowledges what it
 # queued. Set MAX=0 for the unceiled baseline arm, which is the shipped default.
@@ -224,9 +224,10 @@ cycle=0
 CYCLE_WOKE=0
 CYCLE_REASON=''
 watcher_cycle() {
-  local label=$1 out rc
+  local label=$1 expected=$2 out rc err sequence generation
   cycle=$((cycle + 1))
   out="$TMP_ROOT/cycle-$cycle.out"
+  err="$TMP_ROOT/cycle-$cycle.drain.err"
   CYCLE_WOKE=0
   FM_HOME="$LAB_HOME" TMUX_TMPDIR="$LAB_TMUX_DIR" \
     FM_WEDGE_MAX_ESCALATIONS="$MAX" \
@@ -277,9 +278,25 @@ watcher_cycle() {
   esac
   CYCLE_REASON="$reason"
   say "$label -> exit=$rc woke=$CYCLE_WOKE reason=${reason:-none}"
+  if [ "$expected" -eq 0 ]; then
+    [ "$rc" = alive ] && [ "$CYCLE_WOKE" -eq 0 ] \
+      || fail "$label did not stay silently polling: $(cat "$out")"
+  else
+    [ "$rc" = 0 ] || fail "$label watcher failed (exit=$rc): $(cat "$out")"
+    grep -E "^stale: .*possible wedge, escalation $expected([,;)]|$)" "$out" >/dev/null \
+      || fail "$label did not report wedge escalation $expected: $(cat "$out")"
+  fi
   # Acknowledge so the next cycle starts from an empty queue and its exit
   # status reflects the pane, not a leftover wake.
-  FM_HOME="$LAB_HOME" "$ROOT/bin/fm-wake-drain.sh" >/dev/null 2>&1 || true
+  FM_HOME="$LAB_HOME" "$ROOT/bin/fm-wake-drain.sh" >/dev/null 2> "$err" \
+    || fail "$label wake drain failed: $(cat "$err")"
+  sequence=$(sed -n 's/^WAKE_ACK_REQUIRED:.*--ack-through \([0-9][0-9]*\) --recovery-generation [A-Za-z0-9._-][A-Za-z0-9._-]*$/\1/p' "$err")
+  generation=$(sed -n 's/^WAKE_ACK_REQUIRED:.*--ack-through [0-9][0-9]* --recovery-generation \([A-Za-z0-9._-][A-Za-z0-9._-]*\)$/\1/p' "$err")
+  [ -n "$sequence" ] && [ -n "$generation" ] \
+    || fail "$label did not present a generation-bound acknowledgement: $(cat "$err")"
+  FM_HOME="$LAB_HOME" "$ROOT/bin/fm-wake-drain.sh" --ack-through "$sequence" \
+    --recovery-generation "$generation" >/dev/null 2> "$err" \
+    || fail "$label wake acknowledgement failed: $(cat "$err")"
   cat "$out" >> "$TRANSCRIPT"
 }
 # reset_lab_state: put the wedged worker back to a fresh first sight, so the
@@ -325,8 +342,7 @@ unceiled=0
 i=0
 while [ "$i" -lt 5 ]; do
   i=$((i + 1))
-  watcher_cycle "unceiled escalation $i"
-  [ "$CYCLE_WOKE" -eq 1 ] || fail "the unceiled baseline went quiet at escalation $i - that is not the baseline this guard measures"
+  watcher_cycle "unceiled escalation $i" "$i"
   unceiled=$((unceiled + 1))
   if [ "$i" -eq 1 ]; then assert_derived_key_matches_watcher; fi
 done
@@ -339,18 +355,19 @@ say "part 1: the SAME workload with FM_WEDGE_MAX_ESCALATIONS=$CEILING (ceiled)"
 reset_lab_state
 MAX=$CEILING
 cycle=0
-watcher_cycle "ceiled cycle 1 (first sight: absorbed)"
-watcher_cycle "ceiled cycle 2 (escalation 1)"
-watcher_cycle "ceiled cycle 3 (escalation 2)"
-watcher_cycle "ceiled cycle 4 (escalation $MAX: cap threshold)"
+i=1
+while [ "$i" -le "$MAX" ]; do
+  watcher_cycle "ceiled escalation $i" "$i"
+  i=$((i + 1))
+done
 
 terminal_fired=0
 for f in "$TMP_ROOT"/cycle-*.out; do
   grep -q 'PERMANENTLY-WEDGED' "$f" 2>/dev/null && terminal_fired=$((terminal_fired + 1))
 done
 say "ceiled cycles that printed PERMANENTLY-WEDGED: $terminal_fired (cap bound is $MAX)"
-[ "$terminal_fired" -ge 1 ] \
-  || fail "the cap never engaged on a genuinely wedged worker; no cycle printed PERMANENTLY-WEDGED"
+[ "$terminal_fired" -eq 1 ] \
+  || fail "expected exactly one terminal wedge wake, saw $terminal_fired"
 
 # The cap's own marker must be on disk: the window-scoped one the terminal
 # wake names for the operator.
@@ -367,8 +384,7 @@ silenced=0
 i=0
 while [ "$i" -lt 2 ]; do
   i=$((i + 1))
-  watcher_cycle "silence probe $i"
-  [ "$CYCLE_WOKE" -eq 0 ] || fail "a poll re-escalated the still-wedged pane while the cap markers stood (probe $i)"
+  watcher_cycle "silence probe $i" 0
   silenced=$((silenced + 1))
 done
 silence_elapsed=$(( $(date +%s) - silence_start ))
@@ -394,11 +410,9 @@ sleep "$remaining"
 # later. Assert the lane is audible, NOT that the very next cycle carries the
 # terminal marker: requiring the terminal wake on the first cycle would assert a
 # re-fire that the reset counter makes false.
-watcher_cycle "post-horizon cycle 1"
-[ "$CYCLE_WOKE" -eq 1 ] \
-  || fail "after the cap horizon elapsed the pane stayed silent; the cap never released itself"
+watcher_cycle "post-horizon cycle 1" 1
 first_post="$CYCLE_REASON"
-watcher_cycle "post-horizon cycle 2"
+watcher_cycle "post-horizon cycle 2" 2
 released="$CYCLE_WOKE"
 
 say "post-horizon the pane is audible again with no operator action: cycle 1 woke ($first_post), cycle 2 woke=$released"

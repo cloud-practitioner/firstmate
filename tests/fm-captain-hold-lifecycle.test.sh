@@ -3026,7 +3026,7 @@ SH
   pass "an answer before cleanup replay preserves the retained report"
 }
 
-answer_before_cleanup_replay_notes_a_retained_pr() {  # <slug> <provider> <url> <note-label>
+answer_before_cleanup_replay_preserves_a_retained_pr() {  # <slug> <provider> <url> <note-label>
   local slug=$1 provider=$2 pr_url=$3 label=$4 home id repo wt rc show real_tasks_axi
   home=$(make_home "answer-before-replay-$slug")
   id="sample-answer-before-replay-$slug"
@@ -3042,8 +3042,9 @@ answer_before_cleanup_replay_notes_a_retained_pr() {  # <slug> <provider> <url> 
   printf 'done: change landed\n' > "$home/state/$id.status"
   run_captain "$home" hold "$id" --reason "captain must choose the follow-up" >/dev/null \
     || fail "could not hold the landed $provider task for the captain"
-  real_tasks_axi=$(command -v tasks-axi)
-  cat > "$home/fakebin/tasks-axi" <<SH
+  if [ -n "$label" ]; then
+    real_tasks_axi=$(command -v tasks-axi)
+    cat > "$home/fakebin/tasks-axi" <<SH
 #!/usr/bin/env bash
 previous=
 for arg in "\$@"; do
@@ -3055,7 +3056,8 @@ for arg in "\$@"; do
 done
 exec "$real_tasks_axi" "\$@"
 SH
-  chmod +x "$home/fakebin/tasks-axi"
+    chmod +x "$home/fakebin/tasks-axi"
+  fi
   cat > "$home/fakebin/treehouse" <<'SH'
 #!/usr/bin/env bash
 exit 1
@@ -3078,18 +3080,33 @@ SH
     || fail "the captain could not answer a $provider task before cleanup replay"
   show=$(tasks_in "$home" show "$id" --full) || fail "the answered $provider row is gone"
   assert_contains "$show" "state: done" "the answer did not close the $provider row"
-  assert_contains "$show" "$label $pr_url" \
-    "the answer dropped the retained $provider URL"
-  pass "an answer before cleanup replay notes the retained $provider pull request"
+  if [ -n "$label" ]; then
+    assert_contains "$show" "$label $pr_url" \
+      "the answer dropped the retained $provider URL"
+  else
+    assert_contains "$(printf '%s\n' "$show" | sed -n 's/^  links: //p')" "pr:$pr_url" \
+      "the answer dropped the structured $provider PR link"
+  fi
+  pass "an answer before cleanup replay preserves the retained $provider pull request"
+}
+
+test_answer_before_cleanup_replay_preserves_a_retained_github_pr() {
+  answer_before_cleanup_replay_preserves_a_retained_pr github GitHub \
+    https://github.com/o/r/pull/7 ''
+}
+
+test_answer_before_cleanup_replay_preserves_a_retained_forgejo_pr() {
+  answer_before_cleanup_replay_preserves_a_retained_pr forgejo Forgejo \
+    https://forgejo.example.com/o/r/pulls/7 ''
 }
 
 test_answer_before_cleanup_replay_notes_a_retained_gerrit_change() {
-  answer_before_cleanup_replay_notes_a_retained_pr gerrit Gerrit \
+  answer_before_cleanup_replay_preserves_a_retained_pr gerrit Gerrit \
     https://gerrit.example.com/c/project/+/12345 "Gerrit change"
 }
 
 test_answer_before_cleanup_replay_notes_a_retained_bitbucket_pr() {
-  answer_before_cleanup_replay_notes_a_retained_pr bitbucket Bitbucket \
+  answer_before_cleanup_replay_preserves_a_retained_pr bitbucket Bitbucket \
     https://bitbucket.org/ws/repo/pull-requests/7 PR
 }
 
@@ -5056,6 +5073,8 @@ test_teardown_never_closes_a_captain_held_task
 test_retained_row_artifacts_survive_captain_answers
 test_interrupted_cleanup_keeps_the_captain_call_recoverable
 test_answer_before_cleanup_replay_preserves_the_retained_report
+test_answer_before_cleanup_replay_preserves_a_retained_github_pr
+test_answer_before_cleanup_replay_preserves_a_retained_forgejo_pr
 test_answer_before_cleanup_replay_notes_a_retained_gerrit_change
 test_answer_before_cleanup_replay_notes_a_retained_bitbucket_pr
 test_unusable_pending_close_record_names_its_reason
