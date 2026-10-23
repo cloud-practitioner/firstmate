@@ -680,6 +680,7 @@ For each required kind, the comment contains:
 
 - A before PNG and an after PNG, with the differences marked in the exact colour `#FF2D95`.
 - The purpose of each item in ASD-STE100 Simplified Technical English, also drawn on both images by the annotation commands.
+- A hash-bound annotation record for every before and after image of both UI and API items. Keep each `<png>.annotation.json` beside its image; publication refuses missing or invalid records and includes them in the manifest. Verification requires each record and checks its hash against that phase's image hash.
 - For an API item, the full HTTP exchange as text: request headers, request body, response headers, response body, status code, and status message, with secret values masked.
 
 A `none` declaration still needs a published comment with a plain-English reason and the current-head manifest, but no image pair.

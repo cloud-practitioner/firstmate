@@ -501,11 +501,15 @@ cmd_publish() {
   fm_lock_acquire_wait "$lock" || return 1
   jq -n --arg body "$(< "$WORK/comment.md")" --argjson authors "$PR_AUTHORS_JSON" \
     '[{author: $authors[0], body: $body}]' > "$WORK/published.json"
-  updated=$(python3 "$LIB_PY" effective --declared "$(meta_get "$meta" evidence)" --comments "$WORK/published.json" --authors "$PR_AUTHORS_JSON")
-  awk '!/^evidence=/' "$meta" > "$WORK/meta"
-  printf 'evidence=%s\n' "$updated" >> "$WORK/meta"
-  chmod 0600 "$WORK/meta"
-  mv -f -- "$WORK/meta" "$meta"
+  if ! updated=$(python3 "$LIB_PY" effective --declared "$(meta_get "$meta" evidence)" --comments "$WORK/published.json" --authors "$PR_AUTHORS_JSON") \
+    || ! awk -v evidence="$updated" '/^evidence=/ { print "evidence=" evidence; next } { print }' "$meta" > "$WORK/meta" \
+    || { grep -q '^pr=' "$WORK/meta" && ! (fm_pr_metadata_identity_parse "$WORK/meta"); } \
+    || ! chmod 0600 "$WORK/meta" \
+    || ! mv -f -- "$WORK/meta" "$meta"; then
+    fm_lock_release "$lock"
+    fail_line "the replacement task metadata is not valid or could not be saved" "repair the task metadata, then run publish again"
+    return 1
+  fi
   fm_lock_release "$lock"
   while IFS= read -r line; do
     { [ -n "$line" ] && [ "$line" != "$new_id" ]; } || continue

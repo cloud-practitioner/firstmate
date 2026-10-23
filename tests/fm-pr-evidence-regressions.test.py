@@ -25,6 +25,28 @@ def exchange():
 
 
 class EvidenceRegressions(unittest.TestCase):
+    def test_sidecar_capture_keeps_headers_with_optional_whitespace(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            headers = "Accept: application/json\r\nX-Mode:new\r\nX-Tab:\tvalue\t\r\nX-Empty:\r\nX-Url:https://example.test/items\r\n"
+            (tmp / "verbose").write_text(
+                "* Connected\n> GET http://example.test/items HTTP/1.1\n" +
+                "".join("> " + line + "\n" for line in headers.splitlines()) + "> \n")
+            (tmp / "response").write_text("HTTP/1.1 100 Continue\r\n\r\nHTTP/1.1 200 OK\r\n" + headers + "\r\n")
+            (tmp / "body").write_text("{}")
+            out = tmp / "sidecar.json"
+            self.assertEqual(0, ev.main([
+                "sidecar-build", "--verbose", str(tmp / "verbose"), "--resp-headers", str(tmp / "response"),
+                "--resp-body", str(tmp / "body"), "--method", "GET", "--url", "http://example.test/items",
+                "--out", str(out)]))
+            data = json.loads(out.read_text())
+            expected = [["Accept", "application/json"], ["X-Mode", "new"], ["X-Tab", "value"],
+                        ["X-Empty", ""], ["X-Url", "https://example.test/items"]]
+            for side in ("request", "response"):
+                self.assertEqual(expected, data[side]["headers"], side)
+            self.assertEqual(200, data["response"]["status"])
+            self.assertEqual("OK", data["response"]["reason"])
+
     def test_sensitive_fields_are_masked_and_rejected_on_both_sides(self):
         for side in ("request", "response"):
             for body in ('{"password":"correct-horse","token":"short-secret"}',

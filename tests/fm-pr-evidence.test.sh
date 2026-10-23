@@ -96,12 +96,33 @@ png() {  # <out> <seed> <marks>
   python3 "$FIX/mkpng.py" "$1" "$2" "$3"
 }
 
+annotation_records() {
+  python3 - "$1" <<'PY'
+import hashlib, json, pathlib, sys
+items_path = pathlib.Path(sys.argv[1])
+for item in json.loads(items_path.read_text())["items"]:
+    for phase in ("before", "after"):
+        image = items_path.parent / item[phase]["image"]
+        record = {"sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
+                  "purpose": item["purpose"], "labels": item["labels"]}
+        pathlib.Path(str(image) + ".annotation.json").write_text(json.dumps(record))
+PY
+}
+
+poll_valid() {
+  (
+    . "$ROOT/bin/fm-pr-lib.sh"
+    fm_pr_poll_artifacts_valid "$C/home/state" t1 "$ROOT/bin/fm-pr-poll.sh"
+  )
+}
+
 ui_items() {  # writes $C/ev/items.json with one ui item of marked images
   png "$C/ev/b.png" 1 400
   png "$C/ev/a.png" 2 400
   cat > "$C/ev/items.json" <<'EOF'
 {"items":[{"id":"cli","kind":"ui","purpose":"The tool printed old text. Now it prints new text.","before":{"image":"b.png"},"after":{"image":"a.png"},"labels":["Text changed"]}]}
 EOF
+  annotation_records "$C/ev/items.json"
 }
 
 api_sidecars() {
@@ -120,6 +141,7 @@ uiapi_items() {
 {"items":[{"id":"cli","kind":"ui","purpose":"The tool printed old text. Now it prints new text.","before":{"image":"b.png"},"after":{"image":"a.png"},"labels":["Text changed"]},
 {"id":"api","kind":"api","purpose":"The API returned HTTP 500. Now it returns HTTP 200.","before":{"image":"ba.png","sidecar":"b.json"},"after":{"image":"aa.png","sidecar":"a.json"},"labels":["Status changed"]}]}
 EOF
+  annotation_records "$C/ev/items.json"
 }
 
 published() {  # publish the case's items and require a pass
@@ -368,6 +390,68 @@ test_marks_must_be_drawn() {
   pass "fm-pr-evidence: images without drawn marks are refused at publish and by the mark counter"
 }
 
+test_annotation_records_are_required_and_bound() {
+  local out rc index phase image record defect expected original
+  new_case annotation-records
+  write_task t1 ui+api
+  uiapi_items
+  for index in 0 1; do
+    for phase in before after; do
+      image=$(jq -r --argjson i "$index" --arg p "$phase" '.items[$i][$p].image' "$C/ev/items.json")
+      record="$C/ev/$image.annotation.json"
+      cp "$record" "$C/record.json"
+      for defect in missing stale empty invalid; do
+        case "$defect" in
+          missing) rm "$record"; expected="has no annotation record" ;;
+          stale) jq '.sha256 = ("0" * 64)' "$C/record.json" > "$record"; expected="annotation does not match its image" ;;
+          empty) jq '.purpose = ""' "$C/record.json" > "$record"; expected="text is empty" ;;
+          invalid) printf 'not JSON\n' > "$record"; expected="has no annotation record" ;;
+        esac
+        out=$(ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+        expect_code 1 "$rc" "$image with $defect annotation must refuse composition"
+        assert_contains "$out" "$expected" "composition must name the annotation defect"
+        assert_equals 0 "$(comments_json | jq 'length')" "an annotation refusal must post nothing"
+        cp "$C/record.json" "$record"
+      done
+    done
+  done
+  published
+  original=$(comments_json | jq -c --arg k "$PRKEY" '.[0] | {key:$k,id:.id,body:.body,html:.html}')
+  for index in 0 1; do
+    for phase in before after; do
+      for defect in missing stale empty invalid; do
+        stub_post /_admin/replace "$original"
+        case "$defect" in
+          missing) tamper "del m['items'][$index]['$phase']['annotation']"; expected="has no annotation record" ;;
+          stale) tamper "m['items'][$index]['$phase']['annotation']['sha256'] = '0' * 64"; expected="annotation does not match its image" ;;
+          empty) tamper "m['items'][$index]['$phase']['annotation']['purpose'] = ''"; expected="text is empty" ;;
+          invalid) tamper "m['items'][$index]['$phase']['annotation'] = []"; expected="has no annotation record" ;;
+        esac
+        out=$(ev check t1 "$PRURL"); rc=$?
+        expect_code 1 "$rc" "item $index $phase with $defect annotation must refuse verification"
+        assert_contains "$out" "$expected" "verification must name the annotation defect"
+      done
+    done
+  done
+  stub_post /_admin/replace "$original"
+  out=$(ev check t1 "$PRURL") || fail "valid annotation records must pass verification: $out"
+  pass "fm-pr-evidence: each UI and API phase requires a purpose record bound to its image"
+}
+
+test_publish_refuses_invalid_replacement_metadata() {
+  local out rc
+  new_case invalid-publish-meta
+  write_task t1 ui "pr=$PRURL" "pr_head=$HEAD1" 'unexpected=tail'
+  ui_items
+  cp "$C/home/state/t1.meta" "$C/original.meta"
+  out=$(ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+  expect_code 1 "$rc" "publication must validate replacement PR metadata"
+  assert_contains "$out" "replacement task metadata is not valid" "invalid metadata must refuse"
+  cmp -s "$C/original.meta" "$C/home/state/t1.meta" || fail "invalid replacement must leave task metadata unchanged"
+  assert_absent "$C/home/state/.meta-t1.lock" "a refused replacement must release the metadata lock"
+  pass "fm-pr-evidence: invalid replacement metadata is not saved"
+}
+
 test_api_exchange_needs_all_parts_and_masked_secrets() {
   local out rc
   new_case api
@@ -542,12 +626,16 @@ test_arming_and_merge_go_through_the_gate() {
   out=$(run_pr "$PR_CHECK" t1 "$PRURL"); rc=$?
   expect_code 0 "$rc" "arming a PR with evidence (got: $out)"
   assert_contains "$out" "armed: state/t1.check.sh" "a PR with evidence must arm"
+  poll_valid || fail "arming must register a valid poll"
+  published
+  poll_valid || fail "same-head republication must preserve the registered poll"
   # The merge records through the same script and refuses when the head moved.
   stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD2\",\"files\":[\"bin/tool.sh\"]}"
   out=$(run_pr "$PR_MERGE" t1 "$PRURL"); rc=$?
   expect_code 1 "$rc" "merging after the head moved"
   assert_contains "$out" "the PR changed after the evidence" "merge must refuse a moved head"
   published
+  poll_valid || fail "new-head republication must preserve the registered poll"
   out=$(FM_TEST_GH_VIEW_HEAD="$HEAD1" FM_TEST_GH_LOG="$C/gh.log" run_pr "$PR_MERGE" t1 "$PRURL"); rc=$?
   expect_code 1 "$rc" "merge-time head must match evidence even after intake passed"
   assert_contains "$out" "evidence check head differs from the merge head" "a split head snapshot must refuse"
@@ -677,6 +765,21 @@ test_bitbucket_arm_is_off_by_default_and_works_when_on() {
   expect_code 0 "$rc" "Bitbucket publish (got: $out)"
   assert_contains "$out" "[PASS] evidence gate" "the Bitbucket gate must pass after publish"
   assert_contains "$(comments_json | jq -r '.[0].body')" "https://bitbucket.org/ws/repo/downloads/fm-evidence-$PRN-" "images must point at the repository Downloads area"
+  (
+    . "$ROOT/bin/fm-pr-lib.sh"
+    fm_pr_url_parse "$PRURL" &&
+      fm_pr_poll_prepare "$C/home/state" t1 "$FM_PR_PROVIDER" "$FM_PR_URL" "$FM_PR_HOST" "$FM_PR_PATH" "$FM_PR_NUMBER" "$ROOT/bin/fm-pr-poll.sh" &&
+      printf 'pr=%s\npr_head=%s\n' "$PRURL" "$HEAD1" >> "$C/home/state/t1.meta" &&
+      fm_pr_poll_publish_prepared
+  ) || fail "Bitbucket poll registration failed"
+  poll_valid || fail "Bitbucket poll must be valid before republication"
+  out=$(bbenv publish t1 "$PRURL" "$C/ev/items.json") || fail "Bitbucket republication failed: $out"
+  poll_valid || fail "Bitbucket republication must preserve the registered poll"
+  tamper "del m['items'][0]['after']['annotation']"
+  out=$(bbenv check t1 "$PRURL"); rc=$?
+  expect_code 1 "$rc" "Bitbucket verification must require annotation records"
+  assert_contains "$out" "cli after has no annotation record" "Bitbucket must name the missing phase record"
+  out=$(bbenv publish t1 "$PRURL" "$C/ev/items.json") || fail "Bitbucket publication must restore the record: $out"
   out=$(bbenv check t1 "$PRURL" "$HEAD1"); rc=$?
   expect_code 1 "$rc" "Bitbucket must refuse a merge without an atomic expected-head interface"
   assert_contains "$out" "cannot bind evidence" "Bitbucket must explain why merge enforcement refuses"
@@ -746,7 +849,7 @@ test_brief_block_and_list_commands_print() {
 }
 
 test_live_guard_against_the_sandbox() {
-  local pr out rc dir
+  local pr out rc dir phase
   pr=$LIVE_PR
   if [ -z "$pr" ]; then
     echo "note: live guard skipped (set FM_PR_EVIDENCE_LIVE_PR to a PR URL in the private sandbox repository)"
@@ -756,8 +859,13 @@ test_live_guard_against_the_sandbox() {
   mkdir -p "$dir/home/state" "$dir/home/config" "$dir/proj" "$dir/ev"
   echo '* enforce' > "$dir/home/config/pr-evidence"
   fm_write_meta "$dir/home/state/t1.meta" "window=fm-t1" "endpoint_task_id=t1" "project=$dir/proj" "kind=ship" "mode=no-mistakes" "evidence=ui"
-  python3 "$FIX/mkpng.py" "$dir/ev/b.png" 1 400
-  python3 "$FIX/mkpng.py" "$dir/ev/a.png" 2 400
+  python3 "$FIX/mkpng.py" "$dir/ev/b-raw.png" 1 400
+  python3 "$FIX/mkpng.py" "$dir/ev/a-raw.png" 2 400
+  for phase in b a; do
+    "$EV" annotate-ui --image "$dir/ev/$phase-raw.png" --mark '5,5,40,20,Synthetic mark' \
+      --purpose 'This is a synthetic test image. The gate must find it on the PR page.' \
+      --out "$dir/ev/$phase.png" >/dev/null || fail "live fixture annotation failed"
+  done
   cat > "$dir/ev/items.json" <<'EOF'
 {"items":[{"id":"live","kind":"ui","purpose":"This is a synthetic test image. The gate must find it on the PR page.","before":{"image":"b.png"},"after":{"image":"a.png"},"labels":["Synthetic mark"]}]}
 EOF
@@ -1072,7 +1180,15 @@ PY
   expect_code 0 "$rc" "portable cases must not inherit saved live credentials"
   cat > "$EV" <<'PY'
 #!/usr/bin/env python3
-import os, pathlib, sys
+import hashlib, json, os, pathlib, sys
+if sys.argv[1] == 'annotate-ui':
+    image = pathlib.Path(sys.argv[sys.argv.index('--image') + 1])
+    out = pathlib.Path(sys.argv[sys.argv.index('--out') + 1])
+    out.write_bytes(image.read_bytes())
+    pathlib.Path(str(out) + '.annotation.json').write_text(json.dumps({
+        'sha256': hashlib.sha256(out.read_bytes()).hexdigest(),
+        'purpose': sys.argv[sys.argv.index('--purpose') + 1], 'labels': ['Synthetic mark']}))
+    sys.exit(0)
 assert sys.argv[1:3] == ['publish', 't1']
 assert os.environ['GH_TOKEN'] == 'synthetic-gh-token'
 assert os.environ['GITHUB_TOKEN'] == 'synthetic-github-token'
@@ -1270,6 +1386,8 @@ test_head_drift_author_and_missing_comment_refuse
 test_images_that_do_not_display_refuse
 test_broken_or_swapped_images_refuse
 test_marks_must_be_drawn
+test_annotation_records_are_required_and_bound
+test_publish_refuses_invalid_replacement_metadata
 test_api_exchange_needs_all_parts_and_masked_secrets
 test_capture_api_masks_and_keeps_six_parts
 test_declared_kind_and_changed_files_must_agree

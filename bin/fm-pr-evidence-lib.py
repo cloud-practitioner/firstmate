@@ -423,11 +423,14 @@ def cmd_sidecar_build(args):
     def read(path):
         with open(path, "rb") as fh:
             return fh.read().decode("utf-8", "replace")
-    req_headers = []
-    for line in read(args.verbose).splitlines():
-        if line.startswith("> ") and ": " in line:
-            name, value = line[2:].split(": ", 1)
-            req_headers.append([name.strip(), value.strip()])
+    def headers(lines):
+        out = []
+        for line in lines:
+            name, sep, value = line.partition(":")
+            if sep and re.fullmatch(r"[!#$%&'*+.^_`|~0-9A-Za-z-]+", name):
+                out.append([name, value.strip(" \t")])
+        return out
+    req_headers = headers(line[2:] for line in read(args.verbose).splitlines() if line.startswith("> "))
     blocks = [b for b in re.split(r"\r?\n\r?\n", read(args.resp_headers).strip()) if b.strip()]
     last = blocks[-1].splitlines() if blocks else []
     status, reason = 0, ""
@@ -436,11 +439,7 @@ def cmd_sidecar_build(args):
         if match:
             status = int(match.group(1))
             reason = match.group(2).strip() or status_reason(status)
-    resp_headers = []
-    for line in last[1:]:
-        if ": " in line:
-            name, value = line.split(": ", 1)
-            resp_headers.append([name.strip(), value.strip()])
+    resp_headers = headers(last[1:])
     data = {
         "v": 1,
         "request": {"method": args.method, "url": args.url, "headers": req_headers,
@@ -917,6 +916,19 @@ def check_texts(f, item_id, item, vocab):
             f.warn("item %s mark label '%s': %s" % (item_id, label, entry))
 
 
+def check_annotation(f, item_id, annotation, sha, vocab, fix):
+    if not isinstance(annotation, dict):
+        f.fail("item %s has no annotation record" % item_id, fix)
+        return
+    if annotation.get("sha256") != sha:
+        f.fail("item %s annotation does not match its image" % item_id, fix)
+    if not isinstance(annotation.get("purpose"), str) or not isinstance(annotation.get("labels"), list) \
+            or not all(isinstance(label, str) for label in annotation["labels"]):
+        f.fail("item %s annotation has invalid purpose or labels" % item_id, fix)
+        return
+    check_texts(f, item_id + " annotation", annotation, vocab)
+
+
 def cmd_compose(args):
     """Validate worker input and write the evidence comment text."""
     f = Findings()
@@ -978,14 +990,14 @@ def cmd_compose(args):
                 f.fail("item %s %s image has no drawn marks (colour #FF2D95)" % (item_id, phase),
                        "annotate the difference with fm-pr-evidence.sh annotate-ui or annotate-api")
             part_entry = {"sha256": sha}
-            if os.path.isfile(image + ".annotation.json"):
+            try:
                 with open(image + ".annotation.json", encoding="utf-8") as fh:
                     annotation = json.load(fh)
-                if annotation.get("sha256") != sha:
-                    f.fail("item %s %s annotation does not match its image" % (item_id, phase),
-                           "annotate the image again")
-                check_texts(f, "%s %s annotation" % (item_id, phase), annotation, vocab)
-                part_entry["annotation"] = annotation
+            except (OSError, ValueError):
+                annotation = None
+            check_annotation(f, "%s %s" % (item_id, phase), annotation, sha, vocab,
+                             "annotate the image with annotate-ui or annotate-api and keep its .annotation.json file")
+            part_entry["annotation"] = annotation
             if kind == "api":
                 sidecar_path = part.get("sidecar", "")
                 sidecar_path = sidecar_path if os.path.isabs(sidecar_path) else os.path.join(base, sidecar_path)
@@ -1195,8 +1207,8 @@ def cmd_verify(args):
                 continue
             pair.append(part["sha256"])
             shas.append((item_id, phase, part["sha256"]))
-            if "annotation" in part:
-                check_texts(f, "%s %s annotation" % (item_id, phase), part["annotation"], vocab)
+            check_annotation(f, "%s %s" % (item_id, phase), part.get("annotation"), part["sha256"], vocab,
+                             base_fix)
             if kind == "api":
                 block = side_blocks.get((item_id, phase))
                 if block is None:
