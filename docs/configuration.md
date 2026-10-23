@@ -655,12 +655,16 @@ Firstmate turns the gate on in each home after this change merges; code alone do
 Exceptions require a waiver with the captain's words, not a project disable line.
 
 **Intake.**
-The gate covers PR delivery only, not `local-only` work.
-When the gate is on for a project, `bin/fm-brief.sh` adds `## Evidence class` with the placeholder `{EVIDENCE}` to a PR-delivery ship brief.
-Local-only briefs, spawns and promotions skip evidence intake and the PR-publication contract; they record no evidence declaration.
+`evidence_eligible` in `bin/fm-pr-evidence.sh` is the single owner of delivery eligibility.
+An eligible lane is `no-mistakes` or `direct-PR` on GitHub, or on Bitbucket while `bitbucket on` is set, with the project gate enabled.
+Local-only, external-review, GitLab, Gerrit, Forgejo, unknown providers and Bitbucket while off get no evidence intake or publication-before-done contract.
+Before a PR exists, eligibility uses the confirmed forge binding and the clone's offline publication target; checks use the parsed PR provider.
+Brief generation uses `--project` or the clone at `$FM_HOME/projects/<project>`; supply `--project` when the clone is elsewhere.
+`fm-pr-evidence.sh eligible <project> <mode> <forge> <project-dir>` reports eligibility: 0 eligible, 1 excluded, 2 invalid configuration or usage.
+Only an eligible ship brief gains `## Evidence class` with `{EVIDENCE}`; excluded briefs, spawns and promotions record no evidence declaration.
 Firstmate fills it with `ui`, `api`, `ui+api`, or `none: <reason in plain English>`.
 `bin/fm-spawn.sh` refuses an unfilled or invalid value and records `evidence=` (and `evidence_reason=`) in the task record.
-`bin/fm-promote.sh` applies the same intake to the scout brief before promotion to PR delivery and includes the evidence contract in the ship instructions.
+`bin/fm-promote.sh` applies the same eligibility rule before intake and before adding the evidence contract to ship instructions.
 A `none` is refused for a `require` project and for the firstmate repository.
 A worker can add a kind and never remove one.
 Publication retains the union of intake kinds and previously published kinds in the task record and comment.
@@ -699,7 +703,7 @@ The repository holds no ASD-derived dictionary.
 It records the waiver in `state/<id>.evidence-waiver`.
 
 **GitHub and Bitbucket.**
-The GitHub arm is on when the project is enabled.
+The GitHub arm is on for eligible PR delivery when the project is enabled.
 It uploads images with `gh pr comment --attach`, which needs gh 2.99 or newer.
 The script picks the first gh on `PATH` that accepts that flag, so an older gh does not hide a newer one.
 If none qualifies, it checks the explicit `FM_PR_EVIDENCE_GH` executable override; otherwise it refuses.

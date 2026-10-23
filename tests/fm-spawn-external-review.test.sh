@@ -23,7 +23,7 @@ make_case() {
   PROJECT_DIR="$CASE_DIR/project"
   ORIGIN_DIR="$CASE_DIR/origin.git"
   POOL_DIR="$CASE_DIR/pool"
-  FAKEBIN_DIR=$(make_spawn_fakebin "$CASE_DIR/fake")
+  FAKEBIN_DIR=$(make_spawn_fakebin "$CASE_DIR/fake" codex)
   mkdir -p "$HOME_DIR/data/$id" "$HOME_DIR/projects" "$HOME_DIR/state" "$HOME_DIR/config"
   printf 'codex\n' > "$HOME_DIR/config/crew-harness"
   # shellcheck disable=SC2016 # Backticks are literal adapter text.
@@ -35,6 +35,7 @@ make_case() {
   git -C "$PROJECT_DIR" add README.md
   git -C "$PROJECT_DIR" -c user.name='Firstmate Tests' -c user.email='tests@example.invalid' commit -qm initial
   git clone --quiet --bare "$PROJECT_DIR" "$ORIGIN_DIR"
+  git -C "$ORIGIN_DIR" config remote.origin.url https://github.com/o/r.git
   git -C "$PROJECT_DIR" remote add origin "file://$ORIGIN_DIR"
   git -C "$PROJECT_DIR" fetch --quiet origin
   git -C "$PROJECT_DIR" worktree add --quiet --detach "$POOL_DIR" "$(git -C "$PROJECT_DIR" rev-parse HEAD)"
@@ -110,6 +111,7 @@ test_spawn_installs_the_guard_and_records_the_task() {
   local id out status meta hooks
   id=ext-launch-r1
   make_case launch "$id"
+  printf '* enforce\n' > "$HOME_DIR/config/pr-evidence"
   : > "$HOME_DIR/config/keep-ai-trailers"
   printf 'backup\n' > "$HOME_DIR/config/external-review-backup"
   git init --quiet --bare "$CASE_DIR/backup.git"
@@ -118,6 +120,7 @@ test_spawn_installs_the_guard_and_records_the_task() {
   expect_code 0 "$status" "a forge=external direct-PR spawn should launch"$'\n'"$out"
   meta="$HOME_DIR/state/$id.meta"
   assert_grep 'forge=external' "$meta" "the spawn did not record forge=external"
+  assert_no_grep 'evidence=' "$meta" "an external-review task must not require PR evidence"
   assert_grep 'backup_remote=backup' "$meta" "the spawn did not record the backup remote"
   assert_grep 'backup_prefix=backup/' "$meta" "the spawn did not record the backup prefix"
   hooks=$(cd "$HOME_DIR/state" && pwd -P)/$id.git-hooks

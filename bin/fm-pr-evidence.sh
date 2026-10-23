@@ -36,9 +36,12 @@
 #     with a notice; `list-unevidenced` lists those PRs for the captain.
 #
 # Usage: fm-pr-evidence.sh <command> ...
-#   enabled <project>                     exit 0 when config/pr-evidence enables the project
-#   intake <brief> <project> [<proj-dir>] print the evidence= meta lines for a spawn, or refuse
-#   brief-block <task-id>                 print the worker's evidence contract for the brief
+#   eligible <project> <mode> <forge> <proj-dir>
+#                                         exit 0 for an enforced lane, 1 for an excluded lane, 2 for an error
+#   intake <brief> <project> <mode> <forge> <proj-dir>
+#                                         print evidence= meta lines for an eligible spawn, or refuse
+#   brief-block <task-id> <project> <mode> <forge> <proj-dir>
+#                                         print the eligible worker's evidence contract
 #   check <task-id> <pr-url>              the gate; bin/fm-pr-check.sh calls it for arming and merge
 #   publish <task-id> <pr-url> <items.json>
 #                                         validate, upload, post the one comment, then check
@@ -83,6 +86,7 @@ LIB_PY="$SCRIPT_DIR/fm-pr-evidence-lib.py"
 # shellcheck source=bin/fm-pr-lib.sh
 . "$SCRIPT_DIR/fm-pr-lib.sh"
 . "$SCRIPT_DIR/fm-wake-lib.sh"
+. "$SCRIPT_DIR/fm-role-lib.sh"
 [ -z "${FM_PR_EVIDENCE_BITBUCKET_API:-}" ] || FM_PR_BITBUCKET_API=$FM_PR_EVIDENCE_BITBUCKET_API
 
 WORK=
@@ -145,8 +149,6 @@ load_config() {  # <project>
 project_requires_evidence() {  # <project-dir>
   [ "$CFG_REQUIRE" != 1 ] || return 0
   [ -n "${1:-}" ] && [ -d "$1" ] || return 1
-  # shellcheck source=bin/fm-role-lib.sh
-  . "$SCRIPT_DIR/fm-role-lib.sh"
   fm_role_self_repo "$1" "$FM_ROOT" >/dev/null 2>&1
 }
 
@@ -191,19 +193,44 @@ EOF
 
 # ---- config-facing commands ------------------------------------------------
 
-cmd_enabled() {
-  [ "$#" -eq 1 ] || { say "usage: fm-pr-evidence.sh enabled <project>"; return 2; }
-  [ -e "$CONFIG_FILE" ] || [ -L "$CONFIG_FILE" ] || return 1
-  load_config "$1" || return 2
-  [ "$CFG_ENABLED" = 1 ]
+EVIDENCE_SKIP_REASON=
+evidence_eligible() {
+  local project=$1 mode=$2 forge=$3 dir=$4 provider=${5:-} target
+  EVIDENCE_SKIP_REASON="this delivery mode does not publish PR evidence"
+  case "$mode" in no-mistakes|direct-PR) ;; *) return 1 ;; esac
+  EVIDENCE_SKIP_REASON="forge=$forge does not use the PR evidence gate"
+  [ "$forge" = none ] || return 1
+  if [ -z "$provider" ]; then
+    EVIDENCE_SKIP_REASON="the project's publication target is unknown"
+    [ -n "$dir" ] && [ -d "$dir" ] || return 1
+    target=$(fm_role_publication_target "$dir")
+    case "$target" in
+      github.com/*) provider=github ;;
+      bitbucket.org/*) provider=bitbucket ;;
+      *) provider=unsupported ;;
+    esac
+  fi
+  EVIDENCE_SKIP_REASON="$provider pull requests are not supported by the evidence gate"
+  case "$provider" in github|bitbucket) ;; *) return 1 ;; esac
+  load_config "$project" || return 2
+  EVIDENCE_SKIP_REASON=
+  [ "$CFG_ENABLED" = 1 ] || return 1
+  EVIDENCE_SKIP_REASON="the Bitbucket arm is off"
+  if [ "$provider" = bitbucket ] && [ "$CFG_BITBUCKET" != 1 ]; then return 1; fi
+  EVIDENCE_SKIP_REASON=
+  return 0
+}
+
+cmd_eligible() {
+  [ "$#" -eq 4 ] || { say "usage: fm-pr-evidence.sh eligible <project> <mode> <forge> <proj-dir>"; return 2; }
+  evidence_eligible "$@"
 }
 
 cmd_intake() {
-  [ "$#" -ge 2 ] || { say "usage: fm-pr-evidence.sh intake <brief> <project> [<project-dir>]"; return 2; }
-  local brief=$1 project=$2 dir=${3:-} body line value reason
-  [ -e "$CONFIG_FILE" ] || [ -L "$CONFIG_FILE" ] || return 0
-  load_config "$project" || return 1
-  [ "$CFG_ENABLED" = 1 ] || return 0
+  [ "$#" -eq 5 ] || { say "usage: fm-pr-evidence.sh intake <brief> <project> <mode> <forge> <proj-dir>"; return 2; }
+  local brief=$1 project=$2 mode=$3 forge=$4 dir=$5 body line value reason rc=0
+  evidence_eligible "$project" "$mode" "$forge" "$dir" || rc=$?
+  case "$rc" in 0) ;; 1) return 0 ;; *) return 1 ;; esac
   # shellcheck source=bin/fm-brief-heading-lib.sh
   . "$SCRIPT_DIR/fm-brief-heading-lib.sh"
   if ! fm_brief_task_heading_present "$brief" "## Evidence class"; then
@@ -246,10 +273,11 @@ cmd_intake() {
 }
 
 cmd_brief_block() {
-  [ "$#" -eq 1 ] || { say "usage: fm-pr-evidence.sh brief-block <task-id>"; return 2; }
+  [ "$#" -eq 5 ] || { say "usage: fm-pr-evidence.sh brief-block <task-id> <project> <mode> <forge> <proj-dir>"; return 2; }
   fm_pr_task_id_valid "$1" || return 2
-  [ "$(meta_get "$STATE/$1.meta" mode)" != local-only ] || return 0
-  local ev=$SCRIPT_DIR/fm-pr-evidence.sh
+  local rc=0 ev=$SCRIPT_DIR/fm-pr-evidence.sh
+  evidence_eligible "$2" "$3" "$4" "$5" || rc=$?
+  case "$rc" in 0) ;; 1) return 0 ;; *) return 1 ;; esac
   cat <<EOF
 
 # Evidence for review (hard rule)
@@ -321,20 +349,24 @@ read_bitbucket() {  # <workspace/repo> <number>
 
 cmd_check() {
   [ "$#" -ge 2 ] && [ "$#" -le 3 ] || { say "usage: fm-pr-evidence.sh check <task-id> <pr-url> [<merge-head>]"; return 2; }
-  local id=$1 raw=$2 expected=${3:-} meta project_dir project evidence reason require rc waiver
+  local id=$1 raw=$2 expected=${3:-} meta project_dir project evidence reason require rc waiver forge
   if ! { fm_pr_task_id_valid "$id" && fm_pr_url_parse "$raw"; }; then
     say "error: invalid PR evidence check request"
     return 2
   fi
-  [ -e "$CONFIG_FILE" ] || [ -L "$CONFIG_FILE" ] || return 0
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run the check for a task of this home"; return 1; }
-  [ "$(meta_get "$meta" mode)" != local-only ] || return 0
   [ "$(meta_get "$meta" kind)" = ship ] || return 0
   project_dir=$(meta_get "$meta" project)
   project=$(basename "$project_dir")
-  load_config "$project" || return 1
-  [ "$CFG_ENABLED" = 1 ] || return 0
+  forge=$(meta_get "$meta" forge)
+  rc=0
+  evidence_eligible "$project" "$(meta_get "$meta" mode)" "${forge:-none}" "$project_dir" "$FM_PR_PROVIDER" || rc=$?
+  case "$rc" in
+    0) ;;
+    1) [ -z "$EVIDENCE_SKIP_REASON" ] || say "notice: evidence gate not applied: $EVIDENCE_SKIP_REASON"; return 0 ;;
+    *) return 1 ;;
+  esac
   evidence=$(meta_get "$meta" evidence)
   if [ -z "$evidence" ]; then
     say "notice: evidence gate not applied: task $id predates it (no evidence= in its task record); the captain may ask for a retrofit (fm-pr-evidence.sh list-unevidenced)"
@@ -348,19 +380,6 @@ cmd_check() {
     say "notice: evidence gate waived for $id by the captain's words recorded in state/$id.evidence-waiver"
     return 0
   fi
-  case "$FM_PR_PROVIDER" in
-    github) ;;
-    bitbucket)
-      if [ "$CFG_BITBUCKET" != 1 ]; then
-        say "notice: evidence gate not applied: the Bitbucket arm is off (add 'bitbucket on' to config/pr-evidence after the sandbox proof)"
-        return 0
-      fi
-      ;;
-    *)
-      say "notice: evidence gate not applied: $FM_PR_PROVIDER pull requests are not supported"
-      return 0
-      ;;
-  esac
   need_tools || return 1
   if [ "$FM_PR_PROVIDER" = github ]; then
     read_github "$FM_PR_PATH" "$FM_PR_NUMBER" || return 1
@@ -418,7 +437,7 @@ bb_upload() {  # <workspace/repo> <file> <name>
 
 cmd_publish() {
   [ "$#" -eq 3 ] || { say "usage: fm-pr-evidence.sh publish <task-id> <pr-url> <items.json>"; return 2; }
-  local id=$1 raw=$2 items=$3 meta project evidence reason out new_id line path alt name body lock updated publisher
+  local id=$1 raw=$2 items=$3 meta project evidence reason out new_id line path alt name body lock updated publisher forge rc=0
   local -a attach=() compose_extra=()
   if ! { fm_pr_task_id_valid "$id" && fm_pr_url_parse "$raw"; }; then
     say "error: invalid PR evidence publish request"
@@ -427,12 +446,14 @@ cmd_publish() {
   [ -f "$items" ] || { fail_line "the items file $items does not exist" "write the items file (see the header of fm-pr-evidence.sh)"; return 1; }
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run publish for a task of this home"; return 1; }
-  if [ "$(meta_get "$meta" mode)" = local-only ]; then
-    fail_line "local-only tasks do not publish PR evidence" "complete the local-only delivery contract instead"
-    return 1
-  fi
   project=$(basename "$(meta_get "$meta" project)")
-  load_config "$project" || return 1
+  forge=$(meta_get "$meta" forge)
+  evidence_eligible "$project" "$(meta_get "$meta" mode)" "${forge:-none}" "$(meta_get "$meta" project)" "$FM_PR_PROVIDER" || rc=$?
+  case "$rc" in
+    0) ;;
+    1) fail_line "PR evidence is not enabled for this delivery lane${EVIDENCE_SKIP_REASON:+: $EVIDENCE_SKIP_REASON}" "complete this task's delivery contract without PR evidence"; return 1 ;;
+    *) return 1 ;;
+  esac
   evidence=$(meta_get "$meta" evidence)
   if [ -z "$evidence" ]; then
     fail_line "task $id has no evidence= declaration" "firstmate must declare the evidence class for the task first"
@@ -448,17 +469,12 @@ cmd_publish() {
       publisher=$("$GH" api user --jq .login 2>/dev/null) || publisher=
       ;;
     bitbucket)
-      if [ "$CFG_BITBUCKET" != 1 ]; then
-        fail_line "the Bitbucket arm is off" "add 'bitbucket on' to config/pr-evidence after the sandbox proof"
-        return 1
-      fi
       read_bitbucket "$FM_PR_PATH" "$FM_PR_NUMBER" || return 1
       publisher=
       if fm_pr_bitbucket_request GET user; then
         publisher=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -r '.account_id // empty') || publisher=
       fi
       ;;
-    *) fail_line "$FM_PR_PROVIDER pull requests are not supported" "use a GitHub or Bitbucket PR"; return 1 ;;
   esac
   if [ -z "$publisher" ] || ! printf '%s' "$PR_AUTHORS_JSON" | jq -e --arg publisher "$publisher" 'length == 1 and .[0] == $publisher' >/dev/null; then
     fail_line "only the PR author may publish evidence" "log in as the PR author and run publish again"
@@ -580,7 +596,7 @@ cmd_capture_api() {
 # ---- waiver and retrofit list ----------------------------------------------
 
 cmd_waive() {
-  local id raw words='' meta project now body
+  local id raw words='' meta project now body forge rc=0
   [ "$#" -ge 2 ] || { say "usage: fm-pr-evidence.sh waive <task-id> <pr-url> --words <captain's words>"; return 2; }
   id=$1
   raw=$2
@@ -605,12 +621,14 @@ cmd_waive() {
   fi
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run the waiver for a task of this home"; return 1; }
-  if [ "$(meta_get "$meta" mode)" = local-only ]; then
-    fail_line "local-only tasks do not need PR evidence waivers" "complete the local-only delivery contract instead"
-    return 1
-  fi
   project=$(basename "$(meta_get "$meta" project)")
-  load_config "$project" || return 1
+  forge=$(meta_get "$meta" forge)
+  evidence_eligible "$project" "$(meta_get "$meta" mode)" "${forge:-none}" "$(meta_get "$meta" project)" "$FM_PR_PROVIDER" || rc=$?
+  case "$rc" in
+    0) ;;
+    1) fail_line "PR evidence is not enabled for this delivery lane${EVIDENCE_SKIP_REASON:+: $EVIDENCE_SKIP_REASON}" "no evidence waiver is needed for this delivery lane"; return 1 ;;
+    *) return 1 ;;
+  esac
   need_tools || return 1
   now=$(date +%s)
   body="Evidence gate waived for this PR by the captain. The captain's words: ${words}"
@@ -624,7 +642,6 @@ cmd_waive() {
         "$(jq -n --arg raw "$body" '{content: {raw: $raw}}')" \
         || { fail_line "the waiver could not be posted on the PR" "check the Bitbucket credential"; return 1; }
       ;;
-    *) fail_line "$FM_PR_PROVIDER pull requests are not supported" "use a GitHub or Bitbucket PR"; return 1 ;;
   esac
   umask 077
   printf 'at=%s\nurl=%s\nwords=%s\n' "$now" "$FM_PR_URL" "$(printf '%s' "$words" | tr '\n' ' ')" > "$STATE/$id.evidence-waiver"
@@ -632,7 +649,7 @@ cmd_waive() {
 }
 
 cmd_list_unevidenced() {
-  local f id project url count=0
+  local f id project url forge rc count=0
   if [ ! -e "$CONFIG_FILE" ] && [ ! -L "$CONFIG_FILE" ]; then
     say "notice: config/pr-evidence is absent, so the evidence gate is off in this home"
     return 0
@@ -642,14 +659,16 @@ cmd_list_unevidenced() {
   for f in "$STATE"/*.meta; do
     [ -f "$f" ] || continue
     [ "$(meta_get "$f" kind)" = ship ] || continue
-    [ "$(meta_get "$f" mode)" != local-only ] || continue
     url=$(meta_get "$f" pr)
     [ -n "$url" ] || continue
     [ -z "$(meta_get "$f" evidence)" ] || continue
     id=$(basename "$f" .meta)
     project=$(basename "$(meta_get "$f" project)")
-    load_config "$project" || return 1
-    [ "$CFG_ENABLED" = 1 ] || continue
+    fm_pr_url_parse "$url" || continue
+    forge=$(meta_get "$f" forge)
+    rc=0
+    evidence_eligible "$project" "$(meta_get "$f" mode)" "${forge:-none}" "$(meta_get "$f" project)" "$FM_PR_PROVIDER" || rc=$?
+    case "$rc" in 0) ;; 1) continue ;; *) return 1 ;; esac
     if [ "$count" -eq 0 ]; then
       say "These open PRs were made before the evidence gate. They pass with a notice. Pick the ones to retrofit."
     fi
@@ -668,7 +687,7 @@ usage() {
 cmd=${1:-}
 [ "$#" -eq 0 ] || shift
 case "$cmd" in
-  enabled) cmd_enabled "$@" ;;
+  eligible) cmd_eligible "$@" ;;
   intake) cmd_intake "$@" ;;
   brief-block) cmd_brief_block "$@" ;;
   check) cmd_check "$@" ;;

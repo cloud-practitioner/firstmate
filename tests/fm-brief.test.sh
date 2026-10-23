@@ -1287,7 +1287,9 @@ test_wait_no_turns_absent_keeps_the_previous_brief() {
 test_pr_evidence_gate_adds_the_evidence_class_only_when_enabled() {
   local home brief
   home="$TMP_ROOT/evidence-gate"
-  mkdir -p "$home/data" "$home/config"
+  mkdir -p "$home/data" "$home/config" "$home/projects/some-proj"
+  git -C "$home/projects/some-proj" init -q
+  git -C "$home/projects/some-proj" remote add origin https://github.com/o/r.git
   FM_HOME="$home" "$ROOT/bin/fm-brief.sh" ev-off some-proj --mode no-mistakes >/dev/null 2>&1 \
     || fail "fm-brief.sh ship scaffold exited non-zero without config/pr-evidence"
   assert_no_grep "## Evidence class" "$home/data/ev-off/brief.md" "the gate off still added the evidence subsection"

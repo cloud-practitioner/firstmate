@@ -94,6 +94,34 @@ class EvidenceRegressions(unittest.TestCase):
         for text in ('{"code": 302}', 'STATUS CODE: 302', 'postcode=12345'):
             self.assertEqual(text, ev.mask_text(text))
 
+    def test_pkce_verifiers_are_masked_in_all_text_representations(self):
+        verifier = 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk'
+        forms = ('code_verifier=' + verifier,
+                 'https://app.example/token?code_verifier=' + verifier,
+                 json.dumps({'code_verifier': verifier}),
+                 json.dumps({'items': [{'code_verifier': verifier}]}))
+        for side in ('request', 'response'):
+            for body in forms:
+                with self.subTest(side=side, body=body):
+                    data = exchange()
+                    data[side]['body'] = body
+                    self.assertTrue(ev.sidecar_problems(data))
+                    masked = ev.mask_sidecar(copy.deepcopy(data))
+                    self.assertNotIn(verifier, json.dumps(masked))
+                    self.assertFalse(ev.sidecar_problems(masked))
+                    self.assertEqual(masked, ev.mask_sidecar(copy.deepcopy(masked)))
+        data = exchange()
+        data['request']['url'] = forms[1]
+        data['response']['headers'].append(['Location', forms[1]])
+        self.assertTrue(ev.sidecar_problems(data))
+        self.assertNotIn(verifier, json.dumps(ev.mask_sidecar(data)))
+        with tempfile.TemporaryDirectory() as tmp:
+            raw, out = Path(tmp) / 'raw', Path(tmp) / 'out'
+            raw.write_text(forms[0])
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command='tool ' + forms[0], rc=0))
+            self.assertNotIn(verifier, out.read_text())
+        self.assertEqual('code_challenge=' + verifier, ev.mask_text('code_challenge=' + verifier))
+
     def test_sensitive_xml_attributes_preserve_public_siblings(self):
         from xml.etree import ElementTree as ET
         body = '<root><token value="short-secret" hint="correct-horse"/><name value="public"/></root>'

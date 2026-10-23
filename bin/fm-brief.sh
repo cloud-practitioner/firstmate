@@ -769,18 +769,17 @@ DOD=$(fm_dod_block "$MODE" "$ID" "$BRANCH" "$FORGE" "$BASE_BRANCH" "$UPSTREAM_CO
 # Fork-only PR evidence gate (bin/fm-pr-evidence.sh): when config/pr-evidence enables
 # this project, the brief gains an `## Evidence class` subsection that firstmate fills
 # at intake ({EVIDENCE}) and the worker's evidence contract after the Definition of done.
-if [ "$MODE" != local-only ]; then
-  EVIDENCE_STATUS=0
-  "$SCRIPT_DIR/fm-pr-evidence.sh" enabled "$REPO" >/dev/null || EVIDENCE_STATUS=$?
-  if [ "$EVIDENCE_STATUS" -eq 0 ]; then
-    TASK_SECTION="$TASK_SECTION
+EVIDENCE_STATUS=0
+EVIDENCE_PROJECT="${PROJECT_DIR:-$FM_HOME/projects/$REPO}"
+"$SCRIPT_DIR/fm-pr-evidence.sh" eligible "$REPO" "$MODE" "$FORGE" "$EVIDENCE_PROJECT" >/dev/null || EVIDENCE_STATUS=$?
+if [ "$EVIDENCE_STATUS" -eq 0 ]; then
+  TASK_SECTION="$TASK_SECTION
 
 ## Evidence class
 {EVIDENCE}"
-    DOD="$DOD$("$SCRIPT_DIR/fm-pr-evidence.sh" brief-block "$ID")" || exit 1
-  elif [ "$EVIDENCE_STATUS" -ne 1 ]; then
-    exit 1
-  fi
+  DOD="$DOD$("$SCRIPT_DIR/fm-pr-evidence.sh" brief-block "$ID" "$REPO" "$MODE" "$FORGE" "$EVIDENCE_PROJECT")" || exit 1
+elif [ "$EVIDENCE_STATUS" -ne 1 ]; then
+  exit 1
 fi
 
 cat > "$BRIEF" <<EOF

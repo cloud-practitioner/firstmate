@@ -69,6 +69,7 @@ new_case() {
   fm_test_tasks_toml "$C/home/.tasks.toml"
   git -C "$C/proj" init -q
   git -C "$C/proj" commit -q --allow-empty -m "fixture $name"
+  git -C "$C/proj" remote add origin https://github.com/o/r.git
   if [ "$#" -gt 0 ]; then printf '%s\n' "$@" > "$C/home/config/pr-evidence"; else echo '* enforce' > "$C/home/config/pr-evidence"; fi
   PRN=$((PRN + 1))
   PRKEY="o/r/$PRN"
@@ -156,13 +157,13 @@ test_gate_is_off_without_config_and_config_is_strict() {
   out=$(ev check t1 "$PRURL"); rc=$?
   expect_code 0 "$rc" "check without config"
   [ -z "$out" ] || fail "an off gate printed output: $out"
-  ev enabled proj >/dev/null && fail "enabled must fail without config"
+  ev eligible proj no-mistakes none "$C/proj" >/dev/null && fail "an absent config must be ineligible"
   printf '%s\n' '* enforce' 'proj off' > "$C/home/config/pr-evidence"
-  out=$(ev enabled proj); rc=$?
+  out=$(ev eligible proj no-mistakes none "$C/proj"); rc=$?
   expect_code 2 "$rc" "a project off line must be rejected"
   assert_contains "$out" "config/pr-evidence is not valid" "off must not bypass enforcement"
   printf '%s\n' '* enforce' > "$C/home/config/pr-evidence"
-  ev enabled other >/dev/null || fail "'* enforce' must enable other projects"
+  ev eligible other no-mistakes none "$C/proj" >/dev/null || fail "'* enforce' must enable other projects"
   printf '%s\n' '* enforce' 'proj frobnicate x' > "$C/home/config/pr-evidence"
   out=$(ev check t1 "$PRURL"); rc=$?
   expect_code 1 "$rc" "invalid config line"
@@ -176,53 +177,53 @@ test_intake_declares_the_kind() {
   brief="$C/brief.md"
   fill() { printf '# Task\n## Captain'\''s intent\nx\n\n## Firstmate spec\ny\n\n## Evidence class\n%s\n\n# Definition of done\nz\n' "$1" > "$brief"; }
   fill '{EVIDENCE}'
-  out=$(ev intake "$brief" proj "$C/proj"); rc=$?
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "unfilled placeholder"
   assert_contains "$out" "is not filled" "the unfilled class must be refused"
   fill 'ui'
-  out=$(ev intake "$brief" proj "$C/proj")
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj")
   assert_equals "evidence=ui" "$out" "ui class"
   fill 'api+ui'
-  out=$(ev intake "$brief" proj "$C/proj"); rc=$?
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "api+ui is not a canonical declaration"
   fill 'ui+api'
-  out=$(ev intake "$brief" proj "$C/proj")
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj")
   assert_equals "evidence=ui+api" "$out" "ui+api is accepted"
   fill 'none: The change only fixes a typo in a comment.'
-  out=$(ev intake "$brief" proj "$C/proj")
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj")
   assert_contains "$out" "evidence=none" "none with a plain reason"
   assert_contains "$out" "evidence_reason=The change only fixes a typo in a comment." "the reason is recorded"
   fill 'none:'
-  out=$(ev intake "$brief" proj "$C/proj"); rc=$?
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "none without a reason"
   fill 'none: It does not matter; skip it.'
-  out=$(ev intake "$brief" proj "$C/proj"); rc=$?
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "none with a semicolon reason (plain-English refuse rule)"
   assert_contains "$out" "semicolon" "the plain-English refusal must say why"
   fill 'sideways'
-  out=$(ev intake "$brief" proj "$C/proj"); rc=$?
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "invalid class"
   printf '# Task\n## Captain'\''s intent\nx\n\n## Firstmate spec\ny\n' > "$brief"
-  out=$(ev intake "$brief" proj "$C/proj"); rc=$?
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "missing subsection while the gate is on"
   assert_contains "$out" "has no '## Evidence class'" "a missing subsection must be named"
   # Call 5: a require line and the firstmate repository itself never allow none.
   printf '%s\n' '* enforce' 'proj require' > "$C/home/config/pr-evidence"
   fill 'none: Only a comment changed in the file.'
-  out=$(ev intake "$brief" proj "$C/proj"); rc=$?
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "none on a require project"
   assert_contains "$out" "always needs evidence" "the require refusal must say why"
   fill 'ui'
-  out=$(ev intake "$brief" proj "$C/proj")
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj")
   assert_equals "evidence=ui" "$out" "ui stays allowed on a require project"
   echo '* enforce' > "$C/home/config/pr-evidence"
   fill 'none: Only a comment changed in the file.'
-  out=$(ev intake "$brief" firstmate "$ROOT"); rc=$?
+  out=$(FM_ROOT_OVERRIDE="$C/proj" ev intake "$brief" firstmate no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "none on the firstmate repository"
   assert_contains "$out" "always needs evidence" "the firstmate repository never allows none"
   # An off gate prints nothing and records nothing.
   rm -f "$C/home/config/pr-evidence"
-  out=$(ev intake "$brief" proj "$C/proj"); rc=$?
+  out=$(ev intake "$brief" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 0 "$rc" "intake without config"
   [ -z "$out" ] || fail "intake without config printed output"
   pass "fm-pr-evidence: intake validates the declared kind, the none reason, and the require rule"
@@ -726,7 +727,7 @@ test_annotation_tools_draw_marks() {
 test_brief_block_and_list_commands_print() {
   local out
   new_case blocks
-  out=$(ev brief-block task-x)
+  out=$(ev brief-block task-x proj no-mistakes none "$C/proj")
   assert_contains "$out" "# Evidence for review (hard rule)" "the worker contract heading"
   assert_contains "$out" "publish task-x <pr-url>" "the worker contract names publish with the task id"
   assert_contains "$out" "ASD-STE100" "the worker contract names the plain-English rule"
@@ -889,11 +890,11 @@ test_existing_unreadable_config_refuses() {
         continue
       fi
     fi
-    for command in enabled intake check publish list-unevidenced; do
+    for command in eligible intake check publish list-unevidenced; do
       expected=1
       case "$command" in
-        enabled) out=$(ev enabled proj); rc=$?; expected=2 ;;
-        intake) out=$(ev intake "$C/brief.md" proj "$C/proj"); rc=$? ;;
+        eligible) out=$(ev eligible proj no-mistakes none "$C/proj"); rc=$?; expected=2 ;;
+        intake) out=$(ev intake "$C/brief.md" proj no-mistakes none "$C/proj"); rc=$? ;;
         check) out=$(ev check t1 "$PRURL"); rc=$? ;;
         publish) out=$(ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$? ;;
         list-unevidenced) out=$(ev list-unevidenced); rc=$? ;;
@@ -915,7 +916,7 @@ test_strict_english_in_quotes_refuses() {
   expect_code 1 "$rc" "a quoted banned purpose must refuse publication"
   assert_contains "$out" "banned word 'seamless'" "the quoted banned word must be named"
   printf '# Task\n## Evidence class\nnone: The text says `it is seamless`.\n' > "$C/brief.md"
-  out=$(ev intake "$C/brief.md" proj "$C/proj"); rc=$?
+  out=$(ev intake "$C/brief.md" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "a backticked banned none reason must refuse intake"
   assert_contains "$out" "banned word 'seamless'" "the backticked banned word must be named"
   printf 'new text\n' > "$C/ev/after.txt"
@@ -990,7 +991,8 @@ test_spawn_refuses_dangling_evidence_config() {
   printf -- '- proj [direct-PR] - fixture (added 2026-01-01)\n' > "$C/home/data/projects.md"
   git -C "$C/proj" branch -M main
   git clone -q --bare "$C/proj" "$C/origin.git"
-  git -C "$C/proj" remote add origin "file://$C/origin.git"
+  git -C "$C/proj" remote set-url origin "file://$C/origin.git"
+  git -C "$C/origin.git" config remote.origin.url https://github.com/o/r.git
   git -C "$C/proj" fetch -q origin
   git -C "$C/proj" worktree add -q --detach "$C/pool" HEAD
   printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nChange the output.\n## Evidence class\nui\n# Definition of done\nDelivery contract: mode=direct-PR\nShip branch: fm/%s\n' "$id" > "$C/home/data/$id/brief.md"
@@ -1029,7 +1031,7 @@ test_typographic_contractions_refuse_at_public_interfaces() {
   for apostrophe in '‘' '’'; do
     text="The tool isn${apostrophe}t ready."
     printf '# Task\n## Evidence class\nnone: %s\n' "$text" > "$C/brief.md"
-    out=$(ev intake "$C/brief.md" proj "$C/proj"); rc=$?
+    out=$(ev intake "$C/brief.md" proj no-mistakes none "$C/proj"); rc=$?
     expect_code 1 "$rc" "intake must refuse typographic contractions"
     assert_contains "$out" contraction "the intake reason must receive strict validation"
     jq --arg purpose "$text" '.items[0].purpose = $purpose' "$C/ev/items.json" > "$C/ev/bad.json"
@@ -1094,7 +1096,7 @@ test_local_only_promotion_and_evidence_commands() {
   assert_not_contains "$(< "$C/home/data/t1/ship-instructions.md")" '## Evidence class' "local-only promotion must not request an evidence class"
   assert_not_contains "$(< "$C/home/data/t1/ship-instructions.md")" '# Evidence for review (hard rule)' "the current worker must not receive the PR-evidence contract"
   assert_not_contains "$(< "$C/home/data/t1/brief.md")" '# Evidence for review (hard rule)' "a relaunched worker must not receive the PR-evidence contract"
-  out=$(ev brief-block t1); rc=$?
+  out=$(ev brief-block t1 proj local-only none "$C/proj"); rc=$?
   expect_code 0 "$rc" "local-only tasks have no PR-evidence brief block"
   assert_equals '' "$out" "no PR-publication instructions may be emitted for a local-only task"
   out=$(ev check t1 "$PRURL"); rc=$?
@@ -1102,7 +1104,7 @@ test_local_only_promotion_and_evidence_commands() {
   printf '{"items":[]}\n' > "$C/ev/items.json"
   out=$(ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
   expect_code 1 "$rc" "local-only tasks must not publish evidence"
-  assert_contains "$out" 'local-only tasks do not publish PR evidence' "local-only delivery has no evidence publication path"
+  assert_contains "$out" 'does not publish PR evidence' "local-only delivery has no evidence publication path"
   out=$(ev waive t1 "$PRURL" --words 'Waive the evidence for this PR please'); rc=$?
   expect_code 1 "$rc" "local-only tasks must not publish a waiver"
   assert_equals 0 "$(comments_json | jq length)" "local-only evidence commands must never post PR comments"
@@ -1158,6 +1160,86 @@ test_fenced_payload_images_are_literal() {
   pass "fm-pr-evidence: fenced HTTP payloads are literal while visible image hosting remains enforced"
 }
 
+test_evidence_eligibility_is_shared_across_delivery_lanes() {
+  local lane mode forge remote expected out rc url args
+  for lane in github github-nm bitbucket-off bitbucket-on bitbucket-nm external gitlab gerrit forgejo local-only unknown; do
+    new_case "lane-$lane"
+    mode=direct-PR; forge=none; remote=https://github.com/o/r.git; expected=1; url=$PRURL
+    case "$lane" in
+      github) expected=0 ;;
+      github-nm) mode=no-mistakes; expected=0 ;;
+      bitbucket-*)
+        remote=https://bitbucket.org/ws/repo.git
+        PRKEY="ws/repo/$PRN"; url="https://bitbucket.org/ws/repo/pull-requests/$PRN"
+        stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD1\",\"author\":\"acct-worker\",\"files\":[]}"
+        if [ "$lane" != bitbucket-off ]; then printf 'bitbucket on\n' >> "$C/home/config/pr-evidence"; expected=0; fi
+        [ "$lane" != bitbucket-nm ] || mode=no-mistakes
+        ;;
+      external) forge=external; printf 'Run `review-tool upload --draft`.\n' > "$C/home/config/external-review.md" ;;
+      gitlab) remote=https://gitlab.com/o/r.git; url="https://gitlab.com/o/r/-/merge_requests/$PRN" ;;
+      gerrit) forge=gerrit; url="https://review.example/c/o/r/+/$PRN" ;;
+      forgejo) forge=forgejo; remote=https://code.example/o/r.git; url="https://code.example/o/r/pulls/$PRN" ;;
+      local-only) mode=local-only ;;
+      unknown) remote=https://unknown.example/o/r.git; url="https://unknown.example/o/r/pulls/$PRN" ;;
+    esac
+    git -C "$C/proj" remote set-url origin "$remote"
+    matrix_ev() {
+      FM_PR_EVIDENCE_BITBUCKET_API="$STUB/bb/2.0" NO_MISTAKES_BITBUCKET_EMAIL=bot@example.invalid \
+        NO_MISTAKES_BITBUCKET_API_TOKEN=synthetic-token ev "$@"
+    }
+    out=$(ev eligible proj "$mode" "$forge" "$C/proj"); rc=$?
+    expect_code "$expected" "$rc" "$lane eligibility (got: $out)"
+    printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nInspect the output.\n' > "$C/intake.md"
+    out=$(ev intake "$C/intake.md" proj "$mode" "$forge" "$C/proj"); rc=$?
+    if [ "$expected" -eq 0 ]; then
+      expect_code 1 "$rc" "$lane must require evidence intake"
+      assert_contains "$out" 'Evidence class' "$lane must name the missing intake declaration"
+    else
+      expect_code 0 "$rc" "$lane must not require evidence intake"
+      assert_equals '' "$out" "$lane must record no evidence declaration"
+    fi
+    out=$(ev brief-block matrix proj "$mode" "$forge" "$C/proj"); rc=$?
+    expect_code 0 "$rc" "$lane completion contract rendering"
+    if [ "$expected" -eq 0 ]; then
+      assert_contains "$out" '# Evidence for review (hard rule)' "$lane must receive its enforceable contract"
+    else
+      assert_equals '' "$out" "$lane must receive no publication-before-done contract"
+    fi
+    args=()
+    [ "$forge" = none ] || args=(--forge "$forge")
+    out=$(FM_HOME="$C/home" "$ROOT/bin/fm-brief.sh" matrix proj --mode "$mode" --project "$C/proj" "${args[@]+"${args[@]}"}" 2>&1); rc=$?
+    expect_code 0 "$rc" "$lane brief generation (got: $out)"
+    if [ "$expected" -eq 0 ]; then
+      assert_contains "$(< "$C/home/data/matrix/brief.md")" '## Evidence class' "$lane must scaffold evidence intake"
+    else
+      assert_not_contains "$(< "$C/home/data/matrix/brief.md")" '## Evidence class' "$lane must not scaffold evidence intake"
+      assert_not_contains "$(< "$C/home/data/matrix/brief.md")" '# Evidence for review (hard rule)' "$lane must not scaffold the PR-evidence contract"
+    fi
+    write_task t1 ui "mode=$mode" "forge=$forge"
+    out=$(matrix_ev check t1 "$url"); rc=$?
+    if [ "$expected" -eq 0 ]; then
+      expect_code 1 "$rc" "$lane must enforce its evidence gate"
+      assert_contains "$out" 'no evidence comment' "$lane must require a worker-authored comment"
+    else
+      expect_code 0 "$rc" "$lane must not enforce evidence checks"
+      if [ "$forge" != external ]; then
+        mkdir -p "$C/root/bin" "$C/home/data/scout1"
+        printf '#!/bin/sh\nexit 0\n' > "$C/root/bin/fm-guard.sh"
+        printf '#!/bin/sh\nprintf "%s\\n"\n' "$forge" > "$C/root/bin/fm-project-mode.sh"
+        chmod +x "$C/root/bin/"*.sh
+        cp "$C/intake.md" "$C/home/data/scout1/brief.md"
+        write_task scout1 '' 'kind=scout'
+        out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" scout1 --mode "$mode" --yolo off 2>&1); rc=$?
+        expect_code 0 "$rc" "$lane promotion must not require evidence (got: $out)"
+        assert_no_grep 'evidence=' "$C/home/state/scout1.meta" "$lane promotion must record no evidence declaration"
+        assert_not_contains "$(< "$C/home/data/scout1/ship-instructions.md")" '# Evidence for review (hard rule)' "$lane promotion must emit no publication-before-done contract"
+      fi
+    fi
+  done
+  pass "fm-pr-evidence: eligibility, intake, briefs, promotion, contracts, and checks agree across all delivery lanes"
+}
+
+test_evidence_eligibility_is_shared_across_delivery_lanes
 test_local_only_promotion_and_evidence_commands
 test_authorization_code_capture_is_masked
 test_fenced_payload_images_are_literal

@@ -218,7 +218,7 @@ DENY_HEADERS = {h.lower() for h in (
     "Authorization Proxy-Authorization Cookie Set-Cookie X-API-Key Api-Key X-Auth-Token "
     "X-Access-Token X-CSRF-Token X-XSRF-Token X-Amz-Security-Token X-Goog-Api-Key "
     "Ocp-Apim-Subscription-Key MYSAPSSO2").split()}
-DENY_NAME_RE = re.compile(r"(?:auth|token|secret|key|session|cookie|passw|signature|credential)", re.I)
+DENY_NAME_RE = re.compile(r"(?:auth|token|secret|key|session|cookie|passw|signature|credential|code_verifier)", re.I)
 ALLOW_HEADERS = {h.lower() for h in (
     "Content-Type Content-Length Content-Encoding Accept Accept-Encoding Accept-Language Host "
     "User-Agent Date ETag Location Cache-Control Vary Server Connection X-Request-Id "

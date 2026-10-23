@@ -3602,12 +3602,6 @@ if [ "$KIND" = ship ] || [ "$KIND" = scout ]; then
       fi
     fi
   fi
-  # Fork-only PR evidence gate (bin/fm-pr-evidence.sh): record the evidence class the
-  # brief declares as evidence= in the task record. Without config/pr-evidence this is
-  # a no-op; a relaunch keeps the recorded value.
-  if [ "$KIND" = ship ] && [ "$RELAUNCH" -eq 0 ] && [ "$MODE" != local-only ]; then
-    EVIDENCE_META=$(FM_HOME=$FM_HOME FM_CONFIG_OVERRIDE=$CONFIG "$SCRIPT_DIR/fm-pr-evidence.sh" intake "$BRIEF" "$(basename "$PROJ_ABS")" "$PROJ_ABS") || exit 1
-  fi
   if [ "$RELAUNCH" -eq 1 ]; then
     BASE_BRANCH=$(fm_meta_get "$RELAUNCH_META" base_branch)
   elif [ "$BASE_BRANCH_SET" -eq 1 ]; then
@@ -3726,6 +3720,9 @@ if [ "$KIND" = ship ]; then
     fi
     echo "error: forge mismatch for $ID: $PROJ_NAME is registered forge=$STANDING_FORGE but $SOURCE_BRIEF records forge=$BRIEF_FORGE; keep the filled ## Captain's intent and ## Firstmate spec bodies, remove $SOURCE_BRIEF, re-scaffold it with $forge_scaffold, then re-fill those two subsections, so the worker's publication matches the project's forge" >&2
     exit 1
+  fi
+  if [ "$RELAUNCH" -eq 0 ]; then
+    EVIDENCE_META=$(FM_HOME=$FM_HOME FM_CONFIG_OVERRIDE=$CONFIG "$SCRIPT_DIR/fm-pr-evidence.sh" intake "$BRIEF" "$PROJ_NAME" "$MODE" "$STANDING_FORGE" "$PROJ_ABS") || exit 1
   fi
   # Merge authority on a Gerrit forge is refused rather than quietly dropped, on
   # the captain's decision of 2026-09-15: a Code-Review+2 is a positive
