@@ -196,6 +196,7 @@ cmd_stand_down() {
 }
 
 cmd_resume() {
+  local result
   [ "$#" -eq 1 ] && [ -n "$1" ] || { echo "usage: fm-secondmate-dormant.sh resume <secondmate-id>" >&2; exit 2; }
   case "$1" in -*) echo "error: unexpected argument '$1'" >&2; exit 2 ;; esac
   resolve_mate "$1"
@@ -206,15 +207,11 @@ cmd_resume() {
   fm_secondmate_liveness_probe_endpoint "$META" "$ID" full
   case "$FM_SM_LIVE_STATUS" in
     alive)
-      fm_sm_dormant_clear "$STATE" "$ID" || die "second mate $ID is running, but its dormant record could not be cleared"
-      printf 'resumed %s: its agent was already running; dormancy cleared\n' "$ID"
+      result='its agent was already running'
       ;;
     relaunchable)
       if fm_secondmate_liveness_relaunch "$META" "$ID"; then
-        fm_secondmate_liveness_ledger_add "$ID" rearmed || true
-        fm_sm_dormant_clear "$STATE" "$ID" \
-          || die "second mate $ID was relaunched, but its dormant record could not be cleared; rerun resume"
-        printf 'resumed %s: relaunched through the guarded secondmate launch; dormancy cleared\n' "$ID"
+        result='relaunched through the guarded secondmate launch'
       elif [ "$FM_SM_LIVE_STATUS" = skipped ]; then
         die "second mate $ID was not relaunched and stays dormant: $FM_SM_LIVE_REASON"
       else
@@ -225,6 +222,13 @@ cmd_resume() {
       die "second mate $ID was not relaunched and stays dormant: ${FM_SM_LIVE_REASON:-its endpoint has no recorded window}"
       ;;
   esac
+  fm_secondmate_liveness_ledger_add "$ID" rearmed \
+    || die "second mate $ID is running, but its recovery ledger could not be reset; it stays dormant - rerun resume"
+  rm -f -- "$STATE/.secondmate-relaunch-bound-$ID" \
+    || die "second mate $ID is running, but its recovery park marker could not be cleared; it stays dormant - rerun resume"
+  fm_sm_dormant_clear "$STATE" "$ID" \
+    || die "second mate $ID is running, but its dormant record could not be cleared; rerun resume"
+  printf 'resumed %s: %s; dormancy cleared\n' "$ID" "$result"
 }
 
 cmd_list() {

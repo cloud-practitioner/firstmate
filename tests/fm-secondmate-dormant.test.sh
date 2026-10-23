@@ -131,10 +131,27 @@ done
 if [ -n "$target" ] && [ -d "$D/$target" ]; then D="$D/$target"; fi
 case "${1:-}" in
   send-keys)
+    if [ -e "$D/fail-enter" ]; then
+      for arg in "$@"; do
+        if [ "$arg" = Enter ]; then
+          rm -f "$D/fail-enter"
+          printf zsh > "$D/command"
+          exit 1
+        fi
+      done
+    fi
     literal=0
     for arg in "$@"; do
       if [ "$literal" = 1 ]; then
         printf '%s\n' "$arg" >> "$D/literal"
+        case "$arg" in
+          ". "*)
+            case "${FM_TEST_FAIL_LAUNCH_DELIVERY:-}" in
+              literal) printf zsh > "$D/command"; exit 1 ;;
+              enter) : > "$D/fail-enter" ;;
+            esac
+            ;;
+        esac
         if [ -z "${FM_FAKE_NEVER_DIES:-}" ] && { [ "$arg" = /exit ] || [ "$arg" = /quit ]; }; then
           printf 'zsh' > "$D/command"
           if [ -n "${FM_FAKE_STOP_GATE:-}" ]; then
@@ -495,11 +512,13 @@ test_stand_down_serializes_work_and_launch_admission() {
     wait "$pid" || true
     fail "stand-down did not reach the stop/publication window: $(cat "$w/stand-down.out")"
   fi
-  for args in send send-fire-and-forget send-key handoff control spawn spawn-relaunch; do
+  for args in send send-fire-and-forget send-key explicit-send explicit-key handoff control spawn spawn-relaunch; do
     case "$args" in
       send) script=fm-send.sh; set -- sm1 "please reread inherited config" ;;
       send-fire-and-forget) script=fm-send.sh; set -- sm1 --fire-and-forget reconcile-race "please reconcile" ;;
       send-key) script=fm-send.sh; set -- sm1 --key Enter ;;
+      explicit-send) script=fm-send.sh; set -- firstmate:fm-sm1 "please reread inherited config" ;;
+      explicit-key) script=fm-send.sh; set -- firstmate:fm-sm1 --key Enter ;;
       handoff) script=fm-backlog-handoff.sh; set -- sm1 queued-item ;;
       control) script=fm-control.sh; set -- sm1 relaunch ;;
       spawn) script=fm-spawn.sh; set -- sm1 --secondmate ;;
@@ -524,7 +543,97 @@ test_stand_down_serializes_work_and_launch_admission() {
   pass "stand-down serializes ordinary, automatic and key sends, handoffs and both launch forms"
 }
 
+test_failed_delivery_keeps_a_resumable_secondmate_record() {
+  local w phase out rc
+  for phase in literal enter; do
+    w=$(new_world "resume-delivery-$phase")
+    dormant_cmd "$w" stand-down sm1 >/dev/null || fail "stand-down failed"
+    rc=0
+    out=$(FM_TEST_FAIL_LAUNCH_DELIVERY="$phase" dormant_cmd "$w" resume sm1) || rc=$?
+    expect_code 1 "$rc" "failed $phase delivery must fail resume"
+    assert_contains "$out" "stays dormant" "failed delivery stays retryable"
+    assert_present "$w/home/state/sm1.dormant" "failed delivery keeps dormancy"
+    assert_present "$w/home/state/sm1.meta" "failed respawn must retain the persistent recovery record"
+    assert_grep "kind=secondmate" "$w/home/state/sm1.meta" "retained record identifies the mate"
+    assert_grep "home=$w/sm1" "$w/home/state/sm1.meta" "retained record points to the preserved home"
+    assert_grep "harness=codex" "$w/home/state/sm1.meta" "retained record describes the published replacement"
+    assert_contains "$(cat "$w/fake/literal")" ". " "failure happens during launch delivery"
+    assert_equals zsh "$(cat "$w/fake/command")" "the failed replacement is not running"
+    out=$(dormant_cmd "$w" resume sm1) || fail "retry after failed $phase delivery failed: $out"
+    assert_absent "$w/home/state/sm1.dormant" "the retry clears dormancy"
+    assert_equals claude "$(cat "$w/fake/command")" "the retry launches the mate"
+  done
+  pass "failed literal and Enter launch delivery retain the record needed to resume again"
+}
+
+test_failed_first_launch_still_rolls_back_its_new_record() {
+  local w out rc=0
+  w=$(new_world first-launch-failure)
+  rm -f "$w/home/state/sm1.meta"
+  : > "$w/fake/killed"
+  out=$(env -u PI_CODING_AGENT -u FM_SUPERVISION_ACTOR PATH="$w/fakebin:$BASE_PATH" \
+    TMUX='' FM_BACKEND=tmux FM_HOME="$w/home" FM_FAKE_DIR="$w/fake" FM_TEST_FAIL_LAUNCH_DELIVERY=literal \
+    "$ROOT/bin/fm-spawn.sh" sm1 "$w/sm1" --secondmate 2>&1) || rc=$?
+  expect_code 1 "$rc" "failed first launch must fail"
+  assert_contains "$(cat "$w/fake/literal")" ". " "first launch reaches delivery before failing"
+  assert_absent "$w/home/state/sm1.meta" "a failed first launch still removes its provisional record"
+  assert_absent "$w/home/state/sm1.dormant" "first launch failure does not manufacture dormancy"
+  pass "failed first launches still roll back only the new record"
+}
+
+test_resume_rearms_parked_recovery_in_both_success_branches() {
+  local w mode out
+  for mode in stopped running; do
+    w=$(new_world "resume-parked-$mode")
+    dormant_cmd "$w" stand-down sm1 >/dev/null || fail "stand-down failed"
+    printf '1\tattempt\n2\tattempt\n' > "$w/home/state/.secondmate-relaunch-sm1"
+    printf 'parked\n' > "$w/home/state/.secondmate-relaunch-bound-sm1"
+    [ "$mode" != running ] || printf claude > "$w/fake/command"
+    out=$(dormant_cmd "$w" resume sm1) || fail "resume from $mode failed: $out"
+    assert_absent "$w/home/state/sm1.dormant" "successful resume clears dormancy"
+    assert_absent "$w/home/state/.secondmate-relaunch-bound-sm1" "resume removes the prior recovery park"
+    assert_contains "$(tail -n 1 "$w/home/state/.secondmate-relaunch-sm1")" $'\trearmed' "resume resets the recovery budget"
+  done
+  pass "resumed and already-running mates both rejoin automatic recovery"
+}
+
+test_resume_keeps_dormancy_until_recovery_rearm_succeeds() {
+  local w failure out rc
+  for failure in ledger park; do
+    w=$(new_world "resume-rearm-failure-$failure")
+    dormant_cmd "$w" stand-down sm1 >/dev/null || fail "stand-down failed"
+    printf claude > "$w/fake/command"
+    if [ "$failure" = ledger ]; then
+      mkdir "$w/home/state/.secondmate-relaunch-sm1"
+      printf parked > "$w/home/state/.secondmate-relaunch-bound-sm1"
+    else
+      mkdir "$w/home/state/.secondmate-relaunch-bound-sm1"
+    fi
+    : > "$w/fake/calls"
+    rc=0
+    out=$(dormant_cmd "$w" resume sm1) || rc=$?
+    expect_code 1 "$rc" "failed $failure rearm must not report successful resume"
+    assert_contains "$out" "stays dormant" "rearm failure remains retryable"
+    assert_present "$w/home/state/sm1.dormant" "dormancy is retained until recovery is enabled"
+    assert_present "$w/home/state/.secondmate-relaunch-bound-sm1" "failed rearm must not discard the park"
+    [ ! -s "$w/fake/calls" ] || fail "rearm of a running mate must not launch another agent"
+    if [ "$failure" = ledger ]; then
+      rmdir "$w/home/state/.secondmate-relaunch-sm1"
+    else
+      rmdir "$w/home/state/.secondmate-relaunch-bound-sm1"
+    fi
+    out=$(dormant_cmd "$w" resume sm1) || fail "retrying rearm failed: $out"
+    assert_absent "$w/home/state/sm1.dormant" "rearm retry completes resume"
+    assert_absent "$w/home/state/.secondmate-relaunch-bound-sm1" "rearm retry clears the park"
+  done
+  pass "resume reports rearm failures and remains retryable without duplicating a live agent"
+}
+
 test_record_library_roundtrip
+test_failed_delivery_keeps_a_resumable_secondmate_record
+test_failed_first_launch_still_rolls_back_its_new_record
+test_resume_rearms_parked_recovery_in_both_success_branches
+test_resume_keeps_dormancy_until_recovery_rearm_succeeds
 test_exact_prefixed_id_leaves_sibling_untouched
 test_cursor_resume_accepts_dead_and_missing_endpoints
 test_stand_down_serializes_work_and_launch_admission

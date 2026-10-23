@@ -973,12 +973,15 @@ secondmate_ring_to_drain() {  # <task> <window>
 # parent alarm. Empty inbox and a fresh child beacon are not idle proof.
 # Receipts close the append-before-marker crash window without changing the
 # foreign queue.
+SECONDMATE_ADMISSION_LOCK=
 secondmate_wake_stall_tick() {
   local now=$(( $(date +%s) )) threshold=$SECONDMATE_WAKE_STALL_SECS
   local meta task kind remote_host home queue row epoch seq row_key marker progress_marker ring_marker progress observed_at observed_key
   local receipt receipt_dir notify_key queued idle reason episode_alerted already_rung w
   # Endpoint metadata admits this queue-loop check; secondmate-liveness owns registered mates whose endpoint is missing or dead.
   for meta in "$STATE"/*.meta; do
+    fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || return 1
+    SECONDMATE_ADMISSION_LOCK=
     [ -e "$meta" ] || continue
     kind=$(fm_meta_get "$meta" kind)
     [ "$kind" = secondmate ] || continue
@@ -987,6 +990,8 @@ secondmate_wake_stall_tick() {
     task=${meta##*/}
     task=${task%.meta}
     case "$task" in ''|*[!A-Za-z0-9._-]*) continue ;; esac
+    fm_sm_admission_lock "$STATE" "$task" 2>/dev/null || continue
+    SECONDMATE_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
     # A stood-down mate runs no wake loop on purpose (bin/fm-secondmate-dormant.sh).
     ! fm_sm_dormant_is "$STATE" "$task" || continue
     home=$(fm_meta_get "$meta" home)
@@ -1067,6 +1072,8 @@ EOF
     fm_wake_secondmate_stall_marker_write "$task" "$row_key" || return 1
     wake "$reason"
   done
+  fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || return 1
+  SECONDMATE_ADMISSION_LOCK=
   return 0
 }
 
@@ -2832,6 +2839,8 @@ pr_poll_publish_release() {
 
 watcher_cleanup() {
   local cleanup_status=0 owns_lock=0 transition=release-lock
+  fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || cleanup_status=1
+  SECONDMATE_ADMISSION_LOCK=
   pr_poll_publish_release || cleanup_status=1
   pr_poll_control_release || cleanup_status=1
   if [ "$(cat "$WATCH_LOCK/pid" 2>/dev/null || true)" = "${WATCHER_PID:-}" ]; then
@@ -3304,12 +3313,16 @@ EOF
   # remembers the hash already classified, or the declaration a busy pane's
   # crossed turn bound already handed to the away-mode daemon).
   while IFS= read -r w; do
+    fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || exit 1
+    SECONDMATE_ADMISSION_LOCK=
     kind=$(window_kind "$w")
     task=$(window_to_task "$w" "$STATE")
     # A stood-down secondmate is stopped on purpose, so its pane, inbox and
     # declared waits are not the watcher's concern (bin/fm-secondmate-dormant.sh).
-    if [ "$kind" = secondmate ] && [ -n "$task" ] && fm_sm_dormant_is "$STATE" "$task"; then
-      continue
+    if [ "$kind" = secondmate ] && [ -n "$task" ]; then
+      fm_sm_admission_lock "$STATE" "$task" 2>/dev/null || continue
+      SECONDMATE_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
+      ! fm_sm_dormant_is "$STATE" "$task" || continue
     fi
     # Steering-inbox loss detection runs before the secondmate stale
     # exemption below, because a mate's steers land in an inbox too.
@@ -3531,6 +3544,8 @@ EOF
       fi
     fi
   done < <(recorded_windows)
+  fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || exit 1
+  SECONDMATE_ADMISSION_LOCK=
 
   # Heartbeat: the watcher runs a cheap fleet-scan at a regular cadence no matter
   # what. Time-based via .last-heartbeat mtime; interval doubles per consecutive

@@ -848,6 +848,63 @@ SH
   chmod +x "$fakebin/date"
 }
 
+test_secondmate_stall_admission_excludes_dormancy() {
+  local dir state sub fakebin mode lock progress
+  # shellcheck source=bin/fm-secondmate-dormant-lib.sh
+  . "$ROOT/bin/fm-secondmate-dormant-lib.sh"
+  for mode in ring alert; do
+    dir=$(make_case "secondmate-stall-admission-$mode")
+    state="$dir/state"
+    sub="$dir/secondmate"
+    fakebin="$dir/fakebin"
+    mkdir -p "$sub/state"
+    printf 'mate\n' > "$sub/.fm-secondmate-home"
+    printf 'window=firstmate:fm-mate\nkind=secondmate\nharness=claude\nbackend=tmux\nhome=%s\n' \
+      "$sub" > "$state/mate.meta"
+    printf '100\t7\tcheck\trouted\tcheck: routed row\n' > "$sub/state/.wake-queue"
+    printf '1000\t100-7\n' > "$state/.secondmate-wake-progress-mate"
+    progress=$(cat "$state/.secondmate-wake-progress-mate")
+    printf '1002\n' > "$dir/now"
+    install_secondmate_alive_tmux "$fakebin"
+    install_secondmate_stall_date "$fakebin"
+    if [ "$mode" = ring ]; then
+      "$ROOT/bin/fm-busy-event.sh" arm "$state" mate >/dev/null || fail "could not arm idle mate"
+      "$ROOT/bin/fm-busy-event.sh" apply "$state" mate idle --current-gen \
+        --source claude-hook --event stop >/dev/null || fail "could not mark mate idle"
+    fi
+    FM_HOME="$dir" FM_STATE_OVERRIDE="$state" fm_sm_admission_lock "$state" mate || fail "could not hold mate admission"
+    lock=$FM_SM_ADMISSION_LOCK
+    PATH="$fakebin:$PATH" FM_FAKE_NOW_FILE="$dir/now" FM_HOME="$dir" FM_ROOT_OVERRIDE="$ROOT" \
+      FM_STATE_OVERRIDE="$state" FM_FAKE_TMUX_SENT="$dir/sent" \
+      FM_SECONDMATE_WAKE_STALL_SECS=1 FM_POLL=1 FM_SIGNAL_GRACE=0 \
+      FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 \
+      secondmate_stall_watch_leg "$dir" held tick
+    assert_equals "$progress" "$(cat "$state/.secondmate-wake-progress-mate")" "a held admission excludes progress mutations"
+    [ ! -s "$dir/sent" ] || fail "a held admission must exclude a drain ring"
+    [ ! -s "$state/.wake-queue" ] || fail "a held admission must exclude stall notifications"
+    assert_absent "$state/mate.inbox" "a held admission must exclude drain instructions"
+    fm_sm_dormant_write "$state" mate idle || fail "could not publish dormancy"
+    fm_sm_admission_unlock "$lock" || fail "could not release admission"
+    PATH="$fakebin:$PATH" FM_FAKE_NOW_FILE="$dir/now" FM_HOME="$dir" FM_ROOT_OVERRIDE="$ROOT" \
+      FM_STATE_OVERRIDE="$state" FM_FAKE_TMUX_SENT="$dir/sent" \
+      FM_SECONDMATE_WAKE_STALL_SECS=1 FM_POLL=1 FM_SIGNAL_GRACE=0 \
+      FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 \
+      secondmate_stall_watch_leg "$dir" dormant tick
+    assert_equals "$progress" "$(cat "$state/.secondmate-wake-progress-mate")" "dormancy excludes progress mutations after admission opens"
+    assert_absent "$state/mate.inbox" "dormancy excludes drain instructions after admission opens"
+    [ ! -s "$dir/sent" ] || fail "dormancy must exclude a drain ring after admission opens"
+    [ ! -s "$state/.wake-queue" ] || fail "dormancy must exclude a stall alarm after admission opens"
+    fm_sm_dormant_clear "$state" mate || fail "could not clear dormancy"
+    PATH="$fakebin:$PATH" FM_FAKE_NOW_FILE="$dir/now" FM_HOME="$dir" FM_ROOT_OVERRIDE="$ROOT" \
+      FM_STATE_OVERRIDE="$state" FM_FAKE_TMUX_SENT="$dir/sent" \
+      FM_SECONDMATE_WAKE_STALL_SECS=1 FM_POLL=1 FM_SIGNAL_GRACE=0 \
+      FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 \
+      secondmate_stall_watch_leg "$dir" resumed "$mode" mate 100-7
+    assert_absent "$state/.secondmate-admission-mate.lock" "normal completion and alarm exit both release admission"
+  done
+  pass "wake-stall rings and notifications serialize admission and recheck dormancy"
+}
+
 # A proven-idle, ring-safe mate with a leftover foreign row is rung so its
 # own home can drain. The parent alarm stays silent when that ring actually
 # empties the child's queue.
@@ -991,6 +1048,7 @@ SH
   [ ! -e "$state/.watch.lock" ] \
     || fail "a watcher stopped in the drain-ring idle capture kept its singleton lock"
   [ ! -s "$dir/sent" ] || fail "a watcher stopped before its idle proof still rang the mate"
+  assert_absent "$state/.secondmate-admission-mate.lock" "signal cleanup releases mate admission"
   pass "TERM stops a watcher blocked in the drain-ring idle capture and runs its cleanup"
 }
 
@@ -3555,6 +3613,7 @@ test_secondmate_declared_pause_rows_do_not_feed_stall_escalation
 test_secondmate_reprovisioned_queue_starts_a_fresh_interval
 test_secondmate_active_turn_defers_stall_until_the_turn_ends
 test_secondmate_long_lived_mate_mid_turn_is_not_a_stall
+test_secondmate_stall_admission_excludes_dormancy
 test_secondmate_proven_idle_ring_lets_the_child_drain
 test_term_stops_a_watcher_blocked_in_the_drain_ring_idle_capture
 test_secondmate_busy_and_unknown_panes_are_not_rung
