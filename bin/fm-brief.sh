@@ -14,6 +14,9 @@
 # charters still use a single `{TASK}` charter fill. Firstmate may adjust other
 # sections when the task genuinely deviates (e.g. working an existing external
 # PR instead of shipping a new one).
+# An eligible ship brief also scaffolds `## Evidence class` with {EVIDENCE} and
+# the worker's evidence contract; docs/configuration.md "PR evidence gate" owns
+# eligibility and declaration values.
 # Usage: fm-brief.sh <task-id> <repo-name> --mode <no-mistakes|direct-PR|local-only> [--branch-prefix <prefix>] [--base-branch <branch>] [--forge <none|gerrit|forgejo|external> [--shape squash]] [--project <dir>] [--upstream-consent <host>/<owner>/<repo>] [--herdr-lab]
 #        fm-brief.sh <task-id> <repo-name> --scout [--base-branch <branch>] [--herdr-lab]
 #        fm-brief.sh <task-id> --secondmate {<project>...|--no-projects}
@@ -763,6 +766,20 @@ case "$MODE" in
 esac
 RULE1=$(fm_ship_rule_one "$MODE" "$ID" "$BRANCH" "$FORGE" "$BASE_BRANCH") || exit 1
 DOD=$(fm_dod_block "$MODE" "$ID" "$BRANCH" "$FORGE" "$BASE_BRANCH" "$UPSTREAM_CONSENT") || exit 1
+# Resolve evidence eligibility before writing a brief, so invalid configuration
+# cannot publish a scaffold.
+EVIDENCE_STATUS=0
+EVIDENCE_PROJECT="${PROJECT_DIR:-$FM_HOME/projects/$REPO}"
+"$SCRIPT_DIR/fm-pr-evidence.sh" eligible "$REPO" "$MODE" "$FORGE" "$EVIDENCE_PROJECT" >/dev/null || EVIDENCE_STATUS=$?
+if [ "$EVIDENCE_STATUS" -eq 0 ]; then
+  TASK_SECTION="$TASK_SECTION
+
+## Evidence class
+{EVIDENCE}"
+  DOD="$DOD$("$SCRIPT_DIR/fm-pr-evidence.sh" brief-block "$ID" "$REPO" "$MODE" "$FORGE" "$EVIDENCE_PROJECT")" || exit 1
+elif [ "$EVIDENCE_STATUS" -ne 1 ]; then
+  exit 1
+fi
 
 cat > "$BRIEF" <<EOF
 You are a crewmate: an autonomous worker agent managed by firstmate. Work on your own; do not wait for a human.

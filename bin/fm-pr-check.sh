@@ -20,6 +20,8 @@
 # never discards a positively read draft state.
 # bin/fm-pr-merge.sh records through this script with FM_PR_CHECK_MERGE=1 and
 # skips this refusal, because its own merge-time draft refusal is authoritative.
+# The fork-only evidence gate runs before registration; docs/configuration.md
+# "PR evidence gate" owns its applicability, exceptions, and waiver rules.
 # The recorded pr= also frees the task's place in a declared project capacity
 # (bin/fm-project-capacity-lib.sh).
 # Usage: fm-pr-check.sh <task-id> <pr-url>
@@ -153,6 +155,10 @@ if [ "$DRAFT_STATE" = true ]; then
   echo "error: $URL is a draft pull request; a draft cannot be merged, so merge monitoring would wait for an event that cannot occur - mark it ready for review and arm again, or declare a wait instead of done if the draft is deliberate" >&2
   exit 1
 fi
+
+# Keep evidence validation before recording PR metadata or arming a merge poll.
+FM_HOME=$FM_HOME FM_STATE_OVERRIDE=$STATE "$SCRIPT_DIR/fm-pr-evidence.sh" check "$ID" "$URL" \
+  || { echo "error: the PR evidence gate refused $URL; see the [FAIL] and FIX lines above" >&2; exit 1; }
 
 "$FM_ROOT/bin/fm-guard.sh" || true
 

@@ -256,6 +256,7 @@ PROMOTE_CONSENT_WORDS=
 [ -z "$UPSTREAM_CONSENT" ] || PROMOTE_CONSENT_WORDS=" upstream-consent=$UPSTREAM_CONSENT"
 
 SCOUT_BRIEF="$DATA/$ID/brief.md"
+EVIDENCE_META=$(FM_HOME=$FM_HOME FM_CONFIG_OVERRIDE=$CONFIG "$SCRIPT_DIR/fm-pr-evidence.sh" intake "$SCOUT_BRIEF" "${PROMOTE_PROJECT_NAME:-}" "$MODE" "$FORGE" "$PROMOTE_PROJECT") || exit 1
 if fm_brief_task_placeholders_present "$SCOUT_BRIEF"; then
   echo "error: $SCOUT_BRIEF still contains {TASK} or {FIRSTMATE_SPEC}; preserve the original ask in ## Captain's intent and fill the scout-time ## Firstmate spec; promotion generates a separate ship-time spec" >&2
   exit 1
@@ -321,6 +322,9 @@ EOF
   fi
   printf '\n'
   fm_dod_block "$MODE" "$ID" "$BRANCH" "$FORGE" "$BASE_BRANCH" "$UPSTREAM_CONSENT"
+  if [ -n "$EVIDENCE_META" ]; then
+    "$SCRIPT_DIR/fm-pr-evidence.sh" brief-block "$ID" "${PROMOTE_PROJECT_NAME:-}" "$MODE" "$FORGE" "$PROMOTE_PROJECT"
+  fi
 }
 mkdir -p "$DATA/$ID"
 [ ! -d "$INSTRUCTIONS" ] || { echo "error: ship instructions path is a directory: $INSTRUCTIONS" >&2; exit 1; }
@@ -339,6 +343,9 @@ EOF
 $PROMOTION_SHIP_SPEC
 
 EOF
+  if [ -n "$EVIDENCE_META" ]; then
+    printf '## Evidence class\n%s\n\n' "$(fm_brief_task_heading_body "$SCOUT_BRIEF" "## Evidence class")"
+  fi
   promote_delivery_contract
 } > "$TMP" || { echo "error: could not render ship instructions for mode=$MODE" >&2; exit 1; }
 mv "$TMP" "$INSTRUCTIONS"
@@ -373,13 +380,14 @@ fi
 BRIEF_REPLACEMENT=
 
 TMP="$STATE/.$ID.meta.promote.${BASHPID:-$$}"
-grep -v -e '^kind=' -e '^mode=' -e '^yolo=' -e '^branch=' -e '^upstream_consent=' "$META" > "$TMP"
+grep -v -e '^kind=' -e '^mode=' -e '^yolo=' -e '^branch=' -e '^upstream_consent=' -e '^evidence=' -e '^evidence_reason=' "$META" > "$TMP"
 {
   echo "kind=ship"
   echo "mode=$MODE"
   echo "yolo=$YOLO"
   echo "branch=$BRANCH"
   [ -z "$UPSTREAM_CONSENT" ] || echo "upstream_consent=$UPSTREAM_CONSENT"
+  [ -z "$EVIDENCE_META" ] || printf '%s\n' "$EVIDENCE_META"
 } >> "$TMP"
 if ! fm_backlog_atomic_transition publish "$TMP" "$META" "task record" "$STATE"; then
   rm -f -- "$TMP"

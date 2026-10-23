@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+# gh stand-in for tests/fm-pr-evidence.test.sh: reads and writes the stub forge.
+# FM_TEST_STUB is the stub's base URL. FM_TEST_GH_STALE=1 hides pr comment --attach.
+set -u
+STUB=${FM_TEST_STUB:?}
+[ -z "${FM_TEST_GH_LOG:-}" ] || printf '%s\n' "$*" >> "$FM_TEST_GH_LOG"
+case "${1:-} ${2:-}" in
+  "pr comment")
+    if [ "${3:-}" = --help ]; then
+      printf 'Add a comment to a pull request.\n\nFLAGS\n'
+      [ "${FM_TEST_GH_STALE:-0}" = 1 ] || printf '      --attach file      Attach an image or video file\n'
+      printf '  -b, --body text   The comment body text\n'
+      exit 0
+    fi
+    shift 2
+    url=${1:-}
+    shift
+    body=
+    atts='[]'
+    while [ "$#" -gt 0 ]; do
+      case "$1" in
+        --body-file) body=$(cat "$2"); shift 2 ;;
+        --body) body=$2; shift 2 ;;
+        --attach)
+          atts=$(printf '%s' "$atts" | jq -c --arg p "${2%%#*}" --arg a "${2#*#}" '. + [{path: $p, alt: $a}]')
+          shift 2
+          ;;
+        *) shift ;;
+      esac
+    done
+    path=${url#https://github.com/}
+    owner=${path%%/*}
+    rest=${path#*/}
+    repo=${rest%%/*}
+    number=${rest##*/}
+    jq -n --arg b "$body" --argjson a "$atts" '{body: $b, attachments: $a}' \
+      | curl -sS -X POST --data-binary @- "$STUB/gh/repos/$owner/$repo/issues/$number/comments" | jq -r .html_url
+    exit 0
+    ;;
+  "pr merge")
+    exit 0
+    ;;
+  "api graphql")
+    printf 'state=MERGED\nmerged=true\nqueued=false\nbase=main\n'
+    exit 0
+    ;;
+  "pr view")
+    shift 2
+    url=${1:-}
+    shift
+    jqx=
+    while [ "$#" -gt 0 ]; do
+      case "$1" in
+        -q|--jq) jqx=$2; shift 2 ;;
+        *) shift ;;
+      esac
+    done
+    path=${url#https://github.com/}
+    head=$(curl -sS "$STUB/gh/repos/${path%/pull/*}/pulls/${path##*/}" | jq -r .head.sha)
+    out=$(jq -n --arg h "${FM_TEST_GH_VIEW_HEAD:-$head}" '{isDraft: false, headRefOid: $h, state: "OPEN", mergeable: "MERGEABLE", mergeStateStatus: "CLEAN", baseRefName: "main", statusCheckRollup: []}')
+    if [ -n "$jqx" ]; then printf '%s' "$out" | jq -r "$jqx"; else printf '%s\n' "$out"; fi
+    exit 0
+    ;;
+  "api "*)
+    shift
+    slurp=0
+    jqx=
+    method=GET
+    target=
+    while [ "$#" -gt 0 ]; do
+      case "$1" in
+        --paginate) shift ;;
+        --slurp) slurp=1; shift ;;
+        -H) shift 2 ;;
+        --jq) jqx=$2; shift 2 ;;
+        -X) method=$2; shift 2 ;;
+        *) target=$1; shift ;;
+      esac
+    done
+    case "$target" in
+      */rules/branches/main) out=${FM_TEST_GH_RULES:-'[]'} ;;
+      */branches/main) out='{"protected":false}' ;;
+      *) out=$(curl -fsS -X "$method" "$STUB/gh/$target") || exit 1 ;;
+    esac
+    case "${FM_TEST_GH_PARTIAL:-}:$target" in
+      files:*/files*) out=$(printf '%s' "$out" | jq -c '.[0:100]') ;;
+    esac
+    [ "$slurp" = 0 ] || out=$(printf '%s' "$out" | jq -c '[.]')
+    if [ -n "$jqx" ]; then printf '%s' "$out" | jq -r "$jqx"; else printf '%s\n' "$out"; fi
+    case "${FM_TEST_GH_PARTIAL:-}:$target" in
+      files:*/files*|comments:*/comments*) exit 1 ;;
+    esac
+    exit 0
+    ;;
+esac
+exit 0

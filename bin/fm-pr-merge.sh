@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Merge a task's PR or MR after recording pr= and any available pr_head= through
 # bin/fm-pr-check.sh, so teardown can verify landed work after squash merges.
+# Fork-only PR evidence restrictions and exceptions are documented in
+# docs/configuration.md "PR evidence gate", including limits on asynchronous merges.
 # The full canonical URL is parsed by bin/fm-pr-lib.sh. A GitHub pull request is
 # addressed through gh by the derived owner and repository; a GitLab merge
 # request is addressed through glab by the project URL rebuilt from the parsed
@@ -67,9 +69,10 @@
 # own view still proves a landed merge, and every outcome it cannot prove
 # refuses, reporting the failed gh read and naming both failed reads when the
 # gh-axi view could not prove the outcome either.
-# If the pull request remains open and the base branch has an effective
-# merge_queue rule, an attended refusal names the queue's configured merge
-# method and exact --attended-override -- --auto --<method> retry flags. While
+# When the evidence policy linked above permits queued merging, if the pull
+# request remains open and the base branch has an effective merge_queue rule,
+# an attended refusal names the queue's configured merge method and exact
+# --attended-override -- --auto --<method> retry flags. While
 # the away-posture record exists, asynchronous merge requests are refused and
 # queue retry flags are not offered because they would outlive away authority.
 # An attended caller that already passed the configured method with --auto is
@@ -1583,6 +1586,25 @@ record_pr_metadata() {
   }
 }
 
+require_merge_evidence() {
+  local head
+  head=$(FM_HOME=$FM_HOME FM_STATE_OVERRIDE=$STATE "$SCRIPT_DIR/fm-pr-evidence.sh" check "$ID" "$URL" "$FM_PR_MERGE_HEAD") || return 1
+  [ -n "$head" ] || return 0
+  if [ "$PROVIDER" = github ]; then
+    if [ "$FM_PR_GITHUB_AUTO_REQUESTED" = true ]; then
+      echo "[FAIL] evidence requires an immediate merge, not --auto" >&2
+      echo "FIX: retry without --auto" >&2
+      return 1
+    fi
+    github_read_queue_method
+    if [ "$FM_PR_GITHUB_QUEUE_STATUS" != none ]; then
+      echo "[FAIL] evidence requires a base branch with no merge queue" >&2
+      echo "FIX: use an immediate merge path that binds the verified head" >&2
+      return 1
+    fi
+  fi
+}
+
 require_released_captain_hold() {
   local hold_status=0
   FM_HOME="$FM_HOME" FM_STATE_OVERRIDE="$STATE" \
@@ -2292,6 +2314,7 @@ case "$PROVIDER" in
     require_current_away_authority || away_status=$?
     [ "$away_status" -eq 0 ] || exit "$away_status"
     refuse_github_queue_while_away || exit 2
+    require_merge_evidence || exit 1
     merge_status=0
     merge_output=$(gh pr merge "$PR_NUMBER" --repo "$PR_OWNER/$PR_REPO" \
       --match-head-commit "$FM_PR_MERGE_HEAD" \
@@ -2377,6 +2400,7 @@ case "$PROVIDER" in
     require_current_away_authority || away_status=$?
     [ "$away_status" -eq 0 ] || exit "$away_status"
     bitbucket_require_unmoved_head || exit 1
+    require_merge_evidence || exit 1
     bitbucket_merge_body=$(jq -cn --arg strategy "$BITBUCKET_MERGE_STRATEGY" \
       --argjson close "$BITBUCKET_CLOSE_SOURCE_BRANCH" --arg message "$MERGE_MESSAGE" '
       {type: "pullrequest", close_source_branch: $close}

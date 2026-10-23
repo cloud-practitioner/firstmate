@@ -1,0 +1,630 @@
+#!/usr/bin/env python3
+import argparse
+import contextlib
+import copy
+import http.server
+import importlib.util
+import io
+import json
+import os
+import shlex
+from pathlib import Path
+import tempfile
+import threading
+import unittest
+from unittest.mock import patch
+
+ROOT = Path(__file__).parent.parent
+spec = importlib.util.spec_from_file_location("evidence", ROOT / "bin/fm-pr-evidence-lib.py")
+ev = importlib.util.module_from_spec(spec)
+with patch.dict(os.environ, {"FM_PR_EVIDENCE_MARK_MIN": "0"}):
+    spec.loader.exec_module(ev)
+
+
+def exchange():
+    return {"request": {"method": "POST", "url": "https://example.test/login", "headers": [["Accept", "application/json"]], "body": ""},
+            "response": {"status": 200, "reason": "OK", "headers": [["Content-Type", "application/json"]], "body": ""}}
+
+
+class EvidenceRegressions(unittest.TestCase):
+    def capture_sidecar(self, verbose, response, method="GET", request_body=None):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            (tmp / "verbose").write_text(verbose)
+            (tmp / "response").write_text(response)
+            (tmp / "body").write_text("{}")
+            out = tmp / "sidecar.json"
+            args = ["sidecar-build", "--verbose", str(tmp / "verbose"), "--resp-headers", str(tmp / "response"),
+                    "--resp-body", str(tmp / "body"), "--method", method,
+                    "--url", "https://example.test/items", "--out", str(out)]
+            if request_body is not None:
+                (tmp / "request-body").write_text(request_body)
+                args += ["--req-body", str(tmp / "request-body")]
+            self.assertEqual(0, ev.main(args))
+            with contextlib.redirect_stdout(io.StringIO()) as log:
+                self.assertEqual(0, ev.main(["scan-sidecar", str(out)]), log.getvalue())
+            return json.loads(out.read_text())
+
+    def test_sidecar_capture_keeps_headers_with_optional_whitespace(self):
+        headers = "Accept: application/json\r\nX-Mode:new\r\nX-Tab:\tvalue\t\r\nX-Empty:\r\nX-Url:https://example.test/items\r\n"
+        data = self.capture_sidecar(
+            "* Connected\n> GET /items HTTP/1.1\n" +
+            "".join("> " + line + "\n" for line in headers.splitlines()) + "> \n",
+            "HTTP/1.1 100 Continue\r\n\r\nHTTP/1.1 200 OK\r\n" + headers + "\r\n")
+        expected = [["Accept", "application/json"], ["X-Mode", "new"], ["X-Tab", "value"],
+                    ["X-Empty", ""], ["X-Url", "https://example.test/items"]]
+        for side in ("request", "response"):
+            self.assertEqual(expected, data[side]["headers"], side)
+        self.assertEqual(200, data["response"]["status"])
+        self.assertEqual("OK", data["response"]["reason"])
+
+    def test_sidecar_capture_unfolds_headers_before_masking(self):
+        for indent in (" ", "\t", " \t"):
+            with self.subTest(indent=indent):
+                public = ("Link: </items?page=2>;\r\n" + indent + 'rel="next"\r\n' +
+                          "X-Empty:\r\n" + indent + "value\r\n" +
+                          "X-Note: first\r\n" + indent + "part: second\r\n" + indent + "last\r\n")
+                request_headers = ("Host: example.test\r\n" + public + "Authorization: Basic\r\n" +
+                                   indent + "dXNlcjpzZWNyZXQ=\r\n")
+                response = ("HTTP/1.1 200 OK\r\n" + public + "Set-Cookie: sid=short-secret;\r\n" +
+                            indent + "HttpOnly\r\n\r\nX-Result: first\r\n" + indent + "second\r\n" +
+                            "X-API-Key: short\r\n" + indent + "secret\r\n\r\n")
+                data = self.capture_sidecar(
+                    "> GET /items HTTP/1.1\n" +
+                    "".join("> " + line + "\n" for line in request_headers.splitlines()) + "> \n", response)
+                expected = [["Link", '</items?page=2>; rel="next"'], ["X-Empty", "value"],
+                            ["X-Note", "first part: second last"]]
+                self.assertEqual([["Host", "example.test"]] + expected +
+                                 [["Authorization", ev.mask_token("Basic dXNlcjpzZWNyZXQ=")]],
+                                 data["request"]["headers"])
+                self.assertEqual(expected + [["Set-Cookie", ev.mask_token("sid=short-secret; HttpOnly")],
+                                            ["X-Result", "first second"],
+                                            ["X-API-Key", ev.mask_token("short secret")]],
+                                 data["response"]["headers"])
+                rendered = "\n".join(ev.sidecar_lines(data))
+                self.assertEqual(2, rendered.count('Link: </items?page=2>; rel="next"'))
+                self.assertIn("X-Result: first second", rendered)
+                for secret in ("dXNlcjpzZWNyZXQ=", "short-secret", "short secret"):
+                    self.assertNotIn(secret, json.dumps(data))
+
+    def test_api_capture_handles_head_without_a_response_body(self):
+        import subprocess
+        requests = []
+        payload = b'{"result":"new"}'
+
+        class Handler(http.server.BaseHTTPRequestHandler):
+            def log_message(self, *args):
+                pass
+
+            def do_GET(self):
+                body = self.rfile.read(int(self.headers.get("Content-Length", "0"))).decode()
+                requests.append((self.command, self.path, body, self.headers.get("X-Test")))
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(payload)))
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                if self.command != "HEAD":
+                    self.wfile.write(payload)
+
+            def do_HEAD(self):
+                self.do_GET()
+
+            def do_POST(self):
+                self.do_GET()
+
+        with tempfile.TemporaryDirectory() as tmp, http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler) as server:
+            tmp = Path(tmp)
+            env = dict(os.environ, FM_HOME=str(tmp / "home"), FM_ROOT_OVERRIDE=str(ROOT), TMPDIR=str(tmp),
+                       NO_PROXY="*", no_proxy="*")
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                url = "http://127.0.0.1:%d/items" % server.server_port
+                for method in ("HEAD", "GET", "POST"):
+                    with self.subTest(method=method):
+                        out = tmp / (method + ".json")
+                        args = ["bash", str(ROOT / "bin/fm-pr-evidence.sh"), "capture-api", "--out", str(out),
+                                "--header", "X-Test: capture"]
+                        if method != "GET":
+                            args += ["-X", method]
+                        if method == "POST":
+                            (tmp / "request-body").write_text('{"name":"new"}')
+                            args += ["--body-file", str(tmp / "request-body")]
+                        result = subprocess.run(args + [url], env=env, capture_output=True, text=True, timeout=5)
+                        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                        data = json.loads(out.read_text())
+                        self.assertEqual(method, data["request"]["method"])
+                        self.assertEqual(url, data["request"]["url"])
+                        self.assertEqual('{"name":"new"}' if method == "POST" else "", data["request"]["body"])
+                        self.assertEqual(200, data["response"]["status"])
+                        self.assertEqual("OK", data["response"]["reason"])
+                        self.assertIn(["Content-Length", str(len(payload))], data["response"]["headers"])
+                        self.assertEqual("" if method == "HEAD" else payload.decode(), data["response"]["body"])
+            finally:
+                server.shutdown()
+                thread.join()
+        self.assertEqual([("HEAD", "/items", "", "capture"), ("GET", "/items", "", "capture"),
+                          ("POST", "/items", '{"name":"new"}', "capture")], requests)
+
+    def test_sidecar_capture_selects_the_api_request_after_connect(self):
+        proxy_request = ("* Connected to proxy\n> CONNECT example.test:443 HTTP/1.1\n"
+                         "> Host: example.test:443\n> Proxy-Connection: Keep-Alive\n"
+                         "> Proxy-Authorization: Basic cHJveHk6c2VjcmV0\n> \n"
+                         "< HTTP/1.1 200 Connection established\n< \n* TLS connection established\n")
+        proxy_response = "HTTP/1.1 200 Connection established\r\nX-Proxy: tunnel\r\n\r\n"
+        for version in ("1.1", "2", "3"):
+            for proxied in (False, True):
+                with self.subTest(version=version, proxied=proxied):
+                    data = self.capture_sidecar(
+                        (proxy_request if proxied else "") +
+                        "> POST /items HTTP/" + version + "\n> Host: example.test\n"
+                        "> Accept: application/json\n> X-Protocol: prefer HTTP/2\n> X-Mode: old\n> X-Mode: new\n"
+                        "> Authorization: Basic dXNlcjpzZWNyZXQ=\n> \n* Request sent\n",
+                        (proxy_response if proxied else "") +
+                        "HTTP/" + version + " 201\r\nContent-Type: application/json\r\n\r\n",
+                        method="POST", request_body='{"name":"new"}')
+                    self.assertEqual([["Host", "example.test"], ["Accept", "application/json"],
+                                      ["X-Protocol", "prefer HTTP/2"], ["X-Mode", "old"], ["X-Mode", "new"],
+                                      ["Authorization", ev.mask_token("Basic dXNlcjpzZWNyZXQ=")]],
+                                     data["request"]["headers"])
+                    self.assertEqual("POST", data["request"]["method"])
+                    self.assertEqual("https://example.test/items", data["request"]["url"])
+                    self.assertEqual('{"name":"new"}', data["request"]["body"])
+                    self.assertEqual({"status": 201, "reason": "Created",
+                                      "headers": [["Content-Type", "application/json"]], "body": "{}"},
+                                     data["response"])
+                    self.assertNotIn("Proxy-", "\n".join(ev.sidecar_lines(data)))
+                    self.assertNotIn("dXNlcjpzZWNyZXQ=", json.dumps(data))
+
+    def test_sidecar_capture_retains_only_final_response_headers_and_trailers(self):
+        interim = ("HTTP/1.1 200 Connection established\r\nX-Proxy: tunnel\r\n\r\n"
+                   "HTTP/1.1 100 Continue\r\nX-Interim: waiting\r\n\r\n"
+                   "HTTP/1.1 103 Early Hints\r\nLink: </old>; rel=preload\r\n\r\n")
+        final = ("HTTP/1.1 200 All done\r\nContent-Type: application/json\r\n"
+                 "Transfer-Encoding: chunked\r\nTrailer: X-Result, Set-Cookie\r\nX-Result: initial\r\n\r\n")
+        trailers = "X-Result:final\r\nX-Empty:\r\nSet-Cookie: sid=short-secret\r\n"
+        for prefix in ("", interim):
+            for trailer_end in ("", "\r\n"):
+                with self.subTest(interim=bool(prefix), trailer_end=trailer_end):
+                    data = self.capture_sidecar(
+                        "> GET /items HTTP/1.1\n> Host: example.test\n> \n",
+                        prefix + final + trailers + trailer_end)
+                    self.assertEqual(200, data["response"]["status"])
+                    self.assertEqual("All done", data["response"]["reason"])
+                    self.assertEqual([["Content-Type", "application/json"], ["Transfer-Encoding", "chunked"],
+                                      ["Trailer", "X-Result, Set-Cookie"], ["X-Result", "initial"],
+                                      ["X-Result", "final"], ["X-Empty", ""],
+                                      ["Set-Cookie", ev.mask_token("sid=short-secret")]],
+                                     data["response"]["headers"])
+                    rendered = "\n".join(ev.sidecar_lines(data))
+                    self.assertIn("X-Result: final", rendered)
+                    self.assertNotIn("X-Proxy", rendered)
+                    self.assertNotIn("X-Interim", rendered)
+                    self.assertNotIn("short-secret", json.dumps(data))
+
+    def test_sensitive_fields_are_masked_and_rejected_on_both_sides(self):
+        for side in ("request", "response"):
+            for body in ('{"password":"correct-horse","token":"short-secret"}',
+                         '{"items":[{"credentials":{"password":"short-secret"}}]}',
+                         'password=correct-horse&token=short-secret',
+                         '<password>correct-horse</password>',
+                         '<root><token>short-secret</token><name>public</name></root>',
+                         '<s:Envelope xmlns:s="urn:test"><s:password>correct-horse</s:password></s:Envelope>',
+                         '<credentials><password>correct-horse</password><token>short-secret</token></credentials>',
+                         '<password><![CDATA[correct-horse]]></password>',
+                         '<password><password>correct-horse</password>short-secret</password>',
+                         '<password>correct-horse',
+                         '<login password="correct-horse" token="short-secret"/>',
+                         '<token value="short-secret"/>',
+                         '<password value="correct-horse">***masked (1 chars)***</password>',
+                         '<s:token xmlns:s="urn:test" value="short-secret"/>',
+                         '<token value="short-secret" hint="correct-horse">text</token>'):
+                with self.subTest(side=side, body=body):
+                    data = exchange()
+                    data[side]["body"] = body
+                    self.assertTrue(ev.sidecar_problems(data))
+                    masked = ev.mask_sidecar(copy.deepcopy(data))
+                    self.assertNotIn("correct-horse", json.dumps(masked))
+                    self.assertNotIn("short-secret", json.dumps(masked))
+                    self.assertFalse(ev.sidecar_problems(masked))
+                    self.assertEqual(masked, ev.mask_sidecar(copy.deepcopy(masked)))
+
+    def test_urls_commands_and_terminal_text_are_masked(self):
+        samples = ("https://user:correct-horse@example.test/items?token=short-secret",
+                   "tool --password correct-horse --token 'short-secret'",
+                   'PASSWORD="correct-horse" token=short-secret',
+                   'curl --header Authorization: Bearer short-secret',
+                   'Proxy-Authorization: Basic Y29ycmVjdC1ob3JzZQ==',
+                   '<password>correct-horse</password> token=short-secret',
+                   '<token value="short-secret" password="correct-horse"/>')
+        for text in samples:
+            masked = ev.mask_text(text)
+            self.assertNotIn("correct-horse", masked)
+            self.assertNotIn("short-secret", masked)
+            self.assertNotIn("Y29ycmVjdC1ob3JzZQ==", masked)
+            self.assertEqual(masked, ev.mask_text(masked))
+        with tempfile.TemporaryDirectory() as tmp:
+            raw, out = Path(tmp) / "raw", Path(tmp) / "out"
+            raw.write_text(samples[2])
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=shlex.split(samples[1]), rc=0))
+            self.assertNotIn("correct-horse", out.read_text())
+            self.assertNotIn("short-secret", out.read_text())
+            self.assertIn("exit status 0", out.read_text())
+
+    def test_complete_secret_headers_are_masked_in_free_text(self):
+        credential = '0123456789abcdef0123456789abcdef01234567'
+        headers = ('Authorization: Token ' + credential,
+                   'Proxy-Authorization: Custom first-part ' + credential,
+                   'Authorization: Token\r\n\t' + credential,
+                   'Cookie: theme=light; sid=' + credential,
+                   'Set-Cookie: theme=light; sid=' + credential + '; HttpOnly',
+                   'X-API-Key: first-part ' + credential,
+                   'Authorization: ***masked (5 chars)*** ' + credential,
+                   'Cookie: ***masked (11 chars)***; sid=' + credential)
+        for header in headers:
+            variants = (header, '> ' + header + '\r\nAccept: application/json\r\n',
+                        'curl -H "' + header + '" https://example.test',
+                        json.dumps({'body': header, 'message': 'public text'}), json.dumps(header))
+            for value in variants:
+                with self.subTest(value=value):
+                    masked = ev.mask_text(value)
+                    self.assertNotIn(credential, masked)
+                    self.assertEqual(masked, ev.mask_text(masked))
+                    if value.startswith(('{', '"')):
+                        json.loads(masked)
+                    for side in ('request', 'response'):
+                        data = exchange()
+                        data[side]['body'] = value
+                        self.assertTrue(ev.sidecar_problems(data))
+                        masked_data = ev.mask_sidecar(copy.deepcopy(data))
+                        self.assertNotIn(credential, json.dumps(masked_data))
+                        self.assertFalse(ev.sidecar_problems(masked_data))
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            raw, out = tmp / 'raw', tmp / 'captured'
+            raw.write_text('\n'.join(headers) + '\npublic text\n')
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=['curl', '-H', headers[0]], rc=0))
+            self.assertNotIn(credential, out.read_text())
+            self.assertIn('public text', out.read_text())
+            def render(lines, marked, labels, purpose, path):
+                self.assertNotIn(credential, '\n'.join(lines))
+                Path(path).write_bytes(b'masked image')
+            args = argparse.Namespace(image=None, text=str(raw), against=None, mark_line=[0], label=None,
+                                      purpose='The tool hides the header values.', out=str(tmp / 'out.png'))
+            with patch.object(ev, 'render_text_with_marks', side_effect=render), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, ev.cmd_annotate_ui(args))
+
+    def test_standalone_english_checker_uses_only_the_shipped_vocabulary(self):
+        import subprocess
+        command = ['python3', str(ROOT / 'bin/fm-pr-evidence-lib.py'), 'ste', '--text', 'The system will abandon the task.']
+        result = subprocess.run(command, capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn("word 'abandon' is not approved; try stop", result.stdout)
+        with tempfile.TemporaryDirectory() as tmp:
+            vocab = Path(tmp) / 'custom.tsv'
+            vocab.write_text('system\ttool\n')
+            result = subprocess.run(command + ['--vocab', str(vocab)], capture_output=True, text=True)
+            self.assertEqual(2, result.returncode)
+            self.assertIn('--vocab', result.stderr)
+
+    def test_secret_aliases_share_one_rule_for_json_and_other_representations(self):
+        secret = '0123456789abcdef0123456789abcdef01234567'
+        for name in ('sig', 'jwt', 'SIG', 'api_sig', 'x-jwt'):
+            forms = (json.dumps({name: secret}), json.dumps({'items': [{name: secret}]}),
+                     name + '=' + secret, 'https://example.test?' + name + '=' + secret,
+                     '<' + name + '>' + secret + '</' + name + '>')
+            for side in ('request', 'response'):
+                for body in forms:
+                    with self.subTest(name=name, side=side, body=body):
+                        data = exchange()
+                        data[side]['body'] = body
+                        self.assertTrue(ev.sidecar_problems(data))
+                        masked = ev.mask_sidecar(copy.deepcopy(data))
+                        self.assertNotIn(secret, json.dumps(masked))
+                        self.assertFalse(ev.sidecar_problems(masked))
+                        self.assertEqual(masked, ev.mask_sidecar(copy.deepcopy(masked)))
+        self.assertEqual('{"design":"public"}', ev.mask_text('{"design":"public"}'))
+        with tempfile.TemporaryDirectory() as tmp:
+            raw, out = Path(tmp) / 'raw', Path(tmp) / 'out'
+            raw.write_text(json.dumps({'sig': secret}))
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=['tool', '--sig', secret], rc=0))
+            self.assertNotIn(secret, out.read_text())
+
+    def test_quoted_header_redaction_preserves_the_command_and_operation(self):
+        secret = '0123456789abcdef0123456789abcdef01234567'
+        for quote in ('"', "'"):
+            for header in ('Authorization', 'Proxy-Authorization', 'Cookie'):
+                before = 'curl -H ' + quote + header + ': Token ' + secret + quote + ' https://api.example/old'
+                after = before.replace('/old', '/new')
+                left, right = ev.mask_text(before), ev.mask_text(after)
+                with self.subTest(quote=quote, header=header):
+                    self.assertNotIn(secret, left)
+                    self.assertEqual('https://api.example/old', shlex.split(left)[-1])
+                    self.assertEqual('https://api.example/new', shlex.split(right)[-1])
+                    self.assertNotEqual(left, right)
+                    self.assertEqual(left, ev.mask_text(left))
+        raw = 'Authorization: Token "' + secret + '"\r\n\t' + secret + '\r\nAccept: application/json\r\n'
+        masked = ev.mask_text(raw)
+        self.assertNotIn(secret, masked)
+        self.assertIn('Accept: application/json', masked)
+        with tempfile.TemporaryDirectory() as tmp:
+            raw, out = Path(tmp) / 'raw', Path(tmp) / 'out'
+            raw.write_text('public result\n')
+            for secret in ('opaque-secret', "opaque'secret"):
+                argv = ['curl', '-H', 'Authorization: Token ' + secret, 'https://api.example/old']
+                ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=argv, rc=0))
+                command = shlex.split(out.read_text().splitlines()[0][2:])
+                self.assertEqual('https://api.example/old', command[-1])
+                self.assertNotIn(secret, out.read_text())
+
+    def test_fixed_english_options_cannot_disable_or_customize_the_rules(self):
+        import subprocess
+        base = ['python3', str(ROOT / 'bin/fm-pr-evidence-lib.py'), 'ste', '--text', 'The system will abandon the task.']
+        result = subprocess.run(base, capture_output=True, text=True)
+        self.assertEqual(0, result.returncode)
+        self.assertIn("word 'abandon' is not approved", result.stdout)
+        for option in (['--no-vocab'], ['--banned', 'system']):
+            result = subprocess.run(base + option, capture_output=True, text=True)
+            self.assertEqual(2, result.returncode)
+            self.assertIn(option[0], result.stderr)
+        result = subprocess.run(base[:-1] + ['The tool is seamless.'], capture_output=True, text=True)
+        self.assertEqual(1, result.returncode)
+        self.assertIn("banned word 'seamless'", result.stdout)
+        with tempfile.TemporaryDirectory() as tmp:
+            items = Path(tmp) / 'items.json'
+            items.write_text(json.dumps({'items': [], 'none_reason': 'Only a comment changed in the file.'}))
+            compose = ['python3', str(ROOT / 'bin/fm-pr-evidence-lib.py'), 'compose', '--items', str(items),
+                       '--head', 'a' * 40, '--declared', 'none', '--provider', 'github', '--repo', 'o/r',
+                       '--number', '1', '--out', str(Path(tmp) / 'out')]
+            result = subprocess.run(compose, capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            result = subprocess.run(compose + ['--banned', 'file'], capture_output=True, text=True)
+            self.assertEqual(2, result.returncode)
+            self.assertIn('--banned', result.stderr)
+
+    def test_authorization_codes_are_masked_in_every_exchange_field(self):
+        code = 'a1b2c3d4e5f6a1b2c3d4'
+        url = 'https://app.example/callback?code=' + code
+        form = 'grant_type=authorization_code&code=' + code
+        for side in ('request', 'response'):
+            for field in ('headers', 'body', 'url'):
+                if field == 'url' and side != 'request':
+                    continue
+                with self.subTest(side=side, field=field):
+                    data = exchange()
+                    data[side][field] = [['Location', url]] if field == 'headers' else form if field == 'body' else url
+                    self.assertTrue(ev.sidecar_problems(data))
+                    masked = ev.mask_sidecar(copy.deepcopy(data))
+                    self.assertNotIn(code, json.dumps(masked))
+                    self.assertFalse(ev.sidecar_problems(masked))
+                    self.assertEqual(masked, ev.mask_sidecar(copy.deepcopy(masked)))
+        for text in ('code=' + code, 'curl --data "' + form + '"', url):
+            self.assertNotIn(code, ev.mask_text(text))
+        for text in ('{"code": 302}', 'STATUS CODE: 302', 'postcode=12345'):
+            self.assertEqual(text, ev.mask_text(text))
+
+    def test_pkce_verifiers_are_masked_in_all_text_representations(self):
+        verifier = 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk'
+        forms = ('code_verifier=' + verifier,
+                 'https://app.example/token?code_verifier=' + verifier,
+                 json.dumps({'code_verifier': verifier}),
+                 json.dumps({'items': [{'code_verifier': verifier}]}))
+        for side in ('request', 'response'):
+            for body in forms:
+                with self.subTest(side=side, body=body):
+                    data = exchange()
+                    data[side]['body'] = body
+                    self.assertTrue(ev.sidecar_problems(data))
+                    masked = ev.mask_sidecar(copy.deepcopy(data))
+                    self.assertNotIn(verifier, json.dumps(masked))
+                    self.assertFalse(ev.sidecar_problems(masked))
+                    self.assertEqual(masked, ev.mask_sidecar(copy.deepcopy(masked)))
+        data = exchange()
+        data['request']['url'] = forms[1]
+        data['response']['headers'].append(['Location', forms[1]])
+        self.assertTrue(ev.sidecar_problems(data))
+        self.assertNotIn(verifier, json.dumps(ev.mask_sidecar(data)))
+        with tempfile.TemporaryDirectory() as tmp:
+            raw, out = Path(tmp) / 'raw', Path(tmp) / 'out'
+            raw.write_text(forms[0])
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=['tool', forms[0]], rc=0))
+            self.assertNotIn(verifier, out.read_text())
+        self.assertEqual('code_challenge=' + verifier, ev.mask_text('code_challenge=' + verifier))
+
+    def test_sensitive_xml_attributes_preserve_public_siblings(self):
+        from xml.etree import ElementTree as ET
+        body = '<root><token value="short-secret" hint="correct-horse"/><name value="public"/></root>'
+        masked = ev.mask_text(body)
+        root = ET.fromstring(masked)
+        self.assertEqual({"value", "hint"}, set(root.find("token").attrib))
+        self.assertTrue(all(ev.MASK_RE.fullmatch(value) for value in root.find("token").attrib.values()))
+        self.assertEqual("public", root.find("name").get("value"))
+        self.assertEqual(masked, ev.mask_text(masked))
+
+    def test_typographic_contractions_are_strictly_refused(self):
+        texts = ("The tool isn't ready.", "We're ready for work.", "We've changed the text.",
+                 "It'll change the text.", "I'd change the text.", "I'm ready for work.", "It's ready for work.")
+        for apostrophe in ("'", "\u2018", "\u2019"):
+            for kind in ("purpose", "label", "steps"):
+                for text in texts:
+                    for quote in ("", '"', '`'):
+                        candidate = quote + text.replace("'", apostrophe) + quote
+                        with self.subTest(apostrophe=apostrophe, kind=kind, text=candidate):
+                            failures, _ = ev.ste_check(candidate, kind)
+                            self.assertTrue(any("contraction" in failure for failure in failures), failures)
+                self.assertFalse(ev.ste_check("The user's name is shown.".replace("'", apostrophe), kind)[0])
+
+    def test_annotation_checks_all_drawn_text_before_rendering(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            text = Path(tmp) / "text"
+            text.write_text("new text\n")
+            sidecar = Path(tmp) / "sidecar"
+            sidecar.write_text(json.dumps(exchange()))
+            for command in (ev.cmd_annotate_ui, ev.cmd_annotate_api):
+                for field in ("purpose", "label", "mark"):
+                    if command == ev.cmd_annotate_api and field == "mark":
+                        continue
+                    args = argparse.Namespace(image=None, text=str(text), against=None, mark_line=[0],
+                                              label=["Text changed"], mark=None, purpose="The tool prints new text.",
+                                              sidecar=str(sidecar), out=str(Path(tmp) / "out.png"))
+                    if field == "mark":
+                        args.image = "unused.png"
+                        args.mark = ["1,1,40,20,It's fixed; seamless"]
+                    elif field == "label":
+                        args.label = ["It's fixed; seamless"]
+                    else:
+                        args.purpose = "It's fixed; seamless"
+                    with self.subTest(command=command.__name__, field=field), contextlib.redirect_stdout(io.StringIO()) as log, \
+                            patch.object(ev, "run_magick") as render, patch.object(ev, "render_text_with_marks") as render_text, \
+                            patch.object(ev, "differing_lines", return_value=[0]):
+                        self.assertEqual(1, command(args))
+                        self.assertIn("semicolon", log.getvalue())
+                        render.assert_not_called()
+                        render_text.assert_not_called()
+
+    def test_api_annotation_includes_late_changes_and_order_changes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            before, after = exchange(), exchange()
+            before["response"]["body"] = json.dumps(list(range(60)) + ["old"])
+            after["response"]["body"] = json.dumps(list(range(60)) + ["new"])
+            paths = [Path(tmp) / name for name in ("before.json", "after.json")]
+            for path, data in zip(paths, (before, after)):
+                path.write_text(json.dumps(data))
+            args = argparse.Namespace(sidecar=str(paths[1]), against=str(paths[0]),
+                                      purpose="The service returns the new value.", label=None,
+                                      out=str(Path(tmp) / "out.png"))
+            def render(lines, marked, labels, purpose, out):
+                self.assertTrue(any('"new"' in lines[i] for i in marked))
+                self.assertTrue(any("59" in line for line in lines))
+                Path(out).write_bytes(b"rendered image")
+            with patch.object(ev, "render_text_with_marks", side_effect=render), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, ev.cmd_annotate_api(args))
+            for left, right in ((["alpha", "beta"], ["beta", "alpha"]),
+                                (["beta", "alpha"], ["alpha", "beta"]),
+                                (["a", "b", "a"], ["a", "a", "b"])):
+                self.assertTrue(ev.differing_lines(left, right))
+            self.assertEqual([], ev.differing_lines(["same"], ["same"]))
+
+    def test_annotation_warnings_reach_the_published_comment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            items = []
+            for phase, seed in (("before", 1), ("after", 2)):
+                import subprocess
+                path = tmp / (phase + ".png")
+                subprocess.run(["python3", str(ROOT / "tests/fixtures/pr-evidence/mkpng.py"), str(path), str(seed), "400"], check=True)
+                ev.save_annotation_texts(str(path), "The error was caused by a bad value.", ["Text changed"])
+            items.append({"id": "cli", "kind": "ui", "purpose": "The tool prints new text.", "labels": [],
+                          "before": {"image": "before.png"}, "after": {"image": "after.png"}})
+            path = tmp / "items.json"
+            path.write_text(json.dumps({"items": items}))
+            args = argparse.Namespace(items=str(path), declared="ui", head="a" * 40, provider="github",
+                                      repo="o/r", number="1", out=str(tmp / "publish"), default_none_reason=None)
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, ev.cmd_compose(args))
+            comment = (tmp / "publish/comment.md").read_text()
+            self.assertIn("Plain-English notes (warnings)", comment)
+            self.assertIn("passive voice", comment)
+
+    def test_verification_requires_marks_on_every_labelled_image(self):
+        import hashlib
+        import subprocess
+        with tempfile.TemporaryDirectory() as tmp:
+            images = {}
+            shas = []
+            for phase, count in (("before", 400), ("after", 0)):
+                path = Path(tmp) / (phase + ".png")
+                subprocess.run(["python3", str(ROOT / "tests/fixtures/pr-evidence/mkpng.py"), str(path), "1", str(count)], check=True)
+                data = path.read_bytes()
+                images[phase] = data
+                shas.append(("cli", phase, hashlib.sha256(data).hexdigest()))
+            findings = ev.Findings()
+            body = "![cli before](https://github.com/user-attachments/assets/" + "a" * 36 + ")\n" + \
+                   "![cli after](https://github.com/user-attachments/assets/" + "b" * 36 + ")\n"
+            rendered = '<img alt="cli before" src="before"><img alt="cli after" src="after">'
+            with patch.object(ev, "fetch", side_effect=lambda url, creds: (200, "image/png", images[url])):
+                ev.verify_images(findings, {"provider": "github"}, {"html": rendered}, body, shas, 2, "publish again")
+            self.assertTrue(any("cli after image has no drawn marks" in what for what, _ in findings.fails))
+
+    def test_quoted_text_has_no_strict_english_exemption(self):
+        for quote in ('"', '`'):
+            for kind in ('purpose', 'label', 'steps'):
+                for fragment, problem in (("seamless", "banned word"), ("it's", "contraction"),
+                                          ("e.g.", "abbreviation"), ("under the hood", "banned phrase"),
+                                          ("new; old", "semicolon"), ("new — old", "long dash"),
+                                          (" ".join(["word"] * 30), "maximum")):
+                    text = 'The text is ' + quote + fragment + quote
+                    with self.subTest(quote=quote, kind=kind, fragment=fragment):
+                        fails, _ = ev.ste_check(text, kind)
+                        self.assertTrue(any(problem in failure for failure in fails), fails)
+                self.assertFalse(ev.ste_check('The text is ' + quote + 'plain' + quote, kind)[0])
+
+    def test_unreadable_configuration_is_not_disabled(self):
+        for error in (PermissionError("permission denied"), UnicodeError("invalid text"), IsADirectoryError("not a file")):
+            with self.subTest(error=error), patch("builtins.open", side_effect=error), contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertEqual(0, ev.cmd_config(argparse.Namespace(file="config/pr-evidence", project="proj")))
+                self.assertTrue(json.loads(output.getvalue())["errors"])
+        with tempfile.TemporaryDirectory() as tmp, contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(0, ev.cmd_config(argparse.Namespace(file=str(Path(tmp) / "absent"), project="proj")))
+            self.assertEqual([], json.loads(output.getvalue())["errors"])
+
+    def test_insertions_and_deletions_can_annotate_both_phases(self):
+        pairs = (("alpha", "alpha\nbeta"), ("omega", "beta\nomega"),
+                 ("alpha\nomega", "alpha\nbeta\nomega"), ("", "beta"),
+                 ("alpha\nomega", "alpha\n\nomega"))
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            def render(lines, marked, labels, purpose, out):
+                self.assertTrue(marked)
+                self.assertTrue(all(0 <= index < len(lines) for index in marked))
+                Path(out).write_bytes(b"rendered image")
+            for before, after in pairs:
+                for left, right in ((before, after), (after, before)):
+                    for command in (ev.cmd_annotate_ui, ev.cmd_annotate_api):
+                        path, other = tmp / "left", tmp / "right"
+                        if command == ev.cmd_annotate_api:
+                            data, against = exchange(), exchange()
+                            data["response"]["body"], against["response"]["body"] = left, right
+                            path.write_text(json.dumps(data))
+                            other.write_text(json.dumps(against))
+                        else:
+                            path.write_text(left)
+                            other.write_text(right)
+                        args = argparse.Namespace(image=None, text=str(path), sidecar=str(path), against=str(other),
+                                                  label=None, purpose="The tool shows the added line.", out=str(tmp / "out.png"))
+                        with self.subTest(command=command.__name__, left=left, right=right), \
+                                patch.object(ev, "render_text_with_marks", side_effect=render), contextlib.redirect_stdout(io.StringIO()):
+                            self.assertEqual(0, command(args))
+
+    def test_xml_secrets_cannot_reach_annotation_output(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            body = '<password value="correct-horse"/>'
+            path = tmp / "text"
+            path.write_text(body)
+            def render(lines, marked, labels, purpose, out):
+                self.assertNotIn("correct-horse", "\n".join(lines))
+                Path(out).write_bytes(b"masked image")
+            args = argparse.Namespace(image=None, text=str(path), mark_line=[0], against=None, label=None,
+                                      purpose="The tool shows the masked value.", out=str(tmp / "out.png"))
+            with patch.object(ev, "render_text_with_marks", side_effect=render), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, ev.cmd_annotate_ui(args))
+            for side in ("request", "response"):
+                data = exchange()
+                data[side]["body"] = body
+                sidecar = tmp / "sidecar.json"
+                sidecar.write_text(json.dumps(data))
+                args.sidecar = str(sidecar)
+                with patch.object(ev, "render_text_with_marks") as render, contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(1, ev.cmd_annotate_api(args))
+                    render.assert_not_called()
+
+    def test_effective_declaration_uses_only_pr_author_comments(self):
+        def comment(author, kinds):
+            return {"author": author, "body": "```fm-pr-evidence-v1\n" + json.dumps({"kind": kinds, "items": []}) + "\n```"}
+        self.assertEqual("ui+api", ev.effective_declaration("ui", [comment("worker", "ui+api")], {"worker"}))
+        self.assertEqual("ui", ev.effective_declaration("ui", [comment("captain", "ui+api")], {"worker"}))
+
+
+if __name__ == "__main__":
+    unittest.main()
