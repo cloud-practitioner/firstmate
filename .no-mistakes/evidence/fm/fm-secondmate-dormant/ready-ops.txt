@@ -1,0 +1,41 @@
+
+
+ ▐▛███▛█   Claude Code v2.1.309
+▝▜██████▀  Haiku 5.5 with low effort · Claude Team
+ ▝▝   ▝▝   /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops
+
+  Opus 5.5 is now your default model and it draws down usage faster than Sonnet 5. Switch anytime with /model.
+
+❯ : Firstmate operational input waiting: read '/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ
+  8/.m/ops/state/operational-inbox/1792752766-954041474c2c3b74.msg' and handle its contents as Firstmate operational
+  input.
+
+  Read 2 files, listed 1 directory, ran 1 shell command
+
+● LAB_READY_ops
+
+  The inbox message asked for a readiness reply only. I read data/retained-report.md (it contains "Retained report for
+  ops: ballast-42."), and the session-start digest already ran with no queued wakes and no tasks in flight. I didn't
+  spawn anything, route work, call external services, or touch credentials.
+
+✻ Baked for 13s · done 10:53 AM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     tmux detected · scroll with PgUp/PgDn · or add 'set -g mouse on' to ~/.tmux.conf for wheel scroll
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ bypass permissions on (shift+tab to cycle)

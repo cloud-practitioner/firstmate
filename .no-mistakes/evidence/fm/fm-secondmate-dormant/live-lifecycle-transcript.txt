@@ -1,0 +1,19 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l
+Spawned fm-ops through real fm-spawn and guarded Claude.
+Spawned ops through real fm-spawn and guarded Claude.
+Both genuine Claude agents answered their disposable charters.
+Active child work refused stand-down without dormancy.
+Live driver stopped at line 151
+Live driver stopped at line 153
+Home marker, charter, backlog, report, held decision, route and status retained byte-for-byte; parent metadata retained except normal busy_gen retirement by control exit.
+Exact fm-ops stood down; ops sibling untouched; racing sends refused.
+Real bootstrap plus 68 seconds of watcher polling did not relaunch the dormant mate.
+Fleet snapshot after closing terminal: {"id": "fm-ops", "agent_alive": null, "endpoint": {"target": "firstmate:fm-fm-ops", "exists": false, "agent_alive": "dormant", "status": "dormant", "observed_at": "2026-10-23T10:54:21Z", "freshness": "fresh"}, "dormant": {"since": 1792752786, "reason": "No work for now; retain ballast-42"}}
+Live driver stopped at line 236
+Delivery failure retained both the durable secondmate record and dormancy.
+Retained report after resume: Retained report for fm-ops: ballast-42.
+Retained decision after resume: Held decision for fm-ops: wait for captain.
+Resume launched genuine Claude from recorded Cursor metadata, reconciled retained home, cleared dormancy and stale recovery park.
+Live dormancy lifecycle completed.
+Host Claude launcher unchanged.
+Live driver exit: 0; lab homes and private tmux removed.

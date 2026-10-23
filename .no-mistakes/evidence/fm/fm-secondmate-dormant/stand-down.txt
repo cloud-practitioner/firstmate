@@ -1,0 +1,2 @@
+stood down fm-ops: agent stopped; home, route, backlog, held decisions and reports kept
+bring it back with: bin/fm-secondmate-dormant.sh resume fm-ops

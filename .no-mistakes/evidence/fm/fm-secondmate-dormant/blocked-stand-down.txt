@@ -1,0 +1,2 @@
+refused: second mate fm-ops cannot be stood down yet; nothing was changed:
+  - in-flight work: its home has task active-work (/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops/state/active-work.meta)

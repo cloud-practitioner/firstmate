@@ -1,0 +1,523 @@
+{
+  "schema": "fm-fleet-snapshot.v1",
+  "generated": "2026-10-23T10:54:21Z",
+  "fm_home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l",
+  "roots": {
+    "fm_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.test-phase/runtime",
+    "state": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/state",
+    "data": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/data",
+    "config": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/config",
+    "projects": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/projects"
+  },
+  "backlog": {
+    "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/data/backlog.md",
+    "present": false,
+    "records": []
+  },
+  "tasks": [
+    {
+      "id": "fm-ops",
+      "kind": "secondmate",
+      "harness": "claude",
+      "mode": "secondmate",
+      "yolo": "off",
+      "branch": null,
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops",
+      "spawn_gen": "s1792752760.272653.10945",
+      "backend": "tmux",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/state/fm-ops.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/state/fm-ops.status",
+          "present": false,
+          "kind": "event_history",
+          "last_event": {
+            "state": "",
+            "note": "",
+            "raw": "",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops",
+          "present": true
+        },
+        "home": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops",
+          "present": true
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/data/fm-ops/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "unknown",
+        "source": "none",
+        "detail": "backend target gone: firstmate:fm-fm-ops",
+        "raw": "state: unknown · source: none · backend target gone: firstmate:fm-fm-ops",
+        "observed_at": "2026-10-23T10:54:21Z",
+        "freshness": "fresh"
+      },
+      "dormant": {
+        "since": 1792752786,
+        "reason": "No work for now; retain ballast-42"
+      },
+      "endpoint": {
+        "target": "firstmate:fm-fm-ops",
+        "exists": false,
+        "agent_alive": "dormant",
+        "status": "dormant",
+        "observed_at": "2026-10-23T10:54:21Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": ""
+      },
+      "actions": {
+        "send": "bin/fm-secondmate-dormant.sh resume fm-ops",
+        "watch": "dormant: no agent is running, so fm-send refuses until it is resumed",
+        "return_channel_note": "Secondmate is stood down; resume it before routing work or requests."
+      },
+      "backlog": null
+    },
+    {
+      "id": "ops",
+      "kind": "secondmate",
+      "harness": "claude",
+      "mode": "secondmate",
+      "yolo": "off",
+      "branch": null,
+      "project": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops",
+      "spawn_gen": "s1792752764.278963.20423",
+      "backend": "tmux",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/state/ops.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/state/ops.status",
+          "present": false,
+          "kind": "event_history",
+          "last_event": {
+            "state": "",
+            "note": "",
+            "raw": "",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops",
+          "present": true
+        },
+        "home": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops",
+          "present": true
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/data/ops/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "unknown",
+        "source": "none",
+        "detail": "no current-state source available",
+        "raw": "state: unknown · source: none · no current-state source available",
+        "observed_at": "2026-10-23T10:54:21Z",
+        "freshness": "fresh"
+      },
+      "dormant": null,
+      "endpoint": {
+        "target": "firstmate:fm-ops",
+        "exists": true,
+        "agent_alive": "alive",
+        "status": "alive",
+        "observed_at": "2026-10-23T10:54:21Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": ""
+      },
+      "actions": {
+        "send": "bin/fm-send.sh fm-ops '<request>'",
+        "watch": "read status/doc return channel; do not routinely fm-peek a secondmate for answers",
+        "return_channel_note": "Secondmate answers come back through status/doc paths after a marked fm-send request."
+      },
+      "backlog": null
+    }
+  ],
+  "main_inventory": {
+    "valid": true,
+    "reason": null,
+    "orphan_in_flight": [],
+    "unstructured_current_count": 0
+  },
+  "contributions": {
+    "known": 0,
+    "checked": 0,
+    "counts": {
+      "captain": 0,
+      "fleet": 0,
+      "maintainer": 0,
+      "nobody": 0
+    },
+    "unmeasured": 0,
+    "complete": false,
+    "proven_clear": false,
+    "stale_verdicts": 0,
+    "missing_verdicts": 0,
+    "unreadable_records": 1,
+    "valid_until": 900,
+    "captain": [],
+    "captain_omitted": 0
+  },
+  "scout_reports": [],
+  "secondmate_current": {
+    "registry": {
+      "present": true,
+      "available": true,
+      "reason": null,
+      "provenance": "registered-table",
+      "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/data/secondmates.md",
+      "freshness": {
+        "status": "fresh",
+        "observed_at": "2026-10-23T10:54:21Z"
+      },
+      "records": [
+        {
+          "id": "fm-ops",
+          "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops",
+          "host": null,
+          "root": null,
+          "remote": false,
+          "registered": true,
+          "registry_error": null
+        },
+        {
+          "id": "ops",
+          "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops",
+          "host": null,
+          "root": null,
+          "remote": false,
+          "registered": true,
+          "registry_error": null
+        }
+      ],
+      "input_truncated": false,
+      "records_truncated": false,
+      "complete": true,
+      "reasons": [],
+      "lines_in_window": 2,
+      "records_in_window": 2
+    },
+    "records": [
+      {
+        "id": "fm-ops",
+        "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops",
+        "host": null,
+        "remote": false,
+        "registered": true,
+        "spawn_gen": "s1792752760.272653.10945",
+        "current": {
+          "state": "no_active_work",
+          "reason": null
+        },
+        "invalidity": {
+          "kind": null,
+          "ids": []
+        },
+        "reconcile_inventory": {
+          "kind": null,
+          "ids": []
+        },
+        "provenance": {
+          "selected": "structured-home",
+          "structured_home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops",
+          "summary_source": "local-ledger",
+          "summary_valid": true,
+          "trust": "complete",
+          "parent_event_role": "historical-only"
+        },
+        "freshness": {
+          "status": "fresh",
+          "observed_at": "2026-10-23T10:52:51Z",
+          "age_seconds": 90
+        },
+        "active_children": [],
+        "decisions_open": [],
+        "holds": [],
+        "queued": [],
+        "contributions": {
+          "known": 0,
+          "checked": 0,
+          "counts": {
+            "captain": 0,
+            "fleet": 0,
+            "maintainer": 0,
+            "nobody": 0
+          },
+          "unmeasured": 0,
+          "complete": true,
+          "proven_clear": true,
+          "stale_verdicts": 0,
+          "missing_verdicts": 0,
+          "unreadable_records": 0,
+          "valid_until": 900,
+          "captain": [],
+          "captain_omitted": 0
+        },
+        "landed": [
+          {
+            "id": "retained-history",
+            "title": "ballast-42",
+            "kind": null,
+            "hold_kind": null,
+            "pr_url": null,
+            "report_path": null,
+            "local_note": null,
+            "completion": {
+              "date": null,
+              "verb": null
+            }
+          }
+        ],
+        "endpoints": [],
+        "counts": {
+          "active_children": 0,
+          "decisions_open": 0,
+          "holds": 0,
+          "queued": 0,
+          "landed": 1,
+          "endpoints": 0
+        },
+        "omitted": [],
+        "parent_event": {
+          "raw": "",
+          "note": "",
+          "age_seconds": null,
+          "open_activities": [],
+          "open_decisions": [],
+          "activity_scan": {
+            "records": [],
+            "available": true,
+            "input_truncated": false,
+            "retained_truncated": false,
+            "reasons": [],
+            "lines_in_window": 0,
+            "records_in_window": 0
+          },
+          "reconciliation": {
+            "provenance": "parent-status-keyed-fold",
+            "trust": "untrusted-supplement",
+            "activities": [],
+            "decisions": [],
+            "contradiction": false,
+            "inconclusive": false
+          }
+        },
+        "terminal_evidence": {
+          "provenance": "parent-direct-report-terminal",
+          "trust": "untrusted-supplement",
+          "captured": false,
+          "observed_at": "2026-10-23T10:54:21Z",
+          "freshness": "not-collected",
+          "reason": "no useful contradiction check",
+          "lines": 0,
+          "bytes": 0,
+          "event_note_seen": false,
+          "contradiction": false
+        },
+        "contradiction": false
+      },
+      {
+        "id": "ops",
+        "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops",
+        "host": null,
+        "remote": false,
+        "registered": true,
+        "spawn_gen": "s1792752764.278963.20423",
+        "current": {
+          "state": "no_active_work",
+          "reason": null
+        },
+        "invalidity": {
+          "kind": null,
+          "ids": []
+        },
+        "reconcile_inventory": {
+          "kind": null,
+          "ids": []
+        },
+        "provenance": {
+          "selected": "structured-home",
+          "structured_home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops",
+          "summary_source": "local-ledger",
+          "summary_valid": true,
+          "trust": "complete",
+          "parent_event_role": "historical-only"
+        },
+        "freshness": {
+          "status": "fresh",
+          "observed_at": "2026-10-23T10:52:52Z",
+          "age_seconds": 89
+        },
+        "active_children": [],
+        "decisions_open": [],
+        "holds": [],
+        "queued": [],
+        "contributions": {
+          "known": 0,
+          "checked": 0,
+          "counts": {
+            "captain": 0,
+            "fleet": 0,
+            "maintainer": 0,
+            "nobody": 0
+          },
+          "unmeasured": 0,
+          "complete": true,
+          "proven_clear": true,
+          "stale_verdicts": 0,
+          "missing_verdicts": 0,
+          "unreadable_records": 0,
+          "valid_until": 900,
+          "captain": [],
+          "captain_omitted": 0
+        },
+        "landed": [
+          {
+            "id": "retained-history",
+            "title": "ballast-42",
+            "kind": null,
+            "hold_kind": null,
+            "pr_url": null,
+            "report_path": null,
+            "local_note": null,
+            "completion": {
+              "date": null,
+              "verb": null
+            }
+          }
+        ],
+        "endpoints": [],
+        "counts": {
+          "active_children": 0,
+          "decisions_open": 0,
+          "holds": 0,
+          "queued": 0,
+          "landed": 1,
+          "endpoints": 0
+        },
+        "omitted": [],
+        "parent_event": {
+          "raw": "",
+          "note": "",
+          "age_seconds": null,
+          "open_activities": [],
+          "open_decisions": [],
+          "activity_scan": {
+            "records": [],
+            "available": true,
+            "input_truncated": false,
+            "retained_truncated": false,
+            "reasons": [],
+            "lines_in_window": 0,
+            "records_in_window": 0
+          },
+          "reconciliation": {
+            "provenance": "parent-status-keyed-fold",
+            "trust": "untrusted-supplement",
+            "activities": [],
+            "decisions": [],
+            "contradiction": false,
+            "inconclusive": false
+          }
+        },
+        "terminal_evidence": {
+          "provenance": "parent-direct-report-terminal",
+          "trust": "untrusted-supplement",
+          "captured": false,
+          "observed_at": "2026-10-23T10:54:21Z",
+          "freshness": "not-collected",
+          "reason": "no useful contradiction check",
+          "lines": 0,
+          "bytes": 0,
+          "event_note_seen": false,
+          "contradiction": false
+        },
+        "contradiction": false
+      }
+    ],
+    "total_registered": 2,
+    "total": 2,
+    "shown": 2,
+    "truncated": 0
+  },
+  "secondmate_landed": {
+    "records": [
+      {
+        "id": "retained-history",
+        "title": "ballast-42",
+        "kind": null,
+        "hold_kind": null,
+        "pr_url": null,
+        "report_path": null,
+        "local_note": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops",
+        "home_id": "ops"
+      },
+      {
+        "id": "retained-history",
+        "title": "ballast-42",
+        "kind": null,
+        "hold_kind": null,
+        "pr_url": null,
+        "report_path": null,
+        "local_note": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops",
+        "home_id": "fm-ops"
+      }
+    ],
+    "truncated": [],
+    "unreadable": [],
+    "partial": []
+  },
+  "secondmate_guidance": {
+    "note": "For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority."
+  }
+}

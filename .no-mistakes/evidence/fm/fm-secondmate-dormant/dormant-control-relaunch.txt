@@ -1,0 +1,2 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l
+error: secondmate fm-ops is dormant (stood down since 2026-10-23T10:53:06Z (No work for now; retain ballast-42)); refusing to relaunch it - bring it back first with bin/fm-secondmate-dormant.sh resume fm-ops

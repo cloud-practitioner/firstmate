@@ -1,0 +1,1 @@
+error: relaunch of second mate fm-ops failed and it stays dormant: fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l

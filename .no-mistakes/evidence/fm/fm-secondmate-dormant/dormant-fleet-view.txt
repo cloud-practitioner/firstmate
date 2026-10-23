@@ -1,0 +1,19 @@
+# Fleet View
+
+Schema: fm-fleet-snapshot.v1
+Home: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l
+
+## Under Way
+| ID | Current | Kind | Repo/Project | Backend | Endpoint | Artifact | Path | Watch / return channel |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| fm-ops | unknown / none | secondmate | /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops | tmux | dormant (stood down) | - | /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops | bin/fm-secondmate-dormant.sh resume fm-ops - dormant: no agent is running, so fm-send refuses until it is resumed |
+| ops | unknown / none | secondmate | /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops | tmux | present / alive | - | /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops | bin/fm-send.sh fm-ops '<request>' - read status/doc return channel; do not routinely fm-peek a secondmate for answers |
+
+## Queued
+No queued backlog records found.
+
+## Done
+No done backlog records found.
+
+## Secondmates
+For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.

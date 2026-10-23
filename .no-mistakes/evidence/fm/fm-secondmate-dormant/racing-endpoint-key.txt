@@ -1,0 +1,3 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 25s ago)) - full banner already printed this episode.
+error: task fm-ops has a lifecycle or work admission in progress; nothing was changed - retry

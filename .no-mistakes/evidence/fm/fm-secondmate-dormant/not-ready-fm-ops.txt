@@ -1,0 +1,26 @@
+
+fm-ops on  main
+❯ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/state/fm-ops.tasktmp/got
+mp'
+fm-ops on  main
+❯ export COMPACT_ADVISER_DISABLE=1
+fm-ops on  main
+❯ . '/tmp/fm-fm-ops+85f4b1dda58d4bc1c25bf6773265876c73d73c1a0443d4ec771bbfa582096009/launch.s1792752600.127970.17689.sh'
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  WARNING: Claude Code running in Bypass Permissions mode
+
+  In Bypass Permissions mode, Claude Code will not ask for your approval before running potentially dangerous
+  commands.
+  This mode should only be used in a sandboxed container/VM that has restricted internet access and can easily be
+  restored if damaged.
+
+  By proceeding, you accept all responsibility for actions taken while running in Bypass Permissions mode.
+
+  https://code.claude.com/docs/en/security
+
+  ❯ No, exit
+    Yes, I accept
+
+  Enter to confirm · Esc to cancel

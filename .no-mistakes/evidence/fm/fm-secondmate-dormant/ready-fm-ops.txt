@@ -1,0 +1,41 @@
+
+
+ ▐▛███▛█   Claude Code v2.1.309
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops
+
+  Opus 5.5 is now your default model and it draws down usage faster than Sonnet 5. Switch anytime with /model.
+
+❯ : Firstmate operational input waiting: read '/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ
+  8/.m/fm-ops/state/operational-inbox/1792752865-b51fe5ec77e30968.msg' and handle its contents as Firstmate operational
+  input.
+
+  Read 1 file, ran 1 shell command
+
+● LAB_READY_fm-ops
+
+✻ Brewed for 14s · done 10:54 AM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     tmux detected · scroll with PgUp/PgDn · or add 'set -g mouse on' to ~/.tmux.conf for wheel scroll
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ bypass permissions on (shift+tab to cycle)

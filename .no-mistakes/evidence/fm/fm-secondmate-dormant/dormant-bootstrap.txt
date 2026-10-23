@@ -1,0 +1,5 @@
+BOOTSTRAP_INFO: tasks-axi available
+BOOTSTRAP_INFO: secondmate fm-ops dormant (stood down since 2026-10-23T10:53:06Z (No work for now; retain ballast-42))
+BOOTSTRAP_INFO: secondmate ops already live (backend=tmux)
+SECONDMATE_SYNC: secondmate ops: skipped: 24a3a921fc01ca46e0325c131ed38a17593d4223 does not exist
+CONFIG_REREAD: secondmate ops: send failed: fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l

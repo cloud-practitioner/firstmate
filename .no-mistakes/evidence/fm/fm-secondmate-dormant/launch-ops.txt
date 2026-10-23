@@ -1,0 +1,3 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l
+warning: secondmate ops sync skipped before launch: 24a3a921fc01ca46e0325c131ed38a17593d4223 does not exist
+spawned ops harness=claude kind=secondmate mode=secondmate yolo=off window=firstmate:fm-ops worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops

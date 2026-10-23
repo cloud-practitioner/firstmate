@@ -1,0 +1,2 @@
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/data/ops/brief.md (secondmate charter)
+home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/ops

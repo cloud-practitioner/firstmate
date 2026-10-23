@@ -1,0 +1,41 @@
+
+fm-ops on  main
+❯ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/state/fm-ops.tasktmp/got
+mp'
+fm-ops on  main
+❯ export COMPACT_ADVISER_DISABLE=1
+fm-ops on  main
+❯ . '/tmp/fm-fm-ops+85f4b1dda58d4bc1c25bf6773265876c73d73c1a0443d4ec771bbfa582096009/launch.s1792752760.272653.10945.sh'
+
+
+Resume this session with:
+claude --resume f0d68857-4a22-40d9-8b46-a737e6d3eba7
+fm-ops on  main 23s
+❯
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+window=firstmate:fm-fm-ops
+endpoint_task_id=fm-ops
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops
+harness=claude
+kind=secondmate
+mode=secondmate
+yolo=off
+tasktmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.l/state/fm-ops.tasktmp
+model=default
+effort=default
+busy_gen=g1792752863.380928.16563
+spawn_gen=s1792752863.379906.27917
+home=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5M1E0XSGQGNMGBGQ48FENQ8/.m/fm-ops
+projects=
