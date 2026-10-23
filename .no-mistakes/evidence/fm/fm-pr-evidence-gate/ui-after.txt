@@ -1,0 +1,3 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'Read the new text.'
+
+(exit status 0)

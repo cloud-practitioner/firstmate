@@ -1,0 +1,4 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'Use a robust tool.'
+[FAIL] plain-English check (purpose): banned word 'robust'
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+(exit status 1)

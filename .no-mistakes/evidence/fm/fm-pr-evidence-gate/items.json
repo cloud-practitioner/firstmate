@@ -1,33 +1,33 @@
 {
   "items": [
     {
-      "id": "terminal",
+      "id": "text-check",
       "kind": "ui",
-      "purpose": "The tool refuses text with a semicolon.",
+      "purpose": "Use short text to explain the change.",
       "labels": [
-        "The result changed"
+        "Text check changed"
       ],
       "before": {
-        "image": "before-terminal.png"
+        "image": "/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-before.png"
       },
       "after": {
-        "image": "after-terminal.png"
+        "image": "/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-after.png"
       }
     },
     {
-      "id": "save-item",
+      "id": "server-reply",
       "kind": "api",
-      "purpose": "The service saves the item after the change.",
+      "purpose": "Check the server reply before and after the change.",
       "labels": [
-        "The status and result changed"
+        "The reply changed"
       ],
       "before": {
-        "image": "before-http.png",
-        "sidecar": "before-http.json"
+        "image": "/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-before.png",
+        "sidecar": "/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-before.json"
       },
       "after": {
-        "image": "after-http.png",
-        "sidecar": "after-http.json"
+        "image": "/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.png",
+        "sidecar": "/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.json"
       }
     }
   ]

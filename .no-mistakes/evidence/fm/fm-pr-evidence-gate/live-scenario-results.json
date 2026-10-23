@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Declare evidence at intake; reject missing kinds and forbid none for Firstmate",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  },
+  {
+    "name": "Exclude unsupported delivery lanes and keep Bitbucket off; refuse invalid configuration",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  },
+  {
+    "name": "Propagate durable policy into a second home and enforce it in a fresh CLI process",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  },
+  {
+    "name": "Check short plain English and distinguish strict refusals from warnings",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  },
+  {
+    "name": "Allow legacy tasks with a notice and refuse away-mode or empty waiver authority",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  },
+  {
+    "name": "Capture real CLI output and draw a purpose and difference marks on both terminal images",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  },
+  {
+    "name": "Capture HTTPS through a real CONNECT tunnel; keep final headers, folded fields and trailers while masking secrets",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  },
+  {
+    "name": "Capture HEAD with a nonzero entity length without waiting for a body; retain GET and POST bodies",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  },
+  {
+    "name": "Render the six-part HTTP exchanges with visible purpose and marks; reject an unchanged exchange",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  },
+  {
+    "name": "Compose a head-bound review comment; reject missing receipts, stale image hashes and marks drawn outside the image",
+    "result": "pass",
+    "live": true,
+    "evidence": "live-cli-transcript.txt; live-scenario-results.json",
+    "reason": ""
+  }
+]

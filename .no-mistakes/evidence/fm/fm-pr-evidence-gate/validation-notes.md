@@ -1,40 +1,55 @@
-# PR evidence gate: local Test-phase evidence
+# Targeted validation
 
-Validated target: `9512699506a2e867f9fd2bf9633ea138c3f25320`.
-Base inspected: `5958dc34f9507bdd6c3df70a62e6b68df22dfda7`.
+Target: `791c507bc21d52563f59e2e410087668d6ac8783`
 
-## What the visual artifacts prove
+## Result
 
-`live-gallery.png` presents PNGs produced by the real `bin/fm-pr-evidence.sh` executable, not by the forge stub. Each original PNG is also retained separately.
+Local CLI and HTTP scenarios passed. No source or test files were changed.
+Hosted acceptance remains unverified under the workspace-only authority of this turn.
+The final verdict is inconclusive, not a hosted-gate pass.
 
-- `before-terminal.png` and `after-terminal.png`: real CLI captures of a refused semicolon purpose and an accepted corrected purpose, with purpose banners and drawn difference marks.
-- `before-http.png` and `after-http.png`: real POST requests to a disposable localhost service, with 422 and 201 responses. The images show request headers/body, response headers/body, status code/message, masking of conventional authorization/password/cookie values, purpose banners, and drawn difference marks.
-- `image-annotation.png`: the explicit screenshot rectangle-and-label annotation path, using a generated terminal capture as its input.
-- `composed/comment.md`: the real composer's output, including the ui+api declaration, target head, four image hashes, annotations, and complete masked HTTP text.
+## Product-level evidence
 
-These are scenario captures of the target tooling, not recordings of the historical base and target builds. The HTML gallery is a local reviewer presentation, not a GitHub-rendered PR comment. No actual upload, hosted display, PR merge, or this PR's self-gate is claimed.
+- [Terminal before](ui-before.png) and [terminal after](ui-after.png): the real plain-English checker rejects banned wording, then accepts short wording. Both images contain the purpose and drawn difference marks.
+- [HTTP before](api-before.png) and [HTTP after](api-after.png): the real capture CLI calls a disposable HTTPS endpoint through a real CONNECT tunnel. The final status, message, folded header, optional whitespace, empty field, request body, response body and folded trailer survive. Proxy and interim-response headers do not appear. Synthetic authorization, password and cookie values are masked.
+- [HEAD exchange](head.json): status 200, Content-Length 23, and an empty response body. Capture completes without waiting for a nonexistent body. GET and POST body retention were also exercised.
+- [Generated comment](composed/comment.md): the real composer produces a UI+API review comment bound to the target head, with hash-bound annotation records and complete HTTP text. This is pre-upload output; its local image paths are not hosted image URLs.
+- [Generated brief](generated-brief.md), [filled brief](filled-brief.md), and [brief/intake transcript](brief-intake-transcript.txt): the real scaffold reaches the unfilled-declaration refusal; filling it produces `evidence=ui+api`. Local-only intake emits no evidence requirement.
+- [CLI transcript](live-cli-transcript.txt) and [local scenario results](live-scenario-results.json): intake refusals, Firstmate's none restriction, excluded lanes, invalid configuration, persisted policy inheritance, strict/warning English rules, legacy notice, away-mode waiver refusal, terminal capture, HTTP capture, annotation and composition.
+- Composition actively refused absent annotation records and stale image hashes for both phases of both kinds. It also refused a real annotated image whose only box was drawn outside its bounds.
 
-## Other live observations
+These before/after images illustrate the evidence workflow against deliberately changed text and a disposable endpoint. They are **not historical before/after evidence for this branch**, and no hosted upload or display is claimed.
 
-`live-cli-transcript.log` records exact CLI invocations, refusals, FIX messages, and exit statuses. It covers intake declarations, malformed configuration, Firstmate's refusal of none, strict English rules and warning-only passive voice, both annotation paths, insertion context marks, identical/missing evidence refusals, incomplete HTTP data, away-mode waiver refusal, legacy task notice, default-off Bitbucket, and old-CLI refusal.
+All four images were opened and visually inspected. The visible purpose, pink rectangles, masked fields, HTTP sections and status changes match the captured output.
 
-`inherited-policy.log` records real propagation to an isolated child home's gitignored config. A new CLI process enforces the copied policy after runtime state is removed. This is a local persistence/inheritance check; no real secondmate, fleet, devcontainer rebuild, or primary was launched.
+## Focused automated checks
 
-## Targeted tests and the test-only correction
+Commands used a worktree-local TMPDIR and ran no real agent or Herdr lifecycle:
 
-- The first bounded invocation of `tests/fm-pr-evidence.test.sh` timed out after 240 seconds. Its partial transcript is retained in `targeted-evidence-tests.log`.
-- The unbounded retry reached the annotation test after the preceding forge-fixture checks passed. It then failed on a stale literal command assertion: it expected `$ echo hello world`, whereas capture now correctly preserves the argument boundary as `$ echo 'hello world'`. See `targeted-evidence-tests-retry.log`.
-- Only this assertion in `tests/fm-pr-evidence.test.sh` was changed. It now parses the generated command with `shlex.split` and compares the argv list to `["echo", "hello world"]`.
-- A transient focused runner reused that test file's setup and executed `test_annotation_tools_draw_marks`, `test_brief_block_and_list_commands_print`, and the opt-in live guard. The corrected annotation test and remaining local check passed; the live guard reported its missing sandbox URL. The Python regression tests also ran in this focused invocation. See `focused-annotation-retest.log`.
-- `tests/fm-pr-evidence-retrofit.test.sh` completed successfully; see `targeted-retrofit-tests.log`.
-- No full repository test suite, formatter, package installer, pipeline controller, push, PR, or CI phase was executed.
+```sh
+TMPDIR="$PWD/.test-evidence-tmp" PYTHONDONTWRITEBYTECODE=1 bash tests/fm-pr-evidence.test.sh
+TMPDIR="$PWD/.test-evidence-tmp" PYTHONDONTWRITEBYTECODE=1 bash tests/fm-pr-evidence-retrofit.test.sh
+python3 /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/live-validation.py
+python3 /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/brief-intake-validation.py
+python3 /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/reproduce-regressions.py
+```
 
-Forge-fixture tests are supplemental evidence, not live proof of GitHub or Bitbucket behavior.
+The evidence suite also runs its Python regression suite. Its forge fixture covers publication, republishing, metadata ordering, worker-added kinds, file mismatches, image display refusals, changed heads, foreign authors, immediate merges, waivers and Bitbucket Downloads behavior. Those simulated forge results are **not live hosted proof**.
 
-## Hosted proof still required
+[Historical regression transcript](historical-regression-transcript.txt) reproduces the trailer boundary failure at `163827e5`, and HEAD and folded-header failures at `38d81698`. The same selectors pass at the target commit. Historical snapshots were created only inside disposable worktree-local directories.
 
-The default `gh` is 2.96.0, but `/usr/bin/gh` (already on PATH) is 2.102.0 and supports attachments. The product successfully gets past capability selection on normal PATH. A restricted PATH containing the real old binary proves its actionable refusal without mocking gh.
+No complete repository suite, lint, formatting, static-analysis, push, PR or CI phase was run.
 
-No sandbox PR URL or isolated worker credential was supplied. With operator tokens removed and `GH_CONFIG_DIR` redirected into the lab, `publish` refuses the PR read. Operator credential stores were not intentionally inspected or changed. Local forge fixtures and the real localhost HTTP service cannot establish GitHub attachment rendering, author-owned comment replacement, merge-time head binding on a real PR, or this PR's self-gate.
+## Hosted checks that remain untested
 
-To finish that proof, provide an authorized private cloud-practitioner sandbox PR (`FM_PR_EVIDENCE_LIVE_PR`), a scoped worker credential in an isolated environment, and explicit permission for sandbox service mutations outside the worktree-only boundary. The non-IQX Bitbucket proof additionally needs the captain-selected workspace; its production arm remains off.
+The installed GitHub CLI is 2.102.0 and advertises `pr comment --attach`. A missing CLI is not the blocker. `FM_PR_EVIDENCE_LIVE_PR` is unset; this turn has no authorized sandbox PR, isolated publishing identity or remote-write authority. The opt-in hosted guard therefore did not run. No production credential store was inspected or changed.
+
+A disposable local endpoint solves HTTP capture and rendering, but a simulated forge cannot establish GitHub's actual image rendering, worker identity, merge semantics, fresh PR state, or posted waiver text. Completing those checks requires an authorized sandbox PR and explicit authority for the intended remote actions. A read-only sandbox identity and PR records would suffice for the retrofit-list check.
+
+Bitbucket remains off by default. No captain-named non-IQX sandbox was supplied, and ambient production credentials were not used. Its real upload/display proof requires that sandbox and scoped credentials with explicit sandbox-write authority.
+
+This turn did not attach historical evidence to this change's own PR or run another pipeline/publication phase. The outer executor owns publication and subsequent gate phases.
+
+## Cleanup
+
+Disposable operational homes, Git repositories, historical snapshots, TLS certificate/key, HTTP server, TLS server and CONNECT proxy were removed or stopped in their evidence turns. The empty worktree-local scratch directory was removed. Reviewer evidence remains in this directory.

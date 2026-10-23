@@ -1,0 +1,7 @@
+{
+  "labels": [
+    "The reply changed"
+  ],
+  "purpose": "Check the server reply before and after the change.",
+  "sha256": "b077ec09f93a0874a128a03a543b24d144db7f36261e0d9fe63fb3b0aac406d3"
+}

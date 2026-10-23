@@ -1,0 +1,85 @@
+{
+  "request": {
+    "body": "{\"name\": \"part\", \"password\": \"***masked (21 chars)***\"}",
+    "headers": [
+      [
+        "Host",
+        "127.0.0.1:42275"
+      ],
+      [
+        "User-Agent",
+        "curl/8.14.1"
+      ],
+      [
+        "Accept",
+        "*/*"
+      ],
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "X-Request",
+        "new"
+      ],
+      [
+        "Authorization",
+        "***masked (25 chars)***"
+      ],
+      [
+        "Content-Length",
+        "50"
+      ]
+    ],
+    "method": "POST",
+    "url": "https://127.0.0.1:42275/items"
+  },
+  "response": {
+    "body": "{\"result\": \"before\", \"count\": 1}",
+    "headers": [
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "Link",
+        "</items?page=2>; rel=\"next\""
+      ],
+      [
+        "X-NoSpace",
+        "yes"
+      ],
+      [
+        "X-Tab",
+        "value"
+      ],
+      [
+        "X-Empty",
+        ""
+      ],
+      [
+        "Set-Cookie",
+        "***masked (18 chars)***"
+      ],
+      [
+        "Transfer-Encoding",
+        "chunked"
+      ],
+      [
+        "Trailer",
+        "X-Result"
+      ],
+      [
+        "Connection",
+        "close"
+      ],
+      [
+        "X-Result",
+        "complete and checked"
+      ]
+    ],
+    "reason": "Old reply",
+    "status": 500
+  },
+  "v": 1
+}

@@ -1,0 +1,41 @@
+{
+  "request": {
+    "body": "",
+    "headers": [
+      [
+        "Host",
+        "127.0.0.1:33339"
+      ],
+      [
+        "User-Agent",
+        "curl/8.14.1"
+      ],
+      [
+        "Accept",
+        "*/*"
+      ]
+    ],
+    "method": "HEAD",
+    "url": "http://127.0.0.1:33339/head"
+  },
+  "response": {
+    "body": "",
+    "headers": [
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "Content-Length",
+        "23"
+      ],
+      [
+        "Connection",
+        "close"
+      ]
+    ],
+    "reason": "OK",
+    "status": 200
+  },
+  "v": 1
+}

@@ -1,0 +1,4 @@
+* enforce
+demo ui web/*
+demo api server/*
+demo require

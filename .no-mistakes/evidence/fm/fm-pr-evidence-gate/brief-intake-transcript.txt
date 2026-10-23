@@ -1,0 +1,25 @@
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/projects/demo init -q
+(exit status 0)
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/projects/demo remote add origin https://github.com/local-validation/no-network.git
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-brief.sh evidence-brief demo --mode no-mistakes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/data/evidence-brief/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/data/evidence-brief/brief.md demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/projects/demo
+[FAIL] the brief's '## Evidence class' is not filled
+FIX: write ui, api, ui+api, or none: <reason> under it
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/data/evidence-brief/brief.md demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/projects/demo
+evidence=ui+api
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-brief.sh local-brief demo --mode local-only
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/data/local-brief/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/data/local-brief/brief.md demo local-only none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/brief-boiiu1u_/home/projects/demo
+(exit status 0)

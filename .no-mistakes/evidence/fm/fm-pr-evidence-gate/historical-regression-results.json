@@ -1,0 +1,30 @@
+[
+  {
+    "revision": "163827e5",
+    "test": "EvidenceRegressions.test_sidecar_capture_retains_only_final_response_headers_and_trailers",
+    "expected": "failure before fix",
+    "exit": 1
+  },
+  {
+    "revision": "38d81698",
+    "test": "EvidenceRegressions.test_api_capture_handles_head_without_a_response_body",
+    "expected": "failure before fix",
+    "exit": 1
+  },
+  {
+    "revision": "38d81698",
+    "test": "EvidenceRegressions.test_sidecar_capture_unfolds_headers_before_masking",
+    "expected": "failure before fix",
+    "exit": 1
+  },
+  {
+    "revision": "791c507bc21d52563f59e2e410087668d6ac8783",
+    "tests": [
+      "EvidenceRegressions.test_sidecar_capture_retains_only_final_response_headers_and_trailers",
+      "EvidenceRegressions.test_api_capture_handles_head_without_a_response_body",
+      "EvidenceRegressions.test_sidecar_capture_unfolds_headers_before_masking"
+    ],
+    "expected": "pass after fixes",
+    "exit": 0
+  }
+]

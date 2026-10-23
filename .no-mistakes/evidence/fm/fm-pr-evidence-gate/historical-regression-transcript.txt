@@ -1,0 +1,257 @@
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/tests/fm-pr-evidence-regressions.test.py EvidenceRegressions.test_sidecar_capture_retains_only_final_response_headers_and_trailers
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/bin/fm-pr-evidence-lib.py:463: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmpp_4w07ik/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/bin/fm-pr-evidence-lib.py:463: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmp6j192mj8/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/bin/fm-pr-evidence-lib.py:463: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmpmt_rnnkb/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/bin/fm-pr-evidence-lib.py:463: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmpbfu0fwb0/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F
+======================================================================
+FAIL: test_sidecar_capture_retains_only_final_response_headers_and_trailers (__main__.EvidenceRegressions.test_sidecar_capture_retains_only_final_response_headers_and_trailers) (interim=False, trailer_end='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/tests/fm-pr-evidence-regressions.test.py", line 189, in test_sidecar_capture_retains_only_final_response_headers_and_trailers
+    data = self.capture_sidecar(
+        "> GET /items HTTP/1.1\n> Host: example.test\n> \n",
+        prefix + final + trailers + trailer_end)
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/tests/fm-pr-evidence-regressions.test.py", line 45, in capture_sidecar
+    self.assertEqual(0, ev.main(["scan-sidecar", str(out)]), log.getvalue())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : [FAIL] HTTP exchange file: response status code is missing
+FIX: capture the HTTP exchange again with fm-pr-evidence.sh capture-api
+[FAIL] HTTP exchange file: response status message is missing
+FIX: capture the HTTP exchange again with fm-pr-evidence.sh capture-api
+
+
+======================================================================
+FAIL: test_sidecar_capture_retains_only_final_response_headers_and_trailers (__main__.EvidenceRegressions.test_sidecar_capture_retains_only_final_response_headers_and_trailers) (interim=False, trailer_end='\r\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/tests/fm-pr-evidence-regressions.test.py", line 189, in test_sidecar_capture_retains_only_final_response_headers_and_trailers
+    data = self.capture_sidecar(
+        "> GET /items HTTP/1.1\n> Host: example.test\n> \n",
+        prefix + final + trailers + trailer_end)
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/tests/fm-pr-evidence-regressions.test.py", line 45, in capture_sidecar
+    self.assertEqual(0, ev.main(["scan-sidecar", str(out)]), log.getvalue())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : [FAIL] HTTP exchange file: response status code is missing
+FIX: capture the HTTP exchange again with fm-pr-evidence.sh capture-api
+[FAIL] HTTP exchange file: response status message is missing
+FIX: capture the HTTP exchange again with fm-pr-evidence.sh capture-api
+
+
+======================================================================
+FAIL: test_sidecar_capture_retains_only_final_response_headers_and_trailers (__main__.EvidenceRegressions.test_sidecar_capture_retains_only_final_response_headers_and_trailers) (interim=True, trailer_end='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/tests/fm-pr-evidence-regressions.test.py", line 189, in test_sidecar_capture_retains_only_final_response_headers_and_trailers
+    data = self.capture_sidecar(
+        "> GET /items HTTP/1.1\n> Host: example.test\n> \n",
+        prefix + final + trailers + trailer_end)
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/tests/fm-pr-evidence-regressions.test.py", line 45, in capture_sidecar
+    self.assertEqual(0, ev.main(["scan-sidecar", str(out)]), log.getvalue())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : [FAIL] HTTP exchange file: response status code is missing
+FIX: capture the HTTP exchange again with fm-pr-evidence.sh capture-api
+[FAIL] HTTP exchange file: response status message is missing
+FIX: capture the HTTP exchange again with fm-pr-evidence.sh capture-api
+
+
+======================================================================
+FAIL: test_sidecar_capture_retains_only_final_response_headers_and_trailers (__main__.EvidenceRegressions.test_sidecar_capture_retains_only_final_response_headers_and_trailers) (interim=True, trailer_end='\r\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/tests/fm-pr-evidence-regressions.test.py", line 189, in test_sidecar_capture_retains_only_final_response_headers_and_trailers
+    data = self.capture_sidecar(
+        "> GET /items HTTP/1.1\n> Host: example.test\n> \n",
+        prefix + final + trailers + trailer_end)
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/163827e5/tests/fm-pr-evidence-regressions.test.py", line 45, in capture_sidecar
+    self.assertEqual(0, ev.main(["scan-sidecar", str(out)]), log.getvalue())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : [FAIL] HTTP exchange file: response status code is missing
+FIX: capture the HTTP exchange again with fm-pr-evidence.sh capture-api
+[FAIL] HTTP exchange file: response status message is missing
+FIX: capture the HTTP exchange again with fm-pr-evidence.sh capture-api
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.056s
+
+FAILED (failures=4)
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/38d81698/tests/fm-pr-evidence-regressions.test.py EvidenceRegressions.test_api_capture_handles_head_without_a_response_body
+F
+======================================================================
+FAIL: test_api_capture_handles_head_without_a_response_body (__main__.EvidenceRegressions.test_api_capture_handles_head_without_a_response_body) (method='HEAD')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/38d81698/tests/fm-pr-evidence-regressions.test.py", line 134, in test_api_capture_handles_head_without_a_response_body
+    self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : [FAIL] the HTTP call failed: curl: (18) end of response with 16 bytes missing
+FIX: check the URL and the network, then capture again
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.140s
+
+FAILED (failures=1)
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/38d81698/tests/fm-pr-evidence-regressions.test.py EvidenceRegressions.test_sidecar_capture_unfolds_headers_before_masking
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/38d81698/bin/fm-pr-evidence-lib.py:471: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmpmomtwwy5/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/38d81698/bin/fm-pr-evidence-lib.py:471: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmp1pe6wc4l/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/38d81698/bin/fm-pr-evidence-lib.py:471: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmpcczftl2_/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+F
+======================================================================
+FAIL: test_sidecar_capture_unfolds_headers_before_masking (__main__.EvidenceRegressions.test_sidecar_capture_unfolds_headers_before_masking) (indent=' ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/38d81698/tests/fm-pr-evidence-regressions.test.py", line 77, in test_sidecar_capture_unfolds_headers_before_masking
+    self.assertEqual([["Host", "example.test"]] + expected +
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [["Authorization", ev.mask_token("Basic dXNlcjpzZWNyZXQ=")]],
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     data["request"]["headers"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [['Ho[43 chars]e=2>; rel="next"'], ['X-Empty', 'value'], ['X-[75 chars]**']] != [['Ho[43 chars]e=2>;'], ['X-Empty', ''], ['X-Note', 'first'],[40 chars]**']]
+
+First differing element 1:
+['Link', '</items?page=2>; rel="next"']
+['Link', '</items?page=2>;']
+
+  [['Host', 'example.test'],
+-  ['Link', '</items?page=2>; rel="next"'],
+?                            -----------
+
++  ['Link', '</items?page=2>;'],
+-  ['X-Empty', 'value'],
+?               -----
+
++  ['X-Empty', ''],
+-  ['X-Note', 'first part: second last'],
++  ['X-Note', 'first'],
+-  ['Authorization', '***masked (22 chars)***']]
+?                                ^^
+
++  ['Authorization', '***masked (5 chars)***']]
+?                                ^
+
+
+======================================================================
+FAIL: test_sidecar_capture_unfolds_headers_before_masking (__main__.EvidenceRegressions.test_sidecar_capture_unfolds_headers_before_masking) (indent='\t')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/38d81698/tests/fm-pr-evidence-regressions.test.py", line 77, in test_sidecar_capture_unfolds_headers_before_masking
+    self.assertEqual([["Host", "example.test"]] + expected +
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [["Authorization", ev.mask_token("Basic dXNlcjpzZWNyZXQ=")]],
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     data["request"]["headers"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [['Ho[43 chars]e=2>; rel="next"'], ['X-Empty', 'value'], ['X-[75 chars]**']] != [['Ho[43 chars]e=2>;'], ['X-Empty', ''], ['X-Note', 'first'],[40 chars]**']]
+
+First differing element 1:
+['Link', '</items?page=2>; rel="next"']
+['Link', '</items?page=2>;']
+
+  [['Host', 'example.test'],
+-  ['Link', '</items?page=2>; rel="next"'],
+?                            -----------
+
++  ['Link', '</items?page=2>;'],
+-  ['X-Empty', 'value'],
+?               -----
+
++  ['X-Empty', ''],
+-  ['X-Note', 'first part: second last'],
++  ['X-Note', 'first'],
+-  ['Authorization', '***masked (22 chars)***']]
+?                                ^^
+
++  ['Authorization', '***masked (5 chars)***']]
+?                                ^
+
+
+======================================================================
+FAIL: test_sidecar_capture_unfolds_headers_before_masking (__main__.EvidenceRegressions.test_sidecar_capture_unfolds_headers_before_masking) (indent=' \t')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/38d81698/tests/fm-pr-evidence-regressions.test.py", line 77, in test_sidecar_capture_unfolds_headers_before_masking
+    self.assertEqual([["Host", "example.test"]] + expected +
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [["Authorization", ev.mask_token("Basic dXNlcjpzZWNyZXQ=")]],
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     data["request"]["headers"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [['Ho[43 chars]e=2>; rel="next"'], ['X-Empty', 'value'], ['X-[75 chars]**']] != [['Ho[43 chars]e=2>;'], ['X-Empty', ''], ['X-Note', 'first'],[40 chars]**']]
+
+First differing element 1:
+['Link', '</items?page=2>; rel="next"']
+['Link', '</items?page=2>;']
+
+  [['Host', 'example.test'],
+-  ['Link', '</items?page=2>; rel="next"'],
+?                            -----------
+
++  ['Link', '</items?page=2>;'],
+-  ['X-Empty', 'value'],
+?               -----
+
++  ['X-Empty', ''],
+-  ['X-Note', 'first part: second last'],
++  ['X-Note', 'first'],
+-  ['Authorization', '***masked (22 chars)***']]
+?                                ^^
+
++  ['Authorization', '***masked (5 chars)***']]
+?                                ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.060s
+
+FAILED (failures=3)
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/tests/fm-pr-evidence-regressions.test.py EvidenceRegressions.test_sidecar_capture_retains_only_final_response_headers_and_trailers EvidenceRegressions.test_api_capture_handles_head_without_a_response_body EvidenceRegressions.test_sidecar_capture_unfolds_headers_before_masking
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmpoxjpj6vt/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmp6mcedy6g/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmproruihgs/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmpge8jj1x6/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmp3558pvq_/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmp9iuovc1e/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/historical-uqzlgvx9/tmprvyajta5/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.
+----------------------------------------------------------------------
+Ran 3 tests in 1.241s
+
+OK
+(exit status 0)

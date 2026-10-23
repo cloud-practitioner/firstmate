@@ -1,67 +1,73 @@
 ## Evidence for review
 
-Kind: `ui+api`. PR head: `9512699506a2`.
+Kind: `ui+api`. PR head: `791c507bc21d`.
 
-### 1. terminal (ui)
+### 1. text-check (ui)
 
-**Purpose.** The tool refuses text with a semicolon.
+**Purpose.** Use short text to explain the change.
 
 **Before**
 
-![terminal before](/home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-terminal.png)
+![text-check before](/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-before.png)
 
 **After**
 
-![terminal after](/home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-terminal.png)
+![text-check after](/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-after.png)
 
 **Marks.**
-- The result changed
+- Text check changed
 
 ---
 
-### 2. save-item (api)
+### 2. server-reply (api)
 
-**Purpose.** The service saves the item after the change.
+**Purpose.** Check the server reply before and after the change.
 
 **Before**
 
-![save-item before](/home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-http.png)
+![server-reply before](/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-before.png)
 
 **After**
 
-![save-item after](/home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-http.png)
+![server-reply after](/home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.png)
 
 **Marks.**
-- The status and result changed
+- The reply changed
 
 <details><summary>Before: full HTTP exchange (text)</summary>
 
-```fm-pr-evidence-sidecar save-item before
+```fm-pr-evidence-sidecar server-reply before
 {
   "request": {
-    "body": "{\"name\": \"sample\", \"password\": \"***masked (21 chars)***\"}",
+    "body": "{\"name\": \"part\", \"password\": \"***masked (21 chars)***\"}",
     "headers": [
-      ["Host", "127.0.0.1:33829"],
+      ["Host", "127.0.0.1:42275"],
       ["User-Agent", "curl/8.14.1"],
-      ["Accept", "application/json"],
+      ["Accept", "*/*"],
       ["Content-Type", "application/json"],
+      ["X-Request", "new"],
       ["Authorization", "***masked (25 chars)***"],
-      ["Content-Length", "55"]
+      ["Content-Length", "50"]
     ],
     "method": "POST",
-    "url": "http://127.0.0.1:33829/items"
+    "url": "https://127.0.0.1:42275/items"
   },
   "response": {
-    "body": "{\"result\": \"rejected\", \"password\": \"***masked (22 chars)***\"}",
+    "body": "{\"result\": \"before\", \"count\": 1}",
     "headers": [
-      ["Server", "BaseHTTP/0.6 Python/3.13.5"],
-      ["Date", "Fri, 23 Oct 2026 03:32:50 GMT"],
       ["Content-Type", "application/json"],
-      ["Set-Cookie", "***masked (22 chars)***"],
-      ["Content-Length", "60"]
+      ["Link", "</items?page=2>; rel=\"next\""],
+      ["X-NoSpace", "yes"],
+      ["X-Tab", "value"],
+      ["X-Empty", ""],
+      ["Set-Cookie", "***masked (18 chars)***"],
+      ["Transfer-Encoding", "chunked"],
+      ["Trailer", "X-Result"],
+      ["Connection", "close"],
+      ["X-Result", "complete and checked"]
     ],
-    "reason": "Unprocessable Content",
-    "status": 422
+    "reason": "Old reply",
+    "status": 500
   },
   "v": 1
 }
@@ -71,32 +77,38 @@ Kind: `ui+api`. PR head: `9512699506a2`.
 
 <details><summary>After: full HTTP exchange (text)</summary>
 
-```fm-pr-evidence-sidecar save-item after
+```fm-pr-evidence-sidecar server-reply after
 {
   "request": {
-    "body": "{\"name\": \"sample\", \"password\": \"***masked (21 chars)***\"}",
+    "body": "{\"name\": \"part\", \"password\": \"***masked (21 chars)***\"}",
     "headers": [
-      ["Host", "127.0.0.1:33829"],
+      ["Host", "127.0.0.1:42275"],
       ["User-Agent", "curl/8.14.1"],
-      ["Accept", "application/json"],
+      ["Accept", "*/*"],
       ["Content-Type", "application/json"],
+      ["X-Request", "new"],
       ["Authorization", "***masked (25 chars)***"],
-      ["Content-Length", "55"]
+      ["Content-Length", "50"]
     ],
     "method": "POST",
-    "url": "http://127.0.0.1:33829/items"
+    "url": "https://127.0.0.1:42275/items"
   },
   "response": {
-    "body": "{\"result\": \"saved\", \"password\": \"***masked (22 chars)***\"}",
+    "body": "{\"result\": \"after\", \"count\": 2}",
     "headers": [
-      ["Server", "BaseHTTP/0.6 Python/3.13.5"],
-      ["Date", "Fri, 23 Oct 2026 03:32:52 GMT"],
       ["Content-Type", "application/json"],
-      ["Set-Cookie", "***masked (22 chars)***"],
-      ["Content-Length", "57"]
+      ["Link", "</items?page=2>; rel=\"next\""],
+      ["X-NoSpace", "yes"],
+      ["X-Tab", "value"],
+      ["X-Empty", ""],
+      ["Set-Cookie", "***masked (18 chars)***"],
+      ["Transfer-Encoding", "chunked"],
+      ["Trailer", "X-Result"],
+      ["Connection", "close"],
+      ["X-Result", "complete and checked"]
     ],
-    "reason": "Created",
-    "status": 201
+    "reason": "New reply",
+    "status": 200
   },
   "v": 1
 }
@@ -106,77 +118,71 @@ Kind: `ui+api`. PR head: `9512699506a2`.
 
 ---
 
-### Plain-English notes (warnings)
-
-- item save-item purpose: word 'service' is not approved; try servicing
-- item save-item before annotation purpose: word 'service' is not approved; try servicing
-- item save-item after annotation purpose: word 'service' is not approved; try servicing
-
 ```fm-pr-evidence-v1
 {
-  "head": "9512699506a2e867f9fd2bf9633ea138c3f25320",
+  "head": "791c507bc21d52563f59e2e410087668d6ac8783",
   "items": [
     {
       "after": {
         "annotation": {
           "labels": [
-            "The result changed"
+            "Text check changed"
           ],
-          "purpose": "The tool refuses text with a semicolon.",
-          "sha256": "3679fb5d5029fc1c79b1f49ec4891688cc65f95b59305e1982626013bf2b71f9"
+          "purpose": "Use short text to explain the change.",
+          "sha256": "ed7341a81ba3d135d657b68ee99e7d2a707cb1622becac2e92f3d60e70771db5"
         },
-        "sha256": "3679fb5d5029fc1c79b1f49ec4891688cc65f95b59305e1982626013bf2b71f9"
+        "sha256": "ed7341a81ba3d135d657b68ee99e7d2a707cb1622becac2e92f3d60e70771db5"
       },
       "before": {
         "annotation": {
           "labels": [
-            "The result changed"
+            "Text check changed"
           ],
-          "purpose": "The tool refuses text with a semicolon.",
-          "sha256": "d899c89d6255691d695995000b9b184a5fede101b40391db019d2e2528e72653"
+          "purpose": "Use short text to explain the change.",
+          "sha256": "c10fa59eca842167b9eca90713ab45a4772da9cfe39abf3d4995ab0fd12fe98f"
         },
-        "sha256": "d899c89d6255691d695995000b9b184a5fede101b40391db019d2e2528e72653"
+        "sha256": "c10fa59eca842167b9eca90713ab45a4772da9cfe39abf3d4995ab0fd12fe98f"
       },
-      "id": "terminal",
+      "id": "text-check",
       "kind": "ui",
       "labels": [
-        "The result changed"
+        "Text check changed"
       ],
-      "purpose": "The tool refuses text with a semicolon."
+      "purpose": "Use short text to explain the change."
     },
     {
       "after": {
         "annotation": {
           "labels": [
-            "The status and result changed"
+            "The reply changed"
           ],
-          "purpose": "The service saves the item after the change.",
-          "sha256": "abc6880ce5901487aa59d151eedef209197cafc1d3cdefa190319c94b527fe74"
+          "purpose": "Check the server reply before and after the change.",
+          "sha256": "6ba10a71bb4f2c730ed85b58245883c4975f72def6c23cee05a67a3636b58779"
         },
-        "reason": "Created",
-        "sha256": "abc6880ce5901487aa59d151eedef209197cafc1d3cdefa190319c94b527fe74",
-        "sidecar_sha256": "7ead5b73cb03d2b8fbf33be1edef1e8880c48aa871b49d657d0150c9f38c1355",
-        "status": 201
+        "reason": "New reply",
+        "sha256": "6ba10a71bb4f2c730ed85b58245883c4975f72def6c23cee05a67a3636b58779",
+        "sidecar_sha256": "78cab624588609b1967bd57c8b5b249d2e089260a5f9e6c184084d052176632c",
+        "status": 200
       },
       "before": {
         "annotation": {
           "labels": [
-            "The status and result changed"
+            "The reply changed"
           ],
-          "purpose": "The service saves the item after the change.",
-          "sha256": "e51d1f4be0e3c19a15a1bc7d88b7db9e2d2897ffcfa70b9b4c5935b94e39c171"
+          "purpose": "Check the server reply before and after the change.",
+          "sha256": "b077ec09f93a0874a128a03a543b24d144db7f36261e0d9fe63fb3b0aac406d3"
         },
-        "reason": "Unprocessable Content",
-        "sha256": "e51d1f4be0e3c19a15a1bc7d88b7db9e2d2897ffcfa70b9b4c5935b94e39c171",
-        "sidecar_sha256": "bfec245869b24b0ce472132d7960d750c67e8d51c8208fdd9c2cef4e16d02264",
-        "status": 422
+        "reason": "Old reply",
+        "sha256": "b077ec09f93a0874a128a03a543b24d144db7f36261e0d9fe63fb3b0aac406d3",
+        "sidecar_sha256": "698778c3227e1c107d334a84d6410f35c109c645889b27d472d0f241bc586cdc",
+        "status": 500
       },
-      "id": "save-item",
+      "id": "server-reply",
       "kind": "api",
       "labels": [
-        "The status and result changed"
+        "The reply changed"
       ],
-      "purpose": "The service saves the item after the change."
+      "purpose": "Check the server reply before and after the change."
     }
   ],
   "kind": "ui+api",

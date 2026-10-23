@@ -1,0 +1,4 @@
+$ printf '%s
+' 'Authorization: ***masked (25 chars)***'
+Authorization: ***masked (25 chars)***
+(exit status 0)

@@ -1,0 +1,554 @@
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo init -q
+(exit status 0)
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo -c 'user.name=Evidence Test' -c user.email=test@example.invalid commit --allow-empty -qm 'Disposable test project'
+(exit status 0)
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo remote add origin https://github.com/local-validation/no-network.git
+(exit status 0)
+
+
+=== Declare evidence at intake; reject missing kinds and forbid none for Firstmate ===
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/brief.md demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+[FAIL] the brief's '## Evidence class' is not filled
+FIX: write ui, api, ui+api, or none: <reason> under it
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/brief.md demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+[FAIL] the brief's '## Evidence class' is not filled
+FIX: write ui, api, ui+api, or none: <reason> under it
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/brief.md demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+[FAIL] the evidence class 'unknown' is not valid
+FIX: write ui, api, ui+api, or none: <reason>
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/brief.md demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+evidence=ui
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/brief.md demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+evidence=api
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/brief.md demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+evidence=ui+api
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/brief.md demo direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+evidence=none
+evidence_reason=Only a comment changed in the file.
+[WARN] plain-English note (purpose): word 'file' is not approved; try remove
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/brief.md firstmate no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH
+[FAIL] the evidence class none is not allowed for firstmate (it always needs evidence)
+FIX: declare ui (terminal screenshots of the changed behaviour) or api in the brief
+(exit status 1)
+
+
+=== Exclude unsupported delivery lanes and keep Bitbucket off; refuse invalid configuration ===
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo remote set-url origin https://github.com/local-validation/no-network.git
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh eligible demo local-only none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+(exit status 1)
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo remote set-url origin https://github.com/local-validation/no-network.git
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh eligible demo no-mistakes external /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+(exit status 1)
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo remote set-url origin https://bitbucket.org/local-validation/no-network.git
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh eligible demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+(exit status 1)
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo remote set-url origin https://github.com/local-validation/no-network.git
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh eligible demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+[FAIL] config/pr-evidence is not valid: line 2 is not valid: invalid directive
+FIX: fix the line in /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/config/pr-evidence (docs/configuration.md "PR evidence gate")
+(exit status 2)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh eligible demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh eligible demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+(exit status 0)
+
+
+=== Propagate durable policy into a second home and enforce it in a fresh CLI process ===
+
+$ bash -c '. "$1"; propagate_secondmate_inheritance "$2" "$3"' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-config-inherit-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/secondmate
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh eligible demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+(exit status 0)
+
+$ bash -c '. "$1"; propagate_secondmate_inheritance "$2" "$3"' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-config-inherit-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/secondmate
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/brief.md demo no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/home/projects/demo
+[FAIL] the evidence class none is not allowed for demo (it always needs evidence)
+FIX: declare ui (terminal screenshots of the changed behaviour) or api in the brief
+(exit status 1)
+
+
+=== Check short plain English and distinguish strict refusals from warnings ===
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text ''
+[FAIL] plain-English check (purpose): text is empty
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'word word word word word word word word word word word word word word word word word word word word word word word word word word'
+[FAIL] plain-English check (purpose): sentence 1 has 26 words (maximum 25)
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'First step. Second step. Third step. Fourth step.'
+[FAIL] plain-English check (purpose): 4 sentences (maximum 3)
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'Read the file; close the file.'
+[FAIL] plain-English check (purpose): semicolon found; write two sentences
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+[WARN] plain-English note (purpose): word 'file' is not approved; try remove
+[WARN] plain-English note (purpose): word 'close' is not approved; try near
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'It doesn'"'"'t read the file.'
+[FAIL] plain-English check (purpose): contraction 'doesn't'; write the full words
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+[WARN] plain-English note (purpose): word 'file' is not approved; try remove
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'Read the file etc.'
+[FAIL] plain-English check (purpose): abbreviation 'etc.'; write the full words
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+[WARN] plain-English note (purpose): word 'file' is not approved; try remove
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'Read the file — close it.'
+[FAIL] plain-English check (purpose): long dash found; use a plain dash or a new sentence
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+[WARN] plain-English note (purpose): word 'file' is not approved; try remove
+[WARN] plain-English note (purpose): word 'close' is not approved; try near
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'Use a robust tool.'
+[FAIL] plain-English check (purpose): banned word 'robust'
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'The label says "it can’t run".'
+[FAIL] plain-English check (purpose): contraction 'can’t'; write the full words
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+[WARN] plain-English note (purpose): word 'label' is not approved; try identify, label
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --kind steps --text 'word word word word word word word word word word word word word word word word word word word word word'
+[FAIL] plain-English check (steps): sentence 1 has 21 words (maximum 20)
+FIX: rewrite the steps in short plain sentences (ASD-STE100)
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --kind label --text 'word word word word word word word word word word word'
+[FAIL] plain-English check (label): sentence 1 has 11 words (maximum 10)
+FIX: rewrite the label in short plain sentences (ASD-STE100)
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'The file was changed.'
+[WARN] plain-English note (purpose): passive voice 'was changed'; use active voice
+[WARN] plain-English note (purpose): word 'file' is not approved; try remove
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'The system will abandon the task.'
+[WARN] plain-English note (purpose): word 'abandon' is not approved; try stop
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'Read the new text.'
+(exit status 0)
+
+
+=== Allow legacy tasks with a notice and refuse away-mode or empty waiver authority ===
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh check legacy https://github.com/local-validation/no-network/pull/1
+notice: evidence gate not applied: task legacy predates it (no evidence= in its task record); the captain may ask for a retrofit (fm-pr-evidence.sh list-unevidenced)
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh waive legacy https://github.com/local-validation/no-network/pull/1 --words 'I accept this change without images.'
+[FAIL] a waiver is refused in away mode
+FIX: wait for the captain to return and say the waiver in their own words
+(exit status 1)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh waive legacy https://github.com/local-validation/no-network/pull/1 --words 'Accept it'
+[FAIL] a waiver needs the captain's own words (at least 4 words)
+FIX: pass the captain's words exactly as written in the chat
+(exit status 1)
+
+
+=== Capture real CLI output and draw a purpose and difference marks on both terminal images ===
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh capture-ui --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-before.txt -- /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'Use a robust tool.'
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh capture-ui --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-after.txt -- /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh ste --text 'Read the new text.'
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh annotate-ui --text /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-before.txt --against /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-after.txt --purpose 'Use short text to explain the change.' --label 'Text check changed' --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-before.png
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh annotate-ui --text /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-after.txt --against /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-before.txt --purpose 'Use short text to explain the change.' --label 'Text check changed' --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-after.png
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh capture-ui --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/masked.txt -- printf '%s
+' 'Authorization: Bearer fixture-only-token'
+(exit status 0)
+
+$ openssl req -x509 -newkey rsa:2048 -nodes -days 1 -subj /CN=127.0.0.1 -addext subjectAltName=IP:127.0.0.1 -keyout /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/server.key -out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/server.crt
+..+...+...........+....+...+........+....+++++++++++++++++++++++++++++++++++++++*....+.+.........+..+...+......+.......+...+..+....+...+...+..+.+......+.....+++++++++++++++++++++++++++++++++++++++*........+............+...+.....+............+..........+...+.....+........................+....+.........+..+...+......+.+......+...+..+..........+.....+...................+...+.....+.+.........+...+..+.+..............+.............+..+......+.+..............+....+..+.+.....+............+...+...+.......+..+.+......+.....+.+.........+......+..+.+..+.........+.+.........+..............+...................+..+...+................++++++
+..........+.+...+..+...+.+...+...............+++++++++++++++++++++++++++++++++++++++*.+...............+++++++++++++++++++++++++++++++++++++++*.+...+...........+.......+.....+...+.+...........+...+............+.........+..........+.....+....+......+......+..............++++++
+-----
+(exit status 0)
+
+
+=== Capture HTTPS through a real CONNECT tunnel; keep final headers, folded fields and trailers while masking secrets ===
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh capture-api --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-before.json -X POST --header Content-Type:application/json --header 'X-Request: new' --header 'Authorization: Bearer fixture-only-token' --body-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/request.json https://127.0.0.1:42275/items
+(exit status 0)
+
+Captured exchange:
+{
+  "request": {
+    "body": "{\"name\": \"part\", \"password\": \"***masked (21 chars)***\"}",
+    "headers": [
+      [
+        "Host",
+        "127.0.0.1:42275"
+      ],
+      [
+        "User-Agent",
+        "curl/8.14.1"
+      ],
+      [
+        "Accept",
+        "*/*"
+      ],
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "X-Request",
+        "new"
+      ],
+      [
+        "Authorization",
+        "***masked (25 chars)***"
+      ],
+      [
+        "Content-Length",
+        "50"
+      ]
+    ],
+    "method": "POST",
+    "url": "https://127.0.0.1:42275/items"
+  },
+  "response": {
+    "body": "{\"result\": \"before\", \"count\": 1}",
+    "headers": [
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "Link",
+        "</items?page=2>; rel=\"next\""
+      ],
+      [
+        "X-NoSpace",
+        "yes"
+      ],
+      [
+        "X-Tab",
+        "value"
+      ],
+      [
+        "X-Empty",
+        ""
+      ],
+      [
+        "Set-Cookie",
+        "***masked (18 chars)***"
+      ],
+      [
+        "Transfer-Encoding",
+        "chunked"
+      ],
+      [
+        "Trailer",
+        "X-Result"
+      ],
+      [
+        "Connection",
+        "close"
+      ],
+      [
+        "X-Result",
+        "complete and checked"
+      ]
+    ],
+    "reason": "Old reply",
+    "status": 500
+  },
+  "v": 1
+}
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh capture-api --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.json -X POST --header Content-Type:application/json --header 'X-Request: new' --header 'Authorization: Bearer fixture-only-token' --body-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/request.json https://127.0.0.1:42275/items
+(exit status 0)
+
+Captured exchange:
+{
+  "request": {
+    "body": "{\"name\": \"part\", \"password\": \"***masked (21 chars)***\"}",
+    "headers": [
+      [
+        "Host",
+        "127.0.0.1:42275"
+      ],
+      [
+        "User-Agent",
+        "curl/8.14.1"
+      ],
+      [
+        "Accept",
+        "*/*"
+      ],
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "X-Request",
+        "new"
+      ],
+      [
+        "Authorization",
+        "***masked (25 chars)***"
+      ],
+      [
+        "Content-Length",
+        "50"
+      ]
+    ],
+    "method": "POST",
+    "url": "https://127.0.0.1:42275/items"
+  },
+  "response": {
+    "body": "{\"result\": \"after\", \"count\": 2}",
+    "headers": [
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "Link",
+        "</items?page=2>; rel=\"next\""
+      ],
+      [
+        "X-NoSpace",
+        "yes"
+      ],
+      [
+        "X-Tab",
+        "value"
+      ],
+      [
+        "X-Empty",
+        ""
+      ],
+      [
+        "Set-Cookie",
+        "***masked (18 chars)***"
+      ],
+      [
+        "Transfer-Encoding",
+        "chunked"
+      ],
+      [
+        "Trailer",
+        "X-Result"
+      ],
+      [
+        "Connection",
+        "close"
+      ],
+      [
+        "X-Result",
+        "complete and checked"
+      ]
+    ],
+    "reason": "New reply",
+    "status": 200
+  },
+  "v": 1
+}
+
+
+=== Capture HEAD with a nonzero entity length without waiting for a body; retain GET and POST bodies ===
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh capture-api --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/head.json -X HEAD http://127.0.0.1:33339/head
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh capture-api --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/GET.json -X GET http://127.0.0.1:33339/plain
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh capture-api --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/POST.json -X POST http://127.0.0.1:33339/plain
+(exit status 0)
+
+HEAD exchange:
+{
+  "request": {
+    "body": "",
+    "headers": [
+      [
+        "Host",
+        "127.0.0.1:33339"
+      ],
+      [
+        "User-Agent",
+        "curl/8.14.1"
+      ],
+      [
+        "Accept",
+        "*/*"
+      ]
+    ],
+    "method": "HEAD",
+    "url": "http://127.0.0.1:33339/head"
+  },
+  "response": {
+    "body": "",
+    "headers": [
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "Content-Length",
+        "23"
+      ],
+      [
+        "Connection",
+        "close"
+      ]
+    ],
+    "reason": "OK",
+    "status": 200
+  },
+  "v": 1
+}
+
+
+=== Render the six-part HTTP exchanges with visible purpose and marks; reject an unchanged exchange ===
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh annotate-api --sidecar /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-before.json --against /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.json --purpose 'Check the server reply before and after the change.' --label 'The reply changed' --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-before.png
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh annotate-api --sidecar /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.json --against /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-before.json --purpose 'Check the server reply before and after the change.' --label 'The reply changed' --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.png
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh annotate-api --sidecar /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.json --against /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.json --purpose 'Check the server reply before and after the change.' --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/identical.png
+[WARN] item annotation mark label 'Marked lines differ from the other exchange': word 'differ' is not approved; try different
+[WARN] item annotation mark label 'Marked lines differ from the other exchange': word 'exchange' is not approved; try interchange, replace
+[FAIL] the two HTTP exchanges show no difference to mark
+FIX: capture an exchange that differs, or mark lines by hand with annotate-ui
+(exit status 1)
+
+
+=== Compose a head-bound review comment; reject missing receipts, stale image hashes and marks drawn outside the image ===
+
+$ git rev-parse HEAD
+791c507bc21d52563f59e2e410087668d6ac8783
+(exit status 0)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/composed
+(exit status 0)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py marks /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-before.png
+272
+(exit status 0)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py marks /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/ui-after.png
+272
+(exit status 0)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py marks /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-before.png
+635
+(exit status 0)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py marks /home/node/.no-mistakes/evidence/01M5KTDVCMKC5EZ9HW8F6A74KH/api-after.png
+635
+(exit status 0)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/guard-items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/refused
+[FAIL] item text-check before has no annotation record
+FIX: annotate the image with annotate-ui or annotate-api and keep its .annotation.json file
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/guard-items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/refused
+[FAIL] item text-check before annotation does not match its image
+FIX: annotate the image with annotate-ui or annotate-api and keep its .annotation.json file
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/guard-items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/refused
+[FAIL] item text-check after has no annotation record
+FIX: annotate the image with annotate-ui or annotate-api and keep its .annotation.json file
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/guard-items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/refused
+[FAIL] item text-check after annotation does not match its image
+FIX: annotate the image with annotate-ui or annotate-api and keep its .annotation.json file
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/guard-items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/refused
+[FAIL] item server-reply before has no annotation record
+FIX: annotate the image with annotate-ui or annotate-api and keep its .annotation.json file
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/guard-items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/refused
+[FAIL] item server-reply before annotation does not match its image
+FIX: annotate the image with annotate-ui or annotate-api and keep its .annotation.json file
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/guard-items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/refused
+[FAIL] item server-reply after has no annotation record
+FIX: annotate the image with annotate-ui or annotate-api and keep its .annotation.json file
+(exit status 1)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/guard-items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/refused
+[FAIL] item server-reply after annotation does not match its image
+FIX: annotate the image with annotate-ui or annotate-api and keep its .annotation.json file
+(exit status 1)
+
+$ magick -size 640x120 xc:white PNG32:/home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/unmarked.png
+(exit status 0)
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence.sh annotate-ui --image /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/unmarked.png --mark 2000,2000,10,10 --purpose 'Use short text to explain the change.' --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/offscreen.png
+(exit status 0)
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/guard-items.json --head 791c507bc21d52563f59e2e410087668d6ac8783 --declared ui+api --provider github --repo local-validation/no-network --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5KTDVCMKC5EZ9HW8F6A74KH/.test-evidence-tmp/live-krujd8eo/refused
+[FAIL] item text-check before image has no drawn marks (colour #FF2D95)
+FIX: annotate the difference with fm-pr-evidence.sh annotate-ui or annotate-api
+(exit status 1)
+
+
+All local HTTP, TLS and CONNECT services stopped. Disposable homes and TLS keys removed on exit.
