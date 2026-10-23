@@ -25,6 +25,10 @@ command -v jq >/dev/null 2>&1 || { echo "skip: jq not found"; exit 0; }
 command -v curl >/dev/null 2>&1 || { echo "skip: curl not found"; exit 0; }
 
 LIVE_PR=${FM_PR_EVIDENCE_LIVE_PR:-}
+LIVE_GH_TOKEN=${GH_TOKEN:-}
+LIVE_GITHUB_TOKEN=${GITHUB_TOKEN:-}
+LIVE_GH=${FM_PR_EVIDENCE_GH:-}
+export -n LIVE_GH_TOKEN LIVE_GITHUB_TOKEN LIVE_GH
 
 # Keep ambient identity and credentials out of every case.
 unset FM_BACKEND FM_HOME FM_ROOT_OVERRIDE FM_STATE_OVERRIDE FM_CONFIG_OVERRIDE HERDR_PANE_ID HERDR_SESSION \
@@ -514,6 +518,14 @@ test_arming_and_merge_go_through_the_gate() {
     FM_ROOT_OVERRIDE="$C/root" FM_HOME="$C/home" FM_TEST_STUB="$STUB" PATH="$fakebin:$(fm_test_base_path_sans "${FM_TEST_BASE_PATH:-/usr/bin:/bin:/usr/sbin:/sbin}" gh):$(dirname "$(command -v jq)")" \
       "$script" "$@" 2>&1
   }
+  mv "$C/home/config/pr-evidence" "$C/home/config/pr-evidence.saved"
+  ln -s missing-config "$C/home/config/pr-evidence"
+  out=$(run_pr "$PR_CHECK" t1 "$PRURL"); rc=$?
+  expect_code 1 "$rc" "arming must refuse a dangling evidence configuration"
+  assert_contains "$out" 'configuration cannot be read' "arming must use the shared config validation"
+  assert_absent "$C/home/state/t1.check.sh" "a dangling config must not arm a poll"
+  rm "$C/home/config/pr-evidence"
+  mv "$C/home/config/pr-evidence.saved" "$C/home/config/pr-evidence"
   out=$(run_pr "$PR_CHECK" t1 "$PRURL"); rc=$?
   expect_code 1 "$rc" "arming a PR with no evidence"
   assert_contains "$out" "[FAIL] no evidence comment" "arming must show the gate's FAIL line"
@@ -739,7 +751,8 @@ test_live_guard_against_the_sandbox() {
   cat > "$dir/ev/items.json" <<'EOF'
 {"items":[{"id":"live","kind":"ui","purpose":"This is a synthetic test image. The gate must find it on the PR page.","before":{"image":"b.png"},"after":{"image":"a.png"},"labels":["Synthetic mark"]}]}
 EOF
-  out=$(FM_HOME="$dir/home" "$EV" publish t1 "$pr" "$dir/ev/items.json" 2>&1); rc=$?
+  out=$(FM_HOME="$dir/home" GH_TOKEN="$LIVE_GH_TOKEN" GITHUB_TOKEN="$LIVE_GITHUB_TOKEN" \
+    FM_PR_EVIDENCE_GH="$LIVE_GH" "$EV" publish t1 "$pr" "$dir/ev/items.json" 2>&1); rc=$?
   expect_code 0 "$rc" "live publish against the sandbox (got: $out)"
   assert_contains "$out" "[PASS] evidence gate" "the real upload must display and fetch"
   pass "fm-pr-evidence: live guard - real upload, display, and fetch on the sandbox PR"
@@ -753,6 +766,20 @@ test_promote_requires_evidence_intake() {
   printf '#!/bin/sh\nprintf "none\\n"\n' > "$C/root/bin/fm-project-mode.sh"
   chmod +x "$C/root/bin/"*.sh
   write_task t1 '' 'kind=scout'
+  printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nInspect the output.\n## Evidence class\nui\n' > "$C/home/data/t1/brief.md"
+  mv "$C/home/config/pr-evidence" "$C/home/config/pr-evidence.saved"
+  ln -s missing-config "$C/home/config/pr-evidence"
+  out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode local-only --yolo off 2>&1); rc=$?
+  expect_code 1 "$rc" "promotion must refuse a dangling evidence configuration"
+  assert_contains "$out" 'configuration cannot be read' "promotion must use shared config validation"
+  assert_grep 'kind=scout' "$C/home/state/t1.meta" "a dangling config must retain the scout state"
+  assert_absent "$C/home/data/t1/ship-instructions.md" "a dangling config must publish no ship instructions"
+  out=$(FM_HOME="$C/home" "$ROOT/bin/fm-brief.sh" dangling-brief proj --mode direct-PR --project "$C/proj" 2>&1); rc=$?
+  expect_code 1 "$rc" "brief generation must refuse a dangling evidence configuration"
+  assert_contains "$out" 'configuration cannot be read' "a config error must not become an inactive brief gate"
+  assert_absent "$C/home/data/dangling-brief/brief.md" "a dangling config must not emit a ship brief"
+  rm "$C/home/config/pr-evidence"
+  mv "$C/home/config/pr-evidence.saved" "$C/home/config/pr-evidence"
   for value in '{EVIDENCE}' 'api+ui' 'sideways'; do
     printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nInspect the output.\n## Evidence class\n%s\n' "$value" > "$C/home/data/t1/brief.md"
     out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode local-only --yolo off 2>&1); rc=$?
@@ -848,10 +875,12 @@ test_existing_unreadable_config_refuses() {
   write_task t1 ui "pr=$PRURL"
   ui_items
   printf '# Task\n## Evidence class\nui\n' > "$C/brief.md"
-  for mode in directory permissions; do
+  for mode in directory dangling permissions; do
     rm -rf "$C/home/config/pr-evidence"
     if [ "$mode" = directory ]; then
       mkdir "$C/home/config/pr-evidence"
+    elif [ "$mode" = dangling ]; then
+      ln -s missing-config "$C/home/config/pr-evidence"
     else
       printf '* enforce\n' > "$C/home/config/pr-evidence"
       chmod 000 "$C/home/config/pr-evidence"
@@ -940,6 +969,88 @@ test_comment_cleanup_and_image_freshness() {
   pass "fm-pr-evidence: both forges refuse duplicate comments and reload every image on every check"
 }
 
+test_spawn_refuses_dangling_evidence_config() {
+  local fakebin out rc id=ev-dangling
+  . "$ROOT/tests/fixtures.sh"
+  new_case spawn-dangling
+  fakebin=$(fm_test_make_spawn_fakebin "$C/fakes" codex)
+  mkdir -p "$C/home/projects" "$C/home/data/$id"
+  printf 'codex\n' > "$C/home/config/crew-harness"
+  printf -- '- proj [direct-PR] - fixture (added 2026-01-01)\n' > "$C/home/data/projects.md"
+  git -C "$C/proj" branch -M main
+  git clone -q --bare "$C/proj" "$C/origin.git"
+  git -C "$C/proj" remote add origin "file://$C/origin.git"
+  git -C "$C/proj" fetch -q origin
+  git -C "$C/proj" worktree add -q --detach "$C/pool" HEAD
+  printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nChange the output.\n## Evidence class\nui\n# Definition of done\nDelivery contract: mode=direct-PR\nShip branch: fm/%s\n' "$id" > "$C/home/data/$id/brief.md"
+  rm "$C/home/config/pr-evidence"
+  ln -s missing-config "$C/home/config/pr-evidence"
+  out=$(FM_BACKEND=tmux fm_test_run_spawn "$C/home" "$C/pool" "$fakebin" "$id" "$C/proj" --backend tmux --mode direct-PR --yolo off); rc=$?
+  expect_code 1 "$rc" "fresh ship spawn must refuse dangling evidence config (got: $out)"
+  assert_contains "$out" 'configuration cannot be read' "spawn must use shared config validation"
+  assert_absent "$C/home/state/$id.meta" "a dangling config must not create grandfathered task metadata"
+  pass "fm-pr-evidence: fresh ship intake refuses dangling configuration before launch"
+}
+
+test_typographic_contractions_refuse_at_public_interfaces() {
+  local out rc apostrophe text
+  new_case apostrophes
+  write_task t1 ui
+  ui_items
+  printf 'new text\n' > "$C/ev/after.txt"
+  for apostrophe in '‘' '’'; do
+    text="The tool isn${apostrophe}t ready."
+    printf '# Task\n## Evidence class\nnone: %s\n' "$text" > "$C/brief.md"
+    out=$(ev intake "$C/brief.md" proj "$C/proj"); rc=$?
+    expect_code 1 "$rc" "intake must refuse typographic contractions"
+    assert_contains "$out" contraction "the intake reason must receive strict validation"
+    jq --arg purpose "$text" '.items[0].purpose = $purpose' "$C/ev/items.json" > "$C/ev/bad.json"
+    out=$(ev publish t1 "$PRURL" "$C/ev/bad.json"); rc=$?
+    expect_code 1 "$rc" "publication must refuse a typographic contraction in its purpose"
+    assert_contains "$out" contraction "the purpose must receive strict validation"
+    out=$(ev annotate-ui --text "$C/ev/after.txt" --mark-line 0 --purpose 'The tool prints new text.' --label "$text" --out "$C/ev/out.png"); rc=$?
+    expect_code 1 "$rc" "drawn labels must refuse typographic contractions"
+    assert_contains "$out" contraction "the label must be refused before rendering"
+    out=$(ev annotate-api --sidecar "$C/unused.json" --purpose "$text" --out "$C/ev/api.png"); rc=$?
+    expect_code 1 "$rc" "drawn API purposes must refuse typographic contractions"
+    assert_contains "$out" contraction "the API purpose must be refused before reading or rendering"
+  done
+  pass "fm-pr-evidence: typographic contractions refuse intake, publication, and annotation"
+}
+
+test_live_inputs_are_restored_only_for_an_opted_in_invocation() {
+  local out rc
+  new_case live-inputs
+  local EV="$C/mock-evidence" TMP_ROOT="$C/mock-live"
+  local LIVE_PR='https://github.com/fixture/private/pull/1'
+  local LIVE_GH_TOKEN=synthetic-gh-token LIVE_GITHUB_TOKEN=synthetic-github-token LIVE_GH="$C/mock-gh"
+  python3 - <<'PY'
+import os
+for name in ('GH_TOKEN', 'GITHUB_TOKEN', 'FM_PR_EVIDENCE_GH', 'LIVE_GH_TOKEN', 'LIVE_GITHUB_TOKEN', 'LIVE_GH'):
+    assert name not in os.environ, name + ' leaked into a portable case'
+PY
+  rc=$?
+  expect_code 0 "$rc" "portable cases must not inherit saved live credentials"
+  cat > "$EV" <<'PY'
+#!/usr/bin/env python3
+import os, pathlib, sys
+assert sys.argv[1:3] == ['publish', 't1']
+assert os.environ['GH_TOKEN'] == 'synthetic-gh-token'
+assert os.environ['GITHUB_TOKEN'] == 'synthetic-github-token'
+assert os.environ['FM_PR_EVIDENCE_GH'].endswith('/mock-gh')
+(pathlib.Path(os.environ['FM_HOME']) / 'called').touch()
+print('[PASS] evidence gate')
+PY
+  chmod +x "$EV"
+  out=$(test_live_guard_against_the_sandbox); rc=$?
+  expect_code 0 "$rc" "an opted-in invocation must restore saved auth and executable inputs (got: $out)"
+  assert_present "$TMP_ROOT/live/home/called" "the isolated stub must receive the opted-in invocation"
+  pass "fm-pr-evidence: live auth inputs are restored only at the isolated invocation boundary"
+}
+
+test_spawn_refuses_dangling_evidence_config
+test_typographic_contractions_refuse_at_public_interfaces
+test_live_inputs_are_restored_only_for_an_opted_in_invocation
 test_partial_github_reads_refuse
 test_existing_unreadable_config_refuses
 test_strict_english_in_quotes_refuses

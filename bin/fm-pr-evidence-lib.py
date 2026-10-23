@@ -88,7 +88,7 @@ BANNED_PHRASES = (
     "at the end of the day", "move the needle", "a lot of", "piece of cake",
 )
 CONTRACTION_RE = re.compile(
-    r"\b\w+n't\b|\b\w+'(?:re|ve|ll|d|m)\b|\b(?:it|that|there|here|what|who|let|he|she)'s\b",
+    r"\b\w+n['\u2018\u2019]t\b|\b\w+['\u2018\u2019](?:re|ve|ll|d|m)\b|\b(?:it|that|there|here|what|who|let|he|she)['\u2018\u2019]s\b",
     re.I)
 ABBREV_RE = re.compile(r"(?<![\w.])(?:e\.g\.|i\.e\.|etc\b\.?|vs\b\.?|cf\.|viz\.|et al\.?|approx\.)", re.I)
 BE = r"(?:is|are|was|were|be|been|being|am)"
@@ -300,6 +300,10 @@ def mask_text(text):
                         element.text = mask_token(value)
                         element[:] = []
                         changed = True
+                    for name, value in element.attrib.items():
+                        if not MASK_RE.fullmatch(value):
+                            element.set(name, mask_token(value))
+                            changed = True
             if changed:
                 text = ET.tostring(root, encoding="unicode")
     assignment = re.compile(

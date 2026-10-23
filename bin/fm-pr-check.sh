@@ -159,10 +159,8 @@ fi
 # Fork-only PR evidence gate (bin/fm-pr-evidence.sh): a no-op unless
 # config/pr-evidence enables the task's project. It refuses arming and every merge
 # (bin/fm-pr-merge.sh records through this script) until the PR carries its evidence.
-if [ -e "${FM_CONFIG_OVERRIDE:-$FM_HOME/config}/pr-evidence" ]; then
-  FM_HOME=$FM_HOME FM_STATE_OVERRIDE=$STATE "$SCRIPT_DIR/fm-pr-evidence.sh" check "$ID" "$URL" \
-    || { echo "error: the PR evidence gate refused $URL; see the [FAIL] and FIX lines above" >&2; exit 1; }
-fi
+FM_HOME=$FM_HOME FM_STATE_OVERRIDE=$STATE "$SCRIPT_DIR/fm-pr-evidence.sh" check "$ID" "$URL" \
+  || { echo "error: the PR evidence gate refused $URL; see the [FAIL] and FIX lines above" >&2; exit 1; }
 
 "$FM_ROOT/bin/fm-guard.sh" || true
 

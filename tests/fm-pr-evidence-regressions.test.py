@@ -36,7 +36,11 @@ class EvidenceRegressions(unittest.TestCase):
                          '<password><![CDATA[correct-horse]]></password>',
                          '<password><password>correct-horse</password>short-secret</password>',
                          '<password>correct-horse',
-                         '<login password="correct-horse" token="short-secret"/>'):
+                         '<login password="correct-horse" token="short-secret"/>',
+                         '<token value="short-secret"/>',
+                         '<password value="correct-horse">***masked (1 chars)***</password>',
+                         '<s:token xmlns:s="urn:test" value="short-secret"/>',
+                         '<token value="short-secret" hint="correct-horse">text</token>'):
                 with self.subTest(side=side, body=body):
                     data = exchange()
                     data[side]["body"] = body
@@ -53,7 +57,8 @@ class EvidenceRegressions(unittest.TestCase):
                    'PASSWORD="correct-horse" token=short-secret',
                    'curl --header Authorization: Bearer short-secret',
                    'Proxy-Authorization: Basic Y29ycmVjdC1ob3JzZQ==',
-                   '<password>correct-horse</password> token=short-secret')
+                   '<password>correct-horse</password> token=short-secret',
+                   '<token value="short-secret" password="correct-horse"/>')
         for text in samples:
             masked = ev.mask_text(text)
             self.assertNotIn("correct-horse", masked)
@@ -67,6 +72,29 @@ class EvidenceRegressions(unittest.TestCase):
             self.assertNotIn("correct-horse", out.read_text())
             self.assertNotIn("short-secret", out.read_text())
             self.assertIn("exit status 0", out.read_text())
+
+    def test_sensitive_xml_attributes_preserve_public_siblings(self):
+        from xml.etree import ElementTree as ET
+        body = '<root><token value="short-secret" hint="correct-horse"/><name value="public"/></root>'
+        masked = ev.mask_text(body)
+        root = ET.fromstring(masked)
+        self.assertEqual({"value", "hint"}, set(root.find("token").attrib))
+        self.assertTrue(all(ev.MASK_RE.fullmatch(value) for value in root.find("token").attrib.values()))
+        self.assertEqual("public", root.find("name").get("value"))
+        self.assertEqual(masked, ev.mask_text(masked))
+
+    def test_typographic_contractions_are_strictly_refused(self):
+        texts = ("The tool isn't ready.", "We're ready for work.", "We've changed the text.",
+                 "It'll change the text.", "I'd change the text.", "I'm ready for work.", "It's ready for work.")
+        for apostrophe in ("'", "\u2018", "\u2019"):
+            for kind in ("purpose", "label", "steps"):
+                for text in texts:
+                    for quote in ("", '"', '`'):
+                        candidate = quote + text.replace("'", apostrophe) + quote
+                        with self.subTest(apostrophe=apostrophe, kind=kind, text=candidate):
+                            failures, _ = ev.ste_check(candidate, kind)
+                            self.assertTrue(any("contraction" in failure for failure in failures), failures)
+                self.assertFalse(ev.ste_check("The user's name is shown.".replace("'", apostrophe), kind)[0])
 
     def test_annotation_checks_all_drawn_text_before_rendering(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -213,7 +241,7 @@ class EvidenceRegressions(unittest.TestCase):
     def test_xml_secrets_cannot_reach_annotation_output(self):
         with tempfile.TemporaryDirectory() as tmp:
             tmp = Path(tmp)
-            body = '<password>correct-horse</password>'
+            body = '<password value="correct-horse"/>'
             path = tmp / "text"
             path.write_text(body)
             def render(lines, marked, labels, purpose, out):
