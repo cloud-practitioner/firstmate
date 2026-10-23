@@ -27,6 +27,7 @@ import subprocess
 import sys
 import tempfile
 import textwrap
+import xml.etree.ElementTree as ET
 import zlib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -152,20 +153,20 @@ def ste_check(text, kind, banned=(), vocab=None):
             fails.append("sentence %d has %d words (maximum %d)" % (index, count, max_words))
     if ";" in text:
         fails.append("semicolon found; write two sentences")
-    plain = QUOTED_RE.sub(" ", text)
-    for match in CONTRACTION_RE.finditer(plain):
+    for match in CONTRACTION_RE.finditer(text):
         fails.append("contraction '%s'; write the full words" % match.group(0))
-    for match in ABBREV_RE.finditer(plain):
+    for match in ABBREV_RE.finditer(text):
         fails.append("abbreviation '%s'; write the full words" % match.group(0).strip())
     if "\u2014" in text or "\u2013" in text:
         fails.append("long dash found; use a plain dash or a new sentence")
-    lowered = plain.lower()
+    lowered = text.lower()
     banned_all = {w.lower() for w in BANNED_BUILTIN} | {w.lower() for w in banned}
     for word in sorted(set(re.findall(r"[a-z][a-z-]*", lowered)) & banned_all):
         fails.append("banned word '%s'" % word)
     for phrase in BANNED_PHRASES:
         if phrase in lowered:
             fails.append("banned phrase '%s'" % phrase)
+    plain = QUOTED_RE.sub(" ", text)
     for match in PASSIVE_RE.finditer(plain):
         if match.group(1).lower() not in NOT_PARTICIPLE:
             warns.append("passive voice '%s'; use active voice" % match.group(0))
@@ -284,7 +285,23 @@ def mask_text(text):
             text = json.dumps(masked, ensure_ascii=False)
     for pattern in SECRET_PATTERNS[:-1]:
         text = pattern.sub(lambda match: mask_token(match.group(0)), text)
-    sensitive = r"[\w-]*(?:" + DENY_NAME_RE.pattern + r"|sig|jwt)[\w-]*"
+    sensitive = r"[\w.-]*(?:" + DENY_NAME_RE.pattern + r"|sig|jwt)[\w.-]*"
+    if re.search(r"<(?:[\w.-]+:)?" + sensitive + r"\b", text, re.I):
+        try:
+            root = ET.fromstring(text)
+        except ET.ParseError:
+            text = mask_token(text)
+        else:
+            changed = False
+            for element in root.iter():
+                if re.fullmatch(sensitive, element.tag.split("}")[-1], re.I):
+                    value = "".join(element.itertext())
+                    if len(element) or not MASK_RE.fullmatch(value):
+                        element.text = mask_token(value)
+                        element[:] = []
+                        changed = True
+            if changed:
+                text = ET.tostring(root, encoding="unicode")
     assignment = re.compile(
         r"(?i)(?<![\w-])((?:[\"']?" + sensitive + r"[\"']?\s*[:=]\s*|--" + sensitive + r"\s+))"
         r"(\*\*\*masked \(\d+ chars\)\*\*\*|\"(?:\\.|[^\"\\])*\"|'[^']*'|[^\s&,;<>]+)")
@@ -611,9 +628,15 @@ def render_text_with_marks(lines, marked, labels, purpose, out):
 
 
 def differing_lines(lines, other):
-    return [i for tag, start, end, _, _ in difflib.SequenceMatcher(
-        None, lines, other, autojunk=False).get_opcodes() if tag != "equal"
-        for i in range(start, end) if lines[i].strip()]
+    marked = set()
+    for tag, start, end, _, _ in difflib.SequenceMatcher(None, lines, other, autojunk=False).get_opcodes():
+        if tag == "equal":
+            continue
+        if start == end and lines:
+            marked.add(min(start, len(lines) - 1))
+        else:
+            marked.update(range(start, end))
+    return sorted(marked)
 
 
 def annotation_texts(args, labels):
@@ -762,8 +785,11 @@ def cmd_config(args):
     out = {"enabled": False, "require": False, "globs": {"ui": [], "api": []}, "banned": [],
            "bitbucket": False, "errors": []}
     try:
-        lines = open(args.file, encoding="utf-8").read().splitlines()
-    except OSError:
+        with open(args.file, encoding="utf-8") as fh:
+            lines = fh.read().splitlines()
+    except (OSError, UnicodeError) as exc:
+        if not isinstance(exc, FileNotFoundError) or os.path.lexists(args.file):
+            out["errors"].append("configuration cannot be read: %s" % exc)
         print(json.dumps(out))
         return 0
     for number, raw in enumerate(lines, 1):
@@ -1060,14 +1086,6 @@ def fetch(url, creds=None):
         os.unlink(path)
 
 
-def find_comment(comments, authors):
-    found = None
-    for comment in comments:
-        if comment.get("author") in authors and ("```" + MANIFEST_TAG) in (comment.get("body") or ""):
-            found = comment
-    return found
-
-
 def cmd_verify(args):
     f = Findings()
     work = args.work
@@ -1089,22 +1107,20 @@ def cmd_verify(args):
             f.fail("changed files match the %s patterns but the declared kind is %s: %s" % (
                 kind, rules["declared"], ", ".join(hits[:8])),
                 "firstmate fixes the declared kind for this task, or the captain waives the gate in words")
-    comment = find_comment(comments, set(pr.get("authors", [])))
-    if comment is None:
+    eligible = [comment for comment in comments if comment.get("author") in pr.get("authors", [])
+                and ("```" + MANIFEST_TAG) in (comment.get("body") or "")]
+    if not eligible:
         f.fail("no evidence comment by %s was found on the PR" % "/".join(pr.get("authors", [])) ,
                base_fix + " (one comment with before and after evidence)")
         f.emit()
         return 1
+    if len(eligible) != 1:
+        f.fail("the PR holds %d evidence comments by its author (it needs exactly 1)" % len(eligible),
+               "remove the older evidence comments, then run the check again")
+        f.emit()
+        return 1
+    comment = eligible[0]
     body = (comment.get("body") or "").replace("\r\n", "\n")
-    cache_key = hashlib.sha256(("v2|%s|%s|%s|%s|%s" % (
-        comment.get("id"), comment.get("updated"), pr.get("head"),
-        hashlib.sha256(body.encode("utf-8")).hexdigest(),
-        hashlib.sha256((comment.get("html") or "").encode("utf-8")).hexdigest(),
-    )).encode("utf-8")).hexdigest()
-    cached = False
-    if args.cache and os.path.isfile(args.cache):
-        with open(args.cache, encoding="utf-8") as fh:
-            cached = fh.read().strip() == cache_key
     fences = FENCE_RE.findall(body)
     manifests = [text for info, text in fences if info.strip() == MANIFEST_TAG]
     if len(manifests) != 1:
@@ -1187,13 +1203,10 @@ def cmd_verify(args):
         if kind not in kinds_seen:
             f.fail("no evidence item of kind %s" % kind, "add one item of kind %s and publish again" % kind)
     needed = 2 * len(items)
-    if needed and not cached:
-        verify_images(f, args, pr, comment, body, shas, needed, base_fix)
+    if needed:
+        verify_images(f, pr, comment, body, shas, needed, base_fix)
     f.emit()
     if f.ok():
-        if args.cache and needed:
-            with open(args.cache, "w", encoding="utf-8") as fh:
-                fh.write(cache_key + "\n")
         print("[PASS] evidence gate: %d item(s), head %s, comment %s" % (
             len(items), str(pr.get("head"))[:12], comment.get("id")))
         return 0
@@ -1205,7 +1218,7 @@ def glob_match(path, pattern):
     return fnmatch.fnmatchcase(path, pattern)
 
 
-def verify_images(f, args, pr, comment, body, shas, needed, base_fix):
+def verify_images(f, pr, comment, body, shas, needed, base_fix):
     raw_urls = MD_IMG_RE.findall(body)
     repo = pr.get("repo", "")
     if pr.get("provider") == "bitbucket":
@@ -1336,7 +1349,6 @@ def main(argv):
 
     p = sub.add_parser("verify")
     p.add_argument("--work", required=True)
-    p.add_argument("--cache")
     p.set_defaults(fn=cmd_verify)
 
     args = parser.parse_args(argv)

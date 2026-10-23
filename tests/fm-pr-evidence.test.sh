@@ -24,10 +24,14 @@ command -v python3 >/dev/null 2>&1 || { echo "skip: python3 not found"; exit 0; 
 command -v jq >/dev/null 2>&1 || { echo "skip: jq not found"; exit 0; }
 command -v curl >/dev/null 2>&1 || { echo "skip: curl not found"; exit 0; }
 
+LIVE_PR=${FM_PR_EVIDENCE_LIVE_PR:-}
+
 # Keep ambient identity and credentials out of every case.
 unset FM_BACKEND FM_HOME FM_ROOT_OVERRIDE FM_STATE_OVERRIDE FM_CONFIG_OVERRIDE HERDR_PANE_ID HERDR_SESSION \
   NO_MISTAKES_BITBUCKET_EMAIL NO_MISTAKES_BITBUCKET_API_TOKEN GH_TOKEN GITHUB_TOKEN FM_PR_EVIDENCE_GH \
   FM_PR_EVIDENCE_BITBUCKET_API FM_PR_EVIDENCE_LIVE_PR
+
+PYTHONDONTWRITEBYTECODE=1 TMPDIR="$TMP_ROOT" python3 "$ROOT/tests/fm-pr-evidence-regressions.test.py" || fail "the Python evidence regressions failed"
 
 mkdir -p "$TMP_ROOT/img"
 STUB_PID=
@@ -721,7 +725,7 @@ test_brief_block_and_list_commands_print() {
 
 test_live_guard_against_the_sandbox() {
   local pr out rc dir
-  pr=${FM_PR_EVIDENCE_LIVE_PR:-}
+  pr=$LIVE_PR
   if [ -z "$pr" ]; then
     echo "note: live guard skipped (set FM_PR_EVIDENCE_LIVE_PR to a PR URL in the private sandbox repository)"
     return 0
@@ -819,6 +823,127 @@ test_rename_source_paths_require_evidence() {
   pass "fm-pr-evidence: rename sources retain their pattern requirements"
 }
 
+test_partial_github_reads_refuse() {
+  local out rc collection
+  for collection in files comments; do
+    new_case "partial-$collection" '* enforce' 'proj ui components/*.jsx'
+    write_task t1 none 'evidence_reason=Only a comment changed in the file.'
+    printf '{"items":[]}\n' > "$C/ev/items.json"
+    if [ "$collection" = files ]; then
+      stub_post /_admin/pr "$(jq -n --arg key "$PRKEY" --arg head "$HEAD1" '{key:$key,head:$head,files:([range(100) | "docs/" + tostring + ".md"] + ["components/Button.jsx"])}')"
+    fi
+    out=$(FM_TEST_GH_PARTIAL="$collection" ev check t1 "$PRURL"); rc=$?
+    expect_code 1 "$rc" "a partial $collection read must refuse the check"
+    assert_contains "$out" 'cannot be read' "a partial read must be reported"
+    out=$(FM_TEST_GH_PARTIAL="$collection" ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+    expect_code 1 "$rc" "a partial $collection read must refuse publication"
+    assert_equals 0 "$(comments_json | jq 'length')" "a partial read must not post evidence"
+  done
+  pass "fm-pr-evidence: valid partial GitHub collections with failed pagination refuse"
+}
+
+test_existing_unreadable_config_refuses() {
+  local out rc command expected mode
+  new_case unreadable
+  write_task t1 ui "pr=$PRURL"
+  ui_items
+  printf '# Task\n## Evidence class\nui\n' > "$C/brief.md"
+  for mode in directory permissions; do
+    rm -rf "$C/home/config/pr-evidence"
+    if [ "$mode" = directory ]; then
+      mkdir "$C/home/config/pr-evidence"
+    else
+      printf '* enforce\n' > "$C/home/config/pr-evidence"
+      chmod 000 "$C/home/config/pr-evidence"
+      if [ -r "$C/home/config/pr-evidence" ]; then
+        echo 'note: unreadable-file case skipped for a user who can read mode 000 files'
+        continue
+      fi
+    fi
+    for command in enabled intake check publish list-unevidenced; do
+      expected=1
+      case "$command" in
+        enabled) out=$(ev enabled proj); rc=$?; expected=2 ;;
+        intake) out=$(ev intake "$C/brief.md" proj "$C/proj"); rc=$? ;;
+        check) out=$(ev check t1 "$PRURL"); rc=$? ;;
+        publish) out=$(ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$? ;;
+        list-unevidenced) out=$(ev list-unevidenced); rc=$? ;;
+      esac
+      expect_code "$expected" "$rc" "$command must refuse an existing $mode configuration (got: $out)"
+      assert_contains "$out" 'configuration cannot be read' "the config read failure must be named"
+    done
+  done
+  pass "fm-pr-evidence: existing unreadable configuration refuses every consumer"
+}
+
+test_strict_english_in_quotes_refuses() {
+  local out rc
+  new_case strict-quotes
+  write_task t1 ui
+  ui_items
+  jq '.items[0].purpose = "The tool is \"seamless\"."' "$C/ev/items.json" > "$C/ev/quoted.json"
+  out=$(ev publish t1 "$PRURL" "$C/ev/quoted.json"); rc=$?
+  expect_code 1 "$rc" "a quoted banned purpose must refuse publication"
+  assert_contains "$out" "banned word 'seamless'" "the quoted banned word must be named"
+  printf '# Task\n## Evidence class\nnone: The text says `it is seamless`.\n' > "$C/brief.md"
+  out=$(ev intake "$C/brief.md" proj "$C/proj"); rc=$?
+  expect_code 1 "$rc" "a backticked banned none reason must refuse intake"
+  assert_contains "$out" "banned word 'seamless'" "the backticked banned word must be named"
+  printf 'new text\n' > "$C/ev/after.txt"
+  out=$(ev annotate-ui --text "$C/ev/after.txt" --mark-line 0 --purpose 'The tool prints new text.' --label 'Use `e.g.` now' --out "$C/ev/out.png"); rc=$?
+  expect_code 1 "$rc" "a backticked abbreviation must refuse before drawing"
+  assert_contains "$out" 'abbreviation' "the drawn abbreviation must be named"
+  pass "fm-pr-evidence: quoted purposes, drawn labels, and none reasons face strict English checks"
+}
+
+test_comment_cleanup_and_image_freshness() {
+  local out rc provider phase hash image
+  for provider in github bitbucket; do
+    new_case "fresh-$provider" '* enforce' 'bitbucket on'
+    if [ "$provider" = bitbucket ]; then
+      PRN=$((PRN + 1)); PRKEY="ws/repo/$PRN"; PRURL="https://bitbucket.org/ws/repo/pull-requests/$PRN"
+      stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD1\",\"author\":\"acct-worker\",\"files\":[]}"
+    fi
+    current_ev() {
+      FM_PR_EVIDENCE_BITBUCKET_API="$STUB/bb/2.0" NO_MISTAKES_BITBUCKET_EMAIL=bot@example.invalid \
+        NO_MISTAKES_BITBUCKET_API_TOKEN=synthetic-token ev "$@"
+    }
+    write_task t1 ui
+    ui_items
+    out=$(current_ev publish t1 "$PRURL" "$C/ev/items.json") || fail "initial $provider publish failed: $out"
+    stub_post /_admin/delete-failure '{"enabled":true}'
+    out=$(current_ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+    stub_post /_admin/delete-failure '{"enabled":false}'
+    expect_code 1 "$rc" "$provider publication must refuse failed cleanup"
+    assert_contains "$out" 'could not be removed' "the cleanup failure must be named"
+    assert_equals 2 "$(comments_json | jq 'length')" "the fixture must retain both competing comments"
+    out=$(current_ev check t1 "$PRURL"); rc=$?
+    expect_code 1 "$rc" "$provider verification must refuse duplicate eligible comments"
+    assert_contains "$out" '2 evidence comments' "duplicate comments must be reported"
+    out=$(current_ev publish t1 "$PRURL" "$C/ev/items.json") || fail "cleanup recovery failed: $out"
+    assert_equals 1 "$(comments_json | jq 'length')" "successful cleanup must leave one comment"
+    for phase in before after; do
+      if [ "$phase" = before ]; then image="$C/ev/b.png"; else image="$C/ev/a.png"; fi
+      if [ "$provider" = bitbucket ]; then
+        hash="fm-evidence-$PRN-${HEAD1:0:12}-cli-$phase.png"
+      else
+        hash="$(python3 -c 'import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$image").png"
+      fi
+      rm "$TMP_ROOT/img/$hash"
+      out=$(current_ev check t1 "$PRURL"); rc=$?
+      expect_code 1 "$rc" "$provider must re-fetch a previously verified $phase image"
+      assert_contains "$out" 'did not load as an image' "the missing image must refuse without comment or head changes"
+      cp "$image" "$TMP_ROOT/img/$hash"
+      out=$(current_ev check t1 "$PRURL") || fail "a restored image must pass: $out"
+    done
+  done
+  pass "fm-pr-evidence: both forges refuse duplicate comments and reload every image on every check"
+}
+
+test_partial_github_reads_refuse
+test_existing_unreadable_config_refuses
+test_strict_english_in_quotes_refuses
+test_comment_cleanup_and_image_freshness
 test_promote_requires_evidence_intake
 test_worker_added_kinds_are_durable
 test_labelled_image_swaps_refuse

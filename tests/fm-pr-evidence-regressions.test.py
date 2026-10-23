@@ -28,7 +28,15 @@ class EvidenceRegressions(unittest.TestCase):
         for side in ("request", "response"):
             for body in ('{"password":"correct-horse","token":"short-secret"}',
                          '{"items":[{"credentials":{"password":"short-secret"}}]}',
-                         'password=correct-horse&token=short-secret'):
+                         'password=correct-horse&token=short-secret',
+                         '<password>correct-horse</password>',
+                         '<root><token>short-secret</token><name>public</name></root>',
+                         '<s:Envelope xmlns:s="urn:test"><s:password>correct-horse</s:password></s:Envelope>',
+                         '<credentials><password>correct-horse</password><token>short-secret</token></credentials>',
+                         '<password><![CDATA[correct-horse]]></password>',
+                         '<password><password>correct-horse</password>short-secret</password>',
+                         '<password>correct-horse',
+                         '<login password="correct-horse" token="short-secret"/>'):
                 with self.subTest(side=side, body=body):
                     data = exchange()
                     data[side]["body"] = body
@@ -44,7 +52,8 @@ class EvidenceRegressions(unittest.TestCase):
                    "tool --password correct-horse --token 'short-secret'",
                    'PASSWORD="correct-horse" token=short-secret',
                    'curl --header Authorization: Bearer short-secret',
-                   'Proxy-Authorization: Basic Y29ycmVjdC1ob3JzZQ==')
+                   'Proxy-Authorization: Basic Y29ycmVjdC1ob3JzZQ==',
+                   '<password>correct-horse</password> token=short-secret')
         for text in samples:
             masked = ev.mask_text(text)
             self.assertNotIn("correct-horse", masked)
@@ -148,8 +157,81 @@ class EvidenceRegressions(unittest.TestCase):
                    "![cli after](https://github.com/user-attachments/assets/" + "b" * 36 + ")\n"
             rendered = '<img alt="cli before" src="before"><img alt="cli after" src="after">'
             with patch.object(ev, "fetch", side_effect=lambda url, creds: (200, "image/png", images[url])):
-                ev.verify_images(findings, None, {"provider": "github"}, {"html": rendered}, body, shas, 2, "publish again")
+                ev.verify_images(findings, {"provider": "github"}, {"html": rendered}, body, shas, 2, "publish again")
             self.assertTrue(any("cli after image has no drawn marks" in what for what, _ in findings.fails))
+
+    def test_quoted_text_has_no_strict_english_exemption(self):
+        for quote in ('"', '`'):
+            for kind in ('purpose', 'label', 'steps'):
+                for fragment, problem in (("seamless", "banned word"), ("it's", "contraction"),
+                                          ("e.g.", "abbreviation"), ("under the hood", "banned phrase"),
+                                          ("new; old", "semicolon"), ("new — old", "long dash"),
+                                          (" ".join(["word"] * 30), "maximum")):
+                    text = 'The text is ' + quote + fragment + quote
+                    with self.subTest(quote=quote, kind=kind, fragment=fragment):
+                        fails, _ = ev.ste_check(text, kind)
+                        self.assertTrue(any(problem in failure for failure in fails), fails)
+                self.assertFalse(ev.ste_check('The text is ' + quote + 'plain' + quote, kind)[0])
+
+    def test_unreadable_configuration_is_not_disabled(self):
+        for error in (PermissionError("permission denied"), UnicodeError("invalid text"), IsADirectoryError("not a file")):
+            with self.subTest(error=error), patch("builtins.open", side_effect=error), contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertEqual(0, ev.cmd_config(argparse.Namespace(file="config/pr-evidence", project="proj")))
+                self.assertTrue(json.loads(output.getvalue())["errors"])
+        with tempfile.TemporaryDirectory() as tmp, contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(0, ev.cmd_config(argparse.Namespace(file=str(Path(tmp) / "absent"), project="proj")))
+            self.assertEqual([], json.loads(output.getvalue())["errors"])
+
+    def test_insertions_and_deletions_can_annotate_both_phases(self):
+        pairs = (("alpha", "alpha\nbeta"), ("omega", "beta\nomega"),
+                 ("alpha\nomega", "alpha\nbeta\nomega"), ("", "beta"),
+                 ("alpha\nomega", "alpha\n\nomega"))
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            def render(lines, marked, labels, purpose, out):
+                self.assertTrue(marked)
+                self.assertTrue(all(0 <= index < len(lines) for index in marked))
+                Path(out).write_bytes(b"rendered image")
+            for before, after in pairs:
+                for left, right in ((before, after), (after, before)):
+                    for command in (ev.cmd_annotate_ui, ev.cmd_annotate_api):
+                        path, other = tmp / "left", tmp / "right"
+                        if command == ev.cmd_annotate_api:
+                            data, against = exchange(), exchange()
+                            data["response"]["body"], against["response"]["body"] = left, right
+                            path.write_text(json.dumps(data))
+                            other.write_text(json.dumps(against))
+                        else:
+                            path.write_text(left)
+                            other.write_text(right)
+                        args = argparse.Namespace(image=None, text=str(path), sidecar=str(path), against=str(other),
+                                                  label=None, purpose="The tool shows the added line.", out=str(tmp / "out.png"))
+                        with self.subTest(command=command.__name__, left=left, right=right), \
+                                patch.object(ev, "render_text_with_marks", side_effect=render), contextlib.redirect_stdout(io.StringIO()):
+                            self.assertEqual(0, command(args))
+
+    def test_xml_secrets_cannot_reach_annotation_output(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            body = '<password>correct-horse</password>'
+            path = tmp / "text"
+            path.write_text(body)
+            def render(lines, marked, labels, purpose, out):
+                self.assertNotIn("correct-horse", "\n".join(lines))
+                Path(out).write_bytes(b"masked image")
+            args = argparse.Namespace(image=None, text=str(path), mark_line=[0], against=None, label=None,
+                                      purpose="The tool shows the masked value.", out=str(tmp / "out.png"))
+            with patch.object(ev, "render_text_with_marks", side_effect=render), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, ev.cmd_annotate_ui(args))
+            for side in ("request", "response"):
+                data = exchange()
+                data[side]["body"] = body
+                sidecar = tmp / "sidecar.json"
+                sidecar.write_text(json.dumps(data))
+                args.sidecar = str(sidecar)
+                with patch.object(ev, "render_text_with_marks") as render, contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(1, ev.cmd_annotate_api(args))
+                    render.assert_not_called()
 
     def test_effective_declaration_uses_only_pr_author_comments(self):
         def comment(author, kinds):

@@ -142,6 +142,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def do_DELETE(self):
         path = self.path.split("?")[0]
         with LOCK:
+            if STATE.get("delete_fail"):
+                return self.send(503, {"error": "delete unavailable"})
             m = re.match(r"^/gh/repos/([^/]+)/([^/]+)/issues/comments/(\d+)$", path)
             if m:
                 for key, items in STATE["comments"].items():
@@ -159,6 +161,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
         path = self.path.split("?")[0]
         raw = self.read_body()
         with LOCK:
+            if path == "/_admin/delete-failure":
+                STATE["delete_fail"] = json.loads(raw)["enabled"]
+                return self.send(200, {})
             if path == "/_admin/pr":
                 data = json.loads(raw)
                 STATE["prs"][data["key"]] = {"head": data["head"], "author": data.get("author", "worker"),

@@ -123,7 +123,11 @@ load_config() {  # <project>
   CFG_REQUIRE=0
   CFG_BITBUCKET=0
   CFG_BANNED=
-  [ -f "$CONFIG_FILE" ] || return 0
+  [ -e "$CONFIG_FILE" ] || [ -L "$CONFIG_FILE" ] || return 0
+  if [ ! -f "$CONFIG_FILE" ]; then
+    fail_line "configuration cannot be read: config/pr-evidence is not a regular file" "replace $CONFIG_FILE with a readable configuration file"
+    return 1
+  fi
   need_tools || return 1
   CFG_JSON=$(python3 "$LIB_PY" config "$CONFIG_FILE" "$1") || return 1
   if [ "$(printf '%s' "$CFG_JSON" | jq -r '.errors | length')" != 0 ]; then
@@ -189,7 +193,7 @@ EOF
 
 cmd_enabled() {
   [ "$#" -eq 1 ] || { say "usage: fm-pr-evidence.sh enabled <project>"; return 2; }
-  [ -f "$CONFIG_FILE" ] || return 1
+  [ -e "$CONFIG_FILE" ] || [ -L "$CONFIG_FILE" ] || return 1
   load_config "$1" || return 2
   [ "$CFG_ENABLED" = 1 ]
 }
@@ -197,7 +201,7 @@ cmd_enabled() {
 cmd_intake() {
   [ "$#" -ge 2 ] || { say "usage: fm-pr-evidence.sh intake <brief> <project> [<project-dir>]"; return 2; }
   local brief=$1 project=$2 dir=${3:-} body line value reason
-  [ -f "$CONFIG_FILE" ] || return 0
+  [ -e "$CONFIG_FILE" ] || [ -L "$CONFIG_FILE" ] || return 0
   load_config "$project" || return 1
   [ "$CFG_ENABLED" = 1 ] || return 0
   # shellcheck source=bin/fm-brief-heading-lib.sh
@@ -268,7 +272,7 @@ PR_FILES_JSON='[]'
 PR_COMMENTS_JSON='[]'
 
 read_github() {  # <owner/repo> <number>
-  local path=$1 number=$2 pr
+  local path=$1 number=$2 pr files comments
   resolve_gh_read || return 1
   pr=$("$GH" api "repos/$path/pulls/$number" 2>/dev/null) || {
     fail_line "the PR cannot be read from GitHub" "check that gh is logged in and the PR exists"
@@ -276,17 +280,17 @@ read_github() {  # <owner/repo> <number>
   }
   PR_HEAD=$(printf '%s' "$pr" | jq -r '.head.sha // empty')
   PR_AUTHORS_JSON=$(printf '%s' "$pr" | jq -c '[.user.login] | map(select(. != null and . != ""))')
-  PR_FILES_JSON=$("$GH" api --paginate --slurp "repos/$path/pulls/$number/files?per_page=100" 2>/dev/null \
-    | jq -c '[.[][] | .filename, .previous_filename | select(. != null)] | unique') || {
+  if ! files=$("$GH" api --paginate --slurp "repos/$path/pulls/$number/files?per_page=100" 2>/dev/null) \
+    || ! PR_FILES_JSON=$(printf '%s' "$files" | jq -c '[.[][] | .filename, .previous_filename | select(. != null)] | unique'); then
     fail_line "the changed files of the PR cannot be read" "check that gh is logged in"
     return 1
-  }
-  PR_COMMENTS_JSON=$("$GH" api --paginate --slurp -H 'Accept: application/vnd.github.full+json' \
-    "repos/$path/issues/$number/comments?per_page=100" 2>/dev/null \
-    | jq -c '[.[][] | {id: (.id | tostring), author: .user.login, body: .body, html: .body_html, updated: .updated_at}]') || {
+  fi
+  if ! comments=$("$GH" api --paginate --slurp -H 'Accept: application/vnd.github.full+json' \
+    "repos/$path/issues/$number/comments?per_page=100" 2>/dev/null) \
+    || ! PR_COMMENTS_JSON=$(printf '%s' "$comments" | jq -c '[.[][] | {id: (.id | tostring), author: .user.login, body: .body, html: .body_html, updated: .updated_at}]'); then
     fail_line "the PR comments cannot be read" "check that gh is logged in"
     return 1
-  }
+  fi
 }
 
 read_bitbucket() {  # <workspace/repo> <number>
@@ -320,7 +324,7 @@ cmd_check() {
     say "error: invalid PR evidence check request"
     return 2
   fi
-  [ -f "$CONFIG_FILE" ] || return 0
+  [ -e "$CONFIG_FILE" ] || [ -L "$CONFIG_FILE" ] || return 0
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run the check for a task of this home"; return 1; }
   [ "$(meta_get "$meta" kind)" = ship ] || return 0
@@ -389,7 +393,7 @@ cmd_check() {
     '{declared: $declared, none_reason: $reason, require: $require, globs: $globs, banned: $banned}' \
     > "$WORK/rules.json"
   rc=0
-  python3 "$LIB_PY" verify --work "$WORK" --cache "$STATE/$id.evidence-ok" >&2 || rc=$?
+  python3 "$LIB_PY" verify --work "$WORK" >&2 || rc=$?
   if [ "$rc" -eq 0 ] && [ -n "$expected" ]; then printf '%s\n' "$PR_HEAD"; fi
   return "$rc"
 }
@@ -489,14 +493,16 @@ cmd_publish() {
   while IFS= read -r line; do
     { [ -n "$line" ] && [ "$line" != "$new_id" ]; } || continue
     if [ "$FM_PR_PROVIDER" = github ]; then
-      "$GH" api -X DELETE "repos/$FM_PR_PATH/issues/comments/$line" >/dev/null 2>&1 || true
+      "$GH" api -X DELETE "repos/$FM_PR_PATH/issues/comments/$line" >/dev/null 2>&1
     else
-      fm_pr_bitbucket_request DELETE "repositories/$FM_PR_PATH/pullrequests/$FM_PR_NUMBER/comments/$line" >/dev/null 2>&1 || true
-    fi
+      fm_pr_bitbucket_request DELETE "repositories/$FM_PR_PATH/pullrequests/$FM_PR_NUMBER/comments/$line" >/dev/null 2>&1
+    fi || {
+      fail_line "the older evidence comment $line could not be removed" "remove that PR-author evidence comment and run publish again"
+      return 1
+    }
   done <<EOF
 $(printf '%s' "$PR_COMMENTS_JSON" | jq -r --argjson a "$PR_AUTHORS_JSON" '.[] | select(.author as $x | $a | index($x)) | select((.body // "") | contains("```fm-pr-evidence-v1")) | .id')
 EOF
-  rm -f -- "$STATE/$id.evidence-ok"
   rm -rf -- "$WORK"
   WORK=
   cmd_check "$id" "$FM_PR_URL"
@@ -607,11 +613,12 @@ cmd_waive() {
 
 cmd_list_unevidenced() {
   local f id project url count=0
-  if [ ! -f "$CONFIG_FILE" ]; then
+  if [ ! -e "$CONFIG_FILE" ] && [ ! -L "$CONFIG_FILE" ]; then
     say "notice: config/pr-evidence is absent, so the evidence gate is off in this home"
     return 0
   fi
   need_tools || return 1
+  load_config '*' || return 1
   for f in "$STATE"/*.meta; do
     [ -f "$f" ] || continue
     [ "$(meta_get "$f" kind)" = ship ] || continue

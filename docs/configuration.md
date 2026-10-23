@@ -627,6 +627,7 @@ Its header owns the commands, the evidence comment, and the checks.
 
 The optional local, gitignored `config/pr-evidence` turns the gate on.
 Without the file the gate is off and nothing changes.
+An existing configuration that cannot be read causes a refusal, not a disabled gate.
 Blank lines and `#` comments are ignored.
 Every other line is one of these:
 
@@ -675,6 +676,8 @@ The gate refuses unless the PR holds one evidence comment by the PR author with 
 - A manifest that names the PR head, so a head that moved after the evidence is refused until the worker publishes again.
 
 Every image must show on the forge's own rendered page, load as an image, and match the manifest hash.
+Every check fetches and verifies every required image again; successful image checks are not cached.
+Multiple evidence comments by the PR author refuse, and publication refuses if an older comment cannot be removed.
 An image line right after a closing `</details>` line does not show on GitHub, so the gate refuses it.
 When the declared kind and the changed files disagree, the gate refuses and names the files.
 A task with no `evidence=` (made before the gate) passes with a notice.
@@ -682,6 +685,7 @@ A task with no `evidence=` (made before the gate) passes with a notice.
 
 **Plain English.**
 The check refuses text that is empty, too long, or has too many sentences, and text with semicolons, contractions, abbreviations, long dashes, or banned words.
+All strict rules also apply inside quotes and backticks, including purposes, drawn labels, and `none` reasons.
 It warns about passive voice, progressive and perfect tenses, more than one idea per sentence, and words that the OpenSTE word list does not approve.
 Warnings show on the PR.
 The word list in `bin/fm-pr-evidence-openste.tsv` is the MIT-licensed OpenSTE list.
@@ -701,7 +705,7 @@ The Bitbucket arm uploads images to the repository Downloads area and reads comm
 It stays off until a sandbox proof on a non-IQX repository shows upload and display.
 After that proof, add `bitbucket on` to `config/pr-evidence`.
 
-Maintainer verification lives in `tests/fm-pr-evidence.test.sh`.
+Maintainer verification lives in `tests/fm-pr-evidence.test.sh`, which also runs the Python regression suite.
 The opt-in live guard in the same file proves real upload, display, and fetch against a private sandbox repository with `FM_PR_EVIDENCE_LIVE_PR=<sandbox PR URL>`.
 
 ## Waiting worker spends no turns (config/wait-no-turns)

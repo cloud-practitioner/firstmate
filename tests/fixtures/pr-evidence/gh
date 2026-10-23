@@ -80,10 +80,16 @@ case "${1:-} ${2:-}" in
     case "$target" in
       */rules/branches/main) out=${FM_TEST_GH_RULES:-'[]'} ;;
       */branches/main) out='{"protected":false}' ;;
-      *) out=$(curl -sS -X "$method" "$STUB/gh/$target") || exit 1 ;;
+      *) out=$(curl -fsS -X "$method" "$STUB/gh/$target") || exit 1 ;;
+    esac
+    case "${FM_TEST_GH_PARTIAL:-}:$target" in
+      files:*/files*) out=$(printf '%s' "$out" | jq -c '.[0:100]') ;;
     esac
     [ "$slurp" = 0 ] || out=$(printf '%s' "$out" | jq -c '[.]')
     if [ -n "$jqx" ]; then printf '%s' "$out" | jq -r "$jqx"; else printf '%s\n' "$out"; fi
+    case "${FM_TEST_GH_PARTIAL:-}:$target" in
+      files:*/files*|comments:*/comments*) exit 1 ;;
+    esac
     exit 0
     ;;
 esac
