@@ -920,12 +920,12 @@ test_strict_english_in_quotes_refuses() {
   out=$(ev publish t1 "$PRURL" "$C/ev/quoted.json"); rc=$?
   expect_code 1 "$rc" "a quoted banned purpose must refuse publication"
   assert_contains "$out" "banned word 'seamless'" "the quoted banned word must be named"
-  printf '# Task\n## Evidence class\nnone: The text says `it is seamless`.\n' > "$C/brief.md"
+  printf "# Task\n## Evidence class\nnone: The text says \`it is seamless\`.\n" > "$C/brief.md"
   out=$(ev intake "$C/brief.md" proj no-mistakes none "$C/proj"); rc=$?
   expect_code 1 "$rc" "a backticked banned none reason must refuse intake"
   assert_contains "$out" "banned word 'seamless'" "the backticked banned word must be named"
   printf 'new text\n' > "$C/ev/after.txt"
-  out=$(ev annotate-ui --text "$C/ev/after.txt" --mark-line 0 --purpose 'The tool prints new text.' --label 'Use `e.g.` now' --out "$C/ev/out.png"); rc=$?
+  out=$(ev annotate-ui --text "$C/ev/after.txt" --mark-line 0 --purpose 'The tool prints new text.' --label "Use \`e.g.\` now" --out "$C/ev/out.png"); rc=$?
   expect_code 1 "$rc" "a backticked abbreviation must refuse before drawing"
   assert_contains "$out" 'abbreviation' "the drawn abbreviation must be named"
   pass "fm-pr-evidence: quoted purposes, drawn labels, and none reasons face strict English checks"
@@ -1033,7 +1033,7 @@ test_typographic_contractions_refuse_at_public_interfaces() {
   write_task t1 ui
   ui_items
   printf 'new text\n' > "$C/ev/after.txt"
-  for apostrophe in '‘' '’'; do
+  for apostrophe in "‘" "’"; do
     text="The tool isn${apostrophe}t ready."
     printf '# Task\n## Evidence class\nnone: %s\n' "$text" > "$C/brief.md"
     out=$(ev intake "$C/brief.md" proj no-mistakes none "$C/proj"); rc=$?
@@ -1180,7 +1180,7 @@ test_evidence_eligibility_is_shared_across_delivery_lanes() {
         if [ "$lane" != bitbucket-off ]; then printf 'bitbucket on\n' >> "$C/home/config/pr-evidence"; expected=0; fi
         [ "$lane" != bitbucket-nm ] || mode=no-mistakes
         ;;
-      external) forge=external; printf 'Run `review-tool upload --draft`.\n' > "$C/home/config/external-review.md" ;;
+      external) forge=external; printf "Run \`review-tool upload --draft\`.\n" > "$C/home/config/external-review.md" ;;
       gitlab) remote=https://gitlab.com/o/r.git; url="https://gitlab.com/o/r/-/merge_requests/$PRN" ;;
       gerrit) forge=gerrit; url="https://review.example/c/o/r/+/$PRN" ;;
       forgejo) forge=forgejo; remote=https://code.example/o/r.git; url="https://code.example/o/r/pulls/$PRN" ;;
