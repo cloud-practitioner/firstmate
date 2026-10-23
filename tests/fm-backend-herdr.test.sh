@@ -6071,6 +6071,7 @@ test_secondmate_probe_cannot_borrow_another_tasks_binding() {
     printf 'herdr_process_identity=ps:42:Wed Mar 19 10:11:12 2025\n' >> "$state/a.meta"
     printf 'herdr_process_identity=ps:42:Tue Mar 19 10:11:12 2024\n' >> "$state/b.meta"
     export PATH="$fb:$PATH" FM_FAKE_WORLD="$world" FM_STATE_OVERRIDE="$state" FM_HOME="$dir"
+    STATE="$state" # the probe reads the home state dir its bootstrap and watcher callers define
     . "$ROOT/bin/fm-secondmate-liveness-lib.sh"
     fm_backend_source herdr
     # shellcheck disable=SC2329 # Adapter callback invoked by the sourced backend.
