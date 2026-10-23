@@ -7,6 +7,10 @@
 #        fm-secondmate-dormant.sh list
 #        fm-secondmate-dormant.sh --help
 #
+# Set FM_HOME explicitly to the PARENT home. Both lifecycle commands take the
+# exact registered secondmate ID: fm-ops addresses fm-ops, never ops; no fm-
+# window-label alias is added or removed.
+#
 # Why this exists. `bin/fm-control.sh <id> exit` stops a secondmate's agent and
 # keeps its home, but the liveness sweep (bin/fm-secondmate-liveness-lib.sh,
 # driven by session start and the supervision poll) reads a stopped mate as dead
@@ -28,22 +32,39 @@
 #   - has an unresolved parent pending-reply expectation
 #     (bin/fm-pending-reply-lib.sh), an unacknowledged steer in its inbox, or an
 #     undelivered backlog-handoff wake.
-# The stop is verified by fm-control; if it fails, no record is written.
+# The blocker scan, verified stop and dormancy publication hold the per-mate
+# admission lock (bin/fm-secondmate-dormant-lib.sh), excluding concurrent sends,
+# handoffs, watcher steering and ordinary launches. A busy lifecycle/admission
+# lock refuses; retry after the other operation finishes.
+# The stop is verified by fm-control; if it fails, no record is written. If the
+# stop succeeds but record publication fails, the error warns that automatic
+# recovery may relaunch the mate; rerun stand-down to record the stop.
 #
 # resume brings the mate back through the ordinary guarded launch,
 # `bin/fm-spawn.sh <id> --secondmate`, run by the shared liveness relaunch path
 # so the stopped endpoint is replaced exactly as a recovery would replace it.
-# The new agent reconciles from the mate's own records. Dormancy is cleared only
-# after that launch succeeds; a failed launch leaves the mate dormant. A mate
-# whose agent is already running is just cleared. Only resume may launch a
-# dormant mate: it names the id in FM_SECONDMATE_RESUMING, which is the single
-# exception to the refusal in bin/fm-spawn.sh.
+# The replacement uses current launch configuration and reconciles from the
+# mate's own records. A failed launch keeps dormancy and the durable secondmate
+# metadata needed to retry; an inconclusive endpoint probe refuses to launch.
+# An already-running agent is not replaced. In either successful branch, resume
+# resets the recovery attempt budget and clears any recovery park marker before
+# clearing dormancy. If rearming or clearing fails, the record stays: repair the
+# reported storage problem and rerun resume, which will not duplicate a running
+# agent. Only resume may launch a dormant mate: it names the exact id in
+# FM_SECONDMATE_RESUMING, the single exception in bin/fm-spawn.sh.
 #
 # While dormant the mate is never relaunched, never reported as dead, and never
 # woken for. The session-start liveness sweep and the supervision poll skip it,
-# bin/fm-send.sh and bin/fm-backlog-handoff.sh refuse it by name, fleet sync,
-# config push and update leave it alone, and the session-start digest and fleet
-# views list it as dormant. Retirement (bin/fm-teardown.sh) is unchanged.
+# bin/fm-send.sh refuses every target resolved to its metadata, including explicit
+# endpoint targets and key sends, and bin/fm-backlog-handoff.sh refuses new work.
+# Bootstrap convergence and config push omit it from live-home discovery.
+# /updatefirstmate can still guardedly advance its tracked files through the
+# registry backstop, but does not restart or nudge it. The session-start digest
+# and fleet views list it as dormant. Retirement (bin/fm-teardown.sh) keeps its
+# existing checks and removes the dormant record with the mate's other state.
+# tests/fm-secondmate-dormant.test.sh covers lifecycle, identity, admission races,
+# failed-launch retry and recovery rearming; watcher admission is covered by
+# tests/fm-wake-queue.test.sh.
 #
 # list prints each dormant mate in this home with its since-time and reason.
 #

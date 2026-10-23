@@ -489,17 +489,10 @@ Task meta records `backend=` only for a non-default backend; an absent `backend=
 
 ### Dormant secondmate record
 
-A persistent local secondmate with no work for now can be stood down on purpose: its agent stops and stays stopped, while its home, lease, `data/secondmates.md` route, backlog, held decisions and reports stay intact.
-`bin/fm-secondmate-dormant.sh stand-down <id>` stops the agent through `bin/fm-control.sh` and then writes `state/<id>.dormant` in the PARENT home; `resume <id>` relaunches it through the guarded `fm-spawn.sh --secondmate` launch and removes the record only after that launch succeeds.
-Both commands take the exact registered secondmate ID, so `fm-ops` addresses `fm-ops`, not `ops`.
-
-- The record is a small `key=value` file: `schema=fm-secondmate-dormant.v1`, `id=`, `since=` (epoch of the stand-down), and `reason=` (one line, may be empty).
-- Its existence alone is the verdict, and an unparseable record still reads as dormant, because the safe error leaves a stopped mate stopped.
-- Only the parent home writes it, atomically, and a symlink or non-regular path at that location is not a record.
-- Teardown removes it with the mate's other per-task state.
-- Remote secondmates are not supported: their agent is stopped on another host.
-- [`bin/fm-secondmate-dormant.sh`'s header](../bin/fm-secondmate-dormant.sh) owns the command contract, its refusal conditions, and every path that skips, refuses, or lists a dormant mate; [`bin/fm-secondmate-dormant-lib.sh`](../bin/fm-secondmate-dormant-lib.sh) owns the record's storage and read side.
-- The `secondmate-provisioning` skill owns when to stand a mate down or bring it back.
+Stand down an idle persistent local secondmate to keep it stopped without retiring its home or losing its durable information.
+[`bin/fm-secondmate-dormant.sh`'s header and help](../bin/fm-secondmate-dormant.sh) own usage, exact-ID addressing, refusal conditions, resume/retry semantics, and which supervision and update paths honor dormancy.
+[`bin/fm-secondmate-dormant-lib.sh`](../bin/fm-secondmate-dormant-lib.sh) owns the parent-side `state/<id>.dormant` format, atomic publication, and fail-safe read rules; do not edit the record by hand.
+The [`secondmate-provisioning` skill](../.agents/skills/secondmate-provisioning/SKILL.md#standing-a-secondmate-down) owns when to stand a mate down or bring it back.
 
 ### Task selectors
 

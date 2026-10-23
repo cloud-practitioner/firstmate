@@ -69,8 +69,10 @@
 #     useful return-channel supervision data; remote secondmates use "unknown"
 #     without a probe, and other tasks use "not_checked". A local secondmate
 #     stood down by bin/fm-secondmate-dormant.sh reads "dormant" there and in
-#     endpoint.status, and carries dormant: {since,reason}; every other task has
-#     dormant: null. Dormant is a deliberate stop, never an unhealthy endpoint.
+#     endpoint.status even when endpoint.exists is false, and carries dormant:
+#     {since,reason}; every other task has dormant: null. endpoint.exists remains
+#     the separate physical-presence fact, not a request to recover a dormant mate.
+#     Dormant is a deliberate stop, never an unhealthy endpoint.
 #   scout_reports[]: present data/<id>/report.md pointers.
 #   main_inventory: {valid,reason,orphan_in_flight[],unstructured_current_count} -
 #     main-home current-inventory checks shared with secondmate_home_summary_json

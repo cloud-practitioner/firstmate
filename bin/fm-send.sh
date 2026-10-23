@@ -90,9 +90,9 @@
 # stage; do not move the marker behind the invocation or omit it here. Follow-up
 # fm-send-secondmate-harness-invocation-r1 owns that behavior.
 #
-# Dormant secondmate: a task selector that resolves to a secondmate stood down by
-# bin/fm-secondmate-dormant.sh is refused before anything is recorded, rung or
-# marked, so no steer is silently queued to a stopped mate.
+# Dormant secondmate: any target resolved to a stood-down mate's metadata,
+# including an explicit endpoint target or key send, follows the refusal contract
+# in bin/fm-secondmate-dormant.sh before anything is recorded, rung or marked.
 #
 # From-firstmate marker: when the resolved target is a task selector whose meta
 # records kind=secondmate, the message uses the live-charter-compatible

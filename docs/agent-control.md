@@ -57,6 +57,7 @@ A stopped agent whose pane still shows the dialog text is not refused.
 
 **Teardown and discard are not verbs and will not become verbs.**
 `exit` stops an agent and preserves everything else.
+For a persistent local secondmate that must stay stopped, use the [dormancy lifecycle](../bin/fm-secondmate-dormant.sh) instead; its header owns the liveness distinction and the refusal of ordinary relaunches.
 Removing a worktree, closing an endpoint, or discarding work stays with [`bin/fm-teardown.sh`](../bin/fm-teardown.sh), which owns the landed-work test.
 
 **`resume` is not a verb.**

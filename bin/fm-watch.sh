@@ -160,8 +160,8 @@
 #                          counts toward the bound below
 #   check: secondmate <id> auto-relaunch paused after <n> attempts in <s>s; ...
 #                          a mate that kept dying exceeded its bounded relaunch
-#                          budget and is parked until a probe reads it live
-#                          again (FM_SECONDMATE_LIVENESS_MAX_ATTEMPTS and
+#                          budget and is parked by the relaunch bound
+#                          (FM_SECONDMATE_LIVENESS_MAX_ATTEMPTS and
 #                          FM_SECONDMATE_LIVENESS_WINDOW_SECS)
 # For normal supervision, resume the session-start primary-harness protocol
 # after each printed reason. Direct duplicate invocations of this script still
@@ -379,8 +379,9 @@ SECONDMATE_LIVENESS_TIMEOUT=${FM_SECONDMATE_LIVENESS_TIMEOUT:-}
 case "$SECONDMATE_LIVENESS_TIMEOUT" in ''|*[!0-9]*|0) SECONDMATE_LIVENESS_TIMEOUT=120 ;; esac
 # Relaunch bound: at most this many automatic attempts per window per mate,
 # counted from the durable attempt ledger the shared library appends to. A mate
-# that keeps dying past the bound wakes once and is parked until a probe reads
-# it alive again, so a flapping endpoint cannot relaunch forever unseen.
+# that keeps dying past the bound wakes once and is parked, so a flapping endpoint
+# cannot relaunch forever unseen. A live probe rearms it; intentional resume's
+# rearming contract belongs to bin/fm-secondmate-dormant.sh.
 SECONDMATE_LIVENESS_MAX_ATTEMPTS=${FM_SECONDMATE_LIVENESS_MAX_ATTEMPTS:-}
 case "$SECONDMATE_LIVENESS_MAX_ATTEMPTS" in ''|*[!0-9]*|0) SECONDMATE_LIVENESS_MAX_ATTEMPTS=3 ;; esac
 SECONDMATE_LIVENESS_WINDOW_SECS=${FM_SECONDMATE_LIVENESS_WINDOW_SECS:-}
