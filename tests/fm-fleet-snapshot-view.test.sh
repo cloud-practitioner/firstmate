@@ -30,6 +30,7 @@ for arg in "$@"; do
 done
 case "${1:-}" in
   list-windows)
+    [ "${FM_TEST_NO_WINDOWS:-0}" = 0 ] || exit 0
     sed -n 's/^window=[^:]*://p' "${FM_HOME:?}"/state/*.meta
     ;;
   display-message)
@@ -864,6 +865,12 @@ test_dormant_secondmate_is_listed_as_dormant_not_dead() {
   view=$(PATH="$fakebin:$PATH" FM_HOME="$home" "$VIEW")
   assert_contains "$view" "dormant (stood down)" "the fleet view lists the mate as dormant"
   assert_not_contains "$view" "present / dead" "the fleet view must not call a stood-down mate dead"
+  snap=$(FM_TEST_NO_WINDOWS=1 PATH="$fakebin:$PATH" FM_HOME="$home" "$SNAPSHOT")
+  printf '%s' "$snap" | jq -e '
+    .tasks[] | select(.id == "dead-secondmate-stood")
+    | .endpoint.exists == false and .endpoint.status == "dormant"
+      and .endpoint.agent_alive == "dormant" and .dormant.reason == "no work for now"
+  ' >/dev/null || fail "a missing endpoint must not override the dormant lifecycle status"
   pass "fleet snapshot and view list a stood-down secondmate as dormant, not dead"
 }
 

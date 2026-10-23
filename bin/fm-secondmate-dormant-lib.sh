@@ -22,6 +22,30 @@
 # Teardown removes the record with the mate's other per-task state, so a retired
 # id can never inherit a stale stood-down verdict.
 
+fm_sm_admission_lock() {
+  local state=$1 id=$2 lock owner
+  FM_SM_ADMISSION_LOCK=
+  if ! command -v fm_lock_try_acquire >/dev/null 2>&1; then
+    # shellcheck source=bin/fm-wake-lib.sh
+    . "${BASH_SOURCE[0]%/*}/fm-wake-lib.sh"
+  fi
+  lock="$state/.secondmate-admission-$id.lock"
+  owner=$(cat "$lock/pid" 2>/dev/null || true)
+  if [ -n "${FM_SM_ADMISSION_PARENT:-}" ] && [ "$owner" = "$FM_SM_ADMISSION_PARENT" ] \
+    && fm_pid_alive "$owner" && fm_pid_descends_from "$PPID" "$owner"; then
+    return 0
+  fi
+  if ! fm_lock_try_acquire "$lock"; then
+    printf 'error: task %s has a lifecycle or work admission in progress; nothing was changed - retry\n' "$id" >&2
+    return 1
+  fi
+  FM_SM_ADMISSION_LOCK=$lock
+}
+
+fm_sm_admission_unlock() {
+  [ -z "$1" ] || fm_lock_release "$1"
+}
+
 fm_sm_dormant_path() {  # <state-dir> <id>
   printf '%s/%s.dormant\n' "$1" "$2"
 }

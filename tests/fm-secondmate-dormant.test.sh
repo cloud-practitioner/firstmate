@@ -116,6 +116,19 @@ make_tmux() {  # <dir>
 #!/usr/bin/env bash
 set -u
 D=${FM_FAKE_DIR:?}
+target=
+prev=
+for arg in "$@"; do
+  if [ "$prev" = -t ]; then
+    target=${arg#=}
+    target=${target#firstmate:}
+    target=${target#=}
+    target=${target#fm-}
+  fi
+  [ "$prev" != -n ] || target=${arg#fm-}
+  prev=$arg
+done
+if [ -n "$target" ] && [ -d "$D/$target" ]; then D="$D/$target"; fi
 case "${1:-}" in
   send-keys)
     literal=0
@@ -124,6 +137,13 @@ case "${1:-}" in
         printf '%s\n' "$arg" >> "$D/literal"
         if [ -z "${FM_FAKE_NEVER_DIES:-}" ] && { [ "$arg" = /exit ] || [ "$arg" = /quit ]; }; then
           printf 'zsh' > "$D/command"
+          if [ -n "${FM_FAKE_STOP_GATE:-}" ]; then
+            : > "$FM_FAKE_STOP_GATE.entered"
+            for ((i=0; i<300; i++)); do
+              [ ! -e "$FM_FAKE_STOP_GATE.release" ] || break
+              sleep 0.1
+            done
+          fi
         fi
       fi
       [ "$arg" = -l ] && literal=1 || literal=0
@@ -142,7 +162,12 @@ case "${1:-}" in
   list-windows)
     printf '%s\n' main
     [ -e "$D/killed" ] || printf '%s\n' fm-sm1
-    [ ! -s "$D/windows" ] || cat "$D/windows"
+    if [ -s "$D/windows" ]; then
+      while IFS= read -r name; do
+        [ ! -e "$D/${name#fm-}/killed" ] || continue
+        printf '%s\n' "$name"
+      done < "$D/windows"
+    fi
     exit 0 ;;
   new-window|kill-window)
     printf '%s\n' "$*" >> "$D/calls"
@@ -161,20 +186,20 @@ SH
 
 # new_world <name>: a primary home with a registered, running local secondmate sm1.
 new_world() {
-  local w="$TMP_ROOT/$1" home
+  local w="$TMP_ROOT/$1" home id=${2:-sm1}
   mkdir -p "$w/home/state" "$w/home/data" "$w/home/config" "$w/fake"
   touch "$w/home/state/.last-watcher-beat"
   printf 'codex\n' > "$w/home/config/crew-harness"
-  home="$w/sm1"
+  home="$w/$id"
   mkdir -p "$home/bin" "$home/data" "$home/state" "$home/config" "$home/projects"
-  printf 'sm1\n' > "$home/.fm-secondmate-home"
+  printf '%s\n' "$id" > "$home/.fm-secondmate-home"
   printf '# Firstmate\n' > "$home/AGENTS.md"
   printf 'charter\n' > "$home/data/charter.md"
   printf '# Backlog\n\n## In flight\n\n## Queued\n\n## Done\n' > "$home/data/backlog.md"
   printf '%s\n' 'projects/' 'state/' 'data/' 'config/' '.no-mistakes/' > "$home/.gitignore"
   git -C "$home" init -q -b main
-  fm_write_secondmate_meta "$w/home/state/sm1.meta" "$home" firstmate:fm-sm1 none claude
-  printf -- '- sm1 - a test mate (home: %s; scope: testing; projects: none; added 2026-01-01)\n' "$home" \
+  fm_write_secondmate_meta "$w/home/state/$id.meta" "$home" "firstmate:fm-$id" none claude
+  printf -- '- %s - a test mate (home: %s; scope: testing; projects: none; added 2026-01-01)\n' "$id" "$home" \
     > "$w/home/data/secondmates.md"
   : > "$w/fake/literal"; : > "$w/fake/calls"
   printf 'claude' > "$w/fake/command"
@@ -187,7 +212,7 @@ new_world() {
 # dormant_cmd <world> <args...>: the command under test, with the stateful tmux.
 dormant_cmd() {
   local w=$1; shift
-  env PATH="$w/fakebin:$BASE_PATH" TMUX='' FM_BACKEND=tmux FM_HOME="$w/home" FM_FAKE_DIR="$w/fake" \
+  env -u PI_CODING_AGENT -u FM_SUPERVISION_ACTOR PATH="$w/fakebin:$BASE_PATH" TMUX='' FM_BACKEND=tmux FM_HOME="$w/home" FM_FAKE_DIR="$w/fake" \
     FM_FAKE_NEVER_DIES="${FM_FAKE_NEVER_DIES:-}" FM_TEST_FAIL_NEW_WINDOW="${FM_TEST_FAIL_NEW_WINDOW:-0}" \
     FM_CONTROL_POLL=0.01 FM_CONTROL_SETTLE_WAIT=0.05 FM_CONTROL_EXIT_WAIT=0.05 FM_CONTROL_LAUNCH_WAIT=0.05 \
     "$DORMANT" "$@" 2>&1
@@ -411,7 +436,98 @@ test_resume_edge_cases() {
   pass "resume: refuses a mate that is not dormant and just clears one already running"
 }
 
+test_exact_prefixed_id_leaves_sibling_untouched() {
+  local w out
+  w=$(new_world exact-id fm-ops)
+  mkdir -p "$w/ops/data" "$w/ops/state" "$w/fake/ops" "$w/fake/fm-ops"
+  printf 'ops\n' > "$w/ops/.fm-secondmate-home"
+  printf 'sibling backlog\n' > "$w/ops/data/backlog.md"
+  fm_write_secondmate_meta "$w/home/state/ops.meta" "$w/ops" firstmate:fm-ops none claude
+  printf -- '- ops - sibling (home: %s; scope: sibling; projects: none; added 2026-01-01)\n' "$w/ops" \
+    >> "$w/home/data/secondmates.md"
+  printf 'fm-ops\nfm-fm-ops\n' > "$w/fake/windows"
+  cp "$w/fake/command" "$w/fake/cwd" "$w/fake/calls" "$w/fake/literal" "$w/fake/fm-ops/"
+  cp "$w/fake/command" "$w/fake/calls" "$w/fake/literal" "$w/fake/ops/"
+  printf '%s' "$w/ops" > "$w/fake/ops/cwd"
+
+  out=$(dormant_cmd "$w" stand-down fm-ops) || fail "exact prefixed stand-down failed: $out"
+  assert_present "$w/home/state/fm-ops.dormant" "the exact ID is stood down"
+  assert_absent "$w/home/state/ops.dormant" "the sibling is not stood down"
+  assert_equals zsh "$(cat "$w/fake/fm-ops/command")" "the exact endpoint is stopped"
+  assert_equals claude "$(cat "$w/fake/ops/command")" "the sibling keeps running"
+  [ ! -s "$w/fake/ops/literal" ] || fail "nothing may be typed to the sibling"
+
+  out=$(dormant_cmd "$w" resume fm-ops) || fail "exact prefixed resume failed: $out"
+  assert_absent "$w/home/state/fm-ops.dormant" "the exact ID is resumed"
+  assert_equals claude "$(cat "$w/fake/fm-ops/command")" "the exact endpoint is running"
+  assert_equals claude "$(cat "$w/fake/ops/command")" "the sibling is still running"
+  [ ! -s "$w/fake/ops/calls" ] || fail "the sibling endpoint must not be replaced"
+  assert_equals "sibling backlog" "$(cat "$w/ops/data/backlog.md")" "the sibling records stay intact"
+  pass "stand-down and resume preserve the exact fm-prefixed ID and its sibling"
+}
+
+test_cursor_resume_accepts_dead_and_missing_endpoints() {
+  local w state out
+  for state in dead missing; do
+    w=$(new_world "cursor-$state")
+    fm_write_secondmate_meta "$w/home/state/sm1.meta" "$w/sm1" firstmate:fm-sm1 none cursor
+    dormant_cmd "$w" stand-down sm1 >/dev/null || fail "Cursor stand-down failed"
+    [ "$state" != missing ] || : > "$w/fake/killed"
+    out=$(dormant_cmd "$w" resume sm1) || fail "Cursor resume from $state failed: $out"
+    assert_absent "$w/home/state/sm1.dormant" "successful Cursor resume clears dormancy"
+    assert_contains "$(cat "$w/fake/calls")" new-window "Cursor resume launches the endpoint"
+    assert_grep 'harness=codex' "$w/home/state/sm1.meta" "resume uses the current launch configuration"
+  done
+  pass "a stopped Cursor mate resumes from dead or missing with the current harness"
+}
+
+test_stand_down_serializes_work_and_launch_admission() {
+  local w pid i out rc script args
+  w=$(new_world admission-race)
+  FM_FAKE_STOP_GATE="$w/gate" dormant_cmd "$w" stand-down sm1 > "$w/stand-down.out" 2>&1 &
+  pid=$!
+  for ((i=0; i<200; i++)); do
+    [ ! -e "$w/gate.entered" ] || break
+    sleep 0.1
+  done
+  if [ ! -e "$w/gate.entered" ]; then
+    : > "$w/gate.release"
+    wait "$pid" || true
+    fail "stand-down did not reach the stop/publication window: $(cat "$w/stand-down.out")"
+  fi
+  for args in send send-fire-and-forget send-key handoff control spawn spawn-relaunch; do
+    case "$args" in
+      send) script=fm-send.sh; set -- sm1 "please reread inherited config" ;;
+      send-fire-and-forget) script=fm-send.sh; set -- sm1 --fire-and-forget reconcile-race "please reconcile" ;;
+      send-key) script=fm-send.sh; set -- sm1 --key Enter ;;
+      handoff) script=fm-backlog-handoff.sh; set -- sm1 queued-item ;;
+      control) script=fm-control.sh; set -- sm1 relaunch ;;
+      spawn) script=fm-spawn.sh; set -- sm1 --secondmate ;;
+      spawn-relaunch) script=fm-spawn.sh; set -- sm1 --relaunch ;;
+    esac
+    rc=0
+    out=$(env -u PI_CODING_AGENT -u FM_SUPERVISION_ACTOR PATH="$w/fakebin:$BASE_PATH" TMUX='' FM_BACKEND=tmux FM_HOME="$w/home" FM_FAKE_DIR="$w/fake" \
+      "$ROOT/bin/$script" "$@" 2>&1) || rc=$?
+    if [ "$rc" -ne 1 ] || [[ "$out" != *"admission in progress"* ]]; then
+      : > "$w/gate.release"
+      wait "$pid" || true
+      fail "$args must refuse admission during stand-down (rc=$rc): $out"
+    fi
+  done
+  : > "$w/gate.release"
+  wait "$pid" || fail "stand-down failed: $(cat "$w/stand-down.out")"
+  assert_present "$w/home/state/sm1.dormant" "stand-down publishes dormancy"
+  assert_absent "$w/home/state/sm1.inbox" "no racing steer is queued"
+  assert_absent "$w/home/state/.backlog-handoff-sm1.wake-pending" "no racing handoff is admitted"
+  if compgen -G "$w/home/state/pending-replies/*" >/dev/null; then fail "no racing reply expectation is created"; fi
+  [ ! -s "$w/fake/calls" ] || fail "no racing launch may mutate the endpoint"
+  pass "stand-down serializes ordinary, automatic and key sends, handoffs and both launch forms"
+}
+
 test_record_library_roundtrip
+test_exact_prefixed_id_leaves_sibling_untouched
+test_cursor_resume_accepts_dead_and_missing_endpoints
+test_stand_down_serializes_work_and_launch_admission
 test_before_exit_alone_is_relaunched_by_the_sweep
 test_stand_down_stops_records_and_keeps_everything
 test_stand_down_refuses_in_flight_work

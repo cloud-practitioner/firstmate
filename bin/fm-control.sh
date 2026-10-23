@@ -205,6 +205,7 @@ die() {  # <message>
 
 CONTROL_LOCK=
 CONTROL_LOCK_HELD=0
+CONTROL_ADMISSION_LOCK=
 RELAUNCH_ACTIVE=0
 RELAUNCH_PHASE=start
 
@@ -223,6 +224,7 @@ control_cleanup() {
     CONTROL_LOCK_HELD=0
     fm_lock_release "$CONTROL_LOCK" || true
   fi
+  fm_sm_admission_unlock "$CONTROL_ADMISSION_LOCK" || true
   if declare -F fm_lease_guard_release >/dev/null 2>&1; then
     fm_lease_guard_release || true
   fi
@@ -329,6 +331,10 @@ ID=$RAW_ID
 fm_lease_guard "$ID" "lifecycle control (fm-control)"
 CONTROL_LOCK="$STATE/.control-$ID.lock"
 trap control_cleanup EXIT
+if [ "$VERB" = relaunch ]; then
+  fm_sm_admission_lock "$STATE" "$ID" || exit 1
+  CONTROL_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
+fi
 fm_lock_try_acquire "$CONTROL_LOCK" \
   || die "another lifecycle action is already running for task $ID"
 CONTROL_LOCK_HELD=1
@@ -1176,7 +1182,7 @@ do_relaunch() {
   [ "$TARGET_MODEL" = default ] || spawn_args+=(--model "$TARGET_MODEL")
   [ "$TARGET_EFFORT" = default ] || spawn_args+=(--effort "$TARGET_EFFORT")
   if FM_CONTROL_RELAUNCH_TX="$RELAUNCH_TX" \
-      "$SCRIPT_DIR/fm-spawn.sh" "${spawn_args[@]}" >/dev/null; then
+      FM_SM_ADMISSION_PARENT="$$" "$SCRIPT_DIR/fm-spawn.sh" "${spawn_args[@]}" >/dev/null; then
     RELAUNCH_META_PUBLISHED=1
     # $T was resolved from the record before the launch. When the recorded
     # endpoint was gone, the launch owner created a fresh one and republished

@@ -109,6 +109,8 @@ ACTIVE_HANDOFF_LOCK=
 ACTIVE_REGISTRY_LOCK=
 RECEIVER_WAKE_IGNORE_ID=
 release_remote_locks() {
+  fm_sm_admission_unlock "${HANDOFF_ADMISSION_LOCK:-}"
+  HANDOFF_ADMISSION_LOCK=
   if [ -n "$ACTIVE_HANDOFF_LOCK" ]; then
     fm_lock_release "$ACTIVE_HANDOFF_LOCK"
     ACTIVE_HANDOFF_LOCK=
@@ -566,7 +568,7 @@ wake_secondmate_receiver() { # <secondmate-id> <correlation-id>
     return 1
   }
   out=$(FM_HOME="$FM_HOME" FM_STATE_OVERRIDE="$STATE" FM_ROOT_OVERRIDE="$FM_ROOT" \
-    FM_PENDING_REPLY_EXISTING_CORR="$corr" \
+    FM_PENDING_REPLY_EXISTING_CORR="$corr" FM_SM_ADMISSION_PARENT="$$" \
     "$SCRIPT_DIR/fm-send.sh" "$id" "$RECEIVER_WAKE_MESSAGE" 2>&1) || rc=$?
   if [ "$rc" -ne 0 ]; then
     [ -z "$out" ] || printf '%s\n' "$out" >&2
@@ -858,13 +860,15 @@ with_remote_route_locks() { # <secondmate-id> <function> <args...>
   esac
   ACTIVE_REGISTRY_LOCK=$(secondmate_registry_lock_path "$STATE")
   fm_lock_acquire_wait "$ACTIVE_REGISTRY_LOCK"
+  ACTIVE_HANDOFF_LOCK="$STATE/.backlog-handoff-$id.lock"
+  fm_lock_acquire_wait "$ACTIVE_HANDOFF_LOCK"
+  fm_sm_admission_lock "$STATE" "$id" || { release_remote_locks; return 1; }
+  HANDOFF_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
   if [ "$(secondmate_registry_field "$REG" "$id" remote 2>/dev/null || true)" != 1 ]; then
     echo "error: pending outbox has no matching remote secondmate route: $id" >&2
     release_remote_locks
     return 1
   fi
-  ACTIVE_HANDOFF_LOCK="$STATE/.backlog-handoff-$id.lock"
-  fm_lock_acquire_wait "$ACTIVE_HANDOFF_LOCK"
   if "$operation" "$@"; then rc=0; else rc=$?; fi
   release_remote_locks
   return "$rc"
@@ -935,22 +939,22 @@ fi
 
 ACTIVE_REGISTRY_LOCK=$(secondmate_registry_lock_path "$STATE")
 fm_lock_acquire_wait "$ACTIVE_REGISTRY_LOCK"
+ACTIVE_HANDOFF_LOCK="$STATE/.backlog-handoff-$ID.lock"
+fm_lock_acquire_wait "$ACTIVE_HANDOFF_LOCK"
+fm_sm_admission_lock "$STATE" "$ID" || exit 1
+HANDOFF_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
 REMOTE=$(secondmate_registry_field "$REG" "$ID" remote 2>/dev/null || true)
 if [ "$REMOTE" = 1 ]; then
-  ACTIVE_HANDOFF_LOCK="$STATE/.backlog-handoff-$ID.lock"
-  fm_lock_acquire_wait "$ACTIVE_HANDOFF_LOCK"
   if remote_handoff "$ID" "$@"; then rc=0; else rc=$?; fi
   release_remote_locks
   exit "$rc"
 fi
 # A stood-down mate has no agent to take the routed work or its wake, so the
-# handoff is refused before any lock, move or marker (bin/fm-secondmate-dormant.sh).
+# handoff is refused before any move or marker (bin/fm-secondmate-dormant.sh).
 if fm_sm_dormant_is "$STATE" "$ID"; then
   fm_sm_dormant_refusal "$STATE" "$ID" "nothing was moved"
   exit 1
 fi
-ACTIVE_HANDOFF_LOCK="$STATE/.backlog-handoff-$ID.lock"
-fm_lock_acquire_wait "$ACTIVE_HANDOFF_LOCK"
 fm_lock_release "$ACTIVE_REGISTRY_LOCK"
 ACTIVE_REGISTRY_LOCK=
 

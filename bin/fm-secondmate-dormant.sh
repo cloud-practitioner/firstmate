@@ -2,8 +2,8 @@
 # fm-secondmate-dormant.sh - stand a persistent LOCAL secondmate down on purpose,
 # keep everything it holds, and bring it back later.
 #
-# Usage: fm-secondmate-dormant.sh stand-down <secondmate-id> [--reason <text>]
-#        fm-secondmate-dormant.sh resume <secondmate-id>
+# Usage: fm-secondmate-dormant.sh stand-down <exact-secondmate-id> [--reason <text>]
+#        fm-secondmate-dormant.sh resume <exact-secondmate-id>
 #        fm-secondmate-dormant.sh list
 #        fm-secondmate-dormant.sh --help
 #
@@ -91,7 +91,7 @@ die() { echo "error: $*" >&2; exit 1; }
 # Sets ID, META, HOME_DIR. Refuses anything else with the concrete reason.
 resolve_mate() {  # <raw-id>
   local raw=$1
-  ID=${raw#fm-}
+  ID=$raw
   case "$ID" in ''|*[!A-Za-z0-9._-]*) die "invalid second mate id: $raw" ;; esac
   META="$STATE/$ID.meta"
   [ -f "$META" ] && [ ! -L "$META" ] || die "no durable record for second mate $ID in this home ($META)"
@@ -169,12 +169,14 @@ cmd_stand_down() {
   done
   [ -n "$arg" ] || { echo "usage: fm-secondmate-dormant.sh stand-down <secondmate-id> [--reason <text>]" >&2; exit 2; }
   resolve_mate "$arg"
+  fm_secondmate_liveness_lock "$ID" || die "a liveness check is in progress for $ID; nothing was changed - retry"
+  ADMISSION_LOCK=
+  trap 'fm_sm_admission_unlock "$ADMISSION_LOCK"; fm_secondmate_liveness_unlock "$ID"' EXIT
+  fm_sm_admission_lock "$STATE" "$ID" || exit 1
+  ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
   if fm_sm_dormant_is "$STATE" "$ID"; then
     die "second mate $ID is already dormant ($(fm_sm_dormant_describe "$STATE" "$ID"))"
   fi
-  fm_secondmate_liveness_lock "$ID" || die "a liveness check is in progress for $ID; nothing was changed - retry"
-  # shellcheck disable=SC2064 # the id is expanded now, on purpose
-  trap "fm_secondmate_liveness_unlock '$ID'" EXIT
   if blockers=$(collect_blockers); then
     {
       printf 'refused: second mate %s cannot be stood down yet; nothing was changed:\n' "$ID"
@@ -197,10 +199,9 @@ cmd_resume() {
   [ "$#" -eq 1 ] && [ -n "$1" ] || { echo "usage: fm-secondmate-dormant.sh resume <secondmate-id>" >&2; exit 2; }
   case "$1" in -*) echo "error: unexpected argument '$1'" >&2; exit 2 ;; esac
   resolve_mate "$1"
-  fm_sm_dormant_is "$STATE" "$ID" || die "second mate $ID is not dormant; nothing to resume"
   fm_secondmate_liveness_lock "$ID" || die "a liveness check is in progress for $ID; nothing was changed - retry"
-  # shellcheck disable=SC2064 # the id is expanded now, on purpose
-  trap "fm_secondmate_liveness_unlock '$ID'" EXIT
+  trap 'fm_secondmate_liveness_unlock "$ID"' EXIT
+  fm_sm_dormant_is "$STATE" "$ID" || die "second mate $ID is not dormant; nothing to resume"
   export FM_SECONDMATE_RESUMING=$ID
   fm_secondmate_liveness_probe_endpoint "$META" "$ID" full
   case "$FM_SM_LIVE_STATUS" in

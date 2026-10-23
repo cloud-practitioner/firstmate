@@ -455,11 +455,12 @@ shift
 # untouched (contract: bin/fm-lease-lib.sh).
 # shellcheck source=bin/fm-lease-lib.sh
 . "$SCRIPT_DIR/fm-lease-lib.sh"
+SEND_ADMISSION_LOCK=
 if [ -n "$TARGET_META" ]; then
   LEASE_GUARD_TASK=$(fm_send_id_from_meta "$TARGET_META")
   if [ -n "$LEASE_GUARD_TASK" ]; then
     fm_lease_guard "$LEASE_GUARD_TASK" "steer (fm-send)"
-    trap 'fm_lease_guard_release' EXIT
+    trap 'fm_sm_admission_unlock "$SEND_ADMISSION_LOCK"; fm_lease_guard_release' EXIT
   fi
 fi
 
@@ -546,6 +547,8 @@ fm_send_known_undelivered_cleanup() {
 if [ -n "$TARGET_SELECTOR" ] && [ -n "$TARGET_META" ] && [ "$(fm_meta_get "$TARGET_META" kind)" = secondmate ]; then
   MARK_FROM_FIRSTMATE=1
   TARGET_TASK_ID=$(fm_send_id_from_meta "$TARGET_META")
+  fm_sm_admission_lock "$STATE" "$TARGET_TASK_ID" || exit 1
+  SEND_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
   # A stood-down mate has no agent to read a steer, so nothing is queued to it
   # and no reply expectation is armed (bin/fm-secondmate-dormant.sh resume).
   if fm_sm_dormant_is "$STATE" "$TARGET_TASK_ID"; then

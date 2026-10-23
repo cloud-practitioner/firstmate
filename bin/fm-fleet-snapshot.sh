@@ -927,8 +927,9 @@ task_json_lines() {
         current_state:($current_state + {observed_at:$observed_at,freshness:"fresh"}),
         dormant:$dormant,
         endpoint:{target:($target | if . == "" then null else . end),exists:$endpoint_exists,agent_alive:$agent_alive,
-          status:(if $endpoint_exists == false then "absent"
-                  elif $agent_alive == "alive" or $agent_alive == "dead" or $agent_alive == "dormant" then $agent_alive
+          status:(if $agent_alive == "dormant" then "dormant"
+                  elif $endpoint_exists == false then "absent"
+                  elif $agent_alive == "alive" or $agent_alive == "dead" then $agent_alive
                   else "unknown" end),
           observed_at:$observed_at,freshness:"fresh"},
         pr:{url:($pr | if . == "" then null else . end),source:$pr_source,head:($pr_head | if . == "" then null else . end)},

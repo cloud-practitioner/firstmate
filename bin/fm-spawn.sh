@@ -1457,6 +1457,7 @@ SPAWN_CONTROL_LOCK=
 SPAWN_CONTROL_LOCK_HELD=0
 SPAWN_CONTROL_PARENT=0
 SPAWN_META_TMP=
+SPAWN_ADMISSION_LOCK=
 SPAWN_META_LOCK=
 SPAWN_META_LOCK_HELD=0
 SPAWN_META_PUBLISH_STARTED=0
@@ -1735,6 +1736,7 @@ spawn_abort_cleanup() {
     fi
     fm_lock_release "$SPAWN_TASK_LOCK" || true
   fi
+  fm_sm_admission_unlock "$SPAWN_ADMISSION_LOCK" || true
   return "$status"
 }
 trap spawn_abort_cleanup EXIT
@@ -1960,6 +1962,10 @@ spawn_require_relocated_queued_work() {
     exit 1
   fi
 }
+if [ "$RELAUNCH" -eq 1 ] || [ "$KIND" = secondmate ]; then
+  fm_sm_admission_lock "$STATE" "$ID" || exit 1
+  SPAWN_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
+fi
 if [ "$RELAUNCH" -eq 1 ]; then
   SPAWN_CONTROL_LOCK="$STATE/.control-$ID.lock"
   control_owner=$(cat "$SPAWN_CONTROL_LOCK/pid" 2>/dev/null || true)
