@@ -1793,6 +1793,29 @@ SH
   pass "a dirty return is reported even when a later teardown step refuses"
 }
 
+# Retirement of a stood-down secondmate is unchanged: it is not refused for being
+# dormant, and it removes the dormant record with the mate's other per-task state
+# so a retired id can never inherit a stale stood-down verdict.
+test_secondmate_retirement_removes_its_dormant_record() {
+  local case_dir home rc
+  case_dir=$(make_case secondmate-dormant-retire)
+  write_meta "$case_dir" local-only secondmate
+  home="$case_dir/secondmate-home"
+  mkdir -p "$home/state" "$home/data" "$home/config" "$home/projects"
+  printf '%s\n' task-x1 > "$home/.fm-secondmate-home"
+  printf '%s\n' "home=$home" >> "$case_dir/state/task-x1.meta"
+  printf 'schema=fm-secondmate-dormant.v1\nid=task-x1\nsince=1700000000\nreason=idle\n' > "$case_dir/state/task-x1.dormant"
+  add_treehouse_clean_fd "$case_dir"
+
+  rc=0
+  run_teardown "$case_dir" --force > "$case_dir/stdout" 2> "$case_dir/stderr" || rc=$?
+
+  expect_code 0 "$rc" "secondmate-dormant-retire: retiring a dormant secondmate should succeed"
+  assert_absent "$case_dir/state/task-x1.meta" "secondmate-dormant-retire: the durable record survived retirement"
+  assert_absent "$case_dir/state/task-x1.dormant" "secondmate-dormant-retire: the dormant record survived retirement"
+  pass "retiring a dormant secondmate succeeds and removes its dormant record"
+}
+
 test_forced_secondmate_child_scout_nested_clone_returns_clean() {
   local case_dir home child_wt rc
   case_dir=$(make_case secondmate-child-nested-clean)
@@ -5431,6 +5454,7 @@ test_scout_nested_clone_returns_with_no_untracked_entries
 test_ship_nested_clone_is_refused_and_bytes_stay
 test_dirty_return_warns_which_slot_was_lost
 test_dirty_return_warns_even_when_a_later_step_refuses
+test_secondmate_retirement_removes_its_dormant_record
 test_forced_secondmate_child_scout_nested_clone_returns_clean
 test_forced_secondmate_dirty_child_return_warns_and_completes
 test_return_that_removes_copy_warns_cannot_verify

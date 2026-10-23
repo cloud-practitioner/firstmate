@@ -573,6 +573,47 @@ test_secondmate_spawn_resolves_punctuated_registry_projects() {
   pass "secondmate spawn resolves home validation and projects from punctuated registry fields"
 }
 
+# A secondmate stood down by bin/fm-secondmate-dormant.sh is launched only by that
+# command's own resume, which names the id in FM_SECONDMATE_RESUMING; a plain
+# `fm-spawn.sh <id> --secondmate` (the liveness sweep's relaunch, or a hand run)
+# refuses before any lock, window or record is touched.
+test_secondmate_spawn_refuses_a_dormant_mate_except_for_resume() {
+  local home sub sub_abs fakebin log out rc=0
+  home="$TMP_ROOT/dormant-spawn-home"
+  sub="$TMP_ROOT/dormant-spawn-subhome"
+  mkdir -p "$home/data" "$home/state" "$home/config" "$home/projects"
+  mkdir -p "$sub/data" "$sub/state" "$sub/config" "$sub/projects"
+  printf '%s\n' 'projects/' 'state/' 'data/' 'config/' '.no-mistakes/' > "$sub/.gitignore"
+  git -C "$sub" init -q -b main
+  mark_firstmate_home "$sub"
+  printf 'dormantmate\n' > "$sub/.fm-secondmate-home"
+  printf '# Charter\n\nHandled work.\n' > "$sub/data/charter.md"
+  sub_abs=$(cd "$sub" && pwd -P)
+  printf -- '- dormantmate - idle work (home: %s; scope: idle; projects: alpha; added 2026-07-30)\n' \
+    "$sub_abs" > "$home/data/secondmates.md"
+  fakebin=$(make_fake_tmux "$TMP_ROOT/dormant-spawn-fake")
+  log="$TMP_ROOT/dormant-spawn-fake/tmux.log"
+  printf 'schema=fm-secondmate-dormant.v1\nid=dormantmate\nsince=1700000000\nreason=idle\n' > "$home/state/dormantmate.dormant"
+
+  : > "$log"
+  out=$(PATH="$fakebin:$PATH" FM_HOME="$home" FM_FAKE_TMUX_LOG="$log" \
+    FM_FAKE_TMUX_CAPTURE="$TMP_ROOT/dormant-spawn-fake/pane.txt" \
+    "$ROOT/bin/fm-spawn.sh" dormantmate codex --secondmate 2>&1) || rc=$?
+  expect_code 1 "$rc" "a plain secondmate spawn of a dormant mate must refuse"
+  assert_contains "$out" "is dormant" "the refusal names dormancy"
+  assert_contains "$out" "fm-secondmate-dormant.sh resume dormantmate" "the refusal names the way back"
+  assert_absent "$home/state/dormantmate.meta" "a refused spawn must not write a durable record"
+  [ ! -s "$log" ] || fail "a refused spawn must not touch the backend: $(cat "$log")"
+
+  PATH="$fakebin:$PATH" FM_HOME="$home" FM_FAKE_TMUX_LOG="$log" FM_SECONDMATE_RESUMING=dormantmate \
+    FM_FAKE_TMUX_CAPTURE="$TMP_ROOT/dormant-spawn-fake/pane.txt" \
+    "$ROOT/bin/fm-spawn.sh" dormantmate codex --secondmate >/dev/null 2>&1 \
+    || fail "the resume command's own spawn must be allowed"
+  assert_present "$home/state/dormantmate.meta" "the resume spawn did not record the mate"
+  assert_present "$home/state/dormantmate.dormant" "spawn itself must not clear dormancy; resume does that after success"
+  pass "secondmate spawn refuses a dormant mate unless the resume command names it"
+}
+
 test_secondmate_spawn_refuses_ambiguous_and_mismatched_registry_bindings() {
   local row case_name home sub other fakebin log err meta_before
   for row in duplicate-id unterminated-duplicate-id duplicate-home supplied-mismatch metadata-mismatch; do
@@ -3133,6 +3174,7 @@ test_home_seed_refuses_placeholder_charter
 test_home_seed_refuses_empty_charter_fields
 test_home_seed_no_projects_end_to_end
 test_secondmate_spawn_resolves_punctuated_registry_projects
+test_secondmate_spawn_refuses_a_dormant_mate_except_for_resume
 test_secondmate_spawn_refuses_ambiguous_and_mismatched_registry_bindings
 test_home_seed_refuses_projectful_reused_charter_for_projectless_home
 test_home_seed_refuses_projectless_conversion_of_populated_home

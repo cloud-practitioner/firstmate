@@ -1520,6 +1520,30 @@ write_large_fixture() {  # <home> <count>
   done
 }
 
+test_dormant_secondmate_is_not_an_unhealthy_endpoint() {
+  local home fakebin json
+  home=$(make_home dormant-endpoint); write_large_fixture "$home" 1
+  mkdir -p "$home/dead-mate-home"
+  fm_write_meta "$home/state/dead-mate.meta" \
+    "window=firstmate:fm-dead-mate" \
+    "worktree=$home/dead-mate-home" \
+    "project=$home/dead-mate-home" \
+    "harness=codex" \
+    "kind=secondmate" \
+    "mode=secondmate" \
+    "home=$home/dead-mate-home" \
+    "projects=alpha"
+  fakebin=$(make_fakebin "$home")
+  json=$(run "$home" "$fakebin" --json --all-unhealthy)
+  printf '%s' "$json" | jq -e '[.unhealthy_endpoints[].id] | index("dead-mate") != null' >/dev/null \
+    || fail "a stopped secondmate that is not dormant must be an unhealthy endpoint: $json"
+  printf 'schema=fm-secondmate-dormant.v1\nid=dead-mate\nsince=1700000000\nreason=idle\n' > "$home/state/dead-mate.dormant"
+  json=$(run "$home" "$fakebin" --json --all-unhealthy)
+  printf '%s' "$json" | jq -e '[.unhealthy_endpoints[].id] | index("dead-mate") == null' >/dev/null \
+    || fail "a stood-down secondmate must not be listed as an unhealthy endpoint: $json"
+  pass "a dormant secondmate is not an unhealthy endpoint in the bearings snapshot"
+}
+
 test_section_caps_and_expansion_flags() {
   local home fakebin json expanded
   home=$(make_home caps); write_large_fixture "$home" 5
@@ -3411,6 +3435,7 @@ test_include_prs_maps_custom_branch_prefix_to_task
 test_partial_github_failure_degrades
 test_perl_fallback_bounds_github_call
 test_section_caps_and_expansion_flags
+test_dormant_secondmate_is_not_an_unhealthy_endpoint
 test_collapsed_captain_call_deferral_and_landed
 test_undated_hold_phrasing_and_aging_projection
 test_blocked_deferred_hold_has_concrete_disclosure

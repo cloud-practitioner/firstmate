@@ -1312,6 +1312,35 @@ EOF
   pass "registry home parses when summary has parentheses before (home: ...)"
 }
 
+# A secondmate stood down by bin/fm-secondmate-dormant.sh has no agent to take the
+# routed work or its wake, so the handoff refuses before anything moves.
+test_handoff_to_a_dormant_receiver_is_refused_without_moving() {
+  local home="$TMP_ROOT/dormant-main" sub="$TMP_ROOT/dormant-sub" out rc=0
+  setup_homes "$home" "$sub"
+  mkdir -p "$sub/state" "$sub/data"
+  printf '## Queued\n\n## Done\n' > "$sub/data/backlog.md"
+  cat > "$home/data/backlog.md" <<'EOF'
+## Queued
+- [ ] dormant-item - must stay put (repo: alpha)
+
+## Done
+EOF
+  printf 'schema=fm-secondmate-dormant.v1\nid=design\nsince=1700000000\nreason=idle\n' > "$home/state/design.dormant"
+  out=$(FM_HOME="$home" "$ROOT/bin/fm-backlog-handoff.sh" design dormant-item 2>&1) || rc=$?
+  expect_code 1 "$rc" "a handoff to a dormant secondmate must refuse"
+  assert_contains "$out" "is dormant" "the refusal names dormancy"
+  assert_contains "$out" "fm-secondmate-dormant.sh resume design" "the refusal names the way back"
+  assert_grep 'dormant-item' "$home/data/backlog.md" "the source backlog must be untouched"
+  assert_no_grep 'dormant-item' "$sub/data/backlog.md" "nothing may reach the dormant mate's backlog"
+  [ ! -e "$home/state/.backlog-handoff-design.wake-pending" ] || fail "no wake marker may be armed for a dormant mate"
+  [ "$(inbox_record_count "$home/state" design)" = 0 ] || fail "nothing may be queued to a dormant mate"
+  rm -f "$home/state/design.dormant"
+  FM_HOME="$home" "$ROOT/bin/fm-backlog-handoff.sh" design dormant-item >/dev/null 2>&1 \
+    || fail "the handoff must work again once dormancy is cleared"
+  assert_grep 'dormant-item' "$sub/data/backlog.md" "the item must arrive after resume"
+  pass "handoff: a dormant receiver is refused before anything moves, and works after resume"
+}
+
 # An entry that genuinely lacks (home: ...) must still fail cleanly (empty parse
 # surfaces as "has no home"), not succeed or mis-parse prose.
 test_registry_home_missing_field_fails_cleanly() {
@@ -1391,6 +1420,7 @@ test_noncanonical_indented_continuations_refuse_without_changes
 test_indented_heading_is_not_section_boundary
 test_registry_home_with_pre_home_parentheses
 test_registry_home_missing_field_fails_cleanly
+test_handoff_to_a_dormant_receiver_is_refused_without_moving
 test_handoff_warns_when_a_moved_item_still_owes_a_public_reply
 test_handoff_is_silent_about_public_commitments_without_the_relay
 

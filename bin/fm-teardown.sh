@@ -195,7 +195,9 @@
 # before preserving the route for retry. After a successful local or remote
 # secondmate retirement, every parent pending-reply record for that id (resolved
 # leftovers included) and its delivery confirmation is removed so retired mates
-# cannot leave durable reply expectations behind. Non-forced retirement refuses
+# cannot leave durable reply expectations behind, and its dormant record
+# (bin/fm-secondmate-dormant.sh) is removed with its other per-task state, with
+# no change to what retirement checks or refuses. Non-forced retirement refuses
 # while any of those records is still unresolved. Teardown then discards child
 # work, kills child runtime endpoints, and removes the retired home. Removing a
 # leased home releases its durable treehouse lease so the pool slot is freed,
@@ -3933,7 +3935,8 @@ rm -f "$STATE/$ID.evidence-waiver" \
   "$STATE/$ID.claude-settings.json" "$STATE/$ID.devin-config.json" \
   "$STATE/$ID.polytoken-busy.sh" \
   "$STATE/.$ID.branch-outcome-index" \
-  "$STATE/.secondmate-relaunch-$ID" "$STATE/.secondmate-relaunch-bound-$ID"
+  "$STATE/.secondmate-relaunch-$ID" "$STATE/.secondmate-relaunch-bound-$ID" \
+  "$STATE/$ID.dormant"
 # The steering inbox (bin/fm-task-inbox-lib.sh) is runtime state for the
 # retired endpoint; teardown only runs after landing is confirmed, so any
 # leftover unhandled steer here is moot rather than unlanded work.

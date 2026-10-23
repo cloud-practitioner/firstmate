@@ -1,7 +1,7 @@
 ---
 name: secondmate-provisioning
 description: >-
-  Load when creating, seeding, validating, launching, recovering, handing backlog to, pushing inherited local material into, or retiring a secondmate home, or when editing data/secondmates.md.
+  Load when creating, seeding, validating, launching, recovering, handing backlog to, pushing inherited local material into, retiring, standing down, or resuming a secondmate home, or when editing data/secondmates.md.
 user-invocable: false
 metadata:
   internal: true
@@ -9,7 +9,7 @@ metadata:
 
 # secondmate-provisioning
 
-Use this reference before creating, seeding, validating, launching, handing backlog to, recovering, pushing inherited local material into, or retiring a persistent secondmate, and before editing `data/secondmates.md`.
+Use this reference before creating, seeding, validating, launching, handing backlog to, recovering, pushing inherited local material into, retiring, standing down, or resuming a persistent secondmate, and before editing `data/secondmates.md`.
 
 Keep the always-inline routing rules in `AGENTS.md` authoritative: route by natural-language `scope:`, local-only projects stay with the main firstmate, and secondmates are idle by default.
 
@@ -208,7 +208,8 @@ Do not hand off `local-only` items.
 
 ## Recovery
 
-For local `kind=secondmate` meta with no window, treat the secondmate as a dead persistent direct report and respawn it with:
+Check for intentional dormancy before treating a missing window as a failure; a stood-down mate follows [Standing a secondmate down](#standing-a-secondmate-down), not recovery.
+For non-dormant local `kind=secondmate` meta with no window, treat the secondmate as a dead persistent direct report and respawn it with:
 
 ```sh
 bin/fm-spawn.sh <id> --secondmate
@@ -233,6 +234,14 @@ The main firstmate reconciles only direct reports.
 Each secondmate is a firstmate in its own home, so it runs recovery on startup and reconciles its own crewmates.
 A secondmate's recovery reconciles only work that is already its own and then idles.
 It never initiates a survey or audit during recovery.
+
+## Standing a secondmate down
+
+Stand a persistent local secondmate down when it has no work for now and its idle agent only costs memory (each running mate holds its own MCP servers), while its information must survive for future work.
+Use the supported dormancy lifecycle rather than a one-off agent exit or retirement; settle every reported blocker first and never force past it.
+Resume the mate before routing new in-scope work or requests, not merely because its endpoint is absent.
+[`bin/fm-secondmate-dormant.sh`'s header and help](../../../bin/fm-secondmate-dormant.sh) own commands, local-only scope, refusal conditions, preserved records, resume/retry semantics, and all paths that honor dormancy.
+[`bin/fm-secondmate-dormant-lib.sh`](../../../bin/fm-secondmate-dormant-lib.sh) owns the dormant record format and read rules.
 
 ## Retirement and teardown
 

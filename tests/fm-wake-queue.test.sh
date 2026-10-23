@@ -848,6 +848,63 @@ SH
   chmod +x "$fakebin/date"
 }
 
+test_secondmate_stall_admission_excludes_dormancy() {
+  local dir state sub fakebin mode lock progress
+  # shellcheck source=bin/fm-secondmate-dormant-lib.sh
+  . "$ROOT/bin/fm-secondmate-dormant-lib.sh"
+  for mode in ring alert; do
+    dir=$(make_case "secondmate-stall-admission-$mode")
+    state="$dir/state"
+    sub="$dir/secondmate"
+    fakebin="$dir/fakebin"
+    mkdir -p "$sub/state"
+    printf 'mate\n' > "$sub/.fm-secondmate-home"
+    printf 'window=firstmate:fm-mate\nkind=secondmate\nharness=claude\nbackend=tmux\nhome=%s\n' \
+      "$sub" > "$state/mate.meta"
+    printf '100\t7\tcheck\trouted\tcheck: routed row\n' > "$sub/state/.wake-queue"
+    printf '1000\t100-7\n' > "$state/.secondmate-wake-progress-mate"
+    progress=$(cat "$state/.secondmate-wake-progress-mate")
+    printf '1002\n' > "$dir/now"
+    install_secondmate_alive_tmux "$fakebin"
+    install_secondmate_stall_date "$fakebin"
+    if [ "$mode" = ring ]; then
+      "$ROOT/bin/fm-busy-event.sh" arm "$state" mate >/dev/null || fail "could not arm idle mate"
+      "$ROOT/bin/fm-busy-event.sh" apply "$state" mate idle --current-gen \
+        --source claude-hook --event stop >/dev/null || fail "could not mark mate idle"
+    fi
+    FM_HOME="$dir" FM_STATE_OVERRIDE="$state" fm_sm_admission_lock "$state" mate || fail "could not hold mate admission"
+    lock=$FM_SM_ADMISSION_LOCK
+    PATH="$fakebin:$PATH" FM_FAKE_NOW_FILE="$dir/now" FM_HOME="$dir" FM_ROOT_OVERRIDE="$ROOT" \
+      FM_STATE_OVERRIDE="$state" FM_FAKE_TMUX_SENT="$dir/sent" \
+      FM_SECONDMATE_WAKE_STALL_SECS=1 FM_POLL=1 FM_SIGNAL_GRACE=0 \
+      FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 \
+      secondmate_stall_watch_leg "$dir" held tick
+    assert_equals "$progress" "$(cat "$state/.secondmate-wake-progress-mate")" "a held admission excludes progress mutations"
+    [ ! -s "$dir/sent" ] || fail "a held admission must exclude a drain ring"
+    [ ! -s "$state/.wake-queue" ] || fail "a held admission must exclude stall notifications"
+    assert_absent "$state/mate.inbox" "a held admission must exclude drain instructions"
+    fm_sm_dormant_write "$state" mate idle || fail "could not publish dormancy"
+    fm_sm_admission_unlock "$lock" || fail "could not release admission"
+    PATH="$fakebin:$PATH" FM_FAKE_NOW_FILE="$dir/now" FM_HOME="$dir" FM_ROOT_OVERRIDE="$ROOT" \
+      FM_STATE_OVERRIDE="$state" FM_FAKE_TMUX_SENT="$dir/sent" \
+      FM_SECONDMATE_WAKE_STALL_SECS=1 FM_POLL=1 FM_SIGNAL_GRACE=0 \
+      FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 \
+      secondmate_stall_watch_leg "$dir" dormant tick
+    assert_equals "$progress" "$(cat "$state/.secondmate-wake-progress-mate")" "dormancy excludes progress mutations after admission opens"
+    assert_absent "$state/mate.inbox" "dormancy excludes drain instructions after admission opens"
+    [ ! -s "$dir/sent" ] || fail "dormancy must exclude a drain ring after admission opens"
+    [ ! -s "$state/.wake-queue" ] || fail "dormancy must exclude a stall alarm after admission opens"
+    fm_sm_dormant_clear "$state" mate || fail "could not clear dormancy"
+    PATH="$fakebin:$PATH" FM_FAKE_NOW_FILE="$dir/now" FM_HOME="$dir" FM_ROOT_OVERRIDE="$ROOT" \
+      FM_STATE_OVERRIDE="$state" FM_FAKE_TMUX_SENT="$dir/sent" \
+      FM_SECONDMATE_WAKE_STALL_SECS=1 FM_POLL=1 FM_SIGNAL_GRACE=0 \
+      FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 \
+      secondmate_stall_watch_leg "$dir" resumed "$mode" mate 100-7
+    assert_absent "$state/.secondmate-admission-mate.lock" "normal completion and alarm exit both release admission"
+  done
+  pass "wake-stall rings and notifications serialize admission and recheck dormancy"
+}
+
 # A proven-idle, ring-safe mate with a leftover foreign row is rung so its
 # own home can drain. The parent alarm stays silent when that ring actually
 # empties the child's queue.
@@ -991,6 +1048,7 @@ SH
   [ ! -e "$state/.watch.lock" ] \
     || fail "a watcher stopped in the drain-ring idle capture kept its singleton lock"
   [ ! -s "$dir/sent" ] || fail "a watcher stopped before its idle proof still rang the mate"
+  assert_absent "$state/.secondmate-admission-mate.lock" "signal cleanup releases mate admission"
   pass "TERM stops a watcher blocked in the drain-ring idle capture and runs its cleanup"
 }
 
@@ -3244,6 +3302,37 @@ test_secondmate_liveness_tick_leaves_alive_and_inconclusive_untouched() {
   pass "watch liveness: alive and ambiguous endpoints are probed, logged, and never touched"
 }
 
+# A secondmate stood down by bin/fm-secondmate-dormant.sh reads as a stopped agent
+# on a bare shell - the very evidence that relaunches an ordinary mate - yet the
+# watcher must leave it stopped, queue no wake, and leave no triage noise.
+test_secondmate_liveness_tick_skips_a_dormant_mate() {
+  local dir state pid
+  dir=$(make_secondmate_liveness_case liveness-dormant)
+  state="$dir/state"
+  printf 'schema=fm-secondmate-dormant.v1\nid=sm1\nsince=1700000000\nreason=idle\n' > "$state/sm1.dormant"
+
+  run_liveness_leg "$dir" dormant FM_FAKE_TMUX_CURRENT_COMMAND=zsh; pid=$LIVENESS_PID
+  sleep 4
+  is_live_non_zombie "$pid" \
+    || fail "the watcher exited against a dormant secondmate: $(cat "$dir/watch-dormant.out" "$dir/watch-dormant.err")"
+  kill_liveness_leg "$pid"
+  [ ! -s "$dir/tmux.log" ] || fail "a dormant secondmate was killed or relaunched: $(cat "$dir/tmux.log")"
+  [ ! -s "$state/.wake-queue" ] || fail "a dormant secondmate queued a wake: $(cat "$state/.wake-queue")"
+  [ ! -e "$state/.secondmate-relaunch-sm1" ] || fail "a dormant secondmate was ledgered"
+  [ -e "$state/.secondmate-liveness-tick" ] || fail "the liveness tick did not run its cadence"
+  if grep -F 'sm1' "$state/.watch-triage.log" 2>/dev/null | grep -F 'liveness' >/dev/null; then
+    fail "a dormant secondmate left liveness triage noise: $(cat "$state/.watch-triage.log")"
+  fi
+
+  # The same fixture without the record is relaunched, so the skip is the record's doing.
+  rm -f "$state/sm1.dormant" "$state/.secondmate-liveness-tick"
+  drain_liveness_wakes "$dir"
+  run_liveness_leg "$dir" cleared FM_FAKE_TMUX_CURRENT_COMMAND=zsh; pid=$LIVENESS_PID
+  wait_for_exit "$pid" 300 || fail "the watcher did not relaunch the mate once dormancy was cleared"
+  assert_contains "$(cat "$dir/tmux.log")" "new-window" "a mate with no record is relaunched as before"
+  pass "watch liveness: a dormant secondmate is never relaunched, woken for, or logged as dead"
+}
+
 test_secondmate_liveness_tick_cadence_gates_the_probe() {
   local dir state pid
   dir=$(make_secondmate_liveness_case liveness-cadence)
@@ -3524,6 +3613,7 @@ test_secondmate_declared_pause_rows_do_not_feed_stall_escalation
 test_secondmate_reprovisioned_queue_starts_a_fresh_interval
 test_secondmate_active_turn_defers_stall_until_the_turn_ends
 test_secondmate_long_lived_mate_mid_turn_is_not_a_stall
+test_secondmate_stall_admission_excludes_dormancy
 test_secondmate_proven_idle_ring_lets_the_child_drain
 test_term_stops_a_watcher_blocked_in_the_drain_ring_idle_capture
 test_secondmate_busy_and_unknown_panes_are_not_rung
@@ -3574,6 +3664,7 @@ test_secondmate_liveness_tick_relaunches_dead_endpoint_once
 test_secondmate_liveness_tick_relaunches_missing_endpoint
 test_secondmate_liveness_tick_relaunches_every_dead_mate_before_waking
 test_secondmate_liveness_tick_leaves_alive_and_inconclusive_untouched
+test_secondmate_liveness_tick_skips_a_dormant_mate
 test_secondmate_liveness_tick_cadence_gates_the_probe
 test_secondmate_liveness_tick_attempt_bound_parks_then_rearm_on_alive
 test_secondmate_liveness_tick_relaunch_failure_reports_once

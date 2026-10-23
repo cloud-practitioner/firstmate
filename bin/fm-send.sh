@@ -90,6 +90,10 @@
 # stage; do not move the marker behind the invocation or omit it here. Follow-up
 # fm-send-secondmate-harness-invocation-r1 owns that behavior.
 #
+# Dormant secondmate: any target resolved to a stood-down mate's metadata,
+# including an explicit endpoint target or key send, follows the refusal contract
+# in bin/fm-secondmate-dormant.sh before anything is recorded, rung or marked.
+#
 # From-firstmate marker: when the resolved target is a task selector whose meta
 # records kind=secondmate, the message uses the live-charter-compatible
 # from-firstmate carrier owned by bin/fm-operational-input.sh so the secondmate
@@ -246,6 +250,8 @@ fi
 . "$SCRIPT_DIR/fm-marker-lib.sh"
 # shellcheck source=bin/fm-pending-reply-lib.sh
 . "$SCRIPT_DIR/fm-pending-reply-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$SCRIPT_DIR/fm-secondmate-dormant-lib.sh"
 # shellcheck source=bin/fm-classify-lib.sh
 . "$SCRIPT_DIR/fm-classify-lib.sh"
 # shellcheck source=bin/fm-line-cap-lib.sh
@@ -449,11 +455,12 @@ shift
 # untouched (contract: bin/fm-lease-lib.sh).
 # shellcheck source=bin/fm-lease-lib.sh
 . "$SCRIPT_DIR/fm-lease-lib.sh"
+SEND_ADMISSION_LOCK=
 if [ -n "$TARGET_META" ]; then
   LEASE_GUARD_TASK=$(fm_send_id_from_meta "$TARGET_META")
   if [ -n "$LEASE_GUARD_TASK" ]; then
     fm_lease_guard "$LEASE_GUARD_TASK" "steer (fm-send)"
-    trap 'fm_lease_guard_release' EXIT
+    trap 'fm_sm_admission_unlock "$SEND_ADMISSION_LOCK"; fm_lease_guard_release' EXIT
   fi
 fi
 
@@ -537,9 +544,17 @@ fm_send_known_undelivered_cleanup() {
     fm_pending_reply_reset_known_undelivered "$STATE" "$PENDING_REPLY_CORR"
   fi
 }
-if [ -n "$TARGET_SELECTOR" ] && [ -n "$TARGET_META" ] && [ "$(fm_meta_get "$TARGET_META" kind)" = secondmate ]; then
-  MARK_FROM_FIRSTMATE=1
+if [ -n "$TARGET_META" ] && [ "$(fm_meta_get "$TARGET_META" kind)" = secondmate ]; then
+  [ -z "$TARGET_SELECTOR" ] || MARK_FROM_FIRSTMATE=1
   TARGET_TASK_ID=$(fm_send_id_from_meta "$TARGET_META")
+  fm_sm_admission_lock "$STATE" "$TARGET_TASK_ID" || exit 1
+  SEND_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
+  # A stood-down mate has no agent to read a steer, so nothing is queued to it
+  # and no reply expectation is armed (bin/fm-secondmate-dormant.sh resume).
+  if fm_sm_dormant_is "$STATE" "$TARGET_TASK_ID"; then
+    fm_sm_dormant_refusal "$STATE" "$TARGET_TASK_ID" "nothing was sent or queued"
+    exit 1
+  fi
 fi
 
 # Validate the answerer-closes request before any durable mutation or send: the

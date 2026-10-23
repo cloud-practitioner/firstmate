@@ -365,6 +365,8 @@ PRIMARY_HARNESS=$("$SCRIPT_DIR/fm-harness.sh" 2>/dev/null || printf unknown)
 
 # shellcheck source=bin/fm-backend.sh
 . "$SCRIPT_DIR/fm-backend.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$SCRIPT_DIR/fm-secondmate-dormant-lib.sh"
 # shellcheck source=bin/fm-tasks-axi-lib.sh
 . "$SCRIPT_DIR/fm-tasks-axi-lib.sh"
 # shellcheck source=bin/fm-public-followup-lib.sh
@@ -930,7 +932,12 @@ for meta in "$STATE"/*.meta; do
 
   window=$(fm_meta_get "$meta" window)
   target=$(fm_backend_target_of_meta "$meta")
-  if [ -n "$window" ]; then
+  if [ "$(fm_meta_get "$meta" kind)" = secondmate ] && fm_sm_dormant_is "$STATE" "$id"; then
+    # Stood down on purpose (bin/fm-secondmate-dormant.sh): its agent is
+    # stopped, so there is no endpoint to probe and nothing to recover.
+    printf 'endpoint: dormant (%s; bin/fm-secondmate-dormant.sh resume %s brings it back)\n' \
+      "$(fm_sm_dormant_describe "$STATE" "$id")" "$id"
+  elif [ -n "$window" ]; then
     backend=$(fm_backend_of_meta "$meta")
     endpoint_rc=0
     fm_session_start_endpoint_read "$backend" "${target:-$window}" "fm-$id" || endpoint_rc=$?

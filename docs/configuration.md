@@ -94,6 +94,7 @@ Each effective `FM_HOME` contains private operational directories.
 - Per-task steering-inbox records under `state/<id>.inbox/` (`bin/fm-task-inbox-lib.sh`).
 - Per-task private temp roots for worker scratch files under `state/<id>.tasktmp/` (creation: [`bin/fm-spawn.sh`](../bin/fm-spawn.sh); placement rules, including no-mistakes intent files: generated Rules in [`bin/fm-brief.sh`](../bin/fm-brief.sh)).
 - Parent-owned secondmate pending-reply records under `state/pending-replies/` (`bin/fm-pending-reply-lib.sh`).
+- Parent-owned dormant (stood-down) records for persistent local secondmates under `state/<id>.dormant` (see "Dormant secondmate record" below).
 
 `config/` holds local gitignored operating choices, including explicit extension bindings under `config/extensions.d/`.
 
@@ -486,6 +487,13 @@ Task meta records `backend=` only for a non-default backend; an absent `backend=
 - An Orca task additionally records `orca_worktree_id=` and `terminal=`, with `window=fm-<id>` kept as the shared firstmate alias.
 
 - A cmux task additionally records `cmux_workspace_id=` and `cmux_surface_id=`.
+
+### Dormant secondmate record
+
+Stand down an idle persistent local secondmate to keep it stopped without retiring its home or losing its durable information.
+[`bin/fm-secondmate-dormant.sh`'s header and help](../bin/fm-secondmate-dormant.sh) own usage, exact-ID addressing, refusal conditions, resume/retry semantics, and which supervision and update paths honor dormancy.
+[`bin/fm-secondmate-dormant-lib.sh`](../bin/fm-secondmate-dormant-lib.sh) owns the parent-side `state/<id>.dormant` format, atomic publication, and fail-safe read rules; do not edit the record by hand.
+The [`secondmate-provisioning` skill](../.agents/skills/secondmate-provisioning/SKILL.md#standing-a-secondmate-down) owns when to stand a mate down or bring it back.
 
 ### Task selectors
 

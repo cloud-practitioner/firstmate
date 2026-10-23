@@ -91,6 +91,10 @@
 #              state; it never leaves a half-transitioned task claiming to be
 #              running.
 #
+# `relaunch` refuses a secondmate stood down by bin/fm-secondmate-dormant.sh,
+# whose `stand-down` is the supported way to stop one and keep it stopped
+# (`exit` alone leaves it for the liveness sweep to relaunch).
+#
 # Teardown and discard are NOT verbs here and never will be. `exit` stops an
 # agent and preserves everything else; removing a worktree, killing an
 # endpoint, or discarding work stays with bin/fm-teardown.sh, which owns the
@@ -184,6 +188,8 @@ DATA="${FM_DATA_OVERRIDE:-$FM_HOME/data}"
 . "$SCRIPT_DIR/fm-worker-account-lib.sh"
 # shellcheck source=bin/fm-exclude-tools-lib.sh
 . "$SCRIPT_DIR/fm-exclude-tools-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$SCRIPT_DIR/fm-secondmate-dormant-lib.sh"
 
 POLL=${FM_CONTROL_POLL:-0.5}
 SETTLE_WAIT=${FM_CONTROL_SETTLE_WAIT:-5}
@@ -199,6 +205,7 @@ die() {  # <message>
 
 CONTROL_LOCK=
 CONTROL_LOCK_HELD=0
+CONTROL_ADMISSION_LOCK=
 RELAUNCH_ACTIVE=0
 RELAUNCH_PHASE=start
 
@@ -217,6 +224,7 @@ control_cleanup() {
     CONTROL_LOCK_HELD=0
     fm_lock_release "$CONTROL_LOCK" || true
   fi
+  fm_sm_admission_unlock "$CONTROL_ADMISSION_LOCK" || true
   if declare -F fm_lease_guard_release >/dev/null 2>&1; then
     fm_lease_guard_release || true
   fi
@@ -323,6 +331,10 @@ ID=$RAW_ID
 fm_lease_guard "$ID" "lifecycle control (fm-control)"
 CONTROL_LOCK="$STATE/.control-$ID.lock"
 trap control_cleanup EXIT
+if [ "$VERB" = relaunch ]; then
+  fm_sm_admission_lock "$STATE" "$ID" || exit 1
+  CONTROL_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
+fi
 fm_lock_try_acquire "$CONTROL_LOCK" \
   || die "another lifecycle action is already running for task $ID"
 CONTROL_LOCK_HELD=1
@@ -1170,7 +1182,7 @@ do_relaunch() {
   [ "$TARGET_MODEL" = default ] || spawn_args+=(--model "$TARGET_MODEL")
   [ "$TARGET_EFFORT" = default ] || spawn_args+=(--effort "$TARGET_EFFORT")
   if FM_CONTROL_RELAUNCH_TX="$RELAUNCH_TX" \
-      "$SCRIPT_DIR/fm-spawn.sh" "${spawn_args[@]}" >/dev/null; then
+      FM_SM_ADMISSION_PARENT="$$" "$SCRIPT_DIR/fm-spawn.sh" "${spawn_args[@]}" >/dev/null; then
     RELAUNCH_META_PUBLISHED=1
     # $T was resolved from the record before the launch. When the recorded
     # endpoint was gone, the launch owner created a fresh one and republished
@@ -1229,6 +1241,12 @@ case "$VERB" in
     echo "$result $ID harness=$HARNESS backend=$BACKEND endpoint=$T worktree=$WT"
     ;;
   relaunch)
+    # A stood-down secondmate is brought back by bin/fm-secondmate-dormant.sh
+    # resume alone; refuse before anything is stopped or checkpointed.
+    if fm_sm_dormant_is "$STATE" "$ID"; then
+      fm_sm_dormant_refusal "$STATE" "$ID" "refusing to relaunch it"
+      exit 1
+    fi
     do_relaunch
     ;;
 esac

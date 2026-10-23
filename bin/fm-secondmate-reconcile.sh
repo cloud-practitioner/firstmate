@@ -77,6 +77,8 @@
 #   sent: <mate-id> <kind>          one reconcile instruction was recorded
 #   cooldown: <mate-id> <seconds>   nudged this recently; nothing sent
 #   skipped: <mate-id> lock         a required lock was busy; cooldown unchanged
+#   skipped: <mate-id> dormant      stood down by bin/fm-secondmate-dormant.sh;
+#                                   nothing sent, cooldown unchanged
 #   stale: <mate-id> <kind>         the sampled endpoint retired or changed
 #   failed: <mate-id> <kind>        the steer could not be recorded
 #   sent-unrecorded: <mate-id> <kind>  sent, but cooldown commit failed
@@ -91,6 +93,8 @@ STATE="${FM_STATE_OVERRIDE:-$FM_HOME/state}"
 
 # shellcheck source=bin/fm-wake-lib.sh
 . "$SCRIPT_DIR/fm-wake-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$SCRIPT_DIR/fm-secondmate-dormant-lib.sh"
 
 # One nudge per home per four hours.
 FM_RECONCILE_COOLDOWN_SECONDS=${FM_RECONCILE_COOLDOWN_SECONDS:-14400}
@@ -463,6 +467,10 @@ cmd_notify() {
   local id sampled_spawn_gen sampled_host expected_remote_host kind path last age now delivered_at reconcile_lock control_lock meta meta_lock did send_rc
   while IFS=$'\037' read -r id sampled_spawn_gen sampled_host kind; do
     [ -n "${id:-}" ] || continue
+    if fm_sm_dormant_is "$STATE" "$id"; then
+      printf 'skipped: %s dormant\n' "$id"
+      continue
+    fi
     path=$(nudge_path "$id")
     reconcile_lock="$STATE/.$id.reconcile.lock"
     if ! fm_lock_try_acquire "$reconcile_lock"; then

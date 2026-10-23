@@ -160,8 +160,8 @@
 #                          counts toward the bound below
 #   check: secondmate <id> auto-relaunch paused after <n> attempts in <s>s; ...
 #                          a mate that kept dying exceeded its bounded relaunch
-#                          budget and is parked until a probe reads it live
-#                          again (FM_SECONDMATE_LIVENESS_MAX_ATTEMPTS and
+#                          budget and is parked by the relaunch bound
+#                          (FM_SECONDMATE_LIVENESS_MAX_ATTEMPTS and
 #                          FM_SECONDMATE_LIVENESS_WINDOW_SECS)
 # For normal supervision, resume the session-start primary-harness protocol
 # after each printed reason. Direct duplicate invocations of this script still
@@ -379,8 +379,9 @@ SECONDMATE_LIVENESS_TIMEOUT=${FM_SECONDMATE_LIVENESS_TIMEOUT:-}
 case "$SECONDMATE_LIVENESS_TIMEOUT" in ''|*[!0-9]*|0) SECONDMATE_LIVENESS_TIMEOUT=120 ;; esac
 # Relaunch bound: at most this many automatic attempts per window per mate,
 # counted from the durable attempt ledger the shared library appends to. A mate
-# that keeps dying past the bound wakes once and is parked until a probe reads
-# it alive again, so a flapping endpoint cannot relaunch forever unseen.
+# that keeps dying past the bound wakes once and is parked, so a flapping endpoint
+# cannot relaunch forever unseen. A live probe rearms it; intentional resume's
+# rearming contract belongs to bin/fm-secondmate-dormant.sh.
 SECONDMATE_LIVENESS_MAX_ATTEMPTS=${FM_SECONDMATE_LIVENESS_MAX_ATTEMPTS:-}
 case "$SECONDMATE_LIVENESS_MAX_ATTEMPTS" in ''|*[!0-9]*|0) SECONDMATE_LIVENESS_MAX_ATTEMPTS=3 ;; esac
 SECONDMATE_LIVENESS_WINDOW_SECS=${FM_SECONDMATE_LIVENESS_WINDOW_SECS:-}
@@ -973,12 +974,15 @@ secondmate_ring_to_drain() {  # <task> <window>
 # parent alarm. Empty inbox and a fresh child beacon are not idle proof.
 # Receipts close the append-before-marker crash window without changing the
 # foreign queue.
+SECONDMATE_ADMISSION_LOCK=
 secondmate_wake_stall_tick() {
   local now=$(( $(date +%s) )) threshold=$SECONDMATE_WAKE_STALL_SECS
   local meta task kind remote_host home queue row epoch seq row_key marker progress_marker ring_marker progress observed_at observed_key
   local receipt receipt_dir notify_key queued idle reason episode_alerted already_rung w
   # Endpoint metadata admits this queue-loop check; secondmate-liveness owns registered mates whose endpoint is missing or dead.
   for meta in "$STATE"/*.meta; do
+    fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || return 1
+    SECONDMATE_ADMISSION_LOCK=
     [ -e "$meta" ] || continue
     kind=$(fm_meta_get "$meta" kind)
     [ "$kind" = secondmate ] || continue
@@ -987,6 +991,10 @@ secondmate_wake_stall_tick() {
     task=${meta##*/}
     task=${task%.meta}
     case "$task" in ''|*[!A-Za-z0-9._-]*) continue ;; esac
+    fm_sm_admission_lock "$STATE" "$task" 2>/dev/null || continue
+    SECONDMATE_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
+    # A stood-down mate runs no wake loop on purpose (bin/fm-secondmate-dormant.sh).
+    ! fm_sm_dormant_is "$STATE" "$task" || continue
     home=$(fm_meta_get "$meta" home)
     [ -n "$home" ] || continue
     [ -f "$home/.fm-secondmate-home" ] && [ ! -L "$home/.fm-secondmate-home" ] || continue
@@ -1065,6 +1073,8 @@ EOF
     fm_wake_secondmate_stall_marker_write "$task" "$row_key" || return 1
     wake "$reason"
   done
+  fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || return 1
+  SECONDMATE_ADMISSION_LOCK=
   return 0
 }
 
@@ -1138,6 +1148,9 @@ secondmate_liveness_tick() {
         ;;
       skipped)
         triage_log "secondmate $id liveness: $FM_SM_LIVE_REASON"
+        ;;
+      dormant)
+        # Stood down on purpose: no relaunch, no wake, no triage noise.
         ;;
     esac
     if [ -n "$reason" ]; then
@@ -2827,6 +2840,8 @@ pr_poll_publish_release() {
 
 watcher_cleanup() {
   local cleanup_status=0 owns_lock=0 transition=release-lock
+  fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || cleanup_status=1
+  SECONDMATE_ADMISSION_LOCK=
   pr_poll_publish_release || cleanup_status=1
   pr_poll_control_release || cleanup_status=1
   if [ "$(cat "$WATCH_LOCK/pid" 2>/dev/null || true)" = "${WATCHER_PID:-}" ]; then
@@ -3299,8 +3314,17 @@ EOF
   # remembers the hash already classified, or the declaration a busy pane's
   # crossed turn bound already handed to the away-mode daemon).
   while IFS= read -r w; do
+    fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || exit 1
+    SECONDMATE_ADMISSION_LOCK=
     kind=$(window_kind "$w")
     task=$(window_to_task "$w" "$STATE")
+    # A stood-down secondmate is stopped on purpose, so its pane, inbox and
+    # declared waits are not the watcher's concern (bin/fm-secondmate-dormant.sh).
+    if [ "$kind" = secondmate ] && [ -n "$task" ]; then
+      fm_sm_admission_lock "$STATE" "$task" 2>/dev/null || continue
+      SECONDMATE_ADMISSION_LOCK=$FM_SM_ADMISSION_LOCK
+      ! fm_sm_dormant_is "$STATE" "$task" || continue
+    fi
     # Steering-inbox loss detection runs before the secondmate stale
     # exemption below, because a mate's steers land in an inbox too.
     [ -z "$task" ] || inbox_steer_check "$w" "$task"
@@ -3521,6 +3545,8 @@ EOF
       fi
     fi
   done < <(recorded_windows)
+  fm_sm_admission_unlock "$SECONDMATE_ADMISSION_LOCK" || exit 1
+  SECONDMATE_ADMISSION_LOCK=
 
   # Heartbeat: the watcher runs a cheap fleet-scan at a regular cadence no matter
   # what. Time-based via .last-heartbeat mtime; interval doubles per consecutive

@@ -337,7 +337,7 @@ family_for_basename() {
     fm-remote-transport-lanes.test.sh|\
     fm-remote-reply.test.sh|fm-remote-secondmate-lifecycle-e2e.test.sh|\
     fm-remote-secondmate-trace-context.test.sh|\
-    fm-secondmate-harness.test.sh|fm-secondmate-lifecycle-e2e.test.sh|\
+    fm-secondmate-dormant.test.sh|fm-secondmate-harness.test.sh|fm-secondmate-lifecycle-e2e.test.sh|\
     fm-secondmate-liveness.test.sh|fm-secondmate-reconcile.test.sh|\
     fm-secondmate-restart.test.sh|fm-remote-secondmate-relaunch.test.sh|\
     fm-secondmate-safety.test.sh|fm-secondmate-sync.test.sh|\
@@ -835,6 +835,7 @@ tests/fm-remote-secondmate-trace-context.test.sh 74870
 tests/fm-remote-transport-lanes.test.sh 66089
 tests/fm-rovo-harness.test.sh 15691
 tests/fm-rovo-signals-live-e2e.test.sh 52
+tests/fm-secondmate-dormant.test.sh 115000
 tests/fm-secondmate-harness.test.sh 188187
 tests/fm-secondmate-busy-contract-live-e2e.test.sh 90000
 tests/fm-secondmate-lifecycle-e2e.test.sh 11268

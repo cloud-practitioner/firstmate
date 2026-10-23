@@ -49,8 +49,8 @@ This touches only the firstmate repo and its own worktrees, never anything under
 
    The two second-mate sets are disjoint and the script owns the split; do not re-derive it.
    `restart-secondmates:` carries every live mate the pass left on the latest commit, whether it advanced or was already there.
-   A mate reaches neither set only because its home was skipped, because it has no live endpoint recorded here, or because its endpoint was positively classified as dead or missing.
-   A skipped genuine divergence still requires attention through its durable reconciliation record; the other two cases need no update action from you.
+   A mate reaches neither set when it is intentionally dormant (see the [dormancy command contract](../../../bin/fm-secondmate-dormant.sh)), its home was skipped, it has no live endpoint recorded here, or its endpoint was positively classified as dead or missing.
+   A skipped genuine divergence still requires attention through its durable reconciliation record; dormancy or the absence of a running agent needs no update action from you.
 
 2. **Re-read AGENTS.md if your own instructions changed.**
    When the updater printed `reread-firstmate: yes`, the tracked instruction surface (`AGENTS.md`, `bin/`, or `.agents/skills/`) just advanced under you.

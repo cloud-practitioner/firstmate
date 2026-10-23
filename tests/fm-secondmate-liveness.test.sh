@@ -703,6 +703,71 @@ test_sweep_skipped_under_detect_only() {
   pass "sweep: skipped entirely under FM_BOOTSTRAP_DETECT_ONLY=1, exactly like the other mutating sweeps"
 }
 
+# A secondmate stood down by bin/fm-secondmate-dormant.sh gets the `dormant`
+# verdict from the shared probe with NO endpoint read, and the shared relaunch
+# refuses it unless the resume command names it - both drivers (session-start
+# sweep and watcher tick) inherit that single point.
+test_probe_reports_dormant_without_reading_the_endpoint_and_relaunch_refuses() {
+  local w fb log mode out
+  w=$(new_world probe-dormant)
+  add_sm_home "$w" sm1 firstmate:fm-sm1
+  fb=$(fm_fakebin "$w/probe")
+  log="$w/endpoint-calls.log"; : > "$log"
+  printf '#!/usr/bin/env bash\nprintf "%%s\\n" "$*" >> "%s"\nexit 1\n' "$log" > "$fb/tmux"
+  chmod +x "$fb/tmux"
+  printf 'schema=fm-secondmate-dormant.v1\nid=sm1\nsince=1700000000\nreason=idle\n' > "$w/home/state/sm1.dormant"
+  for mode in full poll; do
+    # shellcheck disable=SC2016 # positional params expand in the child shell.
+    out=$(env PATH="$fb:$BASE_PATH" FM_BACKEND=tmux STATE="$w/home/state" FM_HOME="$w/home" FM_DATA_OVERRIDE="$w/home/data" \
+      bash -c '
+        . "$0/bin/fm-secondmate-liveness-lib.sh"
+        fm_secondmate_liveness_probe "$1" sm1 "$2"
+        printf "%s|%s|%s\n" "$FM_SM_LIVE_STATUS" "$FM_SM_LIVE_KILL" "$FM_SM_LIVE_REASON"
+      ' "$ROOT" "$w/home/state/sm1.meta" "$mode")
+    case "$out" in
+      "dormant|0|stood down since "*"(idle)") : ;;
+      *) fail "$mode probe of a dormant mate must read dormant with its reason, got: $out" ;;
+    esac
+  done
+  [ ! -s "$log" ] || fail "the dormant verdict must not read the endpoint: $(cat "$log")"
+
+  # shellcheck disable=SC2016 # positional params expand in the child shell.
+  out=$(env PATH="$fb:$BASE_PATH" FM_BACKEND=tmux STATE="$w/home/state" FM_HOME="$w/home" FM_DATA_OVERRIDE="$w/home/data" \
+    bash -c '
+      . "$0/bin/fm-secondmate-liveness-lib.sh"
+      if fm_secondmate_liveness_relaunch "$1" sm1; then echo relaunched; else echo "refused|$FM_SM_LIVE_STATUS|$FM_SM_LIVE_REASON"; fi
+    ' "$ROOT" "$w/home/state/sm1.meta")
+  case "$out" in
+    "refused|skipped|secondmate sm1 is dormant; only bin/fm-secondmate-dormant.sh resume relaunches it") : ;;
+    *) fail "relaunch of a dormant mate must refuse, got: $out" ;;
+  esac
+  [ ! -s "$log" ] || fail "a refused relaunch must not touch the endpoint: $(cat "$log")"
+  [ ! -e "$w/home/state/.secondmate-relaunch-sm1" ] || fail "a refused relaunch must not be ledgered"
+  pass "liveness library: a dormant mate probes dormant with no endpoint read, and relaunch refuses it"
+}
+
+test_sweep_skips_a_dormant_secondmate_and_reports_it_only_as_dormant() {
+  local w fb tmuxfb log out
+  w=$(new_world sweep-dormant)
+  add_sm_home "$w" sm1 firstmate:fm-sm1
+  fb=$(make_toolchain "$w"); tmuxfb=$(make_liveness_tmux "$w")
+  log="$w/calls.log"; : > "$log"
+  printf 'schema=fm-secondmate-dormant.v1\nid=sm1\nsince=1700000000\nreason=idle\n' > "$w/home/state/sm1.dormant"
+
+  # A bare shell, missing, and unreadable endpoints are the three readings that
+  # would relaunch or report an ordinary mate; none may for a dormant one.
+  for mode in zsh missing unreadable; do
+    out=$(run_bootstrap "$tmuxfb:$fb" "$w/home" "$mode" "$log")
+    assert_not_contains "$out" "SECONDMATE_LIVENESS:" "a dormant mate must never be reported by the sweep ($mode)"
+    [ ! -s "$log" ] || fail "the sweep touched a dormant mate ($mode): $(cat "$log")"
+  done
+  out=$(run_bootstrap "$tmuxfb:$fb" "$w/home" zsh "$log" FM_BOOTSTRAP_VERBOSE_FACTS=1)
+  assert_contains "$out" "BOOTSTRAP_INFO: secondmate sm1 dormant (stood down since " \
+    "verbose diagnostics should identify the dormant outcome"
+  [ ! -e "$w/home/state/.secondmate-relaunch-sm1" ] || fail "a dormant mate was ledgered as relaunched"
+  pass "sweep: a dormant secondmate is skipped in every endpoint reading and reported only as dormant"
+}
+
 test_sweep_noop_with_no_secondmate_meta() {
   local w fb tmuxfb log out
   w=$(new_world sweep-no-secondmates)
@@ -837,6 +902,8 @@ test_sweep_never_acts_on_unverified_harness_dead_reading
 test_sweep_converges_no_retouch_once_alive
 test_sweep_skipped_under_detect_only
 test_sweep_noop_with_no_secondmate_meta
+test_sweep_skips_a_dormant_secondmate_and_reports_it_only_as_dormant
+test_probe_reports_dormant_without_reading_the_endpoint_and_relaunch_refuses
 test_sweep_skips_mate_whose_liveness_lock_is_held
 test_relaunch_waits_for_other_mates_relaunch_lock
 test_sweep_refuses_relaunch_on_ledger_errors

@@ -30,6 +30,7 @@ for arg in "$@"; do
 done
 case "${1:-}" in
   list-windows)
+    [ "${FM_TEST_NO_WINDOWS:-0}" = 0 ] || exit 0
     sed -n 's/^window=[^:]*://p' "${FM_HOME:?}"/state/*.meta
     ;;
   display-message)
@@ -831,6 +832,48 @@ test_view_renders_dead_secondmate_agent_status() {
   pass "fleet view renders secondmate agent liveness"
 }
 
+test_dormant_secondmate_is_listed_as_dormant_not_dead() {
+  local home fakebin snap view
+  home=$(make_home dormant-secondmate)
+  fm_write_meta "$home/state/dead-secondmate-stood.meta" \
+    "window=firstmate:fm-dead-secondmate-stood" \
+    "project=$home/secondmate-home" \
+    "harness=codex" \
+    "kind=secondmate" \
+    "mode=secondmate" \
+    "home=$home/secondmate-home" \
+    "projects=alpha"
+  printf 'working: watching delegated scope\n' > "$home/state/dead-secondmate-stood.status"
+  # The fake pane reads as a bare shell (a dead agent) for this id, exactly what a
+  # stood-down mate's stopped endpoint looks like.
+  fakebin=$(make_fakebin "$home")
+  snap=$(PATH="$fakebin:$PATH" FM_HOME="$home" "$SNAPSHOT")
+  printf '%s' "$snap" | jq -e '.tasks[] | select(.id == "dead-secondmate-stood") | .endpoint.agent_alive == "dead" and .dormant == null' >/dev/null \
+    || fail "a stopped mate that is not dormant must still read dead"
+
+  printf 'schema=fm-secondmate-dormant.v1\nid=dead-secondmate-stood\nsince=1700000000\nreason=no work for now\n' \
+    > "$home/state/dead-secondmate-stood.dormant"
+  snap=$(PATH="$fakebin:$PATH" FM_HOME="$home" "$SNAPSHOT")
+  printf '%s' "$snap" | jq -e '
+    .tasks[] | select(.id == "dead-secondmate-stood")
+    | .endpoint.agent_alive == "dormant" and .endpoint.status == "dormant"
+      and .dormant.since == 1700000000 and .dormant.reason == "no work for now"
+      and (.actions.send | test("fm-secondmate-dormant.sh resume dead-secondmate-stood"))
+  ' >/dev/null || fail "a dormant mate must read dormant with its since-time, reason and resume action"
+  printf '%s' "$snap" | jq -e '[.tasks[] | select(.id != "dead-secondmate-stood")] | all(.dormant == null)' >/dev/null \
+    || fail "only a mate with a record is dormant"
+  view=$(PATH="$fakebin:$PATH" FM_HOME="$home" "$VIEW")
+  assert_contains "$view" "dormant (stood down)" "the fleet view lists the mate as dormant"
+  assert_not_contains "$view" "present / dead" "the fleet view must not call a stood-down mate dead"
+  snap=$(FM_TEST_NO_WINDOWS=1 PATH="$fakebin:$PATH" FM_HOME="$home" "$SNAPSHOT")
+  printf '%s' "$snap" | jq -e '
+    .tasks[] | select(.id == "dead-secondmate-stood")
+    | .endpoint.exists == false and .endpoint.status == "dormant"
+      and .endpoint.agent_alive == "dormant" and .dormant.reason == "no work for now"
+  ' >/dev/null || fail "a missing endpoint must not override the dormant lifecycle status"
+  pass "fleet snapshot and view list a stood-down secondmate as dormant, not dead"
+}
+
 # A still-open decision must survive a LATER, UNRELATED terminal event on the same
 # append-only stream. This is the fmdev masking bug: last-event-wins read the trailing
 # `done` and reported pending_decision=false while a needs-decision was still open. The
@@ -1170,3 +1213,4 @@ test_scout_reports_include_teardown_reports
 test_backlog_tasks_axi_forms_and_overrides
 test_view_renders_snapshot
 test_view_renders_dead_secondmate_agent_status
+test_dormant_secondmate_is_listed_as_dormant_not_dead

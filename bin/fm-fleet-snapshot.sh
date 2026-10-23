@@ -67,7 +67,12 @@
 #     endpoint.exists is the cheap local backend endpoint-presence read.
 #     endpoint.agent_alive is populated for local secondmates only, where it is
 #     useful return-channel supervision data; remote secondmates use "unknown"
-#     without a probe, and other tasks use "not_checked".
+#     without a probe, and other tasks use "not_checked". A local secondmate
+#     stood down by bin/fm-secondmate-dormant.sh reads "dormant" there and in
+#     endpoint.status even when endpoint.exists is false, and carries dormant:
+#     {since,reason}; every other task has dormant: null. endpoint.exists remains
+#     the separate physical-presence fact, not a request to recover a dormant mate.
+#     Dormant is a deliberate stop, never an unhealthy endpoint.
 #   scout_reports[]: present data/<id>/report.md pointers.
 #   main_inventory: {valid,reason,orphan_in_flight[],unstructured_current_count} -
 #     main-home current-inventory checks shared with secondmate_home_summary_json
@@ -846,6 +851,16 @@ task_json_lines() {
       return 1
     }
     [ -f "$report_path" ] && report_present=1 || report_present=0
+    # A secondmate stood down by bin/fm-secondmate-dormant.sh is stopped on
+    # purpose: publish that as its own endpoint verdict, never as a dead agent.
+    dormant_json=null
+    if [ "$kind" = secondmate ] && fm_sm_dormant_is "$STATE" "$id"; then
+      agent_alive=dormant
+      dormant_json=$(jq -n \
+        --arg since "$(fm_sm_dormant_get "$STATE" "$id" since)" \
+        --arg reason "$(fm_sm_dormant_get "$STATE" "$id" reason)" \
+        '{since:($since | tonumber? // null),reason:$reason}') || dormant_json=null
+    fi
     meta_json=$(path_present_json "$original_meta" "$meta")
     status_json=$event_json
     report_json=$(path_present_json "$DATA/$id/report.md" "$report_path")
@@ -887,6 +902,7 @@ task_json_lines() {
       --argjson worktree_path "$worktree_json" \
       --argjson home_path "$home_json" \
       --argjson endpoint_exists "$endpoint_exists" \
+      --argjson dormant "$dormant_json" \
       --argjson open_decisions "$open_decisions_json" \
       --argjson pending_decision "$(bool_json "$pending_decision")" \
       --argjson blocked_event "$(bool_json "$blocked_event")" \
@@ -911,8 +927,10 @@ task_json_lines() {
         },
         secondmate_projects:($projects | if . == "" then [] else split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$"; "")) | map(select(. != "")) end),
         current_state:($current_state + {observed_at:$observed_at,freshness:"fresh"}),
+        dormant:$dormant,
         endpoint:{target:($target | if . == "" then null else . end),exists:$endpoint_exists,agent_alive:$agent_alive,
-          status:(if $endpoint_exists == false then "absent"
+          status:(if $agent_alive == "dormant" then "dormant"
+                  elif $endpoint_exists == false then "absent"
                   elif $agent_alive == "alive" or $agent_alive == "dead" then $agent_alive
                   else "unknown" end),
           observed_at:$observed_at,freshness:"fresh"},
@@ -925,7 +943,11 @@ task_json_lines() {
           last_event_text:$last_event_raw
         },
         actions:(
-          if $kind == "secondmate" then
+          if $kind == "secondmate" and $dormant != null then
+            {send:"bin/fm-secondmate-dormant.sh resume \($id)",
+             watch:"dormant: no agent is running, so fm-send refuses until it is resumed",
+             return_channel_note:"Secondmate is stood down; resume it before routing work or requests."}
+          elif $kind == "secondmate" then
             {send:"bin/fm-send.sh fm-\($id) \u0027<request>\u0027",
              watch:"read status/doc return channel; do not routinely fm-peek a secondmate for answers",
              return_channel_note:"Secondmate answers come back through status/doc paths after a marked fm-send request."}

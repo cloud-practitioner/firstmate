@@ -1157,6 +1157,29 @@ test_secondmate_control_command_carries_no_marker() {
   pass "fm-control: a lifecycle command to a secondmate is unmarked and opens no reply expectation"
 }
 
+# `exit` on a dormant secondmate stays the idempotent stop it always was, but
+# `relaunch` is refused before anything is stopped or typed: only the dormant
+# command's resume brings a stood-down mate back.
+test_relaunch_of_a_dormant_secondmate_is_refused_but_exit_is_not() {
+  local dir out rc
+  dir=$(new_case sm-dormant)
+  add_task "$dir" domain claude secondmate
+  printf '%s\n' domain > "$dir/wt-domain/.fm-secondmate-home"
+  printf 'schema=fm-secondmate-dormant.v1\nid=domain\nsince=1700000000\nreason=idle\n' > "$dir/home/state/domain.dormant"
+  alive_as "$dir" claude
+
+  out=$(run_control "$dir" domain relaunch); rc=$?
+  expect_code 1 "$rc" "relaunch of a dormant secondmate must refuse"$'\n'"$out"
+  assert_contains "$out" "is dormant" "the refusal names dormancy"
+  assert_contains "$out" "fm-secondmate-dormant.sh resume domain" "the refusal names the way back"
+  [ -z "$(literals "$dir")" ] || fail "a refused relaunch typed into the endpoint: $(literals "$dir")"
+  [ -z "$(keys_sent "$dir")" ] || fail "a refused relaunch sent keys to the endpoint: $(keys_sent "$dir")"
+
+  out=$(run_control "$dir" domain exit); rc=$?
+  expect_code 0 "$rc" "exit on a dormant secondmate must still work"$'\n'"$out"
+  pass "fm-control: relaunch of a dormant secondmate is refused, exit is unchanged"
+}
+
 test_fm_send_still_marks_the_same_secondmate_task() {
   local dir log out rc
   dir=$(new_case sm-send)
@@ -1259,4 +1282,5 @@ test_agent_that_does_not_stop_fails_closed
 test_grok_interrupt_without_acknowledgement_reports_unconfirmed
 test_grok_idle_footer_does_not_confirm_cancellation
 test_secondmate_control_command_carries_no_marker
+test_relaunch_of_a_dormant_secondmate_is_refused_but_exit_is_not
 test_fm_send_still_marks_the_same_secondmate_task

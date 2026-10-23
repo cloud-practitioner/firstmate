@@ -42,6 +42,7 @@ make_stubs() {  # <dir> -> echoes fakebin dir
 set -u
 case "${1:-}" in
   send-keys)
+    [ -z "${FM_SEND_CALL_LOG:-}" ] || printf '%s\n' "$*" >> "$FM_SEND_CALL_LOG"
     shift
     literal=0
     while [ $# -gt 0 ]; do
@@ -98,6 +99,40 @@ setup_home() {
 # newlines, so byte-exact trailing assertions read the raw record instead.
 record_body() {  # <record-path>
   bash -c '. "$1"; fm_task_inbox_body "$2"' _ "$ROOT/bin/fm-task-inbox-lib.sh" "$1"
+}
+
+test_dormant_secondmate_send_is_refused_without_queueing() {
+  local dir fb log home rc out target delivery
+  dir="$TMP_ROOT/sm-dormant"; mkdir -p "$dir"
+  fb=$(make_stubs "$dir"); log="$dir/send.log"
+  home=$(setup_home sm-dormant)
+  fm_write_secondmate_meta "$home/state/domain.meta" "$home" "sess:fm-domain"
+  printf 'schema=fm-secondmate-dormant.v1\nid=domain\nsince=1700000000\nreason=idle\n' > "$home/state/domain.dormant"
+  for target in fm-domain domain sess:fm-domain; do
+    for delivery in text key; do
+      set -- "$target"
+      if [ "$delivery" = key ]; then set -- "$@" --key Enter; else set -- "$@" "audit the build"; fi
+      : > "$log"; : > "$dir/calls"; rc=0
+      out=$(env PATH="$fb:$PATH" FM_ROOT_OVERRIDE="$home" FM_HOME="$home" FM_SEND_LOG="$log" \
+        FM_SEND_CALL_LOG="$dir/calls" FM_SEND_SETTLE=0 "$SEND" "$@" 2>&1) || rc=$?
+      expect_code 1 "$rc" "send to a dormant secondmate ($target $delivery) must refuse"
+      assert_contains "$out" "is dormant" "the refusal names dormancy"
+      assert_contains "$out" "fm-secondmate-dormant.sh resume domain" "the refusal names the way back"
+      [ ! -s "$dir/calls" ] || fail "no text or key may reach a dormant endpoint"
+      [ ! -s "$log" ] || fail "nothing may be typed to a dormant secondmate's endpoint"
+      [ ! -e "$home/state/domain.inbox" ] || [ -z "$(find "$home/state/domain.inbox" -name '*.msg' 2>/dev/null)" ] \
+        || fail "nothing may be queued to a dormant secondmate"
+      [ ! -d "$home/state/pending-replies" ] || [ -z "$(find "$home/state/pending-replies" -type f 2>/dev/null)" ] \
+        || fail "no reply expectation may be armed for a dormant secondmate"
+    done
+  done
+  # An ordinary crewmate is never refused, even with a record under its id.
+  fm_write_meta "$home/state/build.meta" "window=sess:fm-build" "kind=ship" "worktree=$home" "project=$home"
+  printf 'schema=fm-secondmate-dormant.v1\nid=build\nsince=1\nreason=\n' > "$home/state/build.dormant"
+  run_send "$fb" "$home" "$log" fm-build "go" || fail "a non-secondmate task must not be refused by a stray dormant record"
+  rm -f "$home/state/domain.dormant"
+  run_send "$fb" "$home" "$log" fm-domain "audit the build" || fail "send must work again once dormancy is cleared"
+  pass "fm-send: a dormant secondmate is refused by name, with nothing queued, typed or armed"
 }
 
 test_secondmate_target_is_marked() {
@@ -268,6 +303,7 @@ test_marked_send_preserves_trailing_newlines() {
   pass "fm-send: marked secondmate payload preserves trailing newline bytes in its record"
 }
 
+test_dormant_secondmate_send_is_refused_without_queueing
 test_secondmate_target_is_marked
 test_exact_secondmate_task_id_is_marked
 test_crewmate_target_is_not_marked
