@@ -559,7 +559,7 @@ def run_magick(argv):
         subprocess.run(["magick"] + argv, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     except FileNotFoundError:
         print("[FAIL] ImageMagick (magick) is not installed")
-        print("FIX: install ImageMagick 7, or make the annotated PNG another way and keep the mark colour #FF2D95")
+        print("FIX: install ImageMagick 7 and run the command again")
         sys.exit(1)
     except subprocess.CalledProcessError as exc:
         print("[FAIL] ImageMagick failed: " + exc.stderr.decode("utf-8", "replace").strip()[:300])
