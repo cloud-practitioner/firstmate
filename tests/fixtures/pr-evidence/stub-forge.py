@@ -101,7 +101,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             m = re.match(r"^/gh/repos/([^/]+)/([^/]+)/pulls/(\d+)/files$", path)
             if m:
                 pr = STATE["prs"].get(self.key(*m.groups()), {"files": []})
-                return self.send(200, [{"filename": f} for f in pr["files"]])
+                return self.send(200, [f if isinstance(f, dict) else {"filename": f} for f in pr["files"]])
             m = re.match(r"^/gh/repos/([^/]+)/([^/]+)/issues/(\d+)/comments$", path)
             if m:
                 return self.send(200, [dict(c, body_html=c["html"], updated_at=c["updated"])
@@ -118,7 +118,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 if not pr:
                     return self.send(404, {})
                 if m.group(4) == "/diffstat":
-                    return self.send(200, {"values": [{"new": {"path": f}} for f in pr["files"]]})
+                    return self.send(200, {"values": [f if isinstance(f, dict) else {"new": {"path": f}} for f in pr["files"]]})
                 if m.group(4) == "/comments":
                     return self.send(200, {"values": [
                         {"id": c["id"], "user": {"account_id": c["user"]["login"]},

@@ -27,7 +27,7 @@ command -v curl >/dev/null 2>&1 || { echo "skip: curl not found"; exit 0; }
 # Keep ambient identity and credentials out of every case.
 unset FM_BACKEND FM_HOME FM_ROOT_OVERRIDE FM_STATE_OVERRIDE FM_CONFIG_OVERRIDE HERDR_PANE_ID HERDR_SESSION \
   NO_MISTAKES_BITBUCKET_EMAIL NO_MISTAKES_BITBUCKET_API_TOKEN GH_TOKEN GITHUB_TOKEN FM_PR_EVIDENCE_GH \
-  FM_PR_EVIDENCE_BITBUCKET_API FM_PR_EVIDENCE_GH_FALLBACKS
+  FM_PR_EVIDENCE_BITBUCKET_API FM_PR_EVIDENCE_LIVE_PR
 
 mkdir -p "$TMP_ROOT/img"
 STUB_PID=
@@ -57,7 +57,10 @@ new_case() {
   local name=$1
   shift
   C="$TMP_ROOT/$name"
-  mkdir -p "$C/home/state" "$C/home/config" "$C/proj" "$C/ev"
+  mkdir -p "$C/home/state" "$C/home/config" "$C/home/data" "$C/proj" "$C/ev"
+  fm_test_tasks_toml "$C/home/.tasks.toml"
+  git -C "$C/proj" init -q
+  git -C "$C/proj" commit -q --allow-empty -m "fixture $name"
   if [ "$#" -gt 0 ]; then printf '%s\n' "$@" > "$C/home/config/pr-evidence"; else echo '* enforce' > "$C/home/config/pr-evidence"; fi
   PRN=$((PRN + 1))
   PRKEY="o/r/$PRN"
@@ -73,7 +76,7 @@ write_task() {  # <id> <evidence> [extra meta line...]
 }
 
 ev() {  # <args...> - run the gate script in the case home
-  FM_HOME="$C/home" FM_TEST_STUB="$STUB" FM_PR_EVIDENCE_GH="$FIX/gh" FM_PR_EVIDENCE_GH_FALLBACKS='' "$EV" "$@" 2>&1
+  FM_HOME="$C/home" FM_TEST_STUB="$STUB" FM_PR_EVIDENCE_GH="$FIX/gh" PATH="$FIX:$PATH" "$EV" "$@" 2>&1
 }
 
 png() {  # <out> <seed> <marks>
@@ -147,13 +150,16 @@ test_gate_is_off_without_config_and_config_is_strict() {
   [ -z "$out" ] || fail "an off gate printed output: $out"
   ev enabled proj >/dev/null && fail "enabled must fail without config"
   printf '%s\n' '* enforce' 'proj off' > "$C/home/config/pr-evidence"
-  ev enabled proj >/dev/null && fail "a project 'off' line must beat '* enforce'"
+  out=$(ev enabled proj); rc=$?
+  expect_code 2 "$rc" "a project off line must be rejected"
+  assert_contains "$out" "config/pr-evidence is not valid" "off must not bypass enforcement"
+  printf '%s\n' '* enforce' > "$C/home/config/pr-evidence"
   ev enabled other >/dev/null || fail "'* enforce' must enable other projects"
   printf '%s\n' '* enforce' 'proj frobnicate x' > "$C/home/config/pr-evidence"
   out=$(ev check t1 "$PRURL"); rc=$?
   expect_code 1 "$rc" "invalid config line"
   assert_contains "$out" "config/pr-evidence is not valid" "an invalid config line must be named"
-  pass "fm-pr-evidence: off without config; config lines are strict; a project off line wins"
+  pass "fm-pr-evidence: off without config; config lines are strict; project off is refused"
 }
 
 test_intake_declares_the_kind() {
@@ -169,8 +175,11 @@ test_intake_declares_the_kind() {
   out=$(ev intake "$brief" proj "$C/proj")
   assert_equals "evidence=ui" "$out" "ui class"
   fill 'api+ui'
+  out=$(ev intake "$brief" proj "$C/proj"); rc=$?
+  expect_code 1 "$rc" "api+ui is not a canonical declaration"
+  fill 'ui+api'
   out=$(ev intake "$brief" proj "$C/proj")
-  assert_equals "evidence=ui+api" "$out" "api+ui is normalized"
+  assert_equals "evidence=ui+api" "$out" "ui+api is accepted"
   fill 'none: The change only fixes a typo in a comment.'
   out=$(ev intake "$brief" proj "$C/proj")
   assert_contains "$out" "evidence=none" "none with a plain reason"
@@ -226,6 +235,10 @@ test_publish_posts_one_comment_that_passes_the_gate() {
   # Publishing again keeps one comment (the older one is removed).
   published
   assert_equals 1 "$(comments_json | jq 'length')" "a second publish must leave one comment"
+  stub_post /_admin/comment "$(comments_json | jq -c --arg k "$PRKEY" '.[0] | {key:$k,author:"captain",body:.body,html:.html}')"
+  published
+  assert_equals 2 "$(comments_json | jq 'length')" "cleanup must preserve another account's comment"
+  assert_equals captain "$(comments_json | jq -r '.[0].user.login')" "cleanup may delete only PR-author comments"
   out=$(ev check t1 "$PRURL"); rc=$?
   assert_contains "$out" "[PASS]" "the gate must pass on a published PR"
   pass "fm-pr-evidence: publish posts one comment whose images show, and the gate passes it"
@@ -252,13 +265,10 @@ test_head_drift_author_and_missing_comment_refuse() {
   write_task t1 ui
   ui_items
   published
-  stub_post /_admin/replace "{\"key\":\"$PRKEY\",\"id\":\"$(comments_json | jq -r '.[0].id')\",\"body\":$(comments_json | jq '.[0].body'),\"html\":$(comments_json | jq '.[0].html')}"
-  curl -sS -X POST --data "{\"key\":\"$PRKEY\",\"author\":\"stranger\",\"body\":$(comments_json | jq '.[0].body'),\"html\":$(comments_json | jq '.[0].html')}" "$STUB/_admin/comment" >/dev/null
-  # Remove the worker's own comment so only the stranger's copy remains.
-  curl -sS -X DELETE "$STUB/gh/repos/o/r/issues/comments/$(comments_json | jq -r '.[0].id')" >/dev/null
+  stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD1\",\"author\":\"actual-worker\",\"files\":[]}"
   out=$(ev check t1 "$PRURL"); rc=$?
   expect_code 1 "$rc" "a fake manifest by another account"
-  assert_contains "$out" "no evidence comment by worker" "only the PR author or the acting account may hold the evidence"
+  assert_contains "$out" "no evidence comment by actual-worker" "only the PR author may hold the evidence"
   pass "fm-pr-evidence: a missing comment, a moved head, and a stranger's comment all refuse with FIX lines"
 }
 
@@ -329,8 +339,8 @@ test_marks_must_be_drawn() {
   write_task t1 ui
   ui_items
   png "$C/ev/a.png" 2 0
-  out=$(ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
-  expect_code 1 "$rc" "publish with an unmarked image"
+  out=$(FM_PR_EVIDENCE_MARK_MIN=0 ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+  expect_code 1 "$rc" "publish with an unmarked image even with a threshold environment override"
   assert_contains "$out" "has no drawn marks" "publish must refuse an unmarked image"
   assert_equals 0 "$(comments_json | jq 'length')" "a refused publish must post nothing"
   # The gate re-checks the shown bytes, so an unmarked image slipped into the comment refuses too.
@@ -516,6 +526,20 @@ test_arming_and_merge_go_through_the_gate() {
   out=$(run_pr "$PR_MERGE" t1 "$PRURL"); rc=$?
   expect_code 1 "$rc" "merging after the head moved"
   assert_contains "$out" "the PR changed after the evidence" "merge must refuse a moved head"
+  published
+  out=$(FM_TEST_GH_VIEW_HEAD="$HEAD1" FM_TEST_GH_LOG="$C/gh.log" run_pr "$PR_MERGE" t1 "$PRURL"); rc=$?
+  expect_code 1 "$rc" "merge-time head must match evidence even after intake passed"
+  assert_contains "$out" "evidence check head differs from the merge head" "a split head snapshot must refuse"
+  assert_no_grep 'pr merge ' "$C/gh.log" "a mismatched head must never reach the merge interface"
+  out=$(run_pr "$PR_MERGE" t1 "$PRURL" --attended-override -- --auto --squash); rc=$?
+  expect_code 1 "$rc" "evidence cannot authorize asynchronous merging"
+  assert_contains "$out" "not --auto" "auto-merge must refuse while evidence is enforced"
+  out=$(FM_TEST_GH_RULES='[{"type":"merge_queue","parameters":{"merge_method":"SQUASH"}}]' run_pr "$PR_MERGE" t1 "$PRURL"); rc=$?
+  expect_code 1 "$rc" "evidence cannot authorize a merge queue"
+  assert_contains "$out" "no merge queue" "merge queues must refuse while evidence is enforced"
+  out=$(FM_TEST_GH_LOG="$C/success.log" run_pr "$PR_MERGE" t1 "$PRURL"); rc=$?
+  expect_code 0 "$rc" "an immediate merge of the evidence head must succeed (got: $out)"
+  assert_grep "--match-head-commit $HEAD2" "$C/success.log" "the merge interface must receive the evidence head"
   # A task from before the gate passes with a notice, both ways.
   fm_write_meta "$C/home/state/t2.meta" "window=fm-t2" "endpoint_task_id=t2" "worktree=$C/wt" "project=$C/proj" "kind=ship" "mode=no-mistakes"
   out=$(run_pr "$PR_CHECK" t2 "$PRURL"); rc=$?
@@ -537,13 +561,20 @@ test_waiver_needs_words_and_is_refused_away() {
   expect_code 1 "$rc" "a waiver in away mode"
   assert_contains "$out" "refused in away mode" "away mode must refuse"
   assert_absent "$C/home/state/t1.evidence-waiver" "a refused waiver records nothing"
-  rm -f "$C/home/state/.afk"
+  printf 'quiet\n' > "$C/home/state/.afk"
   out=$(ev waive t1 "$PRURL" --words "Waive the evidence for this PR please") || fail "an attended waiver must work: $out"
   assert_present "$C/home/state/t1.evidence-waiver" "a waiver must be recorded"
   assert_contains "$(comments_json | jq -r '.[-1].body')" "The captain's words: Waive the evidence for this PR please" "the waiver must be posted on the PR"
   out=$(ev check t1 "$PRURL"); rc=$?
   expect_code 0 "$rc" "a waived PR"
   assert_contains "$out" "waived for t1" "a waived PR passes with a notice"
+  stub_post /_admin/pr "{\"key\":\"o/r/999\",\"head\":\"$HEAD1\",\"files\":[]}"
+  out=$(ev check t1 https://github.com/o/r/pull/999); rc=$?
+  expect_code 1 "$rc" "a waiver must not authorize the next PR for the same task"
+  assert_contains "$out" "no evidence comment" "the next PR needs its own evidence"
+  printf 'url=%s\n' "$PRURL" > "$C/home/state/t1.evidence-waiver"
+  out=$(ev check t1 "$PRURL"); rc=$?
+  expect_code 1 "$rc" "an incomplete waiver must not authorize a PR"
   pass "fm-pr-evidence: a waiver needs the captain's words, is refused away, and is posted on the PR"
 }
 
@@ -571,7 +602,7 @@ test_gh_with_attach_is_picked_over_a_stale_one() {
   cp "$FIX/gh" "$good/gh"
   # The stale gh hides --attach in its help; the good one is later on PATH.
   stale_run() {
-    FM_HOME="$C/home" FM_TEST_STUB="$STUB" FM_PR_EVIDENCE_GH_FALLBACKS="${1:-}" \
+    FM_HOME="$C/home" FM_TEST_STUB="$STUB" FM_PR_EVIDENCE_GH="$stale/gh" \
       PATH="$stale:$good:$nogh" "$EV" publish t1 "$PRURL" "$C/ev/items.json" 2>&1
   }
   # A wrapper makes the stale copy report no --attach support.
@@ -585,14 +616,16 @@ EOF
 exec "$FIX/gh" "\$@"
 EOF
   chmod +x "$good/gh"
-  out=$(stale_run ""); rc=$?
+  out=$(stale_run); rc=$?
   expect_code 0 "$rc" "the later gh with --attach must be used (got: $out)"
   assert_contains "$out" "[PASS]" "publish through the second gh must pass"
   rm -rf "$good"
-  out=$(stale_run ""); rc=$?
+  out=$(stale_run); rc=$?
   expect_code 1 "$rc" "only a stale gh"
   assert_contains "$out" "no gh with 'pr comment --attach' was found" "a stale-only PATH must refuse"
   assert_contains "$out" "FIX: install a newer gh" "the refusal must carry a FIX line"
+  out=$(FM_HOME="$C/home" FM_TEST_STUB="$STUB" FM_PR_EVIDENCE_GH="$FIX/gh" PATH="$stale:$nogh" "$EV" publish t1 "$PRURL" "$C/ev/items.json" 2>&1); rc=$?
+  expect_code 0 "$rc" "the explicit capable override must work when PATH has no capable gh (got: $out)"
   pass "fm-pr-evidence: the gh that accepts --attach is picked over a stale one on PATH"
 }
 
@@ -605,7 +638,7 @@ test_bitbucket_arm_is_off_by_default_and_works_when_on() {
   stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD1\",\"author\":\"acct-worker\",\"files\":[\"bin/tool.sh\"]}"
   write_task t1 ui
   bbenv() {
-    FM_HOME="$C/home" FM_TEST_STUB="$STUB" FM_PR_EVIDENCE_GH="$FIX/gh" FM_PR_EVIDENCE_BITBUCKET_API="$STUB/bb/2.0" \
+    FM_HOME="$C/home" FM_TEST_STUB="$STUB" FM_PR_EVIDENCE_GH="$FIX/gh" PATH="$FIX:$PATH" FM_PR_EVIDENCE_BITBUCKET_API="$STUB/bb/2.0" \
       NO_MISTAKES_BITBUCKET_EMAIL=bot@example.invalid NO_MISTAKES_BITBUCKET_API_TOKEN=synthetic-token "$EV" "$@" 2>&1
   }
   out=$(bbenv check t1 "$PRURL"); rc=$?
@@ -623,17 +656,31 @@ test_bitbucket_arm_is_off_by_default_and_works_when_on() {
   expect_code 0 "$rc" "Bitbucket publish (got: $out)"
   assert_contains "$out" "[PASS] evidence gate" "the Bitbucket gate must pass after publish"
   assert_contains "$(comments_json | jq -r '.[0].body')" "https://bitbucket.org/ws/repo/downloads/fm-evidence-$PRN-" "images must point at the repository Downloads area"
+  out=$(bbenv check t1 "$PRURL" "$HEAD1"); rc=$?
+  expect_code 1 "$rc" "Bitbucket must refuse a merge without an atomic expected-head interface"
+  assert_contains "$out" "cannot bind evidence" "Bitbucket must explain why merge enforcement refuses"
+  stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD1\",\"author\":\"actual-worker\",\"files\":[]}"
+  out=$(bbenv check t1 "$PRURL"); rc=$?
+  expect_code 1 "$rc" "the acting Bitbucket account must not authorize another PR author's evidence"
+  assert_contains "$out" 'no evidence comment by actual-worker' "Bitbucket must filter to its PR author"
   [ "$(curl -sS -X POST "$STUB/_admin/state" | jq -r .bb_auth)" -gt 0 ] || fail "the Bitbucket credential was never sent"
   stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD2\",\"author\":\"acct-worker\",\"files\":[\"bin/tool.sh\"]}"
   out=$(bbenv check t1 "$PRURL"); rc=$?
   expect_code 1 "$rc" "Bitbucket head drift"
   assert_contains "$out" "the PR changed after the evidence" "a moved Bitbucket head must refuse"
+  printf '%s\n' '* enforce' 'bitbucket on' 'proj ui components/*.jsx' > "$C/home/config/pr-evidence"
+  write_task t1 none 'evidence_reason=Only a comment changed in the file.'
+  PRN=$((PRN + 1)); PRKEY="ws/repo/$PRN"; PRURL="https://bitbucket.org/ws/repo/pull-requests/$PRN"
+  stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD1\",\"author\":\"acct-worker\",\"files\":[{\"old\":{\"path\":\"components/Old.jsx\"},\"new\":{\"path\":\"other/New.txt\"}}]}"
+  out=$(bbenv check t1 "$PRURL"); rc=$?
+  expect_code 1 "$rc" "Bitbucket rename matching must include the source path"
+  assert_contains "$out" 'components/Old.jsx' "Bitbucket must name the matched source path"
   pass "fm-pr-evidence: the Bitbucket arm is off by default; when on it uploads to Downloads and gates the same way"
 }
 
 test_annotation_tools_draw_marks() {
   local out rc
-  if ! command -v magick >/dev/null 2>&1 && ! command -v convert >/dev/null 2>&1; then
+  if ! command -v magick >/dev/null 2>&1; then
     echo "note: ImageMagick not found; skipping the render cases"
     return 0
   fi
@@ -694,6 +741,88 @@ EOF
   pass "fm-pr-evidence: live guard - real upload, display, and fetch on the sandbox PR"
 }
 
+test_promote_requires_evidence_intake() {
+  local out rc value
+  new_case promote
+  mkdir -p "$C/root/bin" "$C/home/data/t1"
+  printf '#!/bin/sh\nexit 0\n' > "$C/root/bin/fm-guard.sh"
+  printf '#!/bin/sh\nprintf "none\\n"\n' > "$C/root/bin/fm-project-mode.sh"
+  chmod +x "$C/root/bin/"*.sh
+  write_task t1 '' 'kind=scout'
+  for value in '{EVIDENCE}' 'api+ui' 'sideways'; do
+    printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nInspect the output.\n## Evidence class\n%s\n' "$value" > "$C/home/data/t1/brief.md"
+    out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode local-only --yolo off 2>&1); rc=$?
+    expect_code 1 "$rc" "promotion must reject $value (got: $out)"
+    assert_grep 'kind=scout' "$C/home/state/t1.meta" "refusal must retain the scout state"
+    assert_absent "$C/home/data/t1/ship-instructions.md" "refusal must publish no ship instructions"
+  done
+  printf '# Task\n## Captain'\''s intent\nFix the output.\n## Firstmate spec\nInspect the output.\n## Evidence class\nnone: Only a comment changed in the file.\n' > "$C/home/data/t1/brief.md"
+  out=$(FM_HOME="$C/home" FM_ROOT_OVERRIDE="$C/root" "$ROOT/bin/fm-promote.sh" t1 --mode local-only --yolo off 2>&1); rc=$?
+  expect_code 0 "$rc" "promotion with a valid declaration (got: $out)"
+  assert_grep 'kind=ship' "$C/home/state/t1.meta" "promotion must switch to ship"
+  assert_grep 'evidence=none' "$C/home/state/t1.meta" "promotion must record evidence"
+  assert_grep 'evidence_reason=Only a comment changed in the file.' "$C/home/state/t1.meta" "promotion must record the reason"
+  assert_contains "$(cat "$C/home/data/t1/ship-instructions.md")" '## Evidence class' "the emitted worker interface must include the declaration"
+  assert_contains "$(cat "$C/home/data/t1/ship-instructions.md")" '# Evidence for review (hard rule)' "the emitted worker interface must include the evidence contract"
+  pass "fm-pr-evidence: promotion validates and records the same intake as spawn"
+}
+
+test_worker_added_kinds_are_durable() {
+  local out rc
+  new_case durable '* enforce' 'proj ui bin/*.sh'
+  write_task t1 api
+  uiapi_items
+  published
+  assert_grep 'evidence=ui+api' "$C/home/state/t1.meta" "worker additions must persist in the task record"
+  stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD2\",\"files\":[\"bin/tool.sh\"]}"
+  ui_items
+  out=$(ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+  expect_code 1 "$rc" "a republish must not drop a previously published API kind"
+  assert_contains "$out" "required kinds: api" "the lost worker kind must be named"
+  tamper 'm["items"] = [m["items"][0]]; m["head"] = "fedcba9876543210fedcba9876543210fedcba98"'
+  out=$(ev check t1 "$PRURL"); rc=$?
+  expect_code 1 "$rc" "verification must retain the durable API requirement"
+  assert_contains "$out" "no evidence item of kind api" "verification must name the lost kind"
+  pass "fm-pr-evidence: worker kinds are durable in composition, pattern checks, and verification"
+}
+
+test_labelled_image_swaps_refuse() {
+  local out rc
+  new_case swapped-labels
+  write_task t1 ui+api
+  uiapi_items
+  published
+  STATE_JSON=$(comments_json) STUB=$STUB PRKEY=$PRKEY python3 - <<'PY'
+import json, os, re, urllib.request
+c = json.loads(os.environ['STATE_JSON'])[0]
+urls = re.findall(r'<img src="([^"]+)"', c['html'])
+c['html'] = c['html'].replace(urls[0], 'SWAP').replace(urls[1], urls[0]).replace('SWAP', urls[1])
+req = urllib.request.Request(os.environ['STUB'] + '/_admin/replace', data=json.dumps(
+    dict(key=os.environ['PRKEY'], id=c['id'], body=c['body'], html=c['html'])).encode())
+urllib.request.urlopen(req).read()
+PY
+  out=$(ev check t1 "$PRURL"); rc=$?
+  expect_code 1 "$rc" "swapping Before and After must refuse even when both hashes remain on the page"
+  assert_contains "$out" "does not match its hash" "the phase-to-image binding must be checked"
+  pass "fm-pr-evidence: rendered images are bound to their item and phase labels"
+}
+
+test_rename_source_paths_require_evidence() {
+  local out rc
+  new_case renamed '* enforce' 'proj ui components/*.jsx'
+  write_task t1 none 'evidence_reason=Only a comment changed in the file.'
+  printf '{"items":[]}\n' > "$C/ev/items.json"
+  stub_post /_admin/pr "{\"key\":\"$PRKEY\",\"head\":\"$HEAD1\",\"files\":[{\"filename\":\"other/New.txt\",\"previous_filename\":\"components/Old.jsx\"}]}"
+  out=$(ev publish t1 "$PRURL" "$C/ev/items.json"); rc=$?
+  expect_code 1 "$rc" "rename out of a matched directory must not drop the kind"
+  assert_contains "$out" 'components/Old.jsx' "the source path must be named"
+  pass "fm-pr-evidence: rename sources retain their pattern requirements"
+}
+
+test_promote_requires_evidence_intake
+test_worker_added_kinds_are_durable
+test_labelled_image_swaps_refuse
+test_rename_source_paths_require_evidence
 test_gate_is_off_without_config_and_config_is_strict
 test_intake_declares_the_kind
 test_publish_posts_one_comment_that_passes_the_gate

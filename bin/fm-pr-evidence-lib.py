@@ -16,6 +16,7 @@ way workos/case's PR gate printed them. Warnings are `[WARN] <what>` lines.
 Exit status 0 means pass, 1 means refuse, 2 means a usage error.
 """
 import argparse
+import difflib
 import hashlib
 import html.parser
 import json
@@ -32,7 +33,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 MANIFEST_TAG = "fm-pr-evidence-v1"
 SIDECAR_TAG = "fm-pr-evidence-sidecar"
 MARK_RGB = (0xFF, 0x2D, 0x95)  # the one exact colour of every drawn mark
-MARK_MIN_PIXELS = int(os.environ.get("FM_PR_EVIDENCE_MARK_MIN", "200"))
+MARK_MIN_PIXELS = 200
 MASK_RE = re.compile(r"^\*\*\*masked \(\d+ chars\)\*\*\*$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,40}$")
 KINDS = ("ui", "api")
@@ -216,7 +217,7 @@ DENY_HEADERS = {h.lower() for h in (
     "Authorization Proxy-Authorization Cookie Set-Cookie X-API-Key Api-Key X-Auth-Token "
     "X-Access-Token X-CSRF-Token X-XSRF-Token X-Amz-Security-Token X-Goog-Api-Key "
     "Ocp-Apim-Subscription-Key MYSAPSSO2").split()}
-DENY_NAME_RE = re.compile(r"(auth|token|secret|key|session|cookie|passw|signature|credential)", re.I)
+DENY_NAME_RE = re.compile(r"(?:auth|token|secret|key|session|cookie|passw|signature|credential)", re.I)
 ALLOW_HEADERS = {h.lower() for h in (
     "Content-Type Content-Length Content-Encoding Accept Accept-Encoding Accept-Language Host "
     "User-Agent Date ETag Location Cache-Control Vary Server Connection X-Request-Id "
@@ -264,17 +265,39 @@ def header_is_secret(name):
 
 
 def mask_text(text):
-    """Replace secret-shaped substrings with a mask token."""
-    def whole(match):
-        return mask_token(match.group(0))
+    """Replace sensitive fields and secret-shaped substrings with mask tokens."""
+    def fields(value):
+        if isinstance(value, dict):
+            return {k: (v if isinstance(v, str) and MASK_RE.fullmatch(v) else mask_token(str(v)))
+                    if DENY_NAME_RE.search(k) else fields(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [fields(v) for v in value]
+        return value
 
-    def query(match):
-        return match.group(1) + mask_token(match.group(0)[len(match.group(1)):])
-
+    try:
+        data = json.loads(text)
+    except ValueError:
+        data = None
+    if isinstance(data, (dict, list)):
+        masked = fields(data)
+        if masked != data:
+            text = json.dumps(masked, ensure_ascii=False)
     for pattern in SECRET_PATTERNS[:-1]:
-        text = pattern.sub(whole, text)
-    text = SECRET_PATTERNS[-1].sub(query, text)
+        text = pattern.sub(lambda match: mask_token(match.group(0)), text)
+    sensitive = r"[\w-]*(?:" + DENY_NAME_RE.pattern + r"|sig|jwt)[\w-]*"
+    assignment = re.compile(
+        r"(?i)(?<![\w-])((?:[\"']?" + sensitive + r"[\"']?\s*[:=]\s*|--" + sensitive + r"\s+))"
+        r"(\*\*\*masked \(\d+ chars\)\*\*\*|\"(?:\\.|[^\"\\])*\"|'[^']*'|[^\s&,;<>]+)")
 
+    def assigned(match):
+        value = match.group(2)
+        quote = value[0] if value.startswith(('\"', "'")) else ""
+        raw = value[1:-1] if quote else value
+        return match.group(1) + (value if MASK_RE.fullmatch(raw) else quote + mask_token(raw) + quote)
+
+    text = assignment.sub(assigned, text)
+    text = re.sub(r"(?i)(https?://)([^/@\s]+)@", lambda m: m.group(1) + (
+        m.group(2) if MASK_RE.fullmatch(m.group(2)) else mask_token(m.group(2))) + "@", text)
     def long_run(match):
         run = match.group(0)
         return mask_token(run) if run_is_token(run) else run
@@ -333,6 +356,8 @@ def sidecar_problems(data):
                 walk(item)
     walk(data)
     for text in strings:
+        if mask_text(text) != text:
+            problems.append("a sensitive field or secret-shaped value is visible")
         for pattern in SECRET_PATTERNS:
             for match in pattern.finditer(text):
                 if "masked" not in match.group(0):
@@ -495,16 +520,9 @@ def cmd_marks(args):
     return 0 if count >= args.min else 1
 
 
-def im_tool():
-    """ImageMagick 7 is `magick`; ImageMagick 6 offers `convert`."""
-    import shutil
-    return "magick" if shutil.which("magick") else ("convert" if shutil.which("convert") else None)
-
-
 def run_magick(argv):
-    exe = im_tool() or "magick"
     try:
-        subprocess.run([exe] + argv, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        subprocess.run(["magick"] + argv, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     except FileNotFoundError:
         print("[FAIL] ImageMagick (magick) is not installed")
         print("FIX: install ImageMagick 7, or make the annotated PNG another way and keep the mark colour #FF2D95")
@@ -593,23 +611,27 @@ def render_text_with_marks(lines, marked, labels, purpose, out):
 
 
 def differing_lines(lines, other):
-    """Indexes of lines that do not occur (as a multiset) in the other text."""
-    pool = {}
-    for line in other:
-        pool[line] = pool.get(line, 0) + 1
-    marked = []
-    for i, line in enumerate(lines):
-        if not line.strip():
-            continue
-        if pool.get(line, 0) > 0:
-            pool[line] -= 1
-        else:
-            marked.append(i)
-    return marked
+    return [i for tag, start, end, _, _ in difflib.SequenceMatcher(
+        None, lines, other, autojunk=False).get_opcodes() if tag != "equal"
+        for i in range(start, end) if lines[i].strip()]
+
+
+def annotation_texts(args, labels):
+    f = Findings()
+    check_texts(f, "annotation", {"purpose": args.purpose, "labels": labels},
+                [], load_vocab(os.path.join(HERE, "fm-pr-evidence-openste.tsv")))
+    f.emit()
+    return f.ok()
+
+
+def save_annotation_texts(path, purpose, labels):
+    write_json(path + ".annotation.json", {"sha256": sha256_file(path), "purpose": purpose, "labels": labels})
 
 
 def cmd_annotate_ui(args):
     labels = args.label or []
+    if not args.image and not annotation_texts(args, labels or ["Marked lines changed"]):
+        return 1
     if args.image:
         boxes = []
         for spec in args.mark or []:
@@ -624,9 +646,15 @@ def cmd_annotate_ui(args):
             print("[FAIL] no marks were given for the image")
             print("FIX: add at least one --mark x,y,w,h,label around the part that changed")
             return 1
-        tool = im_tool()
-        ident = subprocess.run(([tool, "identify"] if tool == "magick" else ["identify"]) + ["-format", "%w", args.image],
-                               capture_output=True, text=True)
+        if not annotation_texts(args, labels + [b[4] for b in boxes if b[4]]):
+            return 1
+        try:
+            ident = subprocess.run(["magick", "identify", "-format", "%w", args.image],
+                                   capture_output=True, text=True)
+        except FileNotFoundError:
+            print("[FAIL] ImageMagick (magick) is not installed")
+            print("FIX: install ImageMagick 7 and run the command again")
+            return 1
         try:
             width = int(ident.stdout.strip())
         except ValueError:
@@ -634,7 +662,7 @@ def cmd_annotate_ui(args):
             print("FIX: give a PNG or JPEG file")
             return 1
         width = max(width, 640)
-        banner, _ = draw_banner_args(args.purpose, width)
+        banner, _ = draw_banner_args(args.purpose + "".join("\nMARK: " + label for label in labels), width)
         with tempfile.TemporaryDirectory() as tmp:
             banner_png = os.path.join(tmp, "banner.png")
             shot = os.path.join(tmp, "shot.png")
@@ -643,6 +671,7 @@ def cmd_annotate_ui(args):
             run_magick([shot] + mark_args(boxes) + ["-depth", "8", "PNG32:" + shot + ".m.png"])
             run_magick([banner_png, shot + ".m.png", "-background", "#0d1117", "-append", "+repage", "-depth", "8",
                         "PNG32:" + args.out])
+        save_annotation_texts(args.out, args.purpose, labels + [b[4] for b in boxes if b[4]])
         return 0
     text = open(args.text, encoding="utf-8", errors="replace").read()
     text = mask_text(text)
@@ -660,6 +689,7 @@ def cmd_annotate_ui(args):
     if not labels:
         labels = ["Marked lines changed"]
     render_text_with_marks(lines, marked, labels, args.purpose, args.out)
+    save_annotation_texts(args.out, args.purpose, labels)
     return 0
 
 
@@ -670,7 +700,7 @@ def pretty_body(text):
         return text.splitlines() or ["(empty)"]
 
 
-def sidecar_lines(data, max_body=30):
+def sidecar_lines(data):
     req, resp = data["request"], data["response"]
     out = ["REQUEST", "  %s %s" % (req["method"], req["url"]), "REQUEST HEADERS"]
     out += ["  %s: %s" % (n, v) for n, v in req["headers"]]
@@ -681,13 +711,14 @@ def sidecar_lines(data, max_body=30):
     out += ["  %s: %s" % (n, v) for n, v in resp["headers"]]
     out += ["RESPONSE BODY"]
     body = pretty_body(resp["body"]) if resp.get("body") else ["(empty)"]
-    out += ["  " + l for l in body[:max_body]]
-    if len(body) > max_body:
-        out.append("  ... (%d more lines)" % (len(body) - max_body))
+    out += ["  " + l for l in body]
     return out
 
 
 def cmd_annotate_api(args):
+    labels = args.label or ["Marked lines differ from the other exchange"]
+    if not annotation_texts(args, labels):
+        return 1
     data = json.load(open(args.sidecar, encoding="utf-8"))
     problems = sidecar_problems(data)
     if problems:
@@ -706,8 +737,8 @@ def cmd_annotate_api(args):
         print("[FAIL] the two HTTP exchanges show no difference to mark")
         print("FIX: capture an exchange that differs, or mark lines by hand with annotate-ui")
         return 1
-    labels = args.label or ["Marked lines differ from the other exchange"]
     render_text_with_marks(lines, marked, labels, args.purpose, args.out)
+    save_annotation_texts(args.out, args.purpose, labels)
     return 0
 
 
@@ -715,7 +746,7 @@ def cmd_capture_ui_text(args):
     """Wrap one command's captured output into a masked terminal transcript."""
     text = open(args.raw, encoding="utf-8", errors="replace").read()
     with open(args.out, "w", encoding="utf-8") as fh:
-        fh.write("$ %s\n%s" % (args.command, mask_text(text)))
+        fh.write("$ %s\n%s" % (mask_text(args.command), mask_text(text)))
         if not text.endswith("\n"):
             fh.write("\n")
         fh.write("(exit status %s)\n" % args.rc)
@@ -730,7 +761,6 @@ def cmd_config(args):
     """Parse config/pr-evidence for one project and print JSON."""
     out = {"enabled": False, "require": False, "globs": {"ui": [], "api": []}, "banned": [],
            "bitbucket": False, "errors": []}
-    off = False
     try:
         lines = open(args.file, encoding="utf-8").read().splitlines()
     except OSError:
@@ -750,20 +780,16 @@ def cmd_config(args):
             word = parts[1]
             if word == "enforce" and len(parts) == 2:
                 out["enabled"] = True
-            elif word == "off" and len(parts) == 2 and head != "*":
-                off = True
             elif word == "require" and len(parts) == 2:
                 out["require"] = True
             elif word in KINDS and len(parts) > 2:
                 out["globs"][word] += parts[2:]
             else:
                 out["errors"].append("line %d is not valid: %s" % (number, line))
-        elif len(parts) >= 2 and parts[1] in ("enforce", "off", "require") + KINDS:
+        elif len(parts) >= 2 and parts[1] in ("enforce", "require") + KINDS:
             pass  # a line for another project
         else:
             out["errors"].append("line %d is not valid: %s" % (number, line))
-    if off:
-        out["enabled"] = False
     print(json.dumps(out))
     return 0
 
@@ -804,6 +830,33 @@ def kinds_of(spec):
     if spec.startswith("none"):
         return []
     return [k for k in spec.split("+") if k]
+
+
+def declaration(kinds):
+    return "+".join(k for k in KINDS if k in kinds) or "none"
+
+
+def effective_declaration(declared, comments, authors):
+    kinds = set(kinds_of(declared))
+    for comment in comments:
+        if comment.get("author") not in authors:
+            continue
+        for info, text in FENCE_RE.findall(comment.get("body") or ""):
+            if info.strip() != MANIFEST_TAG:
+                continue
+            try:
+                manifest = json.loads(text)
+                kinds.update(k for k in kinds_of(manifest.get("kind")) if k in KINDS)
+                kinds.update(i.get("kind") for i in manifest.get("items", []) if i.get("kind") in KINDS)
+            except (ValueError, TypeError, AttributeError):
+                continue
+    return declaration(kinds)
+
+
+def cmd_effective(args):
+    print(effective_declaration(args.declared, json.load(open(args.comments, encoding="utf-8")),
+                                json.loads(args.authors)))
+    return 0
 
 
 def check_texts(f, item_id, item, banned, vocab):
@@ -883,6 +936,14 @@ def cmd_compose(args):
                 f.fail("item %s %s image has no drawn marks (colour #FF2D95)" % (item_id, phase),
                        "annotate the difference with fm-pr-evidence.sh annotate-ui or annotate-api")
             part_entry = {"sha256": sha}
+            if os.path.isfile(image + ".annotation.json"):
+                with open(image + ".annotation.json", encoding="utf-8") as fh:
+                    annotation = json.load(fh)
+                if annotation.get("sha256") != sha:
+                    f.fail("item %s %s annotation does not match its image" % (item_id, phase),
+                           "annotate the image again")
+                check_texts(f, "%s %s annotation" % (item_id, phase), annotation, banned, vocab)
+                part_entry["annotation"] = annotation
             if kind == "api":
                 sidecar_path = part.get("sidecar", "")
                 sidecar_path = sidecar_path if os.path.isabs(sidecar_path) else os.path.join(base, sidecar_path)
@@ -923,8 +984,9 @@ def cmd_compose(args):
     if not f.ok():
         f.emit()
         return 1
+    effective = declaration(required | present)
     lines = ["## Evidence for review", "",
-             "Kind: `%s`. PR head: `%s`." % (args.declared, args.head[:12]), ""]
+             "Kind: `%s`. PR head: `%s`." % (effective, args.head[:12]), ""]
     if not items:
         lines += ["No UI or API surface changed. Reason: %s" % none_reason, ""]
     for number, entry, side_md in sections:
@@ -947,7 +1009,7 @@ def cmd_compose(args):
     for entry in manifest_items:
         for phase in ("before", "after"):
             entry[phase].pop("_md", None)
-    manifest = {"v": 1, "head": args.head, "kind": args.declared, "items": manifest_items,
+    manifest = {"v": 1, "head": args.head, "kind": effective, "items": manifest_items,
                 "none_reason": none_reason or None}
     lines += ["```" + MANIFEST_TAG, json.dumps(manifest, indent=2, sort_keys=True, ensure_ascii=False), "```", ""]
     os.makedirs(args.out, exist_ok=True)
@@ -963,13 +1025,13 @@ def cmd_compose(args):
 class ImgParser(html.parser.HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.srcs = []
+        self.images = []
 
     def handle_starttag(self, tag, attrs):
         if tag == "img":
-            src = dict(attrs).get("src")
-            if src:
-                self.srcs.append(src)
+            attrs = dict(attrs)
+            if attrs.get("src"):
+                self.images.append((attrs.get("alt", ""), attrs["src"]))
 
 
 MD_IMG_RE = re.compile(r"!\[[^\]]*\]\(\s*<?([^)\s>]+)>?[^)]*\)")
@@ -1013,6 +1075,7 @@ def cmd_verify(args):
     comments = json.load(open(os.path.join(work, "comments.json"), encoding="utf-8"))
     rules = json.load(open(os.path.join(work, "rules.json"), encoding="utf-8"))
     vocab = load_vocab(os.path.join(HERE, "fm-pr-evidence-openste.tsv"))
+    rules["declared"] = effective_declaration(rules["declared"], comments, set(pr.get("authors", [])))
     declared = kinds_of(rules["declared"])
     require = rules.get("require", False)
     base_fix = "run fm-pr-evidence.sh publish for this PR"
@@ -1033,7 +1096,7 @@ def cmd_verify(args):
         f.emit()
         return 1
     body = (comment.get("body") or "").replace("\r\n", "\n")
-    cache_key = hashlib.sha256(("%s|%s|%s|%s|%s" % (
+    cache_key = hashlib.sha256(("v2|%s|%s|%s|%s|%s" % (
         comment.get("id"), comment.get("updated"), pr.get("head"),
         hashlib.sha256(body.encode("utf-8")).hexdigest(),
         hashlib.sha256((comment.get("html") or "").encode("utf-8")).hexdigest(),
@@ -1100,6 +1163,8 @@ def cmd_verify(args):
                 continue
             pair.append(part["sha256"])
             shas.append((item_id, phase, part["sha256"]))
+            if "annotation" in part:
+                check_texts(f, "%s %s annotation" % (item_id, phase), part["annotation"], rules.get("banned", []), vocab)
             if kind == "api":
                 block = side_blocks.get((item_id, phase))
                 if block is None:
@@ -1157,7 +1222,7 @@ def verify_images(f, args, pr, comment, body, shas, needed, base_fix):
         f.fail("the comment text holds %d images but the manifest lists %d" % (len(raw_urls), needed), base_fix)
     parser = ImgParser()
     parser.feed(comment.get("html") or "")
-    shown = parser.srcs
+    shown = parser.images
     if len(shown) < needed:
         f.fail("the comment text holds %d image(s) but only %d show on the PR page" % (len(raw_urls), len(shown)),
                "an image line right after a closing </details> line does not show; put a blank line and text "
@@ -1166,18 +1231,19 @@ def verify_images(f, args, pr, comment, body, shas, needed, base_fix):
     creds = None
     if os.environ.get("NO_MISTAKES_BITBUCKET_EMAIL") and os.environ.get("NO_MISTAKES_BITBUCKET_API_TOKEN"):
         creds = "%s:%s" % (os.environ["NO_MISTAKES_BITBUCKET_EMAIL"], os.environ["NO_MISTAKES_BITBUCKET_API_TOKEN"])
-    fetched = {}
-    for src in shown:
-        code, ctype, data = fetch(src, creds)
+    for item_id, phase, sha in shas:
+        label = "%s %s" % (item_id, phase)
+        refs = [src for alt, src in shown if alt == label]
+        if len(refs) != 1:
+            f.fail("item %s image must show exactly once with its phase label" % label, base_fix)
+            continue
+        code, ctype, data = fetch(refs[0], creds)
         if code != 200 or not ctype.lower().startswith("image/") or not (
                 data.startswith(b"\x89PNG\r\n\x1a\n") or data.startswith(b"\xff\xd8\xff")):
             f.fail("a shown image did not load as an image (HTTP %s, %s)" % (code, ctype or "no type"),
                    "publish the evidence again with fm-pr-evidence.sh publish")
             continue
-        fetched[hashlib.sha256(data).hexdigest()] = data
-    for item_id, phase, sha in shas:
-        data = fetched.get(sha)
-        if data is None:
+        if hashlib.sha256(data).hexdigest() != sha:
             f.fail("item %s %s image shown on the page does not match its hash" % (item_id, phase), base_fix)
             continue
         try:
@@ -1261,6 +1327,12 @@ def main(argv):
     p.add_argument("--banned")
     p.add_argument("--default-none-reason")
     p.set_defaults(fn=cmd_compose)
+
+    p = sub.add_parser("effective")
+    p.add_argument("--declared", required=True)
+    p.add_argument("--comments", required=True)
+    p.add_argument("--authors", required=True)
+    p.set_defaults(fn=cmd_effective)
 
     p = sub.add_parser("verify")
     p.add_argument("--work", required=True)

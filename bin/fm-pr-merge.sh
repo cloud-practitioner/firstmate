@@ -1583,6 +1583,25 @@ record_pr_metadata() {
   }
 }
 
+require_merge_evidence() {
+  local head
+  head=$(FM_HOME=$FM_HOME FM_STATE_OVERRIDE=$STATE "$SCRIPT_DIR/fm-pr-evidence.sh" check "$ID" "$URL" "$FM_PR_MERGE_HEAD") || return 1
+  [ -n "$head" ] || return 0
+  if [ "$PROVIDER" = github ]; then
+    if [ "$FM_PR_GITHUB_AUTO_REQUESTED" = true ]; then
+      echo "[FAIL] evidence requires an immediate merge, not --auto" >&2
+      echo "FIX: retry without --auto" >&2
+      return 1
+    fi
+    github_read_queue_method
+    if [ "$FM_PR_GITHUB_QUEUE_STATUS" != none ]; then
+      echo "[FAIL] evidence requires a base branch with no merge queue" >&2
+      echo "FIX: use an immediate merge path that binds the verified head" >&2
+      return 1
+    fi
+  fi
+}
+
 require_released_captain_hold() {
   local hold_status=0
   FM_HOME="$FM_HOME" FM_STATE_OVERRIDE="$STATE" \
@@ -2292,6 +2311,7 @@ case "$PROVIDER" in
     require_current_away_authority || away_status=$?
     [ "$away_status" -eq 0 ] || exit "$away_status"
     refuse_github_queue_while_away || exit 2
+    require_merge_evidence || exit 1
     merge_status=0
     merge_output=$(gh pr merge "$PR_NUMBER" --repo "$PR_OWNER/$PR_REPO" \
       --match-head-commit "$FM_PR_MERGE_HEAD" \
@@ -2377,6 +2397,7 @@ case "$PROVIDER" in
     require_current_away_authority || away_status=$?
     [ "$away_status" -eq 0 ] || exit "$away_status"
     bitbucket_require_unmoved_head || exit 1
+    require_merge_evidence || exit 1
     bitbucket_merge_body=$(jq -cn --arg strategy "$BITBUCKET_MERGE_STRATEGY" \
       --argjson close "$BITBUCKET_CLOSE_SOURCE_BRANCH" --arg message "$MERGE_MESSAGE" '
       {type: "pullrequest", close_source_branch: $close}

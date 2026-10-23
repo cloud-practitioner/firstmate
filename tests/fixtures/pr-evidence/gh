@@ -37,6 +37,13 @@ case "${1:-} ${2:-}" in
       | curl -sS -X POST --data-binary @- "$STUB/gh/repos/$owner/$repo/issues/$number/comments" | jq -r .html_url
     exit 0
     ;;
+  "pr merge")
+    exit 0
+    ;;
+  "api graphql")
+    printf 'state=MERGED\nmerged=true\nqueued=false\nbase=main\n'
+    exit 0
+    ;;
   "pr view")
     shift 2
     url=${1:-}
@@ -50,7 +57,7 @@ case "${1:-} ${2:-}" in
     done
     path=${url#https://github.com/}
     head=$(curl -sS "$STUB/gh/repos/${path%/pull/*}/pulls/${path##*/}" | jq -r .head.sha)
-    out=$(jq -n --arg h "$head" '{isDraft: false, headRefOid: $h}')
+    out=$(jq -n --arg h "${FM_TEST_GH_VIEW_HEAD:-$head}" '{isDraft: false, headRefOid: $h, state: "OPEN", mergeable: "MERGEABLE", mergeStateStatus: "CLEAN", baseRefName: "main", statusCheckRollup: []}')
     if [ -n "$jqx" ]; then printf '%s' "$out" | jq -r "$jqx"; else printf '%s\n' "$out"; fi
     exit 0
     ;;
@@ -70,7 +77,11 @@ case "${1:-} ${2:-}" in
         *) target=$1; shift ;;
       esac
     done
-    out=$(curl -sS -X "$method" "$STUB/gh/$target") || exit 1
+    case "$target" in
+      */rules/branches/main) out=${FM_TEST_GH_RULES:-'[]'} ;;
+      */branches/main) out='{"protected":false}' ;;
+      *) out=$(curl -sS -X "$method" "$STUB/gh/$target") || exit 1 ;;
+    esac
     [ "$slurp" = 0 ] || out=$(printf '%s' "$out" | jq -c '[.]')
     if [ -n "$jqx" ]; then printf '%s' "$out" | jq -r "$jqx"; else printf '%s\n' "$out"; fi
     exit 0

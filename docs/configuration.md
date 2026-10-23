@@ -633,7 +633,6 @@ Every other line is one of these:
 | Line | Effect |
 | --- | --- |
 | `<project> enforce` or `* enforce` | The gate is on for that project, or for every project. |
-| `<project> off` | The gate is off for that project, even when `* enforce` is present. |
 | `<project> require` or `* require` | The project always needs evidence, so the declared kind can never be `none`. |
 | `<project> ui <glob>...` and `<project> api <glob>...` | Changed files that match a glob need that kind. A glob can only add a requirement. |
 | `banned <word>...` | Extra words that the plain-English check refuses. |
@@ -651,18 +650,24 @@ firstmate require
 
 A second mate home inherits the file from its primary home at launch and at session start (`bin/fm-config-inherit-lib.sh`).
 The code reaches every home through the normal update.
+Firstmate turns the gate on in each home after this change merges; code alone does not activate it.
+Exceptions require a waiver with the captain's words, not a project disable line.
 
 **Intake.**
 When the gate is on for a project, `bin/fm-brief.sh` adds `## Evidence class` with the placeholder `{EVIDENCE}` to the ship brief.
 Firstmate fills it with `ui`, `api`, `ui+api`, or `none: <reason in plain English>`.
 `bin/fm-spawn.sh` refuses an unfilled or invalid value and records `evidence=` (and `evidence_reason=`) in the task record.
+`bin/fm-promote.sh` applies the same intake to the scout brief before promotion and includes the evidence contract in the ship instructions.
 A `none` is refused for a `require` project and for the firstmate repository.
 A worker can add a kind and never remove one.
+Publication retains the union of intake kinds and previously published kinds in the task record and comment.
 
 **The gate.**
 `bin/fm-pr-check.sh` calls `fm-pr-evidence.sh check` before it arms a PR, and `bin/fm-pr-merge.sh` records through the same script before every merge.
-So one gate covers both.
-The gate refuses unless the PR holds one evidence comment by the PR author or the acting account with these parts:
+The merge path also checks evidence against the exact SHA submitted for merge.
+Enforced GitHub merges refuse auto-merge and merge queues.
+Enforced Bitbucket merges refuse because its merge API cannot bind an expected head.
+The gate refuses unless the PR holds one evidence comment by the PR author with these parts:
 
 - A before image and an after image for each required kind, with the differences marked in the exact colour `#FF2D95`.
 - The purpose of each item in ASD-STE100 Simplified Technical English.
@@ -689,7 +694,9 @@ It records the waiver in `state/<id>.evidence-waiver`.
 **GitHub and Bitbucket.**
 The GitHub arm is on when the project is enabled.
 It uploads images with `gh pr comment --attach`, which needs gh 2.99 or newer.
-The script picks the first gh that accepts that flag, so an older gh earlier on `PATH` does not hide a newer one.
+The script picks the first gh on `PATH` that accepts that flag, so an older gh does not hide a newer one.
+If none qualifies, it checks the explicit `FM_PR_EVIDENCE_GH` executable override; otherwise it refuses.
+Annotation commands require ImageMagick 7's `magick` on `PATH`.
 The Bitbucket arm uploads images to the repository Downloads area and reads comments through the Bitbucket API with the `NO_MISTAKES_BITBUCKET_*` credential.
 It stays off until a sandbox proof on a non-IQX repository shows upload and display.
 After that proof, add `bitbucket on` to `config/pr-evidence`.

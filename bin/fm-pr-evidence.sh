@@ -68,8 +68,8 @@
 # check, masking, mark counting, rendering, comment composition, and the verifier.
 # Notices and refusals go to stderr. Exit 0 is a pass or a skip with a notice,
 # 1 is a refusal, 2 is a usage error.
-# Test-only overrides: FM_PR_EVIDENCE_GH (the gh binary), FM_PR_EVIDENCE_GH_FALLBACKS
-# (the gh paths tried after PATH), and FM_PR_EVIDENCE_BITBUCKET_API (the API base).
+# Overrides: FM_PR_EVIDENCE_GH (an explicit gh binary) and
+# FM_PR_EVIDENCE_BITBUCKET_API (the test API base).
 set -eu
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -82,6 +82,7 @@ LIB_PY="$SCRIPT_DIR/fm-pr-evidence-lib.py"
 
 # shellcheck source=bin/fm-pr-lib.sh
 . "$SCRIPT_DIR/fm-pr-lib.sh"
+. "$SCRIPT_DIR/fm-wake-lib.sh"
 [ -z "${FM_PR_EVIDENCE_BITBUCKET_API:-}" ] || FM_PR_BITBUCKET_API=$FM_PR_EVIDENCE_BITBUCKET_API
 
 WORK=
@@ -165,10 +166,6 @@ resolve_gh_read() {
 # accepts the flag wins.
 resolve_gh_attach() {
   local c
-  if [ -n "${FM_PR_EVIDENCE_GH:-}" ]; then
-    GH=$FM_PR_EVIDENCE_GH
-    return 0
-  fi
   while IFS= read -r c; do
     [ -x "$c" ] || continue
     if "$c" pr comment --help 2>&1 | grep -q -- '--attach'; then
@@ -176,10 +173,15 @@ resolve_gh_attach() {
       return 0
     fi
   done <<EOF
-$(type -ap gh 2>/dev/null; for c in ${FM_PR_EVIDENCE_GH_FALLBACKS-/usr/bin/gh /usr/local/bin/gh /opt/homebrew/bin/gh}; do printf '%s\n' "$c"; done)
+$(type -ap gh 2>/dev/null || true)
 EOF
+  c=${FM_PR_EVIDENCE_GH:-}
+  if [ -n "$c" ] && [ -x "$c" ] && "$c" pr comment --help 2>&1 | grep -q -- '--attach'; then
+    GH=$c
+    return 0
+  fi
   fail_line "no gh with 'pr comment --attach' was found (gh 2.99 or newer)" \
-    "install a newer gh (for example /usr/bin/gh) or set FM_PR_EVIDENCE_GH to it; an older gh earlier on PATH hides the new one"
+    "install a newer gh on PATH or set FM_PR_EVIDENCE_GH to an executable that accepts --attach"
   return 1
 }
 
@@ -212,9 +214,8 @@ cmd_intake() {
       fail_line "the brief's '## Evidence class' is not filled" "write ui, api, ui+api, or none: <reason> under it"
       return 1
       ;;
-    ui|api|ui+api|api+ui)
+    ui|api|ui+api)
       value=$line
-      [ "$value" != api+ui ] || value=ui+api
       printf 'evidence=%s\n' "$value"
       ;;
     none:*)
@@ -267,17 +268,16 @@ PR_FILES_JSON='[]'
 PR_COMMENTS_JSON='[]'
 
 read_github() {  # <owner/repo> <number>
-  local path=$1 number=$2 pr actor
+  local path=$1 number=$2 pr
   resolve_gh_read || return 1
   pr=$("$GH" api "repos/$path/pulls/$number" 2>/dev/null) || {
     fail_line "the PR cannot be read from GitHub" "check that gh is logged in and the PR exists"
     return 1
   }
   PR_HEAD=$(printf '%s' "$pr" | jq -r '.head.sha // empty')
-  actor=$("$GH" api user --jq .login 2>/dev/null || true)
-  PR_AUTHORS_JSON=$(printf '%s' "$pr" | jq -c --arg actor "$actor" '[.user.login, $actor] | map(select(. != null and . != "")) | unique')
+  PR_AUTHORS_JSON=$(printf '%s' "$pr" | jq -c '[.user.login] | map(select(. != null and . != ""))')
   PR_FILES_JSON=$("$GH" api --paginate --slurp "repos/$path/pulls/$number/files?per_page=100" 2>/dev/null \
-    | jq -c '[.[][] | .filename]') || {
+    | jq -c '[.[][] | .filename, .previous_filename | select(. != null)] | unique') || {
     fail_line "the changed files of the PR cannot be read" "check that gh is logged in"
     return 1
   }
@@ -298,14 +298,11 @@ read_bitbucket() {  # <workspace/repo> <number>
   head=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -r '.source.commit.hash // empty')
   PR_AUTHORS_JSON=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -c '[.author.account_id] | map(select(. != null))')
   PR_HEAD=$(fm_pr_bitbucket_resolve_commit "$path" "$head" 2>/dev/null || true)
-  if fm_pr_bitbucket_request GET "user"; then
-    PR_AUTHORS_JSON=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -c --argjson a "$PR_AUTHORS_JSON" '$a + [.account_id] | map(select(. != null)) | unique')
-  fi
   fm_pr_bitbucket_get_all "repositories/$path/pullrequests/$number/diffstat?pagelen=100" || {
     fail_line "the changed files of the PR cannot be read" "check the Bitbucket credential"
     return 1
   }
-  PR_FILES_JSON=$(printf '%s' "$FM_PR_BITBUCKET_VALUES" | jq -c '[.[] | (.new.path // .old.path)]')
+  PR_FILES_JSON=$(printf '%s' "$FM_PR_BITBUCKET_VALUES" | jq -c '[.[] | .new.path, .old.path | select(. != null)] | unique')
   fm_pr_bitbucket_get_all "repositories/$path/pullrequests/$number/comments?pagelen=100" || {
     fail_line "the PR comments cannot be read" "check the Bitbucket credential"
     return 1
@@ -317,8 +314,8 @@ read_bitbucket() {  # <workspace/repo> <number>
 # ---- the gate --------------------------------------------------------------
 
 cmd_check() {
-  [ "$#" -eq 2 ] || { say "usage: fm-pr-evidence.sh check <task-id> <pr-url>"; return 2; }
-  local id=$1 raw=$2 meta project_dir project evidence reason require rc
+  [ "$#" -ge 2 ] && [ "$#" -le 3 ] || { say "usage: fm-pr-evidence.sh check <task-id> <pr-url> [<merge-head>]"; return 2; }
+  local id=$1 raw=$2 expected=${3:-} meta project_dir project evidence reason require rc waiver
   if ! { fm_pr_task_id_valid "$id" && fm_pr_url_parse "$raw"; }; then
     say "error: invalid PR evidence check request"
     return 2
@@ -336,7 +333,11 @@ cmd_check() {
     say "notice: evidence gate not applied: task $id predates it (no evidence= in its task record); the captain may ask for a retrofit (fm-pr-evidence.sh list-unevidenced)"
     return 0
   fi
-  if [ -f "$STATE/$id.evidence-waiver" ]; then
+  waiver="$STATE/$id.evidence-waiver"
+  if [ -f "$waiver" ] && [ "$(meta_get "$waiver" url)" = "$FM_PR_URL" ] \
+    && [ "$(meta_get "$waiver" at | tr -cd '0-9')" = "$(meta_get "$waiver" at)" ] \
+    && [ -n "$(meta_get "$waiver" at)" ] \
+    && [ "$(meta_get "$waiver" words | wc -w | tr -d ' ')" -ge 4 ]; then
     say "notice: evidence gate waived for $id by the captain's words recorded in state/$id.evidence-waiver"
     return 0
   fi
@@ -363,6 +364,16 @@ cmd_check() {
     fail_line "the PR head cannot be read" "check the forge credential, then run the check again"
     return 1
   fi
+  if [ -n "$expected" ]; then
+    if [ "$FM_PR_PROVIDER" = bitbucket ]; then
+      fail_line "Bitbucket cannot bind evidence to an exact merge head" "keep this PR open until an expected-head merge interface is available"
+      return 1
+    fi
+    if [ "$PR_HEAD" != "$expected" ]; then
+      fail_line "the evidence check head differs from the merge head" "check and publish evidence for the current PR head, then retry"
+      return 1
+    fi
+  fi
   require=false
   if project_requires_evidence "$project_dir"; then require=true; fi
   reason=$(meta_get "$meta" evidence_reason)
@@ -371,6 +382,7 @@ cmd_check() {
     --argjson authors "$PR_AUTHORS_JSON" --argjson files "$PR_FILES_JSON" \
     '{head: $head, provider: $provider, repo: $repo, url: $url, authors: $authors, files: $files}' > "$WORK/pr.json"
   printf '%s\n' "$PR_COMMENTS_JSON" > "$WORK/comments.json"
+  evidence=$(python3 "$LIB_PY" effective --declared "$evidence" --comments "$WORK/comments.json" --authors "$PR_AUTHORS_JSON") || return 1
   jq -n --arg declared "$evidence" --arg reason "$reason" --argjson require "$require" \
     --argjson globs "$(printf '%s' "$CFG_JSON" | jq -c .globs)" \
     --argjson banned "$(printf '%s' "$CFG_JSON" | jq -c .banned)" \
@@ -378,6 +390,7 @@ cmd_check() {
     > "$WORK/rules.json"
   rc=0
   python3 "$LIB_PY" verify --work "$WORK" --cache "$STATE/$id.evidence-ok" >&2 || rc=$?
+  if [ "$rc" -eq 0 ] && [ -n "$expected" ]; then printf '%s\n' "$PR_HEAD"; fi
   return "$rc"
 }
 
@@ -398,7 +411,7 @@ bb_upload() {  # <workspace/repo> <file> <name>
 
 cmd_publish() {
   [ "$#" -eq 3 ] || { say "usage: fm-pr-evidence.sh publish <task-id> <pr-url> <items.json>"; return 2; }
-  local id=$1 raw=$2 items=$3 meta project evidence reason out new_id line path alt name body
+  local id=$1 raw=$2 items=$3 meta project evidence reason out new_id line path alt name body lock updated
   local -a attach=() compose_extra=()
   if ! { fm_pr_task_id_valid "$id" && fm_pr_url_parse "$raw"; }; then
     say "error: invalid PR evidence publish request"
@@ -433,6 +446,8 @@ cmd_publish() {
   esac
   [ -n "$PR_HEAD" ] || { fail_line "the PR head cannot be read" "check the forge credential"; return 1; }
   WORK=$(mktemp -d "$STATE/.pr-evidence.XXXXXX") || return 1
+  printf '%s\n' "$PR_COMMENTS_JSON" > "$WORK/comments.json"
+  evidence=$(python3 "$LIB_PY" effective --declared "$evidence" --comments "$WORK/comments.json" --authors "$PR_AUTHORS_JSON") || return 1
   python3 "$LIB_PY" compose --items "$items" --head "$PR_HEAD" --declared "$evidence" \
     --provider "$FM_PR_PROVIDER" --repo "$FM_PR_PATH" --number "$FM_PR_NUMBER" --banned "$CFG_BANNED" \
     --out "$WORK" "${compose_extra[@]+"${compose_extra[@]}"}" >&2 || return 1
@@ -461,7 +476,16 @@ cmd_publish() {
     new_id=$(printf '%s' "$FM_PR_BITBUCKET_BODY" | jq -r '.id | tostring')
   fi
   say "posted: evidence comment $new_id on $FM_PR_URL"
-  # One dedicated comment: remove this account's older evidence comments.
+  lock=$(fm_meta_lock_path "$meta") || return 1
+  fm_lock_acquire_wait "$lock" || return 1
+  jq -n --arg body "$(< "$WORK/comment.md")" --argjson authors "$PR_AUTHORS_JSON" \
+    '[{author: $authors[0], body: $body}]' > "$WORK/published.json"
+  updated=$(python3 "$LIB_PY" effective --declared "$(meta_get "$meta" evidence)" --comments "$WORK/published.json" --authors "$PR_AUTHORS_JSON")
+  awk '!/^evidence=/' "$meta" > "$WORK/meta"
+  printf 'evidence=%s\n' "$updated" >> "$WORK/meta"
+  chmod 0600 "$WORK/meta"
+  mv -f -- "$WORK/meta" "$meta"
+  fm_lock_release "$lock"
   while IFS= read -r line; do
     { [ -n "$line" ] && [ "$line" != "$new_id" ]; } || continue
     if [ "$FM_PR_PROVIDER" = github ]; then
@@ -549,7 +573,7 @@ cmd_waive() {
     say "error: invalid waiver request"
     return 2
   fi
-  if [ -e "$STATE/.afk" ]; then
+  if [ -e "$STATE/.afk" ] && [ "$(fm_afk_mode "$STATE")" = away ]; then
     fail_line "a waiver is refused in away mode" "wait for the captain to return and say the waiver in their own words"
     return 1
   fi
