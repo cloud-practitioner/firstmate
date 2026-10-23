@@ -1,0 +1,8 @@
+....................
+----------------------------------------------------------------------
+Ran 20 tests in 1.082s
+
+OK
+ok - fm-pr-evidence: the annotate helpers draw marks that the gate's counter finds
+ok - fm-pr-evidence: the worker contract and help print
+note: live guard skipped (set FM_PR_EVIDENCE_LIVE_PR to a PR URL in the private sandbox repository)

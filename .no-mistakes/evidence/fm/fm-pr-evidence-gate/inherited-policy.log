@@ -1,0 +1,10 @@
+Policy copied to the new child home:
+* enforce
+project ui web/*.jsx
+project api srv/*.py
+
+Fresh CLI process uses inherited enforcement:
+[FAIL] the brief's '## Evidence class' is not filled
+FIX: write ui, api, ui+api, or none: <reason> under it
+Fresh CLI refusal after runtime state reset: exit 1
+Inherited durable policy remains byte-identical. No live agent or fleet was launched.

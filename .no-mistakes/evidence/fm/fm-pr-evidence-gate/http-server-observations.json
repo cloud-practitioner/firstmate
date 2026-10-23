@@ -1,0 +1,18 @@
+[
+  {
+    "phase": "before",
+    "method": "POST",
+    "path": "/items",
+    "body": "{\"name\": \"sample\", \"password\": \"fixture-request-value\"}",
+    "accept": "application/json",
+    "auth_received": true
+  },
+  {
+    "phase": "after",
+    "method": "POST",
+    "path": "/items",
+    "body": "{\"name\": \"sample\", \"password\": \"fixture-request-value\"}",
+    "accept": "application/json",
+    "auth_received": true
+  }
+]

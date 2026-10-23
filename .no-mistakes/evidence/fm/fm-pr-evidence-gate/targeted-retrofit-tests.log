@@ -1,0 +1,4 @@
+ok - fm-pr-evidence: retrofit listing reads current GitHub and Bitbucket states without changing the legacy exception
+ok - fm-pr-evidence: file count completeness is enforced before rename expansion and publication
+ok - fm-pr-evidence: shipped vocabulary warnings always run and custom banned policy is refused
+ok - fm-pr-evidence: captured header arguments retain the public URL after redaction

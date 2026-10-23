@@ -1,0 +1,4 @@
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The tool prints text; the user reads it.'
+[FAIL] plain-English check (purpose): semicolon found; write two sentences
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+(exit status 1)

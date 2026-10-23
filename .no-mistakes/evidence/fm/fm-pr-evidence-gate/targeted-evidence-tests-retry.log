@@ -1,0 +1,42 @@
+....................
+----------------------------------------------------------------------
+Ran 20 tests in 5.983s
+
+OK
+ok - fm-pr-evidence: eligibility, intake, briefs, promotion, contracts, and checks agree across all delivery lanes
+ok - fm-pr-evidence: local-only promotion and task commands have no PR-evidence obligation
+ok - fm-pr-evidence: captured authorization-code redirects retain status and hide credentials
+ok - fm-pr-evidence: fenced HTTP payloads are literal while visible image hosting remains enforced
+ok - fm-pr-evidence: PR intake refuses bad config while local-only scaffolding and spawning skip the gate
+ok - fm-pr-evidence: typographic contractions refuse intake, publication, and annotation
+ok - fm-pr-evidence: live auth inputs are restored only at the isolated invocation boundary
+ok - fm-pr-evidence: valid partial GitHub collections with failed pagination refuse
+ok - fm-pr-evidence: existing unreadable configuration refuses every consumer
+ok - fm-pr-evidence: quoted purposes, drawn labels, and none reasons face strict English checks
+ok - fm-pr-evidence: both forges refuse duplicate comments and reload every image on every check
+ok - fm-pr-evidence: promotion validates and records the same intake as spawn
+ok - fm-pr-evidence: worker kinds are durable in composition, pattern checks, and verification
+ok - fm-pr-evidence: rendered images are bound to their item and phase labels
+ok - fm-pr-evidence: rename sources retain their pattern requirements
+ok - fm-pr-evidence: off without config; config lines are strict; project off is refused
+ok - fm-pr-evidence: intake validates the declared kind, the none reason, and the require rule
+ok - fm-pr-evidence: publish posts one comment whose images show, and the gate passes it
+ok - fm-pr-evidence: a missing comment, a moved head, and a stranger's comment all refuse with FIX lines
+ok - fm-pr-evidence: an image line after </details> refuses; publish writes a layout that shows
+ok - fm-pr-evidence: a swapped, missing, or identical image refuses
+ok - fm-pr-evidence: images without drawn marks are refused at publish and by the mark counter
+ok - fm-pr-evidence: API evidence needs all six parts, masked secrets, and a bound exchange text
+ok - fm-pr-evidence: capture-api keeps the six HTTP parts and masks secrets
+ok - fm-pr-evidence: file patterns add kinds, and a disagreement refuses naming the files
+ok - fm-pr-evidence: none still posts a visible reason that the gate requires
+ok - fm-pr-evidence: the plain-English check refuses the strict rules and only warns on the heuristics
+ok - fm-pr-evidence: arming and merging go through the gate; a legacy task passes with a notice
+ok - fm-pr-evidence: a waiver needs the captain's words, is refused away, and is posted on the PR
+ok - fm-pr-evidence: list-unevidenced names the open PRs from before the gate
+ok - fm-pr-evidence: the gh that accepts --attach is picked over a stale one on PATH
+ok - fm-pr-evidence: the Bitbucket arm is off by default; when on it uploads to Downloads and gates the same way
+not ok - capture-ui must keep the command (missing: '$ echo hello world')
+--- output ---
+$ echo 'hello world'
+hello world
+(exit status 0)

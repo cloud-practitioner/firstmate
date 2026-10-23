@@ -1,0 +1,20 @@
+PATH candidates:
+/home/node/.nix-profile/bin/gh
+/usr/bin/gh
+/bin/gh
+gh version 2.96.0 (nixpkgs)
+https://github.com/cli/cli/releases/tag/v2.96.0
+gh version 2.102.0 (2026-09-30)
+https://github.com/cli/cli/releases/tag/v2.102.0
+Use `--attach` to upload an image or video. If the body already references an
+`--attach './login.png#The login error state'`. Without it the filename is used.
+      --attach file      Attach an image or video file, in '<file>#<image alt text>' format
+  $ gh pr comment 13 --attach './login.png#The login error state'
+  $ gh pr comment 13 --attach ./before.png --attach ./after.png
+gh version 2.102.0 (2026-09-30)
+https://github.com/cli/cli/releases/tag/v2.102.0
+Use `--attach` to upload an image or video. If the body already references an
+`--attach './login.png#The login error state'`. Without it the filename is used.
+      --attach file      Attach an image or video file, in '<file>#<image alt text>' format
+  $ gh pr comment 13 --attach './login.png#The login error state'
+  $ gh pr comment 13 --attach ./before.png --attach ./after.png

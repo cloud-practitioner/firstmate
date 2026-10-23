@@ -1,0 +1,7 @@
+{
+  "labels": [
+    "The status and result changed"
+  ],
+  "purpose": "The service saves the item after the change.",
+  "sha256": "abc6880ce5901487aa59d151eedef209197cafc1d3cdefa190319c94b527fe74"
+}

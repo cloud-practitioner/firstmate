@@ -1,0 +1,61 @@
+{
+  "request": {
+    "body": "{\"name\": \"sample\", \"password\": \"***masked (21 chars)***\"}",
+    "headers": [
+      [
+        "Host",
+        "127.0.0.1:33829"
+      ],
+      [
+        "User-Agent",
+        "curl/8.14.1"
+      ],
+      [
+        "Accept",
+        "application/json"
+      ],
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "Authorization",
+        "***masked (25 chars)***"
+      ],
+      [
+        "Content-Length",
+        "55"
+      ]
+    ],
+    "method": "POST",
+    "url": "http://127.0.0.1:33829/items"
+  },
+  "response": {
+    "body": "{\"result\": \"saved\", \"password\": \"***masked (22 chars)***\"}",
+    "headers": [
+      [
+        "Server",
+        "BaseHTTP/0.6 Python/3.13.5"
+      ],
+      [
+        "Date",
+        "Fri, 23 Oct 2026 03:32:52 GMT"
+      ],
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "Set-Cookie",
+        "***masked (22 chars)***"
+      ],
+      [
+        "Content-Length",
+        "57"
+      ]
+    ],
+    "reason": "Created",
+    "status": 201
+  },
+  "v": 1
+}

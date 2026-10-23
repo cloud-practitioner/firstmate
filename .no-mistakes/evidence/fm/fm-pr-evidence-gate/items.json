@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "terminal",
+      "kind": "ui",
+      "purpose": "The tool refuses text with a semicolon.",
+      "labels": [
+        "The result changed"
+      ],
+      "before": {
+        "image": "before-terminal.png"
+      },
+      "after": {
+        "image": "after-terminal.png"
+      }
+    },
+    {
+      "id": "save-item",
+      "kind": "api",
+      "purpose": "The service saves the item after the change.",
+      "labels": [
+        "The status and result changed"
+      ],
+      "before": {
+        "image": "before-http.png",
+        "sidecar": "before-http.json"
+      },
+      "after": {
+        "image": "after-http.png",
+        "sidecar": "after-http.json"
+      }
+    }
+  ]
+}

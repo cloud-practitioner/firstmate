@@ -1,0 +1,7 @@
+{
+  "labels": [
+    "The result changed"
+  ],
+  "purpose": "The tool refuses text with a semicolon.",
+  "sha256": "3679fb5d5029fc1c79b1f49ec4891688cc65f95b59305e1982626013bf2b71f9"
+}

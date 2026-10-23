@@ -1,0 +1,301 @@
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project init -q
+
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project -c user.name=Fixture -c user.email=fixture@example.invalid commit --allow-empty -qm 'Disposable evidence lab'
+
+[exit 0]
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project remote set-url origin https://github.com/disposable/example.git
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/brief.md project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project
+[FAIL] the brief's '## Evidence class' is not filled
+FIX: write ui, api, ui+api, or none: <reason> under it
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/brief.md project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project
+evidence=ui
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/brief.md project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project
+evidence=ui+api
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/brief.md project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project
+[FAIL] the evidence class none has no reason
+FIX: write none: <reason in plain English>
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/brief.md project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project
+evidence=none
+evidence_reason=Only a comment changed.
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/brief.md project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y
+[FAIL] the evidence class none is not allowed for project (it always needs evidence)
+FIX: declare ui (terminal screenshots of the changed behaviour) or api in the brief
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh eligible project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh brief-block live-task project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project
+
+# Evidence for review (hard rule)
+This project's PRs need before and after evidence. The gate refuses a PR without it.
+Your evidence class is in the `## Evidence class` subsection above and in `evidence=` of your task record. You may add a kind. You may not remove one.
+Use `/home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh`. Its header has the exact commands.
+1. Take the before evidence before you change anything. Keep all evidence files under your task temp root.
+2. UI evidence: capture the screen (a screenshot, or `capture-ui` for terminal output) before and after. Mark the differences with `annotate-ui`.
+3. API evidence: capture the HTTP exchange with `capture-api` before and after. It shows the request headers, request body, response headers, response body, status code, and status message. It masks secrets. Draw the image with `annotate-api`.
+4. Write the purpose of each item in ASD-STE100 Simplified Technical English: short plain sentences, about 20 words or fewer, one idea each, active voice, no idioms, no semicolons, no contractions, no abbreviations. `/home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste` checks your text.
+5. Write an items file and run `/home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh publish live-task <pr-url> <items.json>` after the PR exists (with no-mistakes: after CI is green). It posts the one evidence comment and then runs the gate.
+6. The gate checks that every image shows on the PR page, matches its hash, and has marks drawn in the colour #FF2D95. If the PR head moves later, publish again.
+7. Report the final PR-ready `done` only after `publish` prints `[PASS]`. The first `done` that hands off to no-mistakes needs no evidence. Never put real secrets, tokens, or personal data in an image.
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh eligible project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project
+[FAIL] config/pr-evidence is not valid: line 2 is not valid: bogus option
+FIX: fix the line in /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/home/config/pr-evidence (docs/configuration.md "PR evidence gate")
+
+[exit 2]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/brief.md project direct-PR none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/project
+evidence=api
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text ''
+[FAIL] plain-English check (purpose): text is empty
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The tool prints text; the user reads it.'
+[FAIL] plain-English check (purpose): semicolon found; write two sentences
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The tool isn’t ready.'
+[FAIL] plain-English check (purpose): contraction 'isn’t'; write the full words
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+[WARN] plain-English note (purpose): word 'ready' is not approved; try prepare
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The tool prints e.g. a name.'
+[FAIL] plain-English check (purpose): abbreviation 'e.g.'; write the full words
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The tool prints text — now.'
+[FAIL] plain-English check (purpose): long dash found; use a plain dash or a new sentence
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The tool is seamless.'
+[FAIL] plain-English check (purpose): banned word 'seamless'
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'word word word word word word word word word word word word word word word word word word word word word word word word word word.'
+[FAIL] plain-English check (purpose): sentence 1 has 26 words (maximum 25)
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'One small sentence. Two small sentences. Three small sentences. Four small sentences.'
+[FAIL] plain-English check (purpose): 4 sentences (maximum 3)
+FIX: rewrite the purpose in short plain sentences (ASD-STE100)
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --kind steps --text 'word word word word word word word word word word word word word word word word word word word word word.'
+[FAIL] plain-English check (steps): sentence 1 has 21 words (maximum 20)
+FIX: rewrite the steps in short plain sentences (ASD-STE100)
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --kind label --text 'One label. Two labels.'
+[FAIL] plain-English check (label): 2 sentences (maximum 1)
+FIX: rewrite the label in short plain sentences (ASD-STE100)
+[WARN] plain-English note (label): word 'label' is not approved; try identify, label
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The tool shows the new value.'
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The error was caused by a bad value.'
+[WARN] plain-English note (purpose): passive voice 'was caused'; use active voice
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh capture-ui --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-terminal.txt -- /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The tool prints text; the user reads it.'
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh capture-ui --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-terminal.txt -- /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh ste --text 'The tool prints the new text.'
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-ui --text /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-terminal.txt --against /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-terminal.txt --purpose 'The tool refuses text with a semicolon.' --label 'The result changed' --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-terminal.png
+
+[exit 0]
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence-lib.py marks /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-terminal.png
+317
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-ui --text /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-terminal.txt --against /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-terminal.txt --purpose 'The tool refuses text with a semicolon.' --label 'The result changed' --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-terminal.png
+
+[exit 0]
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence-lib.py marks /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-terminal.png
+295
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-ui --text /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-terminal.txt --against /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-terminal.txt --purpose 'The tool shows the result.' --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/same.png
+[FAIL] no differing lines to mark
+FIX: the before and after text must differ, or pass --mark-line N for lines to mark
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-ui --image /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-terminal.png --purpose 'The tool shows the result.' --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/unmarked.png
+[FAIL] no marks were given for the image
+FIX: add at least one --mark x,y,w,h,label around the part that changed
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-ui --image /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-terminal.png --mark '8,108,600,32,The result changed' --purpose 'The tool shows the new result.' --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/image-annotation.png
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-ui --text /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/left.txt --against /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/right.txt --purpose 'The tool shows the added line.' --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/left.png
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-ui --text /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/right.txt --against /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/left.txt --purpose 'The tool shows the added line.' --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/right.png
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh capture-api --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-http.json -X POST --header 'Accept: application/json' --header 'Content-Type: application/json' --header 'Authorization: Bearer fixture-auth-value' --body-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/request.json http://127.0.0.1:33829/items
+
+[exit 0]
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence-lib.py scan-sidecar /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-http.json
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh capture-api --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-http.json -X POST --header 'Accept: application/json' --header 'Content-Type: application/json' --header 'Authorization: Bearer fixture-auth-value' --body-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/request.json http://127.0.0.1:33829/items
+
+[exit 0]
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence-lib.py scan-sidecar /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-http.json
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-api --sidecar /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-http.json --against /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-http.json --purpose 'The service saves the item after the change.' --label 'The status and result changed' --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-http.png
+[WARN] item annotation purpose: word 'service' is not approved; try servicing
+
+[exit 0]
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence-lib.py marks /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-http.png
+635
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-api --sidecar /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-http.json --against /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/before-http.json --purpose 'The service saves the item after the change.' --label 'The status and result changed' --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-http.png
+[WARN] item annotation purpose: word 'service' is not approved; try servicing
+
+[exit 0]
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence-lib.py marks /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-http.png
+635
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh annotate-api --sidecar /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/broken.json --against /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/after-http.json --purpose 'The service saves the item.' --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/broken.png
+[WARN] item annotation purpose: word 'service' is not approved; try servicing
+[WARN] item annotation mark label 'Marked lines differ from the other exchange': word 'differ' is not approved; try different
+[WARN] item annotation mark label 'Marked lines differ from the other exchange': word 'exchange' is not approved; try interchange, replace
+[FAIL] HTTP exchange file: response status message is missing
+FIX: capture the HTTP exchange again with fm-pr-evidence.sh capture-api
+
+[exit 1]
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/items.json --head 9512699506a2e867f9fd2bf9633ea138c3f25320 --declared ui --provider github --repo disposable/example --number 1 --out /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/composed
+[WARN] item save-item purpose: word 'service' is not approved; try servicing
+[WARN] item save-item before annotation purpose: word 'service' is not approved; try servicing
+[WARN] item save-item after annotation purpose: word 'service' is not approved; try servicing
+
+[exit 0]
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/identical.json --head 9512699506a2e867f9fd2bf9633ea138c3f25320 --declared ui --provider github --repo disposable/example --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/bad-compose
+[FAIL] item terminal before and after images are the same file
+FIX: take the before image before the change and the after image after it
+[WARN] item save-item purpose: word 'service' is not approved; try servicing
+[WARN] item save-item before annotation purpose: word 'service' is not approved; try servicing
+[WARN] item save-item after annotation purpose: word 'service' is not approved; try servicing
+
+[exit 1]
+
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence-lib.py compose --items /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/missing.json --head 9512699506a2e867f9fd2bf9633ea138c3f25320 --declared ui --provider github --repo disposable/example --number 1 --out /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/bad-compose
+[FAIL] no evidence items are given for the kinds: ui
+FIX: add one item for each required kind to the items file
+[FAIL] no evidence item for the required kinds: ui
+FIX: add an item for each missing kind to the items file
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh waive live-task https://github.com/disposable/example/pull/1 --words 'Skip this evidence for now.'
+[FAIL] a waiver is refused in away mode
+FIX: wait for the captain to return and say the waiver in their own words
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh waive live-task https://github.com/disposable/example/pull/1 --words 'Skip it'
+[FAIL] a waiver needs the captain's own words (at least 4 words)
+FIX: pass the captain's words exactly as written in the chat
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh check live-task https://github.com/disposable/example/pull/1
+notice: evidence gate not applied: task live-task predates it (no evidence= in its task record); the captain may ask for a retrofit (fm-pr-evidence.sh list-unevidenced)
+
+[exit 0]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh check live-task https://bitbucket.org/disposable/example/pull-requests/1
+notice: evidence gate not applied: the Bitbucket arm is off
+
+[exit 0]
+
+$ env PATH=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/.test-evidence-lab/stale-bin /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh publish live-task https://github.com/disposable/example/pull/1 /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/items.json
+[FAIL] no gh with 'pr comment --attach' was found (gh 2.99 or newer)
+FIX: install a newer gh on PATH or set FM_PR_EVIDENCE_GH to an executable that accepts --attach
+
+[exit 1]
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5K1MGANF7V1TVEJY6VCTM5Y/bin/fm-pr-evidence.sh publish live-task https://github.com/disposable/example/pull/1 /home/node/.no-mistakes/evidence/01M5K1MGANF7V1TVEJY6VCTM5Y/items.json
+[FAIL] the PR cannot be read from GitHub
+FIX: check that gh is logged in and the PR exists
+
+[exit 1]
