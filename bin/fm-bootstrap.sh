@@ -807,6 +807,11 @@ secondmate_liveness_one() {  # <meta> <id>
   case "$FM_SM_LIVE_STATUS" in
     silent)
       ;;
+    dormant)
+      # Stood down on purpose (bin/fm-secondmate-dormant.sh): never relaunched,
+      # never reported as dead, and listed only when verbose facts are asked for.
+      [ "${FM_BOOTSTRAP_VERBOSE_FACTS:-0}" != 1 ] || echo "BOOTSTRAP_INFO: secondmate $id dormant ($FM_SM_LIVE_REASON)"
+      ;;
     alive)
       [ "${FM_BOOTSTRAP_VERBOSE_FACTS:-0}" != 1 ] || echo "BOOTSTRAP_INFO: $FM_SM_LIVE_LINE"
       ;;

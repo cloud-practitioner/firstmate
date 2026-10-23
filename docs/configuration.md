@@ -93,6 +93,7 @@ Each effective `FM_HOME` contains private operational directories.
 - Per-task steering-inbox records under `state/<id>.inbox/` (`bin/fm-task-inbox-lib.sh`).
 - Per-task private temp roots for worker scratch files under `state/<id>.tasktmp/` (creation: [`bin/fm-spawn.sh`](../bin/fm-spawn.sh); placement rules, including no-mistakes intent files: generated Rules in [`bin/fm-brief.sh`](../bin/fm-brief.sh)).
 - Parent-owned secondmate pending-reply records under `state/pending-replies/` (`bin/fm-pending-reply-lib.sh`).
+- Parent-owned dormant (stood-down) records for persistent local secondmates under `state/<id>.dormant` (see "Dormant secondmate record" below).
 
 `config/` holds local gitignored operating choices, including explicit extension bindings under `config/extensions.d/`.
 
@@ -485,6 +486,19 @@ Task meta records `backend=` only for a non-default backend; an absent `backend=
 - An Orca task additionally records `orca_worktree_id=` and `terminal=`, with `window=fm-<id>` kept as the shared firstmate alias.
 
 - A cmux task additionally records `cmux_workspace_id=` and `cmux_surface_id=`.
+
+### Dormant secondmate record
+
+A persistent local secondmate with no work for now can be stood down on purpose: its agent stops and stays stopped, while its home, lease, `data/secondmates.md` route, backlog, held decisions and reports stay intact.
+`bin/fm-secondmate-dormant.sh stand-down <id>` stops the agent through `bin/fm-control.sh` and then writes `state/<id>.dormant` in the PARENT home; `resume <id>` relaunches it through the guarded `fm-spawn.sh --secondmate` launch and removes the record only after that launch succeeds.
+
+- The record is a small `key=value` file: `schema=fm-secondmate-dormant.v1`, `id=`, `since=` (epoch of the stand-down), and `reason=` (one line, may be empty).
+- Its existence alone is the verdict, and an unparseable record still reads as dormant, because the safe error leaves a stopped mate stopped.
+- Only the parent home writes it, atomically, and a symlink or non-regular path at that location is not a record.
+- Teardown removes it with the mate's other per-task state.
+- Remote secondmates are not supported: their agent is stopped on another host.
+- [`bin/fm-secondmate-dormant.sh`'s header](../bin/fm-secondmate-dormant.sh) owns the command contract, its refusal conditions, and every path that skips, refuses, or lists a dormant mate; [`bin/fm-secondmate-dormant-lib.sh`](../bin/fm-secondmate-dormant-lib.sh) owns the record's storage and read side.
+- The `secondmate-provisioning` skill owns when to stand a mate down or bring it back.
 
 ### Task selectors
 

@@ -14,6 +14,9 @@
 # has exactly one parser and cannot drift out of sync (the body-orphaning class
 # of bug fixed in PR #401 was exactly that drift).
 #
+# A handoff to a secondmate stood down by bin/fm-secondmate-dormant.sh is
+# refused before anything moves: no agent could take the work or its wake.
+#
 # What this script still owns (never delegated):
 #   - resolving the secondmate home from data/secondmates.md;
 #   - proving the destination is a genuine seeded secondmate home
@@ -97,6 +100,8 @@ MAIN_BACKLOG="$DATA/backlog.md"
 . "$SCRIPT_DIR/fm-public-followup-lib.sh"
 # shellcheck source=bin/fm-pending-reply-lib.sh
 . "$SCRIPT_DIR/fm-pending-reply-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$SCRIPT_DIR/fm-secondmate-dormant-lib.sh"
 
 RECEIVER_WAKE_MESSAGE='New routed work is in your backlog. Run bin/fm-session-start.sh now, then act on the routed task.'
 
@@ -937,6 +942,12 @@ if [ "$REMOTE" = 1 ]; then
   if remote_handoff "$ID" "$@"; then rc=0; else rc=$?; fi
   release_remote_locks
   exit "$rc"
+fi
+# A stood-down mate has no agent to take the routed work or its wake, so the
+# handoff is refused before any lock, move or marker (bin/fm-secondmate-dormant.sh).
+if fm_sm_dormant_is "$STATE" "$ID"; then
+  fm_sm_dormant_refusal "$STATE" "$ID" "nothing was moved"
+  exit 1
 fi
 ACTIVE_HANDOFF_LOCK="$STATE/.backlog-handoff-$ID.lock"
 fm_lock_acquire_wait "$ACTIVE_HANDOFF_LOCK"

@@ -91,6 +91,10 @@
 #              state; it never leaves a half-transitioned task claiming to be
 #              running.
 #
+# `relaunch` refuses a secondmate stood down by bin/fm-secondmate-dormant.sh,
+# whose `stand-down` is the supported way to stop one and keep it stopped
+# (`exit` alone leaves it for the liveness sweep to relaunch).
+#
 # Teardown and discard are NOT verbs here and never will be. `exit` stops an
 # agent and preserves everything else; removing a worktree, killing an
 # endpoint, or discarding work stays with bin/fm-teardown.sh, which owns the
@@ -184,6 +188,8 @@ DATA="${FM_DATA_OVERRIDE:-$FM_HOME/data}"
 . "$SCRIPT_DIR/fm-worker-account-lib.sh"
 # shellcheck source=bin/fm-exclude-tools-lib.sh
 . "$SCRIPT_DIR/fm-exclude-tools-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$SCRIPT_DIR/fm-secondmate-dormant-lib.sh"
 
 POLL=${FM_CONTROL_POLL:-0.5}
 SETTLE_WAIT=${FM_CONTROL_SETTLE_WAIT:-5}
@@ -1229,6 +1235,12 @@ case "$VERB" in
     echo "$result $ID harness=$HARNESS backend=$BACKEND endpoint=$T worktree=$WT"
     ;;
   relaunch)
+    # A stood-down secondmate is brought back by bin/fm-secondmate-dormant.sh
+    # resume alone; refuse before anything is stopped or checkpointed.
+    if fm_sm_dormant_is "$STATE" "$ID"; then
+      fm_sm_dormant_refusal "$STATE" "$ID" "refusing to relaunch it"
+      exit 1
+    fi
     do_relaunch
     ;;
 esac

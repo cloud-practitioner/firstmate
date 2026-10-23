@@ -1360,6 +1360,31 @@ EOF
   pass "session start: the proven bare-shell recovery path remains intact"
 }
 
+test_session_start_lists_a_dormant_secondmate_and_does_not_relaunch_it() {
+  local rec root home fakebin mate log spawned out
+  rec=$(prepare_session_start_secondmate secondmate-dormant)
+  IFS='|' read -r root home fakebin mate log spawned <<EOF
+$rec
+EOF
+  printf 'schema=fm-secondmate-dormant.v1\nid=%s\nsince=1700000000\nreason=no work for now\n' \
+    "$SESSION_START_SECOND_MATE_ID" > "$home/state/$SESSION_START_SECOND_MATE_ID.dormant"
+
+  # The fixture's pane is a bare shell, the evidence that relaunches an ordinary mate.
+  out=$(run_session_start_secondmate "$root" "$home" "$fakebin" "$mate" "$log" "$spawned" shell)
+  wait_for_network_stage "$home" "$root" || fail "the deferred network stage never published"
+
+  assert_contains "$out" "endpoint: dormant (stood down since " \
+    "the digest must list a stood-down secondmate as dormant"
+  assert_contains "$out" "no work for now" "the digest names the stand-down reason"
+  assert_contains "$out" "fm-secondmate-dormant.sh resume $SESSION_START_SECOND_MATE_ID" \
+    "the digest names how to bring it back"
+  assert_not_contains "$out" "endpoint: dead" "the digest must not call a dormant secondmate dead"
+  assert_not_contains "$(network_stage_report "$home" "$root")" "SECONDMATE_LIVENESS:" \
+    "the deferred sweep must not report a dormant secondmate"
+  [ ! -s "$log" ] || fail "session start touched a dormant secondmate's endpoint: $(cat "$log")"
+  pass "session start: a dormant secondmate is listed as dormant, never dead, and never relaunched"
+}
+
 test_session_start_relaunches_herdr_husk_secondmate() {
   local rec root home fakebin mate log state out
   rec=$(prepare_session_start_herdr_secondmate secondmate-herdr-husk)
@@ -3097,6 +3122,7 @@ test_tasks_axi_compatibility_is_probed_once
 test_session_start_preserves_ambiguous_pi_process
 test_session_start_preserves_transiently_unreadable_tmux
 test_session_start_preserves_proven_bare_shell_recovery
+test_session_start_lists_a_dormant_secondmate_and_does_not_relaunch_it
 test_session_start_relaunches_herdr_husk_secondmate
 test_status_tail_bounding
 test_status_tail_line_cap

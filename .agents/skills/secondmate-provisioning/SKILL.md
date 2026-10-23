@@ -1,7 +1,7 @@
 ---
 name: secondmate-provisioning
 description: >-
-  Load when creating, seeding, validating, launching, recovering, handing backlog to, pushing inherited local material into, or retiring a secondmate home, or when editing data/secondmates.md.
+  Load when creating, seeding, validating, launching, recovering, handing backlog to, pushing inherited local material into, retiring, standing down, or resuming a secondmate home, or when editing data/secondmates.md.
 user-invocable: false
 metadata:
   internal: true
@@ -9,7 +9,7 @@ metadata:
 
 # secondmate-provisioning
 
-Use this reference before creating, seeding, validating, launching, handing backlog to, recovering, pushing inherited local material into, or retiring a persistent secondmate, and before editing `data/secondmates.md`.
+Use this reference before creating, seeding, validating, launching, handing backlog to, recovering, pushing inherited local material into, retiring, standing down, or resuming a persistent secondmate, and before editing `data/secondmates.md`.
 
 Keep the always-inline routing rules in `AGENTS.md` authoritative: route by natural-language `scope:`, local-only projects stay with the main firstmate, and secondmates are idle by default.
 
@@ -228,11 +228,33 @@ Move a REMOTE one with `bin/fm-remote-secondmate-relaunch.sh <id> <harness> <mod
 Never call `fm-remote-secondmate-control.sh relaunch` through `fm-on.sh` directly for this: it leaves this primary's own record naming the runtime the mate used to run.
 A successful update restarts every live mate of both placements on its own, including one already on the target commit; the `/updatefirstmate` skill owns that pass, and `bin/fm-secondmate-restart.sh` owns its persist gate and failure vocabulary.
 
+A secondmate with a `state/<id>.dormant` record is not dead: it was stood down on purpose (next section), so never respawn it, relaunch it, or report it as dead; bring it back with `resume`.
+
 Do not reconstruct a secondmate's whole tree from the main home.
 The main firstmate reconciles only direct reports.
 Each secondmate is a firstmate in its own home, so it runs recovery on startup and reconciles its own crewmates.
 A secondmate's recovery reconciles only work that is already its own and then idles.
 It never initiates a survey or audit during recovery.
+
+## Standing a secondmate down
+
+Stand a persistent LOCAL secondmate down when it has no work for now and its idle agent only costs memory (each running mate holds its own MCP servers), while its information must survive so it can be brought back at any time.
+`bin/fm-control.sh <id> exit` is not that: it stops the agent, but the liveness sweep reads the stopped mate as dead and relaunches it within about a minute.
+
+```sh
+bin/fm-secondmate-dormant.sh stand-down <id> [--reason <text>]
+bin/fm-secondmate-dormant.sh resume <id>
+bin/fm-secondmate-dormant.sh list
+```
+
+- `stand-down` stops the agent through `bin/fm-control.sh`, then records dormancy in this home; the mate's home, lease, route in `data/secondmates.md`, backlog, held decisions and reports are untouched.
+- It refuses, changing nothing and naming every blocker, while the mate has in-flight work, an unresolved pending reply, an unread steer, or an undelivered handoff wake. Settle those first; never force past them.
+- It refuses a remote secondmate. A remote agent is stopped on another host, so use the remote lifecycle there.
+- While dormant, recovery, the session-start sweep and the watcher never relaunch the mate or wake you about it, and `bin/fm-send.sh` and `bin/fm-backlog-handoff.sh` refuse it by name rather than queue work to a stopped agent. The digest and fleet views list it as dormant.
+- Route new in-scope work by first running `resume`, which launches the mate through the ordinary guarded `fm-spawn.sh --secondmate` path so it syncs, re-propagates inherited material, and reconciles from its own records. Dormancy clears only after that launch succeeds; a failed launch leaves it dormant.
+- Retirement is unchanged: `bin/fm-teardown.sh` retires a dormant mate with the same checks and removes its dormant record.
+
+[`docs/configuration.md`](../../../docs/configuration.md#dormant-secondmate-record) owns the record, and [`bin/fm-secondmate-dormant.sh`'s header](../../../bin/fm-secondmate-dormant.sh) owns the command contract and every path that honors it.
 
 ## Retirement and teardown
 

@@ -294,6 +294,9 @@
 #   --scout records kind=scout in the task's meta (report deliverable, scratch worktree;
 #   see AGENTS.md task lifecycle); --secondmate records kind=secondmate and launches in a
 #   provisioned firstmate home; the default is kind=ship.
+#   A --secondmate spawn or relaunch of a mate stood down by
+#   bin/fm-secondmate-dormant.sh refuses, except when that command's own resume
+#   names the id in FM_SECONDMATE_RESUMING.
 #   Before a secondmate launch, the home is fast-forwarded to the primary's
 #   default-branch commit when safe: directly for a local home, or through the
 #   configured host for a remote home. Skipped syncs warn and launch unchanged.
@@ -790,6 +793,8 @@ fm_backlog_directory_present "$STATE" "state directory" || {
 }
 # shellcheck source=bin/fm-secondmate-nudge-lib.sh
 . "$SCRIPT_DIR/fm-secondmate-nudge-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$SCRIPT_DIR/fm-secondmate-dormant-lib.sh"
 # shellcheck source=bin/fm-backend.sh
 . "$SCRIPT_DIR/fm-backend.sh"
 # shellcheck source=bin/fm-snapshot-env-lib.sh
@@ -2087,6 +2092,18 @@ if [ "$RELAUNCH" -eq 0 ]; then
     fi
   fi
 fi
+# A secondmate stood down by bin/fm-secondmate-dormant.sh is launched only by
+# its own resume command, which names the id in FM_SECONDMATE_RESUMING; every
+# other launch path (the liveness sweep, a hand-run spawn) refuses it.
+spawn_refuse_dormant_secondmate() {
+  fm_sm_dormant_is "$STATE" "$ID" || return 0
+  [ "${FM_SECONDMATE_RESUMING:-}" != "$ID" ] || return 0
+  fm_sm_dormant_refusal "$STATE" "$ID" "refusing to launch it"
+  exit 1
+}
+if [ "$RELAUNCH" -eq 0 ] && [ "$KIND" = secondmate ]; then
+  spawn_refuse_dormant_secondmate
+fi
 SPAWN_TASK_LOCK="$STATE/.spawn-$ID.lock"
 if ! fm_lock_try_acquire "$SPAWN_TASK_LOCK"; then
   echo "error: another spawn is already creating task $ID" >&2
@@ -2169,6 +2186,9 @@ if [ "$RELAUNCH" -eq 1 ]; then
   RELAUNCH_PRIOR_HARNESS=$(fm_meta_get "$RELAUNCH_META" harness)
   KIND=$(fm_meta_get "$RELAUNCH_META" kind)
   [ -n "$KIND" ] || KIND=ship
+  if [ "$KIND" = secondmate ]; then
+    spawn_refuse_dormant_secondmate
+  fi
   # A secondmate whose endpoint is gone already has ONE owner for that
   # recovery: the session-start liveness sweep respawns it with
   # `fm-spawn.sh <id> --secondmate`, which stands its home's own workspace back

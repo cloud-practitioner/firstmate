@@ -90,6 +90,10 @@
 # stage; do not move the marker behind the invocation or omit it here. Follow-up
 # fm-send-secondmate-harness-invocation-r1 owns that behavior.
 #
+# Dormant secondmate: a task selector that resolves to a secondmate stood down by
+# bin/fm-secondmate-dormant.sh is refused before anything is recorded, rung or
+# marked, so no steer is silently queued to a stopped mate.
+#
 # From-firstmate marker: when the resolved target is a task selector whose meta
 # records kind=secondmate, the message uses the live-charter-compatible
 # from-firstmate carrier owned by bin/fm-operational-input.sh so the secondmate
@@ -246,6 +250,8 @@ fi
 . "$SCRIPT_DIR/fm-marker-lib.sh"
 # shellcheck source=bin/fm-pending-reply-lib.sh
 . "$SCRIPT_DIR/fm-pending-reply-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$SCRIPT_DIR/fm-secondmate-dormant-lib.sh"
 # shellcheck source=bin/fm-classify-lib.sh
 . "$SCRIPT_DIR/fm-classify-lib.sh"
 # shellcheck source=bin/fm-line-cap-lib.sh
@@ -540,6 +546,12 @@ fm_send_known_undelivered_cleanup() {
 if [ -n "$TARGET_SELECTOR" ] && [ -n "$TARGET_META" ] && [ "$(fm_meta_get "$TARGET_META" kind)" = secondmate ]; then
   MARK_FROM_FIRSTMATE=1
   TARGET_TASK_ID=$(fm_send_id_from_meta "$TARGET_META")
+  # A stood-down mate has no agent to read a steer, so nothing is queued to it
+  # and no reply expectation is armed (bin/fm-secondmate-dormant.sh resume).
+  if fm_sm_dormant_is "$STATE" "$TARGET_TASK_ID"; then
+    fm_sm_dormant_refusal "$STATE" "$TARGET_TASK_ID" "nothing was sent or queued"
+    exit 1
+  fi
 fi
 
 # Validate the answerer-closes request before any durable mutation or send: the

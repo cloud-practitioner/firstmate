@@ -3244,6 +3244,37 @@ test_secondmate_liveness_tick_leaves_alive_and_inconclusive_untouched() {
   pass "watch liveness: alive and ambiguous endpoints are probed, logged, and never touched"
 }
 
+# A secondmate stood down by bin/fm-secondmate-dormant.sh reads as a stopped agent
+# on a bare shell - the very evidence that relaunches an ordinary mate - yet the
+# watcher must leave it stopped, queue no wake, and leave no triage noise.
+test_secondmate_liveness_tick_skips_a_dormant_mate() {
+  local dir state pid
+  dir=$(make_secondmate_liveness_case liveness-dormant)
+  state="$dir/state"
+  printf 'schema=fm-secondmate-dormant.v1\nid=sm1\nsince=1700000000\nreason=idle\n' > "$state/sm1.dormant"
+
+  run_liveness_leg "$dir" dormant FM_FAKE_TMUX_CURRENT_COMMAND=zsh; pid=$LIVENESS_PID
+  sleep 4
+  is_live_non_zombie "$pid" \
+    || fail "the watcher exited against a dormant secondmate: $(cat "$dir/watch-dormant.out" "$dir/watch-dormant.err")"
+  kill_liveness_leg "$pid"
+  [ ! -s "$dir/tmux.log" ] || fail "a dormant secondmate was killed or relaunched: $(cat "$dir/tmux.log")"
+  [ ! -s "$state/.wake-queue" ] || fail "a dormant secondmate queued a wake: $(cat "$state/.wake-queue")"
+  [ ! -e "$state/.secondmate-relaunch-sm1" ] || fail "a dormant secondmate was ledgered"
+  [ -e "$state/.secondmate-liveness-tick" ] || fail "the liveness tick did not run its cadence"
+  if grep -F 'sm1' "$state/.watch-triage.log" 2>/dev/null | grep -F 'liveness' >/dev/null; then
+    fail "a dormant secondmate left liveness triage noise: $(cat "$state/.watch-triage.log")"
+  fi
+
+  # The same fixture without the record is relaunched, so the skip is the record's doing.
+  rm -f "$state/sm1.dormant" "$state/.secondmate-liveness-tick"
+  drain_liveness_wakes "$dir"
+  run_liveness_leg "$dir" cleared FM_FAKE_TMUX_CURRENT_COMMAND=zsh; pid=$LIVENESS_PID
+  wait_for_exit "$pid" 300 || fail "the watcher did not relaunch the mate once dormancy was cleared"
+  assert_contains "$(cat "$dir/tmux.log")" "new-window" "a mate with no record is relaunched as before"
+  pass "watch liveness: a dormant secondmate is never relaunched, woken for, or logged as dead"
+}
+
 test_secondmate_liveness_tick_cadence_gates_the_probe() {
   local dir state pid
   dir=$(make_secondmate_liveness_case liveness-cadence)
@@ -3574,6 +3605,7 @@ test_secondmate_liveness_tick_relaunches_dead_endpoint_once
 test_secondmate_liveness_tick_relaunches_missing_endpoint
 test_secondmate_liveness_tick_relaunches_every_dead_mate_before_waking
 test_secondmate_liveness_tick_leaves_alive_and_inconclusive_untouched
+test_secondmate_liveness_tick_skips_a_dormant_mate
 test_secondmate_liveness_tick_cadence_gates_the_probe
 test_secondmate_liveness_tick_attempt_bound_parks_then_rearm_on_alive
 test_secondmate_liveness_tick_relaunch_failure_reports_once

@@ -61,6 +61,8 @@ FM_SM_LIVE_LIB_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 . "$FM_SM_LIVE_LIB_DIR/fm-remote-readiness-lib.sh"
 # shellcheck source=bin/fm-timeout-lib.sh
 . "$FM_SM_LIVE_LIB_DIR/fm-timeout-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$FM_SM_LIVE_LIB_DIR/fm-secondmate-dormant-lib.sh"
 
 # Per-task probe+kill+relaunch serialization. A busy lock means another
 # supervisor (the other sweep, or a racing tick) is mid-episode on this mate;
@@ -116,9 +118,11 @@ fm_secondmate_liveness_recent_attempts() {  # <id> <window-secs>
 
 # fm_secondmate_liveness_probe <meta> <id> <full|poll>
 #
-# Read-only probe of one registered secondmate's recorded endpoint. Populates:
+# Read-only probe of one registered secondmate's recorded endpoint, or the
+# `dormant` verdict with no endpoint read at all when the mate is stood down in
+# this home. Populates:
 #
-#   FM_SM_LIVE_STATUS  silent | alive | relaunchable | skipped
+#   FM_SM_LIVE_STATUS  silent | alive | relaunchable | skipped | dormant
 #   FM_SM_LIVE_STATE   the raw classifier/state word
 #   FM_SM_LIVE_KILL    1 when relaunch must first kill a confirmed-dead local
 #                      endpoint (its shell husk occupies the name)
@@ -133,6 +137,18 @@ fm_secondmate_liveness_recent_attempts() {  # <id> <window-secs>
 # The caller must hold fm_secondmate_liveness_lock for <id> whenever a
 # relaunchable verdict could be acted on.
 fm_secondmate_liveness_probe() {  # <meta> <id> <full|poll>
+  if fm_sm_dormant_is "$STATE" "$2"; then
+    FM_SM_LIVE_STATUS=dormant FM_SM_LIVE_STATE=dormant FM_SM_LIVE_KILL=0
+    FM_SM_LIVE_CAUSE='' FM_SM_LIVE_WHERE='' FM_SM_LIVE_LINE=''
+    FM_SM_LIVE_REASON=$(fm_sm_dormant_describe "$STATE" "$2")
+    return 0
+  fi
+  fm_secondmate_liveness_probe_endpoint "$@"
+}
+
+# The endpoint read itself, with no dormancy check: the same contract and
+# globals as fm_secondmate_liveness_probe for every verdict but `dormant`.
+fm_secondmate_liveness_probe_endpoint() {  # <meta> <id> <full|poll>
   local meta=$1 id=$2 mode=$3
   FM_SM_LIVE_STATUS=skipped FM_SM_LIVE_STATE=unknown FM_SM_LIVE_KILL=0
   FM_SM_LIVE_CAUSE='' FM_SM_LIVE_WHERE='' FM_SM_LIVE_REASON='' FM_SM_LIVE_LINE=''
@@ -272,6 +288,14 @@ fm_secondmate_liveness_probe() {  # <meta> <id> <full|poll>
 fm_secondmate_liveness_relaunch() {  # <meta> <id> [timeout-secs]
   local meta=$1 id=$2 timeout=${3:-} relaunch_lock wait_seconds rc=0
   FM_SM_LIVE_OUT='' FM_SM_LIVE_RC=0
+  # Defense in depth behind the probe's `dormant` verdict: a stood-down mate is
+  # relaunched only by the resume command that names it.
+  if fm_sm_dormant_is "$STATE" "$id" && [ "${FM_SECONDMATE_RESUMING:-}" != "$id" ]; then
+    FM_SM_LIVE_STATUS=skipped
+    FM_SM_LIVE_REASON="secondmate $id is dormant; only bin/fm-secondmate-dormant.sh resume relaunches it"
+    FM_SM_LIVE_RC=1
+    return 1
+  fi
   if ! fm_secondmate_liveness_recent_attempts "$id" 0 >/dev/null; then
     FM_SM_LIVE_STATUS=skipped
     FM_SM_LIVE_REASON="relaunch ledger $STATE/.secondmate-relaunch-$id is unreadable; endpoint left $FM_SM_LIVE_STATE"

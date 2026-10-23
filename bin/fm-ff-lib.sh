@@ -40,6 +40,8 @@
 SUB_HOME_MARKER="${SUB_HOME_MARKER:-.fm-secondmate-home}"
 # shellcheck source=bin/fm-secondmate-registry-lib.sh
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/fm-secondmate-registry-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/fm-secondmate-dormant-lib.sh"
 
 # --- helpers ---------------------------------------------------------------
 
@@ -346,6 +348,9 @@ divergence_is_redundant() { # <dir> <local-commit> <target-commit>
 # The meta file is the liveness signal; data/secondmates.md is only the fallback
 # for durable fields such as home= when an older/incomplete meta lacks them.
 # Output is pipe-delimited: id|home|window|meta-file.
+# A secondmate stood down by bin/fm-secondmate-dormant.sh is not live and is
+# left out, so no nudge, reread or inheritance push is aimed at a stopped agent;
+# its resume launch re-syncs and re-propagates the home before the agent starts.
 live_secondmate_meta_records() {
   local state=$1 registry=${2:-} meta id home window
   [ -d "$state" ] || return 0
@@ -353,6 +358,7 @@ live_secondmate_meta_records() {
     [ -f "$meta" ] || continue
     grep -q '^kind=secondmate$' "$meta" 2>/dev/null || continue
     id=$(basename "$meta" .meta)
+    ! fm_sm_dormant_is "$state" "$id" || continue
     home=$(grep '^home=' "$meta" 2>/dev/null | tail -1 | cut -d= -f2- || true)
     if [ -z "$home" ] && [ -n "$registry" ]; then
       home=$(secondmate_registry_field "$registry" "$id" home || true)

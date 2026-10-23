@@ -383,6 +383,23 @@ test_unprovable_runtime_falls_back() {
   pass "T3 a runtime that cannot prove a restart falls back to the re-read message"
 }
 
+# --- a dormant mate has no agent to replace or to nudge ------------------------
+test_dormant_mate_is_neither_restarted_nor_nudged() {
+  local dir out rc
+  dir=$(new_case dormant)
+  add_local_mate "$dir" sm1
+  printf 'schema=fm-secondmate-dormant.v1\nid=sm1\nsince=1700000000\nreason=idle\n' > "$dir/home/state/sm1.dormant"
+
+  out=$(run_restart "$dir" sm1); rc=$?
+
+  expect_code 3 "$rc" "a dormant mate must not be reported as reloaded"$'\n'"$out"
+  assert_not_contains "$out" "restarted: sm1" "a dormant mate must not be reported restarted"
+  assert_contains "$out" "is dormant" "the report must say why the mate was not reached"
+  [ ! -d "$dir/home/state/sm1.inbox" ] || [ -z "$(find "$dir/home/state/sm1.inbox" -name '*.msg' 2>/dev/null)" ] \
+    || fail "a steer was queued to a stopped mate"
+  pass "a dormant mate is neither restarted nor nudged, and is accounted for as unreached"
+}
+
 # --- T4: a mate with no durable record in this home --------------------------
 test_unknown_mate_is_accounted_for() {
   local dir out rc
@@ -932,6 +949,7 @@ test_arrived_answer_precedes_deadline_check
 test_answer_between_resolution_and_timeout_wins
 test_unprovable_runtime_falls_back
 test_unknown_mate_is_accounted_for
+test_dormant_mate_is_neither_restarted_nor_nudged
 test_refused_restart_falls_back_without_claiming_a_reload
 test_local_restart_uses_the_home_pin_and_reports_what_ran
 test_native_ultra_restart_keeps_local_and_remote_profiles

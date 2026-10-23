@@ -455,6 +455,35 @@ test_bootstrap_sweep_nudges_only_instruction_change() {
   pass "T8 bootstrap sweeps live homes and sends exactly one marked nudge for the instruction change"
 }
 
+# A stood-down secondmate (bin/fm-secondmate-dormant.sh) is not a live direct
+# report: the shared live-record enumeration leaves it out, so the bootstrap
+# convergence sweep neither fast-forwards its home, nor nudges, nor pushes config
+# at an agent that is not running. Its resume launch syncs the home instead.
+test_bootstrap_sweep_leaves_a_dormant_secondmate_alone() {
+  local w c1 fakebin out log recs
+  w=$(new_world boot-sweep-dormant)
+  c1=$(head_of "$w/main")
+  add_sm_worktree "$w" sm-instr "$c1"        # behind by an instruction change
+  add_sm_worktree "$w" sm-dormant "$c1"      # equally behind, but stood down
+  bump_primary "$w" instr
+  printf 'schema=fm-secondmate-dormant.v1\nid=sm-dormant\nsince=1700000000\nreason=idle\n' > "$w/home/state/sm-dormant.dormant"
+
+  recs=$(bash -c '. "$0/bin/fm-ff-lib.sh"; live_secondmate_meta_records "$1"' "$ROOT" "$w/home/state" | cut -d'|' -f1 | sort | tr '\n' ' ')
+  [ "$recs" = "sm-instr " ] || fail "live records must exclude a dormant mate, got: $recs"
+
+  fakebin=$(make_fake_toolchain "$w")
+  log="$w/tmux.log"
+  out=$(PATH="$fakebin:$BASE_PATH" FM_HOME="$w/home" FM_ROOT_OVERRIDE="$w/main" \
+    FM_SEND_SETTLE=0 FM_FAKE_TMUX_LOG="$log" \
+    "$ROOT/bin/fm-bootstrap.sh" 2>/dev/null)
+
+  assert_contains "$out" "nudged fm-sm-instr " "the live mate is still swept and nudged"
+  assert_not_contains "$out" "sm-dormant" "a dormant mate must not be reported or nudged"
+  [ "$(head_of "$w/sm-dormant")" = "$c1" ] || fail "a dormant mate's home was fast-forwarded by the sweep"
+  [ ! -e "$w/home/state/sm-dormant.inbox" ] || fail "a dormant mate was sent a steer"
+  pass "bootstrap convergence skips a dormant secondmate: no sync, no nudge, no steer"
+}
+
 test_bootstrap_nudge_send_uses_state_override() {
   local w c1 fakebin out log override_state marker
   w=$(new_world nudge-state-override)
@@ -1435,6 +1464,7 @@ test_ff_inflight_feature_branch
 test_no_fetch_in_local_path
 test_sweep_nudge_requires_instruction_change
 test_bootstrap_sweep_nudges_only_instruction_change
+test_bootstrap_sweep_leaves_a_dormant_secondmate_alone
 test_bootstrap_nudge_send_uses_state_override
 test_bootstrap_nudge_retry_rejects_malformed_marker_id
 test_bootstrap_nudge_failure_records_retry_marker

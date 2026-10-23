@@ -374,6 +374,24 @@ test_the_ask_never_arms_a_reply_expectation_or_a_re_ring() {
   pass "the reconcile ask expects no reply and stays out of a ladder that still rings ordinary steers"
 }
 
+test_a_dormant_mate_is_never_asked_to_reconcile() {
+  local home mate fakebin snap out
+  { read -r home; read -r mate; read -r fakebin; } < <(make_main_home dormant mate)
+  snap="$home/snapshot.json"
+  write_snapshot "$snap" mate '{"kind":"orphan_in_flight","ids":["ghost"]}'
+  printf 'schema=fm-secondmate-dormant.v1\nid=mate\nsince=1700000000\nreason=idle\n' > "$home/state/mate.dormant"
+
+  out=$(run_notify "$home" "$fakebin" dormant "$snap") || fail "notify failed on a dormant mate: $out"
+  assert_contains "$out" "skipped: mate dormant" "a dormant mate must be reported as skipped: $out"
+  [ "$(inbox_records "$home/state" mate)" -eq 0 ] || fail "a stood-down mate was sent a steer it cannot read"
+  [ ! -e "$home/state/mate.reconcile-nudged" ] || fail "a skipped dormant mate must not start a cooldown"
+
+  rm -f "$home/state/mate.dormant"
+  out=$(run_notify "$home" "$fakebin" dormant "$snap") || fail "notify failed after resume: $out"
+  assert_contains "$out" "sent: mate orphan_in_flight" "the mate is asked again once dormancy is cleared: $out"
+  pass "a dormant mate is skipped by the reconcile ask, with no cooldown spent"
+}
+
 test_a_readable_home_without_a_mismatch_is_never_asked() {
   local home mate fakebin snap out
   { read -r home; read -r mate; read -r fakebin; } < <(make_main_home quiet mate)
@@ -995,6 +1013,7 @@ test_the_cooldown_starts_when_delivery_finishes
 test_the_window_is_four_hours
 test_each_home_carries_its_own_cooldown
 test_the_ask_never_arms_a_reply_expectation_or_a_re_ring
+test_a_dormant_mate_is_never_asked_to_reconcile
 test_a_readable_home_without_a_mismatch_is_never_asked
 test_the_parent_never_changes_the_mates_own_files
 test_a_failed_send_is_retried_on_the_next_run

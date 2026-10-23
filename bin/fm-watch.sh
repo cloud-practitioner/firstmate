@@ -987,6 +987,8 @@ secondmate_wake_stall_tick() {
     task=${meta##*/}
     task=${task%.meta}
     case "$task" in ''|*[!A-Za-z0-9._-]*) continue ;; esac
+    # A stood-down mate runs no wake loop on purpose (bin/fm-secondmate-dormant.sh).
+    ! fm_sm_dormant_is "$STATE" "$task" || continue
     home=$(fm_meta_get "$meta" home)
     [ -n "$home" ] || continue
     [ -f "$home/.fm-secondmate-home" ] && [ ! -L "$home/.fm-secondmate-home" ] || continue
@@ -1138,6 +1140,9 @@ secondmate_liveness_tick() {
         ;;
       skipped)
         triage_log "secondmate $id liveness: $FM_SM_LIVE_REASON"
+        ;;
+      dormant)
+        # Stood down on purpose: no relaunch, no wake, no triage noise.
         ;;
     esac
     if [ -n "$reason" ]; then
@@ -3301,6 +3306,11 @@ EOF
   while IFS= read -r w; do
     kind=$(window_kind "$w")
     task=$(window_to_task "$w" "$STATE")
+    # A stood-down secondmate is stopped on purpose, so its pane, inbox and
+    # declared waits are not the watcher's concern (bin/fm-secondmate-dormant.sh).
+    if [ "$kind" = secondmate ] && [ -n "$task" ] && fm_sm_dormant_is "$STATE" "$task"; then
+      continue
+    fi
     # Steering-inbox loss detection runs before the secondmate stale
     # exemption below, because a mate's steers land in an inbox too.
     [ -z "$task" ] || inbox_steer_check "$w" "$task"

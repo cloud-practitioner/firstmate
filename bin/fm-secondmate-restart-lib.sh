@@ -27,6 +27,8 @@ _FM_SECONDMATE_RESTART_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$_FM_SECONDMATE_RESTART_LIB_DIR/fm-backend.sh"
 # shellcheck source=bin/fm-control-lib.sh disable=SC1091
 . "$_FM_SECONDMATE_RESTART_LIB_DIR/fm-control-lib.sh"
+# shellcheck source=bin/fm-secondmate-dormant-lib.sh disable=SC1091
+. "$_FM_SECONDMATE_RESTART_LIB_DIR/fm-secondmate-dormant-lib.sh"
 
 # The persist request the primary sends before it restarts anything. It is the
 # open-record half of /stow and nothing more: a restart needs the state of work
@@ -64,6 +66,10 @@ fm_secondmate_restart_capable() {  # <meta-file>
   kind=$(fm_meta_get "$meta" kind)
   if [ "$kind" != secondmate ]; then
     FM_SECONDMATE_RESTART_REASON="the durable record is not a second mate's"
+    return 1
+  fi
+  if fm_sm_dormant_is "$(dirname "$meta")" "$(basename "$meta" .meta)"; then
+    FM_SECONDMATE_RESTART_REASON="it is dormant, so there is no agent to replace (bin/fm-secondmate-dormant.sh resume brings it back)"
     return 1
   fi
   window=$(fm_meta_get "$meta" window)

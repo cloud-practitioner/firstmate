@@ -460,6 +460,7 @@ MODEL=$(printf '%s' "$SNAP" | jq \
   | ([.tasks[] | select(.kind != "secondmate" and .current_state.state == "working") | .id]) as $working_ids
   | ($live_ids + $done_ids) as $rel_ids
   | ([ .tasks[]
+       | select(.dormant == null)
        | select(.endpoint.exists == false or .endpoint.agent_alive == "dead")
        | {id, backend, target:(.endpoint.target // "-"), exists:.endpoint.exists, agent:.endpoint.agent_alive} ]
      + [ (.secondmate_current.records // [])[] as $m | $m.endpoints[]?
