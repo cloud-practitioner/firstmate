@@ -34,9 +34,11 @@ put_pr() {
     "$STUB/_admin/pr" >/dev/null || fail 'could not seed the local PR state'
 }
 write_task() {
-  fm_write_meta "$TMP_ROOT/home/state/$1.meta" "kind=ship" "mode=no-mistakes" \
-    "project=$TMP_ROOT/proj" "pr=$2" "${3:-window=fm-$1}"
-  chmod 0600 "$TMP_ROOT/home/state/$1.meta"
+  local id=$1 url=$2
+  shift 2
+  fm_write_meta "$TMP_ROOT/home/state/$id.meta" "kind=ship" "mode=no-mistakes" \
+    "project=$TMP_ROOT/proj" "window=fm-$id" "$@" "pr=$url"
+  chmod 0600 "$TMP_ROOT/home/state/$id.meta"
 }
 evidence() {
   PATH="$FIX:$PATH" FM_HOME="$TMP_ROOT/home" FM_STATE_OVERRIDE="$TMP_ROOT/home/state" \
@@ -95,8 +97,8 @@ pass 'fm-pr-evidence: retrofit listing reads current GitHub and Bitbucket states
 rm "$TMP_ROOT/home/state/zz-unreadable.meta"
 
 printf 'proj ui components/*.jsx\n' >> "$TMP_ROOT/home/config/pr-evidence"
-write_task capped https://github.com/o/r/pull/301 evidence=none
-printf 'evidence_reason=Only a comment changed in the file.\n' >> "$TMP_ROOT/home/state/capped.meta"
+write_task capped https://github.com/o/r/pull/301 evidence=none \
+  'evidence_reason=Only a comment changed in the file.'
 printf '{"items":[]}\n' > "$TMP_ROOT/items.json"
 jq -n '{key:"o/r/301",head:"0123456789abcdef0123456789abcdef01234567",files:([range(3000) | "docs/" + tostring + ".md"] + ["components/Button.jsx"])}' \
   | curl -fsS -X POST --data-binary @- "$STUB/_admin/pr" >/dev/null || fail 'could not seed the truncated collection'

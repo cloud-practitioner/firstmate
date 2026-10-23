@@ -41,8 +41,9 @@
 #    "none_reason":null}
 # For a none declaration, use {"items":[],"none_reason":"<plain-English reason>"}.
 # Omitting none_reason reuses the task's intake reason.
-# Annotation commands save <png>.annotation.json beside each image; keep it with
-# the image so publish can validate and record the drawn purpose and labels.
+# Each image requires the <png>.annotation.json companion saved beside it by an
+# annotation command. Keep both files together for publish; the operator contract
+# in docs/configuration.md "PR evidence gate" owns the record validation rules.
 #
 # Config: docs/configuration.md "PR evidence gate" owns config/pr-evidence.
 # The helper bin/fm-pr-evidence-lib.py holds the pure parts: the plain-English

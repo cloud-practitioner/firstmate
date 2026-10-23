@@ -156,11 +156,12 @@ comments_json() {
 
 # tamper <python-statement-on-m>: edit the newest comment's manifest in place.
 tamper() {
-  local state
-  state=$(curl -sS -X POST "$STUB/_admin/state")
-  STATE_JSON=$state PRKEY=$PRKEY STUB=$STUB python3 - "$1" <<'PY'
+  # Read the growing forge state over HTTP, not through a size-limited env value.
+  PRKEY=$PRKEY STUB=$STUB python3 - "$1" <<'PY'
 import json, os, re, sys, urllib.request
-state = json.loads(os.environ["STATE_JSON"])
+req = urllib.request.Request(os.environ["STUB"] + "/_admin/state", data=b"")
+with urllib.request.urlopen(req) as response:
+    state = json.load(response)
 c = state["comments"][os.environ["PRKEY"]][-1]
 m_re = re.compile(r"(```fm-pr-evidence-v1\n)(.*?)(\n```)", re.S)
 mo = m_re.search(c["body"])
