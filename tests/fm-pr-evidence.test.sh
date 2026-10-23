@@ -70,6 +70,10 @@ new_case() {
   git -C "$C/proj" init -q
   git -C "$C/proj" commit -q --allow-empty -m "fixture $name"
   git -C "$C/proj" remote add origin https://github.com/o/r.git
+  # A readable code-root history lets the publication gate tell this project is not firstmate itself.
+  mkdir -p "$C/root"
+  git -C "$C/root" init -q
+  git -C "$C/root" commit -q --allow-empty -m "code root fixture $name"
   if [ "$#" -gt 0 ]; then printf '%s\n' "$@" > "$C/home/config/pr-evidence"; else echo '* enforce' > "$C/home/config/pr-evidence"; fi
   PRN=$((PRN + 1))
   PRKEY="o/r/$PRN"
