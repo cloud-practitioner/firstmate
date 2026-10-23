@@ -572,14 +572,24 @@ NL_SEP=$'\n'
 # named section, comments stripped. Prints "<key> <value>" lines.
 captain_toml_section_entries() {  # <toml-file> <section> <key-alternation>
   [ -f "$1" ] || return 0
-  LC_ALL=C awk -v section="[$2]" -v keys="^($3)[[:space:]]*=" '
+  LC_ALL=C awk -v section="$2" -v keys="^($3)[[:space:]]*=" '
     function trim(v) { sub(/^[[:space:]]+/, "", v); sub(/[[:space:]]+$/, "", v); return v }
+    # A "#" inside a quoted value is data, not a comment.
+    function uncomment(v,   i, c, quote, out) {
+      quote = ""; out = ""
+      for (i = 1; i <= length(v); i++) {
+        c = substr(v, i, 1)
+        if (quote != "") { if (c == quote) quote = "" }
+        else if (c == "\"" || c == "\047") quote = c
+        else if (c == "#") break
+        out = out c
+      }
+      return out
+    }
     BEGIN { insection = 0 }
     {
-      line = $0
-      sub(/[[:space:]]*#.*/, "", line)
-      line = trim(line)
-      if (line ~ /^\[[^]]+\]$/) { insection = (line == section); next }
+      line = trim(uncomment($0))
+      if (line ~ /^\[[^]]+\]$/) { insection = (trim(substr(line, 2, length(line) - 2)) == section); next }
       if (!insection) next
       if (line ~ keys) {
         key = line
