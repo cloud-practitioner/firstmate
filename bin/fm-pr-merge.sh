@@ -69,9 +69,10 @@
 # own view still proves a landed merge, and every outcome it cannot prove
 # refuses, reporting the failed gh read and naming both failed reads when the
 # gh-axi view could not prove the outcome either.
-# If the pull request remains open and the base branch has an effective
-# merge_queue rule, an attended refusal names the queue's configured merge
-# method and exact --attended-override -- --auto --<method> retry flags. While
+# When the evidence policy linked above permits queued merging, if the pull
+# request remains open and the base branch has an effective merge_queue rule,
+# an attended refusal names the queue's configured merge method and exact
+# --attended-override -- --auto --<method> retry flags. While
 # the away-posture record exists, asynchronous merge requests are refused and
 # queue retry flags are not offered because they would outlive away authority.
 # An attended caller that already passed the configured method with --auto is
