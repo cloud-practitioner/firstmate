@@ -460,25 +460,25 @@ test_none_still_posts_a_visible_reason() {
 test_plain_english_refuse_and_warn() {
   local out rc
   new_case ste
-  out=$(python3 "$LIB" ste --no-vocab --text "The Save button stays grey after you type a name. You cannot save the form."); rc=$?
+  out=$(python3 "$LIB" ste --text "The Save button stays grey after you type a name. You cannot save the form."); rc=$?
   expect_code 0 "$rc" "plain text passes"
-  out=$(python3 "$LIB" ste --no-vocab --text "The tool wasn't shown; it's seamless, e.g. robust — and long."); rc=$?
+  out=$(python3 "$LIB" ste --text "The tool wasn't shown; it's seamless, e.g. robust — and long."); rc=$?
   expect_code 1 "$rc" "refuse rules"
   assert_contains "$out" "semicolon" "semicolon refused"
   assert_contains "$out" "contraction 'wasn't'" "contraction refused"
   assert_contains "$out" "abbreviation 'e.g.'" "abbreviation refused"
   assert_contains "$out" "long dash" "em dash refused"
   assert_contains "$out" "banned word 'seamless'" "banned word refused"
-  out=$(python3 "$LIB" ste --no-vocab --text ""); rc=$?
+  out=$(python3 "$LIB" ste --text ""); rc=$?
   expect_code 1 "$rc" "empty text"
-  out=$(python3 "$LIB" ste --no-vocab --text "$(printf 'word %.0s' $(seq 1 30)).");  rc=$?
+  out=$(python3 "$LIB" ste --text "$(printf 'word %.0s' $(seq 1 30)).");  rc=$?
   expect_code 1 "$rc" "a sentence over 25 words"
   assert_contains "$out" "maximum 25" "sentence length refused"
-  out=$(python3 "$LIB" ste --no-vocab --text "One. Two. Three. Four."); rc=$?
+  out=$(python3 "$LIB" ste --text "One. Two. Three. Four."); rc=$?
   assert_contains "$out" "sentences (maximum 3)" "too many sentences refused"
-  out=$(python3 "$LIB" ste --no-vocab --banned "frobnicate" --text "We frobnicate the file."); rc=$?
-  expect_code 1 "$rc" "a configured banned word"
-  out=$(python3 "$LIB" ste --no-vocab --text "The error was caused by a bad value. The job is running and it has finished."); rc=$?
+  out=$(python3 "$LIB" ste --banned "frobnicate" --text "We frobnicate the file." 2>&1); rc=$?
+  expect_code 2 "$rc" "the removed banned-word override must be refused"
+  out=$(python3 "$LIB" ste --text "The error was caused by a bad value. The job is running and it has finished."); rc=$?
   expect_code 0 "$rc" "warnings do not refuse"
   assert_contains "$out" "[WARN] plain-English note (purpose): passive voice" "passive voice warns"
   assert_contains "$out" "progressive tense" "progressive tense warns"

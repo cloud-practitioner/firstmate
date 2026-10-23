@@ -115,18 +115,16 @@ meta_get() {  # <meta-file> <key>
   grep "^$2=" "$1" 2>/dev/null | tail -1 | cut -d= -f2- || true
 }
 
-# Sets CFG_JSON, CFG_ENABLED, CFG_REQUIRE, CFG_BITBUCKET, CFG_BANNED for a project.
+# Sets CFG_JSON, CFG_ENABLED, CFG_REQUIRE, CFG_BITBUCKET for a project.
 CFG_JSON='{}'
 CFG_ENABLED=0
 CFG_REQUIRE=0
 CFG_BITBUCKET=0
-CFG_BANNED=
 load_config() {  # <project>
   CFG_JSON='{}'
   CFG_ENABLED=0
   CFG_REQUIRE=0
   CFG_BITBUCKET=0
-  CFG_BANNED=
   [ -e "$CONFIG_FILE" ] || [ -L "$CONFIG_FILE" ] || return 0
   if [ ! -f "$CONFIG_FILE" ]; then
     fail_line "configuration cannot be read: config/pr-evidence is not a regular file" "replace $CONFIG_FILE with a readable configuration file"
@@ -142,7 +140,6 @@ load_config() {  # <project>
   [ "$(printf '%s' "$CFG_JSON" | jq -r .enabled)" != true ] || CFG_ENABLED=1
   [ "$(printf '%s' "$CFG_JSON" | jq -r .require)" != true ] || CFG_REQUIRE=1
   [ "$(printf '%s' "$CFG_JSON" | jq -r .bitbucket)" != true ] || CFG_BITBUCKET=1
-  CFG_BANNED=$(printf '%s' "$CFG_JSON" | jq -r '.banned | join(",")')
 }
 
 # A project that always needs evidence: a `require` line, or the firstmate repository.
@@ -262,7 +259,7 @@ cmd_intake() {
         return 1
       fi
       need_tools || return 1
-      python3 "$LIB_PY" ste --kind purpose --text "$reason" --banned "$CFG_BANNED" --no-vocab >&2 || return 1
+      python3 "$LIB_PY" ste --kind purpose --text "$reason" >&2 || return 1
       printf 'evidence=none\nevidence_reason=%s\n' "$(printf '%s' "$reason" | tr '\n' ' ')"
       ;;
     *)
@@ -310,11 +307,22 @@ read_github() {  # <owner/repo> <number>
   }
   PR_HEAD=$(printf '%s' "$pr" | jq -r '.head.sha // empty')
   PR_AUTHORS_JSON=$(printf '%s' "$pr" | jq -c '[.user.login] | map(select(. != null and . != ""))')
-  if ! files=$("$GH" api --paginate --slurp "repos/$path/pulls/$number/files?per_page=100" 2>/dev/null) \
-    || ! PR_FILES_JSON=$(printf '%s' "$files" | jq -c '[.[][] | .filename, .previous_filename | select(. != null)] | unique'); then
+  if ! files=$("$GH" api --paginate --slurp "repos/$path/pulls/$number/files?per_page=100" 2>/dev/null); then
     fail_line "the changed files of the PR cannot be read" "check that gh is logged in"
     return 1
   fi
+  if ! printf '%s' "$files" | jq -e --argjson pr "$pr" '
+    $pr.changed_files as $expected
+    | if ($expected | type) != "number" or $expected < 0 or ($expected | floor) != $expected then false
+      else [.[] | if type == "array" then .[] else error("invalid file page") end
+                | if type == "object" then . else error("invalid file entry") end]
+           | length == $expected
+      end' >/dev/null 2>&1; then
+    fail_line "the GitHub changed-file collection is incomplete or does not match changed_files" \
+      "read the complete file collection or split the PR, then run the command again"
+    return 1
+  fi
+  PR_FILES_JSON=$(printf '%s' "$files" | jq -c '[.[][] | .filename, .previous_filename | select(. != null)] | unique') || return 1
   if ! comments=$("$GH" api --paginate --slurp -H 'Accept: application/vnd.github.full+json' \
     "repos/$path/issues/$number/comments?per_page=100" 2>/dev/null) \
     || ! PR_COMMENTS_JSON=$(printf '%s' "$comments" | jq -c '[.[][] | {id: (.id | tostring), author: .user.login, body: .body, html: .body_html, updated: .updated_at}]'); then
@@ -411,8 +419,7 @@ cmd_check() {
   evidence=$(python3 "$LIB_PY" effective --declared "$evidence" --comments "$WORK/comments.json" --authors "$PR_AUTHORS_JSON") || return 1
   jq -n --arg declared "$evidence" --arg reason "$reason" --argjson require "$require" \
     --argjson globs "$(printf '%s' "$CFG_JSON" | jq -c .globs)" \
-    --argjson banned "$(printf '%s' "$CFG_JSON" | jq -c .banned)" \
-    '{declared: $declared, none_reason: $reason, require: $require, globs: $globs, banned: $banned}' \
+    '{declared: $declared, none_reason: $reason, require: $require, globs: $globs}' \
     > "$WORK/rules.json"
   rc=0
   python3 "$LIB_PY" verify --work "$WORK" >&2 || rc=$?
@@ -485,7 +492,7 @@ cmd_publish() {
   printf '%s\n' "$PR_COMMENTS_JSON" > "$WORK/comments.json"
   evidence=$(python3 "$LIB_PY" effective --declared "$evidence" --comments "$WORK/comments.json" --authors "$PR_AUTHORS_JSON") || return 1
   python3 "$LIB_PY" compose --items "$items" --head "$PR_HEAD" --declared "$evidence" \
-    --provider "$FM_PR_PROVIDER" --repo "$FM_PR_PATH" --number "$FM_PR_NUMBER" --banned "$CFG_BANNED" \
+    --provider "$FM_PR_PROVIDER" --repo "$FM_PR_PATH" --number "$FM_PR_NUMBER" \
     --out "$WORK" "${compose_extra[@]+"${compose_extra[@]}"}" >&2 || return 1
   if [ "$FM_PR_PROVIDER" = github ]; then
     while IFS=$'\t' read -r path alt name; do
@@ -556,7 +563,7 @@ cmd_capture_ui() {
   WORK=$(mktemp -d) || return 1
   raw="$WORK/raw"
   "$@" > "$raw" 2>&1 || rc=$?
-  python3 "$LIB_PY" capture-text --raw "$raw" --command "$*" --rc "$rc" --out "$out"
+  python3 "$LIB_PY" capture-text --raw "$raw" --rc "$rc" --out "$out" --command "$@"
 }
 
 cmd_capture_api() {

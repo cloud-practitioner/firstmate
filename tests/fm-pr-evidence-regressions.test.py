@@ -6,6 +6,7 @@ import importlib.util
 import io
 import json
 import os
+import shlex
 from pathlib import Path
 import tempfile
 import unittest
@@ -68,7 +69,7 @@ class EvidenceRegressions(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             raw, out = Path(tmp) / "raw", Path(tmp) / "out"
             raw.write_text(samples[2])
-            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=samples[1], rc=0))
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=shlex.split(samples[1]), rc=0))
             self.assertNotIn("correct-horse", out.read_text())
             self.assertNotIn("short-secret", out.read_text())
             self.assertIn("exit status 0", out.read_text())
@@ -105,7 +106,7 @@ class EvidenceRegressions(unittest.TestCase):
             tmp = Path(tmp)
             raw, out = tmp / 'raw', tmp / 'captured'
             raw.write_text('\n'.join(headers) + '\npublic text\n')
-            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command='curl -H "' + headers[0] + '"', rc=0))
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=['curl', '-H', headers[0]], rc=0))
             self.assertNotIn(credential, out.read_text())
             self.assertIn('public text', out.read_text())
             def render(lines, marked, labels, purpose, path):
@@ -128,6 +129,81 @@ class EvidenceRegressions(unittest.TestCase):
             result = subprocess.run(command + ['--vocab', str(vocab)], capture_output=True, text=True)
             self.assertEqual(2, result.returncode)
             self.assertIn('--vocab', result.stderr)
+
+    def test_secret_aliases_share_one_rule_for_json_and_other_representations(self):
+        secret = '0123456789abcdef0123456789abcdef01234567'
+        for name in ('sig', 'jwt', 'SIG', 'api_sig', 'x-jwt'):
+            forms = (json.dumps({name: secret}), json.dumps({'items': [{name: secret}]}),
+                     name + '=' + secret, 'https://example.test?' + name + '=' + secret,
+                     '<' + name + '>' + secret + '</' + name + '>')
+            for side in ('request', 'response'):
+                for body in forms:
+                    with self.subTest(name=name, side=side, body=body):
+                        data = exchange()
+                        data[side]['body'] = body
+                        self.assertTrue(ev.sidecar_problems(data))
+                        masked = ev.mask_sidecar(copy.deepcopy(data))
+                        self.assertNotIn(secret, json.dumps(masked))
+                        self.assertFalse(ev.sidecar_problems(masked))
+                        self.assertEqual(masked, ev.mask_sidecar(copy.deepcopy(masked)))
+        self.assertEqual('{"design":"public"}', ev.mask_text('{"design":"public"}'))
+        with tempfile.TemporaryDirectory() as tmp:
+            raw, out = Path(tmp) / 'raw', Path(tmp) / 'out'
+            raw.write_text(json.dumps({'sig': secret}))
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=['tool', '--sig', secret], rc=0))
+            self.assertNotIn(secret, out.read_text())
+
+    def test_quoted_header_redaction_preserves_the_command_and_operation(self):
+        secret = '0123456789abcdef0123456789abcdef01234567'
+        for quote in ('"', "'"):
+            for header in ('Authorization', 'Proxy-Authorization', 'Cookie'):
+                before = 'curl -H ' + quote + header + ': Token ' + secret + quote + ' https://api.example/old'
+                after = before.replace('/old', '/new')
+                left, right = ev.mask_text(before), ev.mask_text(after)
+                with self.subTest(quote=quote, header=header):
+                    self.assertNotIn(secret, left)
+                    self.assertEqual('https://api.example/old', shlex.split(left)[-1])
+                    self.assertEqual('https://api.example/new', shlex.split(right)[-1])
+                    self.assertNotEqual(left, right)
+                    self.assertEqual(left, ev.mask_text(left))
+        raw = 'Authorization: Token "' + secret + '"\r\n\t' + secret + '\r\nAccept: application/json\r\n'
+        masked = ev.mask_text(raw)
+        self.assertNotIn(secret, masked)
+        self.assertIn('Accept: application/json', masked)
+        with tempfile.TemporaryDirectory() as tmp:
+            raw, out = Path(tmp) / 'raw', Path(tmp) / 'out'
+            raw.write_text('public result\n')
+            for secret in ('opaque-secret', "opaque'secret"):
+                argv = ['curl', '-H', 'Authorization: Token ' + secret, 'https://api.example/old']
+                ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=argv, rc=0))
+                command = shlex.split(out.read_text().splitlines()[0][2:])
+                self.assertEqual('https://api.example/old', command[-1])
+                self.assertNotIn(secret, out.read_text())
+
+    def test_fixed_english_options_cannot_disable_or_customize_the_rules(self):
+        import subprocess
+        base = ['python3', str(ROOT / 'bin/fm-pr-evidence-lib.py'), 'ste', '--text', 'The system will abandon the task.']
+        result = subprocess.run(base, capture_output=True, text=True)
+        self.assertEqual(0, result.returncode)
+        self.assertIn("word 'abandon' is not approved", result.stdout)
+        for option in (['--no-vocab'], ['--banned', 'system']):
+            result = subprocess.run(base + option, capture_output=True, text=True)
+            self.assertEqual(2, result.returncode)
+            self.assertIn(option[0], result.stderr)
+        result = subprocess.run(base[:-1] + ['The tool is seamless.'], capture_output=True, text=True)
+        self.assertEqual(1, result.returncode)
+        self.assertIn("banned word 'seamless'", result.stdout)
+        with tempfile.TemporaryDirectory() as tmp:
+            items = Path(tmp) / 'items.json'
+            items.write_text(json.dumps({'items': [], 'none_reason': 'Only a comment changed in the file.'}))
+            compose = ['python3', str(ROOT / 'bin/fm-pr-evidence-lib.py'), 'compose', '--items', str(items),
+                       '--head', 'a' * 40, '--declared', 'none', '--provider', 'github', '--repo', 'o/r',
+                       '--number', '1', '--out', str(Path(tmp) / 'out')]
+            result = subprocess.run(compose, capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            result = subprocess.run(compose + ['--banned', 'file'], capture_output=True, text=True)
+            self.assertEqual(2, result.returncode)
+            self.assertIn('--banned', result.stderr)
 
     def test_authorization_codes_are_masked_in_every_exchange_field(self):
         code = 'a1b2c3d4e5f6a1b2c3d4'
@@ -174,7 +250,7 @@ class EvidenceRegressions(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             raw, out = Path(tmp) / 'raw', Path(tmp) / 'out'
             raw.write_text(forms[0])
-            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command='tool ' + forms[0], rc=0))
+            ev.cmd_capture_ui_text(argparse.Namespace(raw=str(raw), out=str(out), command=['tool', forms[0]], rc=0))
             self.assertNotIn(verifier, out.read_text())
         self.assertEqual('code_challenge=' + verifier, ev.mask_text('code_challenge=' + verifier))
 
@@ -266,7 +342,7 @@ class EvidenceRegressions(unittest.TestCase):
             path = tmp / "items.json"
             path.write_text(json.dumps({"items": items}))
             args = argparse.Namespace(items=str(path), declared="ui", head="a" * 40, provider="github",
-                                      repo="o/r", number="1", out=str(tmp / "publish"), banned=None, default_none_reason=None)
+                                      repo="o/r", number="1", out=str(tmp / "publish"), default_none_reason=None)
             with contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(0, ev.cmd_compose(args))
             comment = (tmp / "publish/comment.md").read_text()

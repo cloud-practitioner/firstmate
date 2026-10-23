@@ -22,6 +22,7 @@ import html.parser
 import json
 import os
 import re
+import shlex
 import struct
 import subprocess
 import sys
@@ -129,7 +130,7 @@ def load_vocab(path):
     return vocab
 
 
-def ste_check(text, kind, banned=(), vocab=None):
+def ste_check(text, kind, vocab=None):
     """Return (fails, warns) for one purpose, label, or reason text.
 
     kind is purpose (descriptive text), label (a short mark label), or steps
@@ -160,8 +161,7 @@ def ste_check(text, kind, banned=(), vocab=None):
     if "\u2014" in text or "\u2013" in text:
         fails.append("long dash found; use a plain dash or a new sentence")
     lowered = text.lower()
-    banned_all = {w.lower() for w in BANNED_BUILTIN} | {w.lower() for w in banned}
-    for word in sorted(set(re.findall(r"[a-z][a-z-]*", lowered)) & banned_all):
+    for word in sorted(set(re.findall(r"[a-z][a-z-]*", lowered)) & set(BANNED_BUILTIN)):
         fails.append("banned word '%s'" % word)
     for phrase in BANNED_PHRASES:
         if phrase in lowered:
@@ -197,9 +197,8 @@ def ste_check(text, kind, banned=(), vocab=None):
 
 def cmd_ste(args):
     text = args.text if args.text is not None else open(args.file, encoding="utf-8").read()
-    banned = args.banned.split(",") if args.banned else []
     vocab = load_vocab(os.path.join(HERE, "fm-pr-evidence-openste.tsv"))
-    fails, warns = ste_check(text, args.kind, banned, None if args.no_vocab else vocab)
+    fails, warns = ste_check(text, args.kind, vocab)
     f = Findings()
     for item in fails:
         f.fail("plain-English check (%s): %s" % (args.kind, item),
@@ -218,7 +217,7 @@ DENY_HEADERS = {h.lower() for h in (
     "Authorization Proxy-Authorization Cookie Set-Cookie X-API-Key Api-Key X-Auth-Token "
     "X-Access-Token X-CSRF-Token X-XSRF-Token X-Amz-Security-Token X-Goog-Api-Key "
     "Ocp-Apim-Subscription-Key MYSAPSSO2").split()}
-DENY_NAME_RE = re.compile(r"(?:auth|token|secret|key|session|cookie|passw|signature|credential|code_verifier)", re.I)
+DENY_NAME_RE = re.compile(r"(?:auth|token|secret|key|session|cookie|passw|signature|credential|code_verifier|(?<![a-z0-9])(?:sig|jwt)(?![a-z0-9]))", re.I)
 ALLOW_HEADERS = {h.lower() for h in (
     "Content-Type Content-Length Content-Encoding Accept Accept-Encoding Accept-Language Host "
     "User-Agent Date ETag Location Cache-Control Vary Server Connection X-Request-Id "
@@ -238,7 +237,6 @@ SECRET_PATTERNS = (
     re.compile(r"\bAKIA[0-9A-Z]{16}\b"),
     re.compile(r"\bxox[abp]-[A-Za-z0-9-]{10,}"),
     re.compile(r"\bsk-[A-Za-z0-9]{20,}"),
-    re.compile(r"(?i)([?&](?:token|access_token|key|api_key|apikey|signature|sig|jwt|secret|password)=)[^&\s\"']+"),
 )
 LONG_RUN_RE = re.compile(r"[A-Za-z0-9+/_-]{48,}={0,2}")
 
@@ -284,13 +282,23 @@ def mask_text(text):
     if isinstance(data, (dict, list, str)):
         masked = fields(data)
         return json.dumps(masked, ensure_ascii=False) if masked != data else text
-    headers = re.compile(r"(?im)(?<![\w-])((?:" + "|".join(re.escape(name) for name in DENY_HEADERS)
-                         + r")[ \t]*:[ \t]*)([^\r\n]*(?:\r?\n[ \t]+[^\r\n]*)*)")
-    text = headers.sub(lambda match: match[1] + (match[2] if MASK_RE.fullmatch(match[2].strip())
-                                               else mask_token(match[2])), text)
-    for pattern in SECRET_PATTERNS[:-1]:
+    header_names = "(?:" + "|".join(re.escape(name) for name in DENY_HEADERS) + ")"
+    headers = re.compile(
+        r"(?im)(?P<quote>[\"'])(?P<quoted_header>" + header_names + r"[ \t]*:[ \t]*)"
+        r"(?P<quoted_value>(?:\\.|(?!(?P=quote))[\s\S])*)(?P=quote)"
+        r"|(?<![\w-])(?P<header>" + header_names + r"[ \t]*:[ \t]*)"
+        r"(?P<value>[^\r\n]*(?:\r?\n[ \t]+[^\r\n]*)*)")
+
+    def redact_header(match):
+        quote = match["quote"] or ""
+        prefix = match["quoted_header"] if quote else match["header"]
+        value = match["quoted_value"] if quote else match["value"]
+        return quote + prefix + (value if MASK_RE.fullmatch(value.strip()) else mask_token(value)) + quote
+
+    text = headers.sub(redact_header, text)
+    for pattern in SECRET_PATTERNS:
         text = pattern.sub(lambda match: mask_token(match.group(0)), text)
-    sensitive = r"[\w.-]*(?:" + DENY_NAME_RE.pattern + r"|sig|jwt)[\w.-]*"
+    sensitive = r"[\w.-]*(?:" + DENY_NAME_RE.pattern + r")[\w.-]*"
     if re.search(r"<(?:[\w.-]+:)?" + sensitive + r"\b", text, re.I):
         try:
             root = ET.fromstring(text)
@@ -651,7 +659,7 @@ def differing_lines(lines, other):
 def annotation_texts(args, labels):
     f = Findings()
     check_texts(f, "annotation", {"purpose": args.purpose, "labels": labels},
-                [], load_vocab(os.path.join(HERE, "fm-pr-evidence-openste.tsv")))
+                load_vocab(os.path.join(HERE, "fm-pr-evidence-openste.tsv")))
     f.emit()
     return f.ok()
 
@@ -778,7 +786,8 @@ def cmd_capture_ui_text(args):
     """Wrap one command's captured output into a masked terminal transcript."""
     text = open(args.raw, encoding="utf-8", errors="replace").read()
     with open(args.out, "w", encoding="utf-8") as fh:
-        fh.write("$ %s\n%s" % (mask_text(args.command), mask_text(text)))
+        command = mask_text(" ".join(shlex.quote(mask_text(arg)) for arg in args.command))
+        fh.write("$ %s\n%s" % (command, mask_text(text)))
         if not text.endswith("\n"):
             fh.write("\n")
         fh.write("(exit status %s)\n" % args.rc)
@@ -791,7 +800,7 @@ def cmd_capture_ui_text(args):
 
 def cmd_config(args):
     """Parse config/pr-evidence for one project and print JSON."""
-    out = {"enabled": False, "require": False, "globs": {"ui": [], "api": []}, "banned": [],
+    out = {"enabled": False, "require": False, "globs": {"ui": [], "api": []},
            "bitbucket": False, "errors": []}
     try:
         with open(args.file, encoding="utf-8") as fh:
@@ -807,9 +816,7 @@ def cmd_config(args):
             continue
         parts = line.split()
         head = parts[0]
-        if head == "banned" and len(parts) > 1:
-            out["banned"] += parts[1:]
-        elif head == "bitbucket" and len(parts) == 2 and parts[1] in ("on", "off"):
+        if head == "bitbucket" and len(parts) == 2 and parts[1] in ("on", "off"):
             out["bitbucket"] = parts[1] == "on"
         elif len(parts) >= 2 and (head == "*" or head == args.project):
             word = parts[1]
@@ -894,14 +901,14 @@ def cmd_effective(args):
     return 0
 
 
-def check_texts(f, item_id, item, banned, vocab):
-    fails, warns = ste_check(item.get("purpose", ""), "purpose", banned, vocab)
+def check_texts(f, item_id, item, vocab):
+    fails, warns = ste_check(item.get("purpose", ""), "purpose", vocab)
     for entry in fails:
         f.fail("item %s purpose: %s" % (item_id, entry), "rewrite the purpose in short plain sentences (ASD-STE100)")
     for entry in warns:
         f.warn("item %s purpose: %s" % (item_id, entry))
     for label in item.get("labels") or []:
-        fails, warns = ste_check(label, "label", banned, vocab)
+        fails, warns = ste_check(label, "label", vocab)
         for entry in fails:
             f.fail("item %s mark label '%s': %s" % (item_id, label, entry),
                    "rewrite the label in one short plain sentence")
@@ -914,7 +921,6 @@ def cmd_compose(args):
     f = Findings()
     spec = json.load(open(args.items, encoding="utf-8"))
     base = os.path.dirname(os.path.abspath(args.items))
-    banned = args.banned.split(",") if args.banned else []
     vocab = load_vocab(os.path.join(HERE, "fm-pr-evidence-openste.tsv"))
     required = set(kinds_of(args.declared))
     items = spec.get("items") or []
@@ -924,7 +930,7 @@ def cmd_compose(args):
         if not none_reason:
             f.fail("the change kind is none, but no reason is given", "set none_reason in the items file")
         else:
-            fails, warns = ste_check(none_reason, "purpose", banned, vocab)
+            fails, warns = ste_check(none_reason, "purpose", vocab)
             for entry in fails:
                 f.fail("none_reason: " + entry, "rewrite the reason in short plain sentences (ASD-STE100)")
             for entry in warns:
@@ -945,7 +951,7 @@ def cmd_compose(args):
             f.fail("item %s has kind '%s'" % (item_id, kind), "use ui or api")
             continue
         present.add(kind)
-        check_texts(f, item_id, item, banned, vocab)
+        check_texts(f, item_id, item, vocab)
         entry = {"id": item_id, "kind": kind, "purpose": item.get("purpose", "").strip(),
                  "labels": item.get("labels") or []}
         side_md = []
@@ -977,7 +983,7 @@ def cmd_compose(args):
                 if annotation.get("sha256") != sha:
                     f.fail("item %s %s annotation does not match its image" % (item_id, phase),
                            "annotate the image again")
-                check_texts(f, "%s %s annotation" % (item_id, phase), annotation, banned, vocab)
+                check_texts(f, "%s %s annotation" % (item_id, phase), annotation, vocab)
                 part_entry["annotation"] = annotation
             if kind == "api":
                 sidecar_path = part.get("sidecar", "")
@@ -1156,7 +1162,7 @@ def cmd_verify(args):
         if not reason:
             f.fail("the change kind is none, but the evidence comment gives no reason", base_fix)
         else:
-            fails, warns = ste_check(reason, "purpose", rules.get("banned", []), vocab)
+            fails, warns = ste_check(reason, "purpose", vocab)
             for entry in fails:
                 f.fail("none reason: " + entry, "rewrite the reason in short plain sentences (ASD-STE100)")
             for entry in warns:
@@ -1176,7 +1182,7 @@ def cmd_verify(args):
             f.fail("item %s has kind '%s'" % (item_id, kind), base_fix)
             continue
         kinds_seen.setdefault(kind, []).append(item_id)
-        check_texts(f, item_id, item, rules.get("banned", []), vocab)
+        check_texts(f, item_id, item, vocab)
         purpose = (item.get("purpose") or "").strip()
         if purpose and purpose not in visible:
             f.fail("item %s purpose is not in the visible comment text" % item_id, base_fix)
@@ -1189,7 +1195,7 @@ def cmd_verify(args):
             pair.append(part["sha256"])
             shas.append((item_id, phase, part["sha256"]))
             if "annotation" in part:
-                check_texts(f, "%s %s annotation" % (item_id, phase), part["annotation"], rules.get("banned", []), vocab)
+                check_texts(f, "%s %s annotation" % (item_id, phase), part["annotation"], vocab)
             if kind == "api":
                 block = side_blocks.get((item_id, phase))
                 if block is None:
@@ -1287,8 +1293,7 @@ def main(argv):
     p.add_argument("--kind", default="purpose", choices=("purpose", "label", "steps"))
     p.add_argument("--text")
     p.add_argument("--file")
-    p.add_argument("--banned")
-    p.add_argument("--no-vocab", action="store_true")
+
     p.set_defaults(fn=cmd_ste)
 
     p = sub.add_parser("sidecar-build")
@@ -1332,7 +1337,7 @@ def main(argv):
 
     p = sub.add_parser("capture-text")
     p.add_argument("--raw", required=True)
-    p.add_argument("--command", required=True)
+    p.add_argument("--command", nargs=argparse.REMAINDER, required=True)
     p.add_argument("--rc", required=True)
     p.add_argument("--out", required=True)
     p.set_defaults(fn=cmd_capture_ui_text)
@@ -1345,7 +1350,6 @@ def main(argv):
     p = sub.add_parser("compose")
     for name in ("items", "head", "declared", "provider", "repo", "number", "out"):
         p.add_argument("--" + name, required=True)
-    p.add_argument("--banned")
     p.add_argument("--default-none-reason")
     p.set_defaults(fn=cmd_compose)
 

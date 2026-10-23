@@ -98,11 +98,11 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 pr = STATE["prs"].get(self.key(*m.groups()))
                 if not pr:
                     return self.send(404, {"message": "Not Found"})
-                return self.send(200, {"head": {"sha": pr["head"]}, "user": {"login": pr["author"]}, "state": pr["state"].lower()})
+                return self.send(200, {"head": {"sha": pr["head"]}, "user": {"login": pr["author"]}, "state": pr["state"].lower(), "changed_files": len(pr["files"])})
             m = re.match(r"^/gh/repos/([^/]+)/([^/]+)/pulls/(\d+)/files$", path)
             if m:
                 pr = STATE["prs"].get(self.key(*m.groups()), {"files": []})
-                return self.send(200, [f if isinstance(f, dict) else {"filename": f} for f in pr["files"]])
+                return self.send(200, [f if isinstance(f, dict) else {"filename": f} for f in pr["files"][:3000]])
             m = re.match(r"^/gh/repos/([^/]+)/([^/]+)/issues/(\d+)/comments$", path)
             if m:
                 return self.send(200, [dict(c, body_html=c["html"], updated_at=c["updated"])

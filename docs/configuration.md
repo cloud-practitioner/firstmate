@@ -636,7 +636,6 @@ Every other line is one of these:
 | `<project> enforce` or `* enforce` | The gate is on for that project, or for every project. |
 | `<project> require` or `* require` | The project always needs evidence, so the declared kind can never be `none`. |
 | `<project> ui <glob>...` and `<project> api <glob>...` | Changed files that match a glob need that kind. A glob can only add a requirement. |
-| `banned <word>...` | Extra words that the plain-English check refuses. |
 | `bitbucket on` | Turns the Bitbucket arm on. The default is off. |
 
 A `*` in a glob matches any characters, including `/`.
@@ -698,7 +697,8 @@ All strict rules also apply inside quotes and backticks, including purposes, dra
 It warns about passive voice, progressive and perfect tenses, more than one idea per sentence, and words that the OpenSTE word list does not approve.
 Warnings show on the PR.
 The word list in `bin/fm-pr-evidence-openste.tsv` is the MIT-licensed OpenSTE list.
-The standalone checker uses this shipped list and accepts no vocabulary-file override.
+Vocabulary warnings from this shipped list always run, including at intake.
+The checker accepts no vocabulary-file override, vocabulary-disable flag, extra banned-word option or banned-word configuration directive; refusal rules are built in.
 The repository holds no ASD-derived dictionary.
 
 **Waivers.**
