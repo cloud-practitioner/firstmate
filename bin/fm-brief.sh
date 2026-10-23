@@ -14,9 +14,9 @@
 # charters still use a single `{TASK}` charter fill. Firstmate may adjust other
 # sections when the task genuinely deviates (e.g. working an existing external
 # PR instead of shipping a new one).
-# When config/pr-evidence enables the project (bin/fm-pr-evidence.sh, fork-only), a
-# ship brief also scaffolds `## Evidence class` with the placeholder {EVIDENCE}, which
-# firstmate fills with ui, api, ui+api, or none: <reason>, and the worker's evidence contract.
+# An eligible ship brief also scaffolds `## Evidence class` with {EVIDENCE} and
+# the worker's evidence contract; docs/configuration.md "PR evidence gate" owns
+# eligibility and declaration values.
 # Usage: fm-brief.sh <task-id> <repo-name> --mode <no-mistakes|direct-PR|local-only> [--branch-prefix <prefix>] [--base-branch <branch>] [--forge <none|gerrit|forgejo|external> [--shape squash]] [--project <dir>] [--upstream-consent <host>/<owner>/<repo>] [--herdr-lab]
 #        fm-brief.sh <task-id> <repo-name> --scout [--base-branch <branch>] [--herdr-lab]
 #        fm-brief.sh <task-id> --secondmate {<project>...|--no-projects}
@@ -766,9 +766,8 @@ case "$MODE" in
 esac
 RULE1=$(fm_ship_rule_one "$MODE" "$ID" "$BRANCH" "$FORGE" "$BASE_BRANCH") || exit 1
 DOD=$(fm_dod_block "$MODE" "$ID" "$BRANCH" "$FORGE" "$BASE_BRANCH" "$UPSTREAM_CONSENT") || exit 1
-# Fork-only PR evidence gate (bin/fm-pr-evidence.sh): when config/pr-evidence enables
-# this project, the brief gains an `## Evidence class` subsection that firstmate fills
-# at intake ({EVIDENCE}) and the worker's evidence contract after the Definition of done.
+# Resolve evidence eligibility before writing a brief, so invalid configuration
+# cannot publish a scaffold.
 EVIDENCE_STATUS=0
 EVIDENCE_PROJECT="${PROJECT_DIR:-$FM_HOME/projects/$REPO}"
 "$SCRIPT_DIR/fm-pr-evidence.sh" eligible "$REPO" "$MODE" "$FORGE" "$EVIDENCE_PROJECT" >/dev/null || EVIDENCE_STATUS=$?

@@ -14,7 +14,7 @@ Start with the directory layout, then use the setting reference for the behavior
 | Supervision and presentation | [Pi supervision branch](#pi-supervision-branch), [supervision host](#supervision-host-configsupervision-host), and [Calm preference](#calm-preference-configcalm) |
 | Persistent secondmates | [Secondmate routes](#secondmate-routes-datasecondmatesmd) |
 | Per-run overrides and tuning | [Environment variables](#environment-variables) |
-| Before and after evidence on every PR | [PR evidence gate](#pr-evidence-gate-configpr-evidence) |
+| Before and after evidence for eligible PRs | [PR evidence gate](#pr-evidence-gate-configpr-evidence) |
 | Forge credentials for Bitbucket Cloud pull requests | [Bitbucket Cloud pull requests](#bitbucket-cloud-pull-requests-no_mistakes_bitbucket_email--no_mistakes_bitbucket_api_token) |
 
 ## FM_HOME
@@ -622,7 +622,7 @@ The receipt prevents accidental publication through supported paths; it proves c
 This is fork-only (cloud-practitioner/firstmate) and is never offered upstream.
 The captain reviews a PR from its evidence: pictures of the behaviour before and after the change, with the differences marked.
 `bin/fm-pr-evidence.sh` turns that rule into a gate that refuses.
-Its header owns the commands, the evidence comment, and the checks.
+This section owns the operator contract; the [script header](../bin/fm-pr-evidence.sh) owns command syntax and the publication input format.
 `bin/fm-pr-evidence-lib.py` holds the plain-English check, the secret masking, the mark counting, and the verifier.
 
 The optional local, gitignored `config/pr-evidence` turns the gate on.
@@ -636,10 +636,11 @@ Every other line is one of these:
 | `<project> enforce` or `* enforce` | The gate is on for that project, or for every project. |
 | `<project> require` or `* require` | The project always needs evidence, so the declared kind can never be `none`. |
 | `<project> ui <glob>...` and `<project> api <glob>...` | Changed files that match a glob need that kind. A glob can only add a requirement. |
-| `bitbucket on` | Turns the Bitbucket arm on. The default is off. |
+| `bitbucket on` or `bitbucket off` | Enables or disables the Bitbucket arm. The default is off. |
 
 A `*` in a glob matches any characters, including `/`.
-The firstmate repository itself always requires evidence, with no config line, because its lineage is detected offline.
+For an enabled, eligible lane, offline lineage detection also forbids `none` in the firstmate repository without a `require` line.
+Terminal behaviour changes there use the `ui` kind with terminal screenshots.
 
 To turn the gate on in a home, write these lines in that home's `config/pr-evidence`:
 
@@ -659,27 +660,30 @@ An eligible lane is `no-mistakes` or `direct-PR` on GitHub, or on Bitbucket whil
 Local-only, external-review, GitLab, Gerrit, Forgejo, unknown providers and Bitbucket while off get no evidence intake or publication-before-done contract.
 Before a PR exists, eligibility uses the confirmed forge binding and the clone's offline publication target; checks use the parsed PR provider.
 Brief generation uses `--project` or the clone at `$FM_HOME/projects/<project>`; supply `--project` when the clone is elsewhere.
-`fm-pr-evidence.sh eligible <project> <mode> <forge> <project-dir>` reports eligibility: 0 eligible, 1 excluded, 2 invalid configuration or usage.
+Use the script's `eligible` command to check a lane before intake; its [help](../bin/fm-pr-evidence.sh) owns the arguments and exit codes.
 Only an eligible ship brief gains `## Evidence class` with `{EVIDENCE}`; excluded briefs, spawns and promotions record no evidence declaration.
 Firstmate fills it with `ui`, `api`, `ui+api`, or `none: <reason in plain English>`.
 `bin/fm-spawn.sh` refuses an unfilled or invalid value and records `evidence=` (and `evidence_reason=`) in the task record.
 `bin/fm-promote.sh` applies the same eligibility rule before intake and before adding the evidence contract to ship instructions.
-A `none` is refused for a `require` project and for the firstmate repository.
 A worker can add a kind and never remove one.
 Publication retains the union of intake kinds and previously published kinds in the task record and comment.
 
 **The gate.**
 `bin/fm-pr-check.sh` calls `fm-pr-evidence.sh check` before it arms a PR, and `bin/fm-pr-merge.sh` records through the same script before every merge.
 The merge path also checks evidence against the exact SHA submitted for merge.
-Enforced GitHub merges refuse auto-merge and merge queues.
-Enforced Bitbucket merges refuse because its merge API cannot bind an expected head.
+For eligible tasks with an evidence declaration and no waiver, GitHub merges refuse auto-merge and merge queues.
+Such Bitbucket merges refuse because its merge API cannot bind an expected head.
 Publication checks the authenticated forge account against the PR author before any uploads, metadata changes or comment replacement.
-The gate refuses unless the PR holds one evidence comment by the PR author with these parts:
+The gate requires one evidence comment by the PR author with a manifest that names the current PR head.
+A head that moved after the evidence is refused until the worker publishes again.
+For each required kind, the comment contains:
 
-- A before image and an after image for each required kind, with the differences marked in the exact colour `#FF2D95`.
-- The purpose of each item in ASD-STE100 Simplified Technical English.
+- A before PNG and an after PNG, with the differences marked in the exact colour `#FF2D95`.
+- The purpose of each item in ASD-STE100 Simplified Technical English, also drawn on both images by the annotation commands.
 - For an API item, the full HTTP exchange as text: request headers, request body, response headers, response body, status code, and status message, with secret values masked.
-- A manifest that names the PR head, so a head that moved after the evidence is refused until the worker publishes again.
+
+A `none` declaration still needs a published comment with a plain-English reason and the current-head manifest, but no image pair.
+The mark check verifies presence, not correctness.
 
 Every image must show on the forge's own rendered page, load as an image, and match the manifest hash.
 Every check fetches and verifies every required image again; successful image checks are not cached.
@@ -715,8 +719,10 @@ The Bitbucket arm uploads images to the repository Downloads area and reads comm
 It stays off until a sandbox proof on a non-IQX repository shows upload and display.
 After that proof, add `bitbucket on` to `config/pr-evidence`.
 
-Maintainer verification lives in `tests/fm-pr-evidence.test.sh`, which also runs the Python regression suite.
-The opt-in live guard in the same file proves real upload, display, and fetch against a private sandbox repository with `FM_PR_EVIDENCE_LIVE_PR=<sandbox PR URL>`.
+Portable coverage lives in `tests/fm-pr-evidence.test.sh`, which also runs the Python regression suite, and `tests/fm-pr-evidence-retrofit.test.sh`.
+The opt-in GitHub live guard in the main suite exercises real upload, display, and fetch with `FM_PR_EVIDENCE_LIVE_PR=<sandbox PR URL>`.
+Use only an authorized private sandbox PR and the PR author's credential: the guard uploads images and replaces evidence comments.
+Fixture results alone do not establish hosted upload and display, and this guard does not provide the separate Bitbucket proof.
 
 ## Waiting worker spends no turns (config/wait-no-turns)
 

@@ -20,8 +20,8 @@
 # never discards a positively read draft state.
 # bin/fm-pr-merge.sh records through this script with FM_PR_CHECK_MERGE=1 and
 # skips this refusal, because its own merge-time draft refusal is authoritative.
-# The fork-only evidence gate (bin/fm-pr-evidence.sh) refuses arming and merging
-# a PR that lacks its before and after evidence, when config/pr-evidence enables it.
+# The fork-only evidence gate runs before registration; docs/configuration.md
+# "PR evidence gate" owns its applicability, exceptions, and waiver rules.
 # The recorded pr= also frees the task's place in a declared project capacity
 # (bin/fm-project-capacity-lib.sh).
 # Usage: fm-pr-check.sh <task-id> <pr-url>
@@ -156,9 +156,7 @@ if [ "$DRAFT_STATE" = true ]; then
   exit 1
 fi
 
-# Fork-only PR evidence gate (bin/fm-pr-evidence.sh): a no-op unless
-# config/pr-evidence enables the task's project. It refuses arming and every merge
-# (bin/fm-pr-merge.sh records through this script) until the PR carries its evidence.
+# Keep evidence validation before recording PR metadata or arming a merge poll.
 FM_HOME=$FM_HOME FM_STATE_OVERRIDE=$STATE "$SCRIPT_DIR/fm-pr-evidence.sh" check "$ID" "$URL" \
   || { echo "error: the PR evidence gate refused $URL; see the [FAIL] and FIX lines above" >&2; exit 1; }
 

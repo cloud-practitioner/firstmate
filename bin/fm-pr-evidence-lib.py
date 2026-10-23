@@ -3,8 +3,9 @@
 
 fork-only (cloud-practitioner/firstmate); never offered upstream.
 
-bin/fm-pr-evidence.sh owns the rule, the forge calls, and the user-facing
-contract. This file holds the parts that are plain data work, so tests can
+docs/configuration.md "PR evidence gate" owns the operator contract;
+bin/fm-pr-evidence.sh owns command syntax, publish input, and forge calls.
+This file holds the parts that are plain data work, so tests can
 drive them without a forge: the config parser, the Simplified Technical
 English (STE) check, secret masking of captured HTTP exchanges, PNG mark
 counting, image rendering with ImageMagick, evidence comment composition,

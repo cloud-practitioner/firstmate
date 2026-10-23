@@ -719,7 +719,12 @@ test_annotation_tools_draw_marks() {
     --out "$C/ev/api.png" >/dev/null || fail "annotate-api failed"
   python3 "$LIB" marks "$C/ev/api.png" --min 200 >/dev/null || fail "an annotated API image must carry marks"
   ev capture-ui --out "$C/ev/cap.txt" -- echo "hello world" >/dev/null || fail "capture-ui failed"
-  assert_contains "$(cat "$C/ev/cap.txt")" '$ echo hello world' "capture-ui must keep the command"
+  python3 - "$C/ev/cap.txt" <<'PY' || fail "capture-ui must preserve the command arguments"
+import pathlib, shlex, sys
+command = pathlib.Path(sys.argv[1]).read_text().splitlines()[0]
+assert command.startswith("$ "), command
+assert shlex.split(command[2:]) == ["echo", "hello world"], command
+PY
   assert_contains "$(cat "$C/ev/cap.txt")" "(exit status 0)" "capture-ui must keep the exit status"
   pass "fm-pr-evidence: the annotate helpers draw marks that the gate's counter finds"
 }

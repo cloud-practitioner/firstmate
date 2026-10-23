@@ -16,7 +16,7 @@ A `forge=external` task reports `done [at=<epoch>]: review <url> uploaded for re
 A direct-PR worker pushes that commit to its PR branch, and a local-only worker commits it on its ship branch.
 A no-mistakes worker re-validates it with /no-mistakes so the pipeline stays the one publisher; it never pushes from its copy.
 In no-mistakes mode the earlier `done [at=<epoch>]: {summary}` is the pipeline handoff and is not gated.
-When `config/pr-evidence` enables the project, `bin/fm-pr-check.sh` also refuses a PR without its before and after evidence, and so does every merge through `bin/fm-pr-merge.sh`; that refusal is the gate working, so steer the worker on its `FIX:` line (`bin/fm-pr-evidence.sh` and `docs/configuration.md` own the rule), and use a waiver only with the captain's own words.
+On an evidence refusal, steer the worker on its `FIX:` line; the [PR evidence gate](../../../docs/configuration.md#pr-evidence-gate-configpr-evidence) owns applicability, exceptions, and waivers.
 Tell the captain the PR's full `https://...` URL copied from the worker's ready line, the resolved checks-green crew-state line, or the task's `pr=` metadata, a concise outcome summary, and the no-mistakes risk level when applicable.
 A captain instruction to merge is explicit authority; `yolo` is the only standing routine merge authority.
 For any custom `state/<id>.check.sh` you write yourself, keep it an ordinary single-link mode-`0700` file, print one line only when firstmate should wake, print nothing otherwise, finish before `FM_CHECK_TIMEOUT`, then bind its current bytes with `bin/fm-check-register.sh <id>` before the watcher may execute it.

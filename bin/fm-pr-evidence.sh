@@ -1,39 +1,11 @@
 #!/usr/bin/env bash
-# PR evidence gate: before-and-after evidence for every PR the captain reviews.
+# PR evidence gate: before-and-after evidence for eligible pull requests.
 #
 # fork-only (cloud-practitioner/firstmate); never offered upstream.
 #
-# The captain reviews a PR from its evidence: screenshots of the behaviour
-# before and after the change, with the differences marked and the purpose
-# written in ASD-STE100 Simplified Technical English. This script turns that
-# rule into code that refuses, in the way workos/case turns its invariants into
-# gates. It prints [FAIL] lines with FIX lines, and it exits non-zero.
-#
-# The rule
-#   - Intake: firstmate declares the change kind in the ship brief under
-#     `## Evidence class`: ui, api, ui+api, or `none: <reason>`. The brief
-#     scaffold holds the placeholder {EVIDENCE}; bin/fm-spawn.sh refuses it
-#     while it is unfilled and records `evidence=<kind>` (and `evidence_reason=`)
-#     in state/<id>.meta. A worker can add a kind and never remove one.
-#   - UI evidence: a before image and an after image with the differences
-#     marked, and the purpose in plain English.
-#   - API evidence: the same two images, drawn from a captured HTTP exchange
-#     that shows the request headers, request body, response headers, response
-#     body, status code, and status message. Secret values are masked first.
-#   - One dedicated PR comment, written by the worker's account, holds the
-#     purposes, the images, the exchange text, and one fenced
-#     `fm-pr-evidence-v1` JSON manifest. The images are forge attachments.
-#   - `check` refuses unless every image shows on the forge's own rendered page,
-#     downloads as an image that matches the manifest hash, carries drawn marks
-#     (the exact colour #FF2D95, presence only), and the manifest head equals
-#     the PR head. "Uploaded" is not "displaying": PRs 35 and 38 of the fork hold
-#     image lines that GitHub renders as nothing.
-#   - A project `require` line, and the firstmate repository itself, never allow
-#     `none`.
-#   - A waiver needs the captain's own words, is refused in away mode, and is
-#     posted on the PR.
-#   - A task without `evidence=` in its record (made before the gate) passes
-#     with a notice; `list-unevidenced` lists those PRs for the captain.
+# docs/configuration.md "PR evidence gate" owns eligibility, evidence requirements,
+# exceptions, waivers, and setup. This header owns command syntax and publish input.
+# The gate follows the workos/case model: refusals print [FAIL] and FIX lines.
 #
 # Usage: fm-pr-evidence.sh <command> ...
 #   eligible <project> <mode> <forge> <proj-dir>
@@ -42,20 +14,22 @@
 #                                         print evidence= meta lines for an eligible spawn, or refuse
 #   brief-block <task-id> <project> <mode> <forge> <proj-dir>
 #                                         print the eligible worker's evidence contract
-#   check <task-id> <pr-url>              the gate; bin/fm-pr-check.sh calls it for arming and merge
+#   check <task-id> <pr-url> [<merge-head>]
+#                                         gate registration, or verify the exact head for an immediate merge
 #   publish <task-id> <pr-url> <items.json>
 #                                         validate, upload, post the one comment, then check
 #   capture-ui --out <txt> -- <command>   run a command and keep a masked terminal transcript
 #   capture-api --out <json> [-X M] [--header 'N: V']... [--body-file F] <url>
 #                                         run one HTTP call and keep a masked six-part exchange
-#   annotate-ui (--image <png> --mark x,y,w,h,label ... | --text <txt> [--against <txt>])
+#   annotate-ui (--image <image> --mark x,y,w,h[,label] ... |
+#                --text <txt> (--against <txt> | --mark-line <zero-based line> ...))
 #               --purpose <text> [--label <text>]... --out <png>
 #   annotate-api --sidecar <json> --against <json> --purpose <text> [--label <text>] --out <png>
 #   ste [--kind purpose|label|steps] (--text <t> | --file <f>)
 #                                         the plain-English check on its own
 #   waive <task-id> <pr-url> --words <captain's words>
 #                                         record a waiver; refused in away mode
-#   list-unevidenced                      list PRs opened before the gate
+#   list-unevidenced                      list recorded open eligible PRs with no evidence declaration
 #
 # Items file for publish (paths are relative to the file or absolute):
 #   {"items":[{"id":"save-button","kind":"ui","purpose":"...",
@@ -65,6 +39,10 @@
 #              "before":{"image":"b.png","sidecar":"b.json"},
 #              "after":{"image":"a.png","sidecar":"a.json"},"labels":["..."]}],
 #    "none_reason":null}
+# For a none declaration, use {"items":[],"none_reason":"<plain-English reason>"}.
+# Omitting none_reason reuses the task's intake reason.
+# Annotation commands save <png>.annotation.json beside each image; keep it with
+# the image so publish can validate and record the drawn purpose and labels.
 #
 # Config: docs/configuration.md "PR evidence gate" owns config/pr-evidence.
 # The helper bin/fm-pr-evidence-lib.py holds the pure parts: the plain-English
