@@ -1004,7 +1004,7 @@ archived_entry() {  # <origin-or-empty> <entry>; prints the archived id
 # as absence. The result carries the attestation evidence and whether an
 # origin was recorded, so completion can disclose the legacy fallback.
 verify_entry_durable() {  # <origin-or-empty> <entry>; prints "<id> <how> <origin-state>"
-  local origin=$1 entry=$2 resolved resolve_status=0 id how stored origin_state=unrecorded origin_id stored_id resolve_err archived archived_status
+  local origin=$1 entry=$2 resolved resolve_status=0 id how stored origin_state=unrecorded origin_id stored_id resolve_err archived archived_status exact_archived
   # The origin task is never its own captain-call inventory: it is the work the
   # calls were found in, so accepting it would let a refused hold look recorded.
   if [ -n "$origin" ] && [ "$origin" != "$BINDING_ANY" ] && [ "$entry" = "$origin" ]; then
@@ -1012,21 +1012,37 @@ verify_entry_durable() {  # <origin-or-empty> <entry>; prints "<id> <how> <origi
   fi
   resolve_err=$(mktemp "${TMPDIR:-/tmp}/fm-captain-hold-resolve.XXXXXX") \
     || fail "cannot stage the resolution diagnostics for $entry"
-  resolved=$(resolve_entry "$origin" "$entry" 2>"$resolve_err") || resolve_status=$?
-  if [ "$resolve_status" -eq 1 ]; then
+  # Durability is judged per identity, exact id first: a row that exists only in
+  # the Done archive under the entry's own id is that call's record, and it
+  # outranks a live row under the legacy-derived identity, so an earlier answer
+  # on that legacy row cannot vouch for a call whose own row was archived
+  # unanswered.
+  exact_archived=0
+  if ! task_show "$entry"; then
     archived_status=0
-    archived=$(archived_entry "$origin" "$entry") || archived_status=$?
-    if [ "$archived_status" -eq 0 ]; then
-      resolved="$archived archived"
-      resolve_status=0
-    elif [ "$archived_status" -eq 124 ]; then
-      rm -f -- "$resolve_err"
-      exit 124
+    task_show_archived "$entry" || archived_status=$?
+    [ "$archived_status" -ne 124 ] || { rm -f -- "$resolve_err"; exit 124; }
+    [ "$archived_status" -ne 0 ] || exact_archived=1
+  fi
+  if [ "$exact_archived" -eq 1 ]; then
+    resolved="$entry archived"
+  else
+    resolved=$(resolve_entry "$origin" "$entry" 2>"$resolve_err") || resolve_status=$?
+    if [ "$resolve_status" -eq 1 ]; then
+      archived_status=0
+      archived=$(archived_entry "$origin" "$entry") || archived_status=$?
+      if [ "$archived_status" -eq 0 ]; then
+        resolved="$archived archived"
+        resolve_status=0
+      elif [ "$archived_status" -eq 124 ]; then
+        rm -f -- "$resolve_err"
+        exit 124
+      else
+        cat "$resolve_err" >&2
+      fi
     else
       cat "$resolve_err" >&2
     fi
-  else
-    cat "$resolve_err" >&2
   fi
   rm -f -- "$resolve_err"
   if [ "$resolve_status" -ne 0 ]; then
