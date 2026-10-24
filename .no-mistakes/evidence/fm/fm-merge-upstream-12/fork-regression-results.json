@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-secondmate-dormant.test.sh"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-pr-bitbucket.test.sh"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-pr-evidence.test.sh"
+    ],
+    "exit_code": 0
+  }
+]

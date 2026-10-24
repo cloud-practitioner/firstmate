@@ -1,0 +1,20 @@
+$ bash bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/watch-recovery
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/watch-recovery
+[exit 0; bounded wait expired=False]
+$ bash -c . "$1"; fm_wake_append check durable-review "check: review the retained delivery" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-wake-lib.sh
+[exit 0; bounded wait expired=False]
+$ bash bin/fm-watch.sh
+check: rearm-resurface
+[exit 0; bounded wait expired=False]
+$ bash bin/fm-watch.sh
+check: rearm-resurface
+[exit 0; bounded wait expired=False]
+$ bash bin/fm-wake-drain.sh
+1792797601	1	check	durable-review	check: review the retained delivery
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 1205447.1792797601.u9YcOD
+[exit 0; bounded wait expired=False]
+$ bash bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 1205447.1792797601.u9YcOD
+[exit 0; bounded wait expired=False]
+$ bash bin/fm-watch.sh
+[exit -15; bounded wait expired=True]
+Observed: two unacknowledged fresh cycles resurfaced the queued event; the acknowledged fresh cycle stayed quiet and alive for the bounded observation.

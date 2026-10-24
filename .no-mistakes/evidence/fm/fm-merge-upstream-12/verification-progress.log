@@ -1,0 +1,20 @@
+START 2026-10-23T23:26:28Z fm-captain-hold-lifecycle
+RESULT fm-captain-hold-lifecycle exit=0 2026-10-23T23:41:44Z
+START 2026-10-23T23:41:44Z fm-watch-wedge-cap
+RESULT fm-watch-wedge-cap exit=0 2026-10-23T23:49:16Z
+START 2026-10-23T23:49:16Z fm-backend
+RESULT fm-backend exit=0 2026-10-23T23:49:44Z
+START 2026-10-23T23:49:44Z fm-backend-rex
+RESULT fm-backend-rex exit=0 2026-10-23T23:50:04Z
+START 2026-10-23T23:50:04Z fm-brief
+RESULT fm-brief exit=0 2026-10-23T23:50:22Z
+START 2026-10-23T23:50:22Z fm-dod-lib
+RESULT fm-dod-lib exit=0 2026-10-23T23:50:28Z
+START 2026-10-23T23:50:28Z fm-self-repo-role
+RESULT fm-self-repo-role exit=0 2026-10-23T23:50:37Z
+START 2026-10-23T23:50:37Z fm-test-fixture-cleanup
+RESULT fm-test-fixture-cleanup exit=0 2026-10-23T23:50:41Z
+START shell syntax 2026-10-23T23:50:41Z
+RESULT shell syntax complete cumulative_failed=0
+RESULT check-coverage exit=0
+FINAL failed=0 2026-10-23T23:50:57Z

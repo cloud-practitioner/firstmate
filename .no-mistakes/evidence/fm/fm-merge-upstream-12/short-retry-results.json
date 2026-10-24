@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-backend-rex.test.sh"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-brief.test.sh"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-test-fixture-cleanup.test.sh"
+    ],
+    "exit_code": 0
+  }
+]

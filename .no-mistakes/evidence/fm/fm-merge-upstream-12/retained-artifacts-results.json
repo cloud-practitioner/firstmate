@@ -1,0 +1,30 @@
+[
+  {
+    "variant": "github-before",
+    "expected_result_observed": true
+  },
+  {
+    "variant": "github",
+    "expected_result_observed": true
+  },
+  {
+    "variant": "forgejo",
+    "expected_result_observed": true
+  },
+  {
+    "variant": "report",
+    "expected_result_observed": true
+  },
+  {
+    "variant": "bitbucket",
+    "expected_result_observed": true
+  },
+  {
+    "variant": "gerrit",
+    "expected_result_observed": true
+  },
+  {
+    "variant": "malformed",
+    "expected_result_observed": true
+  }
+]

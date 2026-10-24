@@ -1,0 +1,115 @@
+$ bash bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts
+[exit 0]
+$ git init --bare --initial-branch=main /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/remote.git
+Initialized empty Git repository in /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/remote.git/
+[exit 0]
+$ git clone /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/remote.git /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared
+Cloning into '/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared'...
+warning: You appear to have cloned an empty repository.
+done.
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared config user.name Validation Fixture
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared config user.email validation@example.invalid
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared commit --allow-empty -m Initial durable commit
+[main (root-commit) b4e6457] Initial durable commit
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared push origin HEAD:main
+To /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/remote.git
+ * [new branch]      HEAD -> main
+[exit 0]
+$ git clone /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/remote.git /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker
+Cloning into '/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker'...
+done.
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker config user.name Validation Fixture
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker config user.email validation@example.invalid
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker checkout --detach
+HEAD is now at b4e6457 Initial durable commit
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker commit --allow-empty -m Unpublished worker head
+[detached HEAD d5c0bcd] Unpublished worker head
+[exit 0]
+$ bash -c . "$1"; fm_dod_accept_ship_done ship no-mistakes "$2" "$3" "done: PR https://bitbucket.org/ws/repo/pull-requests/7 checks green" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-dod-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared
+named head d5c0bcd286cf8f643c8a2c81ab85517b7f0c31eb is unreachable outside the worker copy
+[exit 1]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker push origin HEAD:refs/heads/topic
+To /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/remote.git
+ * [new branch]      HEAD -> topic
+[exit 0]
+$ bash -c . "$1"; fm_dod_accept_ship_done ship no-mistakes "$2" "$3" "done: PR https://bitbucket.org/ws/repo/pull-requests/7 checks green" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-dod-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker show-ref refs/remotes/origin/topic
+d5c0bcd286cf8f643c8a2c81ab85517b7f0c31eb refs/remotes/origin/topic
+[exit 0]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker commit --allow-empty -m Private follow-up after the green head
+[detached HEAD 2b50701] Private follow-up after the green head
+[exit 0]
+$ bash -c . "$1"; fm_dod_accept_ship_done ship no-mistakes "$2" "$3" "done: PR https://bitbucket.org/ws/repo/pull-requests/7 checks green" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-dod-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/worker /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared
+named head 2b507012a22caa3f3e53b953a487ea6f23463e89 is unreachable outside the worker copy
+[exit 1]
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared remote set-url origin https://github.com/o/r.git
+[exit 0]
+$ bash bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/brief.md sample no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared
+[FAIL] the brief has no '## Evidence class' subsection, and the evidence gate is on for sample
+FIX: scaffold the brief again with bin/fm-brief.sh and fill the subsection with ui, api, ui+api, or none: <reason>
+[exit 1]
+$ bash bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/brief.md sample no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared
+[FAIL] the evidence class none is not allowed for sample (it always needs evidence)
+FIX: declare ui (terminal screenshots of the changed behaviour) or api in the brief
+[exit 1]
+$ bash bin/fm-pr-evidence.sh intake /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/brief.md sample no-mistakes none /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/contracts/projects/shared
+evidence=ui
+[exit 0]
+$ bash bin/fm-pr-evidence.sh annotate-ui --text /home/node/.no-mistakes/evidence/01M5NDSRSC3QSFVJQR0FE670EK/retention-before.txt --against /home/node/.no-mistakes/evidence/01M5NDSRSC3QSFVJQR0FE670EK/retention-after.txt --purpose The answer kept the pull request as a note. Now it keeps the structured link. --label The pull request link changed. --out /home/node/.no-mistakes/evidence/01M5NDSRSC3QSFVJQR0FE670EK/retention-before.png
+[WARN] item annotation purpose: word 'request' is not approved; try ask ... to, write
+[WARN] item annotation purpose: word 'note' is not approved; try record
+[WARN] item annotation mark label 'The pull request link changed.': word 'request' is not approved; try ask ... to, write
+[exit 0]
+$ bash bin/fm-pr-evidence.sh annotate-ui --text /home/node/.no-mistakes/evidence/01M5NDSRSC3QSFVJQR0FE670EK/retention-after.txt --against /home/node/.no-mistakes/evidence/01M5NDSRSC3QSFVJQR0FE670EK/retention-before.txt --purpose The answer kept the pull request as a note. Now it keeps the structured link. --label The pull request link changed. --out /home/node/.no-mistakes/evidence/01M5NDSRSC3QSFVJQR0FE670EK/retention-after.png
+[WARN] item annotation purpose: word 'request' is not approved; try ask ... to, write
+[WARN] item annotation purpose: word 'note' is not approved; try record
+[WARN] item annotation mark label 'The pull request link changed.': word 'request' is not approved; try ask ... to, write
+[exit 0]
+$ bash -c . "$1"; fm_wake_append check manual-first "check: first live event" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-wake-lib.sh
+[exit 0]
+$ bash bin/fm-wake-drain.sh
+1792797303	1	check	manual-first	check: first live event
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 920085.1792797303.OXjT0K
+[exit 0]
+$ bash bin/fm-wake-drain.sh
+1792797303	1	check	manual-first	check: first live event
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 920085.1792797303.OXjT0K
+[exit 0]
+$ bash bin/fm-wake-drain.sh --ack-through 0 --recovery-generation wrong-generation
+wake drain: nothing was acknowledged through 0 (none of your presented wake rows is at or below it); the current wake is row 1: run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 920085.1792797303.OXjT0K after handling it
+[exit 0]
+$ bash -c . "$1"; fm_wake_append check manual-second "check: second live event" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-wake-lib.sh
+[exit 0]
+$ bash bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 920085.1792797303.OXjT0K
+[exit 0]
+$ bash bin/fm-wake-drain.sh
+1792797306	2	check	manual-second	check: second live event
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 920085.1792797303.OXjT0K
+[exit 0]
+$ bash bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 920085.1792797303.OXjT0K
+[exit 0]
+$ bash -c . "$1"; fm_wake_append check manual-generation "check: generation-bound event" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-wake-lib.sh
+[exit 0]
+$ bash bin/fm-wake-drain.sh
+1792797308	3	check	manual-generation	check: generation-bound event
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 3 --recovery-generation 924628.1792797308.R6iub8
+[exit 0]
+$ bash bin/fm-wake-drain.sh --ack-through 3 --recovery-generation wrong-generation
+wake drain: acknowledged wakes through 3 (1 row(s) consumed), but a newer recovery episode is pending; re-run bin/fm-wake-drain.sh and use the new WAKE_ACK_REQUIRED command
+[exit 0]
+Observed: sequence-bound rows consumed; mismatched recovery episode retained.
+$ bash bin/fm-wake-drain.sh --ack-through 3 --recovery-generation 924628.1792797308.R6iub8
+[exit 0]
+$ bash bin/fm-wake-drain.sh
+[exit 0]
+Observed: the matching generation acknowledged the episode; a subsequent drain requires no acknowledgement.

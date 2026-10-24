@@ -1,0 +1,26 @@
+$ TMPDIR=/tmp bash bin/fm-test-run.sh --jobs 1 tests/fm-secondmate-dormant.test.sh
+FM_TEST_BEGIN 2026-10-23T23:23:51Z tests/fm-secondmate-dormant.test.sh family=secondmate expected_gate_skip=none
+ok - record library: write, read, describe, list, clear, and unsafe paths
+ok - failed literal and Enter launch delivery retain the record needed to resume again
+ok - failed first launches still roll back only the new record
+ok - resumed and already-running mates both rejoin automatic recovery
+ok - resume reports rearm failures and remains retryable without duplicating a live agent
+ok - stand-down and resume preserve the exact fm-prefixed ID and its sibling
+ok - a stopped Cursor mate resumes from dead or missing with the current harness
+ok - stand-down serializes ordinary, automatic and key sends, handoffs and both launch forms
+ok - before: fm-control exit alone is undone by the liveness sweep
+ok - stand-down: stops the agent, records dormancy in the parent home, keeps the mate's records
+ok - stand-down: refuses while the mate's own home has in-flight work
+ok - stand-down: names a pending reply, an unread steer, and an undelivered handoff wake
+ok - stand-down: lists every blocker at once
+ok - stand-down: refuses remote, already dormant, unknown, and malformed requests
+ok - stand-down: a stop that cannot be confirmed records no dormancy
+ok - sweep: a dormant mate stays stopped, is not reported dead, and shows as dormant
+ok - fm-spawn --secondmate and fm-control relaunch refuse a dormant mate
+ok - resume: launches through the guarded spawn and clears dormancy only on success
+ok - resume: refuses a mate that is not dormant and just clears one already running
+# all fm-secondmate-dormant tests passed
+FM_TEST_END 2026-10-23T23:25:16Z tests/fm-secondmate-dormant.test.sh exit=0 duration_ms=85386 gate_skip=false
+FM_TEST_SUMMARY total=1 failed=0 skipped_gate=0 duration_ms=85436
+FM_TEST_SUMMARY_FAMILY family=secondmate count=1 duration_ms=85386 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-secondmate-dormant.test.sh duration_ms=85386

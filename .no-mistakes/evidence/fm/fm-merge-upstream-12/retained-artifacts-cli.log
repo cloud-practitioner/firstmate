@@ -1,0 +1,442 @@
+$ bash bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github-before
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github-before
+[exit 0]
+$ tasks-axi add task Retained delivery follow-up --kind ship --repo sample --start
+ok: added task (ship, repo sample) -> In flight
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-10-23
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done task --pr <url>` when it ships
+  - Run `tasks-axi block task --by <other>` to record a dependency
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/before-bin/fm-captain-hold.sh hold task --reason Choose the follow-up after interrupted cleanup
+task
+[exit 0]
+$ bash -c . "$1"; fm_backlog_close_marker_mark_cleanup_incomplete "$2/state" "$2/state/task.backlog-close" task "$2/data" live-gen --retain "$3" "$4" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-backlog-transition-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github-before --pr https://github.com/o/r/pull/7
+[exit 0]
+Persisted pending retention contract:
+id=task
+data=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github-before/data
+spawn_gen=live-gen
+cleanup_incomplete=1
+mode=retain
+arg=--pr
+arg=https://github.com/o/r/pull/7
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/before-bin/fm-captain-hold.sh answer task --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github-before/answer.txt
+answered: task
+[exit 0]
+$ tasks-axi show task --full
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "fm-hold-v1:Q2hvb3NlIHRoZSBmb2xsb3ctdXAgYWZ0ZXIgaW50ZXJydXB0ZWQgY2xlYW51cA=="
+  hold_kind: captain
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-23
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 2738e5a748005533b9cf71900196a14adc8582b7767cdc475feb3e2230114acb\nResolution mode: answered\n\nCaptain decision:\nProceed with the delivered result.\nPR https://github.com/o/r/pull/7"
+[exit 0]
+$ bash bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github
+[exit 0]
+$ tasks-axi add task Retained delivery follow-up --kind ship --repo sample --start
+ok: added task (ship, repo sample) -> In flight
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-10-23
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done task --pr <url>` when it ships
+  - Run `tasks-axi block task --by <other>` to record a dependency
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh hold task --reason Choose the follow-up after interrupted cleanup
+task
+[exit 0]
+$ bash -c . "$1"; fm_backlog_close_marker_mark_cleanup_incomplete "$2/state" "$2/state/task.backlog-close" task "$2/data" live-gen --retain "$3" "$4" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-backlog-transition-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github --pr https://github.com/o/r/pull/7
+[exit 0]
+Persisted pending retention contract:
+id=task
+data=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github/data
+spawn_gen=live-gen
+cleanup_incomplete=1
+mode=retain
+arg=--pr
+arg=https://github.com/o/r/pull/7
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh answer task --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-github/answer.txt
+answered: task
+[exit 0]
+$ tasks-axi show task --full
+task:
+  id: task
+  title: "Retained delivery follow-up https://github.com/o/r/pull/7"
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "fm-hold-v1:Q2hvb3NlIHRoZSBmb2xsb3ctdXAgYWZ0ZXIgaW50ZXJydXB0ZWQgY2xlYW51cA=="
+  hold_kind: captain
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-23
+  deps: none
+  links: "pr:https://github.com/o/r/pull/7"
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 2738e5a748005533b9cf71900196a14adc8582b7767cdc475feb3e2230114acb\nResolution mode: answered\n\nCaptain decision:\nProceed with the delivered result."
+[exit 0]
+$ bash bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-forgejo
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-forgejo
+[exit 0]
+$ tasks-axi add task Retained delivery follow-up --kind ship --repo sample --start
+ok: added task (ship, repo sample) -> In flight
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-10-23
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done task --pr <url>` when it ships
+  - Run `tasks-axi block task --by <other>` to record a dependency
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh hold task --reason Choose the follow-up after interrupted cleanup
+task
+[exit 0]
+$ bash -c . "$1"; fm_backlog_close_marker_mark_cleanup_incomplete "$2/state" "$2/state/task.backlog-close" task "$2/data" live-gen --retain "$3" "$4" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-backlog-transition-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-forgejo --pr https://forgejo.example.com/o/r/pulls/7
+[exit 0]
+Persisted pending retention contract:
+id=task
+data=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-forgejo/data
+spawn_gen=live-gen
+cleanup_incomplete=1
+mode=retain
+arg=--pr
+arg=https://forgejo.example.com/o/r/pulls/7
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh answer task --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-forgejo/answer.txt
+answered: task
+[exit 0]
+$ tasks-axi show task --full
+task:
+  id: task
+  title: "Retained delivery follow-up https://forgejo.example.com/o/r/pulls/7"
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "fm-hold-v1:Q2hvb3NlIHRoZSBmb2xsb3ctdXAgYWZ0ZXIgaW50ZXJydXB0ZWQgY2xlYW51cA=="
+  hold_kind: captain
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-23
+  deps: none
+  links: "pr:https://forgejo.example.com/o/r/pulls/7"
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 2738e5a748005533b9cf71900196a14adc8582b7767cdc475feb3e2230114acb\nResolution mode: answered\n\nCaptain decision:\nProceed with the delivered result."
+[exit 0]
+$ bash bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-report
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-report
+[exit 0]
+$ tasks-axi add task Retained delivery follow-up --kind ship --repo sample --start
+ok: added task (ship, repo sample) -> In flight
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-10-23
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done task --pr <url>` when it ships
+  - Run `tasks-axi block task --by <other>` to record a dependency
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh hold task --reason Choose the follow-up after interrupted cleanup
+task
+[exit 0]
+$ bash -c . "$1"; fm_backlog_close_marker_mark_cleanup_incomplete "$2/state" "$2/state/task.backlog-close" task "$2/data" live-gen --retain "$3" "$4" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-backlog-transition-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-report --report data/task/report.md
+[exit 0]
+Persisted pending retention contract:
+id=task
+data=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-report/data
+spawn_gen=live-gen
+cleanup_incomplete=1
+mode=retain
+arg=--report
+arg=data/task/report.md
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh answer task --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-report/answer.txt
+answered: task
+[exit 0]
+$ tasks-axi show task --full
+task:
+  id: task
+  title: Retained delivery follow-up data/task/report.md
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "fm-hold-v1:Q2hvb3NlIHRoZSBmb2xsb3ctdXAgYWZ0ZXIgaW50ZXJydXB0ZWQgY2xlYW51cA=="
+  hold_kind: captain
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-23
+  deps: none
+  links: "report:data/task/report.md"
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 2738e5a748005533b9cf71900196a14adc8582b7767cdc475feb3e2230114acb\nResolution mode: answered\n\nCaptain decision:\nProceed with the delivered result."
+[exit 0]
+$ bash bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-bitbucket
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-bitbucket
+[exit 0]
+$ tasks-axi add task Retained delivery follow-up --kind ship --repo sample --start
+ok: added task (ship, repo sample) -> In flight
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-10-23
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done task --pr <url>` when it ships
+  - Run `tasks-axi block task --by <other>` to record a dependency
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh hold task --reason Choose the follow-up after interrupted cleanup
+task
+[exit 0]
+$ bash -c . "$1"; fm_backlog_close_marker_mark_cleanup_incomplete "$2/state" "$2/state/task.backlog-close" task "$2/data" live-gen --retain "$3" "$4" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-backlog-transition-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-bitbucket --pr https://bitbucket.org/ws/repo/pull-requests/7
+[exit 0]
+Persisted pending retention contract:
+id=task
+data=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-bitbucket/data
+spawn_gen=live-gen
+cleanup_incomplete=1
+mode=retain
+arg=--pr
+arg=https://bitbucket.org/ws/repo/pull-requests/7
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh answer task --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-bitbucket/answer.txt
+answered: task
+[exit 0]
+$ tasks-axi show task --full
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "fm-hold-v1:Q2hvb3NlIHRoZSBmb2xsb3ctdXAgYWZ0ZXIgaW50ZXJydXB0ZWQgY2xlYW51cA=="
+  hold_kind: captain
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-23
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 2738e5a748005533b9cf71900196a14adc8582b7767cdc475feb3e2230114acb\nResolution mode: answered\n\nCaptain decision:\nProceed with the delivered result.\nPR https://bitbucket.org/ws/repo/pull-requests/7"
+[exit 0]
+$ bash bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-gerrit
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-gerrit
+[exit 0]
+$ tasks-axi add task Retained delivery follow-up --kind ship --repo sample --start
+ok: added task (ship, repo sample) -> In flight
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-10-23
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done task --pr <url>` when it ships
+  - Run `tasks-axi block task --by <other>` to record a dependency
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh hold task --reason Choose the follow-up after interrupted cleanup
+task
+[exit 0]
+$ bash -c . "$1"; fm_backlog_close_marker_mark_cleanup_incomplete "$2/state" "$2/state/task.backlog-close" task "$2/data" live-gen --retain "$3" "$4" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-backlog-transition-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-gerrit --pr https://gerrit.example.com/c/project/+/12345
+[exit 0]
+Persisted pending retention contract:
+id=task
+data=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-gerrit/data
+spawn_gen=live-gen
+cleanup_incomplete=1
+mode=retain
+arg=--pr
+arg=https://gerrit.example.com/c/project/+/12345
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh answer task --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-gerrit/answer.txt
+answered: task
+[exit 0]
+$ tasks-axi show task --full
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: done
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "fm-hold-v1:Q2hvb3NlIHRoZSBmb2xsb3ctdXAgYWZ0ZXIgaW50ZXJydXB0ZWQgY2xlYW51cA=="
+  hold_kind: captain
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: "-"
+  closed: 2026-10-23
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 2738e5a748005533b9cf71900196a14adc8582b7767cdc475feb3e2230114acb\nResolution mode: answered\n\nCaptain decision:\nProceed with the delivered result.\nGerrit change https://gerrit.example.com/c/project/+/12345"
+[exit 0]
+$ bash bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-malformed
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-malformed
+[exit 0]
+$ tasks-axi add task Retained delivery follow-up --kind ship --repo sample --start
+ok: added task (ship, repo sample) -> In flight
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-10-23
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi done task --pr <url>` when it ships
+  - Run `tasks-axi block task --by <other>` to record a dependency
+[exit 0]
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh hold task --reason Choose the follow-up after interrupted cleanup
+task
+[exit 0]
+$ bash -c . "$1"; fm_backlog_close_marker_mark_cleanup_incomplete "$2/state" "$2/state/task.backlog-close" task "$2/data" live-gen --retain "$3" "$4" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-backlog-transition-lib.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-malformed --pr https://github.com/o/r/pull/7
+[exit 0]
+Persisted pending retention contract:
+id=task
+data=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-malformed/data
+spawn_gen=live-gen
+cleanup_incomplete=1
+mode=retain
+arg=--pr
+arg=https://github.com/o/r/pull/7
+$ bash /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/bin/fm-captain-hold.sh answer task --decision-file /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-malformed/answer.txt
+fm-captain-hold: cannot apply the artifact recorded for task in /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-malformed/state/task.backlog-close: unreadable pending-close record /home/node/.no-mistakes/worktrees/450411b3e67c/01M5NDSRSC3QSFVJQR0FE670EK/.test-phase/retention-malformed/state/task.backlog-close
+fm-captain-hold: could not close answered captain-held task task
+[exit 1]
+$ tasks-axi show task --full
+task:
+  id: task
+  title: Retained delivery follow-up
+  state: in_flight
+  blocked: no
+  blocked_by: none
+  held: yes
+  hold_reason: "fm-hold-v1:Q2hvb3NlIHRoZSBmb2xsb3ctdXAgYWZ0ZXIgaW50ZXJydXB0ZWQgY2xlYW51cA=="
+  hold_kind: captain
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-10-23
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-23T22:56:00Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: 2738e5a748005533b9cf71900196a14adc8582b7767cdc475feb3e2230114acb\nResolution mode: answered\n\nCaptain decision:\nProceed with the delivered result."
+[exit 0]

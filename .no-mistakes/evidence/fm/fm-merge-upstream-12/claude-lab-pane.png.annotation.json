@@ -1,0 +1,7 @@
+{
+  "labels": [
+    "The agent uses the normal account."
+  ],
+  "purpose": "The real agent starts in a private test terminal. The host launcher stays unchanged.",
+  "sha256": "c9f854ac1aef98b35a5b1ff62dc7110ec0bac36e16adb99d1f8459fac8fe09bb"
+}

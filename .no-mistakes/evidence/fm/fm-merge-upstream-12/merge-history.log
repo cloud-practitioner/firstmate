@@ -1,0 +1,19 @@
+$ git log --first-parent 244d8368..6ed83546
+6ed83546 2477ef9a no-mistakes(review): Preserve retained PR artifacts and acknowledge wedge-test wakes
+2477ef9a b270608f Restore the fork's busy-inbox verification notes
+b270608f eb4963c1 Judge captain-call durability per identity, exact id first
+eb4963c1 1db0b388 Keep quoted-value handling in the captain-hold TOML reader
+1db0b388 02c9c410 Add a tenth portable serial test shard
+02c9c410 244d8368 af1c6817 Merge upstream firstmate main (af1c6817) into the fork
+
+$ git merge-base --is-ancestor 244d8368 6ed83546
+fork base is retained
+
+$ git merge-base --is-ancestor af1c6817 6ed83546
+upstream tip is included
+
+$ git rev-list --count 83b70ef4..af1c6817
+36
+
+$ git diff --quiet 244d8368 6ed83546 -- contrib/iqx-ixia-hook bin/fm-pr-evidence.sh bin/fm-pr-evidence-lib.py bin/fm-live-claude.sh bin/fm-secondmate-dormant.sh bin/fm-pr-merge.sh
+fork-only modules and IQX hook unchanged

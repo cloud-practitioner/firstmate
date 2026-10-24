@@ -1,0 +1,90 @@
+[
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-captain-hold-lifecycle.test.sh"
+    ],
+    "exit_code": 1,
+    "elapsed_s": 300.2
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-watch-wedge-cap.test.sh"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 491.2
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-backend.test.sh"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 29.7
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-backend-rex.test.sh"
+    ],
+    "exit_code": 1,
+    "elapsed_s": 9.4
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-brief.test.sh"
+    ],
+    "exit_code": 1,
+    "elapsed_s": 20.6
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-dod-lib.test.sh"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 10.5
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-self-repo-role.test.sh"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 10.7
+  },
+  {
+    "command": [
+      "bash",
+      "bin/fm-test-run.sh",
+      "--jobs",
+      "1",
+      "tests/fm-test-fixture-cleanup.test.sh"
+    ],
+    "exit_code": 1,
+    "elapsed_s": 4.9
+  }
+]
