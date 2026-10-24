@@ -286,10 +286,10 @@ else
   printf 'contributions: jq unavailable; coverage is unconfirmed\n' >&2
 fi
 # Opt-in config/ready-after-green: a no-mistakes PR is ready only once the
-# child's own status holds the checks-green report naming this exact PR, so a
+# child's own status holds the CI-ready report naming this exact PR, so a
 # PR registered while its checks are pending or failing publishes no ready
-# line. The report is read with the same test bin/fm-crew-state.sh uses, so
-# text around `PR <url> checks green` does not withhold the line.
+# line. fm_dod_note_reports_ci_ready in bin/fm-dod-lib.sh owns the accepted
+# report syntax, shared with bin/fm-crew-state.sh.
 # The child's later done line still reaches the parent through
 # bin/fm-inactive-reconcile.sh, and registering again after the report
 # publishes this line. Only the last done line counts, so a later done that
