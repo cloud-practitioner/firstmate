@@ -1070,6 +1070,8 @@ test_ship_and_scout_teach_validation_round_pause() {
       "$kind brief's Waiting section does not declare the validation round once and then hold it"
     assert_no_grep "is not a \`paused:\` wait" "$brief" \
       "$kind brief still tells workers never to declare a wait they hold in a command"
+    assert_no_grep "heavy-test slot" "$brief" \
+      "$kind brief names a heavy-test slot that nothing defines"
     assert_grep "your own validation round" "$brief" \
       "$kind brief did not teach workers to declare their validation-round wait"
     assert_grep 'Before ending your turn with your own background shell or monitor still running' "$brief" \
@@ -1304,6 +1306,35 @@ test_pr_evidence_gate_adds_the_evidence_class_only_when_enabled() {
     || fail "fm-brief.sh scout scaffold exited non-zero with config/pr-evidence"
   assert_no_grep "## Evidence class" "$home/data/ev-scout/brief.md" "a scout brief gained the evidence subsection"
   pass "fm-brief: the evidence subsection and contract appear only for a ship when config/pr-evidence enables the project"
+}
+
+test_inbox_guidance_explains_marked_body_terminator() {
+  local home brief kind id
+  home="$TMP_ROOT/inbox-guidance"
+  for kind in no-mistakes scout secondmate; do
+    id="inbox-$kind"
+    case "$kind" in
+      no-mistakes)
+        FM_HOME="$home" "$ROOT/bin/fm-brief.sh" "$id" some-proj --mode no-mistakes >/dev/null \
+          || fail "ship scaffold failed"
+        ;;
+      scout)
+        FM_HOME="$home" "$ROOT/bin/fm-brief.sh" "$id" some-proj --scout >/dev/null \
+          || fail "scout scaffold failed"
+        ;;
+      secondmate)
+        FM_HOME="$home" FM_SECONDMATE_CHARTER='Supervise assigned work.' \
+          "$ROOT/bin/fm-brief.sh" "$id" --secondmate --no-projects >/dev/null \
+          || fail "secondmate scaffold failed"
+        ;;
+    esac
+    brief="$home/data/$id/brief.md"
+    assert_grep 'fm_task_inbox_body' "$brief" "$kind scaffold omitted the format-aware inbox reader"
+    assert_grep 'body-terminator=1' "$brief" "$kind scaffold omitted the body terminator marker"
+    assert_grep 'not part of the logical message body' "$brief" "$kind scaffold omitted the synthetic terminator meaning"
+    assert_grep 'preserve any intentional trailing newlines' "$brief" "$kind scaffold omitted trailing-newline preservation"
+  done
+  pass "fm-brief: inbox guidance explains marked synthetic terminators in every scaffold"
 }
 
 test_worker_role_scope() {
@@ -1715,6 +1746,7 @@ test_scout_lavish_line_follows_presentation_floor
 test_inbox_listing_command_is_safe_on_empty_inbox
 test_workers_wait_without_spending_turns
 test_wait_no_turns_absent_keeps_the_previous_brief
+test_inbox_guidance_explains_marked_body_terminator
 test_home_brief_include_is_appended_last
 test_base_branch_is_rendered_and_bounded
 test_ship_branch_prefix_defaults_to_legacy_fm
