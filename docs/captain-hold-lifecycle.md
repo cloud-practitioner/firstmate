@@ -107,7 +107,7 @@ A post-teardown visual review can complete against the surviving report and dura
 
 `complete` accepts `--none` as an explicit semantic inventory result.
 `--none` is refused while the origin still has a lifecycle-open keyed status decision.
-Before recording completion, `complete` applies the same [durability check as `verify`](#checking-before-scout-teardown-verify) to every inventory entry.
+Before recording completion, `complete` applies the same [durability lookup as `verify`](#checking-before-scout-teardown-verify) to every inventory entry.
 The origin is never its own inventory entry, so a hold that failed cannot be vouched for by the origin row.
 For a historical inventory that names its own origin, hold a separate captain task with `--origin`, replace only the invalid entry in the final `decision_keys=` line of the origin metadata with that task id while preserving all other entries, and re-run `complete`.
 An entry whose recorded origin differs from the one being completed is refused.
@@ -126,12 +126,12 @@ Scout teardown calls the read-only `verify` subcommand after checking for the re
 - Every recorded inventory entry still passes the [completion inventory checks](#recording-a-reviewed-inventory-complete).
 - No keyed status decision opened after the last `complete`.
 
-The durability check shared by `complete` and `verify` resolves the exact identity before trying the legacy-derived `<origin>-decision-<entry>` identity.
+The shared durability lookup judges the exact task id before the legacy-derived `<origin>-decision-<entry>` identity.
 For each identity, a current row, including retained Done records, takes precedence and must be a non-Done captain hold or carry a recorded resolution.
-Only when that row is absent does the markdown backend consult its configured Done archive using the same resolution-record predicate.
-Only the newest archived row for that identity is considered; a row without a recorded resolution is refused, and an earlier archived answer never overrides its current row.
-The legacy-derived identity is tried only when the exact identity is absent from both the current backlog and the archive.
-Archive lookup and current-row precedence have regression coverage in [`tests/fm-captain-hold-lifecycle.test.sh`](../tests/fm-captain-hold-lifecycle.test.sh).
+Only when that row is absent does the markdown backend consult its configured Done archive; only the newest archived row counts, and it must carry a recorded resolution.
+The legacy-derived identity is tried only when the exact identity is absent from both the current backlog and the archive, so an unanswered exact row cannot be bypassed by an answered legacy row.
+Other subcommands do not read the archive.
+[`bin/fm-captain-hold.sh`](../bin/fm-captain-hold.sh) owns archive configuration resolution and bounded row replay; [`tests/fm-captain-hold-lifecycle.test.sh`](../tests/fm-captain-hold-lifecycle.test.sh) covers current-row precedence, exact-before-legacy lookup, and archived answers.
 
 A keyed status decision opened after the last `complete` makes `verify` fail, and re-running `complete` is the repair.
 The `--force` path remains the explicit captain-approved discard escape hatch.
@@ -169,7 +169,7 @@ That record carries the retention intent as a `mode=retain` line.
 An interrupted cleanup therefore replays the retention at the next session start through the same record, validator, and lock as an ordinary close, and never closes the row.
 
 If the captain answers before replay, `answer` validates that record and copies any supported retained pull request or report into the row before closing it.
-A retained pull request tasks-axi cannot link is instead recorded as a note on that close: `Gerrit change <url>` for a Gerrit change, `GitLab merge request <url>` for a GitLab merge request, `PR <url>` for any other.
+A retained pull request tasks-axi cannot link is instead recorded as a note on that close: `Gerrit change <url>` for Gerrit, `GitLab merge request <url>` for GitLab, and `PR <url>` for other unsupported links, including Bitbucket.
 Replay then retires the record.
 
 ### Known retained-delivery gaps
@@ -532,6 +532,7 @@ The suite does not test the accepted merge-to-cleanup re-hold window or asynchro
 - A report-only unresolved captain call refuses `--none` completion before teardown can erase the source.
 - Non-forced scout teardown always requires the durable inventory verification.
 - The recorded-answer guard holds: a bare `tasks-axi done` close fails `verify` until `answer` records the captain's word, and an ordinary finished task cannot be dressed up as an answered call.
+- An answered call that markdown Done retention moved into the Done archive still passes `verify`, `complete`, and scout teardown, while an archived close carrying no recorded answer still refuses teardown, and an attested call found nowhere is refused by name.
 
 ### Answers, stamps, and deferral
 

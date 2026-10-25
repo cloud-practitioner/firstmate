@@ -3026,7 +3026,7 @@ SH
   pass "an answer before cleanup replay preserves the retained report"
 }
 
-answer_before_cleanup_replay_notes_a_retained_pr() {  # <slug> <provider> <url> <note-label>
+answer_before_cleanup_replay_preserves_a_retained_pr() {  # <slug> <provider> <url> <note-label>
   local slug=$1 provider=$2 pr_url=$3 label=$4 home id repo wt rc show real_tasks_axi
   home=$(make_home "answer-before-replay-$slug")
   id="sample-answer-before-replay-$slug"
@@ -3042,8 +3042,9 @@ answer_before_cleanup_replay_notes_a_retained_pr() {  # <slug> <provider> <url> 
   printf 'done: change landed\n' > "$home/state/$id.status"
   run_captain "$home" hold "$id" --reason "captain must choose the follow-up" >/dev/null \
     || fail "could not hold the landed $provider task for the captain"
-  real_tasks_axi=$(command -v tasks-axi)
-  cat > "$home/fakebin/tasks-axi" <<SH
+  if [ -n "$label" ]; then
+    real_tasks_axi=$(command -v tasks-axi)
+    cat > "$home/fakebin/tasks-axi" <<SH
 #!/usr/bin/env bash
 previous=
 for arg in "\$@"; do
@@ -3055,7 +3056,8 @@ for arg in "\$@"; do
 done
 exec "$real_tasks_axi" "\$@"
 SH
-  chmod +x "$home/fakebin/tasks-axi"
+    chmod +x "$home/fakebin/tasks-axi"
+  fi
   cat > "$home/fakebin/treehouse" <<'SH'
 #!/usr/bin/env bash
 exit 1
@@ -3078,18 +3080,33 @@ SH
     || fail "the captain could not answer a $provider task before cleanup replay"
   show=$(tasks_in "$home" show "$id" --full) || fail "the answered $provider row is gone"
   assert_contains "$show" "state: done" "the answer did not close the $provider row"
-  assert_contains "$show" "$label $pr_url" \
-    "the answer dropped the retained $provider URL"
-  pass "an answer before cleanup replay notes the retained $provider pull request"
+  if [ -n "$label" ]; then
+    assert_contains "$show" "$label $pr_url" \
+      "the answer dropped the retained $provider URL"
+  else
+    assert_contains "$(printf '%s\n' "$show" | sed -n 's/^  links: //p')" "pr:$pr_url" \
+      "the answer dropped the structured $provider PR link"
+  fi
+  pass "an answer before cleanup replay preserves the retained $provider pull request"
+}
+
+test_answer_before_cleanup_replay_preserves_a_retained_github_pr() {
+  answer_before_cleanup_replay_preserves_a_retained_pr github GitHub \
+    https://github.com/o/r/pull/7 ''
+}
+
+test_answer_before_cleanup_replay_preserves_a_retained_forgejo_pr() {
+  answer_before_cleanup_replay_preserves_a_retained_pr forgejo Forgejo \
+    https://forgejo.example.com/o/r/pulls/7 ''
 }
 
 test_answer_before_cleanup_replay_notes_a_retained_gerrit_change() {
-  answer_before_cleanup_replay_notes_a_retained_pr gerrit Gerrit \
+  answer_before_cleanup_replay_preserves_a_retained_pr gerrit Gerrit \
     https://gerrit.example.com/c/project/+/12345 "Gerrit change"
 }
 
 test_answer_before_cleanup_replay_notes_a_retained_bitbucket_pr() {
-  answer_before_cleanup_replay_notes_a_retained_pr bitbucket Bitbucket \
+  answer_before_cleanup_replay_preserves_a_retained_pr bitbucket Bitbucket \
     https://bitbucket.org/ws/repo/pull-requests/7 PR
 }
 
@@ -4639,6 +4656,138 @@ SH
   pass "marked hold reasons round-trip through public reads, fleet, startup, and return without changing other fields"
 }
 
+# Done retention moves an answered captain call into the Done archive, where
+# tasks-axi no longer shows it; the completion gate must still count the
+# archived answer as durable, and must still refuse an archived close that
+# carries no captain answer or an attested call found nowhere.
+test_archived_answered_hold_still_satisfies_the_gate() {
+  local home id archive
+  home=$(make_home archived-answer)
+  id=sample-archived-review
+  archive="$home/data/done-archive.md"
+  mkdir -p "$home/data/$id"
+  tasks_in "$home" add "$id" "Investigate the archived sample" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the archived-answer origin"
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  printf '# Archived sample review\n\nOne captain choice remains.\n' > "$home/data/$id/report.md"
+  run_captain "$home" hold sample-archived-call --title "Choose the archived option" \
+    --reason "captain archived choice pending" --repo sample --origin "$id" >/dev/null \
+    || fail "could not register the captain-held task"
+  run_captain "$home" complete "$id" sample-archived-call >/dev/null \
+    || fail "completion failed before the answer"
+  printf 'Captain chose the archived option.\n' > "$home/archived-decision.txt"
+  run_captain "$home" answer sample-archived-call --decision-file "$home/archived-decision.txt" >/dev/null \
+    || fail "answer could not close the captain-held task"
+  run_captain "$home" verify "$id" >/dev/null \
+    || fail "the answered captain call did not verify before retention"
+
+  perl -0pi -e 's/done_keep = 10/done_keep = 0/' "$home/.tasks.toml"
+  tasks_in "$home" add sample-archived-trigger "Trigger Done retention" --kind ship --repo sample >/dev/null
+  tasks_in "$home" "done" sample-archived-trigger >/dev/null \
+    || fail "could not trigger Done retention"
+  assert_grep "sample-archived-call" "$archive" "Done retention did not archive the answered call"
+  if tasks_in "$home" show sample-archived-call >/dev/null 2>&1; then
+    fail "the archived call is still shown from the live backlog, so the fixture reproduces nothing"
+  fi
+
+  run_captain "$home" verify "$id" >/dev/null 2> "$home/archived-verify.err" \
+    || fail "verify refused an answered call Done retention archived: $(cat "$home/archived-verify.err")"
+  run_captain "$home" complete "$id" sample-archived-call >/dev/null 2> "$home/archived-complete.err" \
+    || fail "complete refused an answered call Done retention archived: $(cat "$home/archived-complete.err")"
+  run_teardown "$home" "$id" >/dev/null 2> "$home/archived-teardown.err" \
+    || fail "teardown refused a scout whose answered call was archived: $(cat "$home/archived-teardown.err")"
+
+  id=sample-archived-unanswered-review
+  mkdir -p "$home/data/$id"
+  tasks_in "$home" add "$id" "Investigate the unanswered sample" --kind scout --repo sample --start >/dev/null
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  run_captain "$home" hold sample-archived-unanswered-call --title "Choose the unanswered option" \
+    --reason "captain unanswered choice pending" --repo sample --origin "$id" >/dev/null \
+    || fail "could not register the unanswered captain-held task"
+  run_captain "$home" complete "$id" sample-archived-unanswered-call >/dev/null \
+    || fail "completion failed for the unanswered hold"
+  tasks_in "$home" "done" sample-archived-unanswered-call >/dev/null \
+    || fail "could not close the unanswered hold out of band"
+  assert_grep "sample-archived-unanswered-call" "$archive" \
+    "Done retention did not archive the unanswered close"
+  if run_captain "$home" verify "$id" > "$home/unanswered-verify.out" 2> "$home/unanswered-verify.err"; then
+    fail "verify accepted an archived captain call closed with no recorded answer"
+  fi
+  if run_teardown "$home" "$id" > "$home/unanswered-teardown.out" 2> "$home/unanswered-teardown.err"; then
+    fail "teardown proceeded while an archived captain call had no recorded answer"
+  fi
+  assert_present "$home/state/$id.meta" "refused teardown removed investigation metadata"
+
+  printf 'decisions_reviewed=1\ndecision_keys=sample-never-held-call\n' >> "$home/state/$id.meta"
+  if run_captain "$home" verify "$id" > "$home/missing-verify.out" 2> "$home/missing-verify.err"; then
+    fail "verify accepted an attested captain call that exists nowhere"
+  fi
+  assert_grep "sample-never-held-call" "$home/missing-verify.err" \
+    "the refusal did not name the missing captain call"
+  pass "an answered captain call archived by Done retention still satisfies the completion gate"
+}
+
+# The archive location is not always beside the backlog: tasks-axi honours a
+# [markdown] archive set only in the user-level $HOME/.tasks-axi/config.toml, and
+# resolves a relative value against the backlog root. The completion gate must
+# resolve it the same way, or an answered call retention moved there reads as
+# absent and teardown is refused.
+test_archived_answer_in_a_user_configured_archive_satisfies_the_gate() {
+  local home axi_home archive id
+  home=$(make_home archived-answer-userconfig)
+  axi_home="$home/axi-home"
+  mkdir -p "$axi_home/.tasks-axi"
+  # Root config sets no archive, so the location comes only from the user config.
+  cat > "$home/.tasks.toml" <<'EOF'
+backend = "markdown"
+
+[markdown]
+path = "data/backlog.md"
+done_keep = 10
+EOF
+  cat > "$axi_home/.tasks-axi/config.toml" <<'EOF'
+[markdown]
+archive = "data/relocated-done-archive.md"
+EOF
+  archive="$home/data/relocated-done-archive.md"
+  id=sample-userconfig-review
+  mkdir -p "$home/data/$id"
+  HOME="$axi_home" tasks_in "$home" add "$id" "Investigate the user-config sample" --kind scout --repo sample --start >/dev/null \
+    || fail "could not create the user-config origin"
+  write_origin_meta "$home" "$id"
+  printf 'done: report complete\n' > "$home/state/$id.status"
+  printf '# User-config sample review\n\nOne captain choice remains.\n' > "$home/data/$id/report.md"
+  HOME="$axi_home" run_captain "$home" hold sample-userconfig-call --title "Choose the relocated option" \
+    --reason "captain relocated choice pending" --repo sample --origin "$id" >/dev/null \
+    || fail "could not register the captain-held task"
+  HOME="$axi_home" run_captain "$home" complete "$id" sample-userconfig-call >/dev/null \
+    || fail "completion failed before the answer"
+  printf 'Captain chose the relocated option.\n' > "$home/userconfig-decision.txt"
+  HOME="$axi_home" run_captain "$home" answer sample-userconfig-call --decision-file "$home/userconfig-decision.txt" >/dev/null \
+    || fail "answer could not close the captain-held task"
+
+  perl -0pi -e 's/done_keep = 10/done_keep = 0/' "$home/.tasks.toml"
+  HOME="$axi_home" tasks_in "$home" add sample-userconfig-trigger "Trigger Done retention" --kind ship --repo sample >/dev/null
+  HOME="$axi_home" tasks_in "$home" "done" sample-userconfig-trigger >/dev/null \
+    || fail "could not trigger Done retention"
+  assert_present "$archive" "Done retention did not write the user-configured archive"
+  assert_grep "sample-userconfig-call" "$archive" \
+    "Done retention did not archive the answered call to the user-configured location"
+  if HOME="$axi_home" tasks_in "$home" show sample-userconfig-call >/dev/null 2>&1; then
+    fail "the archived call is still shown from the live backlog, so the fixture reproduces nothing"
+  fi
+
+  HOME="$axi_home" run_captain "$home" verify "$id" >/dev/null 2> "$home/userconfig-verify.err" \
+    || fail "verify refused an answered call archived to the user-configured location: $(cat "$home/userconfig-verify.err")"
+  HOME="$axi_home" run_captain "$home" complete "$id" sample-userconfig-call >/dev/null 2> "$home/userconfig-complete.err" \
+    || fail "complete refused an answered call archived to the user-configured location: $(cat "$home/userconfig-complete.err")"
+  HOME="$axi_home" run_teardown "$home" "$id" >/dev/null 2> "$home/userconfig-teardown.err" \
+    || fail "teardown refused a scout whose answered call was archived to the user-configured location: $(cat "$home/userconfig-teardown.err")"
+  pass "an answered captain call archived to a user-configured location still satisfies the completion gate"
+}
+
 test_hold_reason_round_trips_awkward_characters
 test_hold_origins_precede_backend_holds
 test_historical_self_inventory_has_workable_repair
@@ -4924,6 +5073,8 @@ test_teardown_never_closes_a_captain_held_task
 test_retained_row_artifacts_survive_captain_answers
 test_interrupted_cleanup_keeps_the_captain_call_recoverable
 test_answer_before_cleanup_replay_preserves_the_retained_report
+test_answer_before_cleanup_replay_preserves_a_retained_github_pr
+test_answer_before_cleanup_replay_preserves_a_retained_forgejo_pr
 test_answer_before_cleanup_replay_notes_a_retained_gerrit_change
 test_answer_before_cleanup_replay_notes_a_retained_bitbucket_pr
 test_unusable_pending_close_record_names_its_reason
@@ -4956,3 +5107,5 @@ for archive_variant in held-body empty-body reused-id live-legacy live-legacy-he
   test_verify_refuses_an_unanswered_archived_row_despite_an_older_answer "$archive_variant" || exit $?
 done
 test_verify_accepts_an_exact_archived_answer_despite_a_live_legacy_row
+test_archived_answered_hold_still_satisfies_the_gate
+test_archived_answer_in_a_user_configured_archive_satisfies_the_gate
