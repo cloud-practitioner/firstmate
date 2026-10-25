@@ -1,0 +1,49 @@
+{
+  "request": {
+    "body": "",
+    "headers": [
+      [
+        "Host",
+        "127.0.0.1:33719"
+      ],
+      [
+        "User-Agent",
+        "curl/8.14.1"
+      ],
+      [
+        "Accept",
+        "*/*"
+      ],
+      [
+        "Authorization",
+        "***masked (24 chars)***"
+      ]
+    ],
+    "method": "GET",
+    "url": "http://127.0.0.1:33719/status"
+  },
+  "response": {
+    "body": "{\"status\": \"ready\", \"access_token\": \"***masked (17 chars)***\"}",
+    "headers": [
+      [
+        "Server",
+        "BaseHTTP/0.6 Python/3.13.5"
+      ],
+      [
+        "Date",
+        "Sun, 25 Oct 2026 16:35:51 GMT"
+      ],
+      [
+        "Content-Type",
+        "application/json"
+      ],
+      [
+        "Set-Cookie",
+        "***masked (35 chars)***"
+      ]
+    ],
+    "reason": "OK",
+    "status": 200
+  },
+  "v": 1
+}

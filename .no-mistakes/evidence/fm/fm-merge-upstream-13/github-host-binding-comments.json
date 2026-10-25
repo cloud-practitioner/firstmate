@@ -1,0 +1,23 @@
+{
+  "context": "Disposable stub-forge state after the non-live GitHub host-binding regression; not a real GitHub publication",
+  "comments": [
+    {
+      "id": "103",
+      "user": {
+        "login": "worker"
+      },
+      "body": "## Evidence for review\n\nKind: `ui`. PR head: `0123456789ab`.\n\n### 1. cli (ui)\n\n**Purpose.** The tool printed old text. Now it prints new text.\n\n**Before**\n\n![cli before](https://github.com/user-attachments/assets/05c9cef7-aa4f-db7c-d843-03454d518dd5)\n\n**After**\n\n![cli after](https://github.com/user-attachments/assets/f69584f5-52a9-c0b4-962e-ae823f02a753)\n\n**Marks.**\n- Text changed\n\n---\n\n```fm-pr-evidence-v1\n{\n  \"head\": \"0123456789abcdef0123456789abcdef01234567\",\n  \"items\": [\n    {\n      \"after\": {\n        \"annotation\": {\n          \"labels\": [\n            \"Text changed\"\n          ],\n          \"purpose\": \"The tool printed old text. Now it prints new text.\",\n          \"sha256\": \"f69584f552a9c0b4962eae823f02a75301958258e3f0db17c88ee11bfab6296d\"\n        },\n        \"sha256\": \"f69584f552a9c0b4962eae823f02a75301958258e3f0db17c88ee11bfab6296d\"\n      },\n      \"before\": {\n        \"annotation\": {\n          \"labels\": [\n            \"Text changed\"\n          ],\n          \"purpose\": \"The tool printed old text. Now it prints new text.\",\n          \"sha256\": \"05c9cef7aa4fdb7cd84303454d518dd5936cf97765b07789e2a3b483cc53fab2\"\n        },\n        \"sha256\": \"05c9cef7aa4fdb7cd84303454d518dd5936cf97765b07789e2a3b483cc53fab2\"\n      },\n      \"id\": \"cli\",\n      \"kind\": \"ui\",\n      \"labels\": [\n        \"Text changed\"\n      ],\n      \"purpose\": \"The tool printed old text. Now it prints new text.\"\n    }\n  ],\n  \"kind\": \"ui\",\n  \"none_reason\": null,\n  \"v\": 1\n}\n```",
+      "html": "<p>## Evidence for review</p>\n\n<p>Kind: `ui`. PR head: `0123456789ab`.</p>\n\n<p>### 1. cli (ui)</p>\n\n<p>**Purpose.** The tool printed old text. Now it prints new text.</p>\n\n<p>**Before**</p>\n\n<p><img src=\"http://127.0.0.1:34085/img/05c9cef7aa4fdb7cd84303454d518dd5936cf97765b07789e2a3b483cc53fab2.png\" alt=\"cli before\"></p>\n\n<p>**After**</p>\n\n<p><img src=\"http://127.0.0.1:34085/img/f69584f552a9c0b4962eae823f02a75301958258e3f0db17c88ee11bfab6296d.png\" alt=\"cli after\"></p>\n\n<p>**Marks.**</p>\n<p>- Text changed</p>\n\n<p>---</p>\n\n<pre>\n{\n\"head\": \"0123456789abcdef0123456789abcdef01234567\",\n\"items\": [\n{\n\"after\": {\n\"annotation\": {\n\"labels\": [\n\"Text changed\"\n],\n\"purpose\": \"The tool printed old text. Now it prints new text.\",\n\"sha256\": \"f69584f552a9c0b4962eae823f02a75301958258e3f0db17c88ee11bfab6296d\"\n},\n\"sha256\": \"f69584f552a9c0b4962eae823f02a75301958258e3f0db17c88ee11bfab6296d\"\n},\n\"before\": {\n\"annotation\": {\n\"labels\": [\n\"Text changed\"\n],\n\"purpose\": \"The tool printed old text. Now it prints new text.\",\n\"sha256\": \"05c9cef7aa4fdb7cd84303454d518dd5936cf97765b07789e2a3b483cc53fab2\"\n},\n\"sha256\": \"05c9cef7aa4fdb7cd84303454d518dd5936cf97765b07789e2a3b483cc53fab2\"\n},\n\"id\": \"cli\",\n\"kind\": \"ui\",\n\"labels\": [\n\"Text changed\"\n],\n\"purpose\": \"The tool printed old text. Now it prints new text.\"\n}\n],\n\"kind\": \"ui\",\n\"none_reason\": null,\n\"v\": 1\n}\n</pre>",
+      "updated": "2026-10-22T01:00:00Z"
+    },
+    {
+      "id": "104",
+      "user": {
+        "login": "worker"
+      },
+      "body": "Evidence gate waived for this PR by the captain. The captain's words: Waive the evidence for this PR please",
+      "html": "<p>Evidence gate waived for this PR by the captain. The captain's words: Waive the evidence for this PR please</p>",
+      "updated": "2026-10-22T01:00:00Z"
+    }
+  ]
+}

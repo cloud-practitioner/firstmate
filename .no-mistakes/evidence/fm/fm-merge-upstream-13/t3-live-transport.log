@@ -1,0 +1,35 @@
+T3 is a genuine workspace-local vendor binary; server HOME and data are disposable. No model login or operator credential is used.
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/.test-lab/t3-dist/package/t3 --version
+t3 v0.1.0
+Exit: 0
+
+Loopback server ready=True
+
+$ curl --max-time 8 -sS -o /dev/null -w HTTP readiness: %{http_code}\n http://127.0.0.1:46449/
+HTTP readiness: 200
+Exit: 0
+
+$ node /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/bin/fm-t3-mcp.mjs login --url http://127.0.0.1:46449 --access full-access --t3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/.test-lab/t3-dist/package/t3 --base-dir <LAB>/t3
+{"ok":true,"tokenFile":"<LAB>/fm/config/t3code-token","origin":"http://127.0.0.1:46449","access":"full-access","scope":"orchestration:read orchestration:operate settings:write source-control:write","expiresAt":"2026-11-24T16:53:57.579Z","environmentId":"44d675a1-6c74-4953-9226-625570d8b05a","serverVersion":"0.1.0"}
+Exit: 0
+
+$ node /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/bin/fm-t3-mcp.mjs status
+{"ok":true,"origin":"http://127.0.0.1:46449","access":"full-access","expiresAt":"2026-11-24T16:53:57.579Z","daysLeft":30,"environmentId":"44d675a1-6c74-4953-9226-625570d8b05a","serverVersion":"0.1.0","recordedServerVersion":"0.1.0","telemetry":"off"}
+Exit: 0
+
+$ node /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/bin/fm-t3-mcp.mjs project-read --project validation-absent
+{"ok":false,"error":{"code":"project_not_found","message":"T3 lists no live project validation-absent"}}
+fm-t3-mcp: T3 lists no live project validation-absent
+Exit: 3
+
+$ node /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/bin/fm-t3-mcp.mjs state --thread mcp:validation-absent
+{"ok":true,"threadId":"mcp:validation-absent","exists":false}
+Exit: 0
+
+$ node /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/bin/fm-t3-mcp.mjs thread-for-root --root <LAB>/project
+{"ok":false,"error":{"code":"no_thread","message":"T3 has no project rooted at <LAB>/project"}}
+fm-t3-mcp: T3 has no project rooted at <LAB>/project
+Exit: 5
+
+PASS live MCP capability gate, environment pin, typed absent project/thread, and root lookup.

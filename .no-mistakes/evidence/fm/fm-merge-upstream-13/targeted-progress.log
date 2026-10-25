@@ -1,0 +1,19 @@
+
+START 2026-10-25T17:04:29Z tests/fm-brief.test.sh TMPDIR=/tmp/fm-targeted.ulVLAq
+END 2026-10-25T17:04:50Z tests/fm-brief.test.sh exit=0
+
+START 2026-10-25T17:04:50Z tests/fm-pr-evidence.test.sh TMPDIR=/tmp/fm-targeted.LLeuEc
+END 2026-10-25T17:06:55Z tests/fm-pr-evidence.test.sh exit=0
+
+START 2026-10-25T17:06:55Z tests/fm-pr-check-security.test.sh TMPDIR=/tmp/fm-targeted.HBHOwP
+END 2026-10-25T17:12:11Z tests/fm-pr-check-security.test.sh exit=0
+
+START 2026-10-25T17:12:11Z tests/fm-pr-merge.test.sh TMPDIR=/tmp/fm-targeted.KD1Erl
+END 2026-10-25T17:19:34Z tests/fm-pr-merge.test.sh exit=0
+
+START 2026-10-25T17:19:34Z tests/fm-backend-t3code.test.sh TMPDIR=/tmp/fm-targeted.gzG9gc
+END 2026-10-25T17:23:19Z tests/fm-backend-t3code.test.sh exit=0
+
+START 2026-10-25T17:23:19Z python3 tests/fm-pr-evidence-regressions.test.py TMPDIR=/tmp/fm-targeted.YnPkeF
+END 2026-10-25T17:23:21Z python-regressions exit=0
+DONE 2026-10-25T17:23:21Z

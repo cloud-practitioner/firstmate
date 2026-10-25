@@ -1,0 +1,10 @@
+pr comment --help
+api repos/o/r/pulls/107
+api --paginate --slurp repos/o/r/pulls/107/files?per_page=100
+api --paginate --slurp -H Accept: application/vnd.github.full+json repos/o/r/issues/107/comments?per_page=100
+api user --jq .login
+pr comment https://github.com/o/r/pull/107 --body-file /tmp/fm-targeted.LLeuEc/fm-pr-evidence.iJKWYn/github-host-binding/home/state/.pr-evidence.q6T3wb/comment.md --attach /tmp/fm-targeted.LLeuEc/fm-pr-evidence.iJKWYn/github-host-binding/ev/b.png#cli before --attach /tmp/fm-targeted.LLeuEc/fm-pr-evidence.iJKWYn/github-host-binding/ev/a.png#cli after
+api -X DELETE repos/o/r/issues/comments/102
+api repos/o/r/pulls/107
+api --paginate --slurp repos/o/r/pulls/107/files?per_page=100
+api --paginate --slurp -H Accept: application/vnd.github.full+json repos/o/r/issues/107/comments?per_page=100

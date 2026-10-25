@@ -1,0 +1,60 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/.test-lab/fm-lab.SWfCzA
+{"id":"cli:tab:rename","result":{"tab":{"agent_status":"unknown","focused":true,"label":"fm-live-worker","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"tab_info"}}
+viewer attached to fm-lab-busy-grace-137900-17946 (pid 138071)
+Session=fm-lab-busy-grace-137900-17946 pane=w1:p1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/.test-lab/fm-lab.SWfCzA
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the requested message WILL still be sent.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Watcher observed real busy worker: 1
+Busy observation=1792946345
+No delivery strike or escalation after >2 grace periods while busy.
+{"id":"cli:pane:get","result":{"pane":{"agent":"claude","agent_session":{"agent":"claude","kind":"id","source":"herdr:claude","value":"feb7d12b-1fec-479c-adfa-17335e8828ef"},"agent_status":"working","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C","pane_id":"w1:p1","revision":2,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":39},"tab_id":"w1:t1","terminal_id":"term_65eacd8ccb7351","terminal_title":"◑ Firstmate live-worker steering inbox","terminal_title_stripped":"Firstmate live-worker steering inbox","workspace_id":"w1"},"type":"pane_info"}}
+Final real harness state=idle
+
+[0m[38;2;215;119;87m ▐[0m[38;2;215;119;87m[48;2;0;0;0m▛███▛█   [0m[1mClaude Code [0m[38;2;153;153;153mv2.1.310[0m
+[0m[38;2;215;119;87m▝▜[0m[38;2;215;119;87m[48;2;0;0;0m█████[0m[38;2;215;119;87m█▀  [0m[38;2;153;153;153mOpus 5.5 with high effort · Claude Team[0m
+[0m[38;2;215;119;87m ▝▝   ▝▝   [0m[38;2;153;153;153m/home/node/.no-mistakes/worktrees/450411b3e67c/01M5STPF20GY1EH91QX3A4N57C[0m
+
+
+[0m[38;2;153;153;153m[48;2;55;55;55m❯ [0m[38;2;255;255;255m[48;2;55;55;55m: Firstmate instruction waiting: list "$FM_TASK_INBOX"/*.msg in your 'live-worker.inbox' [0m[48;2;55;55;55m   [0m
+[0m[48;2;55;55;55m  [0m[38;2;255;255;255m[48;2;55;55;55msteering inbox, read and act on each in numeric order, then mv each into its handled/.[0m[48;2;55;55;55m      [0m
+
+  [0m[38;2;153;153;153mRead [0m[1m[38;2;153;153;153m1[0m[38;2;153;153;153m file, listed [0m[1m[38;2;153;153;153m1[0m[38;2;153;153;153m directory, ran [0m[1m[38;2;153;153;153m2[0m[38;2;153;153;153m shell commands [0m
+
+[0m[38;2;255;255;255m● [0mRan the 001.msg command: after the 20-second wait it wrote "completed" to [0m[38;2;177;185;249m$FM_HOME/acted[0m,
+  then I moved 001.msg into [0m[38;2;177;185;249mhandled/[0m.
+
+[0m[38;2;153;153;153m✻ Cogitated for 31s · done 4:39 PM[0m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[0m[38;2;136;136;136m──────────────────────────────────────────────────────────────────────────────────────────────[0m
+❯ 
+[0m[38;2;136;136;136m──────────────────────────────────────────────────────────────────────────────────────────────[0m
+  [0m[38;2;153;153;153mOpus 5.5 | ctx: 5% used[0m
+  [0m[38;2;255;107;128m⏵⏵ bypass permissions on[0m[38;2;153;153;153m (shift+tab to cycle)[0mAction persisted: completed
+Acknowledgement: handled/001.msg exists; newline byte:  0a
+PASS durable steer, real worker action, acknowledgement, and busy-grace preservation
+teardown_rc=0
+Host Claude launcher unchanged

@@ -1,0 +1,8 @@
+window=fm-t1
+endpoint_task_id=t1
+project=/tmp/fm-targeted.LLeuEc/fm-pr-evidence.iJKWYn/excluded-gitlab-registration/proj
+kind=ship
+mode=no-mistakes
+evidence=ui
+worktree=/tmp/fm-targeted.LLeuEc/fm-pr-evidence.iJKWYn/excluded-gitlab-registration/wt
+pr=https://gitlab.example/o/r/-/merge_requests/105

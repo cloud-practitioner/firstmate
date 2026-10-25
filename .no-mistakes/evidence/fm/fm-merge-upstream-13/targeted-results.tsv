@@ -1,0 +1,7 @@
+suite	exit
+tests/fm-brief.test.sh	0
+tests/fm-pr-evidence.test.sh	0
+tests/fm-pr-check-security.test.sh	0
+tests/fm-pr-merge.test.sh	0
+tests/fm-backend-t3code.test.sh	0
+python3 tests/fm-pr-evidence-regressions.test.py	0

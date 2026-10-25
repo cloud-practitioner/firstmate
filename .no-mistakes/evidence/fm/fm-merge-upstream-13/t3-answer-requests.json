@@ -1,0 +1,61 @@
+{
+  "context": "Non-live requests recorded by the local T3 fake server during the executable-interface answer authority test. The suite checks that gate, conflicting-lease, and attended-branch refusals make zero requests before the authorized main and away-branch answers.",
+  "requests": [
+    {
+      "method": "initialize"
+    },
+    {
+      "method": "notifications/initialized"
+    },
+    {
+      "method": "tools/list"
+    },
+    {
+      "method": "tools/call",
+      "tool": "t3_environment_read",
+      "arguments": {}
+    },
+    {
+      "method": "tools/call",
+      "tool": "t3_pending_request_respond",
+      "arguments": {
+        "threadId": "mcp:7e8f9a0b-2c3d-4e4f-9a5b-456789abcdef",
+        "requestId": "req-q1",
+        "answers": {
+          "q1": "yes"
+        }
+      }
+    },
+    {
+      "method": "DELETE"
+    },
+    {
+      "method": "initialize"
+    },
+    {
+      "method": "notifications/initialized"
+    },
+    {
+      "method": "tools/list"
+    },
+    {
+      "method": "tools/call",
+      "tool": "t3_environment_read",
+      "arguments": {}
+    },
+    {
+      "method": "tools/call",
+      "tool": "t3_pending_request_respond",
+      "arguments": {
+        "threadId": "mcp:7e8f9a0b-2c3d-4e4f-9a5b-456789abcdef",
+        "requestId": "req-q2",
+        "answers": {
+          "q2": "yes"
+        }
+      }
+    },
+    {
+      "method": "DELETE"
+    }
+  ]
+}
