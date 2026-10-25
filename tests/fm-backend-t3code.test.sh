@@ -2396,23 +2396,59 @@ test_push_wait_escalates_pending_question_once() {
 }
 
 test_answer_script_reads_and_answers_questions() {
-  local id thread=mcp:7e8f9a0b-2c3d-4e4f-9a5b-456789abcdef out rc
+  local id thread=mcp:7e8f9a0b-2c3d-4e4f-9a5b-456789abcdef out rc holder actor lease
   id=$(t3_uid t3answer1)
   make_t3_control_task answer "$id" "$thread" running
   FM_T3_T="$thread" t3_world_set 'w.threads[process.env.FM_T3_T].runtimeRequests = [{ id: "req-q1", kind: "user_input", status: "pending", questions: [{ id: "q1", header: "h", question: "Ship it?", options: [{ label: "yes", description: "y" }] }] }]'
   run_answer() { FM_HOME="$CASE_DIR/home" FM_STATE_OVERRIDE="$CTRL_STATE" FM_CONFIG_OVERRIDE="$CONFIG" "$ROOT/bin/fm-t3-answer.sh" "$@" 2>&1; }
-  out=$(run_answer "$id"); rc=$?
+  out=$(FM_SUPERVISION_ACTOR=branch run_answer "$id"); rc=$?
   expect_code 0 "$rc" "listing pending questions: $out"
   assert_contains "$out" '"requestId":"req-q1"' "the question id is listed"
   assert_contains "$out" "Ship it?" "the question's content is listed"
-  out=$(run_answer "$id" req-q1 '{"q1":"yes"}'); rc=$?
+  : > "$LOG"
+  out=$(FM_GATE_REFUSE_BYPASS= NO_MISTAKES_GATE=1 run_answer "$id" req-q1 '{"q1":"yes"}'); rc=$?
+  expect_code 3 "$rc" "a gate agent must not answer a T3 question: $out"
+  assert_contains "$out" 'no-mistakes gate agent must not drive the fleet' 'the refusal must identify gate authority'
+  [ ! -s "$LOG" ] || fail 'a gate-agent answer must refuse before any T3 request'
+  printf '%s\n' "$$" > "$CTRL_STATE/.lock"
+  for holder in main branch; do
+    if [ "$holder" = main ]; then actor=branch; else actor=main; fi
+    lease=$(printf '%s\t%s\t%s' "$holder" "$$" "$(date +%s)")
+    printf '%s\n' "$lease" > "$CTRL_STATE/.lease-$id"
+    out=$(FM_SUPERVISION_ACTOR="$actor" run_answer "$id" req-q1 '{"q1":"yes"}'); rc=$?
+    expect_code 6 "$rc" "$actor must not answer while $holder owns the task: $out"
+    assert_contains "$out" "leased to the $holder supervision actor" 'a conflicting lease must explain the owner'
+    assert_equals "$lease" "$(< "$CTRL_STATE/.lease-$id")" 'a refused answer must preserve the live lease'
+    [ ! -s "$LOG" ] || fail 'a conflicting answer must refuse before any T3 request'
+    assert_absent "$CTRL_STATE/.fm-lease-command.lock" 'a conflicting answer must release the command lock'
+  done
+  rm "$CTRL_STATE/.lease-$id"
+  out=$(FM_SUPERVISION_ACTOR=branch run_answer "$id" req-q1 '{"q1":"yes"}'); rc=$?
+  expect_code 6 "$rc" "an attended branch must not answer even without a conflicting lease: $out"
+  assert_contains "$out" 'the supervision branch never performs this action' 'the decision partition must refuse the branch'
+  [ ! -s "$LOG" ] || fail 'an attended branch answer must refuse before any T3 request'
+  assert_absent "$CTRL_STATE/.fm-lease-command.lock" 'a partition refusal must release the retained guard'
+  out=$(FM_SUPERVISION_ACTOR=main run_answer "$id" req-q1 '{"q1":"yes"}'); rc=$?
   expect_code 0 "$rc" "answering: $out"
   [ "$(t3_fake_calls t3_pending_request_respond | tail -1)" = "{\"threadId\":\"$thread\",\"requestId\":\"req-q1\",\"answers\":{\"q1\":\"yes\"}}" ] \
     || fail "the answer must reach t3_pending_request_respond, got '$(t3_fake_calls t3_pending_request_respond)'"
+  assert_absent "$CTRL_STATE/.fm-lease-command.lock" 'a successful answer must release the retained guard'
+  FM_HOME="$CASE_DIR/home" FM_STATE_OVERRIDE="$CTRL_STATE" FM_AFK_MODE=away \
+    "$ROOT/bin/fm-afk-contract.sh" enter --words 'Watch the fleet.' >/dev/null 2>&1 || fail 'could not enter the fixture away posture'
+  FM_T3_T="$thread" t3_world_set 'w.threads[process.env.FM_T3_T].runtimeRequests = [{ id: "req-q2", kind: "user_input", status: "pending", questions: [{ id: "q2", header: "h", question: "Continue?", options: [] }] }]'
+  lease=$(printf 'branch\t%s\t%s' "$$" "$(date +%s)")
+  printf '%s\n' "$lease" > "$CTRL_STATE/.lease-$id"
+  out=$(FM_SUPERVISION_ACTOR=branch run_answer "$id" req-q2 '{"q2":"yes"}'); rc=$?
+  expect_code 0 "$rc" "the authorized away branch must be able to answer its own task: $out"
+  assert_contains "$out" 'standing authority is relocated' 'the decision guard must authorize away relocation'
+  [ "$(t3_fake_calls t3_pending_request_respond | tail -1)" = "{\"threadId\":\"$thread\",\"requestId\":\"req-q2\",\"answers\":{\"q2\":\"yes\"}}" ] \
+    || fail 'the relocated branch answer must reach the requested question'
+  assert_equals "$lease" "$(< "$CTRL_STATE/.lease-$id")" 'a successful answer must preserve its same-actor lease'
+  assert_absent "$CTRL_STATE/.fm-lease-command.lock" 'an away answer must release the retained guard'
   fm_write_meta "$CTRL_STATE/tmuxtask.meta" "window=s:w" "kind=ship"
   out=$(run_answer tmuxtask); rc=$?
   expect_code 1 "$rc" "a non-T3 task has no pending requests to answer"
-  pass "fm-t3-answer.sh: lists a T3 worker's pending questions and answers one by request id"
+  pass "fm-t3-answer.sh: lists questions and answers by request id under gate, lease, and decision authority"
 }
 
 # A secondmate whose last T3 run failed still has a readable thread; recovery

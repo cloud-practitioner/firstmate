@@ -43,8 +43,16 @@ if [ "$#" -eq 1 ]; then
   exit
 fi
 
+# shellcheck source=bin/fm-gate-refuse-lib.sh
+. "$SCRIPT_DIR/fm-gate-refuse-lib.sh"
+fm_refuse_if_gate_agent
+# shellcheck source=bin/fm-lease-lib.sh
+. "$SCRIPT_DIR/fm-lease-lib.sh"
+fm_lease_guard "$ID" "decision answer (fm-t3-answer)"
+ANSWERS=
+trap '[ -z "$ANSWERS" ] || rm -f "$ANSWERS"; fm_lease_guard_release' EXIT
+fm_lease_forbid_branch "decision answer (fm-t3-answer)" --away-relocated
 ANSWERS=$(mktemp "${TMPDIR:-/tmp}/fm-t3-answer.XXXXXX")
-trap 'rm -f "$ANSWERS"' EXIT
 printf '%s' "$3" > "$ANSWERS"
 fm_backend_t3code_answer_request "$THREAD" "$2" "$ANSWERS"
 echo "answered $ID request $2 on T3 thread $THREAD"
