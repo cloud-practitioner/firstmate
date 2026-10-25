@@ -61,6 +61,12 @@
 # local secondmate), this script best-effort runs that home's own
 # fm-procevent-when.sh rebind-all to republish those bindings against the new
 # bytes; a failure there is swallowed rather than failing the update.
+# The same fast-forward can rewrite bin/fm-pr-poll.sh, the template every armed
+# PR merge watch holds a byte copy of; bin/fm-pr-rebind.sh re-records each such
+# watch after the same updates, and prints an actionable line naming the task
+# and its bin/fm-pr-check.sh re-arm command for any watch it cannot re-record
+# safely. Its failure is likewise never fatal; the watcher repeats the rebind
+# on its next check sweep.
 #
 # Usage: fm-update.sh [--help]
 set -eu
@@ -102,6 +108,7 @@ if [ "$FF_STATUS" = "updated" ]; then
   # always where this very script file happens to live (FM_ROOT_OVERRIDE, as
   # this test suite uses to point fm-update.sh at a fixture checkout).
   FM_HOME="$FM_HOME" FM_ROOT_OVERRIDE="$FM_ROOT" "$SCRIPT_DIR/fm-procevent-when.sh" rebind-all || true
+  FM_HOME="$FM_HOME" FM_ROOT_OVERRIDE="$FM_ROOT" "$SCRIPT_DIR/fm-pr-rebind.sh" || true
 fi
 
 # --- secondmates -----------------------------------------------------------
@@ -167,6 +174,9 @@ fm_ff_after_secondmate_settled() {  # <id> <home> <window> <status> <instr>
   # own, if the caller set one) leak into the child and misscope it.
   if [ "${4:-}" = "updated" ] && [ -x "$2/bin/fm-procevent-when.sh" ]; then
     FM_HOME="$2" FM_ROOT_OVERRIDE="$2" "$2/bin/fm-procevent-when.sh" rebind-all || true
+  fi
+  if [ "${4:-}" = "updated" ] && [ -x "$2/bin/fm-pr-rebind.sh" ]; then
+    FM_HOME="$2" FM_ROOT_OVERRIDE="$2" FM_STATE_OVERRIDE='' "$2/bin/fm-pr-rebind.sh" || true
   fi
   claim_settled_secondmate "$1"
 }

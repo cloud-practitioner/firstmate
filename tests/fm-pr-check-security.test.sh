@@ -3759,6 +3759,202 @@ SH
   pass "device re-record publication waits without rewriting its registration"
 }
 
+# A self-update rewrites bin/fm-pr-poll.sh in place. A poll armed by
+# bin/fm-pr-check.sh before that update holds a byte copy of the older template,
+# so the strict check no longer matches it. Each case below arms from a scratch
+# copy of the code root with the real entrypoint, then changes the template the
+# way an update does.
+arm_poll_from_code_copy() {  # <dir> <id> <url>
+  local dir=$1 id=$2 url=$3
+  mkdir -p "$dir/code"
+  cp -R "$ROOT/bin" "$dir/code/bin"
+  FM_ROOT_OVERRIDE="$dir/root" FM_HOME="$dir/home" FM_CONFIG_OVERRIDE="$dir/home/config" \
+    FM_TEST_GUARD_LOG="$dir/guard.log" FM_TEST_GH_LOG="$dir/gh.log" \
+    PATH="$dir/fakebin:$BASE_PATH" \
+    "$dir/code/bin/fm-pr-check.sh" "$id" "$url" > "$dir/arm.out" 2> "$dir/arm.err" \
+    || fail "could not arm a poll from the scratch code root: $(cat "$dir/arm.err")"
+  fm_pr_poll_artifacts_valid "$dir/home/state" "$id" "$dir/code/bin/fm-pr-poll.sh" \
+    || fail "the freshly armed poll was not authenticated"
+}
+
+update_code_copy_template() {  # <dir>
+  printf '# template bytes changed by a later release\n' >> "$1/code/bin/fm-pr-poll.sh"
+}
+
+run_code_copy_watcher() {  # <dir>
+  local WATCH="$1/code/bin/fm-watch.sh"
+  FM_TEST_WATCH_ROOT="$1/code" run_watcher_bounded "$1/home" "$1/fakebin"
+}
+
+test_template_change_poll_is_rebound() {
+  local dir state url=https://github.com/o/r/pull/1 out rc
+  dir=$(make_case template-change-watcher)
+  state="$dir/home/state"
+  write_task_meta "$dir"
+  arm_poll_from_code_copy "$dir" task-a "$url"
+  update_code_copy_template "$dir"
+  # Assert the divergence so the case cannot pass vacuously: only the template
+  # moved, and that alone refuses the strict validation.
+  ! cmp -s "$dir/code/bin/fm-pr-poll.sh" "$state/task-a.check.sh" || fail "template fixture did not change the template"
+  ! fm_pr_poll_artifacts_valid "$state" task-a "$dir/code/bin/fm-pr-poll.sh" \
+    || fail "template fixture still authenticated before any watcher cycle"
+  set +e
+  FM_TEST_GH_LOG="$dir/gh.log" FM_TEST_GH_STATE=MERGED run_code_copy_watcher "$dir" > "$dir/watch.out" 2> "$dir/watch.err"
+  rc=$?
+  set -e
+  [ "$rc" -eq 0 ] || fail "template-change watcher failed: $(cat "$dir/watch.err")"
+  out=$(cat "$dir/watch.out")
+  case "$out" in
+    *'rejected unauthenticated state checks'*) fail "watcher refused a poll whose only change was the template: $out" ;;
+  esac
+  [ "$(grep -c '^check: .*task-a\.check\.sh: merged$' "$dir/watch.out")" -eq 1 ] \
+    || fail "template-change poll did not surface its merge exactly once: $out"
+  grep -F 're-recorded PR poll template for task-a' "$state/.watch-triage.log" >/dev/null \
+    || fail "template re-record left no triage evidence"
+  pass "a poll armed before a template change is re-recorded by the watcher and keeps detecting merges"
+}
+
+test_template_change_rebind_command() {
+  local dir state url=https://github.com/o/r/pull/1 out rc before
+  dir=$(make_case template-change-rebind)
+  state="$dir/home/state"
+  write_task_meta "$dir"
+  arm_poll_from_code_copy "$dir" task-a "$url"
+  update_code_copy_template "$dir"
+  # Both renames must happen under the task's control and publication locks.
+  cat > "$dir/fakebin/mv" <<'SH'
+#!/usr/bin/env bash
+case " $* " in
+  *"task-a.pr-poll-registration "*|*"task-a.check.sh "*)
+    [ -d "$FM_TEST_CONTROL_LOCK" ] || exit 91
+    [ -d "$FM_TEST_POLL_PUBLISH_LOCK" ] || exit 92
+    echo renamed >> "$FM_TEST_RENAMED"
+    ;;
+esac
+exec "$FM_TEST_REAL_MV" "$@"
+SH
+  chmod +x "$dir/fakebin/mv"
+  set +e
+  out=$(FM_TEST_CONTROL_LOCK="$state/.control-task-a.lock" \
+    FM_TEST_POLL_PUBLISH_LOCK="$state/.pr-poll-publish-task-a.lock" FM_TEST_REAL_MV="$REAL_MV" \
+    FM_TEST_RENAMED="$dir/renamed" PATH="$dir/fakebin:$PATH" \
+    FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$dir/code" "$dir/code/bin/fm-pr-rebind.sh" 2>&1)
+  rc=$?
+  set -e
+  [ "$rc" -eq 0 ] || fail "rebind failed: $out"
+  [ "$(wc -l < "$dir/renamed")" -eq 2 ] || fail "rebind did not rename the check and the registration under its locks"
+  rm -f "$dir/fakebin/mv"
+  case "$out" in
+    *'rebound: task-a'*) ;;
+    *) fail "rebind did not report the task it rebound: $out" ;;
+  esac
+  fm_pr_poll_artifacts_valid "$state" task-a "$dir/code/bin/fm-pr-poll.sh" \
+    || fail "rebound poll is not strictly authenticated"
+  cmp -s "$dir/code/bin/fm-pr-poll.sh" "$state/task-a.check.sh" || fail "rebound check is not the new template"
+  [ "$(file_mode "$state/task-a.check.sh")" = 600 ] || fail "rebound check is not private"
+  [ "$(file_mode "$state/task-a.pr-poll-registration")" = 600 ] || fail "rebound registration is not private"
+  ! ls "$state"/.fm-pr-poll-* >/dev/null 2>&1 || fail "rebind left a staged file behind"
+  before=$(poll_artifact_snapshot "$state" task-a)
+  out=$(FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$dir/code" "$dir/code/bin/fm-pr-rebind.sh" 2>&1) \
+    || fail "second rebind failed: $out"
+  case "$out" in
+    *'rebound:'*) fail "a second rebind rebound a current poll: $out" ;;
+  esac
+  [ "$(poll_artifact_snapshot "$state" task-a)" = "$before" ] || fail "a second rebind changed a current poll"
+  : > "$dir/gh.log"
+  set +e
+  FM_TEST_GH_LOG="$dir/gh.log" FM_TEST_GH_STATE=MERGED run_code_copy_watcher "$dir" > "$dir/watch.out" 2> "$dir/watch.err"
+  rc=$?
+  set -e
+  [ "$rc" -eq 0 ] || fail "rebound poll watcher failed: $(cat "$dir/watch.err")"
+  [ "$(grep -c '^check: .*task-a\.check\.sh: merged$' "$dir/watch.out")" -eq 1 ] \
+    || fail "rebound poll did not surface its merge exactly once: $(cat "$dir/watch.out")"
+  pass "the rebind command re-records a template-changed poll once and leaves a current poll alone"
+}
+
+test_template_change_refuses_unproven_polls() {
+  local mutation dir state url=https://github.com/o/r/pull/1 out rc registration_sha exercised=
+  for mutation in altered-check swapped-check altered-sidecar altered-template-hash; do
+    exercised="$exercised $mutation"
+    dir=$(make_case "template-change-refuses-$mutation")
+    state="$dir/home/state"
+    write_task_meta "$dir"
+    arm_poll_from_code_copy "$dir" task-a "$url"
+    case "$mutation" in
+      altered-check) printf '# hand edited\n' >> "$state/task-a.check.sh" ;;
+      swapped-check)
+        cp "$state/task-a.check.sh" "$state/.swap"
+        chmod 0600 "$state/.swap"
+        mv -f -- "$state/.swap" "$state/task-a.check.sh"
+        ;;
+      altered-sidecar)
+        printf '%s\n%s\n%s\n%s\n%s\n' github https://github.com/o/r/pull/2 github.com o/r 2 \
+          > "$state/task-a.pr-poll"
+        ;;
+      altered-template-hash)
+        out=$(printf 'another template\n' | shasum -a 256 | awk '{print $1}')
+        awk -v hash="$out" 'NR == 9 { $0 = hash } { print }' "$state/task-a.pr-poll-registration" > "$state/.swap"
+        chmod 0600 "$state/.swap"
+        mv -f -- "$state/.swap" "$state/task-a.pr-poll-registration"
+        ;;
+    esac
+    update_code_copy_template "$dir"
+    registration_sha=$(fm_pr_sha256 "$state/task-a.pr-poll-registration")
+    set +e
+    out=$(FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$dir/code" "$dir/code/bin/fm-pr-rebind.sh" 2>&1)
+    rc=$?
+    set -e
+    [ "$rc" -ne 0 ] || fail "$mutation rebind reported success: $out"
+    case "$out" in
+      *"bin/fm-pr-check.sh task-a $url"*) ;;
+      *) fail "$mutation rebind did not name the re-arm command: $out" ;;
+    esac
+    case "$out" in
+      *'rebound: task-a'*) fail "$mutation was rebound: $out" ;;
+    esac
+    [ "$(fm_pr_sha256 "$state/task-a.pr-poll-registration")" = "$registration_sha" ] \
+      || fail "$mutation let the rebind rewrite the registration"
+    set +e
+    FM_TEST_GH_LOG="$dir/gh.log" FM_TEST_GH_STATE=MERGED run_code_copy_watcher "$dir" > "$dir/watch.out" 2> "$dir/watch.err"
+    rc=$?
+    set -e
+    [ "$rc" -eq 0 ] || fail "$mutation watcher failed: $(cat "$dir/watch.err")"
+    out=$(cat "$dir/watch.out")
+    case "$out" in
+      "check: rejected unauthenticated state checks:"*"task-a.check.sh"*"bin/fm-pr-check.sh task-a $url"*) ;;
+      *) fail "$mutation was not rejected loudly with its re-arm command: $out" ;;
+    esac
+    [ "$(fm_pr_sha256 "$state/task-a.pr-poll-registration")" = "$registration_sha" ] \
+      || fail "$mutation let the watcher rewrite the registration"
+    ! grep -F -- '--json state' "$dir/gh.log" >/dev/null 2>&1 || fail "$mutation ran the refused poll"
+    ! ls "$state"/.fm-pr-poll-* >/dev/null 2>&1 || fail "$mutation left a staged file behind"
+  done
+
+  # A pending retirement receipt owns its artifacts, which its own recovery
+  # settles against the check it recorded, so none is rebound around.
+  dir=$(make_case template-change-pending-retirement)
+  state="$dir/home/state"
+  write_task_meta "$dir"
+  arm_poll_from_code_copy "$dir" task-a "$url"
+  update_code_copy_template "$dir"
+  fm_pr_poll_registration_template_stale "$state" task-a "$dir/code/bin/fm-pr-poll.sh" \
+    || fail "pending-retirement fixture was not template-stale before its receipt"
+  : > "$state/task-a.pr-poll-retirement"
+  chmod 0600 "$state/task-a.pr-poll-retirement"
+  registration_sha=$(fm_pr_sha256 "$state/task-a.pr-poll-registration")
+  ! fm_pr_poll_registration_template_stale "$state" task-a "$dir/code/bin/fm-pr-poll.sh" \
+    || fail "a pending retirement receipt did not keep its artifacts from being rebound"
+  ! fm_pr_poll_registration_rebind_template "$state" task-a "$dir/code/bin/fm-pr-poll.sh" \
+    || fail "a pending retirement receipt was rebound around"
+  out=$(FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$dir/code" "$dir/code/bin/fm-pr-rebind.sh" 2>&1) || true
+  case "$out" in
+    *'rebound: task-a'*) fail "rebind rewrote a poll with a pending retirement receipt: $out" ;;
+  esac
+  [ "$(fm_pr_sha256 "$state/task-a.pr-poll-registration")" = "$registration_sha" ] \
+    || fail "a pending retirement receipt let the registration be rewritten"
+  pass "a template-changed poll is never rebound around an unproven artifact:$exercised, or a pending retirement, and each refused watch is reported with its re-arm command"
+}
+
 test_parser_matrix
 test_github_enterprise_config_resolution
 test_github_enterprise_hosts
@@ -3803,6 +3999,9 @@ test_device_renumbered_poll_stays_armed
 test_device_rerecord_refuses_tampered_artifacts
 test_device_rerecord_serializes_direct_rearm
 test_device_rerecord_serializes_rerecord
+test_template_change_poll_is_rebound
+test_template_change_rebind_command
+test_template_change_refuses_unproven_polls
 test_postrename_poll_validation_revokes_and_retries
 test_bootstrap_leaves_unauthenticated_checks
 test_custom_snapshot_cleanup_on_signal
