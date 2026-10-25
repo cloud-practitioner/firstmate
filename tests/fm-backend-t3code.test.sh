@@ -2406,7 +2406,7 @@ test_answer_script_reads_and_answers_questions() {
   assert_contains "$out" '"requestId":"req-q1"' "the question id is listed"
   assert_contains "$out" "Ship it?" "the question's content is listed"
   : > "$LOG"
-  out=$(FM_GATE_REFUSE_BYPASS= NO_MISTAKES_GATE=1 run_answer "$id" req-q1 '{"q1":"yes"}'); rc=$?
+  out=$(FM_GATE_REFUSE_BYPASS='' NO_MISTAKES_GATE=1 run_answer "$id" req-q1 '{"q1":"yes"}'); rc=$?
   expect_code 3 "$rc" "a gate agent must not answer a T3 question: $out"
   assert_contains "$out" 'no-mistakes gate agent must not drive the fleet' 'the refusal must identify gate authority'
   [ ! -s "$LOG" ] || fail 'a gate-agent answer must refuse before any T3 request'
