@@ -702,7 +702,7 @@ Exceptions require a waiver with the captain's words, not a project disable line
 **Intake.**
 `evidence_eligible` in `bin/fm-pr-evidence.sh` is the single owner of delivery eligibility.
 An eligible lane is `no-mistakes` or `direct-PR` on GitHub, or on Bitbucket while `bitbucket on` is set, with the project gate enabled.
-Local-only, external-review, GitLab, Gerrit, Forgejo, unknown providers and Bitbucket while off get no evidence intake or publication-before-done contract.
+Local-only, external-review, GitHub Enterprise hosts, GitLab, Gerrit, Forgejo, unknown providers and Bitbucket while off get no evidence intake or publication-before-done contract.
 Before a PR exists, eligibility uses the confirmed forge binding and the clone's offline publication target; checks use the parsed PR provider.
 Brief generation uses `--project` or the clone at `$FM_HOME/projects/<project>`; supply `--project` when the clone is elsewhere.
 Use the script's `eligible` command to check a lane before intake; its [help](../bin/fm-pr-evidence.sh) owns the arguments and exit codes.

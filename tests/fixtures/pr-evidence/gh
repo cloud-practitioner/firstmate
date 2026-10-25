@@ -4,6 +4,7 @@
 set -u
 STUB=${FM_TEST_STUB:?}
 [ -z "${FM_TEST_GH_LOG:-}" ] || printf '%s\n' "$*" >> "$FM_TEST_GH_LOG"
+[ -z "${FM_TEST_GH_HOST_LOG:-}" ] || printf '%s\n' "${GH_HOST:-}" >> "$FM_TEST_GH_HOST_LOG"
 case "${1:-} ${2:-}" in
   "pr comment")
     if [ "${3:-}" = --help ]; then

@@ -1347,7 +1347,14 @@ test_evidence_eligibility_is_shared_across_delivery_lanes() {
       expect_code 1 "$rc" "$lane must enforce its evidence gate"
       assert_contains "$out" 'no evidence comment' "$lane must require a worker-authored comment"
     else
-      expect_code 0 "$rc" "$lane must not enforce evidence checks"
+      case "$url" in
+        https://github.com/*|https://bitbucket.org/*)
+          expect_code 0 "$rc" "$lane must not enforce evidence checks" ;;
+        *)
+          expect_code 1 "$rc" "$lane must refuse unsupported evidence hosts"
+          assert_contains "$out" 'PR evidence is not supported' "$lane must name the unsupported PR"
+          ;;
+      esac
       if [ "$forge" != external ]; then
         mkdir -p "$C/root/bin" "$C/home/data/scout1"
         printf '#!/bin/sh\nexit 0\n' > "$C/root/bin/fm-guard.sh"
@@ -1365,6 +1372,86 @@ test_evidence_eligibility_is_shared_across_delivery_lanes() {
   pass "fm-pr-evidence: eligibility, intake, briefs, promotion, contracts, and checks agree across all delivery lanes"
 }
 
+test_unsupported_hosts_refuse_evidence_commands() {
+  local url command out rc before order args
+  new_case unsupported-hosts
+  printf 'enterprise.example\n' > "$C/home/config/github-hosts"
+  write_task t1 ui
+  ui_items
+  published
+  before=$(comments_json)
+  cp "$C/home/state/t1.meta" "$C/original.meta"
+  for url in "https://enterprise.example/o/r/pull/$PRN" \
+    "https://gitlab.example/o/r/-/merge_requests/$PRN" \
+    "https://review.example/c/o/r/+/$PRN" "https://code.example/o/r/pulls/$PRN"; do
+    for command in check publish waive; do
+      args=("$command" t1 "$url")
+      case "$command" in
+        publish) args+=("$C/ev/items.json") ;;
+        waive) args+=(--words 'Waive the evidence for this PR please') ;;
+      esac
+      : > "$C/gh.log"
+      out=$(unset GH_HOST; FM_TEST_GH_LOG="$C/gh.log" ev "${args[@]}"); rc=$?
+      expect_code 1 "$rc" "$command must refuse $url (got: $out)"
+      assert_contains "$out" 'PR evidence is not supported' "$command must explain the unsupported host"
+      assert_contains "$out" "$url" "$command must name the refused PR"
+      [ ! -s "$C/gh.log" ] || fail "$command must refuse before any GitHub invocation"
+      assert_equals "$before" "$(comments_json)" "$command must not alter another PR's comments"
+      cmp -s "$C/original.meta" "$C/home/state/t1.meta" || fail "$command changed task metadata"
+      assert_absent "$C/home/state/t1.evidence-waiver" "$command created an unsupported-host waiver"
+    done
+  done
+  rm "$C/home/state/t1.meta"
+  for order in public-first enterprise-first; do
+    rm -f "$C/home/state/a.meta" "$C/home/state/z.meta"
+    if [ "$order" = public-first ]; then
+      write_task a '' "pr=$PRURL"
+      write_task z '' "pr=https://enterprise.example/o/r/pull/$PRN"
+    else
+      write_task a '' "pr=https://enterprise.example/o/r/pull/$PRN"
+      write_task z '' "pr=$PRURL"
+    fi
+    : > "$C/gh.log"
+    : > "$C/gh-hosts.log"
+    out=$(GH_HOST=enterprise.example FM_TEST_GH_LOG="$C/gh.log" FM_TEST_GH_HOST_LOG="$C/gh-hosts.log" ev list-unevidenced); rc=$?
+    expect_code 1 "$rc" "mixed-host listing must refuse the Enterprise PR (got: $out)"
+    assert_contains "$out" 'PR evidence is not supported' 'listing must explain the unsupported host'
+    if [ "$order" = public-first ]; then
+      assert_equals "api repos/o/r/pulls/$PRN" "$(< "$C/gh.log")" 'listing must read only the public PR'
+      assert_equals github.com "$(< "$C/gh-hosts.log")" 'listing must bind the public read to github.com'
+    else
+      [ ! -s "$C/gh.log" ] || fail 'listing must stop at the first unsupported PR without a forge call'
+    fi
+  done
+  pass 'fm-pr-evidence: unsupported hosts refuse without forge operations or mutations'
+}
+
+test_github_evidence_overrides_an_ambient_enterprise_host() {
+  local out rc
+  new_case github-host-binding
+  write_task t1 ui
+  ui_items
+  GH_HOST=enterprise.example FM_TEST_GH_HOST_LOG="$C/gh-hosts.log" published
+  GH_HOST=enterprise.example FM_TEST_GH_HOST_LOG="$C/gh-hosts.log" FM_TEST_GH_LOG="$C/gh.log" published
+  assert_grep 'api -X DELETE repos/o/r/issues/comments/' "$C/gh.log" 'replacement must exercise comment deletion'
+  assert_equals 1 "$(comments_json | jq length)" 'replacement must retain just the new evidence comment'
+  out=$(GH_HOST=enterprise.example FM_TEST_GH_HOST_LOG="$C/gh-hosts.log" ev check t1 "$PRURL"); rc=$?
+  expect_code 0 "$rc" "public check must pass with an ambient Enterprise host (got: $out)"
+  out=$(GH_HOST=enterprise.example FM_TEST_GH_HOST_LOG="$C/gh-hosts.log" ev waive t1 "$PRURL" --words 'Waive the evidence for this PR please'); rc=$?
+  expect_code 0 "$rc" "public waiver must post with an ambient Enterprise host (got: $out)"
+  write_task t2 '' "pr=$PRURL"
+  out=$(GH_HOST=enterprise.example FM_TEST_GH_HOST_LOG="$C/gh-hosts.log" ev list-unevidenced); rc=$?
+  expect_code 0 "$rc" "public listing must work with an ambient Enterprise host (got: $out)"
+  assert_contains "$out" "t2 proj $PRURL" 'listing must include the public PR'
+  [ -s "$C/gh-hosts.log" ] || fail 'host binding must exercise forge operations'
+  while IFS= read -r out; do
+    assert_equals github.com "$out" 'every evidence GitHub operation must address github.com'
+  done < "$C/gh-hosts.log"
+  pass 'fm-pr-evidence: public reads, identity, posts, and deletes ignore an ambient Enterprise host'
+}
+
+test_unsupported_hosts_refuse_evidence_commands
+test_github_evidence_overrides_an_ambient_enterprise_host
 test_evidence_eligibility_is_shared_across_delivery_lanes
 test_local_only_promotion_and_evidence_commands
 test_authorization_code_capture_is_masked

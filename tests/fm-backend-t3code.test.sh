@@ -187,12 +187,8 @@ t3_dispatch_types() {
   t3_fake_mutations
 }
 
-# t3_excluded <dir> <relative path>: the path is in <dir>'s git info/exclude.
 t3_excluded() {
-  local excl
-  excl=$(git -C "$1" rev-parse --git-path info/exclude)
-  case "$excl" in /*) ;; *) excl="$1/$excl" ;; esac
-  grep -qxF "$2" "$excl"
+  git -C "$1" check-ignore -q -- "$2"
 }
 
 t3_json_field() {  # <file> <js expression over the parsed document d>

@@ -167,6 +167,17 @@ EOF
   return 1
 }
 
+evidence_pr_host_check() {
+  case "$FM_PR_PROVIDER:$FM_PR_HOST" in
+    github:github.com) export GH_HOST=github.com ;;
+    bitbucket:bitbucket.org) ;;
+    *)
+      fail_line "PR evidence is not supported for $FM_PR_URL" "use evidence commands only for github.com or Bitbucket Cloud PRs"
+      return 1
+      ;;
+  esac
+}
+
 # ---- config-facing commands ------------------------------------------------
 
 EVIDENCE_SKIP_REASON=
@@ -341,6 +352,7 @@ cmd_check() {
     say "error: invalid PR evidence check request"
     return 2
   fi
+  evidence_pr_host_check || return 1
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run the check for a task of this home"; return 1; }
   [ "$(meta_get "$meta" kind)" = ship ] || return 0
@@ -429,6 +441,7 @@ cmd_publish() {
     say "error: invalid PR evidence publish request"
     return 2
   fi
+  evidence_pr_host_check || return 1
   [ -f "$items" ] || { fail_line "the items file $items does not exist" "write the items file (see the header of fm-pr-evidence.sh)"; return 1; }
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run publish for a task of this home"; return 1; }
@@ -603,6 +616,7 @@ cmd_waive() {
     say "error: invalid waiver request"
     return 2
   fi
+  evidence_pr_host_check || return 1
   if [ -e "$STATE/.afk" ] && [ "$(fm_afk_mode "$STATE")" = away ]; then
     fail_line "a waiver is refused in away mode" "wait for the captain to return and say the waiver in their own words"
     return 1
@@ -657,6 +671,7 @@ cmd_list_unevidenced() {
     id=$(basename "$f" .meta)
     project=$(basename "$(meta_get "$f" project)")
     fm_pr_url_parse "$url" || continue
+    evidence_pr_host_check || return 1
     forge=$(meta_get "$f" forge)
     rc=0
     evidence_eligible "$project" "$(meta_get "$f" mode)" "${forge:-none}" "$(meta_get "$f" project)" "$FM_PR_PROVIDER" || rc=$?
