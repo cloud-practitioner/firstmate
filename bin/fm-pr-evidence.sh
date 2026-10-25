@@ -347,25 +347,27 @@ read_bitbucket() {  # <workspace/repo> <number>
 
 cmd_check() {
   [ "$#" -ge 2 ] && [ "$#" -le 3 ] || { say "usage: fm-pr-evidence.sh check <task-id> <pr-url> [<merge-head>]"; return 2; }
-  local id=$1 raw=$2 expected=${3:-} meta project_dir project evidence reason require rc waiver forge
+  local id=$1 raw=$2 expected=${3:-} meta project_dir project evidence reason require rc waiver forge provider
   if ! { fm_pr_task_id_valid "$id" && fm_pr_url_parse "$raw"; }; then
     say "error: invalid PR evidence check request"
     return 2
   fi
-  evidence_pr_host_check || return 1
   meta="$STATE/$id.meta"
   [ -f "$meta" ] || { fail_line "task metadata for $id is unavailable" "run the check for a task of this home"; return 1; }
   [ "$(meta_get "$meta" kind)" = ship ] || return 0
   project_dir=$(meta_get "$meta" project)
   project=$(basename "$project_dir")
   forge=$(meta_get "$meta" forge)
+  provider=$FM_PR_PROVIDER
+  if [ "$provider" = github ] && [ "$FM_PR_HOST" != github.com ]; then provider=github-enterprise; fi
   rc=0
-  evidence_eligible "$project" "$(meta_get "$meta" mode)" "${forge:-none}" "$project_dir" "$FM_PR_PROVIDER" || rc=$?
+  evidence_eligible "$project" "$(meta_get "$meta" mode)" "${forge:-none}" "$project_dir" "$provider" || rc=$?
   case "$rc" in
     0) ;;
     1) [ -z "$EVIDENCE_SKIP_REASON" ] || say "notice: evidence gate not applied: $EVIDENCE_SKIP_REASON"; return 0 ;;
     *) return 1 ;;
   esac
+  evidence_pr_host_check || return 1
   evidence=$(meta_get "$meta" evidence)
   if [ -z "$evidence" ]; then
     say "notice: evidence gate not applied: task $id predates it (no evidence= in its task record); the captain may ask for a retrofit (fm-pr-evidence.sh list-unevidenced)"

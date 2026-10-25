@@ -1347,14 +1347,7 @@ test_evidence_eligibility_is_shared_across_delivery_lanes() {
       expect_code 1 "$rc" "$lane must enforce its evidence gate"
       assert_contains "$out" 'no evidence comment' "$lane must require a worker-authored comment"
     else
-      case "$url" in
-        https://github.com/*|https://bitbucket.org/*)
-          expect_code 0 "$rc" "$lane must not enforce evidence checks" ;;
-        *)
-          expect_code 1 "$rc" "$lane must refuse unsupported evidence hosts"
-          assert_contains "$out" 'PR evidence is not supported' "$lane must name the unsupported PR"
-          ;;
-      esac
+      expect_code 0 "$rc" "$lane must not enforce evidence checks"
       if [ "$forge" != external ]; then
         mkdir -p "$C/root/bin" "$C/home/data/scout1"
         printf '#!/bin/sh\nexit 0\n' > "$C/root/bin/fm-guard.sh"
@@ -1372,7 +1365,7 @@ test_evidence_eligibility_is_shared_across_delivery_lanes() {
   pass "fm-pr-evidence: eligibility, intake, briefs, promotion, contracts, and checks agree across all delivery lanes"
 }
 
-test_unsupported_hosts_refuse_evidence_commands() {
+test_unsupported_hosts_do_not_access_evidence() {
   local url command out rc before order args
   new_case unsupported-hosts
   printf 'enterprise.example\n' > "$C/home/config/github-hosts"
@@ -1392,10 +1385,15 @@ test_unsupported_hosts_refuse_evidence_commands() {
       esac
       : > "$C/gh.log"
       out=$(unset GH_HOST; FM_TEST_GH_LOG="$C/gh.log" ev "${args[@]}"); rc=$?
-      expect_code 1 "$rc" "$command must refuse $url (got: $out)"
-      assert_contains "$out" 'PR evidence is not supported' "$command must explain the unsupported host"
-      assert_contains "$out" "$url" "$command must name the refused PR"
-      [ ! -s "$C/gh.log" ] || fail "$command must refuse before any GitHub invocation"
+      if [ "$command" = check ]; then
+        expect_code 0 "$rc" "$command must skip the excluded lane $url (got: $out)"
+        assert_contains "$out" 'notice: evidence gate not applied:' 'check must state why the lane is excluded'
+      else
+        expect_code 1 "$rc" "$command must refuse $url (got: $out)"
+        assert_contains "$out" 'PR evidence is not supported' "$command must explain the unsupported host"
+        assert_contains "$out" "$url" "$command must name the refused PR"
+      fi
+      [ ! -s "$C/gh.log" ] || fail "$command must not invoke GitHub for an unsupported host"
       assert_equals "$before" "$(comments_json)" "$command must not alter another PR's comments"
       cmp -s "$C/original.meta" "$C/home/state/t1.meta" || fail "$command changed task metadata"
       assert_absent "$C/home/state/t1.evidence-waiver" "$command created an unsupported-host waiver"
@@ -1423,7 +1421,7 @@ test_unsupported_hosts_refuse_evidence_commands() {
       [ ! -s "$C/gh.log" ] || fail 'listing must stop at the first unsupported PR without a forge call'
     fi
   done
-  pass 'fm-pr-evidence: unsupported hosts refuse without forge operations or mutations'
+  pass 'fm-pr-evidence: excluded checks skip while unsupported publication refuses without forge operations or mutations'
 }
 
 test_github_evidence_overrides_an_ambient_enterprise_host() {
@@ -1450,7 +1448,75 @@ test_github_evidence_overrides_an_ambient_enterprise_host() {
   pass 'fm-pr-evidence: public reads, identity, posts, and deletes ignore an ambient Enterprise host'
 }
 
-test_unsupported_hosts_refuse_evidence_commands
+test_excluded_hosts_skip_delivery_checks() {
+  local lane url config out rc
+  for lane in gitlab gerrit forgejo github-enterprise; do
+    new_case "excluded-check-$lane"
+    printf 'enterprise.example\n' > "$C/home/config/github-hosts"
+    case "$lane" in
+      gitlab) url="https://gitlab.example/o/r/-/merge_requests/$PRN" ;;
+      gerrit) url="https://review.example/c/o/r/+/$PRN" ;;
+      forgejo) url="https://code.example/o/r/pulls/$PRN" ;;
+      github-enterprise) url="https://enterprise.example/o/r/pull/$PRN" ;;
+    esac
+    write_task t1 ui
+    cp "$C/home/state/t1.meta" "$C/original.meta"
+    : > "$C/gh.log"
+    for config in absent enforced; do
+      if [ "$config" = absent ]; then
+        rm "$C/home/config/pr-evidence"
+      else
+        printf '* enforce\n' > "$C/home/config/pr-evidence"
+      fi
+      out=$(FM_TEST_GH_LOG="$C/gh.log" ev check t1 "$url"); rc=$?
+      expect_code 0 "$rc" "$lane registration check must skip evidence with config $config (got: $out)"
+      assert_contains "$out" "notice: evidence gate not applied: $lane pull requests are not supported" 'an excluded provider must have a stated skip reason'
+      assert_not_contains "$out" 'predates it' 'an excluded lane must not use the legacy-task exception'
+      out=$(FM_TEST_GH_LOG="$C/gh.log" ev check t1 "$url" "$HEAD1"); rc=$?
+      expect_code 0 "$rc" "$lane exact-head merge check must skip evidence with config $config (got: $out)"
+      assert_contains "$out" "notice: evidence gate not applied: $lane pull requests are not supported" 'merge checks must state the same exclusion'
+      assert_not_contains "$out" "$HEAD1" 'an excluded lane must not return an evidence-authorized head'
+      [ ! -s "$C/gh.log" ] || fail 'an excluded check must make no evidence forge calls'
+      cmp -s "$C/original.meta" "$C/home/state/t1.meta" || fail 'an excluded check changed task metadata'
+    done
+  done
+  pass 'fm-pr-evidence: excluded registration and exact-head checks skip with absent or enforced config'
+}
+
+test_excluded_gitlab_registration_ignores_evidence_config() {
+  local url config merge out rc
+  new_case excluded-gitlab-registration
+  url="https://gitlab.example/o/r/-/merge_requests/$PRN"
+  mkdir -p "$C/fakebin" "$C/root/bin" "$C/wt"
+  printf '#!/bin/sh\nexit 0\n' > "$C/fakebin/glab"
+  printf '#!/bin/sh\nexit 0\n' > "$C/root/bin/fm-guard.sh"
+  chmod +x "$C/fakebin/glab" "$C/root/bin/fm-guard.sh"
+  git -C "$C/wt" init -q
+  git -C "$C/wt" commit -q --allow-empty -m init
+  git -C "$C/wt" update-ref refs/remotes/origin/main "$(git -C "$C/wt" rev-parse HEAD)"
+  write_task t1 ui "worktree=$C/wt"
+  for config in absent enforced; do
+    if [ "$config" = absent ]; then
+      rm "$C/home/config/pr-evidence"
+    else
+      printf '* enforce\n' > "$C/home/config/pr-evidence"
+    fi
+    for merge in '' 1; do
+      out=$(FM_ROOT_OVERRIDE="$C/root" FM_HOME="$C/home" FM_PR_CHECK_MERGE="$merge" PATH="$C/fakebin:$PATH" \
+        "$PR_CHECK" t1 "$url" 2>&1); rc=$?
+      expect_code 0 "$rc" "GitLab registration (merge=$merge) must pass with config $config (got: $out)"
+      assert_contains "$out" 'notice: evidence gate not applied: gitlab pull requests are not supported' 'registration must report the evidence exclusion'
+      assert_contains "$out" 'armed: state/t1.check.sh' 'registration must arm the PR poll'
+      assert_grep "pr=$url" "$C/home/state/t1.meta" 'registration must persist the requested GitLab PR'
+      poll_valid || fail 'registration must publish a valid PR poll'
+    done
+  done
+  pass 'fm-pr-evidence: GitLab registration and merge re-registration accept excluded evidence lanes'
+}
+
+test_excluded_hosts_skip_delivery_checks
+test_excluded_gitlab_registration_ignores_evidence_config
+test_unsupported_hosts_do_not_access_evidence
 test_github_evidence_overrides_an_ambient_enterprise_host
 test_evidence_eligibility_is_shared_across_delivery_lanes
 test_local_only_promotion_and_evidence_commands
