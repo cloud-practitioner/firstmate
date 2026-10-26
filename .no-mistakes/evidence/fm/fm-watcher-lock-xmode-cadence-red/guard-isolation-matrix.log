@@ -1,0 +1,49 @@
+Focused execution copies retain the test definitions verbatim and select only test_guard_warnings; production scripts remain unchanged.
+
+## base clean environment
+$ PI_CODING_AGENT=true FM_HOME=<unset> bash tests/.fm-watcher-guard-base.test.sh
+ok - disposable watcher refuses inherited state outside its marked lab
+ok - guard banner leads when down with pending wakes (repair-after-drain) and stays silent when live and fresh
+exit=0; elapsed=2.17s
+
+## target clean environment
+$ PI_CODING_AGENT=true FM_HOME=<unset> bash tests/.fm-watcher-guard-target.test.sh
+ok - disposable watcher refuses inherited state outside its marked lab
+ok - guard banner leads when down with pending wakes (repair-after-drain) and stays silent when live and fresh
+exit=0; elapsed=2.69s
+
+## target conflicting home/config repetition 1
+$ PI_CODING_AGENT=true FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/ambient spaced home bash tests/.fm-watcher-guard-target.test.sh
+ok - disposable watcher refuses inherited state outside its marked lab
+ok - guard banner leads when down with pending wakes (repair-after-drain) and stays silent when live and fresh
+exit=0; elapsed=8.48s
+
+## target nonexistent ambient home repetition 1
+$ PI_CODING_AGENT=true FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/does-not-exist bash tests/.fm-watcher-guard-target.test.sh
+ok - disposable watcher refuses inherited state outside its marked lab
+ok - guard banner leads when down with pending wakes (repair-after-drain) and stays silent when live and fresh
+exit=0; elapsed=6.79s
+
+## target conflicting home/config repetition 2
+$ PI_CODING_AGENT=true FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/ambient spaced home bash tests/.fm-watcher-guard-target.test.sh
+ok - disposable watcher refuses inherited state outside its marked lab
+ok - guard banner leads when down with pending wakes (repair-after-drain) and stays silent when live and fresh
+exit=0; elapsed=6.65s
+
+## target nonexistent ambient home repetition 2
+$ PI_CODING_AGENT=true FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/does-not-exist bash tests/.fm-watcher-guard-target.test.sh
+ok - disposable watcher refuses inherited state outside its marked lab
+ok - guard banner leads when down with pending wakes (repair-after-drain) and stays silent when live and fresh
+exit=0; elapsed=6.79s
+
+## target conflicting home/config repetition 3
+$ PI_CODING_AGENT=true FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/ambient spaced home bash tests/.fm-watcher-guard-target.test.sh
+ok - disposable watcher refuses inherited state outside its marked lab
+ok - guard banner leads when down with pending wakes (repair-after-drain) and stays silent when live and fresh
+exit=0; elapsed=4.01s
+
+## target nonexistent ambient home repetition 3
+$ PI_CODING_AGENT=true FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/does-not-exist bash tests/.fm-watcher-guard-target.test.sh
+ok - disposable watcher refuses inherited state outside its marked lab
+ok - guard banner leads when down with pending wakes (repair-after-drain) and stays silent when live and fresh
+exit=0; elapsed=2.88s

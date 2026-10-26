@@ -1,0 +1,55 @@
+
+## Create disposable, marked worktree-local home
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/live-guard-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/live-guard-home
+exit=0; stdout_bytes=105; stderr_bytes=0
+
+## Conflicting ambient home: real guard uses the explicit local cadence config
+$ bash -c FM_HOME="$CASE_HOME" bin/fm-guard.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  source '/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/live-guard-home/config/x-mode.env' first, then repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/live-guard-home/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/live-guard-home/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exit=0; stdout_bytes=0; stderr_bytes=1319
+
+## Adversarial inverse: ambient config exists, local config absent
+$ bash -c FM_HOME="$CASE_HOME" bin/fm-guard.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/live-guard-home/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/live-guard-home/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exit=0; stdout_bytes=0; stderr_bytes=1175
+Ambient home content hashes and file set unchanged.
+
+## Append a heartbeat using the production wake queue
+$ bash -c . bin/fm-wake-lib.sh; fm_wake_append heartbeat heartbeat heartbeat
+exit=0; stdout_bytes=0; stderr_bytes=0
+
+## Watcher down with queued wake: banner leads, drain precedes repair
+$ bin/fm-guard.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  2 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  After draining queued wakes, repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/live-guard-home/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TSGD98SD2PXA6384PVCDD6/.fm-validation/live-guard-home/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+exit=0; stdout_bytes=0; stderr_bytes=1295
+
+## Healthy watcher
+$ FM_HOME=<marked-local-lab> FM_POLL=30 bin/fm-watch.sh
+Actual daemon pid=2778284; lock pid=2778284; identity=linux-starttime=4913349 cmdline-hex=626173680062696e2f666d2d77617463682e736800; beacon_mtime=1792974682.5874882
+
+## Live identity-matched watcher and fresh beacon: guard emits nothing
+$ bin/fm-guard.sh
+exit=0; stdout_bytes=0; stderr_bytes=0
+Real watcher remains alive; guard is silent with one in-flight record.
+Owned watcher stopped with exit=-15.
+Disposable lab removed; no shared session or operator home accessed.
