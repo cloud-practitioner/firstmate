@@ -18,9 +18,7 @@
 # through bin/fm-hold-reason-lib.sh, which owns the field-only decoding contract.
 # Decoded reasons use quoted strings so embedded line breaks remain intact.
 #
-# Dates: tasks-axi runs with TZ=UTC, so every backlog date it writes or compares
-# (created, since, done, hold-until expiry) is the UTC date whatever zone the
-# host runs in; docs/configuration.md ("Backlog backend") owns the contract.
+# Dates: see docs/configuration.md ("Backlog backend") for the UTC contract.
 #
 # Why it exists: a bare `tasks-axi` resolves the tracked `.tasks.toml` paths
 # against its working directory, so from the code root it forks the queue
