@@ -75,7 +75,7 @@ esac
 fm_tasks_axi_version_parts() {
   local output
   command -v tasks-axi >/dev/null 2>&1 || return 1
-  output=$(tasks-axi --version 2>/dev/null) || return 1
+  output=$(TZ=UTC tasks-axi --version 2>/dev/null) || return 1
   printf '%s\n' "$output" |
     sed -n 's/.*\([0-9][0-9]*\)\.\([0-9][0-9]*\)\.\([0-9][0-9]*\).*/\1 \2 \3/p' |
     head -1
@@ -131,14 +131,14 @@ fm_tasks_axi_compatible_probe() {
 fm_tasks_axi_update_has_archive_body() {
   local output
   command -v tasks-axi >/dev/null 2>&1 || return 1
-  output=$(tasks-axi update --help 2>&1) || return 1
+  output=$(TZ=UTC tasks-axi update --help 2>&1) || return 1
   printf '%s\n' "$output" | grep -F -- '--archive-body' >/dev/null
 }
 
 fm_tasks_axi_mv_has_multi_id() {
   local output
   command -v tasks-axi >/dev/null 2>&1 || return 1
-  output=$(tasks-axi mv --help 2>&1) || return 1
+  output=$(TZ=UTC tasks-axi mv --help 2>&1) || return 1
   printf '%s\n' "$output" | grep -F -- '[<id>...]' >/dev/null
 }
 

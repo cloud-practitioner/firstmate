@@ -39,7 +39,10 @@
 # Explicit core bin/ and bin/backends/ scripts still receive the
 # backend-purity check. The backend-purity check rejects direct Beads CLI
 # invocations in the core bin/ and bin/backends/ scripts so every configured
-# backlog backend follows the same tasks-axi lifecycle path.
+# backlog backend follows the same tasks-axi lifecycle path. The same check
+# requires every tasks-axi invocation in those scripts to run with TZ=UTC
+# (plain or `env` assignment, or inside a `bash -c` payload), because tasks-axi
+# derives backlog dates from the process zone and backlog dates are UTC.
 #
 # Lint defaults to two concurrency-limited workers over two stable logical
 # shards, and each worker runs ONE canonical root per ShellCheck process, so a
@@ -517,13 +520,18 @@ fm_lint_run_backend_purity() {
       if (value < 32 || value > 126) return "?"
       return sprintf("%c", value)
     }
+    # Also records, in tz_pinned, whether a TZ=UTC assignment (plain or under
+    # env) prefixed the command, so the caller can require tasks-axi to be
+    # pinned to UTC.
     function invokes_bd(segment) {
+      tz_pinned=0
       sub(/^[[:space:]]+/, "", segment)
       while (1) {
         previous=segment
         sub(/^(if|then|elif|else|while|until|do)[[:space:]]+/, "", segment)
         sub(/^![[:space:]]+/, "", segment)
         sub(/^(command|exec)[[:space:]]+/, "", segment)
+        if (segment ~ /^TZ=UTC[[:space:]]/) tz_pinned=1
         sub(/^[[:alpha:]_][[:alnum:]_]*=[^[:space:]]+[[:space:]]+/, "", segment)
         if (segment ~ /^env[[:space:]]+/) {
           sub(/^env[[:space:]]+/, "", segment)
@@ -545,6 +553,7 @@ fm_lint_run_backend_purity() {
               continue
             }
             if (segment ~ /^[[:alpha:]_][[:alnum:]_]*=[^[:space:]]+[[:space:]]+/) {
+              if (segment ~ /^TZ=UTC[[:space:]]/) tz_pinned=1
               sub(/^[[:alpha:]_][[:alnum:]_]*=[^[:space:]]+[[:space:]]+/, "", segment)
               continue
             }
@@ -698,6 +707,13 @@ fm_lint_run_backend_purity() {
       for (i=1; i<=count; i++) {
         if (invokes_bd(segments[i])) {
           print FILENAME ":" FNR ": direct Beads CLI invocation bypasses tasks-axi"
+          break
+        }
+        if (!tz_pinned && ((command_word ~ /(^|\/)tasks-axi$/ && segments[i] ~ /tasks-axi[[:space:]]+[^[:space:]]/) \
+            || segments[i] ~ /(^|[^[:alnum:]_.\/-])(fm_run_timed|fm_exec_timed)[[:space:]].*[[:space:]]tasks-axi([[:space:]]|$)/ \
+            || (segments[i] ~ /exec[[:space:]]+tasks-axi([[:space:]]|$)/ && segments[i] !~ /TZ=UTC exec tasks-axi/))) {
+          if (segments[i] ~ /(env TZ=UTC tasks-axi|TZ=UTC exec tasks-axi)([[:space:]]|$)/) continue
+          print FILENAME ":" FNR ": tasks-axi invocation is not pinned to TZ=UTC; backlog dates are UTC"
           break
         }
       }

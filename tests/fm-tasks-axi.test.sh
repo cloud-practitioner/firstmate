@@ -12,6 +12,11 @@
 # that the command refuses addressing it cannot keep correct, and that bootstrap
 # reports any code-root copy that is not this home's own file while staying
 # silent for a link into the home, an absent copy, and the single-home layout.
+# It also proves backlog dates are UTC: under a zone east and a zone west of UTC,
+# at an instant where the local and UTC dates differ, every date tasks-axi
+# writes or compares (created, since, done, hold-until expiry) matches the UTC
+# date that the fleet snapshot uses, however the wrapper or a lifecycle helper
+# reaches tasks-axi.
 set -u
 
 # shellcheck source=tests/lib.sh disable=SC1091
@@ -239,6 +244,121 @@ test_wrapper_single_home() {
   pass "fm-tasks-axi.sh keeps the single-home layout addressing its own code-root backlog"
 }
 
+# Fake clock for node: freezes Date at FM_TEST_FAKE_NOW, so the instant is fixed
+# whatever the wall-clock hour while TZ still drives every local date getter.
+write_fake_clock() {  # <destination-file>
+  cat > "$1" <<'JS'
+const RealDate = Date;
+const fixed = RealDate.parse(process.env.FM_TEST_FAKE_NOW);
+class FakeDate extends RealDate {
+  constructor(...args) {
+    if (args.length === 0) super(fixed);
+    else super(...args);
+  }
+  static now() { return fixed; }
+}
+globalThis.Date = FakeDate;
+JS
+}
+
+# One zone at one instant, driven only through the wrapper. $utc_today is the
+# UTC calendar day of the instant; the zone's local day is a different one.
+assert_backlog_dates_are_utc() {  # <zone> <instant> <utc-today> <utc-tomorrow> <local-today>
+  local zone=$1 instant=$2 utc_today=$3 utc_tomorrow=$4 local_today=$5
+  local dir clock out held snap
+  dir=$(make_split "utc-dates-${zone//\//-}")
+  clock="$dir/fake-clock.cjs"
+  write_fake_clock "$clock"
+  fm_utc_run() {
+    TZ=$zone NODE_OPTIONS="--require $clock" FM_TEST_FAKE_NOW=$instant \
+      FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$dir/code" "$WRAPPER" "$@"
+  }
+  # The scenario only means something while the two dates really differ.
+  assert_equals "$local_today" "$(TZ=$zone date -d "$instant" +%F 2>/dev/null || TZ=$zone date -j -f %Y-%m-%dT%H:%M:%SZ "$instant" +%F)" \
+    "the scenario's local date for $zone is wrong"
+  [ "$local_today" != "$utc_today" ] || fail "the $zone scenario must straddle a UTC date boundary"
+
+  fm_utc_run add d-ship "ship dated" --kind ship >/dev/null || fail "add failed under $zone"
+  fm_utc_run add d-due "hold due today" --kind captain >/dev/null || fail "add failed under $zone"
+  fm_utc_run add d-later "hold due tomorrow" --kind captain >/dev/null || fail "add failed under $zone"
+  fm_utc_run start d-ship >/dev/null || fail "start failed under $zone"
+  fm_utc_run hold d-due --kind captain --until "$utc_today" --reason "due on the UTC day" >/dev/null \
+    || fail "hold failed under $zone"
+  fm_utc_run hold d-later --kind captain --until "$utc_tomorrow" --reason "due after the UTC day" >/dev/null \
+    || fail "hold failed under $zone"
+  out=$(fm_utc_run show d-ship 2>&1)
+  assert_contains "$out" "created: $utc_today" "created is not the UTC date under $zone"
+  assert_not_contains "$out" "$local_today" "created leaked the $zone local date"
+  assert_contains "$(grep -F 'd-ship' "$dir/home/data/backlog.md")" "since $utc_today" \
+    "the transition date is not the UTC date under $zone"
+
+  # tasks-axi's own expiry decision: a hold is inactive on and after its date.
+  held=$(fm_utc_run list --state held --fields hold_until 2>&1)
+  assert_contains "$held" "d-later" "a hold due after the UTC day expired early under $zone"
+  assert_not_contains "$held" "d-due" "a hold due on the UTC day was still active under $zone"
+
+  # The fleet snapshot counts the same two holds the same way at the same instant.
+  snap=$(FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$dir/code" FM_SNAPSHOT_NOW=$instant TZ=$zone "$ROOT/bin/fm-fleet-snapshot.sh" --json 2>/dev/null)
+  printf '%s' "$snap" | jq -e '
+    ([.backlog.records[] | select(.id == "d-due")][0]) as $due
+    | ([.backlog.records[] | select(.id == "d-later")][0]) as $later
+    | $due.captain_actionable == true and $later.captain_actionable == false
+  ' >/dev/null || fail "the fleet snapshot disagrees with tasks-axi about hold expiry under $zone"
+
+  fm_utc_run "done" d-ship >/dev/null || fail "done failed under $zone"
+  assert_contains "$(grep -F 'd-ship' "$dir/home/data/backlog.md")" "done $utc_today" \
+    "the completion date is not the UTC date under $zone"
+  assert_not_contains "$(grep -F 'd-ship' "$dir/home/data/backlog.md")" "$local_today" \
+    "a $zone local date reached the shipped row"
+}
+
+test_backlog_dates_are_utc_in_any_zone() {
+  # 20:00Z is already tomorrow east of UTC; 03:00Z is still yesterday west of it.
+  assert_backlog_dates_are_utc Australia/Sydney 2026-10-26T20:00:00Z 2026-10-26 2026-10-27 2026-10-27
+  assert_backlog_dates_are_utc America/Los_Angeles 2026-10-27T03:00:00Z 2026-10-27 2026-10-28 2026-10-26
+  pass "tasks-axi dates and hold expiry follow the UTC day under Australia/Sydney and America/Los_Angeles"
+}
+
+# Every route to tasks-axi, not only the wrapper, must run it on UTC: a probe
+# stub records the zone it was started in.
+test_every_tasks_axi_route_runs_on_utc() {
+  local dir bin log
+  dir="$TMP_ROOT/utc-routes"
+  bin="$dir/bin"
+  log="$dir/zones.log"
+  mkdir -p "$bin" "$dir/code/data"
+  cat > "$bin/tasks-axi" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' "${TZ:-unset}" >> "$FM_TEST_ZONE_LOG"
+case "${1:-}" in
+  --version) echo "tasks-axi 0.2.6" ;;
+esac
+exit 0
+SH
+  chmod +x "$bin/tasks-axi"
+  : > "$log"
+  fm_test_tasks_toml "$dir/code/.tasks.toml"
+  empty_backlog "$dir/code/data/backlog.md"
+  (
+    export PATH="$bin:$PATH" TZ=Australia/Sydney FM_TEST_ZONE_LOG="$log"
+    export FM_ROOT_OVERRIDE="$dir/code" FM_HOME="$dir/code"
+    "$WRAPPER" list >/dev/null
+    "$WRAPPER" show anything >/dev/null
+    # shellcheck source=bin/fm-tasks-axi-lib.sh disable=SC1091
+    . "$ROOT/bin/fm-tasks-axi-lib.sh"
+    # shellcheck source=bin/fm-backlog-transition-lib.sh disable=SC1091
+    . "$ROOT/bin/fm-backlog-transition-lib.sh"
+    (fm_tasks_axi list) >/dev/null
+    (FM_TASKS_AXI_TIMEOUT=30 fm_tasks_axi list) >/dev/null
+    fm_tasks_axi_version_parts >/dev/null || true  # the stub answers no feature text; only its zone is read
+    fm_tasks_axi_update_has_archive_body >/dev/null || true  # the stub answers no feature text; only its zone is read
+    fm_tasks_axi_mv_has_multi_id >/dev/null || true  # the stub answers no feature text; only its zone is read
+  ) || fail "a tasks-axi route failed against the zone probe"
+  assert_equals "UTC" "$(sort -u "$log" | paste -sd, -)" "a tasks-axi route ran in a zone other than UTC"
+  [ "$(wc -l < "$log")" -ge 7 ] || fail "the zone probe saw fewer tasks-axi calls than the routes made"
+  pass "wrapper, lifecycle helper (plain and timed), and probes start tasks-axi on UTC under TZ=Australia/Sydney"
+}
+
 test_guard_reports_regular_code_root_backlog
 test_guard_reports_foreign_link_and_archive
 test_guard_silent_for_single_home
@@ -249,6 +369,8 @@ if [ "$HAVE_TASKS_AXI" = 1 ]; then
   test_wrapper_refusals
   test_wrapper_refuses_add_start
   test_wrapper_single_home
+  test_backlog_dates_are_utc_in_any_zone
+  test_every_tasks_axi_route_runs_on_utc
 else
   echo "skip: tasks-axi not found; home-addressing cases not run"
 fi

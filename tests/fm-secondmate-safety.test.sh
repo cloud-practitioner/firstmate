@@ -3155,9 +3155,40 @@ EOF
   pass "fm-backlog-handoff refuses Done items under whitespace section headings and unsafe homes"
 }
 
+test_seed_registry_dates_are_utc() {
+  # 20:00Z on 2026-10-26 is already 2026-10-27 in Australia/Sydney. The registry
+  # "added" date must be the UTC day, the same day tasks-axi and the fleet
+  # snapshot use. A date shim fixes the instant and still honors TZ and -u.
+  local home sub fakebin
+  home="$TMP_ROOT/utc-date-main"
+  sub="$TMP_ROOT/utc-date-sub"
+  mkdir -p "$home/projects" "$home/data" "$home/state"
+  fm_git_init_commit "$home/projects/alpha"
+  fm_git_add_origin "$home/projects/alpha" "$TMP_ROOT/remotes/seed-utc-date-alpha.git"
+  printf '%s\n' '- alpha [direct-PR] - alpha project (added 2026-06-22)' > "$home/data/projects.md"
+  fakebin=$(fm_fakebin "$TMP_ROOT/utc-date")
+  cat > "$fakebin/date" <<'SH'
+#!/usr/bin/env bash
+real=$(PATH="$FM_TEST_REAL_PATH" command -v date)
+if "$real" -d @0 >/dev/null 2>&1; then exec "$real" -d "@$FM_TEST_FAKE_EPOCH" "$@"; fi
+exec "$real" -r "$FM_TEST_FAKE_EPOCH" "$@"
+SH
+  chmod +x "$fakebin/date"
+  export FM_TEST_REAL_PATH="$PATH"
+  PATH="$fakebin:$PATH" FM_TEST_FAKE_EPOCH=1793044800 TZ=Australia/Sydney \
+    FM_HOME="$home" FM_SECONDMATE_CHARTER='utc dates' FM_SECONDMATE_SCOPE='utc dates' \
+    "$ROOT/bin/fm-home-seed.sh" utcmate "$sub" alpha >/dev/null \
+    || fail "seed failed under TZ=Australia/Sydney"
+  assert_grep '- utcmate - utc dates' "$home/data/secondmates.md" "the seeded registry line is missing"
+  assert_grep 'added 2026-10-26)' "$home/data/secondmates.md" "the registry date is not the UTC day"
+  assert_no_grep 'added 2026-10-27' "$home/data/secondmates.md" "the registry date leaked the local day"
+  pass "seeded registry dates are UTC under TZ=Australia/Sydney"
+}
+
 test_fm_home_parameterization
 test_lock_status_is_per_home
 test_seed_allows_overlapping_clones_and_drops_owner
+test_seed_registry_dates_are_utc
 test_home_seed_validate_rejects_unparseable_registry_entry
 test_home_seed_refuses_broken_registry_symlink
 test_home_seed_refuses_unreadable_registry

@@ -220,7 +220,7 @@ MANIFEST_BYTES=$(LC_ALL=C wc -c < "$TMP/manifest" | tr -d ' ')
 [ "$MANIFEST_BYTES" -le "$MAX_MANIFEST_BYTES" ] \
   || die "remote provisioning manifest exceeds the $MAX_MANIFEST_BYTES-byte bound"
 
-TODAY=$(date +%F)
+TODAY=$(date -u +%F)
 REG_TMP="$TMP/secondmates.next"
 if [ -f "$REG" ]; then grep -vE "^- $ID( |$)" "$REG" > "$REG_TMP" || true; else : > "$REG_TMP"; fi
 printf -- '- %s - %s (host: %s; root: %s; home: %s; scope: %s; projects: %s; added %s)\n' \

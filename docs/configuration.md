@@ -371,6 +371,11 @@ Removing it stops further retries and leaves the current watcher for the ordinar
 The tracked `.tasks.toml` pins the default `tasks-axi` markdown backend to `data/backlog.md`, with `done_keep = 10` and an archive at `data/done-archive.md`.
 A home may instead select another tasks-axi adapter such as Beads through its own `.tasks.toml` or `TASKS_AXI_BACKEND`; firstmate still uses only tasks-axi verbs for routine backlog reads and mutations, and the adapter maps `start` and evidence-bearing `done` transitions to its native statuses and evidence fields.
 
+Backlog dates are UTC, whatever zone the host or container runs in.
+tasks-axi stamps `created`, `updated`, `closed`, and the transition dates (`since`, `done`) and decides whether a `hold --until` date has passed from the process's local date, so every firstmate invocation of tasks-axi pins `TZ=UTC`; the fleet snapshot and Bearings already take "today" from UTC.
+[`bin/fm-lint.sh`](../bin/fm-lint.sh) rejects a tasks-axi invocation in `bin/` that is not pinned, and [`tests/fm-tasks-axi.test.sh`](../tests/fm-tasks-axi.test.sh) proves the dates under zones east and west of UTC.
+Registry `added YYYY-MM-DD` dates are UTC too.
+
 ### Captain holds on Beads
 
 Captain-hold row creation is owned by [`bin/fm-captain-hold.sh`](../bin/fm-captain-hold.sh) `hold`: when no work item exists, it creates an ordinary backlog row (`--kind captain` metadata; Beads native type `task`) and then applies the captain hold.
