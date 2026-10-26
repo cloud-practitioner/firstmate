@@ -1,0 +1,214 @@
+{
+  "clock_control": "Node Date frozen; real tasks-axi releases and Firstmate scripts executed without product stubs",
+  "firstmate_process_timezones": {
+    "UTC": 87
+  },
+  "unwrapped_baseline_timezones": {
+    "Australia/Sydney": 4,
+    "America/Los_Angeles": 4
+  },
+  "scenarios": {
+    "sydney": {
+      "fleet_hold_records": [
+        {
+          "requires_child_metadata": false,
+          "blocked_reason": null,
+          "title": "Revisit on UTC day",
+          "raw": "- [ ] due-today - Revisit on UTC day (kind: captain) (since 2026-10-26) (hold: Due on UTC day) (hold-kind: captain) (hold-until: 2026-10-26)",
+          "repo": null,
+          "checked": false,
+          "links": [],
+          "body_lines": [],
+          "unresolved_blocker_ids": [],
+          "reported": null,
+          "pr_url": null,
+          "priority": null,
+          "blocked_by_ids": [],
+          "hold_reason": "Due on UTC day",
+          "done": null,
+          "body_excerpt": null,
+          "hold_age_days": 0,
+          "structured": true,
+          "report_path": null,
+          "completion": {
+            "date": null,
+            "verb": null
+          },
+          "id": "due-today",
+          "merged": null,
+          "hold_kind": "captain",
+          "hold_until": "2026-10-26",
+          "current_role": "queued",
+          "blocked_by": null,
+          "since": "2026-10-26",
+          "hold_set": null,
+          "hold_bucket": "live",
+          "state": "queued",
+          "order": 2,
+          "local_note": null,
+          "kind": "captain",
+          "captain_actionable": true
+        },
+        {
+          "hold_set": null,
+          "hold_bucket": "dated",
+          "state": "queued",
+          "local_note": null,
+          "order": 3,
+          "blocked_by": null,
+          "since": "2026-10-26",
+          "captain_actionable": false,
+          "kind": "captain",
+          "hold_kind": "captain",
+          "merged": null,
+          "current_role": "queued",
+          "hold_until": "2026-10-27",
+          "completion": {
+            "verb": null,
+            "date": null
+          },
+          "report_path": null,
+          "structured": true,
+          "id": "due-later",
+          "body_excerpt": null,
+          "hold_age_days": 0,
+          "blocked_by_ids": [],
+          "hold_reason": "Due after UTC day",
+          "done": null,
+          "body_lines": [],
+          "unresolved_blocker_ids": [],
+          "reported": null,
+          "priority": null,
+          "pr_url": null,
+          "checked": false,
+          "raw": "- [ ] due-later - Do not expire early (kind: captain) (since 2026-10-26) (hold: Due after UTC day) (hold-kind: captain) (hold-until: 2026-10-27)",
+          "repo": null,
+          "links": [],
+          "requires_child_metadata": false,
+          "blocked_reason": null,
+          "title": "Do not expire early"
+        }
+      ],
+      "bearings_open_decisions": [
+        {
+          "id": "due-today",
+          "key": "due-today",
+          "verb": "captain-hold",
+          "summary": "Revisit on UTC day: Due on UTC day",
+          "owner": "(main)"
+        }
+      ],
+      "bearings_dated_gates": [
+        {
+          "id": "due-later",
+          "title": "Do not expire early",
+          "blocked_by": "-",
+          "reason": "until 2026-10-27: Due after UTC day",
+          "owner": "(main)",
+          "filed": "2026-10-26"
+        }
+      ]
+    },
+    "los-angeles": {
+      "fleet_hold_records": [
+        {
+          "repo": null,
+          "raw": "- [ ] due-today - Revisit on UTC day (kind: captain) (since 2026-10-27) (hold: Due on UTC day) (hold-kind: captain) (hold-until: 2026-10-27)",
+          "unresolved_blocker_ids": [],
+          "reported": null,
+          "requires_child_metadata": false,
+          "hold_bucket": "live",
+          "id": "due-today",
+          "pr_url": null,
+          "merged": null,
+          "hold_until": "2026-10-27",
+          "hold_set": null,
+          "blocked_by": null,
+          "order": 2,
+          "title": "Revisit on UTC day",
+          "checked": false,
+          "blocked_reason": null,
+          "hold_age_days": 0,
+          "links": [],
+          "structured": true,
+          "hold_reason": "Due on UTC day",
+          "state": "queued",
+          "kind": "captain",
+          "report_path": null,
+          "completion": {
+            "date": null,
+            "verb": null
+          },
+          "body_lines": [],
+          "done": null,
+          "body_excerpt": null,
+          "since": "2026-10-27",
+          "captain_actionable": true,
+          "blocked_by_ids": [],
+          "local_note": null,
+          "priority": null,
+          "current_role": "queued",
+          "hold_kind": "captain"
+        },
+        {
+          "completion": {
+            "date": null,
+            "verb": null
+          },
+          "report_path": null,
+          "body_lines": [],
+          "done": null,
+          "kind": "captain",
+          "structured": true,
+          "state": "queued",
+          "hold_reason": "Due after UTC day",
+          "blocked_by_ids": [],
+          "hold_kind": "captain",
+          "current_role": "queued",
+          "local_note": null,
+          "priority": null,
+          "since": "2026-10-27",
+          "body_excerpt": null,
+          "captain_actionable": false,
+          "merged": null,
+          "hold_until": "2026-10-28",
+          "id": "due-later",
+          "pr_url": null,
+          "hold_bucket": "dated",
+          "hold_set": null,
+          "unresolved_blocker_ids": [],
+          "raw": "- [ ] due-later - Do not expire early (kind: captain) (since 2026-10-27) (hold: Due after UTC day) (hold-kind: captain) (hold-until: 2026-10-28)",
+          "repo": null,
+          "requires_child_metadata": false,
+          "reported": null,
+          "hold_age_days": 0,
+          "links": [],
+          "blocked_by": null,
+          "blocked_reason": null,
+          "checked": false,
+          "title": "Do not expire early",
+          "order": 3
+        }
+      ],
+      "bearings_open_decisions": [
+        {
+          "id": "due-today",
+          "key": "due-today",
+          "verb": "captain-hold",
+          "summary": "Revisit on UTC day: Due on UTC day",
+          "owner": "(main)"
+        }
+      ],
+      "bearings_dated_gates": [
+        {
+          "id": "due-later",
+          "title": "Do not expire early",
+          "blocked_by": "-",
+          "reason": "until 2026-10-28: Due after UTC day",
+          "owner": "(main)",
+          "filed": "2026-10-27"
+        }
+      ]
+    }
+  }
+}

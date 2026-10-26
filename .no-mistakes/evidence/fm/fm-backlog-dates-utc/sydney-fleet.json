@@ -1,0 +1,198 @@
+{
+  "schema": "fm-fleet-snapshot.v1",
+  "generated": "2026-10-26T20:00:00Z",
+  "fm_home": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate",
+  "roots": {
+    "fm_root": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN",
+    "state": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/state",
+    "data": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data",
+    "config": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/config",
+    "projects": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/projects"
+  },
+  "backlog": {
+    "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md",
+    "records": [
+      {
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "report_path": null,
+        "structured": true,
+        "id": "utc-ship",
+        "body_excerpt": null,
+        "hold_age_days": 0,
+        "hold_set": null,
+        "hold_bucket": null,
+        "state": "in_flight",
+        "order": 1,
+        "local_note": null,
+        "blocked_by": null,
+        "since": "2026-10-26",
+        "captain_actionable": false,
+        "kind": "ship",
+        "hold_kind": null,
+        "merged": null,
+        "current_role": "worker",
+        "hold_until": null,
+        "checked": false,
+        "raw": "- [ ] utc-ship - UTC dated work (kind: ship) (since 2026-10-26)",
+        "repo": null,
+        "links": [],
+        "requires_child_metadata": true,
+        "title": "UTC dated work",
+        "blocked_reason": null,
+        "blocked_by_ids": [],
+        "hold_reason": null,
+        "done": null,
+        "body_lines": [],
+        "reported": null,
+        "unresolved_blocker_ids": [],
+        "pr_url": null,
+        "priority": null
+      },
+      {
+        "requires_child_metadata": false,
+        "blocked_reason": null,
+        "title": "Revisit on UTC day",
+        "raw": "- [ ] due-today - Revisit on UTC day (kind: captain) (since 2026-10-26) (hold: Due on UTC day) (hold-kind: captain) (hold-until: 2026-10-26)",
+        "repo": null,
+        "checked": false,
+        "links": [],
+        "body_lines": [],
+        "unresolved_blocker_ids": [],
+        "reported": null,
+        "pr_url": null,
+        "priority": null,
+        "blocked_by_ids": [],
+        "hold_reason": "Due on UTC day",
+        "done": null,
+        "body_excerpt": null,
+        "hold_age_days": 0,
+        "structured": true,
+        "report_path": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "id": "due-today",
+        "merged": null,
+        "hold_kind": "captain",
+        "hold_until": "2026-10-26",
+        "current_role": "queued",
+        "blocked_by": null,
+        "since": "2026-10-26",
+        "hold_set": null,
+        "hold_bucket": "live",
+        "state": "queued",
+        "order": 2,
+        "local_note": null,
+        "kind": "captain",
+        "captain_actionable": true
+      },
+      {
+        "hold_set": null,
+        "hold_bucket": "dated",
+        "state": "queued",
+        "local_note": null,
+        "order": 3,
+        "blocked_by": null,
+        "since": "2026-10-26",
+        "captain_actionable": false,
+        "kind": "captain",
+        "hold_kind": "captain",
+        "merged": null,
+        "current_role": "queued",
+        "hold_until": "2026-10-27",
+        "completion": {
+          "verb": null,
+          "date": null
+        },
+        "report_path": null,
+        "structured": true,
+        "id": "due-later",
+        "body_excerpt": null,
+        "hold_age_days": 0,
+        "blocked_by_ids": [],
+        "hold_reason": "Due after UTC day",
+        "done": null,
+        "body_lines": [],
+        "unresolved_blocker_ids": [],
+        "reported": null,
+        "priority": null,
+        "pr_url": null,
+        "checked": false,
+        "raw": "- [ ] due-later - Do not expire early (kind: captain) (since 2026-10-26) (hold: Due after UTC day) (hold-kind: captain) (hold-until: 2026-10-27)",
+        "repo": null,
+        "links": [],
+        "requires_child_metadata": false,
+        "blocked_reason": null,
+        "title": "Do not expire early"
+      }
+    ],
+    "present": true
+  },
+  "tasks": [],
+  "main_inventory": {
+    "valid": false,
+    "reason": "in-flight backlog item has no child metadata",
+    "orphan_in_flight": [
+      "utc-ship"
+    ],
+    "unstructured_current_count": 0
+  },
+  "contributions": {
+    "known": 0,
+    "checked": 0,
+    "counts": {
+      "captain": 0,
+      "fleet": 0,
+      "maintainer": 0,
+      "nobody": 0
+    },
+    "unmeasured": 0,
+    "complete": true,
+    "proven_clear": true,
+    "stale_verdicts": 0,
+    "missing_verdicts": 0,
+    "unreadable_records": 0,
+    "valid_until": 900,
+    "captain": [],
+    "captain_omitted": 0
+  },
+  "scout_reports": [],
+  "secondmate_current": {
+    "registry": {
+      "present": false,
+      "available": true,
+      "complete": true,
+      "reason": null,
+      "provenance": "registered-table",
+      "path": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/secondmates.md",
+      "freshness": {
+        "status": "fresh",
+        "observed_at": "2026-10-26T20:00:00Z"
+      },
+      "records": [],
+      "input_truncated": false,
+      "records_truncated": false,
+      "reasons": [],
+      "lines_in_window": 0,
+      "records_in_window": 0
+    },
+    "records": [],
+    "total_registered": 0,
+    "total": 0,
+    "shown": 0,
+    "truncated": 0
+  },
+  "secondmate_landed": {
+    "records": [],
+    "truncated": [],
+    "unreadable": [],
+    "partial": []
+  },
+  "secondmate_guidance": {
+    "note": "For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority."
+  }
+}

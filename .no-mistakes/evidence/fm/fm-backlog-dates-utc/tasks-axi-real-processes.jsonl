@@ -1,0 +1,97 @@
+{"argv":[],"tz":"Australia/Sydney","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","bare-date","Unwrapped local-date baseline","--kind","ship"],"tz":"Australia/Sydney","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","bare-date"],"tz":"Australia/Sydney","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","bare-date","--kind","captain","--until","2026-10-27","--reason","Baseline boundary"],"tz":"Australia/Sydney","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","list","--state","held"],"tz":"Australia/Sydney","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","utc-ship","UTC dated work","--kind","ship"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","due-today","Revisit on UTC day","--kind","captain"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","due-later","Do not expire early","--kind","captain"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","start","utc-ship"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","utc-ship"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","due-today","--kind","captain","--until","2026-10-26","--reason","Due on UTC day"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","due-later","--kind","captain","--until","2026-10-27","--reason","Due after UTC day"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","list","--state","held","--fields","hold_until"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","view","due-today"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","ready"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","helper-plain","Lifecycle dated work","--kind","ship"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","start","helper-plain","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","done","helper-plain","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","due-today","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","list","--state","held","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","done","utc-ship"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","utc-ship","--full"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","--version"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","--help"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","mv","--help"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","--help"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","captain-direct","Date-bound captain call","--kind","captain","--repo","firstmate","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","captain-direct","--body-file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/fm-captain-hold-stamp.hcaYMn","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","captain-direct","--reason","fm-hold-v1:QXdhaXQgYXBwcm92YWw=","--kind","captain","--until","2026-10-27","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","--version"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","--help"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","mv","--help"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","--help"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","captain-direct","--body-file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/fm-captain-hold-body.nQHVAi","--archive-body","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","done","captain-direct","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","captain-direct","--body-file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/fm-captain-hold-normalize.3V2JqN","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/sydney-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":[],"tz":"America/Los_Angeles","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","bare-date","Unwrapped local-date baseline","--kind","ship"],"tz":"America/Los_Angeles","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","bare-date"],"tz":"America/Los_Angeles","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","bare-date","--kind","captain","--until","2026-10-27","--reason","Baseline boundary"],"tz":"America/Los_Angeles","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","list","--state","held"],"tz":"America/Los_Angeles","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","utc-ship","UTC dated work","--kind","ship"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","due-today","Revisit on UTC day","--kind","captain"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","due-later","Do not expire early","--kind","captain"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","start","utc-ship"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","utc-ship"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","due-today","--kind","captain","--until","2026-10-27","--reason","Due on UTC day"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","due-later","--kind","captain","--until","2026-10-28","--reason","Due after UTC day"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","list","--state","held","--fields","hold_until"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","view","due-today"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","ready"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","helper-plain","Lifecycle dated work","--kind","ship"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","start","helper-plain","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","done","helper-plain","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","due-today","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","list","--state","held","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","done","utc-ship"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","utc-ship","--full"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","--version"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","--help"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","mv","--help"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","--help"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","add","captain-direct","Date-bound captain call","--kind","captain","--repo","firstmate","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","captain-direct","--body-file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/fm-captain-hold-stamp.XN3vY8","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","captain-direct","--reason","fm-hold-v1:QXdhaXQgYXBwcm92YWw=","--kind","captain","--until","2026-10-28","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","--version"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","--help"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","mv","--help"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","hold","--help"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","captain-direct","--body-file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/fm-captain-hold-body.k2HVs1","--archive-body","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","done","captain-direct","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","update","captain-direct","--body-file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/fm-captain-hold-normalize.XWbw65","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full","--file","/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/los-angeles-firstmate/data/backlog.md"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.npm-global/bin/tasks-axi","show","captain-direct","--full"],"tz":"UTC","now":"2026-10-27T03:00:00Z"}
+{"argv":["/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/bootstrap-bin/tasks-axi","--version"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/bootstrap-bin/tasks-axi","update","--help"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/bootstrap-bin/tasks-axi","mv","--help"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/old-toolchain/node_modules/.bin/tasks-axi","--version"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}
+{"argv":["/home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/old-toolchain/node_modules/.bin/tasks-axi","--version"],"tz":"UTC","now":"2026-10-26T20:00:00Z"}

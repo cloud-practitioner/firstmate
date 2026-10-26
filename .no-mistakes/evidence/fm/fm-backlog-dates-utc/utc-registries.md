@@ -1,0 +1,2 @@
+- utc-local - Isolated UTC registry validation (home: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/registry-local; scope: UTC dates; projects: ; added 2026-10-26)
+- utc-remote - Isolated UTC registry validation (host: utc-loopback; root: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/remote-code; home: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5V1C4SMFHG968XTKT4Y3ERN/.utc-validation-tmp/manual/remote-home; scope: UTC dates; projects: ; added 2026-10-26)
