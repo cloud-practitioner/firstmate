@@ -21,7 +21,7 @@ The shared no-mistakes gate lifecycle boundary is summarized in [architecture.md
 | `fm-bearings-snapshot.sh` | Project the bounded remote-ledger fleet snapshot to compact TOON; `--include-prs` adds live GitHub enrichment |
 | `fm-bearings-board.sh`   | Build and arm the stable interactive `/bearings lavish` fleet board                  |
 | `fm-secondmate-reconcile.sh` | Queue Bearings reconcile requests for later supervision delivery and ask each mismatched home through its durable inbox with a per-home cooldown |
-| `fm-update.sh`           | Guarded self-update of firstmate and local or remote secondmate homes, re-recording armed procevent and PR merge watches, reconciling redundant divergence and classifying every live mate left on the target commit for restart or fallback nudge |
+| `fm-update.sh`           | Guarded self-update of firstmate and local or remote secondmate homes, reconciling redundant divergence and classifying every live mate left on the target commit for restart or fallback nudge; the [script header](../bin/fm-update.sh) owns post-update watch maintenance |
 | `fm-secondmate-restart.sh` | Persist open conversational work, then restart eligible second mates or report the fallback outcome |
 | `fm-secondmate-restart-lib.sh` | Shared second-mate restart capability and persistence-request contract |
 | [`fm-secondmate-dormant.sh`](../bin/fm-secondmate-dormant.sh) | Stand down, resume, or list persistent local secondmates without retiring their homes |
@@ -152,7 +152,7 @@ The shared no-mistakes gate lifecycle boundary is summarized in [architecture.md
 | `fm-usage-warner.sh`     | Opt-in macOS threshold warner that notifies once when a configured Claude usage window crosses its percentage |
 | `fm-pr-lib.sh`           | Own canonical task and PR validation, the branch-to-PR lookup shared by teardown and the PR health monitor, plus private atomic PR-poll publication, merge-notification identity, and retirement |
 | `fm-pr-poll.sh`          | Provide the byte-static watcher program for validated pull-request, merge-request, and Gerrit-change poll sidecars |
-| `fm-pr-rebind.sh`        | Re-record every armed PR merge watch of one home after a self-update changes `fm-pr-poll.sh`, and name the re-arm command of any watch it cannot re-record safely |
+| [`fm-pr-rebind.sh`](../bin/fm-pr-rebind.sh) | Refresh registered PR merge watches after poll-template changes; the script header owns recovery and output semantics |
 | `fm-contributions.sh`    | Observe owned publications, retain exact-head judgments, measure required actors, and wake on maintainer or configured review-bot signals |
 | [`fm-pr-evidence.sh`](../bin/fm-pr-evidence.sh) | Capture, annotate, publish, and gate PR evidence under the [fork-only operator contract](configuration.md#pr-evidence-gate-configpr-evidence) |
 | [`fm-pr-evidence-lib.py`](../bin/fm-pr-evidence-lib.py) | Implement evidence validation, masking, annotation rendering, and comment composition |

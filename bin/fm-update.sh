@@ -10,9 +10,10 @@
 # A secondmate divergence whose complete local tree result is already present at
 # the target is reconciled with reset --keep; every other unsafe target is
 # skipped and reported, with divergence recorded durably by fm-ff-lib.sh.
-# A tracked-files update never touches the gitignored operational
-# dirs (data/, state/, config/, projects/, .no-mistakes/), so a secondmate's
-# in-flight work is never disrupted. Worktrees of this repo share one object
+# The git advance preserves the gitignored operational dirs
+# (data/, state/, config/, projects/, .no-mistakes/) and in-flight work;
+# post-update watch maintenance below may refresh bindings in state/.
+# Worktrees of this repo share one object
 # store, so a single fetch refreshes them all; standalone-clone homes are
 # fetched on their own. Secondmate homes are leased at a detached HEAD on the
 # default branch, so a fast-forward there advances HEAD only and never touches
@@ -61,12 +62,9 @@
 # local secondmate), this script best-effort runs that home's own
 # fm-procevent-when.sh rebind-all to republish those bindings against the new
 # bytes; a failure there is swallowed rather than failing the update.
-# The same fast-forward can rewrite bin/fm-pr-poll.sh, the template every armed
-# PR merge watch holds a byte copy of; bin/fm-pr-rebind.sh re-records each such
-# watch after the same updates, and prints an actionable line naming the task
-# and its bin/fm-pr-check.sh re-arm command for any watch it cannot re-record
-# safely. Its failure is likewise never fatal; the watcher repeats the rebind
-# on its next check sweep.
+# After the same primary and local-secondmate updates, bin/fm-pr-rebind.sh
+# maintains registered PR merge watches under its own header contract.
+# Its diagnostics remain visible, but failure is likewise never fatal.
 #
 # Usage: fm-update.sh [--help]
 set -eu

@@ -1,29 +1,33 @@
 #!/usr/bin/env bash
-# Refresh every armed PR merge watch of one home after bin/fm-pr-poll.sh changed.
+# Refresh registered PR merge watches of one home after bin/fm-pr-poll.sh changed.
 # bin/fm-pr-check.sh arms a watch by publishing a byte copy of that template as
 # state/<id>.check.sh, bound to it by state/<id>.pr-poll-registration. A
 # self-update rewrites the template in place, so every watch armed before the
 # update stops matching the strict validation and the watcher refuses it as
 # unauthenticated, though nothing was tampered with and no merge would then be
 # detected.
-# For each registered watch this script reports one line:
+# Per-watch output reports replacements and refusals:
 #   rebound: <id>       the check was exactly the byte copy the registration
 #                       records, from an older template, so it was replaced by
 #                       the current one under the task's control and poll
 #                       publication locks (fm_pr_poll_registration_rebind_template
 #                       in bin/fm-pr-lib.sh owns the proof).
-#   unchanged: <id>     already valid, a pending retirement receipt, or a volume
-#                       renumber the watcher itself re-records.
 #   actionable: ...     anything the proof does not cover, such as a hand-edited
 #                       or swapped check or a tampered sidecar. It is never
-#                       trusted, and the line names the task and the exact
-#                       bin/fm-pr-check.sh re-arm command.
-# A final summary line counts each kind. The exit status is 1 when any watch
-# needs the re-arm, 0 otherwise. bin/fm-update.sh runs this for its own home and
-# every local secondmate home after a fast-forward; the watcher repeats the same
-# rebind on its next check sweep, so a home updated any other way heals too.
-# The template is bin/fm-pr-poll.sh of the code root this copy belongs to, the
-# one the watcher of that code root validates against.
+#                       trusted, and the line names the task and a
+#                       bin/fm-pr-check.sh re-arm command (<pr-url> means the
+#                       URL must be supplied).
+# A final summary counts rebound, unchanged, and unsafe watches. Already-valid
+# watches, pending retirement receipts, and volume renumbers the watcher itself
+# re-records count as unchanged and produce no per-watch line.
+# The exit status is 1 when any watch needs the re-arm, 0 otherwise.
+# bin/fm-update.sh's header owns automatic update-time invocation; the watcher
+# repeats the rebind on its next check sweep, so other update paths heal too.
+# The template is bin/fm-pr-poll.sh under FM_ROOT_OVERRIDE, defaulting to this
+# script's code root. FM_HOME selects the home; FM_STATE_OVERRIDE can select
+# its state directory. Missing state is a successful no-op; a missing template
+# with state present exits 1.
+# Regression coverage: tests/fm-pr-check-security.test.sh and tests/fm-update.test.sh.
 # Usage: fm-pr-rebind.sh
 set -u
 
@@ -46,8 +50,8 @@ fi
 [ -d "$STATE" ] && [ ! -L "$STATE" ] || { echo "pr-rebind: no state directory"; exit 0; }
 [ -f "$TEMPLATE" ] || { echo "actionable: $TEMPLATE is missing, so no PR merge watch can be checked" >&2; exit 1; }
 
-# The URL a re-arm needs comes from the task's recorded pr=, falling back to
-# the watch's own sidecar; a placeholder is printed when neither parses.
+# Use the task's recorded pr=, or the sidecar URL only when pr= is empty.
+# An invalid selected URL becomes a placeholder, never unvalidated command text.
 rearm_url() {  # <id>
   local id=$1 url
   url=$(grep '^pr=' "$STATE/$id.meta" 2>/dev/null | tail -1 | cut -d= -f2- || true)

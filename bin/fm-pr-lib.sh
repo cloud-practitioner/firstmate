@@ -811,10 +811,10 @@ fm_pr_poll_artifacts_valid() {
 # recorded file identities name the live sidecar and check. Success alone is
 # never authentication. On success FM_PR_DATA_*, FM_PR_REG_*, and FM_PR_META_*
 # hold the parsed records.
-# With a fourth argument of template-stale the check need not equal the current
-# template, and the registration's recorded template hash must still equal the
-# check's own hash: that proves the check is exactly the byte copy
-# bin/fm-pr-check.sh published, taken from an older template.
+# With a fourth argument of template-stale, omit only current-template byte
+# equality; the recorded template hash must still match the live check.
+# This is content consistency, not provenance: callers must also validate file
+# identities before accepting or rebinding the poll.
 fm_pr_poll_artifacts_content_valid() {
   local state=$1 id=$2 template=$3 stale_ok=${4:-} state_device check data registration meta data_hash template_hash
   fm_pr_task_id_valid "$id" || return 1

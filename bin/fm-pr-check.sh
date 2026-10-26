@@ -6,9 +6,7 @@
 # head is that named head and is already stored on the forge.
 # The watcher check source is byte-for-byte bin/fm-pr-poll.sh; task and PR data
 # live only in a private sidecar and are never interpolated into shell source.
-# A later change to bin/fm-pr-poll.sh, as a self-update makes, is followed by
-# bin/fm-pr-rebind.sh and the watcher itself, which re-record a watch armed here
-# and name this script's command for any watch they cannot re-record safely.
+# bin/fm-pr-rebind.sh's header owns template-update continuity and recovery.
 # A GitHub pull request URL, a Bitbucket Cloud pull request URL, a GitLab merge
 # request URL, and a Gerrit change URL are all accepted, including a merge
 # request or change on a self-hosted instance and a GitHub Enterprise pull
