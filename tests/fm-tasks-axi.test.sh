@@ -265,7 +265,7 @@ JS
 # UTC calendar day of the instant; the zone's local day is a different one.
 assert_backlog_dates_are_utc() {  # <zone> <instant> <utc-today> <utc-tomorrow> <local-today>
   local zone=$1 instant=$2 utc_today=$3 utc_tomorrow=$4 local_today=$5
-  local dir clock out held snap
+  local dir clock out held snap scenario_today epoch
   dir=$(make_split "utc-dates-${zone//\//-}")
   clock="$dir/fake-clock.cjs"
   write_fake_clock "$clock"
@@ -274,8 +274,13 @@ assert_backlog_dates_are_utc() {  # <zone> <instant> <utc-today> <utc-tomorrow> 
       FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$dir/code" "$WRAPPER" "$@"
   }
   # The scenario only means something while the two dates really differ.
-  assert_equals "$local_today" "$(TZ=$zone date -d "$instant" +%F 2>/dev/null || TZ=$zone date -j -f %Y-%m-%dT%H:%M:%SZ "$instant" +%F)" \
-    "the scenario's local date for $zone is wrong"
+  if ! scenario_today=$(TZ=$zone date -d "$instant" +%F 2>/dev/null); then
+    epoch=$(TZ=UTC date -j -f %Y-%m-%dT%H:%M:%SZ "$instant" +%s) \
+      || fail "the scenario's instant could not be parsed under UTC"
+    scenario_today=$(TZ=$zone date -r "$epoch" +%F) \
+      || fail "the scenario's epoch could not be formatted under $zone"
+  fi
+  assert_equals "$local_today" "$scenario_today" "the scenario's local date for $zone is wrong"
   [ "$local_today" != "$utc_today" ] || fail "the $zone scenario must straddle a UTC date boundary"
 
   fm_utc_run add d-ship "ship dated" --kind ship >/dev/null || fail "add failed under $zone"
@@ -322,7 +327,7 @@ test_backlog_dates_are_utc_in_any_zone() {
 # Every route to tasks-axi, not only the wrapper, must run it on UTC: a probe
 # stub records the zone it was started in.
 test_every_tasks_axi_route_runs_on_utc() {
-  local dir bin log
+  local dir bin log out
   dir="$TMP_ROOT/utc-routes"
   bin="$dir/bin"
   log="$dir/zones.log"
@@ -353,15 +358,21 @@ SH
     fm_tasks_axi_version_parts >/dev/null || true  # the stub answers no feature text; only its zone is read
     fm_tasks_axi_update_has_archive_body >/dev/null || true  # the stub answers no feature text; only its zone is read
     fm_tasks_axi_mv_has_multi_id >/dev/null || true  # the stub answers no feature text; only its zone is read
+    unset FM_TASKS_AXI_COMPATIBLE FM_TASKS_AXI_CHECK_REASON
+    out=$(PATH="$bin:$BASE_PATH" FM_BOOTSTRAP_DETECT_ONLY=1 FM_BOOTSTRAP_NETWORK=skip "$BOOTSTRAP") \
+      || fail "bootstrap failed against the zone probe"
+    assert_contains "$out" "OUTDATED: tasks-axi (installed: 0.2.6;" \
+      "bootstrap did not report the incompatible tasks-axi version"
   ) || fail "a tasks-axi route failed against the zone probe"
   assert_equals "UTC" "$(sort -u "$log" | paste -sd, -)" "a tasks-axi route ran in a zone other than UTC"
   [ "$(wc -l < "$log")" -ge 7 ] || fail "the zone probe saw fewer tasks-axi calls than the routes made"
-  pass "wrapper, lifecycle helper (plain and timed), and probes start tasks-axi on UTC under TZ=Australia/Sydney"
+  pass "wrapper, lifecycle helper (plain and timed), bootstrap, and probes start tasks-axi on UTC under TZ=Australia/Sydney"
 }
 
 test_guard_reports_regular_code_root_backlog
 test_guard_reports_foreign_link_and_archive
 test_guard_silent_for_single_home
+test_every_tasks_axi_route_runs_on_utc
 if [ "$HAVE_TASKS_AXI" = 1 ]; then
   test_bare_tasks_axi_fork_is_detected
   test_wrapper_writes_through_to_home
@@ -370,7 +381,6 @@ if [ "$HAVE_TASKS_AXI" = 1 ]; then
   test_wrapper_refuses_add_start
   test_wrapper_single_home
   test_backlog_dates_are_utc_in_any_zone
-  test_every_tasks_axi_route_runs_on_utc
 else
   echo "skip: tasks-axi not found; home-addressing cases not run"
 fi
