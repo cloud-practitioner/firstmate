@@ -358,15 +358,15 @@ tasks_axi() {
   backend=$(fm_tasks_axi_backend "$root") || return 2
   if [ "$backend" = markdown ]; then
     file=$(fm_backlog_file "$data") || fail "$FM_BACKLOG_TRANSITION_ERROR"
-    (cd "$root" && tasks-axi "$@" --file "$file")
+    (cd "$root" && TZ=UTC tasks-axi "$@" --file "$file")
   else
-    (cd "$root" && tasks-axi "$@")
+    (cd "$root" && TZ=UTC tasks-axi "$@")
   fi
 }
 
 require_tasks_axi() {
   fm_tasks_axi_compatible || fail "compatible tasks-axi is required"
-  tasks-axi hold --help 2>&1 | grep -F -- '--kind captain' >/dev/null \
+  TZ=UTC tasks-axi hold --help 2>&1 | grep -F -- '--kind captain' >/dev/null \
     || fail "tasks-axi does not expose the captain-hold contract"
 }
 
@@ -959,7 +959,7 @@ task_show_archived() {  # <id>; sets TASK_SHOW_OUTPUT
     # metadata lock. A bound hit is not absence, so it stops loudly with 124.
     # shellcheck disable=SC2016  # Expansion is deliberately deferred to the child shell.
     TASK_SHOW_OUTPUT=$(fm_run_timed "$secs" bash -c \
-      'cd "$1" 2>/dev/null || exit 1; shift; exec tasks-axi show "$@"' \
+      'cd "$1" 2>/dev/null || exit 1; shift; TZ=UTC exec tasks-axi show "$@"' \
       _ "$dir" "$id" --full --file "$dir/backlog.md" 2>/dev/null)
     status=$?
     if [ "$status" -eq 124 ]; then

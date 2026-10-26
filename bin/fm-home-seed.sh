@@ -725,7 +725,7 @@ sync_project_registry() {
   else
     : > "$tmp"
   fi
-  today=$(date +%F)
+  today=$(date -u +%F)
   for project in "$@"; do
     line=$(registry_line_for_project "$project" || true)
     if [ -z "$line" ]; then
@@ -763,7 +763,7 @@ write_registry() {
   mkdir -p "$DATA"
   scope=$(registry_scope_for_brief "$brief")
   summary=$(registry_summary_for_brief "$brief")
-  today=$(date +%F)
+  today=$(date -u +%F)
   tmp="$REG.tmp.$$"
   if [ -f "$REG" ]; then
     grep -vE "^- $id( |$)" "$REG" > "$tmp" || true

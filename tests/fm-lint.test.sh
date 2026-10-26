@@ -1197,6 +1197,75 @@ SH
   pass "fm-lint.sh rejects direct Beads CLI invocations in firstmate core"
 }
 
+test_rejects_unpinned_tasks_axi_invocations() {
+  local tmp fakebin log lint_copy invocation out rc
+  tmp=$(fm_test_tmproot fm-lint-tasks-axi-utc)
+  fakebin=$(fm_fakebin "$tmp")
+  log="$tmp/shellcheck.log"
+  mkdir -p "$tmp/repo/bin/backends" "$tmp/repo/tests"
+  lint_copy="$tmp/repo/bin/fm-lint.sh"
+  cp "$LINT" "$lint_copy"
+  cat > "$tmp/repo/bin/fm-lint-workflows.sh" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  cat > "$tmp/repo/bin/backends/noop.sh" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  cat > "$tmp/repo/tests/noop.test.sh" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  chmod +x "$lint_copy" "$tmp/repo/bin/fm-lint-workflows.sh"
+  fm_lint_stub_shellcheck "$fakebin" "$log"
+
+  # shellcheck disable=SC2016  # The invocation spellings are literal script text.
+  for invocation in \
+    'tasks-axi list --state held' \
+    'out=$(tasks-axi show fm-example)' \
+    'exec tasks-axi "$@"' \
+    'if ! tasks-axi hold fm-example --until 2026-01-01; then exit 1; fi' \
+    'LC_ALL=C tasks-axi done fm-example' \
+    'env LC_ALL=C tasks-axi done fm-example' \
+    'TZ=Australia/Sydney tasks-axi done fm-example' \
+    '/usr/local/bin/tasks-axi done fm-example' \
+    'tasks-axi list | cat' \
+    'fm_exec_timed 5 5 tasks-axi list' \
+    "bash -c 'exec tasks-axi show fm-example'"
+  do
+    printf '#!/usr/bin/env bash\n%s\n' "$invocation" > "$tmp/repo/bin/direct-tasks-axi.sh"
+    rc=0
+    out=$(cd "$tmp/repo" && CI=true PATH="$fakebin:$PATH" "$lint_copy" 2>&1) || rc=$?
+    [ "$rc" -ne 0 ] || fail "lint accepted an unpinned tasks-axi invocation: $invocation"
+    assert_contains "$out" "tasks-axi invocation is not pinned to TZ=UTC" \
+      "lint did not identify the unpinned tasks-axi invocation: $invocation"
+  done
+
+  # shellcheck disable=SC2016  # The invocation spellings are literal script text.
+  for invocation in \
+    'TZ=UTC tasks-axi list --state held' \
+    'out=$(TZ=UTC tasks-axi show fm-example)' \
+    'TZ=UTC exec tasks-axi "$@"' \
+    'if ! TZ=UTC tasks-axi hold fm-example --until 2026-01-01; then exit 1; fi' \
+    'env TZ=UTC tasks-axi done fm-example' \
+    'env -i TZ=UTC tasks-axi done fm-example' \
+    'TZ=UTC tasks-axi list | cat' \
+    'fm_exec_timed 5 5 env TZ=UTC tasks-axi list' \
+    "bash -c 'TZ=UTC exec tasks-axi show fm-example'" \
+    'command -v tasks-axi >/dev/null' \
+    'echo "run tasks-axi list"' \
+    'MISSING+=(tasks-axi)'
+  do
+    printf '#!/usr/bin/env bash\n%s\n' "$invocation" > "$tmp/repo/bin/direct-tasks-axi.sh"
+    rc=0
+    out=$(cd "$tmp/repo" && CI=true PATH="$fakebin:$PATH" "$lint_copy" 2>&1) || rc=$?
+    assert_not_contains "$out" "tasks-axi invocation is not pinned to TZ=UTC" \
+      "lint rejected a pinned or non-invoking tasks-axi spelling: $invocation"
+  done
+  pass "fm-lint.sh requires every tasks-axi invocation in core scripts to be pinned to TZ=UTC"
+}
+
 test_rejects_direct_beads_cli_in_explicit_core_path() {
   local tmp fakebin log lint_copy target spelling out rc
   tmp=$(fm_test_tmproot fm-lint-explicit-backend-purity)
@@ -2044,6 +2113,7 @@ test_missing_shellcheck_fails_closed
 test_rejects_wrong_shellcheck_version
 test_catches_a_real_lint_defect
 test_rejects_direct_beads_cli_invocations
+test_rejects_unpinned_tasks_axi_invocations
 test_rejects_direct_beads_cli_in_explicit_core_path
 test_ignores_ambient_shellcheck_opts
 test_clean_fixture_passes

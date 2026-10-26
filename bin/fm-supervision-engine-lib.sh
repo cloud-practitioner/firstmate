@@ -229,9 +229,9 @@ fm_supervision_host_paused_until() {
   printf '%s\n' "$retry"
 }
 
-# fm_supervision_host_clock <epoch>: the local time of day it names.
+# fm_supervision_host_clock <epoch>: the host-local time of day it names, with its zone label.
 fm_supervision_host_clock() {
-  date -r "$1" '+%H:%M' 2>/dev/null || date -d "@$1" '+%H:%M' 2>/dev/null || printf 'the end of its cooldown'
+  date -r "$1" '+%H:%M %Z' 2>/dev/null || date -d "@$1" '+%H:%M %Z' 2>/dev/null || printf 'the end of its cooldown'
 }
 
 # fm_supervision_engine_bin <engine>: print the executable, or fail with a
