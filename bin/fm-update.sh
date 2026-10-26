@@ -10,9 +10,10 @@
 # A secondmate divergence whose complete local tree result is already present at
 # the target is reconciled with reset --keep; every other unsafe target is
 # skipped and reported, with divergence recorded durably by fm-ff-lib.sh.
-# A tracked-files update never touches the gitignored operational
-# dirs (data/, state/, config/, projects/, .no-mistakes/), so a secondmate's
-# in-flight work is never disrupted. Worktrees of this repo share one object
+# The git advance preserves the gitignored operational dirs
+# (data/, state/, config/, projects/, .no-mistakes/) and in-flight work;
+# post-update watch maintenance below may refresh bindings in state/.
+# Worktrees of this repo share one object
 # store, so a single fetch refreshes them all; standalone-clone homes are
 # fetched on their own. Secondmate homes are leased at a detached HEAD on the
 # default branch, so a fast-forward there advances HEAD only and never touches
@@ -61,6 +62,9 @@
 # local secondmate), this script best-effort runs that home's own
 # fm-procevent-when.sh rebind-all to republish those bindings against the new
 # bytes; a failure there is swallowed rather than failing the update.
+# After the same primary and local-secondmate updates, bin/fm-pr-rebind.sh
+# maintains registered PR merge watches under its own header contract.
+# Its diagnostics remain visible, but failure is likewise never fatal.
 #
 # Usage: fm-update.sh [--help]
 set -eu
@@ -102,6 +106,7 @@ if [ "$FF_STATUS" = "updated" ]; then
   # always where this very script file happens to live (FM_ROOT_OVERRIDE, as
   # this test suite uses to point fm-update.sh at a fixture checkout).
   FM_HOME="$FM_HOME" FM_ROOT_OVERRIDE="$FM_ROOT" "$SCRIPT_DIR/fm-procevent-when.sh" rebind-all || true
+  FM_HOME="$FM_HOME" FM_ROOT_OVERRIDE="$FM_ROOT" "$SCRIPT_DIR/fm-pr-rebind.sh" || true
 fi
 
 # --- secondmates -----------------------------------------------------------
@@ -167,6 +172,9 @@ fm_ff_after_secondmate_settled() {  # <id> <home> <window> <status> <instr>
   # own, if the caller set one) leak into the child and misscope it.
   if [ "${4:-}" = "updated" ] && [ -x "$2/bin/fm-procevent-when.sh" ]; then
     FM_HOME="$2" FM_ROOT_OVERRIDE="$2" "$2/bin/fm-procevent-when.sh" rebind-all || true
+  fi
+  if [ "${4:-}" = "updated" ] && [ -x "$2/bin/fm-pr-rebind.sh" ]; then
+    FM_HOME="$2" FM_ROOT_OVERRIDE="$2" FM_STATE_OVERRIDE='' "$2/bin/fm-pr-rebind.sh" || true
   fi
   claim_settled_secondmate "$1"
 }

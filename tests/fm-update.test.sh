@@ -29,6 +29,8 @@ set -u
 
 # shellcheck source=tests/lib.sh
 . "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+# shellcheck source=/dev/null
+. "$ROOT/bin/fm-pr-lib.sh"
 
 UPDATE="$ROOT/bin/fm-update.sh"
 
@@ -556,6 +558,62 @@ test_primary_update_rebinds_local_watch() {
   pass "T12 a self-update rebinds a locally armed watch on the primary"
 }
 
+# --- T13: a self-update re-records armed PR merge watches -------------------
+# A fast-forward that rewrites bin/fm-pr-poll.sh leaves every PR merge watch
+# armed before it holding a byte copy of the older template, which the watcher
+# then refuses as unauthenticated. The update re-records each one in its own
+# home and in every updated local secondmate home, and names the re-arm command
+# of one it cannot re-record safely instead of leaving it silent.
+arm_pr_watch() {  # <state> <id> <url> <template>
+  local state=$1 id=$2 url=$3 template=$4
+  fm_write_meta "$state/$id.meta" "window=main:fm-$id" "worktree=$state" "pr=$url"
+  fm_pr_url_parse "$url" || fail "fixture URL was invalid"
+  fm_pr_poll_prepare "$state" "$id" "$FM_PR_PROVIDER" "$url" "$FM_PR_HOST" "$FM_PR_PATH" "$FM_PR_NUMBER" "$template" \
+    || fail "could not prepare the PR watch fixture"
+  fm_pr_poll_publish_prepared || fail "could not publish the PR watch fixture"
+}
+
+test_update_rebinds_pr_merge_watches() {
+  local w out url_a=https://github.com/o/r/pull/1 url_b=https://github.com/o/r/pull/2 url_c=https://github.com/o/r/pull/3
+  w=$(new_world t13)
+  # Real scripts, so the update runs the real re-record in each home.
+  cp -Rn "$ROOT/bin/." "$w/seed/bin/"
+  printf 'state/\n' > "$w/seed/.gitignore"
+  git -C "$w/seed" add -A
+  git -C "$w/seed" commit -qm add-real-bin
+  git -C "$w/seed" push -q origin main
+  git -C "$w/main" pull -q origin main
+  add_sm "$w" sm1
+  mkdir -p "$w/sm1/state"
+
+  arm_pr_watch "$w/home/state" pr-main "$url_a" "$w/main/bin/fm-pr-poll.sh"
+  arm_pr_watch "$w/home/state" pr-bad "$url_c" "$w/main/bin/fm-pr-poll.sh"
+  printf '# hand edited\n' >> "$w/home/state/pr-bad.check.sh"
+  arm_pr_watch "$w/sm1/state" pr-mate "$url_b" "$w/sm1/bin/fm-pr-poll.sh"
+
+  printf '# template bytes changed by a later release\n' >> "$w/seed/bin/fm-pr-poll.sh"
+  git -C "$w/seed" add -A
+  git -C "$w/seed" commit -qm change-pr-poll-template
+  git -C "$w/seed" push -q origin main
+  ! fm_pr_poll_artifacts_valid "$w/home/state" pr-main "$w/seed/bin/fm-pr-poll.sh" \
+    || fail "the primary watch was already current before the update"
+
+  out=$(run_update "$w")
+
+  assert_contains "$out" "firstmate: updated " "the primary advanced"
+  assert_contains "$out" "secondmate sm1: updated " "the secondmate advanced"
+  assert_contains "$out" "rebound: pr-main" "the primary's own watch was re-recorded"
+  assert_contains "$out" "rebound: pr-mate" "the updated secondmate's watch was re-recorded"
+  assert_contains "$out" "bin/fm-pr-check.sh pr-bad $url_c" "an unsafe watch was reported with its re-arm command"
+  fm_pr_poll_artifacts_valid "$w/home/state" pr-main "$w/main/bin/fm-pr-poll.sh" \
+    || fail "the primary's watch is not authenticated against the updated template"
+  fm_pr_poll_artifacts_valid "$w/sm1/state" pr-mate "$w/sm1/bin/fm-pr-poll.sh" \
+    || fail "the secondmate's watch is not authenticated against the updated template"
+  ! fm_pr_poll_artifacts_valid "$w/home/state" pr-bad "$w/main/bin/fm-pr-poll.sh" \
+    || fail "the hand-edited watch was trusted"
+  pass "T13 a self-update re-records armed PR merge watches and names the one it cannot"
+}
+
 test_updates_main_and_secondmate
 test_reread_gate_is_instruction_only
 test_bin_only_advance_restarts
@@ -572,5 +630,6 @@ test_firstmate_wrong_branch_skipped
 test_firstmate_detached_head_skipped
 test_unsafe_secondmate_home_skipped_before_git_update
 test_primary_update_rebinds_local_watch
+test_update_rebinds_pr_merge_watches
 
 echo "# all fm-update tests passed"

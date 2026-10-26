@@ -139,7 +139,9 @@
 #                          payload names what to check. These three kinds are
 #                          joined with `;` when more than one surfaces in a cycle
 #   check: rejected unauthenticated state checks: <paths>
-#                          unsafe state checks were refused without execution
+#                          unsafe state checks were refused without execution;
+#                          a refused PR merge watch also names its task and the
+#                          bin/fm-pr-check.sh command that re-arms it
 #   check: rejected unauthenticated PR poll retirement receipts: <paths>
 #                          invalid pending retirements were preserved without
 #                          running a check or removing poll artifacts
@@ -3496,6 +3498,45 @@ rerecord_device_shifted_pr_poll() {  # <id>
   return 0
 }
 
+# A poll armed before a self-update holds a byte copy of an older
+# bin/fm-pr-poll.sh, so its capture fails only because the template moved;
+# bin/fm-pr-lib.sh fm_pr_poll_registration_rebind_template owns the proof that
+# nothing else differs and the replacement. Same contract as the device
+# re-record above: 0 means a rebind was attempted under the locks and the
+# caller captures again, 1 means the proof did not hold and the poll stays
+# refused.
+rebind_template_pr_poll() {  # <id>
+  local id=$1
+  fm_pr_poll_registration_template_stale "$STATE" "$id" "$SCRIPT_DIR/fm-pr-poll.sh" || return 1
+  PR_POLL_CONTROL_LOCK="$STATE/.control-$id.lock"
+  fm_lock_acquire_wait "$PR_POLL_CONTROL_LOCK" || exit 1
+  PR_POLL_PUBLISH_LOCK="$STATE/.pr-poll-publish-$id.lock"
+  fm_lock_acquire_wait "$PR_POLL_PUBLISH_LOCK" || exit 1
+  if fm_pr_poll_registration_rebind_template "$STATE" "$id" "$SCRIPT_DIR/fm-pr-poll.sh"; then
+    triage_log "re-recorded PR poll template for $id after bin/fm-pr-poll.sh changed"
+  else
+    triage_log "PR poll template for $id was not re-recorded; the locked proof or rewrite did not hold"
+  fi
+  pr_poll_publish_release || exit 1
+  pr_poll_control_release || exit 1
+  return 0
+}
+
+# The refusal wake names the re-arm command of every refused PR merge watch, so
+# a watch that stopped detecting merges is actionable from the wake alone.
+rejected_pr_poll_rearm_hints() {  # <check-path>...
+  local c id url hints=
+  for c in "$@"; do
+    id=$(basename "$c" .check.sh)
+    [ -e "$STATE/$id.pr-poll-registration" ] || [ -e "$STATE/$id.pr-poll" ] || continue
+    fm_pr_task_id_valid "$id" || continue
+    url=$(fm_meta_get "$STATE/$id.meta" pr 2>/dev/null || true)
+    if fm_pr_url_parse "$url"; then url=$FM_PR_URL; else url='<pr-url>'; fi
+    hints="$hints; PR merge watch $id will not detect a merge, re-arm with: bin/fm-pr-check.sh $id $url"
+  done
+  printf '%s' "$hints"
+}
+
 resurface_after_downtime() {
   # Handling successors already have a predecessor-delivered wake on the way.
   # Re-announcing from this cycle is what turned a lost handshake into an
@@ -3667,6 +3708,8 @@ while :; do
         id=$(basename "$c" .check.sh)
         if fm_pr_poll_snapshot_capture "$STATE" "$id" "$SCRIPT_DIR/fm-pr-poll.sh" \
           || { rerecord_device_shifted_pr_poll "$id" \
+            && fm_pr_poll_snapshot_capture "$STATE" "$id" "$SCRIPT_DIR/fm-pr-poll.sh"; } \
+          || { rebind_template_pr_poll "$id" \
             && fm_pr_poll_snapshot_capture "$STATE" "$id" "$SCRIPT_DIR/fm-pr-poll.sh"; }; then
           is_pr_poll=1
           provider=$FM_PR_POLL_SNAPSHOT_PROVIDER
@@ -3765,7 +3808,8 @@ EOF
       pr_poll_control_release || exit 1
     done
     if [ -n "$rejected_checks" ]; then
-      reason="check: rejected unauthenticated state checks:$rejected_checks"
+      # shellcheck disable=SC2086 # rejected_checks is a space-separated path list
+      reason="check: rejected unauthenticated state checks:$rejected_checks$(rejected_pr_poll_rearm_hints $rejected_checks)"
       fm_wake_append check unauthenticated-state-checks "$reason" || exit 1
       touch "$STATE/.last-check"
       wake "$reason"
