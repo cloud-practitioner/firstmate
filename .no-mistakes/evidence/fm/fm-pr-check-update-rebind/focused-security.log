@@ -1,0 +1,3 @@
+ok - a poll armed before a template change is re-recorded by the watcher and keeps detecting merges
+ok - the rebind command re-records a template-changed poll once and leaves a current poll alone
+ok - a template-changed poll is never rebound around an unproven artifact: altered-check swapped-check altered-sidecar altered-template-hash, or a pending retirement, and each refused watch is reported with its re-arm command

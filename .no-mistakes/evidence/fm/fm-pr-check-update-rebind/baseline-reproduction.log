@@ -1,0 +1,1 @@
+not ok - watcher refused a poll whose only change was the template: check: rejected unauthenticated state checks: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/tmp/fm-pr-check-security.KWcc4n/template-change-watcher/home/state/task-a.check.sh

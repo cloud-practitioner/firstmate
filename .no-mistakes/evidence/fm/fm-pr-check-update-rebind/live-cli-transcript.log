@@ -1,0 +1,353 @@
+Real Firstmate scripts, git, gh, curl, jq, locks and state; disposable local TLS forge API fixture. No live forge or operator credentials used.
+
+SCENARIO 1: Real self-update from local origin repairs one GitHub + nine Bitbucket watches in two homes; tampered watch is reported.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/primary-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/primary-home
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-check.sh gh-watch https://github.com/fixture/repo/pull/1
+armed: state/gh-watch.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  2 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-check.sh bb-1 https://bitbucket.org/fixture/repo/pull-requests/1
+armed: state/bb-1.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-check.sh bb-2 https://bitbucket.org/fixture/repo/pull-requests/2
+armed: state/bb-2.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-check.sh bb-3 https://bitbucket.org/fixture/repo/pull-requests/3
+armed: state/bb-3.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-check.sh bb-4 https://bitbucket.org/fixture/repo/pull-requests/4
+armed: state/bb-4.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-check.sh bb-5 https://bitbucket.org/fixture/repo/pull-requests/5
+armed: state/bb-5.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-check.sh bb-6 https://bitbucket.org/fixture/repo/pull-requests/6
+armed: state/bb-6.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-check.sh bb-7 https://bitbucket.org/fixture/repo/pull-requests/7
+armed: state/bb-7.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-check.sh bb-8 https://bitbucket.org/fixture/repo/pull-requests/8
+armed: state/bb-8.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-check.sh bb-9 https://bitbucket.org/fixture/repo/pull-requests/9
+armed: state/bb-9.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-check.sh unsafe-watch https://bitbucket.org/fixture/repo/pull-requests/91
+armed: state/unsafe-watch.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-update.sh
+firstmate: updated 3bf7e99..58e964d (instructions changed: bin)
+no watches registered
+rebound: gh-watch
+actionable: the PR merge watch for unsafe-watch cannot be re-recorded safely and will not detect a merge; re-arm it with: bin/fm-pr-check.sh unsafe-watch https://bitbucket.org/fixture/repo/pull-requests/91
+pr-rebind: 1 rebound, 0 unchanged, 1 need a re-arm
+secondmate mate: updated 3bf7e99..58e964d (instructions changed: bin)
+no watches registered
+rebound: bb-1
+rebound: bb-2
+rebound: bb-3
+rebound: bb-4
+rebound: bb-5
+rebound: bb-6
+rebound: bb-7
+rebound: bb-8
+rebound: bb-9
+pr-rebind: 9 rebound, 0 unchanged, 0 need a re-arm
+reread-firstmate: yes
+restart-secondmates: none
+nudge-secondmates: fm-mate
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-rebind.sh
+actionable: the PR merge watch for unsafe-watch cannot be re-recorded safely and will not detect a merge; re-arm it with: bin/fm-pr-check.sh unsafe-watch https://bitbucket.org/fixture/repo/pull-requests/91
+pr-rebind: 0 rebound, 1 unchanged, 1 need a re-arm
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-pr-rebind.sh
+pr-rebind: 0 rebound, 9 unchanged, 0 need a re-arm
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/primary-home/state/gh-watch.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for gh-watch.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-wake-drain.sh
+1792973926	1	check	merged-gh-watch-https://github.com/fixture/repo/pull/1	check: merge landed: gh-watch https://github.com/fixture/repo/pull/1 external
+STATUS OUTCOME BACKSTOP (newest captain-facing task event has no covering branch outcome):
+mate done [key=child-pr-bb-9] [at=1792973885]: child bb-9 PR ready: https://bitbucket.org/fixture/repo/pull-requests/9 mode=no-mistakes
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 2204457.1792973926.sTdhbR
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  2 task(s) in flight, but no live watcher process holds this home lock (last beat: 11s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  After draining queued wakes, repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 2204457.1792973926.sTdhbR
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/state/bb-1.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for bb-1.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh
+1792973956	1	check	merged-bb-1-https://bitbucket.org/fixture/repo/pull-requests/1	check: merge landed: bb-1 https://bitbucket.org/fixture/repo/pull-requests/1 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 2213126.1792973957.E2KyGj
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  9 task(s) in flight, but no live watcher process holds this home lock (last beat: 22s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  After draining queued wakes, repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 2213126.1792973957.E2KyGj
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/state/bb-2.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for bb-2.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh
+1792973971	2	check	merged-bb-2-https://bitbucket.org/fixture/repo/pull-requests/2	check: merge landed: bb-2 https://bitbucket.org/fixture/repo/pull-requests/2 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 2232420.1792973971.kRtmI7
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 8s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 2232420.1792973971.kRtmI7
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/state/bb-3.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for bb-3.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh
+1792973981	3	check	merged-bb-3-https://bitbucket.org/fixture/repo/pull-requests/3	check: merge landed: bb-3 https://bitbucket.org/fixture/repo/pull-requests/3 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 3 --recovery-generation 2238070.1792973981.zpdR0e
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 7s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh --ack-through 3 --recovery-generation 2238070.1792973981.zpdR0e
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/state/bb-4.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for bb-4.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh
+1792973991	4	check	merged-bb-4-https://bitbucket.org/fixture/repo/pull-requests/4	check: merge landed: bb-4 https://bitbucket.org/fixture/repo/pull-requests/4 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2241686.1792973991.mCHNKI
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 7s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2241686.1792973991.mCHNKI
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/state/bb-5.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for bb-5.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh
+1792974003	5	check	merged-bb-5-https://bitbucket.org/fixture/repo/pull-requests/5	check: merge landed: bb-5 https://bitbucket.org/fixture/repo/pull-requests/5 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 5 --recovery-generation 2255055.1792974003.dzq7GP
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 10s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh --ack-through 5 --recovery-generation 2255055.1792974003.dzq7GP
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/state/bb-6.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for bb-6.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh
+1792974011	6	check	merged-bb-6-https://bitbucket.org/fixture/repo/pull-requests/6	check: merge landed: bb-6 https://bitbucket.org/fixture/repo/pull-requests/6 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 6 --recovery-generation 2273851.1792974011.JXtWjG
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 5s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh --ack-through 6 --recovery-generation 2273851.1792974011.JXtWjG
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/state/bb-7.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for bb-7.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh
+1792974018	7	check	merged-bb-7-https://bitbucket.org/fixture/repo/pull-requests/7	check: merge landed: bb-7 https://bitbucket.org/fixture/repo/pull-requests/7 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 7 --recovery-generation 2280186.1792974018.iH7u0V
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 6s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh --ack-through 7 --recovery-generation 2280186.1792974018.iH7u0V
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/state/bb-8.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for bb-8.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh
+1792974032	8	check	merged-bb-8-https://bitbucket.org/fixture/repo/pull-requests/8	check: merge landed: bb-8 https://bitbucket.org/fixture/repo/pull-requests/8 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 8 --recovery-generation 2289266.1792974032.JooYwm
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 10s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh --ack-through 8 --recovery-generation 2289266.1792974032.JooYwm
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/state/bb-9.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for bb-9.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh
+1792974041	9	check	merged-bb-9-https://bitbucket.org/fixture/repo/pull-requests/9	check: merge landed: bb-9 https://bitbucket.org/fixture/repo/pull-requests/9 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 9 --recovery-generation 2305029.1792974041.XGDCog
+WARNING: watcher still down (same stale episode; no live watcher process holds this home lock (last beat: 5s ago)) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/mate/bin/fm-wake-drain.sh --ack-through 9 --recovery-generation 2305029.1792974041.XGDCog
+[exit 0]
+SCENARIO 1 PASS: ten original watches detected merges after update; unsafe watch remained untouched with a named repair.
+
+SCENARIO 2: A separate home sharing a code root heals in its watcher after an external template change.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/unregistered-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/unregistered-home
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-check.sh sync-watch https://bitbucket.org/fixture/repo/pull-requests/22
+armed: state/sync-watch.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-watch.sh
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/unregistered-home/state/sync-watch.check.sh: merged
+[exit 0]
+Observed merge wake and retired authenticated poll for sync-watch.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-wake-drain.sh
+1792974051	1	check	merged-sync-watch-https://bitbucket.org/fixture/repo/pull-requests/22	check: merge landed: sync-watch https://bitbucket.org/fixture/repo/pull-requests/22 external
+stderr:
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 2312807.1792974051.H3ZpZW
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 6s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  After draining queued wakes, repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 2312807.1792974051.H3ZpZW
+[exit 0]
+[2026-10-26T00:20:50+0000] re-recorded PR poll template for sync-watch after bin/fm-pr-poll.sh changed
+[2026-10-26T00:20:51+0000] no matching persisted merge authority for sync-watch; recording an external merge outcome
+SCENARIO 2 PASS: watcher re-recorded the stale template and delivered the merge wake.
+
+SCENARIO 2B: An already-running watcher survives a code-root sync without a restart.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/running-watcher-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/running-watcher-home
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-check.sh running-watch https://bitbucket.org/fixture/repo/pull-requests/23
+armed: state/running-watch.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-watch.sh [start before sync, keep same pid]
+check: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/running-watcher-home/state/running-watch.check.sh: merged
+[exit 0]
+[2026-10-26T00:21:09+0000] re-recorded PR poll template for running-watch after bin/fm-pr-poll.sh changed
+[2026-10-26T00:21:11+0000] no matching persisted merge authority for running-watch; recording an external merge outcome
+SCENARIO 2B PASS: the same live watcher polled OPEN, rebound after template sync, detected MERGED and retired its poll.
+
+SCENARIO 3: Tampered artifacts cannot be blessed by template refresh, and every refused watch gets its own repair command.
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/adversarial-home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/adversarial-home
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-check.sh edited-check https://bitbucket.org/fixture/repo/pull-requests/30
+armed: state/edited-check.check.sh
+stderr:
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-check.sh swapped-check https://bitbucket.org/fixture/repo/pull-requests/31
+armed: state/swapped-check.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-check.sh changed-sidecar https://bitbucket.org/fixture/repo/pull-requests/32
+armed: state/changed-sidecar.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-check.sh changed-hash https://bitbucket.org/fixture/repo/pull-requests/33
+armed: state/changed-hash.check.sh
+stderr:
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-pr-rebind.sh
+actionable: the PR merge watch for changed-hash cannot be re-recorded safely and will not detect a merge; re-arm it with: bin/fm-pr-check.sh changed-hash https://bitbucket.org/fixture/repo/pull-requests/33
+actionable: the PR merge watch for changed-sidecar cannot be re-recorded safely and will not detect a merge; re-arm it with: bin/fm-pr-check.sh changed-sidecar https://bitbucket.org/fixture/repo/pull-requests/32
+actionable: the PR merge watch for edited-check cannot be re-recorded safely and will not detect a merge; re-arm it with: bin/fm-pr-check.sh edited-check https://bitbucket.org/fixture/repo/pull-requests/30
+actionable: the PR merge watch for swapped-check cannot be re-recorded safely and will not detect a merge; re-arm it with: bin/fm-pr-check.sh swapped-check https://bitbucket.org/fixture/repo/pull-requests/31
+pr-rebind: 0 rebound, 0 unchanged, 4 need a re-arm
+[exit 1]
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/main/bin/fm-watch.sh
+check: rejected unauthenticated state checks: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/adversarial-home/state/changed-hash.check.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/adversarial-home/state/changed-sidecar.check.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/adversarial-home/state/edited-check.check.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M5TQX0XB6EGBB786YV97YKC3/.fm-validation/live/adversarial-home/state/swapped-check.check.sh; PR merge watch changed-hash will not detect a merge, re-arm with: bin/fm-pr-check.sh changed-hash https://bitbucket.org/fixture/repo/pull-requests/33; PR merge watch changed-sidecar will not detect a merge, re-arm with: bin/fm-pr-check.sh changed-sidecar https://bitbucket.org/fixture/repo/pull-requests/32; PR merge watch edited-check will not detect a merge, re-arm with: bin/fm-pr-check.sh edited-check https://bitbucket.org/fixture/repo/pull-requests/30; PR merge watch swapped-check will not detect a merge, re-arm with: bin/fm-pr-check.sh swapped-check https://bitbucket.org/fixture/repo/pull-requests/31
+[exit 0]
+SCENARIO 3 PASS: real rebind and watcher refused all four mutations without executing a poll or changing artifacts.
+
+All disposable product processes exited; fixture API and fixture homes are torn down.
