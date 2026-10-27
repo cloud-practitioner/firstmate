@@ -1,0 +1,1 @@
+not ok - Pi must queue an identical unconsumed wake once and never coalesce different text: expected exit 0, got 1

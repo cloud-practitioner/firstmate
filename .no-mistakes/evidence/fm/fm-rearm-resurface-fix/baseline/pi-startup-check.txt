@@ -1,0 +1,40 @@
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ Hold this main turn while lab process results arrive.
+
+
+ LAB STREAM 1: holding the real Pi turn while watcher results arrive.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Follow-up: ⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:delive...
+ ↳ Alt+Up to edit all queued messages
+
+── ⠧ Working ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9 (detached)
+0.7%/128k (auto)                                                                                                  stream

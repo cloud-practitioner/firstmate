@@ -1,0 +1,8 @@
+[
+  "Hold this main turn while lab process results arrive.",
+  "⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:delivery-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned.",
+  "⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: rearm-resurface\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned.",
+  "⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:different-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned.",
+  "Hold another turn to verify a consumed wake can be sent again.",
+  "⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: rearm-resurface\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "n": 1,
+    "path": "/v1/chat/completions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Isolated live test. Respond only to the local endpoint.\n\n<cwd>\n/home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9\n</cwd>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hold this main turn while lab process results arrive."
+          }
+        ]
+      }
+    ]
+  }
+]

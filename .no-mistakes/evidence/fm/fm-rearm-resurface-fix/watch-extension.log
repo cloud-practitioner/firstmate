@@ -1,0 +1,16 @@
+2026-10-27T03:18:06.560Z pid=3964747 restore attempt=0 predecessor=3965949 start=ok pid=3971668
+2026-10-27T03:18:07.294Z pid=3964747 confirm generation=3970283.1793071086.jZbIet watcherPid=3971792 result=confirmed
+2026-10-27T03:18:28.709Z pid=3964747 restore attempt=0 predecessor=3971668 start=ok pid=3989392
+2026-10-27T03:18:29.355Z pid=3964747 confirm generation=3988743.1793071108.CT3Aix watcherPid=3989440 result=confirmed
+2026-10-27T03:18:48.147Z pid=3964747 restore attempt=0 predecessor=3989392 start=ok pid=4004246
+2026-10-27T03:18:48.888Z pid=3964747 confirm generation=4003870.1793071127.4vPqwf watcherPid=4004286 result=confirmed
+2026-10-27T03:18:51.832Z pid=3964747 restore attempt=0 predecessor=4004246 start=ok pid=4006747
+2026-10-27T03:18:52.486Z pid=3964747 confirm generation=4003870.1793071127.4vPqwf watcherPid=4006794 result=confirmed
+2026-10-27T03:18:55.679Z pid=3964747 restore attempt=0 predecessor=4006747 start=ok pid=4010473
+2026-10-27T03:18:56.325Z pid=3964747 confirm generation=4003870.1793071127.4vPqwf watcherPid=4010519 result=confirmed
+2026-10-27T03:18:59.479Z pid=3964747 restore attempt=0 predecessor=4010473 start=ok pid=4013681
+2026-10-27T03:19:00.262Z pid=3964747 confirm generation=4003870.1793071127.4vPqwf watcherPid=4013709 result=confirmed
+2026-10-27T03:19:03.654Z pid=3964747 restore attempt=0 predecessor=4013681 start=ok pid=4019918
+2026-10-27T03:19:04.290Z pid=3964747 confirm generation=4003870.1793071127.4vPqwf watcherPid=4019994 result=confirmed
+2026-10-27T03:19:13.118Z pid=3964747 restore attempt=0 predecessor=4019918 start=ok pid=4023891
+2026-10-27T03:19:13.789Z pid=3964747 confirm generation=4023394.1793071152.v6YUYG watcherPid=4023958 result=confirmed

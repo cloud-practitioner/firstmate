@@ -1,0 +1,11 @@
+{"at":1793071083800,"type":"session_start","pid":3964747}
+{"at":1793071084224,"type":"agent_start"}
+{"at":1793071084226,"type":"user","content":[{"type":"text","text":"Hold this main turn while lab process results arrive."}]}
+{"at":1793071148171,"type":"user","content":[{"type":"text","text":"⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:delivery-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."}]}
+{"at":1793071148187,"type":"user","content":[{"type":"text","text":"⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: rearm-resurface\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."}]}
+{"at":1793071148194,"type":"user","content":[{"type":"text","text":"⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:different-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."}]}
+{"at":1793071148202,"type":"agent_end"}
+{"at":1793071152297,"type":"agent_start"}
+{"at":1793071152297,"type":"user","content":[{"type":"text","text":"Hold another turn to verify a consumed wake can be sent again."}]}
+{"at":1793071156509,"type":"user","content":[{"type":"text","text":"⁣FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: rearm-resurface\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."}]}
+{"at":1793071156517,"type":"agent_end"}

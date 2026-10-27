@@ -1,0 +1,311 @@
+[
+  {
+    "n": 1,
+    "path": "/v1/chat/completions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Isolated live test. Respond only to the local endpoint.\n\n<cwd>\n/home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9\n</cwd>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hold this main turn while lab process results arrive."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": 2,
+    "path": "/v1/chat/completions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Isolated live test. Respond only to the local endpoint.\n\n<cwd>\n/home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9\n</cwd>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hold this main turn while lab process results arrive."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 1: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:delivery-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": 3,
+    "path": "/v1/chat/completions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Isolated live test. Respond only to the local endpoint.\n\n<cwd>\n/home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9\n</cwd>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hold this main turn while lab process results arrive."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 1: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:delivery-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 2: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: rearm-resurface\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": 4,
+    "path": "/v1/chat/completions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Isolated live test. Respond only to the local endpoint.\n\n<cwd>\n/home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9\n</cwd>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hold this main turn while lab process results arrive."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 1: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:delivery-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 2: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: rearm-resurface\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 3: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:different-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": 5,
+    "path": "/v1/chat/completions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Isolated live test. Respond only to the local endpoint.\n\n<cwd>\n/home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9\n</cwd>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hold this main turn while lab process results arrive."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 1: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:delivery-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 2: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: rearm-resurface\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 3: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:different-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 4: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hold another turn to verify a consumed wake can be sent again."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "n": 6,
+    "path": "/v1/chat/completions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Isolated live test. Respond only to the local endpoint.\n\n<cwd>\n/home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9\n</cwd>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hold this main turn while lab process results arrive."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 1: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:delivery-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 2: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: rearm-resurface\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 3: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: process-event result captured: procevent:different-src:1\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 4: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Hold another turn to verify a consumed wake can be sent again."
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": "LAB STREAM 5: holding the real Pi turn while watcher results arrive. Complete."
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "\u2063FIRSTMATE_OP: v1 watcher: FIRSTMATE WATCHER WAKE: check: rearm-resurface\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned."
+          }
+        ]
+      }
+    ]
+  }
+]

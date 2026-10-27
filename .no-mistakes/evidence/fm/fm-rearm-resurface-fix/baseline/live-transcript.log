@@ -1,0 +1,19 @@
+Launch real Pi 1.4.0 on private tmux 3.5a, 120x40; isolated FM_HOME and Pi configuration; local streaming provider dependency (no login or external model).
+$ fm-procevent.sh register lavish delivery-src -- /bin/sh -c printf "session:\n  file: /lab-board.html\n  status: feedback\n  session_ended: true\n  ended_by: user\nfeedback[1]{text}:\n  ship it\n"
+registered: delivery-src (lavish)
+$ fm-procevent.sh reconcile
+reconciled: published=0 started=1 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh retire delivery-src
+retired: delivery-src
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+ERROR AssertionError('queued copy changed during repeated polls')
+Teardown: killed only private fm-lab tmux server, swept only lab process-event home, stopped lab watcher, removed disposable lab home.

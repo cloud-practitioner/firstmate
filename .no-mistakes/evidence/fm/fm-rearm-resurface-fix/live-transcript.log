@@ -1,0 +1,68 @@
+Launch real Pi 1.4.0 on private tmux 3.5a, 120x40; isolated FM_HOME and Pi configuration; local streaming provider dependency (no login or external model).
+$ fm-procevent.sh register lavish delivery-src -- /bin/sh -c printf "session:\n  file: /lab-board.html\n  status: feedback\n  session_ended: true\n  ended_by: user\nfeedback[1]{text}:\n  ship it\n"
+registered: delivery-src (lavish)
+$ fm-procevent.sh reconcile
+reconciled: published=0 started=1 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh retire delivery-src
+retired: delivery-src
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+PASS queued result: one durable row; queue bytes and recovery generation unchanged across five explicit reconciles plus 15 seconds of one-second watcher polls; successor pid 3971792 still alive.
+$ fm-wake-drain.sh
+1793071086	1	check	procevent:delivery-src:1	check: procevent lavish delivery-src 1
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 1 --recovery-generation 3970283.1793071086.jZbIet
+
+$ fm-wake-drain.sh --ack-through 1 --recovery-generation 3970283.1793071086.jZbIet
+
+PASS acknowledged-but-unhandled: next watcher poll republished exactly one row with a new sequence; 10-second quiet period did not change queue, recovery marker or cycle count.
+$ fm-procevent.sh handled delivery-src 1
+handled: delivery-src 1
+$ fm-wake-drain.sh
+1793071108	2	check	procevent:delivery-src:1	check: procevent lavish delivery-src 1
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 2 --recovery-generation 3988743.1793071108.CT3Aix
+
+$ fm-wake-drain.sh --ack-through 2 --recovery-generation 3988743.1793071108.CT3Aix
+
+PASS handled: explicit durable acknowledgement followed by drain left no copy after five more watcher polls.
+Independent queue append independent-0: watcher cycles=3
+Independent queue append independent-1: watcher cycles=4
+Independent queue append independent-2: watcher cycles=5
+Independent queue append independent-3: watcher cycles=6
+$ fm-procevent.sh register lavish different-src -- /bin/sh -c printf "session:\n  file: /lab-board.html\n  status: feedback\n  session_ended: true\n  ended_by: user\nfeedback[1]{text}:\n  ship it\n"
+registered: different-src (lavish)
+$ fm-procevent.sh reconcile
+reconciled: published=0 started=1 stopped=0 uncertain=0 failed=0
+$ fm-procevent.sh retire different-src
+retired: different-src
+While first real Pi stream remains held, independently forced four further actionable recovery closes and a different process-event result. User message_start count before release=1
+$ fm-procevent.sh handled different-src 1
+handled: different-src 1
+$ fm-wake-drain.sh
+1793071127	3	check	independent-0	check: independently queued lab event
+1793071130	4	check	independent-1	check: independently queued lab event
+1793071134	5	check	independent-2	check: independently queued lab event
+1793071137	6	check	independent-3	check: independently queued lab event
+1793071143	7	check	procevent:different-src:1	check: procevent lavish different-src 1
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 7 --recovery-generation 4003870.1793071127.4vPqwf
+
+$ fm-wake-drain.sh --ack-through 7 --recovery-generation 4003870.1793071127.4vPqwf
+
+PASS real Pi follow-ups: consumed exactly one initial process-result wake, one rearm-resurface wake despite four additional identical unread closes, and one distinct process-result wake. No mock ExtensionAPI was used.
+Independent queue append after-consumption: watcher cycles=8
+$ fm-wake-drain.sh
+1793071152	8	check	after-consumption	check: independently queued lab event
+WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 8 --recovery-generation 4023394.1793071152.v6YUYG
+
+$ fm-wake-drain.sh --ack-through 8 --recovery-generation 4023394.1793071152.v6YUYG
+
+PASS consumption boundary: a later identical rearm-resurface wake was delivered again after Pi consumed its earlier copy.
+All live assertions passed.
+Teardown: killed only private fm-lab tmux server, swept only lab process-event home, stopped lab watcher, removed disposable lab home.

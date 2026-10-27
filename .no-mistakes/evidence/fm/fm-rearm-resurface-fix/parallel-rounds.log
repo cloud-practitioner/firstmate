@@ -1,0 +1,25 @@
+registered: same-source (lavish)
+retired: same-source (adapter classified the captured result terminal)
+captured: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9/.test-rearm/parallel-home/state/procevent-inbox/same-source.1.result
+not-autohandled: same-source (left for the handler; still unacknowledged)
+registered: same-source (lavish)
+retired: same-source (adapter classified the captured result terminal)
+captured: /home/node/.no-mistakes/worktrees/450411b3e67c/01M5XNA6EXS99GEKKQTBA3Q4G9/.test-rearm/parallel-home/state/procevent-inbox/same-source.2.result
+not-autohandled: same-source (left for the handler; still unacknowledged)
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+reconciled: published=2 started=0 stopped=0 uncertain=0 failed=0
+PASS: two real captured rounds for the same source remain distinct (sequences 1 and 2); twelve simultaneous public reconcile commands leave exactly those two rows and the same recovery generation.
+Persisted queue contract (epoch, sequence, kind, key, payload):
+1793071374	1	check	procevent:same-source:1	check: procevent lavish same-source 1
+1793071377	2	check	procevent:same-source:2	check: procevent lavish same-source 2
+Teardown: swept only the disposable process-event home and removed it.
