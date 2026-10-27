@@ -24,6 +24,10 @@
 // text. A no-prompt custom trigger cannot consume it, even with equal content.
 // Either user boundary finishes the pending record, and a still-unconsumed
 // record rides the replacement handoff.
+// A close whose wake text is byte-identical to a still-unconsumed follow-up is
+// not queued again: the drain that follow-up triggers presents everything the
+// close would, and its record finishes as delivered. Different text, including
+// typed failure appendices, is never coalesced.
 //
 // Postures (stated once here; docs/pi-supervision-branch.md "Postures"):
 // the away-posture record state/.afk-contract is read as a file at every
@@ -673,7 +677,15 @@ export default function (pi: ExtensionAPI) {
       "watcher",
       `FIRSTMATE WATCHER WAKE: ${message}\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned.`,
     );
-    if (pending) owner.unconsumedWakes.set(pending.token, { content, pending });
+    if (pending) {
+      // Pi still holds an identical follow-up it has accepted but not
+      // consumed, and the drain that one triggers presents everything this
+      // close would, so queue nothing new; the caller finishes this record.
+      for (const queued of owner.unconsumedWakes.values()) {
+        if (queued.content === content) return generationIsLive(owner);
+      }
+      owner.unconsumedWakes.set(pending.token, { content, pending });
+    }
     try {
       await pi.sendUserMessage(content, { deliverAs: "followUp" });
     } catch (error) {

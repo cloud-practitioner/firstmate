@@ -3866,6 +3866,149 @@ EOF
   pass "Pi streaming-time wake delivery keeps the successor chain and replays only unconsumed wakes"
 }
 
+# A producer that re-announces the same result on every watcher poll closes the
+# arm with byte-identical wake text again and again while main is busy. Pi
+# queues each one as a follow-up and one-at-a-time mode spends a model turn on
+# each, so an identical wake that Pi has accepted but not consumed is queued
+# only once. Different text, typed failure appendices, and a wake whose earlier
+# twin was already consumed still go through, and the replacement handoff
+# still replays exactly the unconsumed wakes.
+test_pi_identical_unconsumed_wakes_are_coalesced() {
+  local repo home plugin log trigger out status
+  repo="$TMP_ROOT/pi-coalesce-root"
+  home="$TMP_ROOT/pi-coalesce-home"
+  log="$TMP_ROOT/pi-coalesce.log"
+  trigger="$TMP_ROOT/pi-coalesce.trigger"
+  mkdir -p "$repo/bin" "$home/state" "$home/config"
+  install_pi_watch_extension_fixture "$repo"
+  plugin="$repo/.pi/extensions/fm-primary-pi-watch.ts"
+  cat > "$repo/bin/fm-watch-arm.sh" <<'SH'
+#!/usr/bin/env bash
+if [ "${1:-}" = --handling-delivered ]; then
+  printf 'confirmed=%s\n' "$2" >> "${FM_ARM_LOG:?}"
+  if [ "$2" = chain-6 ]; then
+    printf 'synthetic rejection\n' >&2
+    exit 2
+  fi
+  exit 0
+fi
+printf 'arm=%s\n' "$$" >> "${FM_ARM_LOG:?}"
+count=$(grep -c '^arm=' "$FM_ARM_LOG")
+printf 'watcher: started pid=%s (beacon fresh) recovery-generation=chain-%s\n' "$$" "$count"
+trap 'exit 0' TERM INT
+while [ ! -e "$FM_TRIGGER_FILE.$count" ] && [ -e "$0" ]; do sleep 0.02; done
+case "$count" in
+  3) printf 'signal: coalesce other wake\n' ;;
+  *) printf 'signal: coalesce same wake\n' ;;
+esac
+exit 0
+SH
+  chmod +x "$repo/bin/fm-watch-arm.sh"
+  out=$(PLUGIN="$plugin" FM_HOME="$home" FM_ROOT_OVERRIDE="$repo" FM_ARM_LOG="$log" FM_TRIGGER_FILE="$trigger" node --input-type=module 2>&1 <<'EOF'
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { pathToFileURL } from "node:url";
+
+const handlers = new Map();
+const prompts = [];
+const pi = {
+  on(event, handler) {
+    handlers.set(event, handler);
+  },
+  registerCommand() {},
+  registerTool() {},
+  // Main is streaming: Pi queues the follow-up and returns at once.
+  sendUserMessage: async (message) => {
+    prompts.push(message);
+  },
+  events: { on() {}, emit() {} },
+};
+const consumeQueued = (message) =>
+  handlers.get("message_start")?.({ message: { role: "user", content: [{ type: "text", text: message }] } }, {});
+const logRows = (prefix) => existsSync(process.env.FM_ARM_LOG)
+  ? readFileSync(process.env.FM_ARM_LOG, "utf8").split("\n").filter((row) => row.startsWith(prefix))
+  : [];
+const arms = () => logRows("arm=").length;
+async function waitFor(pred, label) {
+  for (let i = 0; i < 500; i += 1) {
+    if (pred()) return;
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  }
+  throw new Error(`timeout waiting for ${label}`);
+}
+const settle = () => new Promise((resolve) => setTimeout(resolve, 150));
+const close = (n) => writeFileSync(`${process.env.FM_TRIGGER_FILE}.${n}`, "close\n");
+const count = (text) => prompts.filter((message) => message.includes(text)).length;
+
+writeFileSync(`${process.env.FM_HOME}/state/.lock`, `${process.pid}\n`);
+const mod = await import(pathToFileURL(process.env.PLUGIN).href);
+mod.default(pi);
+await handlers.get("session_start")?.({ type: "session_start", reason: "startup" }, {});
+await waitFor(() => arms() === 1, "first arm");
+
+// 1. The first wake is queued; an identical close while it is unread is not.
+close(1);
+await waitFor(() => prompts.length === 1, "first wake");
+await waitFor(() => arms() === 2, "successor after the first wake");
+close(2);
+await waitFor(() => arms() === 3, "successor after the identical close");
+await waitFor(() => logRows("confirmed=chain-3").length === 1, "identical close confirmed its successor");
+await settle();
+if (prompts.length !== 1) throw new Error(`identical unread wake was queued again: ${prompts.join(" | ")}`);
+
+// 2. Different text is never coalesced.
+close(3);
+await waitFor(() => prompts.length === 2, "different wake");
+await waitFor(() => arms() === 4, "successor after the different wake");
+if (count("coalesce other wake") !== 1) throw new Error(`different wake was lost: ${prompts.join(" | ")}`);
+
+// 3. Once Pi consumed the first wake, the same text is queued again.
+consumeQueued(prompts[0]);
+close(4);
+await waitFor(() => prompts.length === 3, "identical wake after consumption");
+await waitFor(() => arms() === 5, "successor after the re-sent wake");
+if (count("coalesce same wake") !== 2) throw new Error(`consumed twin blocked the re-send: ${prompts.join(" | ")}`);
+
+// 4. A typed failure appendix makes the text different, so it is never coalesced.
+close(5);
+await waitFor(() => prompts.length === 4, "wake carrying a failure appendix");
+await waitFor(() => arms() === 6, "successor after the failure appendix");
+const appended = prompts[3];
+if (!appended.includes("coalesce same wake") || !appended.includes("handling delivery confirmation was rejected")) {
+  throw new Error(`failure appendix did not ride the wake: ${appended}`);
+}
+
+// 5. The handoff carries every unconsumed record, and the replacement replays
+// them without queueing a plain wake twice: the other wake and the re-sent
+// wake go out, and the failure wake's record (plain text once stored) joins the
+// re-sent one. The coalesced duplicate from step 1 was finished, so it is not
+// replayed either.
+await handlers.get("session_shutdown")?.({ type: "session_shutdown", reason: "new" }, {});
+const handoffPath = `${process.env.FM_HOME}/state/extensions/pi-primary-watch/session-replacement-actionable.json`;
+const handoff = JSON.parse(readFileSync(handoffPath, "utf8"));
+const carried = handoff.pending.filter((item) => !item.delivered).map((item) => item.message);
+if (carried.length !== 3 || carried.filter((m) => m.includes("coalesce same wake")).length !== 2 || carried.filter((m) => m.includes("coalesce other wake")).length !== 1) {
+  throw new Error(`replacement handoff carried the wrong wakes: ${JSON.stringify(handoff)}`);
+}
+const replacementMod = await import(`${pathToFileURL(process.env.PLUGIN).href}?replacement=coalesce`);
+replacementMod.default(pi);
+const before = prompts.length;
+await handlers.get("session_start")?.({ type: "session_start", reason: "new" }, {});
+await waitFor(() => prompts.length === before + 2, "replacement replay of the unconsumed wakes");
+await waitFor(() => logRows("confirmed=chain-7").length === 3, "replacement settled every carried record");
+await settle();
+const replayed = prompts.slice(before);
+if (replayed.length !== 2 || count("coalesce other wake") !== 2 || replayed.filter((m) => m.includes("coalesce same wake")).length !== 1) {
+  throw new Error(`replacement replayed the wrong wakes: ${replayed.join(" | ")}`);
+}
+process.exit(0);
+EOF
+)
+  status=$?
+  expect_code 0 "$status" "Pi must queue an identical unconsumed wake once and never coalesce different text"
+  [ -z "$out" ] || fail "Pi wake coalescing test printed output: $out"
+  pass "Pi coalesces identical unconsumed wakes and never different text or failure appendices"
+}
+
 # A verified successor can die while the wake it was started for is still
 # being delivered (a branch turn can take minutes). Its failure close arrives
 # while the pipeline is busy, so the ordinary retry path must be deferred to
@@ -5800,6 +5943,7 @@ test_pi_session_transition_generation_owner
 test_pi_session_replacement_carries_inflight_actionable_close
 test_pi_streaming_followup_is_replayed_after_replacement
 test_pi_streaming_time_delivery_keeps_the_successor_chain
+test_pi_identical_unconsumed_wakes_are_coalesced
 test_pi_successor_failure_during_delivery_is_retried_after_delivery
 test_pi_late_retiring_actionable_reaches_replacement
 test_pi_replacement_tokens_are_process_unique
