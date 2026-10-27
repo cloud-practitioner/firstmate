@@ -18,8 +18,8 @@
 // The successor pipeline never waits for the model to read it: a follow-up
 // queued while main is streaming joins the running run without ever raising
 // before_agent_start, so waiting on that event stalls every later close.
-// Consumption is tracked only so a replacement can replay a follow-up Pi had
-// not consumed. An idle main consumes at a prompt-bearing before_agent_start;
+// Consumption tracking controls coalescing and replacement replay.
+// An idle main consumes at a prompt-bearing before_agent_start;
 // a streaming main consumes at the user message_start carrying the exact wake
 // text. A no-prompt custom trigger cannot consume it, even with equal content.
 // Either user boundary finishes the pending record, and a still-unconsumed
@@ -944,7 +944,8 @@ export default function (pi: ExtensionAPI) {
           }
           settleClaim("delivered");
           if (!awaitingConsumption) {
-            // The branch handled it, or Pi consumed it before this ran.
+            // The branch handled it, Pi consumed it before this ran, or an
+            // identical unconsumed follow-up already represents this close.
             pending.delivered = true;
             try {
               finishPendingActionable(owner, pending);
