@@ -1400,9 +1400,9 @@ The contract is runtime-neutral: a runtime must start without MCP servers or ref
 Unlike [worker tool exclusions](#worker-tool-exclusions-configcrew-exclude-tools), which only hide tool names and leave every server process running, `off` stops the servers from starting.
 
 Create the file with one token: `on`, or `off`.
-Surrounding whitespace is trimmed, and any other value, or an unreadable or nonregular file, refuses the launch and names the file.
-With no file, or `on`, every launch on every runtime is unchanged.
-The file is read from this home's own configuration directory on every launch, so a change reaches the next worker or relaunch without a restart.
+Whitespace is removed before validating the value; any value other than `on` or `off`, or an unreadable or nonregular file, refuses the launch and names the file.
+For a new task without a per-task override, an absent file or `on` leaves the runtime's MCP behavior unchanged.
+The file is validated from this home's own configuration directory on every worker launch; a changed value applies to new tasks without a restart, while [relaunches keep the recorded setting](#recording-relaunch-and-the-workers-view).
 It is not in the inherited configuration set, so no other home, including a secondmate home, receives it; create the file in each home that wants it.
 It does not apply to a secondmate's own agent, which neither reads nor refuses on it.
 
@@ -1414,10 +1414,10 @@ The override is refused on a secondmate spawn.
 
 | Runtime | With the effective setting `off` |
 | --- | --- |
-| `pi`, `pi-signed` | Launches with `--no-mcp --tools +codemode` on every ship and scout spawn and relaunch: no MCP server connects and no MCP tool exists, while the `codemode` tool stays available because workers use it without MCP. The launch refuses when the selected Pi does not advertise `--no-mcp`. |
+| `pi`, `pi-signed` | On every ship and scout spawn and relaunch, no MCP server connects and no MCP tool exists, while the `codemode` tool stays available because workers use it without MCP. The launch refuses when the selected Pi does not advertise `--no-mcp`. |
 | Every other runtime, and a raw launch command | The launch refuses with an error naming `config/crew-mcp` and `--mcp on`, because that runtime has no verified way to start without MCP servers. |
 
-The Pi flags compose with [worker tool exclusions](#worker-tool-exclusions-configcrew-exclude-tools).
+The MCP setting composes with [worker tool exclusions](#worker-tool-exclusions-configcrew-exclude-tools).
 Firstmate never connects to a server to check its names or its state.
 
 ### Recording, relaunch, and the worker's view
@@ -1427,6 +1427,9 @@ A relaunch keeps the setting its task record carries, and a task launched before
 `fm-control.sh relaunch --mcp on|off` changes the setting for the replacement, which is how a worker that started without MCP servers is given them for the rest of its task.
 A relaunch validates the file and the replacement runtime's support before stopping the running worker, so a refusal preserves the running agent.
 When the effective setting is `off`, the worker's launch brief says that it started without MCP servers and tells it to append `blocked: needs MCP <server>` and stop if the task needs one, so Firstmate can relaunch it with `--mcp on`.
+
+[`bin/fm-mcp-posture-lib.sh`](../bin/fm-mcp-posture-lib.sh) implements setting selection and validation; [`bin/fm-spawn.sh`](../bin/fm-spawn.sh)'s header owns the launch-flag mechanics.
+Portable regression coverage lives in [`tests/fm-spawn-dispatch-profile.test.sh`](../tests/fm-spawn-dispatch-profile.test.sh) and [`tests/fm-control-relaunch.test.sh`](../tests/fm-control-relaunch.test.sh).
 
 ## Worker account pin (config/claude-account, config/pi-account)
 
