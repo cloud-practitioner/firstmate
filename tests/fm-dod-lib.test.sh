@@ -515,6 +515,23 @@ test_worker_role_names_skill_and_fallback_file() {
   pass "worker role names the skill and its fallback skill file"
 }
 
+# The role says once that a launch started no MCP servers only when the home or
+# task set MCP off; every other value renders the role byte-identically.
+test_worker_role_says_when_mcp_servers_are_off() {
+  local plain off on
+  plain="$TMP_ROOT/worker-role-plain.txt"
+  off="$TMP_ROOT/worker-role-mcp-off.txt"
+  on="$TMP_ROOT/worker-role-mcp-on.txt"
+  fm_brief_worker_role "$TMP_ROOT/state" mcp-4751 "$ROOT" >"$plain"
+  fm_brief_worker_role "$TMP_ROOT/state" mcp-4751 "$ROOT" on >"$on"
+  fm_brief_worker_role "$TMP_ROOT/state" mcp-4751 "$ROOT" off >"$off"
+  assert_grep "launched without MCP servers" "$off" "the MCP-off role did not say so"
+  assert_grep 'needs MCP <server>' "$off" "the MCP-off role did not name the way to ask for a server"
+  assert_no_grep "without MCP servers" "$plain" "the default role mentioned MCP servers"
+  cmp -s "$plain" "$on" || fail "an explicit on changed the worker role"
+  pass "worker role mentions MCP servers only when they are off"
+}
+
 # forge=external: a review tool uploads its own snapshot, so nothing is pushed.
 # The fixtures name an invented tool and an RFC 6761 reserved host only.
 EXT_CFG="$TMP_ROOT/external-config"
@@ -625,5 +642,6 @@ test_external_review_done_without_backup_is_accepted_on_the_url
 test_external_review_done_with_backup_needs_the_copy
 
 test_worker_role_names_skill_and_fallback_file
+test_worker_role_says_when_mcp_servers_are_off
 
 echo "all fm-dod-lib tests passed"

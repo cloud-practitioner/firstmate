@@ -9,7 +9,7 @@ Start with the directory layout, then use the setting reference for the behavior
 | --- | --- |
 | Firstmate's code, private files, or project location | [FM_HOME](#fm_home) and [operational home layout](#operational-home-layout-and-state) |
 | Task windows and worker tools | [Runtime backend](#runtime-backend-configbackend--fm_backend) and [harness support](#harness-support) |
-| Worker permissions, accounts, or environment | [Codex approval review](#codex-automatic-approval-review), [Claude permission mode](#claude-permission-mode-configclaude-permission-mode), [Codex permission mode](#codex-permission-mode-configcodex-permission-mode), [persistent managed-policy failover](#persistent-managed-policy-failover), [worker account pin](#worker-account-pin-configclaude-account-configpi-account), [worker tool exclusions](#worker-tool-exclusions-configcrew-exclude-tools), [worker launch environment](#worker-launch-environment-configlaunch-env-allowlist), and its [Orca environment source](#orca-environment-source-configlaunch-env-tmux-session) |
+| Worker permissions, accounts, or environment | [Codex approval review](#codex-automatic-approval-review), [Claude permission mode](#claude-permission-mode-configclaude-permission-mode), [Codex permission mode](#codex-permission-mode-configcodex-permission-mode), [persistent managed-policy failover](#persistent-managed-policy-failover), [worker account pin](#worker-account-pin-configclaude-account-configpi-account), [worker tool exclusions](#worker-tool-exclusions-configcrew-exclude-tools), [worker MCP servers](#worker-mcp-servers-configcrew-mcp), [worker launch environment](#worker-launch-environment-configlaunch-env-allowlist), and its [Orca environment source](#orca-environment-source-configlaunch-env-tmux-session) |
 | Backlog, preferences, and memory | [Backlog backend](#backlog-backend-taskstoml--configbacklog-backend), [captain preferences](#captain-preferences-datacaptainmd--datacaptain-sharedmd), [external memory tiers](#external-memory-tiers-memory-layering-section), and [startup memory budget](#startup-memory-budget-configstartup-memory-budget) |
 | Supervision and presentation | [Pi supervision branch](#pi-supervision-branch), [supervision host](#supervision-host-configsupervision-host), and [Calm preference](#calm-preference-configcalm) |
 | Persistent secondmates | [Secondmate routes](#secondmate-routes-datasecondmatesmd) |
@@ -1390,6 +1390,46 @@ Each relaunch installs a fresh worker extension with the home's current list, so
 
 [`bin/fm-exclude-tools-lib.sh`](../bin/fm-exclude-tools-lib.sh) implements parsing and pre-launch validation for this contract; [`bin/fm-spawn.sh`](../bin/fm-spawn.sh)'s header owns the launch-flag mechanics.
 [`tests/fm-spawn-dispatch-profile.test.sh`](../tests/fm-spawn-dispatch-profile.test.sh) covers late registration, warning deduplication, declaration preservation, and concurrent decision resolution.
+
+## Worker MCP servers (config/crew-mcp)
+
+The optional local, gitignored `config/crew-mcp` decides whether this home's ship and scout workers start their MCP servers at all.
+Pi starts every enabled MCP server from its `mcp.json` as soon as a session opens, so each new worker brings its own set of helper processes whether or not the task ever calls them.
+A server that talks to SAP, Fiori, UI5, or a browser can cost hundreds of megabytes and several CPU-seconds per launch, per worker.
+The contract is runtime-neutral: a runtime must start without MCP servers or refuse the launch, and an `off` setting is never silently ignored.
+Unlike [worker tool exclusions](#worker-tool-exclusions-configcrew-exclude-tools), which only hide tool names and leave every server process running, `off` stops the servers from starting.
+
+Create the file with one token: `on`, or `off`.
+Whitespace is removed before validating the value; any value other than `on` or `off`, or an unreadable or nonregular file, refuses the launch and names the file.
+For a new task without a per-task override, an absent file or `on` leaves the runtime's MCP behavior unchanged.
+The file is validated from this home's own configuration directory on every worker launch; a changed value applies to new tasks without a restart, while [relaunches keep the recorded setting](#recording-relaunch-and-the-workers-view).
+It is not in the inherited configuration set, so no other home, including a secondmate home, receives it; create the file in each home that wants it.
+It does not apply to a secondmate's own agent, which neither reads nor refuses on it.
+
+`fm-spawn.sh --mcp on|off` overrides the home setting for one ship or scout task, in either direction, and a batch spawn forwards a shared `--mcp` to every pair.
+Use `--mcp on` for a task whose instructions need an MCP server, such as Jira, SAP, CPI, or a browser, in a home set to `off`.
+The override is refused on a secondmate spawn.
+
+### Runtime support
+
+| Runtime | With the effective setting `off` |
+| --- | --- |
+| `pi`, `pi-signed` | On every ship and scout spawn and relaunch, no MCP server connects and no MCP tool exists, while the `codemode` tool stays available because workers use it without MCP. The launch refuses when the selected Pi does not advertise `--no-mcp`. |
+| Every other runtime, and a raw launch command | The launch refuses with an error naming `config/crew-mcp` and `--mcp on`, because that runtime has no verified way to start without MCP servers. |
+
+The MCP setting composes with [worker tool exclusions](#worker-tool-exclusions-configcrew-exclude-tools).
+Firstmate never connects to a server to check its names or its state.
+
+### Recording, relaunch, and the worker's view
+
+A spawn records the effective setting as `mcp=on` or `mcp=off` in the task record whenever the file or `--mcp` chose it, and prints `mcp=off` on its spawned line; an unconfigured home's records and output are unchanged.
+A relaunch keeps the setting its task record carries, and a task launched before the setting existed keeps its MCP servers, so a running task never loses a tool it was given.
+`fm-control.sh relaunch --mcp on|off` changes the setting for the replacement, which is how a worker that started without MCP servers is given them for the rest of its task.
+A relaunch validates the file and the replacement runtime's support before stopping the running worker, so a refusal preserves the running agent.
+When the effective setting is `off`, the worker's launch brief says that it started without MCP servers and tells it to append `blocked: needs MCP <server>` and stop if the task needs one, so Firstmate can relaunch it with `--mcp on`.
+
+[`bin/fm-mcp-posture-lib.sh`](../bin/fm-mcp-posture-lib.sh) implements setting selection and validation; [`bin/fm-spawn.sh`](../bin/fm-spawn.sh)'s header owns the launch-flag mechanics.
+Portable regression coverage lives in [`tests/fm-spawn-dispatch-profile.test.sh`](../tests/fm-spawn-dispatch-profile.test.sh) and [`tests/fm-control-relaunch.test.sh`](../tests/fm-control-relaunch.test.sh).
 
 ## Worker account pin (config/claude-account, config/pi-account)
 

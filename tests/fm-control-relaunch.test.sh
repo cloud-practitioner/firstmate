@@ -1165,6 +1165,99 @@ test_exclude_tools_refusals_happen_before_the_agent_stops() {
   pass "fm-control relaunch: exclusion-list refusals happen before the running agent stops"
 }
 
+# A Pi that advertises the flag worker MCP posture `off` needs (config/crew-mcp).
+write_mcp_capable_pi() {  # <case-dir>
+  printf '#!/usr/bin/env bash\nprintf "Options: --tui-mode --no-mcp\\n"\n' > "$1/fakebin/pi"
+  chmod +x "$1/fakebin/pi"
+}
+
+test_pi_mcp_posture_follows_the_relaunch() {
+  local dir out rc id=rl-pi-mcp
+  dir=$(new_case pi-mcp "$id")
+  add_ship_task "$dir" "$id" pi
+  printf pi > "$dir/fake/command"
+  printf pi > "$dir/fake/becomes"
+  write_mcp_capable_pi "$dir"
+  echo "mcp=off" >> "$dir/home/state/$id.meta"
+  out=$(run_control "$dir" "$id" relaunch --note "keep MCP off"); rc=$?
+  expect_code 0 "$rc" "a Pi relaunch of a task recorded mcp=off should succeed"$'\n'"$out"
+  assert_contains "$(cat "$dir/fake/literal")" "--no-mcp --tools +codemode" \
+    "the replacement must keep the recorded MCP posture without any config file"
+  assert_contains "$out" "mcp=off" "the relaunch line must report the kept posture"
+  [ "$(meta_field "$dir" "$id" mcp)" = off ] || fail "the relaunch must keep recording mcp=off"
+  [ "$(grep -c '^mcp=' "$dir/home/state/$id.meta")" = 1 ] || fail "the relaunch must write exactly one mcp= line"
+  assert_grep "launched without MCP servers" "$dir/home/data/$id/launch-brief.md" \
+    "the replacement's worker role must say it has no MCP servers"
+
+  : > "$dir/fake/literal"
+  printf pi > "$dir/fake/command"
+  out=$(run_control "$dir" "$id" relaunch --mcp on --note "this step needs Jira"); rc=$?
+  expect_code 0 "$rc" "relaunch with --mcp on should succeed"$'\n'"$out"
+  assert_not_contains "$(cat "$dir/fake/literal")" "--no-mcp" "--mcp on must give the replacement its MCP servers"
+  assert_contains "$out" "mcp=on" "the relaunch line must report the new posture"
+  [ "$(meta_field "$dir" "$id" mcp)" = on ] || fail "--mcp on must be recorded"
+  assert_no_grep "without MCP servers" "$dir/home/data/$id/launch-brief.md" \
+    "the replacement's worker role must drop the no-MCP line"
+  pass "fm-control relaunch: a Pi replacement keeps the recorded MCP posture and --mcp changes it"
+}
+
+test_relaunch_of_a_task_without_a_recorded_posture_keeps_mcp_on() {
+  local dir out rc id=rl-mcp-legacy
+  dir=$(new_case mcp-legacy "$id")
+  add_ship_task "$dir" "$id" pi
+  printf pi > "$dir/fake/command"
+  printf pi > "$dir/fake/becomes"
+  write_mcp_capable_pi "$dir"
+  mkdir -p "$dir/home/config"
+  printf 'off\n' > "$dir/home/config/crew-mcp"
+  out=$(run_control "$dir" "$id" relaunch --note "launched before the setting existed"); rc=$?
+  expect_code 0 "$rc" "relaunching a pre-setting task should succeed"$'\n'"$out"
+  assert_not_contains "$(cat "$dir/fake/literal")" "--no-mcp" \
+    "a task launched with MCP servers must keep them across a relaunch"
+  assert_no_grep "mcp=" "$dir/home/state/$id.meta" "no input chose a posture, so none is recorded"
+
+  : > "$dir/fake/literal"
+  printf pi > "$dir/fake/command"
+  out=$(run_control "$dir" "$id" relaunch --mcp off --note "free the helpers"); rc=$?
+  expect_code 0 "$rc" "--mcp off on a pre-setting task should succeed"$'\n'"$out"
+  assert_contains "$(cat "$dir/fake/literal")" "--no-mcp --tools +codemode" "--mcp off must stop the MCP servers"
+  pass "fm-control relaunch: a task launched before the setting keeps MCP servers unless --mcp off"
+}
+
+test_mcp_refusals_happen_before_the_agent_stops() {
+  local dir out rc id=rl-mcp-refuse
+  dir=$(new_case mcp-refuse "$id")
+  add_ship_task "$dir" "$id" pi
+  printf pi > "$dir/fake/command"
+  printf pi > "$dir/fake/becomes"
+  write_mcp_capable_pi "$dir"
+  echo "mcp=off" >> "$dir/home/state/$id.meta"
+  out=$(run_control "$dir" "$id" relaunch --harness codex --note "switch runtime"); rc=$?
+  expect_code 1 "$rc" "relaunching MCP off onto a runtime that cannot honor it must refuse"
+  assert_contains "$out" "config/crew-mcp" "refusal must name the setting"
+  assert_contains "$out" "--mcp on" "refusal must name the per-task way out"
+  [ "$(cat "$dir/fake/command")" = pi ] || fail "an unhonorable MCP posture stopped the running agent"
+  [ ! -s "$dir/fake/literal" ] || fail "a refused relaunch sent lifecycle input"
+
+  mkdir -p "$dir/home/config"
+  printf 'sometimes\n' > "$dir/home/config/crew-mcp"
+  out=$(run_control "$dir" "$id" relaunch --note "bad setting"); rc=$?
+  expect_code 1 "$rc" "a malformed config/crew-mcp must refuse the relaunch"
+  assert_contains "$out" "config/crew-mcp holds 'sometimes'" "refusal must name the setting"
+  [ "$(cat "$dir/fake/command")" = pi ] || fail "a malformed posture stopped the running agent"
+  rm "$dir/home/config/crew-mcp"
+
+  out=$(run_control "$dir" "$id" relaunch --mcp maybe --note "bad flag"); rc=$?
+  expect_code 1 "$rc" "a bad --mcp value must refuse"
+  assert_contains "$out" "--mcp must be on or off" "refusal must say what is accepted"
+  out=$(run_control "$dir" "$id" exit --mcp on); rc=$?
+  expect_code 1 "$rc" "--mcp must be refused on a verb other than relaunch"
+  assert_contains "$out" "apply to 'relaunch' only" "refusal must say where the flag applies"
+  [ "$(cat "$dir/fake/command")" = pi ] || fail "a refused request stopped the running agent"
+  [ ! -s "$dir/fake/literal" ] || fail "a refused request sent lifecycle input"
+  pass "fm-control relaunch: MCP posture refusals happen before the running agent stops"
+}
+
 test_explicit_model_wins_over_the_recorded_one() {
   local dir out rc
   dir=$(new_case explicit rl7)
@@ -3085,6 +3178,9 @@ test_worker_account_pin_follows_the_relaunch
 test_secondmate_account_pin_follows_relaunch_and_refuses_before_stop
 test_pi_exclude_tools_follow_the_relaunch
 test_exclude_tools_refusals_happen_before_the_agent_stops
+test_pi_mcp_posture_follows_the_relaunch
+test_relaunch_of_a_task_without_a_recorded_posture_keeps_mcp_on
+test_mcp_refusals_happen_before_the_agent_stops
 test_explicit_model_wins_over_the_recorded_one
 test_relaunch_onto_an_unverified_harness_is_refused
 test_prior_harness_turnend_registry_entry_is_cleared

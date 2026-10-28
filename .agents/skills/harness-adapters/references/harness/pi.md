@@ -27,6 +27,8 @@ The observed signed process tree has an exact `pi-signed` wrapper parent with th
 The installed plain `pi` command also execs that signed launcher.
 The router's Detection section owns how launch markers and ancestry select between the identities.
 
+For Pi worker MCP startup policy, read [worker MCP servers](../../../../../docs/configuration.md#worker-mcp-servers-configcrew-mcp).
+
 Keep the instructions as one positional argument.
 Multiple positional arguments become separate queued messages; the spawn template already preserves the one-argument shape.
 

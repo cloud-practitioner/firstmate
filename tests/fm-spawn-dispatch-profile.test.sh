@@ -21,12 +21,13 @@ make_spawn_pi_probe() {
 #!/usr/bin/env bash
 set -u
 if [ "${1:-}" = --help ]; then
-  # Mirror real Pi help advertising: 0.82.0 has --approve but not --tui-mode;
-  # 0.50.0 is a synthetic pre-approve probe; current defaults advertise both.
+  # Mirror real Pi help advertising: 0.82.0 has --approve but not --tui-mode
+  # or --no-mcp; 0.50.0 is a synthetic pre-approve probe; current defaults
+  # advertise all three.
   case "${FM_FAKE_PI_VERSION:-0.84.0}" in
   0.50.0) printf '%s\n' 'Pi 0.50.0' 'Options: --help' ;;
   0.82.0) printf '%s\n' 'Pi 0.82.0' 'Options: --help --approve' ;;
-  *) printf '%s\n' "Pi ${FM_FAKE_PI_VERSION:-0.84.0}" 'Options: --help --tui-mode <mode> --approve' ;;
+  *) printf '%s\n' "Pi ${FM_FAKE_PI_VERSION:-0.84.0}" 'Options: --help --tui-mode <mode> --approve --no-mcp' ;;
   esac
 fi
 exit 0
@@ -1968,6 +1969,253 @@ test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates() {
   pass "exclusions stay in the home that configured them and skip secondmate agents"
 }
 
+# config/crew-mcp and --mcp: per-home worker MCP posture (fm-spawn header).
+write_mcp_file() {  # <home> <value>
+  printf '%s\n' "$2" > "$1/config/crew-mcp"
+}
+
+mcp_launch_flags() {  # the exact Pi MCP flags `off` must add
+  printf '%s' ' --no-mcp --tools +codemode'
+}
+
+test_pi_mcp_off_reaches_ship_and_scout_launches() {
+  local harness rec id out status launch kindflag meta brief
+  for harness in pi pi-signed; do
+    for kindflag in --ship --scout; do
+      id="mcp-${harness}-${kindflag#--}-y1a"
+      rec=$(make_spawn_case "mcp-${harness}-${kindflag#--}" "$harness" "$id")
+      read_case_record "$rec"
+      write_mcp_file "$HOME_DIR" '  off  '
+      write_exclude_file "$HOME_DIR" 'mcp__tracker__editIssue'
+      if [ "$kindflag" = --scout ]; then
+        out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --scout)
+      else
+        out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+      fi
+      status=$?
+      expect_code 0 "$status" "$harness $kindflag spawn with MCP off should succeed"$'\n'"$out"
+      launch=$(cat "$LAUNCH_LOG")
+      assert_contains "$launch" "--exclude-tools 'mcp__tracker__editIssue'$(mcp_launch_flags) " \
+        "$harness $kindflag launch must stop MCP servers and keep the tool exclusions"
+      assert_contains "$out" "mcp=off" "the spawn line must report MCP off"
+      meta="$HOME_DIR/state/$id.meta"
+      assert_grep "mcp=off" "$meta" "meta must record mcp=off"
+      brief="$HOME_DIR/data/$id/launch-brief.md"
+      assert_grep "launched without MCP servers" "$brief" "the worker must be told its launch has no MCP servers"
+      assert_grep "needs MCP <server>" "$brief" "the worker must be told how to ask for a server"
+    done
+  done
+  pass "Pi and pi-signed ship and scout launches stop MCP servers when the home sets MCP off"
+}
+
+test_mcp_absent_or_on_leaves_every_launch_unchanged() {
+  local rec id out status harness
+  id=mcp-absent-y1b
+  rec=$(make_spawn_case mcp-absent pi "$id")
+  read_case_record "$rec"
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+  expect_code 0 "$?" "Pi spawn without the file should succeed"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--no-mcp" "an absent file must not stop MCP servers"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--tools" "an absent file must add no tool selection"
+  assert_not_contains "$out" "mcp=" "an unconfigured spawn line stays unchanged"
+  assert_no_grep "mcp=" "$HOME_DIR/state/$id.meta" "an unconfigured task record stays unchanged"
+  assert_no_grep "without MCP servers" "$HOME_DIR/data/$id/launch-brief.md" "an unconfigured worker role stays unchanged"
+
+  id=mcp-on-y1c
+  rec=$(make_spawn_case mcp-on pi "$id")
+  read_case_record "$rec"
+  write_mcp_file "$HOME_DIR" on
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+  expect_code 0 "$?" "Pi spawn with MCP on should succeed"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--no-mcp" "on must not stop MCP servers"
+  assert_grep "mcp=on" "$HOME_DIR/state/$id.meta" "an explicit on is recorded"
+  assert_no_grep "without MCP servers" "$HOME_DIR/data/$id/launch-brief.md" "on adds no worker role line"
+
+  for harness in claude codex; do
+    id="mcp-on-${harness}-y1d"
+    rec=$(make_spawn_case "mcp-on-${harness}" "$harness" "$id")
+    read_case_record "$rec"
+    write_mcp_file "$HOME_DIR" on
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+    status=$?
+    expect_code 0 "$status" "$harness spawn with MCP on should succeed"$'\n'"$out"
+    assert_not_contains "$(cat "$LAUNCH_LOG")" "--no-mcp" "$harness must receive no MCP flag"
+  done
+  pass "an absent or on posture leaves every runtime unaffected"
+}
+
+test_mcp_flag_overrides_the_home_posture_per_task() {
+  local rec id out status launch
+  id=mcp-flag-on-y1e
+  rec=$(make_spawn_case mcp-flag-on pi "$id")
+  read_case_record "$rec"
+  write_mcp_file "$HOME_DIR" off
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --mcp on)
+  status=$?
+  expect_code 0 "$status" "--mcp on must win over a home set to off"$'\n'"$out"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--no-mcp" "--mcp on must keep the MCP servers"
+  assert_grep "mcp=on" "$HOME_DIR/state/$id.meta" "the per-task value is recorded"
+  assert_no_grep "without MCP servers" "$HOME_DIR/data/$id/launch-brief.md" "--mcp on adds no worker role line"
+
+  id=mcp-flag-off-y1f
+  rec=$(make_spawn_case mcp-flag-off pi "$id")
+  read_case_record "$rec"
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --mcp=off)
+  status=$?
+  expect_code 0 "$status" "--mcp off must work in a home with no file"$'\n'"$out"
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" "$(mcp_launch_flags) " "--mcp off must stop MCP servers"
+  assert_grep "mcp=off" "$HOME_DIR/state/$id.meta" "the per-task value is recorded"
+
+  # A home set to off must still launch a runtime that cannot honor it, on request.
+  id=mcp-flag-on-claude-y1g
+  rec=$(make_spawn_case mcp-flag-on-claude claude "$id")
+  read_case_record "$rec"
+  write_mcp_file "$HOME_DIR" off
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --mcp on)
+  expect_code 0 "$?" "--mcp on must let a non-Pi runtime launch in a home set to off"$'\n'"$out"
+  pass "--mcp overrides the home posture for one task, in either direction"
+}
+
+test_mcp_off_refuses_runtimes_that_cannot_honor_it() {
+  local harness rec id out status
+  for harness in claude codex grok; do
+    id="mcp-refuse-${harness}-y1h"
+    rec=$(make_spawn_case "mcp-refuse-${harness}" "$harness" "$id")
+    read_case_record "$rec"
+    write_mcp_file "$HOME_DIR" off
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+    status=$?
+    expect_code 1 "$status" "$harness spawn with MCP off must refuse"
+    assert_contains "$out" "config/crew-mcp" "the $harness refusal must name the setting"
+    assert_contains "$out" "$harness runtime cannot start without MCP servers" "the $harness refusal must name the runtime"
+    assert_contains "$out" "--mcp on" "the $harness refusal must name the per-task way out"
+    [ ! -s "$LAUNCH_LOG" ] || fail "$harness launched despite an unhonorable MCP posture"
+    [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "$harness refusal still wrote a task record"
+  done
+  id=mcp-refuse-raw-y1i
+  rec=$(make_spawn_case mcp-refuse-raw pi "$id")
+  read_case_record "$rec"
+  write_mcp_file "$HOME_DIR" off
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" "pi Verify this adapter")
+  status=$?
+  expect_code 1 "$status" "a raw launch with MCP off must refuse"
+  assert_contains "$out" "raw launch command cannot start without MCP servers" "the raw-launch refusal must say why"
+  [ ! -s "$LAUNCH_LOG" ] || fail "a raw launch ignored the MCP posture"
+  pass "a runtime that cannot start without MCP servers, or a raw launch, refuses MCP off"
+}
+
+test_pi_without_no_mcp_support_refuses_before_endpoint() {
+  local harness rec id out status
+  for harness in pi pi-signed; do
+    id="mcp-old-${harness}-y1j"
+    rec=$(make_spawn_case "mcp-old-${harness}" "$harness" "$id")
+    read_case_record "$rec"
+    write_mcp_file "$HOME_DIR" off
+    out=$(FM_TEST_PI_VERSION=0.82.0 run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+    status=$?
+    expect_code 1 "$status" "$harness without --no-mcp must refuse MCP off"
+    assert_contains "$out" "does not advertise --no-mcp" "the refusal must say what is missing"
+    [ ! -s "$LAUNCH_LOG" ] || fail "an old $harness launched with MCP servers despite MCP off"
+    [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "an old $harness refusal still wrote a task record"
+    # The same Pi still launches when MCP is on.
+    out=$(FM_TEST_PI_VERSION=0.82.0 run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --mcp on)
+    expect_code 0 "$?" "an old $harness must still launch with MCP on"$'\n'"$out"
+  done
+  pass "a Pi without --no-mcp refuses MCP off before any endpoint or record"
+}
+
+test_mcp_invalid_input_refuses_before_endpoint() {
+  local rec id out status bad n=0
+  for bad in maybe 'off on' 'OFF' 0; do
+    n=$((n + 1))
+    id="mcp-bad-$n-y1k"
+    rec=$(make_spawn_case "mcp-bad-$n" pi "$id")
+    read_case_record "$rec"
+    write_mcp_file "$HOME_DIR" "$bad"
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+    status=$?
+    expect_code 1 "$status" "config/crew-mcp holding '$bad' must refuse the spawn"
+    assert_contains "$out" "config/crew-mcp holds" "the refusal must name the setting and its value"
+    [ ! -s "$LAUNCH_LOG" ] || fail "a malformed MCP posture '$bad' still launched a worker"
+    [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "a malformed MCP posture '$bad' still wrote a task record"
+  done
+  id=mcp-bad-dir-y1l
+  rec=$(make_spawn_case mcp-bad-dir pi "$id")
+  read_case_record "$rec"
+  mkdir "$HOME_DIR/config/crew-mcp"
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+  status=$?
+  expect_code 1 "$status" "an unreadable config/crew-mcp must refuse the spawn"
+  assert_contains "$out" "config/crew-mcp must be a readable regular file" "the refusal must name the setting"
+  [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "an unreadable MCP posture still wrote a task record"
+  rmdir "$HOME_DIR/config/crew-mcp"
+
+  for bad in maybe ''; do
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --mcp "$bad")
+    status=$?
+    expect_code 1 "$status" "--mcp '$bad' must refuse"
+    assert_contains "$out" "--mcp" "the flag refusal must name the flag"
+  done
+  [ ! -e "$HOME_DIR/state/$id.meta" ] || fail "a refused --mcp still wrote a task record"
+  pass "a malformed or unreadable MCP posture, or a bad --mcp value, refuses before any launch or record"
+}
+
+test_mcp_posture_stays_in_its_home_and_skips_secondmate_agents() {
+  local rec_a rec_b id_a id_b launch sm out status
+  id_a=mcp-home-a-y1m
+  id_b=mcp-home-b-y1n
+  rec_a=$(make_spawn_case mcp-home-a pi "$id_a")
+  read_case_record "$rec_a"
+  write_mcp_file "$HOME_DIR" off
+  run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_a" "$PROJ_DIR" >/dev/null
+  expect_code 0 "$?" "home A spawn should succeed"
+  assert_contains "$(cat "$LAUNCH_LOG")" "$(mcp_launch_flags) " "home A lost its own MCP posture"
+
+  rec_b=$(make_spawn_case mcp-home-b pi "$id_b")
+  read_case_record "$rec_b"
+  run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_b" "$PROJ_DIR" >/dev/null
+  expect_code 0 "$?" "home B spawn should succeed"
+  assert_not_contains "$(cat "$LAUNCH_LOG")" "--no-mcp" "home B must not inherit home A's MCP posture"
+
+  id_a=mcp-sm-y1o
+  rec_a=$(make_spawn_case mcp-sm codex "$id_a")
+  read_case_record "$rec_a"
+  printf '%s\n' pi > "$HOME_DIR/config/secondmate-harness"
+  write_mcp_file "$HOME_DIR" off
+  sm="$CASE_DIR/secondmate-home"
+  make_seeded_secondmate_home "$sm" "$id_a"
+  sm=$(cd "$sm" && pwd -P)
+  out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_a" "$sm" --secondmate)
+  status=$?
+  expect_code 0 "$status" "Pi secondmate spawn should succeed"$'\n'"$out"
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" "fm-primary-turnend-guard.ts" "secondmate launch was not the Pi secondmate shape"
+  assert_not_contains "$launch" "--no-mcp" "a secondmate's own agent must keep its MCP servers"
+  assert_no_grep "mcp=" "$HOME_DIR/state/$id_a.meta" "a secondmate record carries no MCP posture"
+
+  out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id_a" "$sm" --secondmate --mcp off)
+  status=$?
+  expect_code 1 "$status" "--mcp must be refused on a secondmate spawn"
+  assert_contains "$out" "--mcp applies only to ship and scout workers" "the refusal must say why"
+  pass "the MCP posture stays in the home that configured it and skips secondmate agents"
+}
+
+test_batch_forwards_the_shared_mcp_flag() {
+  local rec id1 id2 out status
+  id1=mcp-batch-a-y1p
+  id2=mcp-batch-b-y1q
+  rec=$(make_spawn_case mcp-batch pi "$id1" "$id2")
+  read_case_record "$rec"
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
+    "$id1=$PROJ_DIR" "$id2=$PROJ_DIR" --harness pi --mcp off)
+  status=$?
+  expect_code 0 "$status" "batch spawn with a shared --mcp should succeed"$'\n'"$out"
+  assert_grep "mcp=off" "$HOME_DIR/state/$id1.meta" "first batch task did not get the shared posture"
+  assert_grep "mcp=off" "$HOME_DIR/state/$id2.meta" "second batch task did not get the shared posture"
+  pass "a batch spawn forwards a shared --mcp to every pair"
+}
+
 test_batch_forwards_shared_profile_flags() {
   local rec id1 id2 out status
   id1=profile-batch-a-z9
@@ -2944,6 +3192,14 @@ test_pi_exclude_tools_malformed_entry_refuses_before_endpoint
 test_pi_exclude_tools_server_shape_refuses_before_endpoint
 test_pi_exclude_tools_read_failure_refuses_before_launch
 test_pi_exclude_tools_do_not_leak_across_homes_or_to_secondmates
+test_pi_mcp_off_reaches_ship_and_scout_launches
+test_mcp_absent_or_on_leaves_every_launch_unchanged
+test_mcp_flag_overrides_the_home_posture_per_task
+test_mcp_off_refuses_runtimes_that_cannot_honor_it
+test_pi_without_no_mcp_support_refuses_before_endpoint
+test_mcp_invalid_input_refuses_before_endpoint
+test_mcp_posture_stays_in_its_home_and_skips_secondmate_agents
+test_batch_forwards_the_shared_mcp_flag
 test_batch_forwards_shared_profile_flags
 test_claude_forwards_firstmate_config_dir_when_set
 test_lavish_server_address_is_exported_to_worker_launch

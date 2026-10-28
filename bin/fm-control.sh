@@ -5,7 +5,7 @@
 # Usage: fm-control.sh <task-id> interrupt
 #        fm-control.sh <task-id> exit
 #        fm-control.sh <task-id> relaunch [--harness <name>] [--model <name>]
-#                                         [--effort <level>]
+#                                         [--effort <level>] [--mcp <on|off>]
 #                                         (--note <text> | --note-file <path>)
 #
 # Why this exists, and how it differs from fm-send.sh. bin/fm-send.sh is the
@@ -92,6 +92,13 @@
 #              The same pre-stop refusal applies to this home's worker tool
 #              exclusions (bin/fm-exclude-tools-lib.sh): a malformed list, or a
 #              replacement runtime that cannot hide the listed tools.
+#              A ship or scout replacement keeps the MCP posture its record
+#              carries (mcp=, set by config/crew-mcp or fm-spawn's --mcp at the
+#              original launch); --mcp on|off changes it for the replacement,
+#              which is how a worker launched without MCP servers is given them
+#              for the rest of its task. A malformed config/crew-mcp, or a
+#              replacement runtime that cannot honor off, refuses before the
+#              old agent stops (bin/fm-mcp-posture-lib.sh).
 #              Refused on t3code before anything is stopped: a T3 thread
 #              keeps its conversation, so a new turn or a provider change on
 #              it continues the same agent rather than a fresh one
@@ -208,6 +215,8 @@ DATA="${FM_DATA_OVERRIDE:-$FM_HOME/data}"
 . "$SCRIPT_DIR/fm-omp-profile-lib.sh"
 # shellcheck source=bin/fm-exclude-tools-lib.sh
 . "$SCRIPT_DIR/fm-exclude-tools-lib.sh"
+# shellcheck source=bin/fm-mcp-posture-lib.sh
+. "$SCRIPT_DIR/fm-mcp-posture-lib.sh"
 # shellcheck source=bin/fm-secondmate-dormant-lib.sh
 . "$SCRIPT_DIR/fm-secondmate-dormant-lib.sh"
 
@@ -277,6 +286,8 @@ NEW_EFFORT=
 HARNESS_SET=0
 MODEL_SET=0
 EFFORT_SET=0
+NEW_MCP=
+MCP_SET=0
 NOTE=
 NOTE_SET=0
 control_want_value=
@@ -289,6 +300,7 @@ for control_arg in "$@"; do
       harness) NEW_HARNESS=$control_arg; HARNESS_SET=1 ;;
       model) NEW_MODEL=$control_arg; MODEL_SET=1 ;;
       effort) NEW_EFFORT=$control_arg; EFFORT_SET=1 ;;
+      mcp) NEW_MCP=$control_arg; MCP_SET=1 ;;
       note) NOTE=$control_arg; NOTE_SET=1 ;;
       note_file)
         [ -f "$control_arg" ] || die "--note-file '$control_arg' is not a readable file"
@@ -306,6 +318,8 @@ for control_arg in "$@"; do
     --model=*) NEW_MODEL=${control_arg#--model=}; MODEL_SET=1 ;;
     --effort) control_want_value=effort ;;
     --effort=*) NEW_EFFORT=${control_arg#--effort=}; EFFORT_SET=1 ;;
+    --mcp) control_want_value=mcp ;;
+    --mcp=*) NEW_MCP=${control_arg#--mcp=}; MCP_SET=1 ;;
     --note) control_want_value=note ;;
     --note=*) NOTE=${control_arg#--note=}; NOTE_SET=1 ;;
     --note-file) control_want_value=note_file ;;
@@ -323,12 +337,17 @@ if [ -n "$control_want_value" ]; then
 fi
 
 if [ "$VERB" != relaunch ]; then
-  [ "$HARNESS_SET" = 0 ] && [ "$MODEL_SET" = 0 ] && [ "$EFFORT_SET" = 0 ] && [ "$NOTE_SET" = 0 ] \
-    || die "--harness, --model, --effort, and --note apply to 'relaunch' only"
+  [ "$HARNESS_SET" = 0 ] && [ "$MODEL_SET" = 0 ] && [ "$EFFORT_SET" = 0 ] && [ "$MCP_SET" = 0 ] && [ "$NOTE_SET" = 0 ] \
+    || die "--harness, --model, --effort, --mcp, and --note apply to 'relaunch' only"
 fi
 [ "$HARNESS_SET" = 0 ] || [ -n "$NEW_HARNESS" ] || die "--harness requires a non-empty value"
 [ "$MODEL_SET" = 0 ] || [ -n "$NEW_MODEL" ] || die "--model requires a non-empty value"
 [ "$EFFORT_SET" = 0 ] || [ -n "$NEW_EFFORT" ] || die "--effort requires a non-empty value"
+[ "$MCP_SET" = 0 ] || [ -n "$NEW_MCP" ] || die "--mcp requires a value: on or off"
+case "$NEW_MCP" in
+  ''|on|off) ;;
+  *) die "--mcp must be on or off" ;;
+esac
 case "$NEW_EFFORT" in
   ''|default|low|medium|high|xhigh|max|ultra) ;;
   *) die "--effort must be one of default, low, medium, high, xhigh, max, ultra" ;;
@@ -886,6 +905,8 @@ PRIOR_EFFORT=
 TARGET_HARNESS=$HARNESS
 TARGET_MODEL=
 TARGET_EFFORT=
+MCP_TARGET=on
+MCP_TARGET_EXPLICIT=0
 
 journal_write() {  # <phase> [extra-line]...
   local phase=$1
@@ -1093,6 +1114,13 @@ resolve_relaunch_profile() {
   if [ "$KIND" != secondmate ]; then
     fm_exclude_tools_check "$TARGET_HARNESS" 0 "${FM_CONFIG_OVERRIDE:-$FM_HOME/config}" >/dev/null || return 1
   fi
+  # Likewise the worker MCP posture (bin/fm-mcp-posture-lib.sh): a malformed
+  # config/crew-mcp, a bad task record, or a replacement runtime that cannot
+  # start without MCP servers refuses here. A secondmate refuses --mcp itself.
+  MCP_TARGET_SELECTED=$(fm_mcp_posture_select "${FM_CONFIG_OVERRIDE:-$FM_HOME/config}" "$KIND" "$NEW_MCP" 1 "$(fm_meta_get "$META" mcp)") || return 1
+  MCP_TARGET=${MCP_TARGET_SELECTED% *}
+  MCP_TARGET_EXPLICIT=${MCP_TARGET_SELECTED#* }
+  fm_mcp_posture_check "$TARGET_HARNESS" 0 "$MCP_TARGET" || return 1
 }
 
 # safe_checkpoint: prove, before anything is stopped, that the work a relaunch
@@ -1247,6 +1275,7 @@ do_relaunch() {
   spawn_args=("$ID" --relaunch --harness "$TARGET_HARNESS")
   [ "$TARGET_MODEL" = default ] || spawn_args+=(--model "$TARGET_MODEL")
   [ "$TARGET_EFFORT" = default ] || spawn_args+=(--effort "$TARGET_EFFORT")
+  [ "$MCP_SET" = 0 ] || spawn_args+=(--mcp "$NEW_MCP")
   if FM_CONTROL_RELAUNCH_TX="$RELAUNCH_TX" \
       FM_SM_ADMISSION_PARENT="$$" "$SCRIPT_DIR/fm-spawn.sh" "${spawn_args[@]}" >/dev/null; then
     RELAUNCH_META_PUBLISHED=1
@@ -1280,7 +1309,9 @@ do_relaunch() {
 
   journal_write complete "${CHECKPOINT_LINES[@]}" "$note_line" "exit_result=$exit_result"
   RELAUNCH_ACTIVE=0
-  echo "relaunched $ID harness=$TARGET_HARNESS from=$PRIOR_RECORDED_HARNESS model=$TARGET_MODEL effort=$TARGET_EFFORT backend=$BACKEND endpoint=$T worktree=$WT"
+  mcp_report=
+  [ "$MCP_TARGET_EXPLICIT" != 1 ] || mcp_report=" mcp=$MCP_TARGET"
+  echo "relaunched $ID harness=$TARGET_HARNESS from=$PRIOR_RECORDED_HARNESS model=$TARGET_MODEL effort=$TARGET_EFFORT${mcp_report} backend=$BACKEND endpoint=$T worktree=$WT"
 }
 
 # --- verbs ------------------------------------------------------------------

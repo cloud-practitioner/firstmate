@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Spawn a direct report: a crewmate in a treehouse or Orca worktree, or a
 # secondmate in its isolated firstmate home.
-# Usage: fm-spawn.sh <task-id> <project-dir> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--branch-prefix <prefix>] [--base-branch <branch>] [--upstream-consent <host>/<owner>/<repo>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] [--herdr-resume-lock-wait]
-#        fm-spawn.sh <task-id> <project-dir> --scout [--base-branch <branch>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] [--herdr-resume-lock-wait]
+# Usage: fm-spawn.sh <task-id> <project-dir> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--branch-prefix <prefix>] [--base-branch <branch>] [--upstream-consent <host>/<owner>/<repo>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--mcp <on|off>] [--backend <name>] [--herdr-resume-lock-wait]
+#        fm-spawn.sh <task-id> <project-dir> --scout [--base-branch <branch>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--mcp <on|off>] [--backend <name>] [--herdr-resume-lock-wait]
 #        fm-spawn.sh <task-id> [<firstmate-home>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] --secondmate
 #   --mode and --yolo are this task's delivery contract, REQUIRED for every ship
 #   spawn and refused on --scout and --secondmate spawns. Firstmate resolves both
@@ -70,7 +70,7 @@
 #   first in the private launch-brief overlay, including the exact task-owned
 #   steering inbox. This never rewrites a project's instruction files or a
 #   secondmate's charter.
-#        fm-spawn.sh <task-id> --relaunch [--harness <name>] [--model <name>] [--effort <level>]
+#        fm-spawn.sh <task-id> --relaunch [--harness <name>] [--model <name>] [--effort <level>] [--mcp <on|off>]
 #   --relaunch launches a replacement agent for an EXISTING task into that
 #   task's own recorded worktree, reusing its recorded endpoint when that
 #   endpoint still exists, instead of creating either from scratch. It is
@@ -81,7 +81,7 @@
 #   backend, kind, project or home, worktree, endpoint - comes from the task's
 #   validated state/<id>.meta, so --backend, --scout, --secondmate, a project
 #   positional, and batch pairs are all refused alongside it; only harness,
-#   model, and effort may change, which is what makes a harness switch one
+#   model, effort, and --mcp may change, which is what makes a harness switch one
 #   ordinary relaunch. It refuses unless the recorded endpoint is positively
 #   agent-free on a backend with both a recovery-grade agent-state classifier
 #   and replacement-agent support (tmux or herdr), and clears the previous
@@ -487,6 +487,14 @@
 #   docs/configuration.md "Worker tool exclusions" owns config/crew-exclude-tools
 #   and its operator contract. Resolve it with bin/fm-exclude-tools-lib.sh
 #   before provisioning; __PIEXCLUDE__ below owns the Pi launch substitution.
+# Worker MCP servers:
+#   docs/configuration.md "Worker MCP servers" owns config/crew-mcp, the --mcp
+#   override, and the runtime-support table. Resolve both with
+#   bin/fm-mcp-posture-lib.sh before provisioning; __PIMCP__ below owns the Pi
+#   launch substitution (--no-mcp --tools +codemode), unlike __PIEXCLUDE__,
+#   which only hides tools and leaves every server process running. The
+#   effective posture is recorded as mcp= in state/<id>.meta whenever an input
+#   chose it, and a relaunch reuses that record unless --mcp overrides it.
 # Worker account pin (config/claude-account, config/pi-account):
 #   Opt-in. docs/configuration.md's "Worker account pin" section owns unpinned
 #   account selection. A present file pins every supported launch of
@@ -528,6 +536,9 @@
 #     __PIEXCLUDE__ optional ` --exclude-tools '<comma-joined names>'` from
 #                  config/crew-exclude-tools on Pi/pi-signed ship and scout
 #                  launches (supplies its own leading space, empty otherwise)
+#     __PIMCP__    optional ` --no-mcp --tools +codemode` when the effective MCP
+#                  posture is off on a Pi/pi-signed ship or scout launch
+#                  (supplies its own leading space, empty otherwise)
 #     __PIRESUME__ optional relaunch-only `--session <reference>` that keeps a
 #                  Pi replacement on the session the endpoint's runtime already
 #                  reports (relaunch_resume_args below owns it; it supplies its
@@ -772,6 +783,8 @@ CONFIG="${FM_CONFIG_OVERRIDE:-$FM_HOME/config}"
 . "$SCRIPT_DIR/fm-config-inherit-lib.sh"
 # shellcheck source=bin/fm-exclude-tools-lib.sh
 . "$SCRIPT_DIR/fm-exclude-tools-lib.sh"
+# shellcheck source=bin/fm-mcp-posture-lib.sh
+. "$SCRIPT_DIR/fm-mcp-posture-lib.sh"
 if ! LAUNCH_ENV_ENABLED=$(fm_config_source_present "$CONFIG/launch-env-allowlist"); then
   exit 1
 fi
@@ -982,6 +995,8 @@ UPSTREAM_CONSENT=
 EVIDENCE_META=
 UPSTREAM_CONSENT_SET=0
 TRACEPARENT_SET=0
+MCP_ARG=
+MCP_SET=0
 RELAUNCH=0
 RELAUNCH_TASK_TMP=
 # Opt-in only: exact-resume presentation-order lock waits without a bound.
@@ -1037,6 +1052,10 @@ for a in "$@"; do
     traceparent)
       TRACEPARENT_ARG=$a
       TRACEPARENT_SET=1
+      ;;
+    mcp)
+      MCP_ARG=$a
+      MCP_SET=1
       ;;
     *)
       echo "error: internal parser state for --$want_value" >&2
@@ -1107,6 +1126,11 @@ for a in "$@"; do
     TRACEPARENT_ARG=${a#--traceparent=}
     TRACEPARENT_SET=1
     ;;
+  --mcp) want_value=mcp ;;
+  --mcp=*)
+    MCP_ARG=${a#--mcp=}
+    MCP_SET=1
+    ;;
   *) POS+=("$a") ;;
   esac
 done
@@ -1144,6 +1168,21 @@ done
 }
 [ "$TRACEPARENT_SET" -eq 0 ] || [ -n "$TRACEPARENT_ARG" ] || {
   echo "error: --traceparent requires a non-empty value" >&2
+  exit 1
+}
+case "$MCP_ARG" in
+'' | on | off) ;;
+*)
+  echo "error: --mcp must be on or off (got '$MCP_ARG')" >&2
+  exit 1
+  ;;
+esac
+[ "$MCP_SET" -eq 0 ] || [ -n "$MCP_ARG" ] || {
+  echo "error: --mcp requires a value: on or off" >&2
+  exit 1
+}
+[ "$KIND" != secondmate ] || [ "$MCP_SET" -eq 0 ] || {
+  echo "error: --mcp applies only to ship and scout workers; a secondmate's own agent is never covered by config/crew-mcp" >&2
   exit 1
 }
 # A parent-delivered carrier replaces this home's own resolution, so it is
@@ -2024,6 +2063,7 @@ if [ "${#POS[@]}" -gt 0 ] && [ "${POS[0]}" != "$idpart" ] && case "$idpart" in *
   [ -z "$HARNESS_ARG" ] || shared_args+=(--harness "$HARNESS_ARG")
   [ -z "$MODEL" ] || shared_args+=(--model "$MODEL")
   [ -z "$EFFORT" ] || shared_args+=(--effort "$EFFORT")
+  [ "$MCP_SET" -eq 0 ] || shared_args+=(--mcp "$MCP_ARG")
   [ -z "$BACKEND_ARG" ] || shared_args+=(--backend "$BACKEND_ARG")
   # One delivery contract applies to every pair in a batch, exactly like the shared
   # harness. Each pair still re-validates it against its own brief, so a batch
@@ -2310,6 +2350,8 @@ RAW_LAUNCH=0
 # validation teardown uses, so a malformed, ambiguous, or foreign record
 # refuses here exactly as it refuses there.
 RELAUNCH_PRIOR_HARNESS=
+# The MCP posture a relaunched task's own record carries (empty when none).
+MCP_RECORDED=
 # 1 when the recorded endpoint is authoritatively gone and this relaunch must
 # create a fresh one for the task rather than adopt its recorded address.
 RELAUNCH_REBIND=0
@@ -2435,6 +2477,7 @@ if [ "$RELAUNCH" -eq 1 ]; then
   MODE=$(fm_meta_get "$RELAUNCH_META" mode)
   YOLO=$(fm_meta_get "$RELAUNCH_META" yolo)
   UPSTREAM_CONSENT=$(fm_meta_get "$RELAUNCH_META" upstream_consent)
+  MCP_RECORDED=$(fm_meta_get "$RELAUNCH_META" mcp)
   if [ "$KIND" = ship ]; then
     BRANCH=$(fm_meta_get "$RELAUNCH_META" branch)
     [ -n "$BRANCH" ] || BRANCH="fm/$ID"
@@ -2549,6 +2592,15 @@ pi_supports_approve() {
   help=$("$executable" --help 2>&1) || return 1
   # Pi prints "--approve, -a"; allow comma (and any non-token char) after the name.
   printf '%s\n' "$help" | grep -Eq -- '(^|[[:space:]])--approve([^[:alnum:]_-]|$)'
+}
+
+# Same help-probe shape for the flag that stops Pi's MCP servers from starting.
+# Unlike the optional flags above, an inconclusive probe is not skipped: a
+# worker the captain set to start no MCP servers must never silently get them.
+pi_supports_no_mcp() {
+  local executable=$1 help
+  help=$("$executable" --help 2>&1) || return 1
+  printf '%s\n' "$help" | grep -Eq -- '(^|[[:space:]])--no-mcp([^[:alnum:]_-]|$)'
 }
 
 # omp pre-launch model validation. `omp models --json` (omp 18.1.11) prints
@@ -2728,7 +2780,7 @@ launch_template() {
     ;;
   opencode) printf '%s' 'OPENCODE_CONFIG_CONTENT='\''{"permission":{"*":"allow"}__EFFORTFLAG__}'\'' __OPENCODEBIN__ __MODELFLAG__--prompt "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;
   pi | pi-signed)
-    printf '%s' '__PIBIN____PITUIMODE____PIAPPROVE____PIEXCLUDE____PIRESUME__'
+    printf '%s' '__PIBIN____PITUIMODE____PIAPPROVE____PIEXCLUDE____PIMCP____PIRESUME__'
     if [ "$kind" = secondmate ]; then
       # The two primary extensions supervise the mate's own home. __PIEXT__ is
       # the parent-home busy contract, loaded from outside the home so Pi's
@@ -3049,6 +3101,14 @@ if [ "$KIND" != secondmate ]; then
   EXCLUDE_TOOLS=$(fm_exclude_tools_check "$HARNESS" "$RAW_LAUNCH" "$CONFIG") || exit 1
 fi
 
+# config/crew-mcp and --mcp (header above): resolve the worker MCP posture and
+# refuse before worker provisioning if this launch cannot honor `off`.
+# Secondmate agents are not covered.
+MCP_SELECTED=$(fm_mcp_posture_select "$CONFIG" "$KIND" "$MCP_ARG" "$RELAUNCH" "$MCP_RECORDED") || exit 1
+MCP_POSTURE=${MCP_SELECTED% *}
+MCP_EXPLICIT=${MCP_SELECTED#* }
+fm_mcp_posture_check "$HARNESS" "$RAW_LAUNCH" "$MCP_POSTURE" || exit 1
+
 case "$HARNESS" in
 devin)
   DEVIN_BIN=$(command -v devin) || {
@@ -3090,6 +3150,15 @@ pi | pi-signed)
   PI_EXCLUDE=
   [ -z "$EXCLUDE_TOOLS" ] || PI_EXCLUDE=" --exclude-tools $(shell_quote "$EXCLUDE_TOOLS")"
   LAUNCH=${LAUNCH//__PIEXCLUDE__/$PI_EXCLUDE}
+  PI_MCP=
+  if [ "$MCP_POSTURE" = off ]; then
+    pi_supports_no_mcp "$PI_BIN" || {
+      echo "error: MCP servers are set off (config/crew-mcp or --mcp off), but $PI_BIN does not advertise --no-mcp, so this launch is refused rather than running with MCP servers; update Pi or pass --mcp on for this task" >&2
+      exit 1
+    }
+    PI_MCP=' --no-mcp --tools +codemode'
+  fi
+  LAUNCH=${LAUNCH//__PIMCP__/$PI_MCP}
   LAUNCH="FM_PI_HARNESS=$HARNESS $LAUNCH"
   ;;
 cursor)
@@ -3997,7 +4066,7 @@ if [ "$KIND" = ship ] || [ "$KIND" = scout ]; then
   BRIEF="$DATA/$ID/launch-brief.md"
   BRIEF_TMP="$DATA/$ID/.launch-brief.md.${BASHPID:-$$}"
   {
-    fm_brief_worker_role "$STATE" "$ID" "$FM_ROOT" &&
+    fm_brief_worker_role "$STATE" "$ID" "$FM_ROOT" "$MCP_POSTURE" &&
       printf '\n' &&
       cat "$SOURCE_BRIEF" &&
       if [ "$KIND" = ship ] && [ "$MODE" = no-mistakes ]; then
@@ -6675,7 +6744,7 @@ SPAWN_META_PATH=$SPAWN_META_TMP
 preserve_relaunch_meta() {
   awk -F= '
     BEGIN {
-      split("window endpoint_task_id worktree project harness kind mode yolo branch tasktmp base_branch upstream_consent forge backup_remote backup_prefix model effort opencode_version account account_provider omp_profile busy_gen spawn_gen approval_mode traceparent backend herdr_session herdr_workspace_id herdr_tab_id herdr_pane_id herdr_process_identity zellij_session zellij_tab_id zellij_pane_id orca_worktree_id terminal cmux_workspace_id cmux_surface_id paseo_terminal_id paseo_workspace_id rex_server rex_session_id rex_window_id rex_block_id t3_thread_id t3_project_id home projects control_relaunch_tx polytoken_session polytoken_port polytoken_credential", keys, " ")
+      split("window endpoint_task_id worktree project harness kind mode yolo branch tasktmp base_branch upstream_consent mcp forge backup_remote backup_prefix model effort opencode_version account account_provider omp_profile busy_gen spawn_gen approval_mode traceparent backend herdr_session herdr_workspace_id herdr_tab_id herdr_pane_id herdr_process_identity zellij_session zellij_tab_id zellij_pane_id orca_worktree_id terminal cmux_workspace_id cmux_surface_id paseo_terminal_id paseo_workspace_id rex_server rex_session_id rex_window_id rex_block_id t3_thread_id t3_project_id home projects control_relaunch_tx polytoken_session polytoken_port polytoken_credential", keys, " ")
       for (i in keys) owned[keys[i]] = 1
     }
     !($1 in owned)
@@ -6700,6 +6769,9 @@ preserve_relaunch_meta() {
   echo "tasktmp=$TASK_TMP"
   [ -z "$BASE_BRANCH" ] || echo "base_branch=$BASE_BRANCH"
   [ -z "$UPSTREAM_CONSENT" ] || echo "upstream_consent=$UPSTREAM_CONSENT"
+  # The worker MCP posture, only when an input chose it, so an unconfigured
+  # home's task record stays byte-identical.
+  [ "$MCP_EXPLICIT" != 1 ] || echo "mcp=$MCP_POSTURE"
   # Fork-only evidence class (bin/fm-pr-evidence.sh), read by the PR evidence gate.
   [ -z "$EVIDENCE_META" ] || printf '%s\n' "$EVIDENCE_META"
   # Read by bin/fm-dod-lib.sh's ready-report gate; absent on every other forge.
@@ -7566,6 +7638,7 @@ SPAWN_ACCOUNT=
 [ -z "$WORKER_ACCOUNT" ] || SPAWN_ACCOUNT=" account=$WORKER_ACCOUNT_DECLARED"
 [ -z "$WORKER_ACCOUNT_PROVIDER" ] || SPAWN_ACCOUNT="$SPAWN_ACCOUNT account_provider=$WORKER_ACCOUNT_PROVIDER"
 [ -z "$OMP_PROFILE_PIN" ] || SPAWN_ACCOUNT="$SPAWN_ACCOUNT omp_profile=$OMP_PROFILE_PIN"
+[ "$MCP_POSTURE" != off ] || SPAWN_ACCOUNT="$SPAWN_ACCOUNT mcp=off"
 # Opt-in fleet activity ledger (docs/fleet-ledger.md); off costs one file test.
 [ ! -e "$CONFIG/fleet-ledger" ] || [ "$RELAUNCH" -eq 1 ] || FM_HOME=$FM_HOME FM_STATE_OVERRIDE=$STATE FM_CONFIG_OVERRIDE=$CONFIG "$SCRIPT_DIR/fm-fleet-ledger.sh" dispatched "$ID" "$KIND" "${PROJ_ABS##*/}" "$HARNESS" "$MODEL" || true
 # Opt-in Herdr project groups (docs/herdr-backend.md "Project groups") tag the
