@@ -119,6 +119,8 @@
 # session does not register the skill, such as one in another project's
 # worktree, cannot, so the role also names the file as the fallback to read;
 # the Claude launch grants the skills directory that holds it.
+# An optional fourth argument, off, adds one line telling the worker its launch
+# started no MCP servers; any other value renders the role unchanged.
 # fm_ship_rule_one owns the mode-specific first ship safety rule shared by an
 # ordinary ship brief and the durable contract written during scout promotion.
 # It takes the same optional trailing forge argument, because the rule that keeps
@@ -135,8 +137,8 @@
 # shellcheck source=bin/fm-external-review-lib.sh
 . "$(d=${BASH_SOURCE[0]%/*}; [ "$d" != "${BASH_SOURCE[0]}" ] || d=.; cd "${d:-/}" && pwd)/fm-external-review-lib.sh"
 
-fm_brief_worker_role() {  # <state-dir> <task-id> <code-root>
-  local state=$1 task_id=$2 root=$3
+fm_brief_worker_role() {  # <state-dir> <task-id> <code-root> [<mcp on|off>]
+  local state=$1 task_id=$2 root=$3 mcp=${4:-on}
   cat <<'EOF'
 # Current worker role contract
 You are a crewmate: an autonomous worker agent managed by firstmate.
@@ -150,6 +152,13 @@ When this task works on Firstmate itself, the repository root `AGENTS.md` (also 
 Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.
 EOF
   printf "If the \`firstmate-coding-guidelines\` skill name does not resolve in this session, read \`%s/.agents/skills/firstmate-coding-guidelines/SKILL.md\` instead.\n" "$root"
+  if [ "$mcp" = off ]; then
+    # config/crew-mcp or --mcp off (docs/configuration.md "Worker MCP servers"):
+    # the launch started no MCP servers, so say so once and name the way out.
+    cat <<'EOF'
+This worker was launched without MCP servers (Jira, SAP, CPI, browser, and similar helper tools); if the task needs one, append `blocked [at=<epoch>]: needs MCP <server>` to the status file and stop, and firstmate will relaunch you with it.
+EOF
+  fi
 }
 
 # Closed-set gate shared by every forge-aware renderer and bin/fm-brief.sh, so a

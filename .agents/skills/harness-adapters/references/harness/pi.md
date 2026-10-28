@@ -27,6 +27,9 @@ The observed signed process tree has an exact `pi-signed` wrapper parent with th
 The installed plain `pi` command also execs that signed launcher.
 The router's Detection section owns how launch markers and ancestry select between the identities.
 
+Pi starts every enabled MCP server when a session opens, so a Pi worker launched with the home's MCP setting `off` gets `--no-mcp --tools +codemode`.
+`../../../bin/fm-spawn.sh --help` owns the launch mechanics, and [worker MCP servers](../../../../../docs/configuration.md#worker-mcp-servers-configcrew-mcp) owns the setting.
+
 Keep the instructions as one positional argument.
 Multiple positional arguments become separate queued messages; the spawn template already preserves the one-argument shape.
 
