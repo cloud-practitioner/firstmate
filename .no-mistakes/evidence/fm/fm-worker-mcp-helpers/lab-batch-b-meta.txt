@@ -1,0 +1,12 @@
+window=primary:fm-lab-batch-b
+endpoint_task_id=lab-batch-b
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/4/notes
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+harness=pi
+kind=scout
+tasktmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-batch-b.tasktmp
+mcp=off
+model=lab/probe
+effort=default
+busy_gen=g1793194323.2948837.13375
+spawn_gen=s1793194324.2945161.23908

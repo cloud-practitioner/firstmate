@@ -1,0 +1,2 @@
+Read-only process check for only this disposable run's observed Pi/helper PIDs:
+ps exit=1

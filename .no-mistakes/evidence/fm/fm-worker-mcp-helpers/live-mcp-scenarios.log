@@ -1,0 +1,1738 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+exit=0
+$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes config user.name "Disposable Probe"
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes config user.email probe@example.invalid
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes add README.md
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes commit -qm "Initial fixture"
+exit=0
+$ git init --bare -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/origin.git
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes remote add origin /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/origin.git
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes push -q origin main
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/origin.git symbolic-ref HEAD refs/heads/main
+exit=0
+$ tmux -L fm-lab -f /dev/null new-session -d -s primary -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49 -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a "pi --approve --no-extensions --no-skills --no-mcp --tools +codemode --model lab/probe"
+exit=0
+$ tmux -L fm-lab display-message -p -t primary #{socket_path},#{pid},0
+$ tmux -L fm-lab display-message -p -t primary #{pane_id}
+$ tmux -L fm-lab set-option -g default-shell /bin/bash
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary -S -30
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49 (detached)
+0.0%/200k (auto)                                                                                                   probe
+exit=0
+$ bin/fm-brief.sh lab-default notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-default/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-spawn.sh lab-default /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off --harness pi --model lab/probe
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+notice: lab-default ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned lab-default harness=pi kind=ship mode=local-only yolo=off window=primary:fm-lab-default worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+Accepting project trust in disposable lab only: lab-default
+$ tmux -L fm-lab send-keys -t primary:fm-lab-default Enter
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+OBSERVE lab-default meta={"harness": "pi", "mcp": null, "window": "primary:fm-lab-default", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "kind": "ship"}
+MCP starts for lab-default: [{"event": "start", "name": "sap-lab", "pid": 2882622, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes"}, {"event": "request", "name": "sap-lab", "pid": 2882622, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 2882628, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes"}, {"event": "request", "name": "browser-lab", "pid": 2882628, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 2882622, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 2882622, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 2882628, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 2882628, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "tools/list"}]
+$ ps -p 2882622 -o pid=,ppid=,rss=,args=
+2882622 2881176 19432 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py sap-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+$ ps -p 2882628 -o pid=,ppid=,rss=,args=
+2882628 2881176 19552 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py browser-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+MEASUREMENT {"task": "lab-default", "posture": "unconfigured", "fixture_helper_count": 2, "fixture_helper_rss_kib": 38984, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+    A mid-task working: line (including setup complete) is nonterminal: do not end the
+    turn after it; continue the same stage until a defined done: gate under Definition of done.
+    Use paused: {why} - distinct from blocked: - when deliberately waiting for work or an external condition expected
+    to clear on its own, including your own validation round.
+    Before ending your turn with your own background shell or monitor still running, or before waiting on your own
+    pipeline run or a long foreground command, append paused [at=<epoch>]: {job and completion condition} to the status
+    file.
+    Name what you are waiting for and what will let you resume; do not repeat the declaration on every poll.
+    Do not declare active implementation or reasoning as a wait.
+    Firstmate may still raise one first-sight alert; the declared wait then uses the existing long recheck cadence
+    instead of repeated possible-wedge alarms.
+    When you know when the wait clears, include until <YYYY-MM-DDTHH:MMZ> (UTC) for a recheck at that time; for your
+    own background job or command with a timeout, that time is its start plus its timeout, rounded up to the minute.
+    Follow the resolution rule below when the wait clears, then resume the task.
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs above the implementation worker (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line
+ even when it is not newline-terminated) and act on each message in numeric order, then acknowledge each handled
+ message by moving it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox'/NNN.msg
+
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox'/handled
+ /.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Project memory
+
+ A project's AGENTS.md or CLAUDE.md is loaded into every agent session in that project, so edit it only to correct
+ information that is factually wrong - including information your own change made wrong - and never to add knowledge
+ because it is missing.
+ A correction edits only the wrong text: do not run
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/bin/fm-ensure-agents-md.sh, create either
+ file, or add sections, headings, or pointers alongside it.
+
+ Definition of done
+
+ Delivery contract: mode=local-only
+ Ship branch: fm/lab-default
+ This task ships local-only: no remote, no PR, no pipeline.
+ The task is complete only when committed on your branch fm/lab-default. Do NOT push, do NOT open a PR, do NOT merge.
+ A done: is accepted when the named head is on this project's shared local branch, not only on a detached copy; the
+ check tests that head, not merely that a branch moved.
+ Keep your branch a clean fast-forward onto the current default branch - if main has advanced, rebase onto it so the
+ eventual merge stays a fast-forward.
+ When it is implemented and committed, append done [at=<epoch>]: ready in branch fm/lab-default to the status file and
+ stop.
+ The configured merge authority approves the ready branch, then firstmate merges it into local main through the guarded
+ fast-forward path.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":["mcp__sap_lab__ping","mcp__browser_lab__ping"]}
+
+ Took 0.1s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/1/notes (detached)
+9.1%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-default: active MCP helpers=2 active tools=["read", "bash", "edit", "write", "codemode"]
+$ bin/fm-brief.sh lab-on notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-on/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-spawn.sh lab-on /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off --harness pi --model lab/probe
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+notice: lab-on ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned lab-on harness=pi kind=ship mode=local-only yolo=off window=primary:fm-lab-on worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-on -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-on -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-on -S -80
+Accepting project trust in disposable lab only: lab-on
+$ tmux -L fm-lab send-keys -t primary:fm-lab-on Enter
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-on -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-on -S -80
+OBSERVE lab-on meta={"harness": "pi", "mcp": "on", "window": "primary:fm-lab-on", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "kind": "ship"}
+MCP starts for lab-on: [{"event": "start", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}]
+$ ps -p 2892847 -o pid=,ppid=,rss=,args=
+2892847 2891367 19428 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py sap-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+$ ps -p 2892851 -o pid=,ppid=,rss=,args=
+2892851 2891367 19432 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py browser-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+MEASUREMENT {"task": "lab-on", "posture": "on", "fixture_helper_count": 2, "fixture_helper_rss_kib": 38860, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-on -S -80
+    Whenever you mention a PR anywhere - a status line, your terminal, a summary - write its full
+    https:// URL exactly as the forge printed it, never a bare number such as "PR 108"; firstmate
+    copies that URL from your line rather than assembling one.
+    A mid-task working: line (including setup complete) is nonterminal: do not end the
+    turn after it; continue the same stage until a defined done: gate under Definition of done.
+    Use paused: {why} - distinct from blocked: - when deliberately waiting for work or an external condition expected
+    to clear on its own, including your own validation round.
+    Before ending your turn with your own background shell or monitor still running, or before waiting on your own
+    pipeline run or a long foreground command, append paused [at=<epoch>]: {job and completion condition} to the status
+    file.
+    Name what you are waiting for and what will let you resume; do not repeat the declaration on every poll.
+    Do not declare active implementation or reasoning as a wait.
+    Firstmate may still raise one first-sight alert; the declared wait then uses the existing long recheck cadence
+    instead of repeated possible-wedge alarms.
+    When you know when the wait clears, include until <YYYY-MM-DDTHH:MMZ> (UTC) for a recheck at that time; for your
+    own background job or command with a timeout, that time is its start plus its timeout, rounded up to the minute.
+    Follow the resolution rule below when the wait clears, then resume the task.
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs above the implementation worker (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-on.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-on.inbox' -maxdepth 1
+ -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line even when it
+ is not newline-terminated) and act on each message in numeric order, then acknowledge each handled message by moving
+ it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-on.inbox'/NNN.msg
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-on.inbox'/handled/.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Project memory
+
+ A project's AGENTS.md or CLAUDE.md is loaded into every agent session in that project, so edit it only to correct
+ information that is factually wrong - including information your own change made wrong - and never to add knowledge
+ because it is missing.
+ A correction edits only the wrong text: do not run
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/bin/fm-ensure-agents-md.sh, create either
+ file, or add sections, headings, or pointers alongside it.
+
+ Definition of done
+
+ Delivery contract: mode=local-only
+ Ship branch: fm/lab-on
+ This task ships local-only: no remote, no PR, no pipeline.
+ The task is complete only when committed on your branch fm/lab-on. Do NOT push, do NOT open a PR, do NOT merge.
+ A done: is accepted when the named head is on this project's shared local branch, not only on a detached copy; the
+ check tests that head, not merely that a branch moved.
+ Keep your branch a clean fast-forward onto the current default branch - if main has advanced, rebase onto it so the
+ eventual merge stays a fast-forward.
+ When it is implemented and committed, append done [at=<epoch>]: ready in branch fm/lab-on to the status file and stop.
+ The configured merge authority approves the ready branch, then firstmate merges it into local main through the guarded
+ fast-forward path.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":["mcp__sap_lab__ping","mcp__browser_lab__ping"]}
+
+ Took 0.1s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/2/notes (detached)
+9.1%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-on: active MCP helpers=2 active tools=["read", "bash", "edit", "write", "codemode"]
+SCENARIO PASS: Absent and on home settings preserve configured MCP helpers
+$ tmux -L fm-lab kill-window -t primary:fm-lab-on
+exit=0
+$ bin/fm-brief.sh lab-off notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-off/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-spawn.sh lab-off /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off --harness pi --model lab/probe
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+notice: lab-off ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned lab-off harness=pi kind=ship mode=local-only yolo=off window=primary:fm-lab-off worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes mcp=off
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+OBSERVE lab-off meta={"harness": "pi", "mcp": "off", "window": "primary:fm-lab-off", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "kind": "ship"}
+MCP starts for lab-off: [{"event": "start", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}, {"event": "stdin-closed", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "stdin-closed", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}]
+$ ps -p 2892847 -o pid=,ppid=,rss=,args=
+exit=1
+$ ps -p 2892851 -o pid=,ppid=,rss=,args=
+exit=1
+MEASUREMENT {"task": "lab-off", "posture": "off", "fixture_helper_count": 0, "fixture_helper_rss_kib": 0, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+    https:// URL exactly as the forge printed it, never a bare number such as "PR 108"; firstmate
+    copies that URL from your line rather than assembling one.
+    A mid-task working: line (including setup complete) is nonterminal: do not end the
+    turn after it; continue the same stage until a defined done: gate under Definition of done.
+    Use paused: {why} - distinct from blocked: - when deliberately waiting for work or an external condition expected
+    to clear on its own, including your own validation round.
+    Before ending your turn with your own background shell or monitor still running, or before waiting on your own
+    pipeline run or a long foreground command, append paused [at=<epoch>]: {job and completion condition} to the status
+    file.
+    Name what you are waiting for and what will let you resume; do not repeat the declaration on every poll.
+    Do not declare active implementation or reasoning as a wait.
+    Firstmate may still raise one first-sight alert; the declared wait then uses the existing long recheck cadence
+    instead of repeated possible-wedge alarms.
+    When you know when the wait clears, include until <YYYY-MM-DDTHH:MMZ> (UTC) for a recheck at that time; for your
+    own background job or command with a timeout, that time is its start plus its timeout, rounded up to the minute.
+    Follow the resolution rule below when the wait clears, then resume the task.
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs above the implementation worker (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox' -maxdepth 1
+ -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line even when it
+ is not newline-terminated) and act on each message in numeric order, then acknowledge each handled message by moving
+ it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'/NNN.msg
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'/handled/.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Project memory
+
+ A project's AGENTS.md or CLAUDE.md is loaded into every agent session in that project, so edit it only to correct
+ information that is factually wrong - including information your own change made wrong - and never to add knowledge
+ because it is missing.
+ A correction edits only the wrong text: do not run
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/bin/fm-ensure-agents-md.sh, create either
+ file, or add sections, headings, or pointers alongside it.
+
+ Definition of done
+
+ Delivery contract: mode=local-only
+ Ship branch: fm/lab-off
+ This task ships local-only: no remote, no PR, no pipeline.
+ The task is complete only when committed on your branch fm/lab-off. Do NOT push, do NOT open a PR, do NOT merge.
+ A done: is accepted when the named head is on this project's shared local branch, not only on a detached copy; the
+ check tests that head, not merely that a branch moved.
+ Keep your branch a clean fast-forward onto the current default branch - if main has advanced, rebase onto it so the
+ eventual merge stays a fast-forward.
+ When it is implemented and committed, append done [at=<epoch>]: ready in branch fm/lab-off to the status file and
+ stop.
+ The configured merge authority approves the ready branch, then firstmate merges it into local main through the guarded
+ fast-forward path.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":[]}
+
+ Took 0.1s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/2/notes (detached)
+9.1%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-off: active MCP helpers=0 active tools=["read", "bash", "edit", "write", "codemode"]
+$ bin/fm-brief.sh lab-scout notes --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-scout/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-spawn.sh lab-scout /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --scout --harness pi --model lab/probe
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+spawned lab-scout harness=pi kind=scout window=primary:fm-lab-scout worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes mcp=off
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-scout -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-scout -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-scout -S -80
+Accepting project trust in disposable lab only: lab-scout
+$ tmux -L fm-lab send-keys -t primary:fm-lab-scout Enter
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-scout -S -80
+OBSERVE lab-scout meta={"harness": "pi", "mcp": "off", "window": "primary:fm-lab-scout", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "kind": "scout"}
+MCP starts for lab-scout: []
+MEASUREMENT {"task": "lab-scout", "posture": "off", "fixture_helper_count": 0, "fixture_helper_rss_kib": 0, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-scout -S -80
+    States: working, needs-decision, blocked, paused, done, failed.
+    Substitute <epoch> with the current Unix time in seconds - run date +%s and write the number it printed; a stamp
+    that is not plain digits records no time at all.
+    Each append wakes firstmate, so report sparingly: only phase changes a supervisor
+    would act on and the needs-decision/blocked/paused/done/failed states. No step-by-step
+    FYI progress lines; firstmate reads your pane for that.
+    Whenever you mention a PR anywhere - a status line, your terminal, a summary - write its full
+    https:// URL exactly as the forge printed it, never a bare number such as "PR 108"; firstmate
+    copies that URL from your line rather than assembling one.
+    Use paused: {why} - distinct from blocked: - when deliberately waiting for work or an external condition expected
+    to clear on its own, including your own validation round.
+    Before ending your turn with your own background shell or monitor still running, or before waiting on your own
+    pipeline run or a long foreground command, append paused [at=<epoch>]: {job and completion condition} to the status
+    file.
+    Name what you are waiting for and what will let you resume; do not repeat the declaration on every poll.
+    Do not declare active implementation or reasoning as a wait.
+    Firstmate may still raise one first-sight alert; the declared wait then uses the existing long recheck cadence
+    instead of repeated possible-wedge alarms.
+    When you know when the wait clears, include until <YYYY-MM-DDTHH:MMZ> (UTC) for a recheck at that time; for your
+    own background job or command with a timeout, that time is its start plus its timeout, rounded up to the minute.
+    Follow the resolution rule below when the wait clears, then resume the task.
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs to a human (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-scout.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-scout.inbox' -maxdepth
+ 1 -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line even when
+ it is not newline-terminated) and act on each message in numeric order, then acknowledge each handled message by
+ moving it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-scout.inbox'/NNN.msg
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-scout.inbox'/handled/.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Definition of done
+
+ Write your findings to
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-scout/report.md.
+ The report must stand alone: what you did, what you found, the evidence (commands run, output, file:line references),
+ and what you recommend.
+ If your deliverable is a visual artifact the captain will review and iterate on, use the lavish-axi rule: arm your
+ board with bin/fm-procevent-lavish.sh arm <artifact.html> --for <task-id>; never run lavish-axi poll yourself. Re-arm
+ with the reply after each nonterminal round to acknowledge it, route the board feedback through your steering inbox,
+ write needs-decision [key=board-review] with the live board URL when the captain owes a decision, and stop at
+ session_ended or an empty End without re-arming - acknowledge that final round with bin/fm-procevent.sh handled
+ <source-id> <sequence> to conclude and retire your board.
+ Before reporting done, read and follow
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/.agents/skills/captain-hold-lifecycle/SKILL.
+ md and pass its shared completion gate for the report and any visual review.
+ When the report is complete, append done [at=<epoch>]: {one-line conclusion} to the status file and stop.
+ If your findings reveal work that should ship (e.g. you reproduced a bug and the fix is clear), say so in the report;
+ firstmate may promote this task in place, and you would then receive mode-specific ship instructions as a follow-up
+ message.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":[]}
+
+ Took 0.1s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/3/notes (detached)
+8.9%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-scout: active MCP helpers=0 active tools=["bash", "edit", "write", "codemode"]
+SCENARIO PASS: MCP off suppresses helpers for ship and scout while codemode and exclusions work
+$ tmux -L fm-lab kill-window -t primary:fm-lab-scout
+exit=0
+$ bin/fm-brief.sh lab-override-on notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-override-on/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-spawn.sh lab-override-on /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off --harness pi --model lab/probe --mcp=on
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+notice: lab-override-on ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned lab-override-on harness=pi kind=ship mode=local-only yolo=off window=primary:fm-lab-override-on worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-override-on -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-override-on -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-override-on -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-override-on -S -80
+OBSERVE lab-override-on meta={"harness": "pi", "mcp": "on", "window": "primary:fm-lab-override-on", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "kind": "ship"}
+MCP starts for lab-override-on: [{"event": "start", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}, {"event": "request", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}, {"event": "request", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "tools/list"}]
+$ ps -p 2925693 -o pid=,ppid=,rss=,args=
+2925693 2925157 19540 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py sap-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+$ ps -p 2925699 -o pid=,ppid=,rss=,args=
+2925699 2925157 19396 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py browser-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+MEASUREMENT {"task": "lab-override-on", "posture": "on", "fixture_helper_count": 2, "fixture_helper_rss_kib": 38936, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-override-on -S -80
+    turn after it; continue the same stage until a defined done: gate under Definition of done.
+    Use paused: {why} - distinct from blocked: - when deliberately waiting for work or an external condition expected
+    to clear on its own, including your own validation round.
+    Before ending your turn with your own background shell or monitor still running, or before waiting on your own
+    pipeline run or a long foreground command, append paused [at=<epoch>]: {job and completion condition} to the status
+    file.
+    Name what you are waiting for and what will let you resume; do not repeat the declaration on every poll.
+    Do not declare active implementation or reasoning as a wait.
+    Firstmate may still raise one first-sight alert; the declared wait then uses the existing long recheck cadence
+    instead of repeated possible-wedge alarms.
+    When you know when the wait clears, include until <YYYY-MM-DDTHH:MMZ> (UTC) for a recheck at that time; for your
+    own background job or command with a timeout, that time is its start plus its timeout, rounded up to the minute.
+    Follow the resolution rule below when the wait clears, then resume the task.
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs above the implementation worker (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-override-on.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-override-on.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line
+ even when it is not newline-terminated) and act on each message in numeric order, then acknowledge each handled
+ message by moving it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-override-on.inbox'/NNN
+ .msg
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-override-on.inbox'/han
+ dled/.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Project memory
+
+ A project's AGENTS.md or CLAUDE.md is loaded into every agent session in that project, so edit it only to correct
+ information that is factually wrong - including information your own change made wrong - and never to add knowledge
+ because it is missing.
+ A correction edits only the wrong text: do not run
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/bin/fm-ensure-agents-md.sh, create either
+ file, or add sections, headings, or pointers alongside it.
+
+ Definition of done
+
+ Delivery contract: mode=local-only
+ Ship branch: fm/lab-override-on
+ This task ships local-only: no remote, no PR, no pipeline.
+ The task is complete only when committed on your branch fm/lab-override-on. Do NOT push, do NOT open a PR, do NOT
+ merge.
+ A done: is accepted when the named head is on this project's shared local branch, not only on a detached copy; the
+ check tests that head, not merely that a branch moved.
+ Keep your branch a clean fast-forward onto the current default branch - if main has advanced, rebase onto it so the
+ eventual merge stays a fast-forward.
+ When it is implemented and committed, append done [at=<epoch>]: ready in branch fm/lab-override-on to the status file
+ and stop.
+ The configured merge authority approves the ready branch, then firstmate merges it into local main through the guarded
+ fast-forward path.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":["mcp__sap_lab__ping","mcp__browser_lab__ping"]}
+
+ Took 0.2s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/3/notes (detached)
+9.1%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-override-on: active MCP helpers=2 active tools=["read", "bash", "edit", "write", "codemode"]
+$ tmux -L fm-lab kill-window -t primary:fm-lab-override-on
+exit=0
+$ bin/fm-brief.sh lab-override-off notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-override-off/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-spawn.sh lab-override-off /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off --harness pi --model lab/probe --mcp off
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+notice: lab-override-off ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned lab-override-off harness=pi kind=ship mode=local-only yolo=off window=primary:fm-lab-override-off worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes mcp=off
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-override-off -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-override-off -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-override-off -S -80
+OBSERVE lab-override-off meta={"harness": "pi", "mcp": "off", "window": "primary:fm-lab-override-off", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "kind": "ship"}
+MCP starts for lab-override-off: [{"event": "start", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}, {"event": "request", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}, {"event": "request", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "tools/list"}, {"event": "stdin-closed", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}, {"event": "stdin-closed", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}]
+$ ps -p 2925693 -o pid=,ppid=,rss=,args=
+exit=1
+$ ps -p 2925699 -o pid=,ppid=,rss=,args=
+exit=1
+MEASUREMENT {"task": "lab-override-off", "posture": "off", "fixture_helper_count": 0, "fixture_helper_rss_kib": 0, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-override-off -S -80
+    turn after it; continue the same stage until a defined done: gate under Definition of done.
+    Use paused: {why} - distinct from blocked: - when deliberately waiting for work or an external condition expected
+    to clear on its own, including your own validation round.
+    Before ending your turn with your own background shell or monitor still running, or before waiting on your own
+    pipeline run or a long foreground command, append paused [at=<epoch>]: {job and completion condition} to the status
+    file.
+    Name what you are waiting for and what will let you resume; do not repeat the declaration on every poll.
+    Do not declare active implementation or reasoning as a wait.
+    Firstmate may still raise one first-sight alert; the declared wait then uses the existing long recheck cadence
+    instead of repeated possible-wedge alarms.
+    When you know when the wait clears, include until <YYYY-MM-DDTHH:MMZ> (UTC) for a recheck at that time; for your
+    own background job or command with a timeout, that time is its start plus its timeout, rounded up to the minute.
+    Follow the resolution rule below when the wait clears, then resume the task.
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs above the implementation worker (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-override-off.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-override-off.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line
+ even when it is not newline-terminated) and act on each message in numeric order, then acknowledge each handled
+ message by moving it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-override-off.inbox'/NN
+ N.msg
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-override-off.inbox'/ha
+ ndled/.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Project memory
+
+ A project's AGENTS.md or CLAUDE.md is loaded into every agent session in that project, so edit it only to correct
+ information that is factually wrong - including information your own change made wrong - and never to add knowledge
+ because it is missing.
+ A correction edits only the wrong text: do not run
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/bin/fm-ensure-agents-md.sh, create either
+ file, or add sections, headings, or pointers alongside it.
+
+ Definition of done
+
+ Delivery contract: mode=local-only
+ Ship branch: fm/lab-override-off
+ This task ships local-only: no remote, no PR, no pipeline.
+ The task is complete only when committed on your branch fm/lab-override-off. Do NOT push, do NOT open a PR, do NOT
+ merge.
+ A done: is accepted when the named head is on this project's shared local branch, not only on a detached copy; the
+ check tests that head, not merely that a branch moved.
+ Keep your branch a clean fast-forward onto the current default branch - if main has advanced, rebase onto it so the
+ eventual merge stays a fast-forward.
+ When it is implemented and committed, append done [at=<epoch>]: ready in branch fm/lab-override-off to the status file
+ and stop.
+ The configured merge authority approves the ready branch, then firstmate merges it into local main through the guarded
+ fast-forward path.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":[]}
+
+ Took 0.1s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/3/notes (detached)
+9.1%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-override-off: active MCP helpers=0 active tools=["read", "bash", "edit", "write", "codemode"]
+$ tmux -L fm-lab kill-window -t primary:fm-lab-override-off
+exit=0
+$ bin/fm-brief.sh lab-batch-a notes --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-batch-a/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-brief.sh lab-batch-b notes --scout
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-batch-b/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-spawn.sh lab-batch-a=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes lab-batch-b=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --scout --harness pi --model lab/probe --mcp off
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+spawned lab-batch-a harness=pi kind=scout window=primary:fm-lab-batch-a worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes mcp=off
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+spawned lab-batch-b harness=pi kind=scout window=primary:fm-lab-batch-b worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/4/notes mcp=off
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-batch-a -S -80
+OBSERVE lab-batch-a meta={"harness": "pi", "mcp": "off", "window": "primary:fm-lab-batch-a", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "kind": "scout"}
+MCP starts for lab-batch-a: [{"event": "start", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}, {"event": "request", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}, {"event": "request", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes", "method": "tools/list"}, {"event": "stdin-closed", "name": "sap-lab", "pid": 2925693, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}, {"event": "stdin-closed", "name": "browser-lab", "pid": 2925699, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes"}]
+$ ps -p 2925693 -o pid=,ppid=,rss=,args=
+exit=1
+$ ps -p 2925699 -o pid=,ppid=,rss=,args=
+exit=1
+MEASUREMENT {"task": "lab-batch-a", "posture": "off", "fixture_helper_count": 0, "fixture_helper_rss_kib": 0, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-batch-a -S -80
+    that is not plain digits records no time at all.
+    Each append wakes firstmate, so report sparingly: only phase changes a supervisor
+    would act on and the needs-decision/blocked/paused/done/failed states. No step-by-step
+    FYI progress lines; firstmate reads your pane for that.
+    Whenever you mention a PR anywhere - a status line, your terminal, a summary - write its full
+    https:// URL exactly as the forge printed it, never a bare number such as "PR 108"; firstmate
+    copies that URL from your line rather than assembling one.
+    Use paused: {why} - distinct from blocked: - when deliberately waiting for work or an external condition expected
+    to clear on its own, including your own validation round.
+    Before ending your turn with your own background shell or monitor still running, or before waiting on your own
+    pipeline run or a long foreground command, append paused [at=<epoch>]: {job and completion condition} to the status
+    file.
+    Name what you are waiting for and what will let you resume; do not repeat the declaration on every poll.
+    Do not declare active implementation or reasoning as a wait.
+    Firstmate may still raise one first-sight alert; the declared wait then uses the existing long recheck cadence
+    instead of repeated possible-wedge alarms.
+    When you know when the wait clears, include until <YYYY-MM-DDTHH:MMZ> (UTC) for a recheck at that time; for your
+    own background job or command with a timeout, that time is its start plus its timeout, rounded up to the minute.
+    Follow the resolution rule below when the wait clears, then resume the task.
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs to a human (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-batch-a.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-batch-a.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line
+ even when it is not newline-terminated) and act on each message in numeric order, then acknowledge each handled
+ message by moving it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-batch-a.inbox'/NNN.msg
+
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-batch-a.inbox'/handled
+ /.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Definition of done
+
+ Write your findings to
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-batch-a/report.md.
+ The report must stand alone: what you did, what you found, the evidence (commands run, output, file:line references),
+ and what you recommend.
+ If your deliverable is a visual artifact the captain will review and iterate on, use the lavish-axi rule: arm your
+ board with bin/fm-procevent-lavish.sh arm <artifact.html> --for <task-id>; never run lavish-axi poll yourself. Re-arm
+ with the reply after each nonterminal round to acknowledge it, route the board feedback through your steering inbox,
+ write needs-decision [key=board-review] with the live board URL when the captain owes a decision, and stop at
+ session_ended or an empty End without re-arming - acknowledge that final round with bin/fm-procevent.sh handled
+ <source-id> <sequence> to conclude and retire your board.
+ Before reporting done, read and follow
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/.agents/skills/captain-hold-lifecycle/SKILL.
+ md and pass its shared completion gate for the report and any visual review.
+ When the report is complete, append done [at=<epoch>]: {one-line conclusion} to the status file and stop.
+ If your findings reveal work that should ship (e.g. you reproduced a bug and the fix is clear), say so in the report;
+ firstmate may promote this task in place, and you would then receive mode-specific ship instructions as a follow-up
+ message.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":[]}
+
+ Took 0.1s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/3/notes (detached)
+9.0%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-batch-a: active MCP helpers=0 active tools=["read", "bash", "edit", "write", "codemode"]
+$ tmux -L fm-lab kill-window -t primary:fm-lab-batch-a
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-batch-b -S -80
+Accepting project trust in disposable lab only: lab-batch-b
+$ tmux -L fm-lab send-keys -t primary:fm-lab-batch-b Enter
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-batch-b -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-batch-b -S -80
+OBSERVE lab-batch-b meta={"harness": "pi", "mcp": "off", "window": "primary:fm-lab-batch-b", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/4/notes", "kind": "scout"}
+MCP starts for lab-batch-b: []
+MEASUREMENT {"task": "lab-batch-b", "posture": "off", "fixture_helper_count": 0, "fixture_helper_rss_kib": 0, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-batch-b -S -80
+    that is not plain digits records no time at all.
+    Each append wakes firstmate, so report sparingly: only phase changes a supervisor
+    would act on and the needs-decision/blocked/paused/done/failed states. No step-by-step
+    FYI progress lines; firstmate reads your pane for that.
+    Whenever you mention a PR anywhere - a status line, your terminal, a summary - write its full
+    https:// URL exactly as the forge printed it, never a bare number such as "PR 108"; firstmate
+    copies that URL from your line rather than assembling one.
+    Use paused: {why} - distinct from blocked: - when deliberately waiting for work or an external condition expected
+    to clear on its own, including your own validation round.
+    Before ending your turn with your own background shell or monitor still running, or before waiting on your own
+    pipeline run or a long foreground command, append paused [at=<epoch>]: {job and completion condition} to the status
+    file.
+    Name what you are waiting for and what will let you resume; do not repeat the declaration on every poll.
+    Do not declare active implementation or reasoning as a wait.
+    Firstmate may still raise one first-sight alert; the declared wait then uses the existing long recheck cadence
+    instead of repeated possible-wedge alarms.
+    When you know when the wait clears, include until <YYYY-MM-DDTHH:MMZ> (UTC) for a recheck at that time; for your
+    own background job or command with a timeout, that time is its start plus its timeout, rounded up to the minute.
+    Follow the resolution rule below when the wait clears, then resume the task.
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs to a human (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-batch-b.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-batch-b.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line
+ even when it is not newline-terminated) and act on each message in numeric order, then acknowledge each handled
+ message by moving it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-batch-b.inbox'/NNN.msg
+
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-batch-b.inbox'/handled
+ /.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Definition of done
+
+ Write your findings to
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-batch-b/report.md.
+ The report must stand alone: what you did, what you found, the evidence (commands run, output, file:line references),
+ and what you recommend.
+ If your deliverable is a visual artifact the captain will review and iterate on, use the lavish-axi rule: arm your
+ board with bin/fm-procevent-lavish.sh arm <artifact.html> --for <task-id>; never run lavish-axi poll yourself. Re-arm
+ with the reply after each nonterminal round to acknowledge it, route the board feedback through your steering inbox,
+ write needs-decision [key=board-review] with the live board URL when the captain owes a decision, and stop at
+ session_ended or an empty End without re-arming - acknowledge that final round with bin/fm-procevent.sh handled
+ <source-id> <sequence> to conclude and retire your board.
+ Before reporting done, read and follow
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/.agents/skills/captain-hold-lifecycle/SKILL.
+ md and pass its shared completion gate for the report and any visual review.
+ When the report is complete, append done [at=<epoch>]: {one-line conclusion} to the status file and stop.
+ If your findings reveal work that should ship (e.g. you reproduced a bug and the fix is clear), say so in the report;
+ firstmate may promote this task in place, and you would then receive mode-specific ship instructions as a follow-up
+ message.
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":[]}
+
+ Took 0.1s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/4/notes (detached)
+9.0%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-batch-b: active MCP helpers=0 active tools=["read", "bash", "edit", "write", "codemode"]
+$ tmux -L fm-lab kill-window -t primary:fm-lab-batch-b
+exit=0
+SCENARIO PASS: Per-task overrides work in both directions and batch forwards MCP off
+$ bin/fm-brief.sh lab-refuse-claude notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-refuse-claude/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+$ bin/fm-spawn.sh lab-refuse-claude /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off --harness claude
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+error: MCP servers are set off (config/crew-mcp or --mcp off), but the claude runtime cannot start without MCP servers, so this launch is refused rather than running with them; pass --mcp on for this task or launch a runtime that supports it (pi, pi-signed)
+exit=1
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+PROVEN refusal before endpoint/metadata/helper creation: lab-refuse-claude
+$ bin/fm-brief.sh lab-refuse-raw notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-refuse-raw/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+$ bin/fm-spawn.sh lab-refuse-raw /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off "pi Verify this adapter"
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+error: MCP servers are set off (config/crew-mcp or --mcp off), but a raw launch command cannot start without MCP servers; pass --mcp on for this task or launch a runtime that supports it (pi, pi-signed)
+exit=1
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+PROVEN refusal before endpoint/metadata/helper creation: lab-refuse-raw
+$ bin/fm-brief.sh lab-refuse-malformed notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-refuse-malformed/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+$ bin/fm-spawn.sh lab-refuse-malformed /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off --harness pi
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+error: config/crew-mcp holds 'offon'; accepted values are: on (the default when the file is absent), off (Pi workers start no MCP servers)
+exit=1
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+PROVEN refusal before endpoint/metadata/helper creation: lab-refuse-malformed
+$ bin/fm-brief.sh lab-refuse-directory notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-refuse-directory/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+$ bin/fm-spawn.sh lab-refuse-directory /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off --harness pi
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+error: config/crew-mcp must be a readable regular file holding one of: on, off
+exit=1
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+PROVEN refusal before endpoint/metadata/helper creation: lab-refuse-directory
+$ bin/fm-brief.sh lab-refuse-flag notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/data/lab-refuse-flag/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+$ bin/fm-spawn.sh lab-refuse-flag /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes --mode local-only --yolo off --harness pi --mcp maybe
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+error: --mcp must be on or off (got 'maybe')
+exit=1
+$ tmux -L fm-lab list-windows -a -F #{window_id}
+PROVEN refusal before endpoint/metadata/helper creation: lab-refuse-flag
+$ bin/fm-spawn.sh lab-secondmate --secondmate --mcp off
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+error: --mcp applies only to ship and scout workers; a secondmate's own agent is never covered by config/crew-mcp
+exit=1
+SCENARIO PASS: Invalid settings and unsupported launch kinds refuse before provisioning
+$ bin/fm-control.sh lab-off relaunch --note "Disposable guard probe"
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+error: config/crew-mcp holds 'maybe'; accepted values are: on (the default when the file is absent), off (Pi workers start no MCP servers)
+exit=1
+$ bin/fm-control.sh lab-off relaunch --harness claude --note "Disposable guard probe"
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+error: MCP servers are set off (config/crew-mcp or --mcp off), but the claude runtime cannot start without MCP servers, so this launch is refused rather than running with them; pass --mcp on for this task or launch a runtime that supports it (pi, pi-signed)
+exit=1
+SCENARIO PASS: Malformed setting and unsupported replacement preserve the running worker
+$ bin/fm-control.sh lab-off relaunch --note "Verify recorded off survives changed home setting"
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+notice: lab-off ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched lab-off harness=pi from=pi model=lab/probe effort=default mcp=off backend=tmux endpoint=primary:fm-lab-off worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+OBSERVE lab-off meta={"harness": "pi", "mcp": "off", "window": "primary:fm-lab-off", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "kind": "ship"}
+MCP starts for lab-off: [{"event": "start", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}, {"event": "stdin-closed", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "stdin-closed", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}]
+$ ps -p 2892847 -o pid=,ppid=,rss=,args=
+exit=1
+$ ps -p 2892851 -o pid=,ppid=,rss=,args=
+exit=1
+MEASUREMENT {"task": "lab-off", "posture": "off", "fixture_helper_count": 0, "fixture_helper_rss_kib": 0, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+    own background job or command with a timeout, that time is its start plus its timeout, rounded up to the minute.
+    Follow the resolution rule below when the wait clears, then resume the task.
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs above the implementation worker (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox' -maxdepth 1
+ -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line even when it
+ is not newline-terminated) and act on each message in numeric order, then acknowledge each handled message by moving
+ it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'/NNN.msg
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'/handled/.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Project memory
+
+ A project's AGENTS.md or CLAUDE.md is loaded into every agent session in that project, so edit it only to correct
+ information that is factually wrong - including information your own change made wrong - and never to add knowledge
+ because it is missing.
+ A correction edits only the wrong text: do not run
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/bin/fm-ensure-agents-md.sh, create either
+ file, or add sections, headings, or pointers alongside it.
+
+ Definition of done
+
+ Delivery contract: mode=local-only
+ Ship branch: fm/lab-off
+ This task ships local-only: no remote, no PR, no pipeline.
+ The task is complete only when committed on your branch fm/lab-off. Do NOT push, do NOT open a PR, do NOT merge.
+ A done: is accepted when the named head is on this project's shared local branch, not only on a detached copy; the
+ check tests that head, not merely that a branch moved.
+ Keep your branch a clean fast-forward onto the current default branch - if main has advanced, rebase onto it so the
+ eventual merge stays a fast-forward.
+ When it is implemented and committed, append done [at=<epoch>]: ready in branch fm/lab-off to the status file and
+ stop.
+ The configured merge authority approves the ready branch, then firstmate merges it into local main through the guarded
+ fast-forward path.
+
+ Progress note (2026-10-28T13:32:19Z)
+
+ This task was relaunched. Continue from here; the local copy and every
+ uncommitted change are exactly as the previous worker left them.
+
+ First, check your instruction inbox: list it with
+ find '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, act on
+ each message in numeric order, then mv each handled file into
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox/handled/'. A
+ steer sent before the relaunch survives there.
+
+ Verify recorded off survives changed home setting
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":[]}
+
+ Took 0.1s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/2/notes (detached)
+9.2%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-off: active MCP helpers=0 active tools=["read", "bash", "edit", "write", "codemode"]
+$ bin/fm-control.sh lab-off relaunch --mcp on --note "Enable helpers for this existing task"
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+notice: lab-off ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched lab-off harness=pi from=pi model=lab/probe effort=default mcp=on backend=tmux endpoint=primary:fm-lab-off worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+OBSERVE lab-off meta={"harness": "pi", "mcp": "on", "window": "primary:fm-lab-off", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "kind": "ship"}
+MCP starts for lab-off: [{"event": "start", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}, {"event": "stdin-closed", "name": "sap-lab", "pid": 2892847, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "stdin-closed", "name": "browser-lab", "pid": 2892851, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "start", "name": "sap-lab", "pid": 3001424, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "sap-lab", "pid": 3001424, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 3001429, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes"}, {"event": "request", "name": "browser-lab", "pid": 3001429, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 3001424, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 3001424, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 3001429, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 3001429, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes", "method": "tools/list"}]
+$ ps -p 2892847 -o pid=,ppid=,rss=,args=
+exit=1
+$ ps -p 2892851 -o pid=,ppid=,rss=,args=
+exit=1
+$ ps -p 3001424 -o pid=,ppid=,rss=,args=
+3001424 3000886 19400 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py sap-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+$ ps -p 3001429 -o pid=,ppid=,rss=,args=
+3001429 3000886 19408 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py browser-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+MEASUREMENT {"task": "lab-off", "posture": "on", "fixture_helper_count": 2, "fixture_helper_rss_kib": 38808, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox' -maxdepth 1
+ -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line even when it
+ is not newline-terminated) and act on each message in numeric order, then acknowledge each handled message by moving
+ it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'/NNN.msg
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'/handled/.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Project memory
+
+ A project's AGENTS.md or CLAUDE.md is loaded into every agent session in that project, so edit it only to correct
+ information that is factually wrong - including information your own change made wrong - and never to add knowledge
+ because it is missing.
+ A correction edits only the wrong text: do not run
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/bin/fm-ensure-agents-md.sh, create either
+ file, or add sections, headings, or pointers alongside it.
+
+ Definition of done
+
+ Delivery contract: mode=local-only
+ Ship branch: fm/lab-off
+ This task ships local-only: no remote, no PR, no pipeline.
+ The task is complete only when committed on your branch fm/lab-off. Do NOT push, do NOT open a PR, do NOT merge.
+ A done: is accepted when the named head is on this project's shared local branch, not only on a detached copy; the
+ check tests that head, not merely that a branch moved.
+ Keep your branch a clean fast-forward onto the current default branch - if main has advanced, rebase onto it so the
+ eventual merge stays a fast-forward.
+ When it is implemented and committed, append done [at=<epoch>]: ready in branch fm/lab-off to the status file and
+ stop.
+ The configured merge authority approves the ready branch, then firstmate merges it into local main through the guarded
+ fast-forward path.
+
+ Progress note (2026-10-28T13:32:19Z)
+
+ This task was relaunched. Continue from here; the local copy and every
+ uncommitted change are exactly as the previous worker left them.
+
+ First, check your instruction inbox: list it with
+ find '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, act on
+ each message in numeric order, then mv each handled file into
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox/handled/'. A
+ steer sent before the relaunch survives there.
+
+ Verify recorded off survives changed home setting
+
+ Progress note (2026-10-28T13:32:30Z)
+
+ This task was relaunched. Continue from here; the local copy and every
+ uncommitted change are exactly as the previous worker left them.
+
+ First, check your instruction inbox: list it with
+ find '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, act on
+ each message in numeric order, then mv each handled file into
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-off.inbox/handled/'. A
+ steer sent before the relaunch survives there.
+
+ Enable helpers for this existing task
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":["mcp__sap_lab__ping","mcp__browser_lab__ping"]}
+
+ Took 0.1s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/2/notes (detached)
+9.3%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-off: active MCP helpers=2 active tools=["read", "bash", "edit", "write", "codemode"]
+$ bin/fm-control.sh lab-default relaunch --note "Legacy task with no MCP record retains helpers"
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+notice: lab-default ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched lab-default harness=pi from=pi model=lab/probe effort=default backend=tmux endpoint=primary:fm-lab-default worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+OBSERVE lab-default meta={"harness": "pi", "mcp": null, "window": "primary:fm-lab-default", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "kind": "ship"}
+MCP starts for lab-default: [{"event": "start", "name": "sap-lab", "pid": 2882622, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes"}, {"event": "request", "name": "sap-lab", "pid": 2882622, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 2882628, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes"}, {"event": "request", "name": "browser-lab", "pid": 2882628, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 2882622, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 2882622, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 2882628, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 2882628, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "tools/list"}, {"event": "stdin-closed", "name": "browser-lab", "pid": 2882628, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes"}, {"event": "stdin-closed", "name": "sap-lab", "pid": 2882622, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes"}, {"event": "start", "name": "sap-lab", "pid": 3024917, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes"}, {"event": "request", "name": "sap-lab", "pid": 3024917, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "initialize"}, {"event": "start", "name": "browser-lab", "pid": 3024925, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes"}, {"event": "request", "name": "browser-lab", "pid": 3024925, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "initialize"}, {"event": "request", "name": "sap-lab", "pid": 3024917, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "notifications/initialized"}, {"event": "request", "name": "sap-lab", "pid": 3024917, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "tools/list"}, {"event": "request", "name": "browser-lab", "pid": 3024925, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "notifications/initialized"}, {"event": "request", "name": "browser-lab", "pid": 3024925, "cwd": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/1/notes", "method": "tools/list"}]
+$ ps -p 2882622 -o pid=,ppid=,rss=,args=
+exit=1
+$ ps -p 2882628 -o pid=,ppid=,rss=,args=
+exit=1
+$ ps -p 3024917 -o pid=,ppid=,rss=,args=
+3024917 3023760 19444 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py sap-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+$ ps -p 3024925 -o pid=,ppid=,rss=,args=
+3024925 3023760 19420 python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-server.py browser-lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/mcp-events.jsonl
+exit=0
+MEASUREMENT {"task": "lab-default", "posture": "unconfigured", "fixture_helper_count": 2, "fixture_helper_rss_kib": 38864, "scope": "disposable Python MCP servers, not production SAP/browser helpers"}
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+    Use blocked: when you are stuck and need help.
+
+ 5. If you hit the same obstacle twice, append blocked [at=<epoch>]: {why} and stop; firstmate will help.
+
+ 6. If a decision belongs above the implementation worker (product choices, destructive actions),
+    append needs-decision [at=<epoch>]: {summary of options} and stop. Firstmate will reply with the decision.
+
+    A decision or blocker you opened stays open until a resolved line carrying its exact key lands; a later done: or
+    working: line never closes it, even when the answer is what started that work.
+    Firstmate's reply normally writes that closing line at answer time; when a blocker or wait clears WITHOUT a
+    firstmate reply, append resolved [at=<epoch>]: {how it cleared} yourself (same [key=<slug>] if you opened it with
+    one) as you resume.
+
+ 7. Never administer infrastructure that every lane shares. Two things are shared:
+     - The no-mistakes daemon - one instance serving every lane/home, so stopping, restarting, or
+       updating it kills other lanes' in-flight pipeline runs; only firstmate manages the daemon.
+       Before you append blocked: about the pipeline, run no-mistakes daemon status and
+       no-mistakes axi status. If the daemon socket refuses connections or is missing, append
+       blocked [at=<epoch>]: {the daemon error} and stop even when the local run record still says running or
+       fixing, because that record can be stale after the daemon exits. A run record failed with a
+       daemon error is also a real block.
+       Only after ruling out socket refusal, if the run is still running or fixing, reattach and keep
+       going. A drive-call error, timeout, slow read, or generic unreachability is NOT a daemon error:
+       the daemon accepts respond immediately and runs the round in the background, so a killed or
+       timed-out call was only waiting for a read while the run kept working.
+     - The worktree pool your own worktree came from, and the repository every lane's worktree
+       shares. Never create, remove, return, prune, move, or reassign a worktree or pool slot, and
+       never write into a sibling slot's directory. Rule 2 does not cover this: removing a worktree
+       is administration rather than an edit outside your directory, and it lands on lanes that are
+       running right now. The act is the rule and commands are only examples of it - treehouse
+       get/return/remove/prune, the equivalent operations on any other worktree provider or runtime
+       backend, and git worktree add|remove|move|prune. A slot that looks unused is not evidence
+       that it is free, and returning your own worktree is firstmate's job at cleanup, not yours.
+       If you genuinely need a second checkout, another slot, or the daemon touched, append
+       blocked [at=<epoch>]: {what you need} and stop; firstmate arranges it.
+
+ 8. Never start a shell command with cd, and never run a search whose path depends on the current directory.
+    Use absolute paths, git -C <abs>, or a ( cd <abs> && ... ) subshell.
+    Pass this rule to every sub-agent you launch.
+
+ Firstmate instruction inbox
+
+ Firstmate steers you through durable message files in
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox'.
+ When a terminal message says an instruction is waiting there - and at any natural checkpoint when you are unsure -
+ list them with find
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, read the complete contents of each record (including its final line
+ even when it is not newline-terminated) and act on each message in numeric order, then acknowledge each handled
+ message by moving it: mv
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox'/NNN.msg
+
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox'/handled
+ /.
+ Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is available. If you read
+ manually, a header line body-terminator=1 means the writer added exactly one synthetic final newline to terminate the
+ record file; that marked newline is not part of the logical message body, so remove only it and preserve any
+ intentional trailing newlines. Legacy records without that marker may end without a newline; read them through the
+ file end.
+ The move IS the acknowledgement: without it firstmate rings again and eventually treats you as stuck. An empty or
+ absent inbox needs no action.
+
+ Project memory
+
+ A project's AGENTS.md or CLAUDE.md is loaded into every agent session in that project, so edit it only to correct
+ information that is factually wrong - including information your own change made wrong - and never to add knowledge
+ because it is missing.
+ A correction edits only the wrong text: do not run
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/bin/fm-ensure-agents-md.sh, create either
+ file, or add sections, headings, or pointers alongside it.
+
+ Definition of done
+
+ Delivery contract: mode=local-only
+ Ship branch: fm/lab-default
+ This task ships local-only: no remote, no PR, no pipeline.
+ The task is complete only when committed on your branch fm/lab-default. Do NOT push, do NOT open a PR, do NOT merge.
+ A done: is accepted when the named head is on this project's shared local branch, not only on a detached copy; the
+ check tests that head, not merely that a branch moved.
+ Keep your branch a clean fast-forward onto the current default branch - if main has advanced, rebase onto it so the
+ eventual merge stays a fast-forward.
+ When it is implemented and committed, append done [at=<epoch>]: ready in branch fm/lab-default to the status file and
+ stop.
+ The configured merge authority approves the ready branch, then firstmate merges it into local main through the guarded
+ fast-forward path.
+
+ Progress note (2026-10-28T13:32:41Z)
+
+ This task was relaunched. Continue from here; the local copy and every
+ uncommitted change are exactly as the previous worker left them.
+
+ First, check your instruction inbox: list it with
+ find '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox'
+ -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V, act on
+ each message in numeric order, then mv each handled file into
+ '/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-default.inbox/handled/
+ '. A steer sent before the relaunch survives there.
+
+ Legacy task with no MCP record retains helpers
+
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+ codemode
+ text({probe: "codemode-ran", mcpTools: ALL_TOOLS.filter(t => t.name.startsWith("mcp__")).map(t => t.name)});
+
+ {"probe":"codemode-ran","mcpTools":["mcp__sap_lab__ping","mcp__browser_lab__ping"]}
+
+ Took 0.2s
+
+
+ Disposable MCP startup probe complete. No repository changes requested.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/treehouse/.treehouse/notes-814ddd/1/notes (detached)
+9.2%/200k (auto)                                                                                                   probe
+exit=0
+PROVEN lab-default: active MCP helpers=2 active tools=["read", "bash", "edit", "write", "codemode"]
+SCENARIO PASS: Relaunch preserves recorded or legacy posture and explicit on enables helpers
+COMPLETE all live scenarios
+$ tmux -L fm-lab kill-server
+exit=0
+CLEANUP removed disposable lab /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a

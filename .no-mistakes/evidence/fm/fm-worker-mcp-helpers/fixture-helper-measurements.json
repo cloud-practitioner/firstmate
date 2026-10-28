@@ -1,0 +1,79 @@
+[
+  {
+    "task": "lab-default",
+    "posture": "unconfigured",
+    "fixture_helper_count": 2,
+    "fixture_helper_rss_kib": 38984,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-on",
+    "posture": "on",
+    "fixture_helper_count": 2,
+    "fixture_helper_rss_kib": 38860,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-off",
+    "posture": "off",
+    "fixture_helper_count": 0,
+    "fixture_helper_rss_kib": 0,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-scout",
+    "posture": "off",
+    "fixture_helper_count": 0,
+    "fixture_helper_rss_kib": 0,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-override-on",
+    "posture": "on",
+    "fixture_helper_count": 2,
+    "fixture_helper_rss_kib": 38936,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-override-off",
+    "posture": "off",
+    "fixture_helper_count": 0,
+    "fixture_helper_rss_kib": 0,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-batch-a",
+    "posture": "off",
+    "fixture_helper_count": 0,
+    "fixture_helper_rss_kib": 0,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-batch-b",
+    "posture": "off",
+    "fixture_helper_count": 0,
+    "fixture_helper_rss_kib": 0,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-off",
+    "posture": "off",
+    "fixture_helper_count": 0,
+    "fixture_helper_rss_kib": 0,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-off",
+    "posture": "on",
+    "fixture_helper_count": 2,
+    "fixture_helper_rss_kib": 38808,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  },
+  {
+    "task": "lab-default",
+    "posture": "unconfigured",
+    "fixture_helper_count": 2,
+    "fixture_helper_rss_kib": 38864,
+    "scope": "disposable Python MCP servers, not production SAP/browser helpers"
+  }
+]

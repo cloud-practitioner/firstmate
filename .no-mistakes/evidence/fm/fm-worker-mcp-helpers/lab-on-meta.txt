@@ -1,0 +1,15 @@
+window=primary:fm-lab-on
+endpoint_task_id=lab-on
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/2/notes
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+harness=pi
+kind=ship
+mode=local-only
+yolo=off
+branch=fm/lab-on
+tasktmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-on.tasktmp
+mcp=on
+model=lab/probe
+effort=default
+busy_gen=g1793194270.2889261.23413
+spawn_gen=s1793194270.2885879.12315

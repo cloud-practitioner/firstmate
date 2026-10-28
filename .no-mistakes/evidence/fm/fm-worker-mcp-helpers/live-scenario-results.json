@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Absent and on home settings preserve configured MCP helpers",
+    "result": "pass"
+  },
+  {
+    "name": "MCP off suppresses helpers for ship and scout while codemode and exclusions work",
+    "result": "pass"
+  },
+  {
+    "name": "Per-task overrides work in both directions and batch forwards MCP off",
+    "result": "pass"
+  },
+  {
+    "name": "Invalid settings and unsupported launch kinds refuse before provisioning",
+    "result": "pass"
+  },
+  {
+    "name": "Malformed setting and unsupported replacement preserve the running worker",
+    "result": "pass"
+  },
+  {
+    "name": "Relaunch preserves recorded or legacy posture and explicit on enables helpers",
+    "result": "pass"
+  }
+]

@@ -1,0 +1,170 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg
+exit=0
+$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes config user.name "Disposable Probe"
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes config user.email probe@example.invalid
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes add README.md
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes commit -qm "Initial fixture"
+exit=0
+$ git init --bare -q /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/origin.git
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes remote add origin /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/origin.git
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes push -q origin main
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/origin.git symbolic-ref HEAD refs/heads/main
+exit=0
+$ tmux -L fm-lab -f /dev/null new-session -d -s primary -x 120 -y 40 -c /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49 -e FM_HOME=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg "pi --approve --no-extensions --no-skills --no-mcp --tools +codemode --model lab/probe"
+exit=0
+$ tmux -L fm-lab display-message -p -t primary #{socket_path},#{pid},0
+exit=0
+$ tmux -L fm-lab display-message -p -t primary #{pane_id}
+exit=0
+$ tmux -L fm-lab set-option -g default-shell /bin/bash
+exit=0
+$ tmux -L fm-lab capture-pane -p -t primary -S -30
+
+ Warning: tmux extended-keys is off. Modified Enter keys may not work. Add `set -g extended-keys on` to ~/.tmux.conf
+ and restart tmux.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49 (detached)
+0.0%/200k (auto)                                                                                                   probe
+exit=0
+$ bin/fm-brief.sh lab-default notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/data/lab-default/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-spawn.sh lab-default /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes --mode local-only --yolo off --harness pi --model lab/probe
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg
+notice: lab-default ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned lab-default harness=pi kind=ship mode=local-only yolo=off window=primary:fm-lab-default worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b1/1/notes
+exit=0
+OBSERVE lab-default meta={"harness": "pi", "mcp": null, "window": "primary:fm-lab-default", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b1/1/notes", "kind": "ship"}
+MCP starts for lab-default: []
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-default -S -80
+treehouse get
+node@bef6b0d89de1:~/projects/notes$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/treehouse/.treehouse/notes-0803b1/1/notes. Type 'exit' to return.
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/1/notes$ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M
+61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b1/1/notes'
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/1/notes$ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411
+b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/state/lab-default.tasktmp/gotmp'
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/1/notes$ export COMPACT_ADVISER_DISABLE=1
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/1/notes$ export FM_TASK_ID=lab-default
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/1/notes$ . '/tmp/fm-lab-default+bceb83d95c04a341af3e51cb65d579ff76
+23fee44181d91a361342043413869a/launch.s1793193959.2587164.6634.sh'
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ Trust project folder?
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b1
+ /1/notes
+
+ This allows pi to load .pi settings and resources, install missing project packages, and execute project extensions.
+
+ → Trust
+   Trust parent folder
+ (/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b
+ 1/1)
+   Trust (this session only)
+   Do not trust
+   Do not trust (this session only)
+
+ ↑↓ navigate  enter select  escape/ctrl+c cancel
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+exit=0
+$ bin/fm-brief.sh lab-off notes --mode local-only --project /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/data/lab-off/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ bin/fm-spawn.sh lab-off /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/projects/notes --mode local-only --yolo off --harness pi --model lab/probe
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+notice: lab-off ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned lab-off harness=pi kind=ship mode=local-only yolo=off window=primary:fm-lab-off worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b1/2/notes mcp=off
+exit=0
+OBSERVE lab-off meta={"harness": "pi", "mcp": "off", "window": "primary:fm-lab-off", "worktree": "/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b1/2/notes", "kind": "ship"}
+MCP starts for lab-off: []
+$ tmux -L fm-lab capture-pane -p -t primary:fm-lab-off -S -80
+treehouse get
+node@bef6b0d89de1:~/projects/notes$ treehouse get
+A new version of treehouse is available: v3.1.6 → v3.1.7
+Run "treehouse update" to update
+
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/treehouse/.treehouse/notes-0803b1/2/notes. Type 'exit' to return.
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/2/notes$ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M
+61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b1/2/notes'
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/2/notes$ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411
+b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/state/lab-off.tasktmp/gotmp'
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/2/notes$ export COMPACT_ADVISER_DISABLE=1
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/2/notes$ export FM_TASK_ID=lab-off
+node@bef6b0d89de1:~/treehouse/.treehouse/notes-0803b1/2/notes$ . '/tmp/fm-lab-off+bceb83d95c04a341af3e51cb65d579ff7623fe
+e44181d91a361342043413869a/launch.s1793193967.2597233.18202.sh'
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ Trust project folder?
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b1
+ /2/notes
+
+ This allows pi to load .pi settings and resources, install missing project packages, and execute project extensions.
+
+ → Trust
+   Trust parent folder
+ (/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.xib2jfrg/treehouse/.treehouse/notes-0803b
+ 1/2)
+   Trust (this session only)
+   Do not trust
+   Do not trust (this session only)
+
+ ↑↓ navigate  enter select  escape/ctrl+c cancel
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+exit=0
+COMPLETE initial live probes
+$ tmux -L fm-lab kill-server
+exit=0

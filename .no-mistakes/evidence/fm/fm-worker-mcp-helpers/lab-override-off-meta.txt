@@ -1,0 +1,15 @@
+window=primary:fm-lab-override-off
+endpoint_task_id=lab-override-off
+worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/treehouse/.treehouse/notes-814ddd/3/notes
+project=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/projects/notes
+harness=pi
+kind=ship
+mode=local-only
+yolo=off
+branch=fm/lab-override-off
+tasktmp=/home/node/.no-mistakes/worktrees/450411b3e67c/01M61A8HYS7FQRYSG1TFAMDT49/L.2anbfa6a/state/lab-override-off.tasktmp
+mcp=off
+model=lab/probe
+effort=default
+busy_gen=g1793194308.2930060.29002
+spawn_gen=s1793194308.2926832.7111
