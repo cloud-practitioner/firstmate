@@ -18,12 +18,16 @@
 // The successor pipeline never waits for the model to read it: a follow-up
 // queued while main is streaming joins the running run without ever raising
 // before_agent_start, so waiting on that event stalls every later close.
-// Consumption is tracked only so a replacement can replay a follow-up Pi had
-// not consumed. An idle main consumes at a prompt-bearing before_agent_start;
+// Consumption tracking controls coalescing and replacement replay.
+// An idle main consumes at a prompt-bearing before_agent_start;
 // a streaming main consumes at the user message_start carrying the exact wake
 // text. A no-prompt custom trigger cannot consume it, even with equal content.
 // Either user boundary finishes the pending record, and a still-unconsumed
 // record rides the replacement handoff.
+// A close whose wake text is byte-identical to a still-unconsumed follow-up is
+// not queued again: the drain that follow-up triggers presents everything the
+// close would, and its record finishes as delivered. Different text, including
+// typed failure appendices, is never coalesced.
 //
 // Postures (stated once here; docs/pi-supervision-branch.md "Postures"):
 // the away-posture record state/.afk-contract is read as a file at every
@@ -673,7 +677,15 @@ export default function (pi: ExtensionAPI) {
       "watcher",
       `FIRSTMATE WATCHER WAKE: ${message}\n\nRun bin/fm-wake-drain.sh first and handle the queued wake. Watcher continuity is extension-owned.`,
     );
-    if (pending) owner.unconsumedWakes.set(pending.token, { content, pending });
+    if (pending) {
+      // Pi still holds an identical follow-up it has accepted but not
+      // consumed, and the drain that one triggers presents everything this
+      // close would, so queue nothing new; the caller finishes this record.
+      for (const queued of owner.unconsumedWakes.values()) {
+        if (queued.content === content) return generationIsLive(owner);
+      }
+      owner.unconsumedWakes.set(pending.token, { content, pending });
+    }
     try {
       await pi.sendUserMessage(content, { deliverAs: "followUp" });
     } catch (error) {
@@ -932,7 +944,8 @@ export default function (pi: ExtensionAPI) {
           }
           settleClaim("delivered");
           if (!awaitingConsumption) {
-            // The branch handled it, or Pi consumed it before this ran.
+            // The branch handled it, Pi consumed it before this ran, or an
+            // identical unconsumed follow-up already represents this close.
             pending.delivered = true;
             try {
               finishPendingActionable(owner, pending);

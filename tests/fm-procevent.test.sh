@@ -401,6 +401,45 @@ case "$repeat_out" in
 esac
 pass "an unhandled result survives restart and repeat drains, and only explicit acknowledgement stops its re-announcement"
 
+# --- a copy still queued is never queued again ---------------------------------
+# Re-announcement exists so a drain that consumes the wake without handling the
+# result gets it back. While the first copy is still queued the next drain
+# presents it anyway, and a second row would only open a fresh recovery episode
+# for every watcher poll (the check: rearm-resurface loop).
+HQ="$TMP_ROOT/hqueued"; new_home "$HQ"
+mkdir -p "$HQ/state/procevent-inbox"
+printf 'queued result\n' > "$HQ/state/procevent-inbox/src-queued.3.result"
+printf 'lavish\n' > "$HQ/state/procevent-inbox/src-queued.3.adapter"
+chmod 0600 "$HQ/state/procevent-inbox/src-queued.3.result" "$HQ/state/procevent-inbox/src-queued.3.adapter"
+queued_rows() {
+  [ -e "$HQ/state/.wake-queue" ] || { printf '0\n'; return 0; }
+  grep -c "procevent:src-queued:3" "$HQ/state/.wake-queue" || true
+}
+out=$(pe "$HQ" reconcile)
+assert_contains "$out" "published=1" "the first reconcile announces the captured result"
+[ "$(queued_rows)" = 1 ] || fail "the first reconcile did not queue exactly one row: $(queued_rows)"
+cp "$HQ/state/.watcher-down" "$HQ/watcher-down.before" 2>/dev/null || : > "$HQ/watcher-down.before"
+queue_before=$(cat "$HQ/state/.wake-queue")
+for _ in 1 2 3; do
+  out=$(pe "$HQ" reconcile)
+  assert_contains "$out" "published=1" "a result whose copy is still queued still counts as published"
+done
+[ "$(queued_rows)" = 1 ] || fail "reconcile queued a second copy while the first was still queued: $(queued_rows)"
+[ "$(cat "$HQ/state/.wake-queue")" = "$queue_before" ] || fail "reconcile changed the queue while a copy was still queued"
+cp "$HQ/state/.watcher-down" "$HQ/watcher-down.after" 2>/dev/null || : > "$HQ/watcher-down.after"
+cmp -s "$HQ/watcher-down.before" "$HQ/watcher-down.after" \
+  || fail "reconcile opened a new recovery episode while a copy was still queued"
+mv "$HQ/state/.wake-queue" "$HQ/state/.wake-queue.drained-1"
+out=$(pe "$HQ" reconcile)
+assert_contains "$out" "published=1" "a drained but unhandled result is announced again"
+[ "$(queued_rows)" = 1 ] || fail "the re-announcement after a drain did not queue exactly one row: $(queued_rows)"
+pe "$HQ" handled src-queued 3 >/dev/null
+mv "$HQ/state/.wake-queue" "$HQ/state/.wake-queue.drained-2"
+out=$(pe "$HQ" reconcile)
+assert_contains "$out" "published=0" "a handled result is not announced again"
+[ "$(queued_rows)" = 0 ] || fail "a handled result was queued again"
+pass "reconcile queues a captured result once while its copy is queued and again only after a drain consumed it"
+
 HRACE="$TMP_ROOT/hrace"; new_home "$HRACE"
 mkdir -p "$HRACE/state/procevent-inbox"
 printf 'racing result\n' > "$HRACE/state/procevent-inbox/racing-src.1.result"

@@ -305,6 +305,200 @@ test_handling_successor_resurfaces_a_row_appended_during_startup() {
   pass "a handling successor resurfaces a row appended during startup"
 }
 
+# A captured, unhandled, main-owned process-event result is re-announced by
+# every watcher poll. Each append used to open a new recovery episode, so the
+# handling successor closed at once with check: rearm-resurface and the Pi
+# extension queued another identical follow-up, one per second, until main ran
+# `handled`. These two cases drive the real extension, arm, watcher and
+# fm-procevent.sh with a sendUserMessage that settles at once like Pi queueing
+# a follow-up while main streams, and read the outcome from the prompts it saw,
+# the durable queue and the recovery marker.
+pe_home() {  # <home> <fm-procevent args...>
+  local home=$1
+  shift
+  (unset FM_ROOT_OVERRIDE FM_STATE_OVERRIDE; FM_PROCEVENT_CLAIM_ROOT="$home/claims" FM_HOME="$home" "$ROOT/bin/fm-procevent.sh" "$@")
+}
+
+seed_captured_procevent_result() {  # <home>
+  local home=$1 i=0
+  pe_home "$home" register lavish delivery-src -- \
+    /bin/sh -c 'printf "session:\n  file: /a.html\n  status: waiting\n"' >/dev/null || return 1
+  pe_home "$home" reconcile >/dev/null || return 1
+  while [ "$i" -lt 100 ] && [ ! -s "$home/state/.wake-queue" ]; do
+    sleep 0.1
+    i=$((i + 1))
+  done
+  # The runner publishes before it releases its claim; retire only after that.
+  i=0
+  while [ "$i" -lt 100 ] && [ -e "$home/claims/delivery-src.claim" ]; do
+    sleep 0.1
+    i=$((i + 1))
+  done
+  pe_home "$home" retire delivery-src >/dev/null || return 1
+  [ -s "$home/state/.wake-queue" ]
+}
+
+# <name> <ack-at-secs, 0 for none> <window-secs: observation window, or the longest
+# wait for the re-announcement after an ack> <quiet-secs> <after-handled-secs>
+# Prints LOOP_* facts; the successor watcher is stopped afterwards.
+run_procevent_loop_scenario() {
+  local name=$1 ack_at=$2 window=$3 quiet=$4 after=$5
+  local repo="$TMP_ROOT/$name-root" home="$TMP_ROOT/$name-home" fakebin="$TMP_ROOT/$name-fakebin"
+  local out status watcher_pid
+  mkdir -p "$repo/bin" "$home/state" "$home/config" "$home/claims" "$fakebin"
+  install_pi_watch_extension_fixture "$repo"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$fakebin/tmux"
+  chmod +x "$fakebin/tmux"
+  make_fake_crew_state "$fakebin" >/dev/null
+  cat > "$repo/bin/fm-watch-arm.sh" <<SH
+#!/usr/bin/env bash
+export FM_ROOT_OVERRIDE="$ROOT"
+export PATH="$fakebin:\$PATH"
+exec "$ROOT/bin/fm-watch-arm.sh" "\$@"
+SH
+  chmod +x "$repo/bin/fm-watch-arm.sh"
+  seed_captured_procevent_result "$home" || fail "$name fixture captured no process-event result"
+  out=$(
+    PLUGIN="$repo/.pi/extensions/fm-primary-pi-watch.ts" FM_HOME="$home" FM_ROOT_OVERRIDE="$repo" \
+      FM_STATE_OVERRIDE="$home/state" PATH="$fakebin:$PATH" FM_PROCEVENT_CLAIM_ROOT="$home/claims" \
+      FM_CREW_STATE_BIN="$fakebin/fm-crew-state.sh" ROOT="$ROOT" \
+      WINDOW_SECS="$window" ACK_AT_SECS="$ack_at" QUIET_SECS="$quiet" AFTER_SECS="$after" \
+      FM_POLL=1 FM_SIGNAL_GRACE=0 FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999 \
+      node --input-type=module 2>&1 <<'EOF'
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { pathToFileURL } from "node:url";
+
+const state = `${process.env.FM_HOME}/state`;
+let tool = null;
+const prompts = [];
+const markers = [];
+const pi = {
+  on() {},
+  registerCommand() {},
+  registerTool(candidate) {
+    if (candidate.name === "fm_watch_arm_pi") tool = candidate;
+  },
+  // Pi queues a follow-up while main streams and returns at once.
+  sendUserMessage: async (message) => {
+    const text = String(message);
+    prompts.push((text.match(/FIRSTMATE WATCHER WAKE: ([^\n]*)/) || [])[1] || text.slice(0, 80));
+  },
+};
+const sample = () => {
+  try { markers.push(readFileSync(`${state}/.watcher-down`, "utf8").trim()); } catch {}
+};
+const keyRows = () => {
+  try {
+    return readFileSync(`${state}/.wake-queue`, "utf8").split("\n")
+      .filter((row) => row.split("\t")[3] === "procevent:delivery-src:1").length;
+  } catch { return 0; }
+};
+const run = (args) => spawnSync("bash", ["-c", args], { encoding: "utf8", env: process.env });
+const wait = async (secs) => {
+  const until = Date.now() + secs * 1000;
+  while (Date.now() < until) { sample(); await new Promise((resolve) => setTimeout(resolve, 250)); }
+};
+const rearm = () => prompts.filter((reason) => reason.includes("check: rearm-resurface")).length;
+
+writeFileSync(`${state}/.lock`, `${process.pid}\n`);
+const mod = await import(pathToFileURL(process.env.PLUGIN).href);
+mod.default(pi);
+await tool.execute("recovery-loop", {}, undefined, undefined, {});
+
+const ackAt = Number(process.env.ACK_AT_SECS);
+if (ackAt > 0) {
+  // Acknowledge only after main was woken for the result: a loaded host can
+  // start the first cycle later than any fixed delay.
+  const firstDeadline = Date.now() + 40000;
+  while (prompts.length === 0 && Date.now() < firstDeadline) await wait(0.25);
+  if (prompts.length === 0) throw new Error("the captured result never woke main");
+  await wait(ackAt);
+  // Main drains and acknowledges the queued wake WITHOUT marking it handled.
+  const drain = run('"$ROOT/bin/fm-wake-drain.sh"');
+  const m = (drain.stderr || "").match(/--ack-through ([0-9]+) --recovery-generation ([A-Za-z0-9._-]+)/);
+  if (!m) throw new Error(`drain printed no acknowledgement command: ${drain.stderr}`);
+  run(`"$ROOT/bin/fm-wake-drain.sh" --ack-through ${m[1]} --recovery-generation ${m[2]}`);
+  const atAck = prompts.length;
+  // The one bounded re-announcement lands on the next poll; a loaded host may
+  // delay it, so wait for it (bounded) before measuring the quiet period.
+  const deadline = Date.now() + Number(process.env.WINDOW_SECS) * 1000;
+  while (prompts.length === atAck && Date.now() < deadline) await wait(0.5);
+  await wait(3);
+  const settled = prompts.length;
+  await wait(Number(process.env.QUIET_SECS));
+  console.log(`LOOP_FOLLOWUPS_AFTER_ACK=${settled - atAck}`);
+  console.log(`LOOP_FOLLOWUPS_DURING_QUIET=${prompts.length - settled}`);
+} else {
+  await wait(Number(process.env.WINDOW_SECS));
+}
+const before = prompts.length;
+console.log(`LOOP_FOLLOWUPS=${before}`);
+console.log(`LOOP_CAPTURED_FOLLOWUPS=${prompts.filter((reason) => reason.includes("process-event result captured")).length}`);
+console.log(`LOOP_REARM_FOLLOWUPS=${rearm()}`);
+console.log(`LOOP_KEY_ROWS=${keyRows()}`);
+console.log(`LOOP_GENERATIONS=${new Set(markers.map((marker) => marker.split(":").pop())).size}`);
+const watcherPid = existsSync(`${state}/.watch.lock/pid`) ? readFileSync(`${state}/.watch.lock/pid`, "utf8").trim() : "";
+console.log(`LOOP_WATCHER_PID=${watcherPid}`);
+let alive = 0;
+try { process.kill(Number(watcherPid), 0); alive = 1; } catch {}
+console.log(`LOOP_WATCHER_ALIVE=${alive}`);
+run('unset FM_ROOT_OVERRIDE FM_STATE_OVERRIDE; "$ROOT/bin/fm-procevent.sh" handled delivery-src 1');
+await wait(Number(process.env.AFTER_SECS));
+console.log(`LOOP_FOLLOWUPS_AFTER_HANDLED=${prompts.length - before}`);
+console.log(`LOOP_KEY_ROWS_AFTER_HANDLED=${keyRows()}`);
+process.exit(0);
+EOF
+  )
+  status=$?
+  watcher_pid=$(sed -n 's/^LOOP_WATCHER_PID=//p' <<<"$out" | tail -1)
+  if [ -n "$watcher_pid" ]; then
+    kill -TERM "$watcher_pid" 2>/dev/null || true
+  fi
+  expect_code 0 "$status" "$name driver failed: $out"
+  if [ "${FM_TEST_EVIDENCE:-0}" = 1 ]; then
+    printf '%s\n' "$out" >&2
+  fi
+  printf '%s\n' "$out"
+}
+
+loop_fact() {  # <output> <name>
+  sed -n "s/^LOOP_$2=//p" <<<"$1" | tail -1
+}
+
+test_unhandled_procevent_result_does_not_loop_rearm_resurface() {
+  local out
+  out=$(run_procevent_loop_scenario t4 0 15 0 5)
+  [ "$(loop_fact "$out" CAPTURED_FOLLOWUPS)" = 1 ] \
+    || fail "T4 expected exactly one process-event follow-up: $out"
+  [ "$(loop_fact "$out" REARM_FOLLOWUPS)" = 0 ] \
+    || fail "T4 an unhandled result looped check: rearm-resurface follow-ups: $out"
+  [ "$(loop_fact "$out" FOLLOWUPS)" = 1 ] || fail "T4 queued more than one follow-up: $out"
+  [ "$(loop_fact "$out" KEY_ROWS)" -le 1 ] || fail "T4 queued the result more than once: $out"
+  [ "$(loop_fact "$out" GENERATIONS)" -le 1 ] || fail "T4 minted more than one recovery generation: $out"
+  [ "$(loop_fact "$out" WATCHER_ALIVE)" = 1 ] || fail "T4 the successor watcher is not alive: $out"
+  [ "$(loop_fact "$out" FOLLOWUPS_AFTER_HANDLED)" = 0 ] || fail "T4 handled result woke main again: $out"
+  pass "an unhandled process-event result queues one follow-up and no rearm-resurface loop"
+}
+
+test_procevent_reannouncement_after_ack_without_handled_is_bounded() {
+  local out
+  out=$(run_procevent_loop_scenario t5 2 20 10 5)
+  [ "$(loop_fact "$out" CAPTURED_FOLLOWUPS)" = 1 ] \
+    || fail "T5 expected exactly one process-event follow-up: $out"
+  [ "$(loop_fact "$out" FOLLOWUPS_AFTER_ACK)" -le 1 ] \
+    || fail "T5 more than one follow-up after an acknowledgement without handled: $out"
+  [ "$(loop_fact "$out" FOLLOWUPS_DURING_QUIET)" = 0 ] \
+    || fail "T5 the re-announcement kept waking main after it settled: $out"
+  [ "$(loop_fact "$out" KEY_ROWS)" = 1 ] || fail "T5 expected exactly one queued copy: $out"
+  [ "$(loop_fact "$out" WATCHER_ALIVE)" = 1 ] || fail "T5 the successor watcher is not alive: $out"
+  [ "$(loop_fact "$out" FOLLOWUPS_AFTER_HANDLED)" = 0 ] || fail "T5 handled result woke main again: $out"
+  [ "$(loop_fact "$out" KEY_ROWS_AFTER_HANDLED)" = 1 ] || fail "T5 handled result queued a new row: $out"
+  pass "a result acknowledged without handled is re-announced at most once, then stays quiet until handled"
+}
+
 test_handling_successor_does_not_go_blind
 test_handling_successor_resurfaces_a_row_appended_during_startup
 test_unacknowledged_recovery_is_announced_once_per_generation
+test_unhandled_procevent_result_does_not_loop_rearm_resurface
+test_procevent_reannouncement_after_ack_without_handled_is_bounded

@@ -63,9 +63,7 @@ A state-scoped replacement handoff carries every actionable close whose delivery
 A handoff marker never satisfies the extension-ownership tolerance.
 So a running Pi process whose replacement did not load this extension is reported as missing, rather than borrowing stale load evidence from its predecessor.
 
-A main follow-up counts as delivered once Pi accepts it, never once the model reads it.
-The reason is that a follow-up queued while main is streaming joins the running run without a `before_agent_start`.
-The extension header owns how consumption is observed and why it only decides what a replacement replays.
+The [Pi extension header](../.pi/extensions/fm-primary-pi-watch.ts) owns follow-up delivery versus consumption, unread-follow-up coalescing, and replacement replay.
 
 ### omp session replacement
 
@@ -432,6 +430,7 @@ It then simulates actionable and empty child closes against the actual Pi and Op
 
 - Blocks prompt delivery to prove the successor launches first.
 - Verifies single-flight behavior.
+- Exercises the Pi extension header's unread-follow-up coalescing contract, including consumption, typed failure appendices, and replacement replay (`test_pi_identical_unconsumed_wakes_are_coalesced`).
 - Changes the session lock before close to prove ownership is rechecked.
 - Hangs each successor arm to prove bounded fallback delivery includes the typed restoration failure.
 
@@ -481,6 +480,7 @@ They also prove that a legacy or handoff-phase watcher marker from an absent rep
 - The once-per-generation announcement bound with the real Pi extension against a refused handling handshake.
 - A handling successor that must surface a real crew event instead of going blind.
 - A handling successor that resurfaces a row appended between its predecessor's close and its own startup handoff.
+- The [process-event publication rule](configuration.md#process-to-event-sources-stateprocevent) together with Pi follow-up coalescing, both before queue acknowledgement and after acknowledgement without result handling.
 
 `tests/fm-watch-triage.test.sh` proves TERM stops a watcher blocked inside a poll's pane capture and still releases its lock and records an acknowledgeable stop.
 It also exercises a single TERM with a live foreign downtime-marker lock holder, retained stale singleton and subsequent arm-style recovery, including decimal `08` and zero `00` cleanup bounds.
