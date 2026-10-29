@@ -150,7 +150,7 @@ export FM_POLL=1 FM_SIGNAL_GRACE=0 FM_CHECK_INTERVAL=999999 FM_HEARTBEAT=999999
 export FM_WARM_COMPACT_TICK=5
 export HERDR_SESSION='$SESSION'
 export CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0
-export PATH='$LAB/bin':"\$PATH"
+export PATH='$FM_LIVE_CLAUDE_SHIM:$LAB/bin':"\$PATH"
 ENV
 
 "$LAB_HELPER" provision "$SESSION"
@@ -165,7 +165,7 @@ shell_ready() { screen | grep -q MARK_42; }
 wait_until 600 shell_ready || fail "the lab pane's shell never answered"
 
 PROMPT='This is an isolated Firstmate test lab, not a real fleet. Reply with exactly READY now and use no tools. Later, whenever a "Stop hook feedback" message wakes you, do exactly this and nothing else: run `bin/fm-wake-drain.sh` once with the Bash tool, then run the exact `bin/fm-wake-drain.sh --ack-through ...` command that its WAKE_ACK_REQUIRED line prints, then reply with exactly ACKED. Never run any other command, never run bin/fm-watch-arm.sh, and never use any other tool.'
-lab pane run "$PANE" ". '$LAB/env'; printf '%s\\n' \"\$\$\" > state/.lock; exec claude --model $MODEL --effort low --dangerously-skip-permissions" >/dev/null
+lab pane run "$PANE" ". '$LAB/env'; printf '%s\\n' \"\$\$\" > state/.lock; exec \"$FM_LIVE_CLAUDE_SHIM/claude\" --model $MODEL --effort low --dangerously-skip-permissions" >/dev/null
 FM_HOME="$FM" "$FM/bin/fm-afk-contract.sh" enter --words 'Watch the fleet. Merge nothing and dispatch nothing.' >/dev/null \
   || fail "could not record the lab's away posture"
 
