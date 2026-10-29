@@ -1,0 +1,6 @@
+# all fm-spawn-dispatch-profile tests passed
+ok - Pi and pi-signed ship and scout launches stop MCP servers when the home sets MCP off
+not ok - claude spawn with MCP on should succeed
+warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-spawn-dispatch-profile.K2mW9v/mcp-on-claude/home/data/mcp-on-claude-y1d/launch-brief.md records no ship branch; defaulting to legacy branch fm/mcp-on-claude-y1d
+warning: /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-spawn-dispatch-profile.K2mW9v/mcp-on-claude/home/data/mcp-on-claude-y1d/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+error: could not resolve the task-channel directories for mcp-on-claude-y1d's claude --add-dir grant: expected exit 0, got 1

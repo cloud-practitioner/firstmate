@@ -1,0 +1,133 @@
+./home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:948: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmplzigjy1n/items.json' mode='r' encoding='utf-8'>
+  spec = json.load(open(args.items, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:775: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpvn73x4lg/after.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.sidecar, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:785: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpvn73x4lg/before.json' mode='r' encoding='utf-8'>
+  other = wrap_lines("\n".join(sidecar_lines(json.load(open(args.against, encoding="utf-8")))), chars)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.../home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:800: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpallexyy8/raw' mode='r' encoding='utf-8'>
+  text = open(args.raw, encoding="utf-8", errors="replace").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:729: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpallexyy8/raw' mode='r' encoding='utf-8'>
+  text = open(args.text, encoding="utf-8", errors="replace").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.../home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:729: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpa2ih64rn/left' mode='r' encoding='utf-8'>
+  text = open(args.text, encoding="utf-8", errors="replace").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:734: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpa2ih64rn/right' mode='r' encoding='utf-8'>
+  other = wrap_lines(mask_text(open(args.against, encoding="utf-8", errors="replace").read().rstrip("\n")), chars)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:775: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpa2ih64rn/left' mode='r' encoding='utf-8'>
+  data = json.load(open(args.sidecar, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:785: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpa2ih64rn/right' mode='r' encoding='utf-8'>
+  other = wrap_lines("\n".join(sidecar_lines(json.load(open(args.against, encoding="utf-8")))), chars)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:800: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmp__6wpi8y/raw' mode='r' encoding='utf-8'>
+  text = open(args.raw, encoding="utf-8", errors="replace").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:800: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpa__i0udt/raw' mode='r' encoding='utf-8'>
+  text = open(args.raw, encoding="utf-8", errors="replace").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:800: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmprs7mbfbc/raw' mode='r' encoding='utf-8'>
+  text = open(args.raw, encoding="utf-8", errors="replace").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.../home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmp78ttn_g0/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmphlvu1yaq/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmp0cw26z5h/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpyfxxfrmx/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmp3kux89od/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmph50967xh/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmprvjif8u7/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpl71crw2x/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmp2zsqtfc3/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpgjsj0ntr/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpdkzdw_yo/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmp98u7zq3o/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpem2t10wm/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:476: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpcxvyc1hf/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.file, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..../home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:800: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpcnlxw219/raw' mode='r' encoding='utf-8'>
+  text = open(args.raw, encoding="utf-8", errors="replace").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:729: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpny8i9s50/text' mode='r' encoding='utf-8'>
+  text = open(args.text, encoding="utf-8", errors="replace").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-pr-evidence-lib.py:775: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-pr-evidence.wrzBRk/tmpny8i9s50/sidecar.json' mode='r' encoding='utf-8'>
+  data = json.load(open(args.sidecar, encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.
+----------------------------------------------------------------------
+Ran 25 tests in 2.437s
+
+OK
+ok - fm-pr-evidence: excluded registration and exact-head checks skip with absent or enforced config
+ok - fm-pr-evidence: GitLab registration and merge re-registration accept excluded evidence lanes
+ok - fm-pr-evidence: excluded checks skip while unsupported publication refuses without forge operations or mutations
+ok - fm-pr-evidence: public reads, identity, posts, and deletes ignore an ambient Enterprise host
+ok - fm-pr-evidence: eligibility, intake, briefs, promotion, contracts, and checks agree across all delivery lanes
+ok - fm-pr-evidence: local-only promotion and task commands have no PR-evidence obligation
+ok - fm-pr-evidence: captured authorization-code redirects retain status and hide credentials
+ok - fm-pr-evidence: fenced HTTP payloads are literal while visible image hosting remains enforced
+ok - fm-pr-evidence: PR intake refuses bad config while local-only scaffolding and spawning skip the gate
+ok - fm-pr-evidence: typographic contractions refuse intake, publication, and annotation
+ok - fm-pr-evidence: live auth inputs are restored only at the isolated invocation boundary
+ok - fm-pr-evidence: valid partial GitHub collections with failed pagination refuse
+ok - fm-pr-evidence: existing unreadable configuration refuses every consumer
+ok - fm-pr-evidence: quoted purposes, drawn labels, and none reasons face strict English checks
+ok - fm-pr-evidence: both forges refuse duplicate comments and reload every image on every check
+ok - fm-pr-evidence: promotion validates and records the same intake as spawn
+ok - fm-pr-evidence: worker kinds are durable in composition, pattern checks, and verification
+ok - fm-pr-evidence: rendered images are bound to their item and phase labels
+ok - fm-pr-evidence: rename sources retain their pattern requirements
+ok - fm-pr-evidence: off without config; config lines are strict; project off is refused
+ok - fm-pr-evidence: intake validates the declared kind, the none reason, and the require rule
+ok - fm-pr-evidence: publish posts one comment whose images show, and the gate passes it
+ok - fm-pr-evidence: a missing comment, a moved head, and a stranger's comment all refuse with FIX lines
+ok - fm-pr-evidence: an image line after </details> refuses; publish writes a layout that shows
+ok - fm-pr-evidence: a swapped, missing, or identical image refuses
+ok - fm-pr-evidence: images without drawn marks are refused at publish and by the mark counter
+ok - fm-pr-evidence: each UI and API phase requires a purpose record bound to its image
+ok - fm-pr-evidence: invalid replacement metadata is not saved
+ok - fm-pr-evidence: API evidence needs all six parts, masked secrets, and a bound exchange text
+ok - fm-pr-evidence: capture-api keeps the six HTTP parts and masks secrets
+ok - fm-pr-evidence: file patterns add kinds, and a disagreement refuses naming the files
+ok - fm-pr-evidence: none still posts a visible reason that the gate requires
+ok - fm-pr-evidence: the plain-English check refuses the strict rules and only warns on the heuristics
+ok - fm-pr-evidence: arming and merging go through the gate; a legacy task passes with a notice
+ok - fm-pr-evidence: a waiver needs the captain's words, is refused away, and is posted on the PR
+ok - fm-pr-evidence: list-unevidenced names the open PRs from before the gate
+ok - fm-pr-evidence: the gh that accepts --attach is picked over a stale one on PATH
+ok - fm-pr-evidence: the Bitbucket arm is off by default; when on it uploads to Downloads and gates the same way
+ok - fm-pr-evidence: the annotate helpers draw marks that the gate's counter finds
+ok - fm-pr-evidence: the worker contract and help print
+note: live guard skipped (set FM_PR_EVIDENCE_LIVE_PR to a PR URL in the private sandbox repository)

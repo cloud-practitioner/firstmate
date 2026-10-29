@@ -1,0 +1,22 @@
+{
+  "schema": "firstmate-record-export-archive.v1",
+  "schema_version": 1,
+  "task": "export-check",
+  "spawn_gen": "live-validation-1",
+  "captured_at": "2026-10-29T15:41:05Z",
+  "complete": true,
+  "files": [
+    {
+      "source": "state/export-check.meta",
+      "archive": "meta",
+      "bytes": 39,
+      "sha256": "cb1afbebc703a0026b7663d8ecb82de3c024dcf5406a4f5823b5416c3daab7e1"
+    },
+    {
+      "source": "state/export-check.inbox/001.msg",
+      "archive": "inbox/001.msg",
+      "bytes": 31,
+      "sha256": "d4b578c03ebbbf68430d26a6631ad403d63e545b7e697cd1ff5e5ae4aea17720"
+    }
+  ]
+}

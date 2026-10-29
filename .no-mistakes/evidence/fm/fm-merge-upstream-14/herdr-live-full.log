@@ -1,0 +1,102 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ
+provisioned named isolated session fm-lab-merge-live-2621631-22493
+container=fm-lab-merge-live-2621631-22493:w1 seeded=w1:t1
+task endpoint=fm-lab-merge-live-2621631-22493:w1:p2 tab=w1:t2 identity=proc:2622392:550642af-9afc-4d76-b27d-5778ab863659:30989233
+printf 'REAL-HERDR-ENDPOINT-OK\n'
+.test-phase/tmp/fm-lab.vVFPRJ on  HEAD [?]
+❯ printf 'REAL-HERDR-ENDPOINT-OK\n'
+REAL-HERDR-ENDPOINT-OK
+.test-phase/tmp/fm-lab.vVFPRJ on  HEAD [?]
+❯
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the requested message WILL still be sent.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-send: doorbell not typed because the agent in fm-lab-merge-live-2621631-22493:w1:p2 has exited; the steer is durably recorded at /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/merge-check.inbox/001.msg for recovery (stuck-crewmate-recovery), and the watcher will not re-ring a dead pane
+
+Durable instruction record (public inbox protocol):
+schema=fm-task-inbox.v1
+at=2026-10-29T15:41:07Z
+body-terminator=1
+--
+Keep the preserved fork additions.
+Do not merge without approval.
+
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/data/pi-check/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+Real Pi spawn exit=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+spawned pi-check harness=pi kind=scout window=fm-lab-merge-live-2621631-22493:w2:p2 worktree=/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/treehouse/.treehouse/fixture-522e54/1/fixture mcp=off
+
+fixture on  main
+❯ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/t
+reehouse/.treehouse/fixture-522e54/1/fixture. Type 'exit' to return.
+fixture on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/treeho
+use/.treehouse/fixture-522e54/1/fixture'
+fixture on  HEAD
+❯ export GOTMPDIR='/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVF
+PRJ/state/pi-check.tasktmp/gotmp'
+fixture on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+fixture on  HEAD
+❯ export FM_TASK_ID=pi-check
+fixture on  HEAD
+❯ . '/tmp/fm-pi-check+86caa58139fbad3c73026c2407f0f3c47beb4b8f20dfd2630bf41e4f9f41037b/launch.s1793288473.2626884.936.s
+h'
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ Trust project folder?
+ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/treehouse/.tr
+ eehouse/fixture-522e54/1/fixture
+
+ This allows pi to load .pi settings and resources, install missing project packages, and execute project extensions.
+
+ → Trust
+   Trust parent folder
+ (/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/treehouse/.t
+ reehouse/fixture-522e54/1)
+   Trust (this session only)
+   Do not trust
+   Do not trust (this session only)
+
+ ↑↓ navigate  enter select  escape/ctrl+c cancel
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────Staged real Claude launch bytes: 2706
+{"duration_api_ms":1478,"stop_reason":"end_turn","session_id":"b09ffed2-5c73-4d18-b345-05125f5c0786","total_cost_usd":0.01134,"usage":{"input_tokens":2,"cache_creation_input_tokens":1379,"cache_read_input_tokens":0,"output_tokens":15,"output_tokens_details":{"thinking_tokens":0},"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier":"standard","cache_creation":{"ephemeral_1h_input_tokens":1379,"ephemeral_5m_input_tokens":0},"inference_geo":"global","iterations":[{"input_tokens":2,"output_tokens":15,"cache_read_input_tokens":0,"cache_creation_input_tokens":1379,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":1379},"type":"message"}],"speed":"standard","fallback_credit":null},"modelUsage":{"claude-opus-5-5":{"inputTokens":2,"outputTokens":15,"cacheReadInputTokens":0,"cacheCreationInputTokens":1379,"webSearchRequests":0,"costUSD":0.01134,"contextWindow":1000000,"maxOutputTokens":128000,"thinkingTokens":0,"cacheCreationEphemeral5mInputTokens":0,"cacheCreationEphemeral1hInputTokens":1379,"canonicalModel":"claude-opus-5-5","provider":"firstParty","costBasis":"list"}},"permission_denials":[],"terminal_reason":"completed","fast_mode_state":"off","fast_mode_disabled_reason":"sdk_opt_in_required","subagent_stats":{"spawned":0,"requested":{"background":0,"foreground":0,"unset":0},"started_in_background":0,"max_depth":0,"spawned_by_subagents":0,"completed":0,"failed":0,"killed":{"parent":0,"user":0,"system":0},"refused":{"depth_limit":0,"concurrency_limit":0,"budget":0},"by_type":{}},"safety_stops":0,"is_error":false,"num_turns":1,"subtype":"success","api_error_status":null,"result":"CLAUDE-LAB-READY","ttft_ms":2023,"type":"result","duration_ms":2047,"uuid":"bb793716-2950-423b-a6de-0f1a50f038a2","ttft_stream_ms":1999,"time_to_request_ms":566,"first_content_frame_ms":2000,"queued_turn_count":0,"result_index":0}
+
+CLAUDE_EXIT=0
+
+Real Claude host launcher unchanged
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65efc81ec2f662","workspace_id":"w1"},"type":"pane_info"}}
+Foreign process identity close preserved the exact endpoint as expected
+{"error":{"code":"pane_not_found","message":"pane w1:p2 not found"},"id":"cli:pane:get"}
+Owned endpoint closed and confirmed absent
+fm-herdr-lab: refusing session name 'default'
+Default-session teardown refused
+fm-herdr-lab: run forbids session lifecycle operations; use guarded teardown
+Session lifecycle escape refused
+fm-herdr-lab: run forbids caller-supplied --session; the helper supplies the lab session
+Caller session override refused
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/post-merge': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/pre-push': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/post-commit': Permission denied
+rm: cannot remove '/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.vVFPRJ/state/pi-check.git-hooks/prepare-commit-msg': Permission denied

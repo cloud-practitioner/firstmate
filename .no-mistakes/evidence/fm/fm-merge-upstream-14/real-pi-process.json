@@ -1,0 +1,1 @@
+{"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":3217677,"foreground_processes":[{"cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.Dxgd9L/treehouse/.treehouse/fixture-0d1793/1/fixture","name":"pi","pid":3217677}],"pane_id":"w2:p2","shell_pid":3214343},"type":"pane_process_info"}}

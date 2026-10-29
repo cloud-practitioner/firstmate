@@ -1,0 +1,7 @@
+{
+  "labels": [
+    "Read stopped"
+  ],
+  "purpose": "The tool stops the next read.",
+  "sha256": "dee861342f2778512e6b3bbc021b77126c7c091d885c33d241070a52c202a908"
+}

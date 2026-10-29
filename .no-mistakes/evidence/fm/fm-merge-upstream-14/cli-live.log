@@ -1,0 +1,186 @@
+=== Merge topology consumed by Git ===
+$ git rev-list --parents -n 1 64ec5d95
+64ec5d9585dfb26f2c923ccde8321d2aea4147fc 6b81e84f5617723075abcf70c713727befa8293d 0adf422ed687c98a6ca6f7343ea1bdc37d896905
+exit=0
+$ git merge-base --is-ancestor 6b81e84f acb8ff52
+
+exit=0
+$ git merge-base --is-ancestor 0adf422e acb8ff52
+
+exit=0
+$ git rev-list --count 6b81e84f..0adf422e
+33
+exit=0
+$ git show --format=fuller --no-patch 64ec5d95
+commit 64ec5d9585dfb26f2c923ccde8321d2aea4147fc
+Merge: 6b81e84f 0adf422e
+Author:     Cloud Practitioner <cloud.practitioner@outlook.com>
+AuthorDate: Thu Oct 29 13:20:09 2026 +0000
+Commit:     Cloud Practitioner <cloud.practitioner@outlook.com>
+CommitDate: Thu Oct 29 13:20:09 2026 +0000
+
+    Merge upstream firstmate main (0adf422e) into the fork
+    
+    Brings kunchenguid/firstmate main from 147b2672 to 0adf422e (33 upstream
+    PRs, #7265 through #7933) into the fork as a true merge. Every fork-only
+    change is kept.
+    
+    Conflicts resolved (17 files): cursor.md, CONTRIBUTING.md, README.md,
+    bin/fm-backend.sh, bin/fm-brief.sh, bin/fm-composer-lib.sh, bin/fm-spawn.sh,
+    bin/fm-teardown.sh, docs/architecture.md, docs/configuration.md,
+    docs/fm-test-portable-shards.md, docs/verification/runtime-backends.md,
+    tests/fm-bearings-snapshot.test.sh, tests/fm-fleet-snapshot-view.test.sh,
+    tests/fm-remote-secondmate-lifecycle-e2e.test.sh,
+    tests/fm-supervision-host.test.sh, tests/fm-watch-arm.test.sh.
+    
+    The fork's supervision-host test changes are re-homed in upstream's split
+    suite layout: per-case process stop through an fm_test_after_case hook in
+    tests/lib.sh, zero_minute_age, and the at-turn downtime-write regressions.
+exit=0
+=== IQX generator consumes the merged scout scaffold ===
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-brief.sh lens-check disposable --scout --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv/data/lens-check/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+exit=0
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/contrib/iqx-lenses/mk-lens-brief.py runproof --home /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv --task lens-check --ticket TKT-LAB --plan /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv/data/TKT-LAB/plans/plan.md --dispositions /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv/data/TKT-LAB/plans/dispositions.md --changes /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv/data/TKT-LAB/plans/changes.md
+ok /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv/data/TKT-LAB/plans/reviews/run-proof-claude-opus-5.5.md
+exit=0
+$ python3 /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/contrib/iqx-lenses/mk-lens-brief.py runproof --home /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv --task lens-check --ticket TKT-LAB --plan /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv/data/TKT-LAB/plans/plan.md --dispositions /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv/data/TKT-LAB/plans/dispositions.md --changes /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv/data/TKT-LAB/plans/changes.md
+mk-lens-brief: /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.5m2sjplv/data/lens-check/brief.md must contain {TASK} exactly once (found 0); re-scaffold the brief with bin/fm-brief.sh --scout
+exit=2
+Generated run-proof brief saved; repeat fill refused without mutation.
+=== Allowlisted record snapshots, generations, and symlink refusal ===
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.p2e5o3_c
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.p2e5o3_c
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-record-export.sh sync
+
+exit=0
+Published inventory:
+.firstmate-record-export-root.v1.json
+.live-generations/g1793288465073922776.2622684.ce2772ff01cb47f0b5dd8022b189c538/data/export-check/brief.md
+.live-generations/g1793288465073922776.2622684.ce2772ff01cb47f0b5dd8022b189c538/data/export-check/report.md
+.live-generations/g1793288465073922776.2622684.ce2772ff01cb47f0b5dd8022b189c538/state/export-check.inbox/001.msg
+.live-generations/g1793288465073922776.2622684.ce2772ff01cb47f0b5dd8022b189c538/state/export-check.meta
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-record-export.sh archive-task export-check
+
+exit=0
+{
+  "schema": "firstmate-record-export-archive.v1",
+  "schema_version": 1,
+  "task": "export-check",
+  "spawn_gen": "live-validation-1",
+  "captured_at": "2026-10-29T15:41:05Z",
+  "complete": true,
+  "files": [
+    {
+      "source": "state/export-check.meta",
+      "archive": "meta",
+      "bytes": 39,
+      "sha256": "cb1afbebc703a0026b7663d8ecb82de3c024dcf5406a4f5823b5416c3daab7e1"
+    },
+    {
+      "source": "state/export-check.inbox/001.msg",
+      "archive": "inbox/001.msg",
+      "bytes": 31,
+      "sha256": "d4b578c03ebbbf68430d26a6631ad403d63e545b7e697cd1ff5e5ae4aea17720"
+    }
+  ]
+}
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-record-export.sh sync
+error: data/export-check/report.md is not a regular non-symlink file
+exit=1
+Unsafe input left the complete prior snapshot and sentinel byte-identical.
+=== Local landing refuses an unapproved head, then lands exactly its pinned head ===
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7
+exit=0
+$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/projects/landing
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/projects/landing commit -q --allow-empty -m base
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/projects/landing rev-parse HEAD
+fef643c001119dc0407e0c02d738235295565b66
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/projects/landing worktree add -q -b fm/local-check /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/worker
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/worker add approved.txt
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/worker commit -q -m 'approved change'
+
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/worker rev-parse HEAD
+3162b913167d8de3e29b93f06ab8252163874c52
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-merge-local.sh local-check
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+error: missing or malformed local done head for task local-check; report readiness before approval
+exit=1
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/projects/landing rev-parse HEAD
+fef643c001119dc0407e0c02d738235295565b66
+exit=0
+$ bash -c '. "$1/bin/fm-dod-lib.sh"; fm_dod_accept_ship_done ship local-only "$2" "$3" "done [at=1790000000]: ready in branch fm/local-check" "$4/state" local-check "$4/state/local-check.meta"' _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/worker /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/projects/landing /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7
+
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-merge-local.sh local-check
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+merged fm/local-check into local main (fef643c001119dc0407e0c02d738235295565b66 -> 3162b91) in /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/projects/landing
+exit=0
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.0gmca6c7/projects/landing rev-parse HEAD
+3162b913167d8de3e29b93f06ab8252163874c52
+exit=0
+Landed content: approved commit only
+
+=== Process-event capture and queued-wake de-duplication ===
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.y88wnydx
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.y88wnydx
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-procevent.sh register lavish local-proof -- /usr/bin/printf '%s\n' 'status: feedback' 'prompts[1]{uid,text}:' '  local,Keep fork behavior'
+registered: local-proof (lavish)
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-procevent.sh start local-proof
+not-autohandled: local-proof (left for the handler; still unacknowledged)
+captured: /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.y88wnydx/state/procevent-inbox/local-proof.1.result
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-procevent.sh retire local-proof
+retired: local-proof
+exit=0
+Persisted public wake record:
+1793288468	1	check	procevent:local-proof:1	check: procevent lavish local-proof 1
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-procevent.sh reconcile
+reconciled: published=1 started=0 stopped=0 uncertain=0 failed=0
+exit=0
+Captured result:
+status: feedback
+prompts[1]{uid,text}:
+  local,Keep fork behavior
+
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-procevent.sh handled local-proof 1
+handled: local-proof 1
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-procevent.sh handled local-proof 1
+already-handled: local-proof 1
+exit=0
+$ /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/bin/fm-procevent.sh retire local-proof
+retired: local-proof
+exit=0
+Repeated reconcile preserved one queued wake; repeated acknowledgement did not re-authorize handling.

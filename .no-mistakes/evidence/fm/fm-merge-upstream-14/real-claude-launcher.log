@@ -1,0 +1,8 @@
+host_launcher_before=/home/node/.local/share/claude/versions/2.1.312
+2.1.312 (Claude Code)
+{
+  "loggedIn": true,
+  "authMethod": "claude.ai",
+  "apiProvider": "firstParty"
+}
+host_launcher_after=/home/node/.local/share/claude/versions/2.1.312

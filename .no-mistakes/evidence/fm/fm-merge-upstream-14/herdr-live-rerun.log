@@ -1,0 +1,39 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.lC387Y
+provisioned named isolated session fm-lab-merge-live-2515444-29854
+container=fm-lab-merge-live-2515444-29854:w1 seeded=w1:t1
+task endpoint=fm-lab-merge-live-2515444-29854:w1:p2 tab=w1:t2 identity=proc:2515792:550642af-9afc-4d76-b27d-5778ab863659:30970988
+printf 'REAL-HERDR-ENDPOINT-OK\n'
+.test-phase/tmp/fm-lab.lC387Y on  HEAD [?]
+❯ printf 'REAL-HERDR-ENDPOINT-OK\n'
+REAL-HERDR-ENDPOINT-OK
+.test-phase/tmp/fm-lab.lC387Y on  HEAD [?]
+❯
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.lC387Y
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the requested message WILL still be sent.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-send: doorbell not typed because the agent in fm-lab-merge-live-2515444-29854:w1:p2 has exited; the steer is durably recorded at /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.lC387Y/state/merge-check.inbox/001.msg for recovery (stuck-crewmate-recovery), and the watcher will not re-ring a dead pane
+
+Durable instruction record (public inbox protocol):
+schema=fm-task-inbox.v1
+at=2026-10-29T15:38:04Z
+body-terminator=1
+--
+Keep the preserved fork additions.
+Do not merge without approval.
+
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.lC387Y","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.lC387Y","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65efc770c50c82","workspace_id":"w1"},"type":"pane_info"}}
+Foreign process identity close preserved the exact endpoint as expected
+{"error":{"code":"pane_not_found","message":"pane w1:p2 not found"},"id":"cli:pane:get"}
+Owned endpoint closed and confirmed absent
+fm-herdr-lab: refusing session name 'default'
+Default-session teardown refused
+fm-herdr-lab: run forbids session lifecycle operations; use guarded teardown
+Session lifecycle escape refused
+fm-herdr-lab: run forbids caller-supplied --session; the helper supplies the lab session
+Caller session override refused
+lab teardown complete; default-session tripwire verified; exit=0

@@ -1,0 +1,2 @@
+{"installedPiRPC":"passed","executionsBeforeStop":3,"requestsBeforeStop":4,"operationalResetDenied":true,"userResetAllowed":true,"durableNotice":true}
+ok - Pi 1.4.0 installed RPC read guard: veto, abort, durable latch, operational denial and user reset

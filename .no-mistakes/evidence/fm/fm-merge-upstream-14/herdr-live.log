@@ -1,0 +1,30 @@
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.hWvrIQ
+provisioned named isolated session fm-lab-merge-live-2205808-13919
+container=fm-lab-merge-live-2205808-13919:w1 seeded=w1:t1
+task endpoint=fm-lab-merge-live-2205808-13919:w1:p2 tab=w1:t2 identity=proc:2206780:550642af-9afc-4d76-b27d-5778ab863659:30941364
+printf 'REAL-HERDR-ENDPOINT-OK\n'
+.test-phase/tmp/fm-lab.hWvrIQ on  HEAD [?]
+❯ printf 'REAL-HERDR-ENDPOINT-OK\n'
+REAL-HERDR-ENDPOINT-OK
+.test-phase/tmp/fm-lab.hWvrIQ on  HEAD [?]
+❯
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.hWvrIQ
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the requested message WILL still be sent.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fm-send: doorbell not typed because the agent in fm-lab-merge-live-2205808-13919:w1:p2 has exited; the steer is durably recorded at /home/node/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.hWvrIQ/state/merge-check.inbox/001.msg for recovery (stuck-crewmate-recovery), and the watcher will not re-ring a dead pane
+
+Durable instruction record (public inbox protocol):
+schema=fm-task-inbox.v1
+at=2026-10-29T15:33:08Z
+body-terminator=1
+--
+Keep the preserved fork additions.
+Do not merge without approval.
+
+ERROR: foreign identity was allowed to close
+lab teardown complete; default-session tripwire verified; exit=1

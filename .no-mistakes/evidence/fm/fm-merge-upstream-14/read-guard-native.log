@@ -1,0 +1,5 @@
+{"nativeBashReads": 3, "durableStopNotices": 1, "providerRequests": 4, "source": "Real Pi, native bash, production locks/guards; scripted model workload only"}
+Operational wake did not reset latch or start model work
+{"nativeBashReads": 4, "durableStopNotices": 1, "providerRequests": 6, "source": "Real Pi, native bash, production locks/guards; scripted model workload only"}
+Fresh interactive input reset the guard and one more native read completed
+native read lab removed; fleet tripwire verified; exit=0

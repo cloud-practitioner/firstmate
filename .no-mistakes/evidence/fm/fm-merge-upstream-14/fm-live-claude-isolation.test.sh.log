@@ -1,0 +1,10 @@
+ok - reproduced: sandboxing only XDG_DATA_HOME lets the updater re-point the host launcher and leave it dangling
+ok - a rogue updater run through the shim cannot touch the host launcher or ~/.local
+ok - updater off, scratch HOME/XDG/PATH, real process name
+ok - login, session files, and sibling tools keep working through the mirror
+ok - a nested claude stays in the same sandbox
+ok - the shim refuses when it has nothing to guard
+ok - fm_live_gate guards every claude a live scenario starts and cleans up after itself
+ok - an absolute-shim primary restores the marker and guards a daemon-built claude pane
+ok - an ordinary spawn is unchanged
+ok - Claude and Pi labs guard their shared process environment with either helper enabled

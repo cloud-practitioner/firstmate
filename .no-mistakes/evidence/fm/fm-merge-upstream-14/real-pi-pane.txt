@@ -1,0 +1,40 @@
+ Press ctrl+o to show full startup help and loaded resources.
+
+ Pi can explain its own features and look up its docs. Ask it how to use or extend Pi.
+
+
+[Context]
+  ~/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/AGENTS.md
+
+[Skills]
+  analyze-chat-session, ask-matt, bootstrap-system-context, chief-of-staff, claude-handoff, code-review,
+codebase-design, convert-ui5-to-fiori-elements, create-arc1-extension, debug-slow-sql, diagnosing-bugs,
+domain-modeling, explain-abap-code, find-skills, generate-abap-unit-test, generate-analytics-star-schema,
+generate-cds-analytical-query, generate-cds-unit-test, generate-rap-logic, generate-rap-service,
+generate-rap-service-researched, git-guardrails-claude-code, grill-me, grill-with-docs, grilling, handoff, implement,
+implement-spec, improve-codebase-architecture, loop-me, migrate-custom-code, migrate-segw-to-rap, migrate-to-shoehorn,
+modernize-ui5-app, no-mistakes, pr, prototype, research, resolving-merge-conflicts, retro, sap-clean-core-atc,
+sap-migration-dossier, sap-object-documenter, sap-transport-overview, sap-transport-review, sap-unused-code,
+scaffold-exercises, setup-abap-mirror, setup-matt-pocock-skills, setup-pre-commit, setup-ts-deep-modules, tdd, teach,
+to-questionnaire, to-spec, to-tickets, triage, wait-what, wayfinder, wizard, writing-beats, writing-for-agents,
+writing-fragments, writing-shape
+
+[Extensions]
+  pi-check.pi-ext.ts
+
+
+ Warning: No models available. Use /login to log into a provider via OAuth or API key. See:
+   /workspaces/wp/.pi/install/releases/1.4.0/node_modules/@earendil-works/pi-coding-agent/docs/providers.md
+   /workspaces/wp/.pi/install/releases/1.4.0/node_modules/@earendil-works/pi-coding-agent/docs/models.md
+
+ Error: No API key found for the selected model.
+
+ Use /login to log into a provider via OAuth or API key. See:
+   /workspaces/wp/.pi/install/releases/1.4.0/node_modules/@earendil-works/pi-coding-agent/docs/providers.md
+   /workspaces/wp/.pi/install/releases/1.4.0/node_modules/@earendil-works/pi-coding-agent/docs/models.md
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/450411b3e67c/01M643TH9MB3MKY9CTY96RSFYG/.test-phase/tmp/fm-lab.Dxgd9L/treehouse/.treehouse/...
+0.0%/0 (auto)                                                                                                   unknown

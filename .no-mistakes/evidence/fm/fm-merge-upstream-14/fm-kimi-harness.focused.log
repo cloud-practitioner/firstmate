@@ -1,0 +1,1 @@
+ok - fm-spawn: the task temp root is scoped to the spawning home, and teardown removes only that home's root

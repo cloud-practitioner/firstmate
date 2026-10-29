@@ -1,0 +1,8 @@
+# all fm-spawn-dispatch-profile tests passed
+ok - Pi and pi-signed ship and scout launches stop MCP servers when the home sets MCP off
+ok - an absent or on posture leaves every runtime unaffected
+ok - --mcp overrides the home posture for one task, in either direction
+ok - a runtime that cannot start without MCP servers, or a raw launch, refuses MCP off
+ok - a Pi without --no-mcp refuses MCP off before any endpoint or record
+ok - a malformed or unreadable MCP posture, or a bad --mcp value, refuses before any launch or record
+ok - the MCP posture stays in the home that configured it and skips secondmate agents
