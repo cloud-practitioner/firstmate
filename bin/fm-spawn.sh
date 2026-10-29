@@ -129,17 +129,17 @@
 #   docs/cmux-backend.md),
 #   then tmux.
 #   Spawn-capable backends are the reference tmux adapter, verified herdr
-#   adapter, and experimental zellij, orca, cmux, paseo, rex, and t3code
+#   adapter, and experimental zellij, orca, cmux, paseo, rex, t3code, and tern
 #   adapters. Orca owns both the task worktree and terminal, so ship/scout Orca
-#   spawns do not run treehouse get; cmux, paseo, and rex are session providers
-#   only, exactly like herdr/zellij, so they do. Auto-detected herdr and rex stay
-#   silent like tmux; auto-detected cmux prints a loud stderr notice; zellij,
-#   orca, paseo, and t3code are never auto-detected (paseo's markers leak into
-#   every descendant process).
+#   spawns do not run treehouse get; cmux, paseo, rex, and tern are session
+#   providers only, exactly like herdr/zellij, so they do. Auto-detected herdr
+#   and rex stay silent like tmux; auto-detected cmux prints a loud stderr
+#   notice; zellij, orca, paseo, t3code, and tern are never auto-detected (the
+#   paseo and tern markers leak into every descendant process).
 #   codex-app is not a known backend yet; docs/codex-app-backend.md owns that
 #   blocked backend contract. Default tmux spawns do not write backend= to meta;
-#   absent backend= means tmux. Orca, cmux, and paseo do not support --secondmate
-#   spawns.
+#   absent backend= means tmux. Orca, cmux, paseo, and tern do not support
+#   --secondmate spawns.
 #   A rex crewmate or scout opens one tab in the Rex session the launching
 #   firstmate runs in when it runs directly inside Rex, otherwise in its home's
 #   own Rex session; a --secondmate launch opens its tab in that secondmate
@@ -350,11 +350,24 @@
 #   Only after this isolation check, every fresh ship or scout requires a clean
 #   task worktree. When an origin configuration is detected, spawn fetches it,
 #   resolves the current remote default branch (or uses --base-branch, described
-#   above), and resets to its tip. When none is detected, spawn skips that remote freshness check and launches from the
-#   clean worktree's current HEAD. Relaunch reuses the recorded worktree without
-#   fetching or resetting its base. An unreachable detected origin, unresolved
-#   default branch, or non-clean worktree refuses a fresh spawn rather than
-#   risking a PR based on stale history or discarding local work.
+#   above), and resets to its tip. A home that creates the default-off
+#   config/spawn-base-primary-checkout flag (docs/configuration.md) instead
+#   resets a local-only ship or a scout without --base-branch to that same
+#   branch in the primary checkout when it strictly contains origin's tip: a
+#   local-only project lands work there through bin/fm-merge-local.sh and never
+#   pushes, so origin stays frozen at the last push. A publishing mode
+#   (bin/fm-dod-lib.sh fm_mode_publishes) and a named base branch keep origin's
+#   tip, because that work is delivered against origin. Two branches that have
+#   diverged also keep origin's tip, with a note counting both sides. The
+#   primary's commit is read from the local object store, so nothing more is
+#   fetched, and every base this picks contains origin's tip, so the reset
+#   discards nothing the origin-only rule would have kept. When no origin
+#   configuration is detected, spawn skips that remote freshness check and
+#   launches from the clean worktree's current HEAD. Relaunch reuses the
+#   recorded worktree without fetching or resetting its base. An unreachable
+#   detected origin, unresolved default branch, or non-clean worktree refuses
+#   a fresh spawn rather than risking a PR based on stale history or
+#   discarding local work.
 #   A slot whose only deviation is a stale submodule gitlink is refused by that
 #   same clean check, but is reported as a stale checkout naming each submodule
 #   and both pins; nothing is converged or removed, and no remedy is suggested.
@@ -418,7 +431,8 @@
 #   TMUX TMUX_PANE HERDR_ENV HERDR_SESSION HERDR_SOCKET_PATH HERDR_PANE_ID
 #   CMUX_WORKSPACE_ID CMUX_SURFACE_ID CMUX_TAB_ID CMUX_PANEL_ID CMUX_SOCKET_PATH
 #   ZELLIJ ZELLIJ_SESSION_NAME ZELLIJ_PANE_ID FM_ZELLIJ_SESSION TERM_PROGRAM
-#   REX_SESSION REX_BLOCK REX_SERVER REX_BIN_DIR, plus the task
+#   REX_SESSION REX_BLOCK REX_SERVER REX_BIN_DIR TERN_IDENTITY TERN_PANE
+#   TERN_PANE_SOCKET TERN_WINDOW_KEY TERN_WINDOW_SOCKET, plus the task
 #   marker FM_TASK_ID that ship and scout panes receive above, plus the
 #   compact-adviser kill switch COMPACT_ADVISER_DISABLE, which the floor also
 #   pins to 1 with a literal assignment so it survives the cleared environment
@@ -2295,7 +2309,14 @@ if [ "$RELAUNCH" -eq 0 ]; then
     echo "error: backend=paseo does not support --secondmate spawns yet" >&2
     exit 1
   fi
+  if [ "$BACKEND" = tern ] && [ "$KIND" = secondmate ]; then
+    echo "error: backend=tern does not support --secondmate spawns yet" >&2
+    exit 1
+  fi
   fm_backend_runtime_check "$BACKEND" || exit 1
+  if [ "$BACKEND" = rex ]; then
+    fm_backend_rex_local_server_ensure || exit 1
+  fi
   if [ "$BACKEND" = orca ]; then
     ORCA_LAUNCH_ENV_ENABLED=$(fm_config_source_present "$CONFIG/launch-env-tmux-session") || exit 1
     if [ "$ORCA_LAUNCH_ENV_ENABLED" = 1 ]; then
@@ -3079,7 +3100,7 @@ if [ "$KIND" = secondmate ] && [ "$HARNESS" = rovo ]; then
 fi
 
 # Command Code's idle placeholder reads empty only with a Command Code pane
-# identity, which tmux and Herdr supply and zellij, cmux, orca, and paseo do not, so
+# identity, which tmux and Herdr supply and zellij, cmux, orca, paseo, and tern do not, so
 # there the composer would never read empty and steering would stall.
 if [ "$HARNESS" = commandcode ] && [ "$BACKEND" != tmux ] && [ "$BACKEND" != herdr ]; then
   echo "error: commandcode is verified on the tmux and herdr backends only; backend=$BACKEND cannot prove its composer empty. Select backend tmux or herdr." >&2
@@ -4245,8 +4266,9 @@ BRIEF_REAL="$BRIEF_DIR_REAL/$(basename "$BRIEF")"
 # PROJ_ABS can still carry a symlinked path component (e.g. macOS's /tmp ->
 # /private/tmp) when it came from the ship/scout branch's logical `pwd` above.
 # Every backend's own current-path read (tmux's pane_current_path, herdr's
-# foreground_cwd, zellij/cmux's active pwd probe against the live shell) can
-# report the OS-level, physically-resolved cwd, so comparing it against a
+# foreground_cwd, tern's foreground cwd from `tern process`, zellij/cmux's
+# active pwd probe against the live shell) can report the OS-level,
+# physically-resolved cwd, so comparing it against a
 # still-symlinked PROJ_ABS can misfire both ways: false-negative (the poll
 # below never notices the pane left the project) or false-positive (the
 # isolation guard refuses a spawn that never actually tangled). Canonicalize
@@ -4417,8 +4439,32 @@ spawn_worktree_has_origin_config() { # <worktree>
   return 1
 }
 
-freshen_spawn_worktree_base() { # <worktree> [<base-branch>]; 2 when the worktree is not clean
-  local worktree=$1 base=${2:-} default target expected actual status
+# The opt-in half of the base rule the header owns: return 0 and set
+# SPAWN_PRIMARY_BASE_REV when <project>'s own <default> should be this fresh
+# slot's base instead of origin's tip <origin-rev>. A pool slot shares the
+# primary checkout's object store, so reading that commit fetches nothing, and a
+# commit the slot cannot read keeps origin's tip.
+SPAWN_PRIMARY_BASE_REV=
+spawn_base_from_primary_checkout() { # <worktree> <project> <default> <origin-rev> <mode>
+  local worktree=$1 project=$2 default=$3 origin_rev=$4 mode=$5 primary_rev ahead behind
+  SPAWN_PRIMARY_BASE_REV=
+  if [ -z "$project" ] || fm_mode_publishes "$mode"; then
+    return 1
+  fi
+  primary_rev=$(git -C "$project" rev-parse --verify --quiet "refs/heads/$default^{commit}" 2>/dev/null) || return 1
+  ahead=$(git -C "$worktree" rev-list --count "$origin_rev..$primary_rev" 2>/dev/null) || return 1
+  behind=$(git -C "$worktree" rev-list --count "$primary_rev..$origin_rev" 2>/dev/null) || return 1
+  [ "$ahead" -gt 0 ] || return 1
+  if [ "$behind" -eq 0 ]; then
+    SPAWN_PRIMARY_BASE_REV=$primary_rev
+    return 0
+  fi
+  echo "note: pooled worktree '$worktree': $default in the primary checkout has diverged from origin/$default (ahead by $ahead, behind by $behind); starting from origin's tip" >&2
+  return 1
+}
+
+freshen_spawn_worktree_base() { # <worktree> <base-branch> <project> <mode>; 2 when the worktree is not clean
+  local worktree=$1 base=${2:-} project=${3:-} mode=${4:-} default target expected reset_ref actual status
   status=$(git -C "$worktree" -c core.quotePath=false status --porcelain) || {
     echo "error: could not inspect pooled worktree '$worktree' before refreshing its base" >&2
     return 1
@@ -4463,7 +4509,14 @@ freshen_spawn_worktree_base() { # <worktree> [<base-branch>]; 2 when the worktre
     echo "error: '$target' is not a commit for pooled worktree '$worktree'; refusing to launch from a potentially stale base" >&2
     return 1
   }
-  if ! git -C "$worktree" reset --hard "$target" >/dev/null; then
+  reset_ref=$target
+  if [ -z "$base" ] && [ -e "$CONFIG/spawn-base-primary-checkout" ] \
+    && spawn_base_from_primary_checkout "$worktree" "$project" "$default" "$expected" "$mode"; then
+    target="$default in the primary checkout"
+    expected=$SPAWN_PRIMARY_BASE_REV
+    reset_ref=$expected
+  fi
+  if ! git -C "$worktree" reset --hard "$reset_ref" >/dev/null; then
     echo "error: could not reset pooled worktree '$worktree' to '$target'; refusing to launch from a potentially stale base" >&2
     return 1
   fi
@@ -5002,6 +5055,20 @@ EOF
     fi
     T=$(fm_backend_rex_target "$FM_REX_TASK_SESSION_ID" "$FM_REX_TASK_BLOCK_ID")
     ;;
+  tern)
+    TERN_SESSION_ID=$(fm_backend_tern_container_ensure) || exit 1
+    TERN_TASK_IDS=$(fm_backend_tern_create_task "$W" "$PROJ_ABS") || exit 1
+    read -r TERN_TAB_ID TERN_BLOCK_ID <<EOF
+$TERN_TASK_IDS
+EOF
+    if ! fm_backend_endpoint_u64_valid "$TERN_SESSION_ID" ||
+      ! fm_backend_endpoint_u64_valid "$TERN_TAB_ID" ||
+      ! fm_backend_endpoint_u64_valid "$TERN_BLOCK_ID"; then
+      echo "error: tern did not return a numeric session/tab/block id for $W" >&2
+      exit 1
+    fi
+    T="$TERN_SESSION_ID:$TERN_BLOCK_ID"
+    ;;
   orca)
     set +e
     ORCA_WT_RAW=$(fm_backend_orca_worktree_create "$PROJ_ABS" "$W")
@@ -5076,7 +5143,7 @@ EOF
       [ -n "$WT" ] || { echo "error: treehouse get --lease did not report a worktree for $ID" >&2; exit 1; }
       validate_spawn_worktree "treehouse get --lease" "$WT (leased to $ID; once inspected, release it with 'treehouse return --force $WT' from $PROJ_ABS)"
       T3CODE_LEASED=1
-      freshen_spawn_worktree_base "$WT" "$BASE_BRANCH" || {
+      freshen_spawn_worktree_base "$WT" "$BASE_BRANCH" "$PROJ_ABS" "$MODE" || {
         if [ "$?" -eq 2 ]; then
           T3CODE_LEASED=0
           echo "error: $WT stays leased to $ID; once inspected, release it with 'treehouse return --force $WT' from $PROJ_ABS" >&2
@@ -5122,6 +5189,7 @@ spawn_send_text_line() { # <target> <text>
   paseo) fm_backend_paseo_send_text_line "$1" "$2" "$W" ;;
   rex) fm_backend_rex_send_text_line "$1" "$2" "$W" ;;
   t3code) fm_backend_t3code_send_literal "$1" "$2" ;;
+  tern) fm_backend_tern_send_text_line "$1" "$2" "$W" ;;
   esac
 }
 spawn_current_path() { # <target>
@@ -5132,6 +5200,7 @@ spawn_current_path() { # <target>
   cmux) fm_backend_cmux_current_path "$1" "$W" ;;
   paseo) fm_backend_paseo_current_path "$1" "$W" ;;
   rex) fm_backend_rex_current_path "$1" "$W" ;;
+  tern) fm_backend_tern_current_path "$1" "$W" ;;
   esac
 }
 spawn_send_literal() { # <target> <text>
@@ -5144,6 +5213,7 @@ spawn_send_literal() { # <target> <text>
   paseo) fm_backend_paseo_send_literal "$1" "$2" "$W" ;;
   rex) fm_backend_rex_send_literal "$1" "$2" "$W" ;;
   t3code) fm_backend_t3code_send_literal "$1" "$2" ;;
+  tern) fm_backend_tern_send_literal "$1" "$2" "$W" ;;
   esac
 }
 spawn_send_key() { # <target> <key>
@@ -5156,6 +5226,7 @@ spawn_send_key() { # <target> <key>
   paseo) fm_backend_paseo_send_key "$1" "$2" "$W" ;;
   rex) fm_backend_rex_send_key "$1" "$2" "$W" ;;
   t3code) fm_backend_t3code_send_literal "$1" "$2" ;;
+  tern) fm_backend_tern_send_key "$1" "$2" "$W" ;;
   esac
 }
 
@@ -5751,7 +5822,7 @@ elif [ "$KIND" != secondmate ] && [ "$BACKEND" != orca ]; then
   fi
 fi
 if [ "$RELAUNCH" -eq 0 ] && [ "$KIND" != secondmate ] && [ "$BACKEND" != t3code ]; then
-  freshen_spawn_worktree_base "$WT" "$BASE_BRANCH" || exit 1
+  freshen_spawn_worktree_base "$WT" "$BASE_BRANCH" "$PROJ_ABS" "$MODE" || exit 1
 fi
 
 # Re-assert the durable task copy after either treehouse acquisition or endpoint
@@ -6744,7 +6815,7 @@ SPAWN_META_PATH=$SPAWN_META_TMP
 preserve_relaunch_meta() {
   awk -F= '
     BEGIN {
-      split("window endpoint_task_id worktree project harness kind mode yolo branch tasktmp base_branch upstream_consent mcp forge backup_remote backup_prefix model effort opencode_version account account_provider omp_profile busy_gen spawn_gen approval_mode traceparent backend herdr_session herdr_workspace_id herdr_tab_id herdr_pane_id herdr_process_identity zellij_session zellij_tab_id zellij_pane_id orca_worktree_id terminal cmux_workspace_id cmux_surface_id paseo_terminal_id paseo_workspace_id rex_server rex_session_id rex_window_id rex_block_id t3_thread_id t3_project_id home projects control_relaunch_tx polytoken_session polytoken_port polytoken_credential", keys, " ")
+      split("window endpoint_task_id worktree project harness kind mode yolo branch tasktmp base_branch upstream_consent mcp forge backup_remote backup_prefix model effort opencode_version account account_provider omp_profile busy_gen spawn_gen approval_mode traceparent backend herdr_session herdr_workspace_id herdr_tab_id herdr_pane_id herdr_process_identity zellij_session zellij_tab_id zellij_pane_id orca_worktree_id terminal cmux_workspace_id cmux_surface_id paseo_terminal_id paseo_workspace_id rex_server rex_session_id rex_window_id rex_block_id t3_thread_id t3_project_id tern_session_id tern_tab_id tern_block_id home projects control_relaunch_tx polytoken_session polytoken_port polytoken_credential", keys, " ")
       for (i in keys) owned[keys[i]] = 1
     }
     !($1 in owned)
@@ -6831,6 +6902,11 @@ preserve_relaunch_meta() {
   if [ "$BACKEND" = t3code ]; then
     echo "t3_thread_id=$T"
     echo "t3_project_id=$T3CODE_PROJECT_ID"
+  fi
+  if [ "$BACKEND" = tern ]; then
+    echo "tern_session_id=$TERN_SESSION_ID"
+    echo "tern_tab_id=$TERN_TAB_ID"
+    echo "tern_block_id=$TERN_BLOCK_ID"
   fi
   if [ "$KIND" = secondmate ]; then
     echo "home=$PROJ_ABS"
@@ -7327,6 +7403,7 @@ if [ "$LAUNCH_ENV_ENABLED" = 1 ]; then
     HERDR_PANE_ID CMUX_WORKSPACE_ID CMUX_SURFACE_ID CMUX_TAB_ID CMUX_PANEL_ID \
     CMUX_SOCKET_PATH ZELLIJ ZELLIJ_SESSION_NAME ZELLIJ_PANE_ID FM_ZELLIJ_SESSION \
     TERM_PROGRAM REX_SESSION REX_BLOCK REX_SERVER REX_BIN_DIR \
+    TERN_IDENTITY TERN_PANE TERN_PANE_SOCKET TERN_WINDOW_KEY TERN_WINDOW_SOCKET \
     FM_TASK_ID COMPACT_ADVISER_DISABLE LAVISH_AXI_HOST \
     $LAUNCH_ENV_FORWARD_NAMES; do
     if [ "$ORCA_LAUNCH_ENV_ENABLED" = 1 ]; then
