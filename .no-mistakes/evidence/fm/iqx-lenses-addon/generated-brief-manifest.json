@@ -1,0 +1,26 @@
+{
+  "panel-architect-brief.md": {
+    "bytes": 16878,
+    "sha256": "977bda119b66657fd6bc8b9212b6f39fb117bdfd522fa6e26f21cad969bcc88b"
+  },
+  "panel-clone-path-brief.md": {
+    "bytes": 15703,
+    "sha256": "89af9b6791eaf6b7c54df8d644c30505c55093d822f13ae2fb035ba4eafa7623"
+  },
+  "runproof-primary-brief.md": {
+    "bytes": 43874,
+    "sha256": "c3ac7564bee13442fd6af8439a7e2238a9dc8fd3e93c0990a559648513ccfdcc"
+  },
+  "runproof-second-model-brief.md": {
+    "bytes": 43713,
+    "sha256": "fb589fc23f1b48d9cfe9c1740d569809d53fdab1d036dd98aaef2ae70702403d"
+  },
+  "shadow-copilot-brief.md": {
+    "bytes": 17362,
+    "sha256": "65a27dddc3194dc54f9d42d5e55f39f2a9567902147c8bac4f465e9c80d35cbe"
+  },
+  "shadow-openai-brief.md": {
+    "bytes": 17297,
+    "sha256": "034ac4a9a1d1be6fdb86b7b03f41c953fab8d57bf091ff08e19f25bf004f1cf0"
+  }
+}
