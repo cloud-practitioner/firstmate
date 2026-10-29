@@ -28,9 +28,10 @@ Usage:
 
 Output paths (under <home>/data/<ticket>/plans/):
   panel     reviews/<lens>.md
-  shadow    reviews/shadow/<lens>-<model-last-segment>.md
+  shadow    reviews/shadow/<lens>-<encoded-full-model-id>.md
   runproof  reviews/run-proof-<model-last-segment>.md
   probes    probes/ (plan author prototypes) and probes/panel-<lens>/,
+            probes/shadow-<lens>-<encoded-full-model-id>/,
             probes/run-proof-<model-last-segment>/ (reviewer probe files)
 The task's own data/<task-id>/report.md is a one-line pointer to that path,
 so the scout completion gate finds a report.
@@ -42,12 +43,12 @@ import json
 import os
 import re
 import sys
+from urllib.parse import quote
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 DEFAULT_MODEL = "github-copilot/claude-opus-5.5"
 SECOND_MODEL = "github-copilot/gpt-6.1-sol"
-DEFAULT_BASE = "development/preview"
 DEFAULT_BITBUCKET_ENV = "/workspaces/wp/.secrets/bitbucket.env"
 RUN_LENSES = ("solutions-architect", "security-architect")
 SHARED_TOUCHES = ("runner", "identity", "resume")
@@ -102,6 +103,20 @@ def resolve_home(args):
     if not os.path.isdir(os.path.join(home, "data")):
         die("%s is not a firstmate home (no data/ directory)" % home)
     return home
+
+
+def resolve_base_ref(brief, requested):
+    setups = list(re.finditer(
+        r"(?m)^You are in a disposable git worktree of .*, at a detached HEAD on a clean "
+        r"(?:copy of its base branch\.\nBase branch: (?P<branch>[^\n]+)|default branch\.)$",
+        read(brief),
+    ))
+    if len(setups) != 1:
+        die("%s has an unsupported scout base; re-scaffold with bin/fm-brief.sh --scout" % brief)
+    branch = setups[0].group("branch")
+    if requested is not None and requested != branch:
+        die("--base-branch %r does not match the scaffold's base %r; re-scaffold with the intended base before filling" % (requested, branch))
+    return "origin/%s" % branch if branch else "the default-branch checkout named in Setup"
 
 
 def slug(model):
@@ -226,7 +241,7 @@ def panel_spec(a, home, lock, paths):
     return (
         "1. %s\n"
         "2. Review ONLY as that reviewer. %s no SAP, Jira, Confluence or Bitbucket writes. Inputs: the plan %s (and its earlier in-session review file beside it, "
-        "for context only - form your own view), the repo's AGENTS.md, CLAUDE.md and .claude/ixia-engineering-contract.md, the repo at origin/%s "
+        "for context only - form your own view), the repo's AGENTS.md, CLAUDE.md and .claude/ixia-engineering-contract.md, the repo at %s "
         "(git fetch first; name the commit), and the S4P evidence the plan cites. %s\n"
         "3. Write your output verbatim, in the agent file's required format (findings with severity: BLOCKER / SHOULD-FIX / NIT or as the file says; "
         "each with file:line or plan section and evidence), to %s. Start the file with: reviewer lens, agent file and plugin version, the model you actually run on "
@@ -242,7 +257,7 @@ def panel_spec(a, home, lock, paths):
             ixia_source_block(lock, mode, agentfile, a.bitbucket_env, a.ixia_dir),
             access,
             a.plan,
-            a.base_branch,
+            a.base_ref,
             a.extra,
             paths["out"],
             probe_rule,
@@ -281,7 +296,7 @@ def runproof_spec(a, home, lock, paths):
         "ONE READ ORDER (read in this order and no other):\n"
         "1. The embedded lens text, checklist and sources lock below, in this brief. Read them before anything else; the checklist is the lessons of earlier runs.\n"
         "2. The Ixia contract. %(ixia)s\n"
-        "3. The module at origin/%(base)s in your scratch worktree (git fetch first; name the commit): CLAUDE.md, AGENTS.md, .claude/ixia-engineering-contract.md, "
+        "3. The module at %(base)s in your scratch worktree (git fetch first; name the commit): CLAUDE.md, AGENTS.md, .claude/ixia-engineering-contract.md, "
         "the design principles and the ADRs the plan cites, the runner and the Scenarios the plan reuses, test/support and the fake-SAP simulator.\n"
         "4. Your first inputs about the plan: the plan %(plan)s (state its revision); the dispositions %(disp)s; the plan author's list of what changed since the panel %(changes)s. "
         "Aim the attack at the text the dispositions and the changes wrote (lens text, section 4, step 2). %(extra)s\n"
@@ -304,7 +319,7 @@ def runproof_spec(a, home, lock, paths):
             "model": a.model,
             "plan": a.plan,
             "ixia": ixia_line,
-            "base": a.base_branch,
+            "base": a.base_ref,
             "disp": a.dispositions,
             "changes": a.changes,
             "extra": a.extra,
@@ -394,7 +409,7 @@ def build_parser():
     p.add_argument("--extra", default="", help="extra context sentence appended to the inputs")
     p.add_argument("--owner", default="Product owner", help="how the standing rules name the product owner (default %(default)s)")
     p.add_argument("--intent-file", help="a file of verbatim owner words to append to the captain's intent")
-    p.add_argument("--base-branch", default=DEFAULT_BASE, help="module base branch (default %(default)s)")
+    p.add_argument("--base-branch", help="assert the module base branch matches the scaffold (default: inherit the scaffold's base)")
     p.add_argument("--ixia-source", choices=("pinned", "clone"),
                    help="where the worker reads Ixia (default: pinned for runproof, clone for panel and shadow)")
     p.add_argument("--ixia-dir", help="override the pinned Ixia marketplace copy (default: the path in sources.lock.json)")
@@ -411,6 +426,7 @@ def main(argv):
     brief = os.path.join(home, "data", a.task, "brief.md")
     if not os.path.isfile(brief):
         die("no scaffolded brief at %s (run bin/fm-brief.sh <task> <repo> --scout first)" % brief)
+    a.base_ref = resolve_base_ref(brief, a.base_branch)
     plans = os.path.join(home, "data", a.ticket, "plans")
     a.plan = under_home(home, a.plan)
 
@@ -420,12 +436,14 @@ def main(argv):
         if a.kind == "shadow":
             if not a.shadow_model:
                 die("shadow needs --shadow-model")
-            out = os.path.join(plans, "reviews", "shadow", "%s-%s.md" % (a.lens, slug(a.shadow_model)))
+            reviewer = "%s-%s" % (a.lens, quote(a.shadow_model, safe=""))
+            out = os.path.join(plans, "reviews", "shadow", "%s.md" % reviewer)
         else:
-            out = os.path.join(plans, "reviews", "%s.md" % a.lens)
+            reviewer = a.lens
+            out = os.path.join(plans, "reviews", "%s.md" % reviewer)
         paths = {"out": out}
         if a.lens in RUN_LENSES:
-            paths["probe_out"] = os.path.join(plans, "probes", "panel-%s" % a.lens)
+            paths["probe_out"] = os.path.join(plans, "probes", "%s-%s" % (a.kind, reviewer))
         task_text = standing_intent(a.kind, a.lens, a.plan, a.owner, a.shadow_model)
         spec = panel_spec(a, home, lock, paths)
     else:

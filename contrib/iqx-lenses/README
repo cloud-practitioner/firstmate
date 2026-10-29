@@ -42,25 +42,26 @@ Run from the IQX firstmate home. Name the home explicitly: the generator takes `
 ```bash
 FORK="/absolute/path/to/cloud-practitioner/firstmate"
 HOME_DIR="<the IQX firstmate home>"
+BASE_BRANCH="<module base branch>"
 ```
 
-By hand, one brief at a time. First scaffold the scout brief, then fill it:
+By hand, one brief at a time. First scaffold the scout brief, then fill it. The generator inherits the scaffold's selected base, including a default-branch scaffold without `--base-branch`. An explicit generator `--base-branch` is an assertion and must match the scaffold; it never changes the selected base.
 
 ```bash
-FM_HOME="$HOME_DIR" "$FORK/bin/fm-brief.sh" <task-id> <module-clone> --scout --base-branch <base>
+FM_HOME="$HOME_DIR" "$FORK/bin/fm-brief.sh" <task-id> <module-clone> --scout --base-branch "$BASE_BRANCH"
 
 # 1. a panel reviewer (solutions-architect, security-architect, business-analyst, ux-designer)
 python3 "$FORK/contrib/iqx-lenses/mk-lens-brief.py" panel --home "$HOME_DIR" \
-  --task <task-id> --ticket <ticket-dir> --plan <plan path> --lens solutions-architect
+  --task <task-id> --ticket <ticket-dir> --plan <plan path> --base-branch "$BASE_BRANCH" --lens solutions-architect
 
 # 2. a shadow (comparison) reviewer; it never counts for dispositions
 python3 "$FORK/contrib/iqx-lenses/mk-lens-brief.py" shadow --home "$HOME_DIR" \
-  --task <task-id> --ticket <ticket-dir> --plan <plan path> --lens security-architect \
+  --task <task-id> --ticket <ticket-dir> --plan <plan path> --base-branch "$BASE_BRANCH" --lens security-architect \
   --shadow-model <model id>
 
 # 3. the run-proof lens, after the dispositions
 python3 "$FORK/contrib/iqx-lenses/mk-lens-brief.py" runproof --home "$HOME_DIR" \
-  --task <task-id> --ticket <ticket-dir> --plan <plan path> \
+  --task <task-id> --ticket <ticket-dir> --plan <plan path> --base-branch "$BASE_BRANCH" \
   --dispositions <dispositions file> --changes <what-changed list> \
   --seed "<a seed made for this ticket>" --touches runner
 ```
@@ -72,10 +73,14 @@ Where things go (under `<home>/data/<ticket-dir>/plans/`):
 | What | Path |
 |---|---|
 | panel review | `reviews/<lens>.md` |
-| shadow review | `reviews/shadow/<lens>-<model>.md` |
+| shadow review | `reviews/shadow/<lens>-<encoded-full-model-id>.md` |
 | run-proof report (the one output path) | `reviews/run-proof-<model>.md` |
 | plan author's prototypes | `probes/` (runnable from any checkout) |
-| panel and lens probe files | `probes/panel-<lens>/`, `probes/run-proof-<model>/` |
+| panel probe files | `probes/panel-<lens>/` |
+| shadow probe files | `probes/shadow-<lens>-<encoded-full-model-id>/` |
+| run-proof probe files | `probes/run-proof-<model>/` |
+
+Shadow report and probe paths percent-encode the full model id as one path component (for example `github-copilot/gpt-6.1-sol` becomes `github-copilot%2Fgpt-6.1-sol`), so models with the same final segment still keep separate evidence. Run-proof `<model>` paths use the model id's final segment.
 
 The task's own `data/<task-id>/report.md` is a one-line pointer to the output path, so the scout completion gate finds a report.
 

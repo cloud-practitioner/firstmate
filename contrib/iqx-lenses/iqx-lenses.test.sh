@@ -46,9 +46,12 @@ expect_hasnt() {
 }
 
 scaffold() {
+  local task=$1 branch=${2-development/preview}
+  set --
+  if [ -n "$branch" ]; then set -- --base-branch "$branch"; fi
   FM_HOME="$HOME_T" FM_ROOT_OVERRIDE="$ROOT" FM_DATA_OVERRIDE="$HOME_T/data" \
     FM_STATE_OVERRIDE="$HOME_T/state" FM_CONFIG_OVERRIDE="$HOME_T/config" \
-    bash "$ROOT/bin/fm-brief.sh" "$1" synthetic-module --scout --base-branch development/preview >/dev/null
+    bash "$ROOT/bin/fm-brief.sh" "$task" synthetic-module --scout "$@" >/dev/null
 }
 brief() { echo "$HOME_T/data/$1/brief.md"; }
 
@@ -114,7 +117,7 @@ expect_has "BA: agent file" "$B" "plan-ba.md"
 scaffold t-sh
 python3 "$GEN" shadow --home "$HOME_T" --task t-sh --ticket "$TICKET" --plan "$PLAN_DIR/plan.md" --lens security-architect --shadow-model github-copilot/gpt-6.1-sol --extra "SHADOW-EXTRA-CONTEXT" >/dev/null
 B=$(brief t-sh)
-expect_has "shadow: output path" "$B" "$PLAN_DIR/reviews/shadow/security-architect-gpt-6.1-sol.md"
+expect_has "shadow: output path" "$B" "$PLAN_DIR/reviews/shadow/security-architect-github-copilot%2Fgpt-6.1-sol.md"
 expect_has "shadow: never counts for dispositions" "$B" "its output never counts for dispositions"
 expect_has "shadow: benchmark role" "$B" "SHADOW benchmark reviewer on github-copilot/gpt-6.1-sol"
 expect_has "shadow: extra context kept" "$B" "SHADOW-EXTRA-CONTEXT"
@@ -216,7 +219,7 @@ home, plans, stdout = map(pathlib.Path, sys.argv[1:])
 cases = [
     ("t-arch", plans / "reviews/solutions-architect.md", plans / "probes/panel-solutions-architect"),
     ("t-ba", plans / "reviews/business-analyst.md", None),
-    ("t-sh", plans / "reviews/shadow/security-architect-gpt-6.1-sol.md", plans / "probes/panel-security-architect"),
+    ("t-sh", plans / "reviews/shadow/security-architect-github-copilot%2Fgpt-6.1-sol.md", plans / "probes/shadow-security-architect-github-copilot%2Fgpt-6.1-sol"),
     ("t-pin", plans / "reviews/business-analyst.md", None),
     ("t-rp", plans / "reviews/run-proof-claude-opus-5.5.md", plans / "probes/run-proof-claude-opus-5.5"),
     ("t-rp2", plans / "reviews/run-proof-claude-opus-5.5.md", plans / "probes/run-proof-claude-opus-5.5"),
@@ -225,8 +228,9 @@ cases = [
 ]
 for kind in ("panel", "shadow"):
     for lens in ("solutions-architect", "security-architect", "business-analyst", "ux-designer"):
-        output = plans / "reviews" / (lens + ".md" if kind == "panel" else "shadow/" + lens + "-gpt-6.1-sol.md")
-        probes = plans / ("probes/panel-" + lens) if lens.endswith("architect") else None
+        reviewer = lens if kind == "panel" else lens + "-github-copilot%2Fgpt-6.1-sol"
+        output = plans / "reviews" / (reviewer + ".md" if kind == "panel" else "shadow/" + reviewer + ".md")
+        probes = plans / ("probes/" + kind + "-" + reviewer) if lens.endswith("architect") else None
         cases.append(("t-" + kind + "-" + lens, output, probes))
 for task, output, probes in cases:
     text = (stdout if task == "t-so" else home / "data" / task / "brief.md").read_text()
@@ -242,6 +246,91 @@ for task, output, probes in cases:
     assert "When the report is complete, append `done [at=<epoch>]: {one-line conclusion}`" in dod, task
     assert "Say the plugin version you read in the report header" in text, task
     assert "{TASK}" not in text and "{FIRSTMATE_SPEC}" not in text, task
+PY
+
+for kind in panel shadow runproof runproof-second; do
+  for base_case in named standard default; do
+    case "$base_case" in
+      named) branch=feature/revision; wrong=development/preview ;;
+      standard) branch=development/preview; wrong=feature/revision ;;
+      default) branch=; wrong=development/preview ;;
+    esac
+    task="t-base-$kind-$base_case"
+    scaffold "$task" "$branch"
+    B=$(brief "$task")
+    cp "$B" "$TMP/base-before.md"
+    args=("${kind%-second}" --home "$HOME_T" --task "$task" --ticket "$TICKET" --plan "$PLAN_DIR/plan.md")
+    case "$kind" in
+      panel) args+=(--lens solutions-architect) ;;
+      shadow) args+=(--lens security-architect --shadow-model github-copilot/gpt-6.1-sol) ;;
+      runproof|runproof-second) args+=(--dispositions "$PLAN_DIR/plan-reviews.md" --changes "$PLAN_DIR/what-changed.md" --ixia-dir "$TMP/ixia-ok") ;;
+    esac
+    if [ "$kind" = runproof-second ]; then args+=(--model github-copilot/gpt-6.1-sol); fi
+    python3 "$GEN" "${args[@]}" --stdout >"$TMP/base-output.md"
+    if [ -n "$branch" ]; then
+      expect_has "$kind: inherits $base_case base in setup" "$TMP/base-output.md" "Base branch: $branch"
+      expect_has "$kind: inherits $base_case base in review inputs" "$TMP/base-output.md" "at origin/$branch "
+      python3 "$GEN" "${args[@]}" --base-branch "$branch" --stdout >"$TMP/base-match.md"
+      check "$kind: matching explicit $base_case base preserves output" cmp -s "$TMP/base-output.md" "$TMP/base-match.md"
+    else
+      expect_has "$kind: default-branch setup retained" "$TMP/base-output.md" "at a detached HEAD on a clean default branch."
+      expect_has "$kind: default-branch review inputs agree" "$TMP/base-output.md" "at the default-branch checkout named in Setup "
+      expect_hasnt "$kind: no hardcoded default branch" "$TMP/base-output.md" "origin/development/preview"
+    fi
+    check "$kind: inherited $base_case stdout leaves scaffold untouched" cmp -s "$B" "$TMP/base-before.md"
+    for delivery in write stdout; do
+      delivery_args=()
+      if [ "$delivery" = stdout ]; then delivery_args=(--stdout); fi
+      out=$(python3 "$GEN" "${args[@]}" --base-branch "$wrong" ${delivery_args[@]+"${delivery_args[@]}"} 2>&1) && rc=0 || rc=$?
+      if [ "$rc" -ne 0 ] && grep -q "does not match the scaffold's base" <<<"$out" && cmp -s "$B" "$TMP/base-before.md"; then
+        pass "$kind: mismatched $base_case base refused before $delivery"
+      else
+        fail "$kind: mismatched $base_case base refused before $delivery"
+      fi
+    done
+    python3 "$GEN" "${args[@]}" >/dev/null
+    check "$kind: inherited $base_case write matches stdout" cmp -s "$B" "$TMP/base-output.md"
+  done
+done
+
+for lens in solutions-architect security-architect; do
+  for variant in other-provider other-model; do
+    case "$variant" in
+      other-provider) model=openai/gpt-6.1-sol ;;
+      other-model) model=github-copilot/claude-opus-5.5 ;;
+    esac
+    task="t-shadow-$variant-$lens"
+    scaffold "$task"
+    python3 "$GEN" shadow --home "$HOME_T" --task "$task" --ticket "$TICKET" --plan "$PLAN_DIR/plan.md" \
+      --lens "$lens" --shadow-model "$model" >/dev/null
+  done
+done
+check "concurrent architect reviewers retain separate reports and same-named probes" python3 - "$HOME_T" "$PLAN_DIR" <<'PY'
+import pathlib, re, sys
+home, plans = map(pathlib.Path, sys.argv[1:])
+artifacts = {}
+for lens in ("solutions-architect", "security-architect"):
+    cases = [
+        ("t-panel-" + lens, plans / ("reviews/" + lens + ".md"), plans / ("probes/panel-" + lens)),
+        ("t-shadow-" + lens, plans / ("reviews/shadow/" + lens + "-github-copilot%2Fgpt-6.1-sol.md"), plans / ("probes/shadow-" + lens + "-github-copilot%2Fgpt-6.1-sol")),
+        ("t-shadow-other-provider-" + lens, plans / ("reviews/shadow/" + lens + "-openai%2Fgpt-6.1-sol.md"), plans / ("probes/shadow-" + lens + "-openai%2Fgpt-6.1-sol")),
+        ("t-shadow-other-model-" + lens, plans / ("reviews/shadow/" + lens + "-github-copilot%2Fclaude-opus-5.5.md"), plans / ("probes/shadow-" + lens + "-github-copilot%2Fclaude-opus-5.5")),
+    ]
+    for task, output, probes in cases:
+        text = (home / "data" / task / "brief.md").read_text()
+        rule = next(line for line in text.splitlines() if line.startswith("2. Stay inside this worktree;"))
+        permitted = re.findall(r"`([^`]+)`", rule)
+        assert permitted[0] == str(output), (task, permitted)
+        assert permitted[2] == str(probes), (task, permitted)
+        assert "keep each throwaway probe you run as a file under " + str(probes) + ", runnable from any checkout" in text, task
+        assert "Write your findings to `" + str(output) + "`." in text, task
+        for artifact in (output, probes / "check-target.ts"):
+            assert artifact not in artifacts, (task, artifact)
+            artifact.parent.mkdir(parents=True, exist_ok=True)
+            artifact.write_text(task)
+            artifacts[artifact] = task
+for artifact, task in artifacts.items():
+    assert artifact.read_text() == task, (task, artifact)
 PY
 
 scaffold t-incompatible
