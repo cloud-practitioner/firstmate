@@ -1956,11 +1956,11 @@ fm_failure_episode_reset() {
 #     its owner pid is alive, its recorded identity successfully recomputes
 #     and matches that pid, its owner is still REACHABLE by its session -
 #     either it DESCENDS from the numeric session-lock pid (state/.lock line 1)
-#     or, for a tagged Windows session-lock pid that is outside the local
-#     process table, its recorded owner_session_id matches the trusted session
-#     id beside that lock (state/.lock-session) WHILE the recorded pid-identity
-#     of the lock holder it claimed under (entry line 3) still recomputes from
-#     the lock's current holder pid. A missing or malformed lock means no
+#     or its recorded owner_session_id matches the trusted session id beside
+#     that lock (state/.lock-session) WHILE the recorded session-lock identity
+#     of the holder it claimed under (entry line 3) still recomputes from the
+#     lock's current holder. The second path accepts numeric and tagged Windows
+#     holders alike. A missing or unusable lock means no
 #     session can receive a rewake. The id signal is the second one
 #     the claiming hook's own admission accepts (fm_session_lock_owned_by_self),
 #     so a background session whose bridge is recycled mid-cycle keeps its live

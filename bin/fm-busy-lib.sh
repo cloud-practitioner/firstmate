@@ -1102,10 +1102,10 @@ fm_busy_classify() {  # <backend> <target> <harness> <id> <state-dir> [tail40]
       ;;
   esac
   # No record at all. A native herdr, rex, or tern busy verdict is semantic
-  # enough to trust for BUSY (streaming means a turn is running; rex trusts an
-  # OSC 7501 working record only while its reporting process is still in the
-  # block's foreground chain); native idle is narrower than turn state (a long
-  # foreground tool call reads idle) and stays unknown here.
+  # enough to trust for BUSY (streaming means a turn is running; Rex's
+  # fm_backend_rex_owner_trusted owns OSC 7501 record validation); native idle
+  # is narrower than turn state (a long foreground tool call reads idle) and
+  # stays unknown here.
   case "$backend" in
     herdr|rex|tern)
       if command -v fm_backend_busy_state >/dev/null 2>&1; then

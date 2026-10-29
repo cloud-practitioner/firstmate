@@ -434,7 +434,8 @@ Compacting while the cache is still warm reads the old context at the read price
 The feature is off when the file is absent.
 The file is local to each home and is not inherited.
 The host reads it at every check, so creating or removing it needs no restart.
-It acts only on a home that runs the [supervision host](#supervision-host-configsupervision-host) beside a Claude primary, because the host's park is the primary's idle episode.
+It acts only while the [supervision host](#supervision-host-configsupervision-host) is parked.
+Primary compaction requires a Claude primary; engine compaction can also run beside another supported primary when the host uses a Claude engine conversation with a readable transcript.
 
 The file may be empty or hold these lines, each optional:
 
@@ -449,10 +450,10 @@ A session is compacted when all of these hold:
 - The home opted in.
 - The session has been idle for `idle-seconds`: the primary since its turn ended, the engine conversation since its last handled turn.
 - Its context is at least `min-context-tokens`.
-- It was not already compacted in this idle episode.
-  The host remembers a primary compaction for one park.
-  It records an engine compaction in the engine record, so a later host does not repeat it.
-- For the engine conversation, the next turn would resume it: the same engine, model, and prompt key, and below the rotation limit.
+- No completed attempt is recorded for this idle episode.
+  The host remembers a primary attempt for one park.
+  It records a completed engine attempt, successful or failed, in the engine record, so a later host does not repeat it.
+- For the engine conversation, the next turn would resume it: the same main session, engine, and model, with the recorded prompt still available, and below the rotation limit.
   An abandoned compaction is not recorded, so a later check retries it.
 - For the primary, the agent reads idle and the composer reads provably empty.
   A busy agent, a non-empty composer, or an unproven state defers the compaction; nothing is typed.
@@ -1344,7 +1345,7 @@ devin is verified for crewmate and scout launches only; a secondmate is refused 
 Its private worker config disables Claude Code imports (including the captain's hooks) and, unless the home sets `config/keep-ai-trailers` (see "Commit attribution"), Devin commit attribution without editing user or project config; [`fm-devin-config.sh`](../bin/fm-devin-config.sh) owns these enforced settings and [Devin verification](verification/devin.md) owns the live evidence and observed model availability.
 
 cortex (Snowflake's Cortex Code) is likewise verified for crewmate and scout launches only; a secondmate is refused because Cortex has no verified primary supervision protocol.
-It runs only on the tmux and Herdr backends; a zellij, cmux, orca, paseo, rex, or t3code launch is refused because those backends supply no Cortex pane identity to prove its titled composer empty.
+Its [adapter reference](../.agents/skills/harness-adapters/references/harness/cortex.md#composer-and-steering) owns backend eligibility and the composer-identity requirement.
 Its busy-state and turn-end hooks reach the worker through a private per-task plugin directory passed with `--plugin-dir`, so no user or project Cortex or Claude config is edited; [`fm-cortex-plugin.sh`](../bin/fm-cortex-plugin.sh) owns it and teardown removes it.
 The launch clears `CLAUDECODE` so Herdr's Claude integration hook cannot claim the pane, and it uses `--dangerously-allow-all-tool-calls`, which also skips the project trust dialog without recording the project in Cortex's trust file.
 Cortex loads Claude-compatible hook files with no switch to disable the import, so a worker in a project with Claude hooks runs them.
