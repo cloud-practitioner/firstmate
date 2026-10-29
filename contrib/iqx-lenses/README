@@ -20,8 +20,7 @@ The two Markdown texts use the `.markdown` extension, and this file has none, so
 - `run-proof-lens.markdown` - the lens text. Method by reference to pstack `interrogate` and `arena` Phase F at the locked commit, with pstack's MIT notice; the Ixia overrides; order of work; probe rules; evidence labels (`simulator-tested`, `S4P-seen consequence`, `needs a live check`); the second-model rule; the report shape.
 - `orchestration-checklist.markdown` - the lessons of earlier runs, sent to the lens before its work starts: the seeds, a fixed checklist for every run, the simulator switches and gaps, and the known S4P facts. Each entry has a "Leaves the list when" line. The block of known S4P facts is also given to panel and shadow reviewers.
 - `sources.lock.json` - the pins: the pstack repository and commit (`c742dd61706fbacc1b95f1a20b7b988cf096ce6c`), and the Ixia plugin version (`ixia-stratex` 1.0.23, from the local copy of the marketplace repository, with its commit and the agent file of each lens).
-- `mk-lens-brief.py` - the brief generator (Python 3, standard library only). It fills the two placeholders of a scout brief that `bin/fm-brief.sh --scout` already scaffolded. Three kinds: `panel` (an Ixia lens reviewer), `shadow` (a comparison reviewer for the model benchmark; its output never counts for dispositions), `runproof` (the run-proof lens, with the lens text, checklist and lock embedded).
-- `run-panel.sh` - scaffolds, fills and spawns the reviewers of one ticket through the home's own `bin/fm-brief.sh`, `fm-tasks-axi.sh` and `fm-spawn.sh`. `--dry-run` prints the commands and runs none.
+- `mk-lens-brief.py` - the brief generator (Python 3, standard library only). It fills the two placeholders of a scout brief that `bin/fm-brief.sh --scout` already scaffolded, and adapts its write permissions and Definition of done to the exact report, completion-pointer and probe paths. It refuses an incompatible scaffold rather than leaving conflicting instructions. Three kinds: `panel` (an Ixia lens reviewer), `shadow` (a comparison reviewer for the model benchmark; its output never counts for dispositions), `runproof` (the run-proof lens, with the lens text, checklist and lock embedded).
 - `iqx-lenses.test.sh` - self-contained test, in a temporary home with synthetic data; run `bash contrib/iqx-lenses/iqx-lenses.test.sh`. It lives here, not in `tests/`, so the repository's test inventory and CI do not pick it up.
 
 ## When the run-proof lens runs
@@ -38,7 +37,7 @@ The plan author's part is the cross-check in section 5 of the checklist (fixes t
 
 ## How to use
 
-Run from the IQX firstmate home. Name the home explicitly: the generator and `run-panel.sh` take `--home <dir>` (or `FM_HOME` when `--home` is not given) and refuse when neither is set. A shell can carry another home's `FM_HOME`, so prefer `--home`.
+Run from the IQX firstmate home. Name the home explicitly: the generator takes `--home <dir>` (or `FM_HOME` when `--home` is not given) and refuses when neither is set. A shell can carry another home's `FM_HOME`, so prefer `--home`.
 
 ```bash
 FORK="/absolute/path/to/cloud-practitioner/firstmate"
@@ -68,14 +67,6 @@ python3 "$FORK/contrib/iqx-lenses/mk-lens-brief.py" runproof --home "$HOME_DIR" 
 
 `--touches` (repeatable: `runner`, `identity`, `resume`) says the plan changes the shared runner, the identity unit or a Resume rule; the generator then reports that a second-model run is needed, and the brief says so. Run the generator again with `--model github-copilot/gpt-6.1-sol` (and a new scaffolded task) for that run.
 
-Or the whole set for a ticket, scaffold, fill and spawn in one command:
-
-```bash
-bash "$FORK/contrib/iqx-lenses/run-panel.sh" --home "$HOME_DIR" --ticket-dir <ticket-dir> --key <KEY> --plan <plan path> --dry-run
-# panel: --mode real (default); benchmark: --mode shadow-arch | shadow-sec; lens: --mode runproof
-# drop --dry-run to spawn. Run --mode runproof only after the dispositions exist.
-```
-
 Where things go (under `<home>/data/<ticket-dir>/plans/`):
 
 | What | Path |
@@ -89,19 +80,18 @@ Where things go (under `<home>/data/<ticket-dir>/plans/`):
 The task's own `data/<task-id>/report.md` is a one-line pointer to the output path, so the scout completion gate finds a report.
 
 The generated briefs keep what the IQX home relies on: the standing-rule text, the read-only limits, the Ixia agent file of each lens, "set `FM_HOME` explicitly on every firstmate script", never the `arc-dgw` or `arc-dgw-fab` servers, never the Ixia feedback skill, and no board work.
-Panel and shadow briefs clone the marketplace repository by credential path as before (`--ixia-source clone`, the default); the run-proof brief reads the pinned local copy (`--ixia-source pinned`, the default for it). Either default can be switched with `--ixia-source`. The generator warns when the pinned copy is not the locked version.
+Panel and shadow briefs clone the marketplace repository by credential path as before (`--ixia-source clone`, the default); the run-proof brief reads the pinned local copy (`--ixia-source pinned`, the default for it). Either default can be switched with `--ixia-source`. Every brief tells the reviewer to state the plugin version it read in the report header. The generator warns when the pinned copy is not the locked version.
 Verbatim words of the product owner go into a file given with `--intent-file`; the generator keeps no person's name in the repository (`--owner` sets how the rules name the product owner).
 
 ## Upkeep
 
 - After each ticket, update `orchestration-checklist.markdown` from the run's "What this run taught about the checklist" section: add the new classes, and the simulator gaps and S4P facts the run found.
 - A class that a repository test now covers leaves the list in the same change that adds the test.
-- A seed with no finding in five runs moves to "Retired" with the condition that brings it back.
 - When the pstack commit or the Ixia version changes, read the new text first, then change `sources.lock.json` and any text that depends on it in one commit, and run the test.
 - Another module gets its own checklist file here when it has lessons of its own.
 
 ## Switching over from the untracked scripts
 
 The IQX home's old `state/mk-reviewer.py`, `run-panel.sh`, `spawn-panel.sh` and `mk-iqx-brief.py` are not touched by this folder.
-The home switches to these scripts after this folder is merged; until then both work.
+The home switches to this generator and the scaffold-and-fill sequence after this folder is merged; until then the old scripts remain available.
 `spawn-panel.sh` and `mk-iqx-brief.py` (the plan author's build brief) are not part of this add-on.

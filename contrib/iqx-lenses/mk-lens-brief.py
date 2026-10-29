@@ -5,7 +5,8 @@ Fork-only (cloud-practitioner/firstmate), IQX Bitbucket work only, never
 offered upstream; nothing in core bin/ or skills calls it. See README.
 
 It fills the two placeholders ({TASK}, {FIRSTMATE_SPEC}) of a scout brief that
-bin/fm-brief.sh already wrote at <home>/data/<task-id>/brief.md. Three kinds:
+bin/fm-brief.sh already wrote at <home>/data/<task-id>/brief.md, and adapts its
+write permissions and completion contract to the review and probe paths. Three kinds:
 
   panel     one Ixia plan-gate panel reviewer (a lens, read-only, or read and
             run for the architect lenses)
@@ -50,7 +51,6 @@ DEFAULT_BASE = "development/preview"
 DEFAULT_BITBUCKET_ENV = "/workspaces/wp/.secrets/bitbucket.env"
 RUN_LENSES = ("solutions-architect", "security-architect")
 SHARED_TOUCHES = ("runner", "identity", "resume")
-LAVISH_MARK = "If your deliverable is a visual artifact"
 
 
 def die(msg):
@@ -130,7 +130,7 @@ def ixia_source_block(lock, mode, agentfile, bitbucket_env, ixia_dir):
             body = (
                 "Read the architecture-contract skill and its references there, and the plan-gate and review-panel skills' rules for reviewer output. "
             )
-        return head + body + "Say the plugin version you read (the sources lock names %s)." % ixia["version"]
+        return head + body + "Say the plugin version you read in the report header (the sources lock names %s)." % ixia["version"]
     head = (
         "Clone iqxbusiness/ixia-marketplace shallow into your task temp root (Bitbucket credentials: read %s inside node or python by path; "
         "never source, cat or print it). " % bitbucket_env
@@ -142,7 +142,7 @@ def ixia_source_block(lock, mode, agentfile, bitbucket_env, ixia_dir):
         )
     else:
         body = "Read the architecture-contract skill and its references, and the plan-gate and review-panel skills' rules for reviewer output. "
-    return head + body + "Say the plugin version."
+    return head + body + "Say the plugin version you read in the report header."
 
 
 def warn_version(root, lock):
@@ -214,13 +214,13 @@ def panel_spec(a, home, lock, paths):
             "in your own scratch worktree to check a premise; never edit tracked repo files, never commit or push;"
         )
     else:
-        access = "Read-only: Read, Grep, Glob and git read commands; no edits to the repo, the plan or any file except your output;"
+        access = "Read-only: Read, Grep, Glob and git read commands; no edits to the repo or the plan; all other writes must stay within the scout Rules below;"
     probe_rule = ""
     if run:
         probe_rule = (
             "\n5. Probe files (read-and-run lenses): keep each throwaway probe you run as a file under %s, runnable from any checkout "
             "(no path to another checkout; find the repository root with git rev-parse --show-toplevel), so the run-proof lens and the build can run it again. "
-            "Do not keep probes only in a temporary folder." % paths["panel_probes"]
+            "Do not keep probes only in a temporary folder." % paths["probe_out"]
         )
     n = 6 if run else 5
     return (
@@ -250,15 +250,8 @@ def panel_spec(a, home, lock, paths):
             n + 1,
             indent(known_s4p_facts()),
             n + 2,
-            limits_block(home) + pointer_sentence(paths),
+            limits_block(home),
         )
-    )
-
-
-def pointer_sentence(paths):
-    return (
-        " The one output path is the file above; the scout report gate wants data/<task-id>/report.md, so write that as a single line "
-        "'Report: <output path>' and nothing else."
     )
 
 
@@ -291,13 +284,12 @@ def runproof_spec(a, home, lock, paths):
         "3. The module at origin/%(base)s in your scratch worktree (git fetch first; name the commit): CLAUDE.md, AGENTS.md, .claude/ixia-engineering-contract.md, "
         "the design principles and the ADRs the plan cites, the runner and the Scenarios the plan reuses, test/support and the fake-SAP simulator.\n"
         "4. Your first inputs about the plan: the plan %(plan)s (state its revision); the dispositions %(disp)s; the plan author's list of what changed since the panel %(changes)s. "
-        "Aim the attack at the text the dispositions and the changes wrote (lens text, section 4, step 2).\n"
+        "Aim the attack at the text the dispositions and the changes wrote (lens text, section 4, step 2). %(extra)s\n"
         "5. The plan author's prototypes and the panel's probe files in %(probes)s (start from them; they must run from any checkout).\n"
         "6. NOT YET: the panel reviews in %(reviews)s (every file there except your own output, including the shadow folder and any other run-proof report). "
         "Read them only after the line FROZEN is in your report (lens text, section 4, step 4), then write the comparison.\n\n"
         "ONE OUTPUT PATH: %(out)s. Write the whole report there, in the shape of lens text section 7, and nowhere else. "
         "Keep your probe files in %(probe_out)s, runnable from any checkout, and put the probe source in the report as Appendix A as well. "
-        "The scout report gate wants data/<task-id>/report.md: write it as a single line 'Report: %(out)s' and nothing else.\n"
         "Start the report with the header table (lens text section 7): lens, method references, the Ixia contract version you read, plan revision, code commit, "
         "the exact model id you run on, date.\n\n"
         "Seeds made for this ticket (checklist section 1.9; add your own from the plan's premises and test list):\n%(seeds)s\n\n"
@@ -315,6 +307,7 @@ def runproof_spec(a, home, lock, paths):
             "base": a.base_branch,
             "disp": a.dispositions,
             "changes": a.changes,
+            "extra": a.extra,
             "probes": paths["probes"],
             "reviews": paths["reviews"],
             "out": out_file,
@@ -344,18 +337,40 @@ def second_note_text(a):
     return ""
 
 
-def fill(brief_path, task_text, spec_text):
+def fill(brief_path, task_text, spec_text, paths):
     s = read(brief_path)
     for tok in ("{TASK}", "{FIRSTMATE_SPEC}"):
         if s.count(tok) != 1:
             die("%s must contain %s exactly once (found %d); re-scaffold the brief with bin/fm-brief.sh --scout" % (brief_path, tok, s.count(tok)))
-    s = re.sub(r"\{TASK\}|\{FIRSTMATE_SPEC\}", lambda m: task_text if m.group(0) == "{TASK}" else spec_text, s)
-    i = s.find(LAVISH_MARK)
-    if i >= 0:
-        j = s.find("\n", i)
-        j = len(s) if j < 0 else j
-        s = s[:i] + "No board work: do not arm, poll or edit any board." + s[j:]
-    return s
+    report = os.path.join(os.path.dirname(brief_path), "report.md")
+    probe_permission = "probe files under `%s`, " % paths["probe_out"] if paths.get("probe_out") else ""
+    standalone = "The report must stand alone: what you did, what you found, the evidence (commands run, output, file:line references), and what you recommend."
+    replacements = (
+        (
+            "2. Stay inside this worktree; the only files you may write outside it are the report, the status file below, and scratch files under your task temp root.",
+            "2. Stay inside this worktree; the only files you may write outside it are the findings report `%s`, the completion pointer `%s`, %sthe status file below, and scratch files under your task temp root."
+            % (paths["out"], report, probe_permission),
+        ),
+        (
+            "Write your findings to `%s`.\n%s" % (report, standalone),
+            "Write your findings to `%s`.\n%s\nWrite `%s` as a single line `Report: %s` and nothing else; it is only the scout completion pointer."
+            % (paths["out"], standalone, report, paths["out"]),
+        ),
+        (
+            "The report is the only thing that survives, so anything worth keeping must be in it.",
+            "The findings report is the durable record; include all evidence worth keeping in it, along with the source of any retained probes.",
+        ),
+    )
+    for old, new in replacements:
+        if s.count(old) != 1:
+            die("%s has an unsupported scout scaffold; re-scaffold with bin/fm-brief.sh --scout" % brief_path)
+        s = s.replace(old, new, 1)
+    s = re.sub(
+        r"(?m)^(?:If your deliverable is a visual artifact|Lavish is unavailable).*",
+        "No board work: do not arm, poll or edit any board.",
+        s,
+    )
+    return re.sub(r"\{TASK\}|\{FIRSTMATE_SPEC\}", lambda m: task_text if m.group(0) == "{TASK}" else spec_text, s)
 
 
 def build_parser():
@@ -408,7 +423,9 @@ def main(argv):
             out = os.path.join(plans, "reviews", "shadow", "%s-%s.md" % (a.lens, slug(a.shadow_model)))
         else:
             out = os.path.join(plans, "reviews", "%s.md" % a.lens)
-        paths = {"out": out, "panel_probes": os.path.join(plans, "probes", "panel-%s" % a.lens)}
+        paths = {"out": out}
+        if a.lens in RUN_LENSES:
+            paths["probe_out"] = os.path.join(plans, "probes", "panel-%s" % a.lens)
         task_text = standing_intent(a.kind, a.lens, a.plan, a.owner, a.shadow_model)
         spec = panel_spec(a, home, lock, paths)
     else:
@@ -433,7 +450,7 @@ def main(argv):
 
     if a.intent_file:
         task_text += "\n\n" + read(a.intent_file).strip()
-    text = fill(brief, task_text, spec)
+    text = fill(brief, task_text, spec, paths)
     if a.stdout:
         sys.stdout.write(text)
         return 0

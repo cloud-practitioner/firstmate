@@ -9,8 +9,8 @@ Another module gets its own file in this folder when it has its own lessons.
 
 Upkeep rule: every entry has a "Leaves the list when" line.
 When a repository test covers a class, remove the entry in the same change that adds the test.
-After each ticket, add the new classes the run found and drop what no longer earns its place.
-An entry with no finding in five runs moves to "Retired" with a one-line condition to bring it back.
+After each ticket, add the new classes the run found.
+Required seed and checklist classes leave the list only when a repository test covers them, not after a number of clean runs.
 
 Evidence labels used below: `simulator-tested`, `S4P-seen consequence`, `needs a live check` (the lens text defines them).
 
@@ -73,10 +73,8 @@ Seeds made for the ticket (section 1.9) come from the plan's own premises and te
 - Seed these only when the plan changes the identity unit, changes the target check, or builds a PATCH body from a whole row. The shared code is mature, and these found nothing when the plan did none of those.
 - Leaves the list when: a repository test covers each of the three on the shared code and the plan does not change it.
 
-### 1.8 Retired seed: a Resume sends a succeeded write again
+### 1.8 Replaced seed: a Resume sends a succeeded write again
 
-- Result: no finding in five runs; ten probes dropped.
-- Brought back only when the plan touches the runner's Resume path or adds a hook that writes.
 - Replaced by the three Resume seeds above (1.2, 1.3, 1.3a).
 
 ### 1.9 Seeds made for the ticket
