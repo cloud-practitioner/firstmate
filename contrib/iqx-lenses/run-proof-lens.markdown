@@ -20,7 +20,7 @@ It does not replace the Ixia review panel and does not apply fixes.
 
 The method comes from pstack, by reference. Nothing from pstack is installed or enabled.
 
-- Repository: `https://github.com/cursor/plugins`, folder `pstack/`, commit `c742dd61706fbacc1b95f1a20b7b988cf096ce6c` (see `sources.lock.json`).
+- Repository, folder and exact commit: the `pstack` block in the embedded `sources.lock.json`.
 - `pstack/skills/interrogate/SKILL.md`: adversaries try to break a change or a design; "A finding survives only when a run proves it. Report the findings. Do not apply fixes."
 - `pstack/skills/arena/SKILL.md`, Phase F (Verify), as `interrogate` uses it: verify each finding by running its command again. Keep a finding when the output shows the failure and the failure breaks the intent. Drop the rest. Merge findings that share a root cause.
 - Read both files from a shallow clone at the locked commit in your task temp root, if you want the full text. The lens text here is complete without them.
@@ -55,7 +55,10 @@ SOFTWARE.
 
 ## 3. Ixia overrides
 
-- **The Ixia contract wins over pstack.** Read it from the pinned local copy named in `sources.lock.json` (plugin `ixia-stratex`, version 1.0.23), read-only. State the version you read in the report header. If the pinned copy has another version than the lock, say so in the header and go on.
+- **The Ixia contract wins over pstack.**
+  Read it read-only from the pinned local copy named in the embedded `sources.lock.json` (`ixia` block).
+  State the version you read in the report header.
+  If the pinned copy has another version than the lock, say so in the header and go on.
 - Do not copy Ixia plugin text into a report or into a repository. Name the file and the rule.
 - **Severities are Ixia's words:** BLOCKER, SHOULD-FIX, CONSIDER.
 - **Read-only limits.** No SAP, Jira, Confluence or Bitbucket write. No commit, push or pull request outside your scratch worktree. Never use the `arc-dgw` or `arc-dgw-fab` MCP servers. Never run the Ixia feedback skill. Never read, print or commit a secret; read a credential file by path inside a program, never with `cat`, `source` or `echo`.
@@ -85,7 +88,8 @@ Follow this order. One read order, one output path (the brief names the path).
 - **Where the plan describes code that is not built**, probe the existing code the plan says it reuses, run the plan's rule as written on a prototype, and say which of the two each finding is.
 - **Runnable from any checkout.** Keep probe files in the probes folder the brief names, with no path to another checkout. Find the repository root with `git rev-parse --show-toplevel`. Keep the probe source in the report too, because the scratch checkout is deleted.
 - **Simulator switches.** Name the switches and value lists each probe needs, and say what the simulator lacks (see the checklist, section 3). A rule the simulator cannot show is not dropped; it is labelled.
-- Throwaway probe scripts go in your scratch worktree or task temp folder. Never edit a tracked repository file outside the scratch worktree.
+- Temporary helper files may stay in your scratch worktree or task temp folder; retain the probe files as above.
+  Never edit a tracked repository file outside the scratch worktree.
 
 ## 6. Evidence labels
 

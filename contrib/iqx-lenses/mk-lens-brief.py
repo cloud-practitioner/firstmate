@@ -30,11 +30,15 @@ Output paths (under <home>/data/<ticket>/plans/):
   panel     reviews/<lens>.md
   shadow    reviews/shadow/<lens>-<encoded-full-model-id>.md
   runproof  reviews/run-proof-<model-last-segment>.md
-  probes    probes/ (plan author prototypes) and probes/panel-<lens>/,
-            probes/shadow-<lens>-<encoded-full-model-id>/,
-            probes/run-proof-<model-last-segment>/ (reviewer probe files)
-The task's own data/<task-id>/report.md is a one-line pointer to that path,
-so the scout completion gate finds a report.
+  probes    probes/ (plan author prototypes), probes/panel-<lens>/ and
+            probes/shadow-<lens>-<encoded-full-model-id>/ (architect lenses only),
+            probes/run-proof-<model-last-segment>/ (run-proof reviewer files)
+Shadow paths percent-encode the full model id as one path component: for example,
+github-copilot/gpt-6.1-sol becomes github-copilot%2Fgpt-6.1-sol, so providers
+with the same final model segment retain separate evidence. Run-proof paths
+use only the final segment of the model id.
+The task's own data/<task-id>/report.md contains only the single line
+Report: <output-path>, so the scout completion gate finds a report.
 
 Standard library only; Python 3.8 or newer.
 """

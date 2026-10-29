@@ -15,25 +15,19 @@ It also keeps the tooling that fills the briefs of all those reviewers, which us
 
 ## Files
 
-The two Markdown texts use the `.markdown` extension, and this file has none, so the repository's maintained-prose check (`*.md`) does not classify fork-only text.
+These fork-only text files fall outside the fixed scope in [the documentation inventory](../../docs/documentation-audiences.json); see [the audience policy](../../docs/documentation-audiences.md).
 
 - `run-proof-lens.markdown` - the lens text. Method by reference to pstack `interrogate` and `arena` Phase F at the locked commit, with pstack's MIT notice; the Ixia overrides; order of work; probe rules; evidence labels (`simulator-tested`, `S4P-seen consequence`, `needs a live check`); the second-model rule; the report shape.
 - `orchestration-checklist.markdown` - the lessons of earlier runs, sent to the lens before its work starts: the seeds, a fixed checklist for every run, the simulator switches and gaps, and the known S4P facts. Each entry has a "Leaves the list when" line. The block of known S4P facts is also given to panel and shadow reviewers.
-- `sources.lock.json` - the pins: the pstack repository and commit (`c742dd61706fbacc1b95f1a20b7b988cf096ce6c`), and the Ixia plugin version (`ixia-stratex` 1.0.23, from the local copy of the marketplace repository, with its commit and the agent file of each lens).
+- [`sources.lock.json`](sources.lock.json) - the authoritative pstack and Ixia pins, local-copy location and lens agent-file mapping.
 - `mk-lens-brief.py` - the brief generator (Python 3, standard library only). It fills the two placeholders of a scout brief that `bin/fm-brief.sh --scout` already scaffolded, and adapts its write permissions and Definition of done to the exact report, completion-pointer and probe paths. It refuses an incompatible scaffold rather than leaving conflicting instructions. Three kinds: `panel` (an Ixia lens reviewer), `shadow` (a comparison reviewer for the model benchmark; its output never counts for dispositions), `runproof` (the run-proof lens, with the lens text, checklist and lock embedded).
 - `iqx-lenses.test.sh` - self-contained test, in a temporary home with synthetic data; run `bash contrib/iqx-lenses/iqx-lenses.test.sh`. It lives here, not in `tests/`, so the repository's test inventory and CI do not pick it up.
 
-## When the run-proof lens runs
+## Gate rules
 
-- **Scope.** In a Tier A plan gate, when the plan changes code that the simulator or a test harness can run.
-- **Skip** for a Tier A plan with nothing to run offline: documentation only, infrastructure layout, contract text.
-- **Timing.** After the panel's dispositions and before the plan go. Its questions go to the product owner with the plan-go questions, in one decision round.
-- **Not in parallel with the panel**, and **no second lens pass** on the finished branch for now.
-- **Models.** `claude-opus-5.5` by default. Add a second model (`gpt-6.1-sol`, the only other model tested) when the plan changes the shared runner, the identity unit or a Resume rule.
-- **Inputs.** The dispositions and the plan author's "what changed since the panel" list from the start; the panel reviews only after the lens has frozen its findings. One read order, one output path.
-
-The panel changes that go with it (they are in the generated panel briefs): no second panel round, the lens is the check of the revision after the dispositions; panel probe files are kept with the plan; each runtime claim in a review or disposition is labelled `[run]` or `[read]`; the panel gets the same known S4P facts; the panel keeps its role for product decisions, documentation, wording, order, tenancy and cost.
-The plan author's part is the cross-check in section 5 of the checklist (fixes that touch the same output field, or the same SAP field from two writers), before each revision.
+See [the lens text](run-proof-lens.markdown#1-when-it-runs) for scope, skips, timing and model selection, and its [order of work](run-proof-lens.markdown#4-order-of-work) for input sequencing.
+The generated panel briefs (`panel_spec` in [`mk-lens-brief.py`](mk-lens-brief.py)) own the panel's revised review contract.
+The plan author's revision duties are in [checklist section 5](orchestration-checklist.markdown#5-plan-author-cross-check-before-each-revision).
 
 ## How to use
 
@@ -45,7 +39,10 @@ HOME_DIR="<the IQX firstmate home>"
 BASE_BRANCH="<module base branch>"
 ```
 
-By hand, one brief at a time. First scaffold the scout brief, then fill it. The generator inherits the scaffold's selected base, including a default-branch scaffold without `--base-branch`. An explicit generator `--base-branch` is an assertion and must match the scaffold; it never changes the selected base.
+By hand, one brief at a time: use a fresh task and repeat the scaffold command for each reviewer before filling its brief.
+The generator only prepares instructions; it does not launch reviewers.
+The generator inherits the scaffold's selected base, including a default-branch scaffold without `--base-branch`.
+An explicit generator `--base-branch` is an assertion and must match the scaffold; it never changes the selected base.
 
 ```bash
 FM_HOME="$HOME_DIR" "$FORK/bin/fm-brief.sh" <task-id> <module-clone> --scout --base-branch "$BASE_BRANCH"
@@ -68,21 +65,8 @@ python3 "$FORK/contrib/iqx-lenses/mk-lens-brief.py" runproof --home "$HOME_DIR" 
 
 `--touches` (repeatable: `runner`, `identity`, `resume`) says the plan changes the shared runner, the identity unit or a Resume rule; the generator then reports that a second-model run is needed, and the brief says so. Run the generator again with `--model github-copilot/gpt-6.1-sol` (and a new scaffolded task) for that run.
 
-Where things go (under `<home>/data/<ticket-dir>/plans/`):
-
-| What | Path |
-|---|---|
-| panel review | `reviews/<lens>.md` |
-| shadow review | `reviews/shadow/<lens>-<encoded-full-model-id>.md` |
-| run-proof report (the one output path) | `reviews/run-proof-<model>.md` |
-| plan author's prototypes | `probes/` (runnable from any checkout) |
-| panel probe files | `probes/panel-<lens>/` |
-| shadow probe files | `probes/shadow-<lens>-<encoded-full-model-id>/` |
-| run-proof probe files | `probes/run-proof-<model>/` |
-
-Shadow report and probe paths percent-encode the full model id as one path component (for example `github-copilot/gpt-6.1-sol` becomes `github-copilot%2Fgpt-6.1-sol`), so models with the same final segment still keep separate evidence. Run-proof `<model>` paths use the model id's final segment.
-
-The task's own `data/<task-id>/report.md` is a one-line pointer to the output path, so the scout completion gate finds a report.
+The [generator's header](mk-lens-brief.py) owns the report and probe layout, model-id encoding and scout completion-pointer format.
+The filled brief names the exact paths permitted for that reviewer.
 
 The generated briefs keep what the IQX home relies on: the standing-rule text, the read-only limits, the Ixia agent file of each lens, "set `FM_HOME` explicitly on every firstmate script", never the `arc-dgw` or `arc-dgw-fab` servers, never the Ixia feedback skill, and no board work.
 Panel and shadow briefs clone the marketplace repository by credential path as before (`--ixia-source clone`, the default); the run-proof brief reads the pinned local copy (`--ixia-source pinned`, the default for it). Either default can be switched with `--ixia-source`. Every brief tells the reviewer to state the plugin version it read in the report header. The generator warns when the pinned copy is not the locked version.
@@ -91,10 +75,8 @@ Verbatim words of the product owner go into a file given with `--intent-file`; t
 
 ## Upkeep
 
-- After each ticket, update `orchestration-checklist.markdown` from the run's "What this run taught about the checklist" section: add the new classes, and the simulator gaps and S4P facts the run found.
-- A class that a repository test now covers leaves the list in the same change that adds the test.
+- Follow the [checklist's upkeep rule](orchestration-checklist.markdown) after each ticket, using the report's "What this run taught about the checklist" section.
 - When the pstack commit or the Ixia version changes, read the new text first, then change `sources.lock.json` and any text that depends on it in one commit, and run the test.
-- Another module gets its own checklist file here when it has lessons of its own.
 
 ## Switching over from the untracked scripts
 

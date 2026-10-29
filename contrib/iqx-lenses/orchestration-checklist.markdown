@@ -195,6 +195,7 @@ Each fact leaves the list when the simulator models it, or when a live check dis
 ## 5. Plan-author cross-check (before each revision)
 
 This is a rule for the plan author, not for a reviewer.
+In dispositions, label each runtime claim `[run]` with its command and output, or `[read]` when supported only by inspection.
 Before each plan revision, list the fixes that touch the same output field, and the fixes that touch the same SAP field from two writers.
 Probe each pair together.
 Two accepted fixes from two reviewers collided on the same output field in a first run, and no single reviewer saw both.
