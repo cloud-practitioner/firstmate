@@ -299,7 +299,7 @@ Unknown backend names fail loudly.
 For compatibility, default tmux tasks do not write `backend=tmux`; every reader treats a missing `backend=` field as `tmux`.
 `fm-watch.sh` decides each window's busy state through the semantic contract above rather than by polling the backend for rendered text.
 Herdr's native `agent.get` verdict still participates, but only as evidence of activity: a native `busy` is accepted when the task has no record of its own, while a native `idle` is not, because `agent.get` reports generation state and reads idle while a worker blocks on its own long-running foreground tool call.
-Rex's OSC 7501 program status participates as positive activity evidence under the [Rex record-ownership rule](rex-backend.md#current-operation-and-safety).
+Rex's OSC 7501 program status participates the same way, as positive activity evidence only, and only while the process that reported it is still in the block's foreground chain.
 tern can supply native busy/idle/blocked vocabulary from `tern ctl` agent state when a window control endpoint is available (`working`→busy, `idle`→idle, `waiting_input`→blocked); Herdr's own busy_state folds blocked into idle, while tern keeps the extra distinction, and shared consumers still key only on the exact word `busy` so blocked is not-busy like herdr idle; when `ctl` is unavailable tern degrades to `unknown` rather than failing hard.
 tmux, zellij, orca, cmux, and Paseo expose no native busy primitive at all, so a task on those backends is classified purely from its adapter's own lifecycle record.
 [`t3code-backend.md`](t3code-backend.md#restart-and-liveness-behavior) owns T3's native classification and its precedence over harness records.

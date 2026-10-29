@@ -3,8 +3,9 @@
 # supervision host's engine conversation (one owner of both).
 #
 # Sourced, never executed. The supervision host (bin/fm-supervision-host.sh)
-# calls it while it is parked. docs/configuration.md "Warm-cache compaction"
-# owns the applicable sessions, home gate, and tunables.
+# calls it while it is parked, so the trigger lives on the Claude adapter path.
+# docs/configuration.md "Warm-cache compaction" owns the home gate and its
+# tunables.
 #
 # WHY. A session that sits idle past its prompt-cache lifetime re-writes its
 # whole context at the cache-write price on the next turn. Compacting while the
