@@ -358,6 +358,10 @@ def fill(brief_path, task_text, spec_text, paths):
         if s.count(tok) != 1:
             die("%s must contain %s exactly once (found %d); re-scaffold the brief with bin/fm-brief.sh --scout" % (brief_path, tok, s.count(tok)))
     report = os.path.join(os.path.dirname(brief_path), "report.md")
+    scaffold_reports = re.findall(r"(?m)^# Definition of done\nWrite your findings to `([^`\n]+)`\.$", s)
+    if (len(scaffold_reports) != 1 or not os.path.isabs(scaffold_reports[0])
+            or os.path.realpath(scaffold_reports[0]) != os.path.realpath(report)):
+        die("%s has an unsupported scout report path; re-scaffold with bin/fm-brief.sh --scout" % brief_path)
     probe_permission = "probe files under `%s`, " % paths["probe_out"] if paths.get("probe_out") else ""
     standalone = "The report must stand alone: what you did, what you found, the evidence (commands run, output, file:line references), and what you recommend."
     replacements = (
@@ -367,7 +371,7 @@ def fill(brief_path, task_text, spec_text, paths):
             % (paths["out"], report, probe_permission),
         ),
         (
-            "Write your findings to `%s`.\n%s" % (report, standalone),
+            "Write your findings to `%s`.\n%s" % (scaffold_reports[0], standalone),
             "Write your findings to `%s`.\n%s\nWrite `%s` as a single line `Report: %s` and nothing else; it is only the scout completion pointer."
             % (paths["out"], standalone, report, paths["out"]),
         ),

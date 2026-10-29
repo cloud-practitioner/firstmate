@@ -401,6 +401,64 @@ for kind in ("panel", "shadow", "runproof", "runproof-second"):
                 assert "SYNTHETIC_CREDENTIAL_FILE" not in emitted.stdout + emitted.stderr, task
 PY
 
+LINK_HOME="$TMP/linked-home"
+ln -s "$HOME_T" "$LINK_HOME"
+for kind in panel shadow runproof runproof-second; do
+  for spelling in linked-linked linked-canonical canonical-linked; do
+    case "$spelling" in
+      linked-linked) scaffold_home=$LINK_HOME; generator_home=$LINK_HOME ;;
+      linked-canonical) scaffold_home=$LINK_HOME; generator_home=$HOME_T ;;
+      canonical-linked) scaffold_home=$HOME_T; generator_home=$LINK_HOME ;;
+    esac
+    task="t-home-$kind-$spelling"
+    HOME_T="$scaffold_home" scaffold "$task"
+    B=$(brief "$task")
+    expect_has "$kind: $spelling scaffold preserves its report spelling" "$B" "Write your findings to \`$scaffold_home/data/$task/report.md\`."
+    check "$kind: $spelling report does not yet exist" test ! -e "$HOME_T/data/$task/report.md"
+    cp "$B" "$TMP/home-before.md"
+    args=("${kind%-second}" --home "$generator_home" --task "$task" --ticket "$TICKET" --plan "$PLAN_DIR/plan.md")
+    case "$kind" in
+      panel) args+=(--lens solutions-architect) ;;
+      shadow) args+=(--lens security-architect --shadow-model github-copilot/gpt-6.1-sol) ;;
+      runproof|runproof-second) args+=(--dispositions "$PLAN_DIR/plan-reviews.md" --changes "$PLAN_DIR/what-changed.md" --ixia-dir "$TMP/ixia-ok") ;;
+    esac
+    if [ "$kind" = runproof-second ]; then args+=(--model github-copilot/gpt-6.1-sol); fi
+    python3 "$GEN" "${args[@]}" --stdout >"$TMP/home-output.md"
+    check "$kind: $spelling stdout preserves scaffold" cmp -s "$B" "$TMP/home-before.md"
+    expect_has "$kind: $spelling output names the expected task report" "$TMP/home-output.md" "Write \`$HOME_T/data/$task/report.md\` as a single line"
+    expect_hasnt "$kind: $spelling original report instruction was replaced" "$TMP/home-output.md" "Write your findings to \`$scaffold_home/data/$task/report.md\`."
+    python3 "$GEN" "${args[@]}" >/dev/null
+    check "$kind: $spelling write matches stdout" cmp -s "$B" "$TMP/home-output.md"
+  done
+done
+
+for invalid in wrong-task wrong-home; do
+  task="t-home-$invalid"
+  HOME_T="$LINK_HOME" scaffold "$task"
+  B=$(brief "$task")
+  case "$invalid" in
+    wrong-task) target="$LINK_HOME/data/another-task/report.md" ;;
+    wrong-home) target="$TMP/another-home/data/$task/report.md" ;;
+  esac
+  python3 - "$B" "$target" <<'PY'
+import pathlib, re, sys
+brief = pathlib.Path(sys.argv[1])
+brief.write_text(re.sub(r"(?m)^Write your findings to `[^`\n]+`\.$", lambda _: "Write your findings to `" + sys.argv[2] + "`.", brief.read_text(), count=1))
+PY
+  cp "$B" "$TMP/home-invalid-before.md"
+  for delivery in write stdout; do
+    delivery_args=()
+    if [ "$delivery" = stdout ]; then delivery_args=(--stdout); fi
+    out=$(python3 "$GEN" panel --home "$LINK_HOME" --task "$task" --ticket "$TICKET" --plan "$PLAN_DIR/plan.md" \
+      --lens business-analyst ${delivery_args[@]+"${delivery_args[@]}"} 2>&1) && rc=0 || rc=$?
+    if [ "$rc" -ne 0 ] && grep -q 'unsupported scout report path' <<<"$out" && cmp -s "$B" "$TMP/home-invalid-before.md"; then
+      pass "$invalid report is refused before $delivery without modifying the brief"
+    else
+      fail "$invalid report is refused before $delivery without modifying the brief"
+    fi
+  done
+done
+
 scaffold t-incompatible
 B=$(brief t-incompatible)
 python3 - "$B" <<'PY'
