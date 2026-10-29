@@ -86,6 +86,7 @@ The task's own `data/<task-id>/report.md` is a one-line pointer to the output pa
 
 The generated briefs keep what the IQX home relies on: the standing-rule text, the read-only limits, the Ixia agent file of each lens, "set `FM_HOME` explicitly on every firstmate script", never the `arc-dgw` or `arc-dgw-fab` servers, never the Ixia feedback skill, and no board work.
 Panel and shadow briefs clone the marketplace repository by credential path as before (`--ixia-source clone`, the default); the run-proof brief reads the pinned local copy (`--ixia-source pinned`, the default for it). Either default can be switched with `--ixia-source`. Every brief tells the reviewer to state the plugin version it read in the report header. The generator warns when the pinned copy is not the locked version.
+Relative `--ixia-dir` and `--bitbucket-env` paths resolve against the generator's invocation directory, not `--home`; the generator emits absolute dependency paths so reviewers can use them from their own checkout.
 Verbatim words of the product owner go into a file given with `--intent-file`; the generator keeps no person's name in the repository (`--owner` sets how the rules name the product owner).
 
 ## Upkeep

@@ -333,6 +333,74 @@ for artifact, task in artifacts.items():
     assert artifact.read_text() == task, (task, artifact)
 PY
 
+for kind in panel shadow runproof runproof-second; do
+  for source in pinned clone; do
+    for form in relative absolute; do
+      scaffold "t-path-$kind-$source-$form"
+    done
+  done
+done
+check "dependency paths identify the checked files from another working directory" python3 - "$GEN" "$HOME_T" "$PLAN_DIR" "$TMP" <<'PY'
+import json, os, pathlib, re, subprocess, sys
+gen, home, plans, tmp = map(pathlib.Path, sys.argv[1:])
+invocation = tmp / "invocation"
+worker = tmp / "worker"
+worker.mkdir()
+ixia = invocation / "vendor/ixia"
+plugin = ixia / "plugins/ixia-stratex"
+(plugin / ".claude-plugin").mkdir(parents=True)
+(plugin / ".claude-plugin/plugin.json").write_text('{"version": "0.9.0"}\n')
+(plugin / "agents").mkdir()
+for agent in ("plan-architect.md", "plan-security.md"):
+    (plugin / "agents" / agent).write_text("synthetic " + agent)
+credential = invocation / "credentials/bitbucket.env"
+credential.parent.mkdir()
+credential.write_text("SYNTHETIC_CREDENTIAL_FILE\n")
+os.chdir(worker)
+for kind in ("panel", "shadow", "runproof", "runproof-second"):
+    for source in ("pinned", "clone"):
+        for form in ("relative", "absolute"):
+            task = "t-path-" + kind + "-" + source + "-" + form
+            brief = home / "data" / task / "brief.md"
+            before = brief.read_text()
+            args = [sys.executable, str(gen), kind.split("-")[0], "--home", str(home), "--task", task,
+                    "--ticket", plans.parent.name, "--plan", str(plans / "plan.md"), "--ixia-source", source]
+            agent = None
+            if kind == "panel":
+                agent = "plan-architect.md"
+                args += ["--lens", "solutions-architect"]
+            elif kind == "shadow":
+                agent = "plan-security.md"
+                args += ["--lens", "security-architect", "--shadow-model", "github-copilot/gpt-6.1-sol"]
+            else:
+                args += ["--dispositions", str(plans / "plan-reviews.md"), "--changes", str(plans / "what-changed.md")]
+                if kind == "runproof-second":
+                    args += ["--model", "github-copilot/gpt-6.1-sol"]
+            dependency = ixia if source == "pinned" else credential
+            supplied = str(dependency) if form == "absolute" else os.path.relpath(dependency, invocation)
+            args += ["--ixia-dir" if source == "pinned" else "--bitbucket-env", supplied]
+            emitted = subprocess.run(args + ["--stdout"], cwd=invocation, capture_output=True, text=True, check=True)
+            assert brief.read_text() == before, task
+            written = subprocess.run(args, cwd=invocation, capture_output=True, text=True, check=True)
+            assert brief.read_text() == emitted.stdout, task
+            assert written.stderr == emitted.stderr, task
+            if source == "pinned":
+                match = re.search(r"pinned local copy (.*?) \(never edit it", emitted.stdout)
+                delivered = pathlib.Path(match.group(1))
+                assert delivered.is_absolute() and delivered == plugin, (task, delivered)
+                assert json.loads((delivered / ".claude-plugin/plugin.json").read_text())["version"] == "0.9.0", task
+                assert "pinned Ixia copy is version 0.9.0, the sources lock says 1.0.23" in emitted.stderr, task
+                if agent:
+                    assert "Read " + str(delivered / "agents" / agent) + " in full" in emitted.stdout, task
+                    assert (delivered / "agents" / agent).read_text() == "synthetic " + agent, task
+            else:
+                match = re.search(r"Bitbucket credentials: read (.*?) inside node or python by path;", emitted.stdout)
+                delivered = pathlib.Path(match.group(1))
+                assert delivered.is_absolute() and delivered == credential, (task, delivered)
+                assert delivered.read_text() == "SYNTHETIC_CREDENTIAL_FILE\n", task
+                assert "SYNTHETIC_CREDENTIAL_FILE" not in emitted.stdout + emitted.stderr, task
+PY
+
 scaffold t-incompatible
 B=$(brief t-incompatible)
 python3 - "$B" <<'PY'

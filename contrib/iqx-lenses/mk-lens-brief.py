@@ -132,7 +132,7 @@ def ixia_source_block(lock, mode, agentfile, bitbucket_env, ixia_dir):
     """How the worker reads Ixia. agentfile None: the run-proof lens, which adopts no agent file."""
     ixia = lock["ixia"]
     if mode == "pinned":
-        root = ixia_dir or os.path.expanduser(ixia["pinned_copy"])
+        root = os.path.abspath(ixia_dir or os.path.expanduser(ixia["pinned_copy"]))
         plugin = os.path.join(root, ixia["plugin_dir"])
         warn_version(root, lock)
         head = "Read the Ixia plugin read-only from the pinned local copy %s (never edit it, never clone it again, never install it). " % plugin
@@ -148,7 +148,7 @@ def ixia_source_block(lock, mode, agentfile, bitbucket_env, ixia_dir):
         return head + body + "Say the plugin version you read in the report header (the sources lock names %s)." % ixia["version"]
     head = (
         "Clone iqxbusiness/ixia-marketplace shallow into your task temp root (Bitbucket credentials: read %s inside node or python by path; "
-        "never source, cat or print it). " % bitbucket_env
+        "never source, cat or print it). " % os.path.abspath(bitbucket_env)
     )
     if agentfile:
         body = (
@@ -412,9 +412,9 @@ def build_parser():
     p.add_argument("--base-branch", help="assert the module base branch matches the scaffold (default: inherit the scaffold's base)")
     p.add_argument("--ixia-source", choices=("pinned", "clone"),
                    help="where the worker reads Ixia (default: pinned for runproof, clone for panel and shadow)")
-    p.add_argument("--ixia-dir", help="override the pinned Ixia marketplace copy (default: the path in sources.lock.json)")
+    p.add_argument("--ixia-dir", help="override the pinned Ixia marketplace copy (relative to the invocation directory; default: the path in sources.lock.json)")
     p.add_argument("--bitbucket-env", default=DEFAULT_BITBUCKET_ENV,
-                   help="credential file the worker reads by path, never printing it (clone mode; default %(default)s)")
+                   help="credential file the worker reads by path, never printing it (relative to the invocation directory; clone mode; default %(default)s)")
     p.add_argument("--stdout", action="store_true", help="print the filled brief instead of writing it")
     return p
 
