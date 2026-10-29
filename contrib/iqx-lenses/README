@@ -1,0 +1,85 @@
+# IQX lenses: run-proof lens, checklist and reviewer brief generator (fork-only)
+
+This folder exists only in the personal fork cloud-practitioner/firstmate.
+It is for IQX Bitbucket work only (the Ixia plan gate and review panel of `bitbucket.org/iqxbusiness` modules).
+It is never offered upstream and must not be part of any pull request to kunchenguid/firstmate.
+Nothing in `bin/`, the skills, `AGENTS.md` or the repository tests calls it; the operator runs it by hand.
+Upstream merges normally retain this fork-only folder; if upstream ever introduces the same path, preserve this contribution when resolving the merge.
+It is public content: no secrets, no business data, no copied Ixia plugin text. It names the Ixia plugin by version and path only.
+
+## What it is
+
+A Tier A plan gate has the Ixia review panel (separate reader reviewers, one per lens).
+This add-on adds the run-proof lens: one more reviewer process that attacks the plan with tests, and keeps only findings that a run proves.
+It also keeps the tooling that fills the briefs of all those reviewers, which used to live as untracked scripts in the IQX operational home.
+
+## Files
+
+These fork-only text files fall outside the fixed scope in [the documentation inventory](../../docs/documentation-audiences.json); see [the audience policy](../../docs/documentation-audiences.md).
+
+- `run-proof-lens.markdown` - the lens text. Method by reference to pstack `interrogate` and `arena` Phase F at the locked commit, with pstack's MIT notice; the Ixia overrides; order of work; probe rules; evidence labels (`simulator-tested`, `S4P-seen consequence`, `needs a live check`); the second-model rule; the report shape.
+- `orchestration-checklist.markdown` - the lessons of earlier runs, sent to the lens before its work starts: the seeds, a fixed checklist for every run, the simulator switches and gaps, and the known S4P facts. Each entry has a "Leaves the list when" line. The block of known S4P facts is also given to panel and shadow reviewers.
+- [`sources.lock.json`](sources.lock.json) - the authoritative pstack and Ixia pins, local-copy location and lens agent-file mapping.
+- `mk-lens-brief.py` - the brief generator (Python 3, standard library only). It fills the two placeholders of a scout brief that `bin/fm-brief.sh --scout` already scaffolded, and adapts its write permissions and Definition of done to the exact report, completion-pointer and probe paths. It refuses an incompatible scaffold rather than leaving conflicting instructions. Three kinds: `panel` (an Ixia lens reviewer), `shadow` (a comparison reviewer for the model benchmark; its output never counts for dispositions), `runproof` (the run-proof lens, with the lens text, checklist and lock embedded).
+- `iqx-lenses.test.sh` - self-contained test, in a temporary home with synthetic data; run `bash contrib/iqx-lenses/iqx-lenses.test.sh`. It lives here, not in `tests/`, so the repository's test inventory and CI do not pick it up.
+
+## Gate rules
+
+See [the lens text](run-proof-lens.markdown#1-when-it-runs) for scope, skips, timing and model selection, and its [order of work](run-proof-lens.markdown#4-order-of-work) for input sequencing.
+The generated panel briefs (`panel_spec` in [`mk-lens-brief.py`](mk-lens-brief.py)) own the panel's revised review contract.
+The plan author's revision duties are in [checklist section 5](orchestration-checklist.markdown#5-plan-author-cross-check-before-each-revision).
+
+## How to use
+
+Run from the IQX firstmate home. Name the home explicitly: the generator takes `--home <dir>` (or `FM_HOME` when `--home` is not given) and refuses when neither is set. A shell can carry another home's `FM_HOME`, so prefer `--home`.
+
+```bash
+FORK="/absolute/path/to/cloud-practitioner/firstmate"
+HOME_DIR="<the IQX firstmate home>"
+BASE_BRANCH="<module base branch>"
+```
+
+By hand, one brief at a time: use a fresh task and repeat the scaffold command for each reviewer before filling its brief.
+The generator only prepares instructions; it does not launch reviewers.
+The generator inherits the scaffold's selected base, including a default-branch scaffold without `--base-branch`.
+An explicit generator `--base-branch` is an assertion and must match the scaffold; it never changes the selected base.
+
+```bash
+FM_HOME="$HOME_DIR" "$FORK/bin/fm-brief.sh" <task-id> <module-clone> --scout --base-branch "$BASE_BRANCH"
+
+# 1. a panel reviewer (solutions-architect, security-architect, business-analyst, ux-designer)
+python3 "$FORK/contrib/iqx-lenses/mk-lens-brief.py" panel --home "$HOME_DIR" \
+  --task <task-id> --ticket <ticket-dir> --plan <plan path> --base-branch "$BASE_BRANCH" --lens solutions-architect
+
+# 2. a shadow (comparison) reviewer; it never counts for dispositions
+python3 "$FORK/contrib/iqx-lenses/mk-lens-brief.py" shadow --home "$HOME_DIR" \
+  --task <task-id> --ticket <ticket-dir> --plan <plan path> --base-branch "$BASE_BRANCH" --lens security-architect \
+  --shadow-model <model id>
+
+# 3. the run-proof lens, after the dispositions
+python3 "$FORK/contrib/iqx-lenses/mk-lens-brief.py" runproof --home "$HOME_DIR" \
+  --task <task-id> --ticket <ticket-dir> --plan <plan path> --base-branch "$BASE_BRANCH" \
+  --dispositions <dispositions file> --changes <what-changed list> \
+  --seed "<a seed made for this ticket>" --touches runner
+```
+
+`--touches` (repeatable: `runner`, `identity`, `resume`) says the plan changes the shared runner, the identity unit or a Resume rule; the generator then reports that a second-model run is needed, and the brief says so. Run the generator again with `--model github-copilot/gpt-6.1-sol` (and a new scaffolded task) for that run.
+
+The [generator's header](mk-lens-brief.py) owns the report and probe layout, model-id encoding and scout completion-pointer format.
+The filled brief names the exact paths permitted for that reviewer.
+
+The generated briefs keep what the IQX home relies on: the standing-rule text, the read-only limits, the Ixia agent file of each lens, "set `FM_HOME` explicitly on every firstmate script", never the `arc-dgw` or `arc-dgw-fab` servers, never the Ixia feedback skill, and no board work.
+Panel and shadow briefs clone the marketplace repository by credential path as before (`--ixia-source clone`, the default); the run-proof brief reads the pinned local copy (`--ixia-source pinned`, the default for it). Either default can be switched with `--ixia-source`. Every brief tells the reviewer to state the plugin version it read in the report header. The generator warns when the pinned copy is not the locked version.
+Relative `--ixia-dir` and `--bitbucket-env` paths resolve against the generator's invocation directory, not `--home`; the generator emits absolute dependency paths so reviewers can use them from their own checkout.
+Verbatim words of the product owner go into a file given with `--intent-file`; the generator keeps no person's name in the repository (`--owner` sets how the rules name the product owner).
+
+## Upkeep
+
+- Follow the [checklist's upkeep rule](orchestration-checklist.markdown) after each ticket, using the report's "What this run taught about the checklist" section.
+- When the pstack commit or the Ixia version changes, read the new text first, then change `sources.lock.json` and any text that depends on it in one commit, and run the test.
+
+## Switching over from the untracked scripts
+
+The IQX home's old `state/mk-reviewer.py`, `run-panel.sh`, `spawn-panel.sh` and `mk-iqx-brief.py` are not touched by this folder.
+The home switches to this generator and the scaffold-and-fill sequence after this folder is merged; until then the old scripts remain available.
+`spawn-panel.sh` and `mk-iqx-brief.py` (the plan author's build brief) are not part of this add-on.
