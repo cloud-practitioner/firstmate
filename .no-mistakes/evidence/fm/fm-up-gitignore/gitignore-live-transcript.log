@@ -1,0 +1,73 @@
+Git consumer: git version 2.54.0
+All JSON below is synthetic; no credentials or user configuration are used.
+
+=== baseline: create .claude/settings.local.json ===
+$ git status --porcelain=v1 --untracked-files=all
+?? .claude/settings.local.json
+[exit 0]
+$ git check-ignore -v .claude/settings.local.json
+(no stdout)
+[exit 1]
+Reported regression reproduced against the supplied upstream baseline.
+
+=== candidate: create .claude/settings.local.json ===
+$ git status --porcelain=v1 --untracked-files=all
+(no stdout)
+[exit 0]
+$ git check-ignore -v .claude/settings.local.json
+.gitignore:14:.claude/settings.local.json	.claude/settings.local.json
+[exit 0]
+$ git status --porcelain=v1 --ignored --untracked-files=all
+!! .claude/settings.local.json
+[exit 0]
+$ git add .
+(no stdout)
+[exit 0]
+$ git diff --cached --name-only
+(no stdout)
+[exit 0]
+Local settings stay out of both normal status and the index after git add .
+
+=== adversarial: shared and similarly named files remain visible ===
+$ git status --porcelain=v1 --untracked-files=all
+?? .claude/README.md
+?? .claude/settings.json
+?? .claude/settings.local.json.bak
+?? .claude/settings.local.json.example
+?? settings.local.json
+[exit 0]
+$ git add .
+(no stdout)
+[exit 0]
+$ git diff --cached --name-only
+.claude/README.md
+.claude/settings.json
+.claude/settings.local.json.bak
+.claude/settings.local.json.example
+settings.local.json
+[exit 0]
+Shared settings and controls stage normally; the per-user settings file does not.
+
+=== edit tracked shared settings alongside ignored local settings ===
+$ git status --porcelain=v1 --untracked-files=all
+ M .claude/settings.json
+[exit 0]
+$ git add .
+(no stdout)
+[exit 0]
+$ git diff --cached --name-only
+.claude/settings.json
+[exit 0]
+Only the shared-settings edit is stageable by normal add-all.
+
+Disposable fixture repositories removed.
+
+=== supplied upstream baseline incorporated into candidate ===
+$ git show -s --format=%H%n%P%n%s f14274f4d4333e8090de45cc9f72624ebf856d87
+f14274f4d4333e8090de45cc9f72624ebf856d87
+6a2b9880f3477ecba91dd5022eba5882c4a7d7f5 b936f04076b1822fceaace5dad08c8682329235d
+merge: sync with upstream main
+[exit 0]
+$ git merge-base --is-ancestor b936f04076b1822fceaace5dad08c8682329235d f14274f4d4333e8090de45cc9f72624ebf856d87
+(no stdout)
+[exit 0]
