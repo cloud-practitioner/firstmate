@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "note": "Pins what the IQX lenses are built from. Update by hand, in one commit, after reading the new upstream text; the generator and its test read this file.",
+  "pstack": {
+    "repository": "https://github.com/cursor/plugins",
+    "folder": "pstack",
+    "commit": "c742dd61706fbacc1b95f1a20b7b988cf096ce6c",
+    "commit_short": "c742dd61",
+    "version": "0.15.36",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2026 Lauren Tan",
+    "licence_path": "pstack/LICENSE",
+    "used_by_reference": [
+      "pstack/skills/interrogate/SKILL.md",
+      "pstack/skills/arena/SKILL.md (Phase F: Verify)"
+    ],
+    "use": "Read-only reference for the method. Nothing is installed or enabled."
+  },
+  "ixia": {
+    "plugin": "ixia-stratex",
+    "version": "1.0.23",
+    "marketplace_repository": "bitbucket.org/iqxbusiness/ixia-marketplace",
+    "marketplace_commit": "50b47e70362837395cc7ed129fbe7304f8f15925",
+    "marketplace_commit_short": "50b47e7",
+    "pinned_copy": "~/.local/share/ixia-marketplace",
+    "pinned_copy_origin": "A local clone of the marketplace repository above, made by the IQX operator; read-only for lens work. Not copied into this repository.",
+    "plugin_dir": "plugins/ixia-stratex",
+    "version_file": "plugins/ixia-stratex/.claude-plugin/plugin.json",
+    "agents": {
+      "solutions-architect": "plan-architect.md",
+      "security-architect": "plan-security.md",
+      "business-analyst": "plan-ba.md",
+      "ux-designer": "plan-ux.md"
+    }
+  }
+}
