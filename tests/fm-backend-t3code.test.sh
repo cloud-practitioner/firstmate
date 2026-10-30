@@ -27,34 +27,19 @@ export PATH="$FAKEBIN:$PATH"
 t3_fake_start "$TMP_ROOT/server"
 WATCH_PID=
 PROVIDER_PID=
-# fm-spawn.sh stages each task's launch file in /tmp/fm-<id>+<home token>
-# outside TMP_ROOT, so every id a case spawns is recorded (t3_task_id) and that
-# directory removed on exit.
-T3_TASK_IDS="$TMP_ROOT/task-ids"
 cleanup() {
-  local pid id
+  local pid
   for pid in "$WATCH_PID" "$PROVIDER_PID"; do
     [ -n "$pid" ] || continue
     kill "$pid" 2>/dev/null || true
     wait "$pid" 2>/dev/null || true
   done
-  if [ -f "$T3_TASK_IDS" ]; then
-    while IFS= read -r id; do
-      [ -z "$id" ] || rm -rf "/tmp/fm-$id+"*
-    done < "$T3_TASK_IDS"
-  fi
   t3_fake_stop
   fm_test_cleanup
 }
 trap cleanup EXIT
-t3_task_id() {  # <id>
-  printf '%s\n' "$1" >> "$T3_TASK_IDS"
-}
-# Concurrent runs of this suite share /tmp, so every case id carries this
-# run's tag; the EXIT cleanup then removes only directories this run created.
 T3_RUN=$(printf '%05x%04x' "$(( $$ % 1048576 ))" "$RANDOM")
-t3_uid() {  # <base> -> <base><run-tag>, recorded for cleanup
-  t3_task_id "$1$T3_RUN"
+t3_uid() {  # <base> -> <base><run-tag>
   printf '%s' "$1$T3_RUN"
 }
 # A claude spawn writes workspace trust into the launching user's own store
@@ -1285,7 +1270,6 @@ test_spawn_codex_preserves_tracked_codex_config() {
   local proj wt data state id out rc fb neutral original
   t3_require_tomllib test_spawn_codex_preserves_tracked_codex_config || return 0
   id=$(t3_uid t3codextrk2)
-  t3_task_id "$id"
   t3_case spawn-codex-tracked-compatible
   proj="$CASE_DIR/spawn-project"; wt="$CASE_DIR/spawn-wt"; data="$CASE_DIR/data"; state="$CASE_DIR/state"
   fm_git_worktree "$proj" "$wt" "fm/$id"
@@ -1404,7 +1388,6 @@ test_spawn_claude_refuses_tracked_claude_local_md() {
 test_spawn_claude_refuses_worktree_symlink() {
   local proj wt data state id out rc fb target exclude
   id=$(t3_uid t3claudelink)
-  t3_task_id "$id"
   t3_case spawn-claude-symlink
   proj="$CASE_DIR/spawn-project"; wt="$CASE_DIR/spawn-wt"; data="$CASE_DIR/data"; state="$CASE_DIR/state"
   fm_git_worktree "$proj" "$wt" "fm/$id"
@@ -1505,7 +1488,6 @@ test_codex_cleanup_without_journal_needs_no_python() {
 test_spawn_leases_slot_creates_thread_and_starts_launch_turn() {
   local proj wt data state id out fb thread
   id=$(t3_uid t3spawnz1)
-  t3_task_id "$id"
   t3_case spawn
   proj="$CASE_DIR/spawn-project"
   wt="$CASE_DIR/spawn-wt"
@@ -1576,7 +1558,6 @@ test_spawn_codex_scout_writes_toml_env_with_traceparent() {
   local proj wt data state id out fb toml tp
   t3_require_tomllib test_spawn_codex_scout_writes_toml_env_with_traceparent || return 0
   id=$(t3_uid t3codexz1)
-  t3_task_id "$id"
   t3_case spawn-codex
   proj="$CASE_DIR/spawn-project"; wt="$CASE_DIR/spawn-wt"; data="$CASE_DIR/data"; state="$CASE_DIR/state"
   fm_git_worktree "$proj" "$wt" "fm/$id"
@@ -1622,7 +1603,6 @@ test_spawn_codex_warns_unless_codex_trusts_the_project() {
   t3_require_tomllib test_spawn_codex_warns_unless_codex_trusts_the_project || return 0
   for trust in absent project; do
     id=$(t3_uid "t3trust$trust")
-    t3_task_id "$id"
     t3_case "spawn-codex-trust-$trust"
     proj="$CASE_DIR/spawn-project"; wt="$CASE_DIR/spawn-wt"; data="$CASE_DIR/data"; state="$CASE_DIR/state"
     codex_home="$CASE_DIR/codex-home"
@@ -1667,7 +1647,6 @@ test_spawn_codex_warns_unless_codex_trusts_the_project() {
 # config dir, so the bearer is read from there.
 make_t3_secondmate_home() {  # <home> <id>
   local home=$1 id=$2
-  t3_task_id "$id"
   mkdir -p "$home/bin" "$home/data"
   printf '# Firstmate\n' > "$home/AGENTS.md"
   printf '%s\n' "$id" > "$home/.fm-secondmate-home"
@@ -1819,7 +1798,6 @@ test_spawn_refuses_t3code_when_token_rejected() {
 # worktree the fake treehouse leases for it, in the current case.
 t3_worker_setup() {
   local id=$1
-  t3_task_id "$id"
   WORKER_PROJ="$CASE_DIR/spawn-project"; WORKER_WT="$CASE_DIR/spawn-wt"
   fm_git_worktree "$WORKER_PROJ" "$WORKER_WT" "fm/$id"
   mkdir -p "$CASE_DIR/data/$id" "$CASE_DIR/state" "$CASE_DIR/home/state"
