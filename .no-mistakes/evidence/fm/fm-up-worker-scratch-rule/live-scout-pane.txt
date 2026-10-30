@@ -1,0 +1,40 @@
+bash-5.2$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-
+adc5ac/2/demo. Type 'exit' to return.
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac
+/2/demo'
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ export GOTMPDIR=/tmp/fm-scratch-scout-606982/gotmp
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ export COMPACT_ADVISER_DISABLE=1
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ export FM_TASK_ID=scratch-scout-606982
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ . '/tmp/fm-scratch-scout-606982+3b3a9fd28ed2872b1987f6e72dc82c014376d5e434a20b194a99091af15c2952/launch.s17933
+22703.620788.1407.sh'
+WORKER_SCRATCH_RESULT {"task": "scratch-scout-606982", "FM_TASK_TMP": "/tmp/fm-scratch-scout-606982", "cwd": "/home/node
+/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/2/demo", "intent": "scratc
+h-scout-606982-initial", "mode": "0o700"}
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

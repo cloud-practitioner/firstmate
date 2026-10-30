@@ -1,0 +1,1 @@
+not ok - ship with allowlist=absent must receive its task temp root as FM_TASK_TMP (expected '/tmp/fm-temp-ship-absent-a1', got 'unset')

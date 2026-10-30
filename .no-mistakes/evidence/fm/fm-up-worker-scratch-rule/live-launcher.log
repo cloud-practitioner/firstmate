@@ -1,0 +1,213 @@
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l
+Runtime: tmux 3.5a; private socket=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/tmux/tmux-1000/fm-lab; grid=120x40
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/data/scratch-ship-606982/brief.md (ship, mode=no-mistakes; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l
+spawned scratch-ship-606982 harness=true kind=ship mode=no-mistakes yolo=off window=primary:fm-scratch-ship-606982 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/1/demo
+
+ship task observed:
+{
+    "task": "scratch-ship-606982",
+    "FM_TASK_TMP": "/tmp/fm-scratch-ship-606982",
+    "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/1/demo",
+    "intent": "scratch-ship-606982-initial",
+    "mode": "0o700"
+}
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/data/scratch-scout-606982/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+spawned scratch-scout-606982 harness=true kind=scout window=primary:fm-scratch-scout-606982 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/2/demo
+
+scout task observed:
+{
+    "task": "scratch-scout-606982",
+    "FM_TASK_TMP": "/tmp/fm-scratch-scout-606982",
+    "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/2/demo",
+    "intent": "scratch-scout-606982-initial",
+    "mode": "0o700"
+}
+Two workers used the same basename intent.txt without overwriting one another; both roots remained private.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+spawned scratch-ship-606982 harness=true kind=ship mode=no-mistakes yolo=off window=primary:fm-scratch-ship-606982 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/1/demo
+Relaunch replaced a poisoned pane FM_TASK_TMP and wrote into the original task root: {"task": "scratch-ship-606982", "FM_TASK_TMP": "/tmp/fm-scratch-ship-606982", "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/1/demo", "intent": "scratch-ship-606982-relaunch", "mode": "0o700"}
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/data/scratch-agent-606982/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+spawned scratch-agent-606982 harness=true kind=scout window=primary:fm-scratch-agent-606982 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/3/demo
+Real Claude result: {"duration_api_ms": 31680, "stop_reason": "end_turn", "session_id": "4296da93-3832-4338-a1a9-244690ed7657", "total_cost_usd": 0.7729181999999999, "usage": {"input_tokens": 12, "cache_creation_input_tokens": 79884, "cache_read_input_tokens": 377791, "output_tokens": 2912, "output_tokens_details": {"thinking_tokens": 247}, "server_tool_use": {"web_search_requests": 0, "web_fetch_requests": 0}, "service_tier": "standard", "cache_creation": {"ephemeral_1h_input_tokens": 79884, "ephemeral_5m_input_tokens": 0}, "inference_geo": "global", "iterations": [{"input_tokens": 2, "output_tokens": 430, "cache_read_input_tokens": 79272, "cache_creation_input_tokens": 612, "cache_creation": {"ephemeral_5m_input_tokens": 0, "ephemeral_1h_input_tokens": 612}, "type": "message"}], "speed": "standard", "fallback_credit": null}, "modelUsage": {"claude-opus-5-5": {"inputTokens": 12, "outputTokens": 2912, "cacheReadInputTokens": 377791, "cacheCreationInputTokens": 79884, "webSearchRequests": 0, "costUSD": 0.7729181999999999, "contextWindow": 1000000, "maxOutputTokens": 128000, "thinkingTokens": 247, "cacheCreationEphemeral5mInputTokens": 0, "cacheCreationEphemeral1hInputTokens": 79884, "canonicalModel": "claude-opus-5-5", "provider": "firstParty", "costBasis": "list"}}, "permission_denials": [], "terminal_reason": "completed", "fast_mode_state": "off", "fast_mode_disabled_reason": "sdk_opt_in_required", "subagent_stats": {"spawned": 0, "requested": {"background": 0, "foreground": 0, "unset": 0}, "started_in_background": 0, "max_depth": 0, "spawned_by_subagents": 0, "completed": 0, "failed": 0, "killed": {"parent": 0, "user": 0, "system": 0}, "refused": {"depth_limit": 0, "concurrency_limit": 0, "budget": 0}, "by_type": {}}, "safety_stops": 0, "is_error": false, "num_turns": 6, "subtype": "success", "api_error_status": null, "result": "I wrote the scratch file in the location the Rules allow, and the verification task is complete.\n\n- **File:** `/tmp/fm-scratch-agent-606982/intent.txt`. That folder is the task's own temp directory (`$FM_TASK_TMP`), not a shared spot in `/tmp`.\n- **Content:** exactly `disposable-agent-goal`. It is 21 bytes with no trailing newline, which I checked with `od -c` and `wc -c`.\n- **Project untouched:** `git status --porcelain` in the worktree shows no changes. I did not run no-mistakes, contact a remote, publish anything or start other agents.\n- **Herdr:** this task didn't need Herdr, so I never started a Herdr session and the isolation helper was never exercised.\n- **Inbox:** no messages were waiting.\n- **Closing steps:** I wrote the report, and recorded that there are no open questions for the captain using `fm-captain-hold.sh complete --none`, which succeeded. I then added the `done` line to the status file.\n\nFiles are in `/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/data/scratch-agent-606982/`:\n- report.md", "ttft_ms": 4356, "type": "result", "duration_ms": 45696, "uuid": "ef48ef8d-a8ee-4739-aabd-557aa7808e2b", "ttft_stream_ms": 3673, "time_to_request_ms": 2254, "first_content_frame_ms": 3681, "queued_turn_count": 0, "result_index": 0}
+Real Claude followed the generated rules and wrote its intent file at /tmp/fm-scratch-agent-606982/intent.txt
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+warn: no registry at /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/data/projects.md; defaulting demo to no-mistakes off
+warn: no registry at /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/data/projects.md; defaulting demo to no-mistakes off
+promoted scratch-scout-606982 to ship mode=no-mistakes yolo=off (teardown protection restored)
+wrote ship instructions for mode=no-mistakes: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/data/scratch-scout-606982/ship-instructions.md
+next: FM_HOME=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l bin/fm-send.sh fm-scratch-scout-606982 "$(cat /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/data/scratch-scout-606982/ship-instructions.md)"
+
+Completed real launcher, private tmux, Treehouse, and promotion scenarios.
+bash-5.2$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bash-5.2$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-
+adc5ac/1/demo. Type 'exit' to return.
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac
+/1/demo'
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ export GOTMPDIR=/tmp/fm-scratch-ship-606982/gotmp
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ export COMPACT_ADVISER_DISABLE=1
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ export FM_TASK_ID=scratch-ship-606982
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ . '/tmp/fm-scratch-ship-606982+3b3a9fd28ed2872b1987f6e72dc82c014376d5e434a20b194a99091af15c2952/launch.s179332
+2652.607895.251.sh'
+WORKER_SCRATCH_RESULT {"task": "scratch-ship-606982", "FM_TASK_TMP": "/tmp/fm-scratch-ship-606982", "cwd": "/home/node/.
+no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/1/demo", "intent": "scratch-
+ship-606982-initial", "mode": "0o700"}
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ export FM_TASK_TMP='/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/poison'
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac
+/1/demo'
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ export GOTMPDIR=/tmp/fm-scratch-ship-606982/gotmp
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ export COMPACT_ADVISER_DISABLE=1
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ export FM_TASK_ID=scratch-ship-606982
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$ . '/tmp/fm-scratch-ship-606982+3b3a9fd28ed2872b1987f6e72dc82c014376d5e434a20b194a99091af15c2952/launch.s179332
+2741.638171.9000.sh'
+WORKER_SCRATCH_RESULT {"task": "scratch-ship-606982", "FM_TASK_TMP": "/tmp/fm-scratch-ship-606982", "cwd": "/home/node/.
+no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/1/demo", "intent": "scratch-
+ship-606982-relaunch", "mode": "0o700"}
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/1/demo$
+
+
+bash-5.2$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-
+adc5ac/2/demo. Type 'exit' to return.
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac
+/2/demo'
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ export GOTMPDIR=/tmp/fm-scratch-scout-606982/gotmp
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ export COMPACT_ADVISER_DISABLE=1
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ export FM_TASK_ID=scratch-scout-606982
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$ . '/tmp/fm-scratch-scout-606982+3b3a9fd28ed2872b1987f6e72dc82c014376d5e434a20b194a99091af15c2952/launch.s17933
+22703.620788.1407.sh'
+WORKER_SCRATCH_RESULT {"task": "scratch-scout-606982", "FM_TASK_TMP": "/tmp/fm-scratch-scout-606982", "cwd": "/home/node
+/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac/2/demo", "intent": "scratc
+h-scout-606982-initial", "mode": "0o700"}
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/2/demo$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bash-5.2$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-
+adc5ac/3/demo. Type 'exit' to return.
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/3/demo$ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5ac
+/3/demo'
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/3/demo$ export GOTMPDIR=/tmp/fm-scratch-agent-606982/gotmp
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/3/demo$ export COMPACT_ADVISER_DISABLE=1
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/3/demo$ export FM_TASK_ID=scratch-agent-606982
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/3/demo$ . '/tmp/fm-scratch-agent-606982+3b3a9fd28ed2872b1987f6e72dc82c014376d5e434a20b194a99091af15c2952/launch.s17933
+22774.654158.27305.sh'
+REAL_CLAUDE_EXIT=0
+node@5df3e5f32fb6:/home/node/.no-mistakes/worktrees/5e28e613310e/01M65229C40JTER6W5EVESV1QF/l/pool/.treehouse/demo-adc5a
+c/3/demo$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Isolated socket, fixture project, and this run's task temp roots cleaned (exit=0).
