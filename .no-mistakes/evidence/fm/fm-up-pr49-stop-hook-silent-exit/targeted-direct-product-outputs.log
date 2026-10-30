@@ -1,0 +1,45 @@
+
+=== fixture attended-turns-main-only-write-fails (fake harness; real host/hook/watcher) ===
+
+--- host.out ---
+watcher: started pid=2342269 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+
+--- host.err ---
+
+--- host.rc ---
+1
+
+--- state/.supervision-host.log ---
+1793333051	start	gen=host-2340694-1793333048	primary=claude
+1793333078	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.6xl7gH/attended-turns-main-only-write-fails/state/demo.status
+1793333079	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.6xl7gH/attended-turns-main-only-write-fails/state/demo.status
+
+--- state/.watcher-down ---
+announced:handling:2342269.1793333061.nV90y1
+
+--- state/.wake-queue ---
+1793333061	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.6xl7gH/attended-turns-main-only-write-fails/state/demo.status
+1793333062	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.6xl7gH/attended-turns-main-only-write-fails/state/demo.status
+
+=== fixture attended-turns-main-only (fake harness; real host/hook/watcher) ===
+
+--- host.out ---
+watcher: started pid=2368407 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.6xl7gH/attended-turns-main-only/state/demo.status
+
+--- host.err ---
+
+--- host.rc ---
+0
+
+--- state/.supervision-host.log ---
+1793333085	start	gen=host-2365872-1793333083	primary=claude
+1793333103	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.6xl7gH/attended-turns-main-only/state/demo.status
+
+--- state/.watcher-down ---
+announced:downtime:2368407.1793333093.Yggz9F
+
+--- state/.wake-queue ---
+1793333093	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.6xl7gH/attended-turns-main-only/state/demo.status
+1793333094	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.6xl7gH/attended-turns-main-only/state/demo.status

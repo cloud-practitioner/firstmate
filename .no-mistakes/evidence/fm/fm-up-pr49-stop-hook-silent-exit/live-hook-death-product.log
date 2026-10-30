@@ -1,0 +1,45 @@
+mode=hook-death; CLI=2.1.314 (Claude Code); tmux=tmux 3.5a
+Real CLI, normal login, private fm-lab socket, 120x36 pane; no harness or engine stub.
+Transient linked-home marker enables the documented primary-scope predicate in this gate worktree.
+Fault injection: decision status append before the second real offer; mktemp fails only watcher downtime publication.
+
+--- hook.out ---
+
+--- hook.err ---
+bin/fm-claude-stop-autoarm.sh: line 474: 2903458 Killed                  FM_SUPERVISION_HOST_AUTOARM_GEN=$MY_GEN FM_SUPERVISION_HOST_OWNER_PID=$$ FM_SUPERVISION_HOST_PRIMARY=claude FM_GUARD_GRACE="$GRACE" FM_WARM_COMPACT_TRANSCRIPT=$(printf '%s' "$PAYLOAD" | jq -r '.transcript_path // empty' 2> /dev/null) "$SCRIPT_DIR/fm-supervision-host.sh" park > "${OUT:-/dev/null}" 2>&1
+firstmate watcher wake - one supervision event needs a handling turn now.
+check: rearm-resurface
+Run bin/fm-wake-drain.sh first, handle the wake, then run its exact WAKE_ACK_REQUIRED --ack-through command. Until that post-handling acknowledgement, interruption leaves the wake durable for idempotent re-handling. This Stop hook owns watcher continuity: when the handling turn ends, the next needed cycle arms automatically - do NOT run bin/fm-watch-arm.sh after an ordinary wake.
+
+--- hook.rc ---
+2
+
+--- successor-alive-at-hook-exit ---
+true
+
+--- host-killed ---
+SIGKILL sent to first real host 2903458
+
+--- offer-count ---
+1
+
+--- claude.err ---
+
+--- cli.rc ---
+0
+
+--- state/.supervision-host.log ---
+1793333869	start	gen=host-2903458-1793333865	primary=claude
+1793333877	start	gen=host-2905366-1793333872	primary=claude
+1793333884	pass-through	attended	main-only	check: rearm-resurface
+
+--- state/.watcher-down ---
+pending:downtime:2911127.1793333891.VtFwrS
+
+--- state/.claude-autoarm-epoch ---
+epoch=1 owner_pid=2901036 outcome=rewake updated_at=1793333891 session_pid=2895097 recovery_generation=2911127.1793333891.VtFwrS
+linux-starttime=35528925 cmdline-hex=626173680062696e2f666d2d636c617564652d73746f702d6175746f61726d2e736800
+
+--- state/.wake-queue ---
+1793333891	1	signal	demo.status	needs-decision: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.5fYwnY/state/demo.status
+1793333891	2	signal	demo.status	needs-decision: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.5fYwnY/state/demo.status

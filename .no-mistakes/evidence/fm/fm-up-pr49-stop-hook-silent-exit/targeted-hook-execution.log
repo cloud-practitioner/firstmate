@@ -1,0 +1,9 @@
+
+=== executing test_claude_stop_hook_notifies_when_at_turn_downtime_write_fails ===
+ok - host+hook: failed at-turn downtime write notifies main despite a healthy successor
+
+=== executing test_claude_stop_hook_delivers_a_close_that_turns_main_only_at_its_turn ===
+ok - host+hook: a close that turns main-only at its turn rewakes main and keeps its successor watcher
+
+=== executing test_claude_stop_hook_notifies_when_closed_successor_downtime_restore_fails ===
+ok - host+hook: a refused hand-back becomes a delivered failure notice

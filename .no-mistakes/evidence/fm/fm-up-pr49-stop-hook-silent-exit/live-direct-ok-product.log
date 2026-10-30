@@ -1,0 +1,34 @@
+mode=direct-ok; CLI=2.1.314 (Claude Code); tmux=tmux 3.5a
+Real CLI, normal login, private fm-lab socket, 120x36 pane; no harness or engine stub.
+Transient linked-home marker enables the documented primary-scope predicate in this gate worktree.
+Fault injection: decision status append before the second real offer; mktemp fails only watcher downtime publication.
+
+--- host.out ---
+watcher: started pid=2791761 (beacon fresh)
+signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.2R6NV2/state/demo.status
+
+--- host.err ---
+
+--- host.rc ---
+0
+
+--- offer-count ---
+2
+
+--- claude.err ---
+
+--- cli.rc ---
+0
+
+--- state/.supervision-host.log ---
+1793333711	start	gen=host-2790283-1793333710	primary=claude
+1793333722	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.2R6NV2/state/demo.status
+
+--- state/.watcher-down ---
+pending:downtime:2800978.1793333722.r789OK
+
+--- state/.wake-queue ---
+1793333715	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.2R6NV2/state/demo.status
+1793333716	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.2R6NV2/state/demo.status
+1793333722	3	signal	demo.status	needs-decision: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.2R6NV2/state/demo.status
+1793333723	4	signal	demo.status	needs-decision: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.2R6NV2/state/demo.status

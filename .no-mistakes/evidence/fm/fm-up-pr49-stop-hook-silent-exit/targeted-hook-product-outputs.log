@@ -1,0 +1,90 @@
+
+=== fixture hook-turns-main-only-write-fails (fake harness; real host/hook/watcher) ===
+
+--- hook.out ---
+
+--- hook.err ---
+firstmate watcher auto-arm FAILED - the Stop-owned automatic supervision mechanism is broken after 1 bounded attempts, and no live watcher with a fresh beacon was verified.
+watcher: started pid=2344075 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+The supervision host (docs/supervision-host.md) ran these cycles; its last one exited 1 without a wake.
+Do not launch a manual background arm from this notice; investigate the automatic Stop hook and watcher startup before ending blind.
+
+--- hook.rc ---
+2
+
+--- state/.supervision-host.log ---
+1793333054	start	gen=host-2342387-1793333051	primary=claude
+1793333082	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only-write-fails/state/demo.status
+1793333083	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only-write-fails/state/demo.status
+
+--- state/.watcher-down ---
+announced:handling:2344075.1793333065.gCjQ0l
+
+--- state/.claude-autoarm-epoch ---
+epoch=1 owner_pid=2340988 outcome=failed updated_at=1793333084
+linux-starttime=35448000 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3565323865363133333130652f30314d363546444a3756315a525a51594e3243465045575a4a462f2e746573742d70686173652f746d702f666d2d7375706572766973696f6e2d686f73742e796a4f7953422f686f6f6b2d7475726e732d6d61696e2d6f6e6c792d77726974652d6661696c732f62696e2f666d2d636c617564652d73746f702d6175746f61726d2e736800
+
+--- state/.wake-queue ---
+1793333065	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only-write-fails/state/demo.status
+1793333066	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only-write-fails/state/demo.status
+
+=== fixture hook-turns-main-only (fake harness; real host/hook/watcher) ===
+
+--- hook.out ---
+
+--- hook.err ---
+firstmate watcher wake - one supervision event needs a handling turn now.
+signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only/state/demo.status
+Run bin/fm-wake-drain.sh first, handle the wake, then run its exact WAKE_ACK_REQUIRED --ack-through command. Until that post-handling acknowledgement, interruption leaves the wake durable for idempotent re-handling. This Stop hook owns watcher continuity: when the handling turn ends, the next needed cycle arms automatically - do NOT run bin/fm-watch-arm.sh after an ordinary wake.
+
+--- hook.rc ---
+2
+
+--- state/.supervision-host.log ---
+1793333091	start	gen=host-2372535-1793333089	primary=claude
+1793333109	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only/state/demo.status
+
+--- state/.watcher-down ---
+pending:downtime:2386452.1793333112.GsH3y9
+
+--- state/.claude-autoarm-epoch ---
+epoch=1 owner_pid=2370488 outcome=rewake updated_at=1793333112 session_pid=2367907 recovery_generation=2375074.1793333099.HgpuUR
+linux-starttime=35451857 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3565323865363133333130652f30314d363546444a3756315a525a51594e3243465045575a4a462f2e746573742d70686173652f746d702f666d2d7375706572766973696f6e2d686f73742e796a4f7953422f686f6f6b2d7475726e732d6d61696e2d6f6e6c792f62696e2f666d2d636c617564652d73746f702d6175746f61726d2e736800
+
+--- state/.wake-queue ---
+1793333099	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only/state/demo.status
+1793333100	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only/state/demo.status
+1793333112	3	signal	demo.status	needs-decision: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only/state/demo.status
+1793333113	4	signal	demo.status	needs-decision: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-turns-main-only/state/demo.status
+
+=== fixture hook-successor-restore-fails-pending (fake harness; real host/hook/watcher) ===
+
+--- hook.out ---
+
+--- hook.err ---
+firstmate watcher wake - one supervision event needs a handling turn now.
+supervision-host: branch-outcome: the supervision session handled this wake and recorded captain outcomes for you (store rows 1); run bin/fm-wake-drain.sh, act on its BRANCH OUTCOMES section, and acknowledge them as it prints
+supervision-host: watcher downtime could not be restored for the main hand-back
+Run bin/fm-wake-drain.sh first, handle the wake, then run its exact WAKE_ACK_REQUIRED --ack-through command. Until that post-handling acknowledgement, interruption leaves the wake durable for idempotent re-handling. This Stop hook owns watcher continuity: when the handling turn ends, the next needed cycle arms automatically - do NOT run bin/fm-watch-arm.sh after an ordinary wake.
+firstmate watcher auto-arm FAILED - the supervision host returned an actionable wake, but its rewake could not be committed.
+
+--- hook.rc ---
+2
+
+--- state/.supervision-host.log ---
+1793333120	start	gen=host-2394507-1793333118	primary=claude
+1793333157	handled	turn=host-2394507-1793333118.1	posture=attended	rc=0	reports=1	error=0 cost=0.25 conversation_cost=0.25 input=5 cache_read=100 cache_write=10 output=20 turns=3	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-successor-restore-fails-pending/state/demo.status
+1793333158	to-main	downtime-unrestored	branch-outcome: the supervision session handled this wake and recorded captain outcomes for you (store rows 1); run bin/fm-wake-drain.sh, act on its BRANCH OUTCOMES section, and acknowledge them as it prints
+1793333158	to-main	branch-outcome: the supervision session handled this wake and recorded captain outcomes for you (store rows 1); run bin/fm-wake-drain.sh, act on its BRANCH OUTCOMES section, and acknowledge them as it prints
+
+--- state/.watcher-down ---
+pending:handling:2396485.1793333129.J3VSaK
+
+--- state/.claude-autoarm-epoch ---
+epoch=1 owner_pid=2393037 outcome=failed updated_at=1793333160
+linux-starttime=35454646 cmdline-hex=62617368002f686f6d652f6e6f64652f2e6e6f2d6d697374616b65732f776f726b74726565732f3565323865363133333130652f30314d363546444a3756315a525a51594e3243465045575a4a462f2e746573742d70686173652f746d702f666d2d7375706572766973696f6e2d686f73742e796a4f7953422f686f6f6b2d737563636573736f722d726573746f72652d6661696c732d70656e64696e672f62696e2f666d2d636c617564652d73746f702d6175746f61726d2e736800
+
+--- state/.wake-queue ---
+1793333152	3	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-successor-restore-fails-pending/state/demo.status
+1793333153	4	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.yjOySB/hook-successor-restore-fails-pending/state/demo.status

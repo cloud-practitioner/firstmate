@@ -1,0 +1,40 @@
+mode=direct-control; CLI=2.1.314 (Claude Code); tmux=tmux 3.5a
+Real CLI, normal login, private fm-lab socket, 120x36 pane; no harness or engine stub.
+Transient linked-home marker enables the documented primary-scope predicate in this gate worktree.
+Fault injection: decision status append before the second real offer; mktemp fails only watcher downtime publication.
+
+--- host.out ---
+
+--- host.err ---
+
+--- host.rc ---
+1
+
+--- scheduler.log ---
+Paused real host 2942355 while its first real arm 2944021 closes.
+Resuming host; first arm alive=true
+
+--- fault.log ---
+injected watcher downtime publication failure
+injected watcher downtime publication failure
+injected watcher downtime publication failure
+
+--- offer-count ---
+2
+
+--- claude.err ---
+
+--- cli.rc ---
+0
+
+--- state/.supervision-host.log ---
+1793333952	start	gen=host-2942355-1793333947	primary=claude
+1793333978	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.SJL0mm/state/demo.status
+1793333979	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.SJL0mm/state/demo.status
+
+--- state/.watcher-down ---
+announced:handling:2944299.1793333964.qGRico
+
+--- state/.wake-queue ---
+1793333963	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.SJL0mm/state/demo.status
+1793333965	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.SJL0mm/state/demo.status

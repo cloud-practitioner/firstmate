@@ -1,0 +1,48 @@
+mode=hook-fail; CLI=2.1.314 (Claude Code); tmux=tmux 3.5a
+Real CLI, normal login, private fm-lab socket, 120x36 pane; no harness or engine stub.
+Transient linked-home marker enables the documented primary-scope predicate in this gate worktree.
+Fault injection: decision status append before the second real offer; mktemp fails only watcher downtime publication.
+
+--- hook.out ---
+
+--- hook.err ---
+firstmate watcher auto-arm FAILED - the Stop-owned automatic supervision mechanism is broken after 1 bounded attempts, and no live watcher with a fresh beacon was verified.
+watcher: started pid=2694859 (beacon fresh)
+supervision-host hand-back failed: watcher downtime could not be restored for the main hand-back
+The supervision host (docs/supervision-host.md) ran these cycles; its last one exited 1 without a wake.
+Do not launch a manual background arm from this notice; investigate the automatic Stop hook and watcher startup before ending blind.
+
+--- hook.rc ---
+2
+
+--- successor-alive-at-hook-exit ---
+true
+
+--- fault.log ---
+injected watcher downtime publication failure
+injected watcher downtime publication failure
+injected watcher downtime publication failure
+
+--- offer-count ---
+2
+
+--- claude.err ---
+
+--- cli.rc ---
+0
+
+--- state/.supervision-host.log ---
+1793333577	start	gen=host-2692534-1793333575	primary=claude
+1793333599	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.jq798l/state/demo.status
+1793333599	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.jq798l/state/demo.status
+
+--- state/.watcher-down ---
+announced:handling:2694859.1793333586.3sdxAP
+
+--- state/.claude-autoarm-epoch ---
+epoch=1 owner_pid=2690745 outcome=failed updated_at=1793333600
+linux-starttime=35500350 cmdline-hex=626173680062696e2f666d2d636c617564652d73746f702d6175746f61726d2e736800
+
+--- state/.wake-queue ---
+1793333586	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.jq798l/state/demo.status
+1793333587	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/l.jq798l/state/demo.status

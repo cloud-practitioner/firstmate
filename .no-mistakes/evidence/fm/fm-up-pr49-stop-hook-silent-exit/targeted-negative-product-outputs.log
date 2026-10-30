@@ -1,0 +1,22 @@
+
+=== fixture attended-turns-main-only-write-fails (fake harness; real host/hook/watcher) ===
+
+--- host.out ---
+watcher: started pid=2975192 (beacon fresh)
+
+--- host.err ---
+
+--- host.rc ---
+1
+
+--- state/.supervision-host.log ---
+1793334019	start	gen=host-2973542-1793334017	primary=claude
+1793334039	pass-through	attended	main-only	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.STg51R/attended-turns-main-only-write-fails/state/demo.status
+1793334039	pass-through	downtime-unrestored	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.STg51R/attended-turns-main-only-write-fails/state/demo.status
+
+--- state/.watcher-down ---
+announced:handling:2975192.1793334028.k3f7Nb
+
+--- state/.wake-queue ---
+1793334027	1	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.STg51R/attended-turns-main-only-write-fails/state/demo.status
+1793334028	2	signal	demo.status	signal: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.STg51R/attended-turns-main-only-write-fails/state/demo.status

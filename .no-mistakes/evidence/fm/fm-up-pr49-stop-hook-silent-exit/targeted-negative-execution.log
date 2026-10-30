@@ -1,0 +1,5 @@
+
+=== executing test_at_turn_downtime_write_failure_is_never_silent ===
+not ok - the failed hand-back must name itself on stdout
+--- /home/node/.no-mistakes/worktrees/5e28e613310e/01M65FDJ7V1ZRZQYN2CFPEWZJF/.test-phase/tmp/fm-supervision-host.STg51R/attended-turns-main-only-write-fails/host.out ---
+watcher: started pid=2975192 (beacon fresh)
