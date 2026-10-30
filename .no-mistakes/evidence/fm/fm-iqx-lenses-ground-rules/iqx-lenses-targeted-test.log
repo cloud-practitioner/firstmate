@@ -1,0 +1,270 @@
+ok - sources lock names the pstack commit in full
+ok - generator refuses without a home
+ok - generator refuses a directory that is no home
+ok - generator refuses a task with no scaffolded brief
+ok - run-proof refuses without dispositions and the changes list
+ok - shadow refuses without a model
+ok - panel: placeholders filled
+ok - panel: placeholders filled (spec)
+ok - panel: output path
+ok - panel: agent file
+ok - panel: read and run limits
+ok - panel: [run] and [read] labels
+ok - panel: [read] label
+ok - panel: probes kept beside the plan
+ok - panel: runnable from any checkout
+ok - panel: known S4P facts
+ok - panel: no second round, lens checks the revision
+ok - panel: role kept
+ok - panel: home pinned for fm scripts
+ok - panel: never DGW
+ok - panel: never the feedback skill
+ok - panel: standing rule
+ok - panel: extra context kept
+ok - panel: clone mode reads credentials by path
+ok - panel: report pointer
+ok - panel: board work removed
+ok - panel: lavish line gone
+ok - generator refuses an already filled brief
+ok - BA: read-only limits
+ok - BA: no probe-file rule
+ok - BA: agent file
+ok - shadow: output path
+ok - shadow: never counts for dispositions
+ok - shadow: benchmark role
+ok - shadow: extra context kept
+ok - pinned copy of another version is reported
+ok - pinned: path named, never cloned
+ok - run-proof: matching pinned copy gives no warning
+ok - run-proof: output path
+ok - run-proof: one output path
+ok - run-proof: one read order
+ok - run-proof: lens text embedded
+ok - run-proof: emitted pstack MIT notice contract
+ok - run-proof: checklist embedded
+ok - run-proof: fixed checklist item
+ok - run-proof: three Resume seeds
+ok - run-proof: sources lock embedded
+ok - run-proof: Ixia version in lock
+ok - run-proof: ticket seed
+ok - run-proof: extra context delivered with first inputs
+ok - run-proof: classes require repository coverage to leave
+ok - run-proof: known S4P facts
+ok - run-proof: pinned Ixia copy
+ok - run-proof: probes folder
+ok - run-proof: never DGW
+ok - run-proof: never the feedback skill
+ok - run-proof: no dispositions
+ok - run-proof: dispositions are read before the panel reviews
+ok - run-proof: panel reviews only after the freeze
+ok - run-proof: no second-model note without a touch
+ok - run-proof: placeholders filled
+ok - second-model run is called for
+ok - run-proof: second-model rule in the first brief
+ok - run-proof: second model gets its own output path
+ok - run-proof: second model reads no first report before freeze
+ok - --stdout prints the filled brief
+ok - --stdout leaves the scaffold unchanged
+ok - real scout output contracts agree for every reviewer kind and lens
+ok - panel: inherits named base in setup
+ok - panel: inherits named base in review inputs
+ok - panel: matching explicit named base preserves output
+ok - panel: inherited named stdout leaves scaffold untouched
+ok - panel: mismatched named base refused before write
+ok - panel: mismatched named base refused before stdout
+ok - panel: inherited named write matches stdout
+ok - panel: inherits standard base in setup
+ok - panel: inherits standard base in review inputs
+ok - panel: matching explicit standard base preserves output
+ok - panel: inherited standard stdout leaves scaffold untouched
+ok - panel: mismatched standard base refused before write
+ok - panel: mismatched standard base refused before stdout
+ok - panel: inherited standard write matches stdout
+ok - panel: default-branch setup retained
+ok - panel: default-branch review inputs agree
+ok - panel: no hardcoded default branch
+ok - panel: inherited default stdout leaves scaffold untouched
+ok - panel: mismatched default base refused before write
+ok - panel: mismatched default base refused before stdout
+ok - panel: inherited default write matches stdout
+ok - shadow: inherits named base in setup
+ok - shadow: inherits named base in review inputs
+ok - shadow: matching explicit named base preserves output
+ok - shadow: inherited named stdout leaves scaffold untouched
+ok - shadow: mismatched named base refused before write
+ok - shadow: mismatched named base refused before stdout
+ok - shadow: inherited named write matches stdout
+ok - shadow: inherits standard base in setup
+ok - shadow: inherits standard base in review inputs
+ok - shadow: matching explicit standard base preserves output
+ok - shadow: inherited standard stdout leaves scaffold untouched
+ok - shadow: mismatched standard base refused before write
+ok - shadow: mismatched standard base refused before stdout
+ok - shadow: inherited standard write matches stdout
+ok - shadow: default-branch setup retained
+ok - shadow: default-branch review inputs agree
+ok - shadow: no hardcoded default branch
+ok - shadow: inherited default stdout leaves scaffold untouched
+ok - shadow: mismatched default base refused before write
+ok - shadow: mismatched default base refused before stdout
+ok - shadow: inherited default write matches stdout
+ok - runproof: inherits named base in setup
+ok - runproof: inherits named base in review inputs
+ok - runproof: matching explicit named base preserves output
+ok - runproof: inherited named stdout leaves scaffold untouched
+ok - runproof: mismatched named base refused before write
+ok - runproof: mismatched named base refused before stdout
+ok - runproof: inherited named write matches stdout
+ok - runproof: inherits standard base in setup
+ok - runproof: inherits standard base in review inputs
+ok - runproof: matching explicit standard base preserves output
+ok - runproof: inherited standard stdout leaves scaffold untouched
+ok - runproof: mismatched standard base refused before write
+ok - runproof: mismatched standard base refused before stdout
+ok - runproof: inherited standard write matches stdout
+ok - runproof: default-branch setup retained
+ok - runproof: default-branch review inputs agree
+ok - runproof: no hardcoded default branch
+ok - runproof: inherited default stdout leaves scaffold untouched
+ok - runproof: mismatched default base refused before write
+ok - runproof: mismatched default base refused before stdout
+ok - runproof: inherited default write matches stdout
+ok - runproof-second: inherits named base in setup
+ok - runproof-second: inherits named base in review inputs
+ok - runproof-second: matching explicit named base preserves output
+ok - runproof-second: inherited named stdout leaves scaffold untouched
+ok - runproof-second: mismatched named base refused before write
+ok - runproof-second: mismatched named base refused before stdout
+ok - runproof-second: inherited named write matches stdout
+ok - runproof-second: inherits standard base in setup
+ok - runproof-second: inherits standard base in review inputs
+ok - runproof-second: matching explicit standard base preserves output
+ok - runproof-second: inherited standard stdout leaves scaffold untouched
+ok - runproof-second: mismatched standard base refused before write
+ok - runproof-second: mismatched standard base refused before stdout
+ok - runproof-second: inherited standard write matches stdout
+ok - runproof-second: default-branch setup retained
+ok - runproof-second: default-branch review inputs agree
+ok - runproof-second: no hardcoded default branch
+ok - runproof-second: inherited default stdout leaves scaffold untouched
+ok - runproof-second: mismatched default base refused before write
+ok - runproof-second: mismatched default base refused before stdout
+ok - runproof-second: inherited default write matches stdout
+ok - concurrent architect reviewers retain separate reports and same-named probes
+ok - dependency paths identify the checked files from another working directory
+ok - panel: linked-linked scaffold preserves its report spelling
+ok - panel: linked-linked report does not yet exist
+ok - panel: linked-linked stdout preserves scaffold
+ok - panel: linked-linked output names the expected task report
+ok - panel: linked-linked original report instruction was replaced
+ok - panel: linked-linked write matches stdout
+ok - panel: linked-canonical scaffold preserves its report spelling
+ok - panel: linked-canonical report does not yet exist
+ok - panel: linked-canonical stdout preserves scaffold
+ok - panel: linked-canonical output names the expected task report
+ok - panel: linked-canonical original report instruction was replaced
+ok - panel: linked-canonical write matches stdout
+ok - panel: canonical-linked scaffold preserves its report spelling
+ok - panel: canonical-linked report does not yet exist
+ok - panel: canonical-linked stdout preserves scaffold
+ok - panel: canonical-linked output names the expected task report
+ok - panel: canonical-linked original report instruction was replaced
+ok - panel: canonical-linked write matches stdout
+ok - shadow: linked-linked scaffold preserves its report spelling
+ok - shadow: linked-linked report does not yet exist
+ok - shadow: linked-linked stdout preserves scaffold
+ok - shadow: linked-linked output names the expected task report
+ok - shadow: linked-linked original report instruction was replaced
+ok - shadow: linked-linked write matches stdout
+ok - shadow: linked-canonical scaffold preserves its report spelling
+ok - shadow: linked-canonical report does not yet exist
+ok - shadow: linked-canonical stdout preserves scaffold
+ok - shadow: linked-canonical output names the expected task report
+ok - shadow: linked-canonical original report instruction was replaced
+ok - shadow: linked-canonical write matches stdout
+ok - shadow: canonical-linked scaffold preserves its report spelling
+ok - shadow: canonical-linked report does not yet exist
+ok - shadow: canonical-linked stdout preserves scaffold
+ok - shadow: canonical-linked output names the expected task report
+ok - shadow: canonical-linked original report instruction was replaced
+ok - shadow: canonical-linked write matches stdout
+ok - runproof: linked-linked scaffold preserves its report spelling
+ok - runproof: linked-linked report does not yet exist
+ok - runproof: linked-linked stdout preserves scaffold
+ok - runproof: linked-linked output names the expected task report
+ok - runproof: linked-linked original report instruction was replaced
+ok - runproof: linked-linked write matches stdout
+ok - runproof: linked-canonical scaffold preserves its report spelling
+ok - runproof: linked-canonical report does not yet exist
+ok - runproof: linked-canonical stdout preserves scaffold
+ok - runproof: linked-canonical output names the expected task report
+ok - runproof: linked-canonical original report instruction was replaced
+ok - runproof: linked-canonical write matches stdout
+ok - runproof: canonical-linked scaffold preserves its report spelling
+ok - runproof: canonical-linked report does not yet exist
+ok - runproof: canonical-linked stdout preserves scaffold
+ok - runproof: canonical-linked output names the expected task report
+ok - runproof: canonical-linked original report instruction was replaced
+ok - runproof: canonical-linked write matches stdout
+ok - runproof-second: linked-linked scaffold preserves its report spelling
+ok - runproof-second: linked-linked report does not yet exist
+ok - runproof-second: linked-linked stdout preserves scaffold
+ok - runproof-second: linked-linked output names the expected task report
+ok - runproof-second: linked-linked original report instruction was replaced
+ok - runproof-second: linked-linked write matches stdout
+ok - runproof-second: linked-canonical scaffold preserves its report spelling
+ok - runproof-second: linked-canonical report does not yet exist
+ok - runproof-second: linked-canonical stdout preserves scaffold
+ok - runproof-second: linked-canonical output names the expected task report
+ok - runproof-second: linked-canonical original report instruction was replaced
+ok - runproof-second: linked-canonical write matches stdout
+ok - runproof-second: canonical-linked scaffold preserves its report spelling
+ok - runproof-second: canonical-linked report does not yet exist
+ok - runproof-second: canonical-linked stdout preserves scaffold
+ok - runproof-second: canonical-linked output names the expected task report
+ok - runproof-second: canonical-linked original report instruction was replaced
+ok - runproof-second: canonical-linked write matches stdout
+ok - wrong-task report is refused before write without modifying the brief
+ok - wrong-task report is refused before stdout without modifying the brief
+ok - wrong-home report is refused before write without modifying the brief
+ok - wrong-home report is refused before stdout without modifying the brief
+ok - incompatible scaffold is refused without modifying the brief
+ok - panel: without --ground-rules no ground-rules text
+ok - panel: without --ground-rules no premise rule text
+ok - panel: without --ground-rules no conditional-section markers
+ok - panel: with --ground-rules the file is a mandatory read
+ok - panel: with --ground-rules the rule ids are cited
+ok - panel: --ground-rules only adds text to the default output
+ok - shadow: without --ground-rules no ground-rules text
+ok - shadow: without --ground-rules no premise rule text
+ok - shadow: without --ground-rules no conditional-section markers
+ok - shadow: with --ground-rules the file is a mandatory read
+ok - shadow: with --ground-rules the rule ids are cited
+ok - shadow: --ground-rules only adds text to the default output
+ok - runproof: without --ground-rules no ground-rules text
+ok - runproof: without --ground-rules no premise rule text
+ok - runproof: without --ground-rules no conditional-section markers
+ok - runproof: with --ground-rules the file is a mandatory read
+ok - runproof: with --ground-rules the rule ids are cited
+ok - runproof: --ground-rules only adds text to the default output
+ok - runproof: with --ground-rules the premise rule is in the lens text
+ok - runproof: with --ground-rules the rule is active
+ok - runproof: activation governs all probing and seeds
+ok - runproof: premise rule overrides inherited probing and ticket seeds
+ok - runproof: plan tests and all ticket seeds require confirmation before probing
+ok - runproof: premise rule asks, never builds a finding
+ok - runproof: unconfirmed premise is one plain question
+ok - runproof: conditional-section markers are not shown
+ok - panel: premise rule is a run-proof lens text only
+ok - panel: no premise-based finding suppression
+ok - panel: no unconfirmed-premise policy
+ok - shadow: premise rule is a run-proof lens text only
+ok - shadow: no premise-based finding suppression
+ok - shadow: no unconfirmed-premise policy
+ok - runproof: without --ground-rules the embedded lens text is the unchanged lens
+ok - ground-rules content is not embedded
+ok - a relative --ground-rules path resolves against the home
+ok - a missing or unreadable --ground-rules file is refused without modifying the brief
+ok - a missing or unreadable --ground-rules file is refused without modifying the brief
+
+all passed

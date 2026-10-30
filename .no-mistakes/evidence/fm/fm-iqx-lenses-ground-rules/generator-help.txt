@@ -1,0 +1,75 @@
+usage: mk-lens-brief.py [-h] [--home HOME] --task TASK --ticket TICKET
+                        --plan PLAN [--lens LENS] [--agent-file AGENT_FILE]
+                        [--shadow-model SHADOW_MODEL] [--model MODEL]
+                        [--dispositions DISPOSITIONS] [--changes CHANGES]
+                        [--panel-reviews PANEL_REVIEWS] [--seed SEED]
+                        [--seeds-file SEEDS_FILE]
+                        [--touches {runner,identity,resume}] [--extra EXTRA]
+                        [--owner OWNER] [--intent-file INTENT_FILE]
+                        [--base-branch BASE_BRANCH]
+                        [--ixia-source {pinned,clone}] [--ixia-dir IXIA_DIR]
+                        [--bitbucket-env BITBUCKET_ENV]
+                        [--ground-rules GROUND_RULES] [--stdout]
+                        {panel,shadow,runproof}
+
+Fill a scaffolded scout brief for an IQX lens reviewer (fork-only; see
+README).
+
+positional arguments:
+  {panel,shadow,runproof}
+
+options:
+  -h, --help            show this help message and exit
+  --home HOME           firstmate home directory (else FM_HOME; refuses when
+                        neither is set)
+  --task TASK           scout task id whose brief.md was scaffolded by bin/fm-
+                        brief.sh --scout
+  --ticket TICKET       ticket folder name under <home>/data/
+  --plan PLAN           plan path (absolute, or relative to the home)
+  --lens LENS           panel/shadow lens: solutions-architect, security-
+                        architect, business-analyst, ux-designer
+  --agent-file AGENT_FILE
+                        override the Ixia agent file name for the lens
+  --shadow-model SHADOW_MODEL
+                        shadow: the model id the benchmark reviewer runs on
+  --model MODEL         runproof: the model id the process runs on (default
+                        github-copilot/claude-opus-5.5)
+  --dispositions DISPOSITIONS
+                        runproof: the dispositions file (a first input)
+  --changes CHANGES     runproof: the plan author's 'what changed since the
+                        panel' list (a first input)
+  --panel-reviews PANEL_REVIEWS
+                        runproof: panel reviews folder, read only after the
+                        findings are frozen (default <ticket>/plans/reviews)
+  --seed SEED           runproof: a seed made for this ticket (repeatable)
+  --seeds-file SEEDS_FILE
+                        runproof: a file with one ticket seed per line
+  --touches {runner,identity,resume}
+                        runproof: what the plan changes (runner, identity,
+                        resume); any of them adds the second-model run
+  --extra EXTRA         extra context sentence appended to the inputs
+  --owner OWNER         how the standing rules name the product owner (default
+                        Product owner)
+  --intent-file INTENT_FILE
+                        a file of verbatim owner words to append to the
+                        captain's intent
+  --base-branch BASE_BRANCH
+                        assert the module base branch matches the scaffold
+                        (default: inherit the scaffold's base)
+  --ixia-source {pinned,clone}
+                        where the worker reads Ixia (default: pinned for
+                        runproof, clone for panel and shadow)
+  --ixia-dir IXIA_DIR   override the pinned Ixia marketplace copy (relative to
+                        the invocation directory; default: the path in
+                        sources.lock.json)
+  --bitbucket-env BITBUCKET_ENV
+                        credential file the worker reads by path, never
+                        printing it (relative to the invocation directory;
+                        clone mode; default
+                        /workspaces/wp/.secrets/bitbucket.env)
+  --ground-rules GROUND_RULES
+                        opt in: a home's ground-rules file (absolute, or
+                        relative to the home) every brief names as a mandatory
+                        read; runproof also keeps the production-only premise
+                        rule of the lens text
+  --stdout              print the filled brief instead of writing it
