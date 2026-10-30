@@ -27,8 +27,9 @@ export PATH="$FAKEBIN:$PATH"
 t3_fake_start "$TMP_ROOT/server"
 WATCH_PID=
 PROVIDER_PID=
-# fm-spawn.sh creates each task's /tmp/fm-<id> outside TMP_ROOT, so every id a
-# case spawns is recorded (t3_task_id) and its directory removed on exit.
+# fm-spawn.sh stages each task's launch file in /tmp/fm-<id>+<home token>
+# outside TMP_ROOT, so every id a case spawns is recorded (t3_task_id) and that
+# directory removed on exit.
 T3_TASK_IDS="$TMP_ROOT/task-ids"
 cleanup() {
   local pid id
@@ -39,7 +40,7 @@ cleanup() {
   done
   if [ -f "$T3_TASK_IDS" ]; then
     while IFS= read -r id; do
-      [ -z "$id" ] || rm -rf "/tmp/fm-$id"
+      [ -z "$id" ] || rm -rf "/tmp/fm-$id+"*
     done < "$T3_TASK_IDS"
   fi
   t3_fake_stop
@@ -1549,7 +1550,7 @@ test_spawn_leases_slot_creates_thread_and_starts_launch_turn() {
   local settings="$wt/.claude/settings.local.json"
   [ "$(t3_json_field "$settings" 'Object.keys(d.hooks).sort().join(" ")')" = "SessionEnd Stop StopFailure UserPromptSubmit" ] \
     || fail "the env merge must keep the busy hooks, got hooks '$(t3_json_field "$settings" 'Object.keys(d.hooks || {})')'"
-  [ "$(t3_json_field "$settings" 'd.env.GOTMPDIR')" = "/tmp/fm-$id/gotmp" ] || fail "settings env must carry GOTMPDIR, got '$(t3_json_field "$settings" 'd.env')'"
+  [ "$(t3_json_field "$settings" 'd.env.GOTMPDIR')" = "$(cd "$CASE_DIR/state" && pwd -P)/$id.tasktmp/gotmp" ] || fail "settings env must carry GOTMPDIR, got '$(t3_json_field "$settings" 'd.env')'"
   [ "$(t3_json_field "$settings" 'd.env.FM_TASK_ID')" = "$id" ] || fail "a ship worker's settings env must carry FM_TASK_ID"
   [ "$(t3_json_field "$settings" 'd.env.FM_TASK_INBOX')" = "$state/$id.inbox" ] || fail "a ship worker's settings env must carry its steering inbox"
   [ "$(t3_json_field "$settings" 'd.env.GIT_CONFIG_VALUE_0')" = "$state/$id.git-hooks" ] || fail "T3 workers must select the installed Git hook"
@@ -1595,7 +1596,7 @@ test_spawn_codex_scout_writes_toml_env_with_traceparent() {
   expect_code 0 $? "a codex scout on t3code should spawn against the fake T3 server"$'\n'"$out"
   toml="$wt/.codex/config.toml"
   assert_present "$toml" "a codex worker gets .codex/config.toml in its worktree"
-  [ "$(t3_toml_env "$toml" GOTMPDIR)" = "/tmp/fm-$id/gotmp" ] || fail "config.toml must set GOTMPDIR, got '$(cat "$toml")'"
+  [ "$(t3_toml_env "$toml" GOTMPDIR)" = "$(cd "$CASE_DIR/state" && pwd -P)/$id.tasktmp/gotmp" ] || fail "config.toml must set GOTMPDIR, got '$(cat "$toml")'"
   [ "$(t3_toml_env "$toml" FM_TASK_ID)" = "$id" ] || fail "a scout's config.toml must set FM_TASK_ID"
   [ "$(t3_toml_env "$toml" FM_TASK_INBOX)" = "$state/$id.inbox" ] || fail "a scout's config.toml must set FM_TASK_INBOX"
   [ "$(t3_toml_env "$toml" GIT_CONFIG_VALUE_0)" = "$state/$id.git-hooks" ] || fail "a scout's config.toml must select the installed Git hook"
@@ -1757,7 +1758,7 @@ test_spawn_secondmate_runs_thread_in_home_with_env() {
   [ "$(t3_json_field "$settings" 'd.permissions.allow[0]')" = 'Bash(ls:*)' ] || fail "the home's own settings must survive the T3 environment install"
   [ "$(t3_json_field "$settings" 'd.env.LAVISH_AXI_HOST')" = undefined ] || fail "a key an earlier spawn wrote and this one does not must not linger"
   [ "$(t3_json_field "$settings" 'Object.keys(d.env).length')" = 19 ] || fail "the env block should hold the home's entry, the 17 Firstmate keys, and their list, got $(t3_json_field "$settings" 'Object.keys(d.env)')"
-  [ "$(t3_json_field "$settings" 'd.env.GOTMPDIR')" = "/tmp/fm-$id/gotmp" ] || fail "settings env must carry GOTMPDIR"
+  [ "$(t3_json_field "$settings" 'd.env.GOTMPDIR')" = "$(cd "$CASE_DIR/home/state" && pwd -P)/$id.tasktmp/gotmp" ] || fail "settings env must carry GOTMPDIR"
   read_settings() { t3_json_field "$settings" "d.env[\"$1\"]"; }
   assert_t3_secondmate_env read_settings "claude secondmate settings env" "$home" "$thread" autoarm "$id"
   t3_excluded "$home" .claude/settings.local.json || fail "the settings file must be git-excluded in the home"
@@ -1782,7 +1783,7 @@ test_spawn_codex_secondmate_writes_toml_env() {
   thread=$(bash -c '. "$1"; fm_meta_get "$2" t3_thread_id' _ "$ROOT/bin/fm-backend.sh" "$CASE_DIR/home/state/$id.meta")
   toml="$home/.codex/config.toml"
   assert_present "$toml" "a codex secondmate home gets .codex/config.toml"
-  [ "$(t3_toml_env "$toml" GOTMPDIR)" = "/tmp/fm-$id/gotmp" ] || fail "config.toml must set GOTMPDIR, got '$(cat "$toml")'"
+  [ "$(t3_toml_env "$toml" GOTMPDIR)" = "$(cd "$CASE_DIR/home/state" && pwd -P)/$id.tasktmp/gotmp" ] || fail "config.toml must set GOTMPDIR, got '$(cat "$toml")'"
   read_toml() { t3_toml_env "$toml" "$1"; }
   assert_t3_secondmate_env read_toml "codex secondmate config.toml" "$home" "$thread" persistent "$id"
   t3_excluded "$home" .codex/config.toml || fail "config.toml must be git-excluded in the home"
