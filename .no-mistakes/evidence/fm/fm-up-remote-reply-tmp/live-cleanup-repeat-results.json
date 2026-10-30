@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Broken continuity through ingest and lifecycle-locked handle",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Reject wrong digest and wrong length without staging, locks, or committed data",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Successful captured handle and replay commit once and release lifecycle lock",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "SIGTERM during real SSH document fetch via ingest",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "SIGTERM during real SSH document fetch via handle",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "SIGTERM during real SSH source read",
+    "result": "pass",
+    "live": true
+  }
+]

@@ -1,0 +1,268 @@
+Real adapter: /home/node/.no-mistakes/worktrees/5e28e613310e/01M6541DNVG7XABCMY2GVFT6D9/bin/fm-procevent-remote-reply.sh
+Real OpenSSH client: /usr/bin/ssh; disposable loopback endpoint port=56441
+
+=== Broken continuity through ingest and lifecycle-locked handle ===
+$ $WORKTREE/bin/fm-lab-home.sh create $WORKTREE/.test-remote-reply/live/continuity/home
+exit=0
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M6541DNVG7XABCMY2GVFT6D9/.test-remote-reply/live/continuity/home
+real delta-reader envelope:
+schema=fm-remote-delta.v1
+status=continuity-broken
+path=state/parent-replies.status
+from_offset=0
+to_offset=0
+from_prefix_sha256=0000000000000000000000000000000000000000000000000000000000000000
+to_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+payload_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+payload_bytes=0
+reason=prefix-changed
+
+
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh ingest ios $WORKTREE/.test-remote-reply/live/continuity/delta.result
+exit=3
+continuity-broken: ios (prefix-changed)
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+$ $WORKTREE/bin/fm-procevent.sh register remote-reply remote-reply-ios -- /bin/cat $WORKTREE/.test-remote-reply/live/continuity/delta.result
+exit=0
+registered: remote-reply-ios (remote-reply)
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh handle ios 1 $WORKTREE/.test-remote-reply/live/continuity/home/state/procevent-inbox/remote-reply-ios.1.result
+exit=3
+continuity-broken: ios (prefix-changed)
+already-handled: remote-reply-ios 1
+persisted status:
+blocked [key=remote-reply-continuity-ios] [at=1793321578]: remote reply continuity broke for ios (prefix-changed) at offset 0 prefix e3b0c44298fc retirements 0
+
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+
+=== Reject wrong digest and wrong length without staging, locks, or committed data ===
+$ $WORKTREE/bin/fm-lab-home.sh create $WORKTREE/.test-remote-reply/live/digest/home
+exit=0
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M6541DNVG7XABCMY2GVFT6D9/.test-remote-reply/live/digest/home
+real delta-reader envelope:
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=22
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=6c4d8104f3e57df73dafc8f8e2a28a4d6d0b48d083300b2f8fa1cac0ad8d65c1
+payload_sha256=6c4d8104f3e57df73dafc8f8e2a28a4d6d0b48d083300b2f8fa1cac0ad8d65c1
+payload_bytes=22
+reason=
+
+working: digest check
+
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh ingest ios $WORKTREE/.test-remote-reply/live/digest/delta.result
+exit=1
+error: result payload bytes do not match its committed digest
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh handle ios 1 $WORKTREE/.test-remote-reply/live/digest/delta.result
+exit=1
+error: result payload bytes do not match its committed digest
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh ingest ios $WORKTREE/.test-remote-reply/live/digest/delta.result
+exit=1
+error: result payload bytes do not match its committed digest
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh handle ios 1 $WORKTREE/.test-remote-reply/live/digest/delta.result
+exit=1
+error: result payload bytes do not match its committed digest
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh ingest ios $WORKTREE/.test-remote-reply/live/digest/delta.result
+exit=0
+ingested: ios appended=1 offset=22
+retry persisted status:
+working: digest check
+
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+
+=== Successful captured handle and replay commit once and release lifecycle lock ===
+$ $WORKTREE/bin/fm-lab-home.sh create $WORKTREE/.test-remote-reply/live/success/home
+exit=0
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M6541DNVG7XABCMY2GVFT6D9/.test-remote-reply/live/success/home
+real delta-reader envelope:
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=33
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=f1bbb8b29ac2908b6a5ee492964ea8e8928852028cc762cba0172b4e0e95990f
+payload_sha256=f1bbb8b29ac2908b6a5ee492964ea8e8928852028cc762cba0172b4e0e95990f
+payload_bytes=33
+reason=
+
+working: live cleanup validation
+
+$ $WORKTREE/bin/fm-procevent.sh register remote-reply remote-reply-ios -- /bin/cat $WORKTREE/.test-remote-reply/live/success/delta.result
+exit=0
+registered: remote-reply-ios (remote-reply)
+$ $WORKTREE/bin/fm-procevent.sh sweep-home
+exit=0
+retired: remote-reply-ios
+swept: attempted=1
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh handle ios 1 $WORKTREE/.test-remote-reply/live/success/home/state/procevent-inbox/remote-reply-ios.1.result
+exit=0
+ingested: ios appended=0 offset=33
+registered: remote-reply-ios (remote-reply)
+armed: remote-reply-ios offset=33
+already-handled: remote-reply-ios 1
+persisted status:
+working: live cleanup validation
+
+persisted cursor:
+schema=fm-remote-reply-cursor.v1
+offset=33
+prefix_sha256=f1bbb8b29ac2908b6a5ee492964ea8e8928852028cc762cba0172b4e0e95990f
+
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+
+=== SIGTERM during real SSH document fetch via ingest ===
+$ $WORKTREE/bin/fm-lab-home.sh create $WORKTREE/.test-remote-reply/live/term-ingest/home
+exit=0
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M6541DNVG7XABCMY2GVFT6D9/.test-remote-reply/live/term-ingest/home
+real delta-reader envelope:
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=47
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=dab7969c7c146b71c45a444ab93d1c3091e9c48b3ba86f8b9b292111853a7e24
+payload_sha256=dab7969c7c146b71c45a444ab93d1c3091e9c48b3ba86f8b9b292111853a7e24
+payload_bytes=47
+reason=
+
+done: report ready report=data/reply/report.md
+
+before SIGTERM: {"TMPDIR": ["fm-remote-doc-reason.cJhPzs", "fm-remote-reply-ingest.brzHt3"], "document_staging": ["data/remote-secondmates/ios/data/reply/.remote-doc.36WGI4"], "lifecycle_locks": [], "ingest_locks": [".remote-reply-ingest-ios.lock", ".remote-reply-ingest-ios.lock.owner.ANndVZ"]}
+SIGTERM real adapter group; exit=-15
+Terminated
+
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": [".remote-reply-ingest-ios.lock", ".remote-reply-ingest-ios.lock.owner.ANndVZ"]}
+real delta-reader envelope:
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=39
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=1ca3e418818b7f0e63f2231a6259b89a6f5ab4540e9616bcf0992119dc168bc4
+payload_sha256=1ca3e418818b7f0e63f2231a6259b89a6f5ab4540e9616bcf0992119dc168bc4
+payload_bytes=39
+reason=
+
+working: retry after interrupted fetch
+
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh ingest ios $WORKTREE/.test-remote-reply/live/term-ingest/retry.result
+exit=0
+ingested: ios appended=1 offset=39
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+
+=== SIGTERM during real SSH document fetch via handle ===
+$ $WORKTREE/bin/fm-lab-home.sh create $WORKTREE/.test-remote-reply/live/term-handle/home
+exit=0
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M6541DNVG7XABCMY2GVFT6D9/.test-remote-reply/live/term-handle/home
+real delta-reader envelope:
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=47
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=dab7969c7c146b71c45a444ab93d1c3091e9c48b3ba86f8b9b292111853a7e24
+payload_sha256=dab7969c7c146b71c45a444ab93d1c3091e9c48b3ba86f8b9b292111853a7e24
+payload_bytes=47
+reason=
+
+done: report ready report=data/reply/report.md
+
+before SIGTERM: {"TMPDIR": ["fm-remote-doc-reason.B3gdDc", "fm-remote-reply-ingest.tL3VAJ"], "document_staging": ["data/remote-secondmates/ios/data/reply/.remote-doc.HBgfip"], "lifecycle_locks": [".remote-reply-lifecycle-ios.lock", ".remote-reply-lifecycle-ios.lock.owner.GEO2mk"], "ingest_locks": [".remote-reply-ingest-ios.lock", ".remote-reply-ingest-ios.lock.owner.GPf6jZ"]}
+SIGTERM real adapter group; exit=-15
+Terminated
+
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": [".remote-reply-ingest-ios.lock", ".remote-reply-ingest-ios.lock.owner.GPf6jZ"]}
+real delta-reader envelope:
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=39
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=1ca3e418818b7f0e63f2231a6259b89a6f5ab4540e9616bcf0992119dc168bc4
+payload_sha256=1ca3e418818b7f0e63f2231a6259b89a6f5ab4540e9616bcf0992119dc168bc4
+payload_bytes=39
+reason=
+
+working: retry after interrupted fetch
+
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh ingest ios $WORKTREE/.test-remote-reply/live/term-handle/retry.result
+exit=0
+ingested: ios appended=1 offset=39
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+
+=== SIGTERM during real SSH source read ===
+$ $WORKTREE/bin/fm-lab-home.sh create $WORKTREE/.test-remote-reply/live/term-source/home
+exit=0
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M6541DNVG7XABCMY2GVFT6D9/.test-remote-reply/live/term-source/home
+before SIGTERM: {"TMPDIR": ["fm-remote-reply-source.rY2DTI"], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+SIGTERM real adapter group; exit=-15
+Terminated
+
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+$ $WORKTREE/bin/fm-procevent-remote-reply.sh source ios
+exit=255
+ssh: connect to host 127.0.0.1 port 1: Connection refused
+observable cleanup state: {"TMPDIR": [], "document_staging": [], "lifecycle_locks": [], "ingest_locks": []}
+$ $WORKTREE/bin/fm-procevent.sh sweep-home
+exit=0
+swept: attempted=0
+$ $WORKTREE/bin/fm-procevent.sh sweep-home
+exit=0
+swept: attempted=0
+$ $WORKTREE/bin/fm-procevent.sh sweep-home
+exit=0
+swept: attempted=0
+$ $WORKTREE/bin/fm-procevent.sh sweep-home
+exit=0
+retired: remote-reply-ios
+swept: attempted=1
+$ $WORKTREE/bin/fm-procevent.sh sweep-home
+exit=0
+swept: attempted=0
+$ $WORKTREE/bin/fm-procevent.sh sweep-home
+exit=0
+swept: attempted=0
+Disposed all live lab homes and the loopback endpoint.
+[
+  {
+    "name": "Broken continuity through ingest and lifecycle-locked handle",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Reject wrong digest and wrong length without staging, locks, or committed data",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "Successful captured handle and replay commit once and release lifecycle lock",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "SIGTERM during real SSH document fetch via ingest",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "SIGTERM during real SSH document fetch via handle",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "SIGTERM during real SSH source read",
+    "result": "pass",
+    "live": true
+  }
+]

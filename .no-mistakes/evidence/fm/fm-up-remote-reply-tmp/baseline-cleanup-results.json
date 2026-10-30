@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Broken continuity through ingest and lifecycle-locked handle",
+    "result": "fail",
+    "live": true,
+    "error": "AssertionError(('TMPDIR', ['fm-remote-reply-ingest.tYvjlg']))"
+  },
+  {
+    "name": "Reject wrong digest and wrong length without staging, locks, or committed data",
+    "result": "fail",
+    "live": true,
+    "error": "AssertionError(('lifecycle_locks', ['.remote-reply-lifecycle-ios.lock', '.remote-reply-lifecycle-ios.lock.owner.5GpYep']))"
+  },
+  {
+    "name": "Successful captured handle and replay commit once and release lifecycle lock",
+    "result": "pass",
+    "live": true
+  },
+  {
+    "name": "SIGTERM during real SSH document fetch via ingest",
+    "result": "fail",
+    "live": true,
+    "error": "AssertionError(('TMPDIR', ['fm-remote-doc-reason.lJcqo2', 'fm-remote-reply-ingest.IX5aWj']))"
+  },
+  {
+    "name": "SIGTERM during real SSH document fetch via handle",
+    "result": "fail",
+    "live": true,
+    "error": "AssertionError(('TMPDIR', ['fm-remote-doc-reason.421zNW', 'fm-remote-reply-ingest.ucQuuP']))"
+  },
+  {
+    "name": "SIGTERM during real SSH source read",
+    "result": "fail",
+    "live": true,
+    "error": "AssertionError(('TMPDIR', ['fm-remote-reply-source.5N78KS']))"
+  }
+]
