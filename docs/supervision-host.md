@@ -268,7 +268,7 @@ That publication is required even when the successor already exited, because no 
 If that publication fails, the hand-back includes an additional wake diagnostic and the host exits nonzero.
 A close that becomes main-only at its turn instead leaves its successor running, as [Away](#away) describes.
 If that path cannot restore downtime, it reports a non-wake failure rather than emitting the close; on Claude, the auto-arm failure notice reaches main even with a healthy successor.
-The [host header](../bin/fm-supervision-host.sh) owns the output contract that distinguishes this failure from host death; the direct-host and Claude Stop-hook downtime-write regressions in [fm-supervision-host.test.sh](../tests/fm-supervision-host.test.sh) cover it.
+The [host header](../bin/fm-supervision-host.sh) owns the output contract that distinguishes this failure from host death; the direct-host downtime-write regression in [fm-supervision-host.test.sh](../tests/fm-supervision-host.test.sh) and the Claude Stop-hook regression in [fm-supervision-host-hook.test.sh](../tests/fm-supervision-host-hook.test.sh) cover it.
 On Claude, a Stop hook whose rewake is refused while the recovery marker is still `pending:handling` and no watcher is live commits the auto-arm failure notice once per failure episode (`failed-suppressed` after that) and still exits 2, so the hand-back reaches main; every other refused rewake stays silent as before.
 After a failure-path hand-back restores downtime, the owner's next arm starts from the same state as without the host.
 The wake stays durable in the queue even if restoration fails.

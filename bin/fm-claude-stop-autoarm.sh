@@ -83,15 +83,14 @@
 #     the harness delivers the collected stderr only on exit 2, so an owned
 #     terminal commit decides the exit. Markerless outcomes commit with the
 #     ledger write; the failure notice additionally requires its marker write.
-#     A refused generation exits 0 silently even after printing. A close that
-#     reports no actionable reason is benign when a live identity-matched
-#     watcher still has a fresh beacon.
-#   - Failure handling: ordinary arm failures are rechecked against the same
-#     live, fresh watcher predicate and retried a bounded number of times in
-#     this hook. Only an exhausted failure with no verified watcher emits one
-#     last-resort notice per failure episode; later consecutive failures still
-#     exit 2 to guarantee the next Stop-owned retry without repeating notice,
-#     until the synchronous guard has consumed its attended fail-open.
+#     A refused generation exits 0 silently even after printing.
+#   - Failure handling: ordinary arm failures are benign when an
+#     identity-matched live watcher has a fresh beacon; otherwise this hook
+#     retries a bounded number of times. Only an exhausted failure with no
+#     verified watcher emits one last-resort notice per failure episode; later
+#     consecutive failures still exit 2 to guarantee the next Stop-owned retry
+#     without repeating notice, until the synchronous guard has consumed its
+#     attended fail-open.
 #     docs/supervision-host.md "Failure direction" owns failed host hand-backs.
 #
 # The epoch ledger state/.claude-autoarm-epoch records the latest claim
