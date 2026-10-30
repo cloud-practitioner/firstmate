@@ -109,9 +109,16 @@ The stale-owner claim occurs only after the existing AFK and supervision-need ga
 
 ### Claude arm failures
 
-The [auto-arm header](../bin/fm-claude-stop-autoarm.sh) owns ordinary arm retries and healthy-watcher suppression.
-[Claude cooperative mode](turnend-guard.md#claude-cooperative-mode) owns the notice commit contract, monotonic failure progression, one-time attended fail-open, post-alarm continuation suppression, and positive recovery reset.
-[Supervision-host failure direction](supervision-host.md#failure-direction) owns failed host hand-backs.
+After each non-actionable arm close, the hook rechecks the identity-matched watcher lock and fresh beacon before retrying a bounded number of times.
+The beacon is `state/.last-watcher-beat`, which only the watcher process touches.
+
+- A cycle-end failure is benign when that live-watcher predicate is true.
+  In that case the hook suppresses the arm output and continues silently.
+- Only an exhausted failure with no verified watcher commits one last-resort notice for the continuous failure episode.
+- A refused notice commit stays silent for a later retry.
+- After a successful notice, later Stop cycles exit 2 without repeating it until the turn-end guard consumes the attended fail-open.
+
+The Claude turn-end guard owns that notice commit contract, the monotonic failure progression, one-time attended fail-open, post-alarm continuation suppression, and positive recovery reset described in [`turnend-guard.md`](turnend-guard.md#harness-integrations).
 
 ### Supervision host
 

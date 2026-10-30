@@ -337,6 +337,12 @@ dump_host_handback_diagnostics() {  # <home> [wait-name]
   else
     printf '(missing)\n' >&2
   fi
+  printf '%s\n' '--- host.err ---' >&2
+  if [ -n "$home" ] && [ -f "$home/host.err" ]; then
+    cat "$home/host.err" >&2
+  else
+    printf '(missing)\n' >&2
+  fi
   printf '--- .supervision-host.log ---\n' >&2
   if [ -n "$home" ] && [ -f "$home/state/.supervision-host.log" ]; then
     cat "$home/state/.supervision-host.log" >&2

@@ -98,8 +98,8 @@
 # line naming them, and one line per visible outcome, for main to relay. The
 # default host injects nothing and has no delivery path of its own; the owner's
 # existing wake path delivers it, unless ACKNOWLEDGED HAND-BACK below adds
-# retries through its detached owner. For these return handoffs, the default
-# fallback is to exit with the close's own reason line. That handoff is only a
+# retries through its detached owner. The default fallback is
+# always to exit with the close's own reason line. That handoff is only a
 # prompt: each non-silent outcome recorded after the return is already a
 # durable queued wake
 # (bin/fm-branch-report.sh), so it still reaches main when the host dies at the
