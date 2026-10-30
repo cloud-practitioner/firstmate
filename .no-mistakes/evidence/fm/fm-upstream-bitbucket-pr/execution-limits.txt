@@ -1,0 +1,17 @@
+Target: 59809f24e8956058122792212c9bd360505070a7
+Scope: Only tests/fm-pr-bitbucket.test.sh, tests/fm-pr-merge.test.sh, and tests/fm-pr-check-security.test.sh. No live scenarios, lint, broad suite, pipeline-control commands, publication, or credential changes.
+
+Initial serial invocation used --jobs 1 --per-script-timeout-secs 300 under an outer 900-second timeout. It was intentionally interrupted and superseded when its bound proved unsuitable for fixture runtime.
+
+The next invocation used --jobs 3 --per-script-timeout-secs 900 under an outer 1000-second timeout. The runner scheduled fm-pr-merge alone before its family-only phase. The pending scheduler was paused to avoid duplicate later execution while Bitbucket/check suites were launched separately under their recorded PR-forge family isolation proof. The merge worker continued, but the outer invocation ultimately exited 124 before the merge suite completed. Its partial passing observations are not a completed-suite pass. The merge worker's per-script timer had also been paused during the budget adjustment; the outer timeout remained effective.
+
+The separate --jobs 2 --per-script-timeout-secs 750 invocation completed:
+- tests/fm-pr-bitbucket.test.sh: exit 0, 445014 ms.
+- tests/fm-pr-check-security.test.sh: exit 124, 750042 ms; exceeded its per-script bound. No product assertion failure was observed before termination.
+The paired runner exited 1 because of the security-suite timeout.
+
+bitbucket-cli-evidence.json contains directly observed CLI stdout/stderr and generated task/outcome state from the completed Bitbucket suite. HTTP responses were stubbed. In all eight async-away cases, both post-acceptance read-back probes refused concurrent archive/control acquisition. Only confirmed landings without persistence failure produced a landed marker. These are automated regression observations, not live forge evidence.
+
+Cleanup: all recorded test controllers stopped; no remaining processes were found with the test fixtures' scoped environments. Owned runner temporary roots were removed after timeout cleanup left a nonempty directory. Final git status --short was empty and .test-phase was absent. No source or test files were changed.
+
+Result: Bitbucket regression suite passed. Complete merge/security regression validation remains incomplete. A larger Test-phase budget (and correspondingly larger suite bounds), or explicitly approved narrower executable selectors, is needed to finish those suites on this host.
