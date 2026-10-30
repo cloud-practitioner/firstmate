@@ -474,5 +474,91 @@ else
   fail "incompatible scaffold is refused without modifying the brief"
 fi
 
+# --- opt-in --ground-rules ------------------------------------------------------------
+GR="$TMP/synthetic-ground-rules.md"
+printf '# Synthetic ground rules\nGR-1 example rule\n' >"$GR"
+gen_kind() { # gen_kind <task> <kind> [extra generator args...]: scaffold, generate to stdout
+  local task=$1 kind=$2
+  shift 2
+  scaffold "$task"
+  local args=("$kind" --home "$HOME_T" --task "$task" --ticket "$TICKET" --plan "$PLAN_DIR/plan.md")
+  case "$kind" in
+    panel) args+=(--lens solutions-architect) ;;
+    shadow) args+=(--lens security-architect --shadow-model github-copilot/gpt-6.1-sol) ;;
+    runproof) args+=(--dispositions "$PLAN_DIR/plan-reviews.md" --changes "$PLAN_DIR/what-changed.md" --ixia-dir "$TMP/ixia-ok") ;;
+  esac
+  python3 "$GEN" "${args[@]}" "$@" --stdout
+}
+for kind in panel shadow runproof; do
+  gen_kind "t-gr0-$kind" "$kind" >"$TMP/gr-off-$kind.md"
+  gen_kind "t-gr1-$kind" "$kind" --ground-rules "$GR" >"$TMP/gr-on-$kind.md"
+  # The task id is the only input that differs between the two generations; mask it.
+  python3 - "$kind" "$TMP/gr-off-$kind.md" "$TMP/gr-on-$kind.md" <<'PY'
+import pathlib, sys
+for index, name in enumerate(sys.argv[2:]):
+    path = pathlib.Path(name)
+    task = ("t-gr%d-%s" % (index, sys.argv[1])).encode()
+    path.write_bytes(path.read_bytes().replace(task, b"TASK"))
+PY
+  # Without the option nothing of the feature shows, and nothing a run produced before is gone.
+  expect_hasnt "$kind: without --ground-rules no ground-rules text" "$TMP/gr-off-$kind.md" "GROUND RULES"
+  expect_hasnt "$kind: without --ground-rules no premise rule text" "$TMP/gr-off-$kind.md" "Production-only premise rule"
+  expect_hasnt "$kind: without --ground-rules no conditional-section markers" "$TMP/gr-off-$kind.md" "ground-rules-premise-rule"
+  # With it, each kind names the file and the rule ids, and only adds text.
+  expect_has "$kind: with --ground-rules the file is a mandatory read" "$TMP/gr-on-$kind.md" "GROUND RULES (mandatory read): before you review anything, read the ground-rules file $GR in full."
+  expect_has "$kind: with --ground-rules the rule ids are cited" "$TMP/gr-on-$kind.md" "Cite the rule ids you rely on in each finding."
+  diff_status=0
+  diff "$TMP/gr-off-$kind.md" "$TMP/gr-on-$kind.md" >"$TMP/gr-diff-$kind.txt" || diff_status=$?
+  if [ "$diff_status" -gt 1 ]; then
+    exit "$diff_status"
+  fi
+  if grep -q '^<' "$TMP/gr-diff-$kind.txt"; then
+    fail "$kind: --ground-rules only adds text (a line of the default output changed or went)"
+  else
+    pass "$kind: --ground-rules only adds text to the default output"
+  fi
+done
+expect_has "runproof: with --ground-rules the premise rule is in the lens text" "$TMP/gr-on-runproof.md" "## 8. Production-only premise rule (only when the brief names a ground-rules file)"
+expect_has "runproof: with --ground-rules the rule is active" "$TMP/gr-on-runproof.md" "the production-only premise rule (lens text, section 8) is active"
+expect_has "runproof: activation governs all probing and seeds" "$TMP/gr-on-runproof.md" "it governs all attacks, probes and seeds below, overriding conflicting instructions."
+expect_has "runproof: premise rule overrides inherited probing and ticket seeds" "$TMP/gr-on-runproof.md" "overriding section 4's attack and seed instructions, section 5's probe rules and checklist section 1.9's ticket seeds wherever they conflict."
+expect_has "runproof: plan tests and all ticket seeds require confirmation before probing" "$TMP/gr-on-runproof.md" "Do not attack or probe an unconfirmed premise, even when the plan lists it as a test or it appears in a supplied or generated seed."
+expect_has "runproof: premise rule asks, never builds a finding" "$TMP/gr-on-runproof.md" "Any other premise is not a finding."
+expect_has "runproof: unconfirmed premise is one plain question" "$TMP/gr-on-runproof.md" "Ask it as one plain question in the report's questions section, headed \"unconfirmed premise\""
+expect_hasnt "runproof: conditional-section markers are not shown" "$TMP/gr-on-runproof.md" "ground-rules-premise-rule"
+for kind in panel shadow; do
+  expect_hasnt "$kind: premise rule is a run-proof lens text only" "$TMP/gr-on-$kind.md" "production-only premise rule"
+  expect_hasnt "$kind: no premise-based finding suppression" "$TMP/gr-on-$kind.md" "do not build the finding on it"
+  expect_hasnt "$kind: no unconfirmed-premise policy" "$TMP/gr-on-$kind.md" "unconfirmed premise"
+done
+# Without the option the embedded lens text is exactly the lens file minus the conditional section.
+check "runproof: without --ground-rules the embedded lens text is the unchanged lens" python3 - "$here/run-proof-lens.markdown" "$TMP/gr-off-runproof.md" <<'PY'
+import sys
+lens = open(sys.argv[1]).read().split("<!-- BEGIN ground-rules-premise-rule -->")[0].strip()
+brief = open(sys.argv[2]).read()
+begin = "===== BEGIN LENS TEXT (run-proof-lens.markdown) =====\n"
+end = "\n===== END LENS TEXT ====="
+assert brief.split(begin)[1].split(end)[0] == lens
+PY
+# The ground-rules file is a path only: its content is never copied into the brief.
+expect_hasnt "ground-rules content is not embedded" "$TMP/gr-on-panel.md" "GR-1 example rule"
+# A relative path resolves against the home.
+mkdir -p "$HOME_T/data/rules"
+cp "$GR" "$HOME_T/data/rules/ground-rules.md"
+gen_kind t-gr-rel panel --ground-rules data/rules/ground-rules.md >"$TMP/gr-rel.md"
+expect_has "a relative --ground-rules path resolves against the home" "$TMP/gr-rel.md" "read the ground-rules file $HOME_T/data/rules/ground-rules.md in full."
+# A missing or unreadable file is refused before anything is written.
+scaffold t-gr-bad
+cp "$(brief t-gr-bad)" "$TMP/gr-bad-before.md"
+for bad in "$TMP/no-such-ground-rules.md" "$TMP"; do
+  out=$(python3 "$GEN" runproof --home "$HOME_T" --task t-gr-bad --ticket "$TICKET" --plan "$PLAN_DIR/plan.md" \
+    --dispositions "$PLAN_DIR/plan-reviews.md" --changes "$PLAN_DIR/what-changed.md" --ground-rules "$bad" 2>&1) && rc=0 || rc=$?
+  if [ "$rc" -ne 0 ] && grep -q 'ground-rules file .* is missing or unreadable' <<<"$out" && cmp -s "$(brief t-gr-bad)" "$TMP/gr-bad-before.md"; then
+    pass "a missing or unreadable --ground-rules file is refused without modifying the brief"
+  else
+    fail "a missing or unreadable --ground-rules file is refused without modifying the brief ($bad)"
+  fi
+done
+
 echo
 if [ "$fails" -eq 0 ]; then echo "all passed"; else echo "$fails failed" >&2; exit 1; fi
