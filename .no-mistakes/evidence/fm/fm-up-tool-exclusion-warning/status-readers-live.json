@@ -1,0 +1,2144 @@
+[
+  {
+    "scenario": "done",
+    "before": "state: done \u00b7 source: status-log \u00b7 completed fixture task",
+    "after": "state: done \u00b7 source: status-log \u00b7 completed fixture task",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "done",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "done": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "done",
+            "note": "completed fixture task",
+            "raw": "done [at=1700000000]: completed fixture task",
+            "age_seconds": 93339971
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "done",
+        "source": "status-log",
+        "detail": "completed fixture task",
+        "raw": "state: done \u00b7 source: status-log \u00b7 completed fixture task",
+        "observed_at": "2026-10-30T05:59:31Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T05:59:31Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": "done [at=1700000000]: completed fixture task"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "state": "in_flight",
+        "blocked_reason": null,
+        "title": "Live status fixture",
+        "requires_child_metadata": true,
+        "since": null,
+        "blocked_by": null,
+        "current_role": "worker",
+        "done": null,
+        "pr_url": null,
+        "body_lines": [],
+        "hold_kind": null,
+        "repo": null,
+        "hold_reason": null,
+        "hold_until": null,
+        "unresolved_blocker_ids": [],
+        "checked": false,
+        "kind": "scout",
+        "hold_age_days": null,
+        "local_note": null,
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "body_excerpt": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "hold_bucket": null,
+        "blocked_by_ids": [],
+        "merged": null,
+        "report_path": null,
+        "id": "worker",
+        "hold_set": null,
+        "order": 1,
+        "links": [],
+        "captain_actionable": false,
+        "reported": null,
+        "structured": true,
+        "priority": null
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:32Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      done [at=1700000000]: completed fixture task\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T05:59:32Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "done",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "completed fixture task"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "failed",
+    "before": "state: failed \u00b7 source: status-log \u00b7 stopped fixture task",
+    "after": "state: failed \u00b7 source: status-log \u00b7 stopped fixture task",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "failed",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "failed": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "failed",
+            "note": "stopped fixture task",
+            "raw": "failed: stopped fixture task",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "failed",
+        "source": "status-log",
+        "detail": "stopped fixture task",
+        "raw": "state: failed \u00b7 source: status-log \u00b7 stopped fixture task",
+        "observed_at": "2026-10-30T05:59:37Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T05:59:37Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": "failed: stopped fixture task"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "current_role": "worker",
+        "kind": "scout",
+        "report_path": null,
+        "state": "in_flight",
+        "blocked_by_ids": [],
+        "hold_reason": null,
+        "merged": null,
+        "reported": null,
+        "unresolved_blocker_ids": [],
+        "blocked_by": null,
+        "hold_age_days": null,
+        "structured": true,
+        "done": null,
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "body_lines": [],
+        "body_excerpt": null,
+        "title": "Live status fixture",
+        "hold_until": null,
+        "requires_child_metadata": true,
+        "links": [],
+        "id": "worker",
+        "blocked_reason": null,
+        "order": 1,
+        "repo": null,
+        "hold_bucket": null,
+        "pr_url": null,
+        "priority": null,
+        "hold_set": null,
+        "since": null,
+        "local_note": null,
+        "checked": false,
+        "completion": {
+          "verb": null,
+          "date": null
+        },
+        "captain_actionable": false,
+        "hold_kind": null
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:38Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      failed: stopped fixture task\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T05:59:38Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "failed",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "stopped fixture task"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "working",
+    "before": "state: working \u00b7 source: status-log \u00b7 continuing fixture task",
+    "after": "state: working \u00b7 source: status-log \u00b7 continuing fixture task",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "working",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "working": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "working",
+            "note": "continuing fixture task",
+            "raw": "working: continuing fixture task",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "working",
+        "source": "status-log",
+        "detail": "continuing fixture task",
+        "raw": "state: working \u00b7 source: status-log \u00b7 continuing fixture task",
+        "observed_at": "2026-10-30T05:59:40Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T05:59:40Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": "working: continuing fixture task"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "merged": null,
+        "hold_reason": null,
+        "since": null,
+        "body_lines": [],
+        "hold_until": null,
+        "body_excerpt": null,
+        "report_path": null,
+        "done": null,
+        "requires_child_metadata": true,
+        "state": "in_flight",
+        "blocked_reason": null,
+        "title": "Live status fixture",
+        "current_role": "worker",
+        "hold_bucket": null,
+        "blocked_by_ids": [],
+        "hold_set": null,
+        "checked": false,
+        "unresolved_blocker_ids": [],
+        "hold_age_days": null,
+        "repo": null,
+        "kind": "scout",
+        "order": 1,
+        "blocked_by": null,
+        "links": [],
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "pr_url": null,
+        "hold_kind": null,
+        "completion": {
+          "verb": null,
+          "date": null
+        },
+        "reported": null,
+        "priority": null,
+        "id": "worker",
+        "captain_actionable": false,
+        "local_note": null,
+        "structured": true
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:41Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      working: continuing fixture task\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T05:59:41Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "working",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "continuing fixture task"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "paused",
+    "before": "state: paused \u00b7 source: status-log \u00b7 waiting for release",
+    "after": "state: paused \u00b7 source: status-log \u00b7 waiting for release",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "paused",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "paused": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "paused",
+            "note": "waiting for release",
+            "raw": "paused [key=release]: waiting for release",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "paused",
+        "source": "status-log",
+        "detail": "waiting for release",
+        "raw": "state: paused \u00b7 source: status-log \u00b7 waiting for release",
+        "observed_at": "2026-10-30T05:59:43Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T05:59:43Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": "paused [key=release]: waiting for release"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "blocked_by_ids": [],
+        "hold_set": null,
+        "requires_child_metadata": true,
+        "unresolved_blocker_ids": [],
+        "merged": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "checked": false,
+        "links": [],
+        "structured": true,
+        "pr_url": null,
+        "hold_bucket": null,
+        "body_excerpt": null,
+        "hold_until": null,
+        "hold_age_days": null,
+        "kind": "scout",
+        "order": 1,
+        "id": "worker",
+        "priority": null,
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "blocked_by": null,
+        "local_note": null,
+        "hold_reason": null,
+        "title": "Live status fixture",
+        "since": null,
+        "repo": null,
+        "body_lines": [],
+        "reported": null,
+        "captain_actionable": false,
+        "state": "in_flight",
+        "report_path": null,
+        "current_role": "worker",
+        "blocked_reason": null,
+        "done": null,
+        "hold_kind": null
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:44Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      paused [key=release]: waiting for release\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T05:59:44Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "paused",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "waiting for release"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "blocked",
+    "before": "state: blocked \u00b7 source: status-log \u00b7 waiting for access",
+    "after": "state: blocked \u00b7 source: status-log \u00b7 waiting for access",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "blocked",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "blocked": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "blocked",
+            "note": "waiting for access",
+            "raw": "blocked [key=access]: waiting for access",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "blocked",
+        "source": "status-log",
+        "detail": "waiting for access",
+        "raw": "state: blocked \u00b7 source: status-log \u00b7 waiting for access",
+        "observed_at": "2026-10-30T05:59:45Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T05:59:45Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": true,
+        "open_decisions": [
+          {
+            "key": "access",
+            "verb": "blocked",
+            "summary": "waiting for access"
+          }
+        ],
+        "scout_report_present": false,
+        "last_event_text": "blocked [key=access]: waiting for access"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "local_note": null,
+        "links": [],
+        "structured": true,
+        "hold_set": null,
+        "since": null,
+        "hold_kind": null,
+        "state": "in_flight",
+        "report_path": null,
+        "body_excerpt": null,
+        "current_role": "worker",
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "unresolved_blocker_ids": [],
+        "done": null,
+        "body_lines": [],
+        "hold_until": null,
+        "blocked_by_ids": [],
+        "kind": "scout",
+        "order": 1,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "hold_age_days": null,
+        "id": "worker",
+        "priority": null,
+        "repo": null,
+        "hold_reason": null,
+        "blocked_by": null,
+        "pr_url": null,
+        "captain_actionable": false,
+        "hold_bucket": null,
+        "requires_child_metadata": true,
+        "blocked_reason": null,
+        "title": "Live status fixture",
+        "checked": false,
+        "reported": null,
+        "merged": null
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:46Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      blocked [key=access]: waiting for access\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T05:59:46Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "blocked",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "waiting for access"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "decision",
+    "before": "state: parked \u00b7 source: status-log \u00b7 choose a shape",
+    "after": "state: parked \u00b7 source: status-log \u00b7 choose a shape",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "needs-decision",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "needs-decision": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "needs-decision",
+            "note": "choose a shape",
+            "raw": "needs-decision [key=shape]: choose a shape",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "parked",
+        "source": "status-log",
+        "detail": "choose a shape",
+        "raw": "state: parked \u00b7 source: status-log \u00b7 choose a shape",
+        "observed_at": "2026-10-30T05:59:47Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T05:59:47Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": true,
+        "blocked_event": false,
+        "open_decisions": [
+          {
+            "key": "shape",
+            "verb": "needs-decision",
+            "summary": "choose a shape"
+          }
+        ],
+        "scout_report_present": false,
+        "last_event_text": "needs-decision [key=shape]: choose a shape"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "hold_reason": null,
+        "checked": false,
+        "hold_until": null,
+        "requires_child_metadata": true,
+        "local_note": null,
+        "hold_bucket": null,
+        "state": "in_flight",
+        "links": [],
+        "current_role": "worker",
+        "report_path": null,
+        "id": "worker",
+        "blocked_reason": null,
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "priority": null,
+        "blocked_by": null,
+        "completion": {
+          "verb": null,
+          "date": null
+        },
+        "unresolved_blocker_ids": [],
+        "blocked_by_ids": [],
+        "merged": null,
+        "hold_age_days": null,
+        "kind": "scout",
+        "done": null,
+        "title": "Live status fixture",
+        "since": null,
+        "reported": null,
+        "order": 1,
+        "hold_kind": null,
+        "body_excerpt": null,
+        "hold_set": null,
+        "repo": null,
+        "captain_actionable": false,
+        "structured": true,
+        "pr_url": null,
+        "body_lines": []
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:48Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      needs-decision [key=shape]: choose a shape\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T05:59:48Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "parked",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "choose a shape"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "held",
+    "before": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+    "after": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "captain-held",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "captain-held": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "captain-held",
+            "note": "transferred",
+            "raw": "captain-held [key=shape]: transferred",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "unknown",
+        "source": "none",
+        "detail": "no current-state source available",
+        "raw": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+        "observed_at": "2026-10-30T05:59:50Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T05:59:50Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": "captain-held [key=shape]: transferred"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "order": 1,
+        "body_excerpt": null,
+        "repo": null,
+        "priority": null,
+        "blocked_by_ids": [],
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "structured": true,
+        "pr_url": null,
+        "current_role": "worker",
+        "hold_reason": null,
+        "checked": false,
+        "blocked_by": null,
+        "body_lines": [],
+        "requires_child_metadata": true,
+        "id": "worker",
+        "since": null,
+        "hold_age_days": null,
+        "hold_kind": null,
+        "done": null,
+        "kind": "scout",
+        "hold_set": null,
+        "reported": null,
+        "title": "Live status fixture",
+        "merged": null,
+        "hold_bucket": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "links": [],
+        "blocked_reason": null,
+        "state": "in_flight",
+        "unresolved_blocker_ids": [],
+        "captain_actionable": false,
+        "report_path": null,
+        "hold_until": null,
+        "local_note": null
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:51Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      captain-held [key=shape]: transferred\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T05:59:51Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "unknown",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "no current-state source available"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "resolved",
+    "before": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+    "after": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "resolved",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "resolved": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "resolved",
+            "note": "answered",
+            "raw": "resolved [key=shape]: answered",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "unknown",
+        "source": "none",
+        "detail": "no current-state source available",
+        "raw": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+        "observed_at": "2026-10-30T05:59:53Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T05:59:53Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": "resolved [key=shape]: answered"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "state": "in_flight",
+        "hold_set": null,
+        "requires_child_metadata": true,
+        "blocked_by": null,
+        "title": "Live status fixture",
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "body_excerpt": null,
+        "links": [],
+        "done": null,
+        "unresolved_blocker_ids": [],
+        "blocked_by_ids": [],
+        "captain_actionable": false,
+        "blocked_reason": null,
+        "reported": null,
+        "id": "worker",
+        "hold_bucket": null,
+        "hold_until": null,
+        "current_role": "worker",
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "hold_age_days": null,
+        "hold_reason": null,
+        "hold_kind": null,
+        "merged": null,
+        "checked": false,
+        "repo": null,
+        "priority": null,
+        "pr_url": null,
+        "order": 1,
+        "kind": "scout",
+        "structured": true,
+        "body_lines": [],
+        "local_note": null,
+        "report_path": null,
+        "since": null
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:54Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      resolved [key=shape]: answered\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T05:59:54Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "unknown",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "no current-state source available"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "ordinary-note",
+    "before": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+    "after": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "note",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "note": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "note",
+            "note": "ordinary note",
+            "raw": "note: ordinary note",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "unknown",
+        "source": "none",
+        "detail": "no current-state source available",
+        "raw": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+        "observed_at": "2026-10-30T05:59:57Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T05:59:57Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": "note: ordinary note"
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "title": "Live status fixture",
+        "done": null,
+        "body_lines": [],
+        "checked": false,
+        "blocked_reason": null,
+        "since": null,
+        "local_note": null,
+        "state": "in_flight",
+        "structured": true,
+        "report_path": null,
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "hold_kind": null,
+        "hold_age_days": null,
+        "links": [],
+        "hold_reason": null,
+        "merged": null,
+        "order": 1,
+        "pr_url": null,
+        "blocked_by": null,
+        "blocked_by_ids": [],
+        "unresolved_blocker_ids": [],
+        "hold_bucket": null,
+        "current_role": "worker",
+        "captain_actionable": false,
+        "reported": null,
+        "repo": null,
+        "priority": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "requires_child_metadata": true,
+        "hold_set": null,
+        "kind": "scout",
+        "body_excerpt": null,
+        "hold_until": null,
+        "id": "worker"
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:58Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      note: ordinary note\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T05:59:58Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "unknown",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "no current-state source available"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "warning-only",
+    "before": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+    "after": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+    "voice": {
+      "awaiting_captain": 0,
+      "awaiting_captain_detail": [],
+      "basis": "Last recorded event, which is history and not a live check.",
+      "captain_notes_waiting": 0,
+      "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+      "in_flight": 1,
+      "in_flight_detail": [
+        {
+          "id": "worker",
+          "state": "no events yet",
+          "title": "Live status fixture"
+        }
+      ],
+      "open_pull_requests": 0,
+      "pull_request_detail": [],
+      "queued": 0,
+      "scope": "full",
+      "withheld_as_confidential": 0,
+      "worker_states": {
+        "no events yet": 1
+      },
+      "workers_on_deck": 1
+    },
+    "fleet": {
+      "id": "worker",
+      "kind": "scout",
+      "harness": "pi",
+      "mode": "scout",
+      "yolo": "",
+      "branch": null,
+      "project": "fixture",
+      "spawn_gen": null,
+      "backend": "herdr",
+      "remote": null,
+      "paths": {
+        "meta": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta",
+          "present": true
+        },
+        "status_log": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status",
+          "present": true,
+          "kind": "event_history",
+          "last_event": {
+            "state": "",
+            "note": "",
+            "raw": "",
+            "age_seconds": null
+          }
+        },
+        "worktree": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+          "present": true
+        },
+        "home": {
+          "path": null,
+          "present": false
+        },
+        "report": {
+          "path": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md",
+          "present": false
+        }
+      },
+      "secondmate_projects": [],
+      "current_state": {
+        "state": "unknown",
+        "source": "none",
+        "detail": "no current-state source available",
+        "raw": "state: unknown \u00b7 source: none \u00b7 no current-state source available",
+        "observed_at": "2026-10-30T06:00:00Z",
+        "freshness": "fresh"
+      },
+      "endpoint": {
+        "target": "fm-lab-exclusion-3357943-9305:w1:p1",
+        "exists": true,
+        "agent_alive": "not_checked",
+        "status": "unknown",
+        "observed_at": "2026-10-30T06:00:00Z",
+        "freshness": "fresh"
+      },
+      "pr": {
+        "url": null,
+        "source": "absent",
+        "head": null
+      },
+      "hints": {
+        "pending_decision": false,
+        "blocked_event": false,
+        "open_decisions": [],
+        "scout_report_present": false,
+        "last_event_text": ""
+      },
+      "actions": {
+        "watch": "bin/fm-peek.sh fm-worker",
+        "steer": "bin/fm-send.sh fm-worker '<instruction>'",
+        "return_channel_note": null
+      },
+      "backlog": {
+        "requires_child_metadata": true,
+        "hold_age_days": null,
+        "merged": null,
+        "state": "in_flight",
+        "raw": "- [ ] worker - Live status fixture (kind: scout)",
+        "priority": null,
+        "blocked_by_ids": [],
+        "current_role": "worker",
+        "id": "worker",
+        "hold_reason": null,
+        "title": "Live status fixture",
+        "captain_actionable": false,
+        "hold_until": null,
+        "done": null,
+        "blocked_by": null,
+        "order": 1,
+        "local_note": null,
+        "body_lines": [],
+        "hold_set": null,
+        "pr_url": null,
+        "blocked_reason": null,
+        "completion": {
+          "date": null,
+          "verb": null
+        },
+        "repo": null,
+        "links": [],
+        "kind": "scout",
+        "report_path": null,
+        "hold_bucket": null,
+        "checked": false,
+        "hold_kind": null,
+        "structured": true,
+        "reported": null,
+        "unresolved_blocker_ids": [],
+        "body_excerpt": null,
+        "since": null
+      }
+    },
+    "inbox": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T06:00:01Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      (no events yet)\n\nNote: the last event line is history, not current state.\n",
+    "bearings": {
+      "schema": "fm-bearings.v1",
+      "home": "status-lab/home",
+      "generated": "2026-10-30T06:00:02Z",
+      "prs": "not_requested (run: /bearings include PRs)",
+      "contributions": {
+        "scope": "owned contributions per home",
+        "known": 0,
+        "checked": 0,
+        "counts": {
+          "captain": 0,
+          "fleet": 0,
+          "maintainer": 0,
+          "nobody": 0
+        },
+        "complete": true,
+        "proven_clear": true,
+        "unmeasured_homes": 0,
+        "unreadable_records": 0,
+        "unmeasured": 0,
+        "stale_verdicts": 0,
+        "missing_verdicts": 0,
+        "captain_omitted": 0,
+        "captain": []
+      },
+      "in_flight": [
+        {
+          "id": "worker",
+          "kind": "scout",
+          "state": "unknown",
+          "repo": "fixture",
+          "name": "Live status fixture",
+          "doing": "no current-state source available"
+        }
+      ],
+      "secondmates": [],
+      "secondmate_reconcile": [],
+      "decisions_open": [],
+      "landed": [],
+      "gates": [],
+      "reports": [],
+      "recorded_prs": [],
+      "omitted": [
+        {
+          "surface": "backlog item bodies",
+          "reveal": "--fields bodies"
+        },
+        {
+          "surface": "task paths",
+          "reveal": "--fields paths"
+        },
+        {
+          "surface": "watch/steer actions",
+          "reveal": "--fields actions"
+        },
+        {
+          "surface": "healthy endpoint detail",
+          "reveal": "--fields endpoints"
+        },
+        {
+          "surface": "full scout-report inventory",
+          "reveal": "--all-reports"
+        },
+        {
+          "surface": "live PR discovery + checks",
+          "reveal": "--include-prs"
+        }
+      ]
+    }
+  }
+]

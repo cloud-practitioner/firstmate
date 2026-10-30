@@ -1,0 +1,16 @@
+window=fm-lab-excl-spawn-3560748-2201:w2:p2
+endpoint_task_id=excl-live-3560673
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/pool/.treehouse/fixture-e90a76/1/fixture
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/projects/fixture
+harness=pi
+kind=scout
+tasktmp=/tmp/fm-excl-live-3560673
+model=lab/exclusion-fixture
+effort=default
+busy_gen=g1793340222.3575995.14326
+spawn_gen=s1793340222.3567819.18619
+backend=herdr
+herdr_session=fm-lab-excl-spawn-3560748-2201
+herdr_workspace_id=w2
+herdr_tab_id=w2:t2
+herdr_pane_id=w2:p2

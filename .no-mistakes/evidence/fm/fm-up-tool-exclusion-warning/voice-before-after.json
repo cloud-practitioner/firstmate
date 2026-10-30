@@ -1,0 +1,50 @@
+{
+  "base": {
+    "awaiting_captain": 0,
+    "awaiting_captain_detail": [],
+    "basis": "Last recorded event, which is history and not a live check.",
+    "captain_notes_waiting": 0,
+    "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+    "in_flight": 1,
+    "in_flight_detail": [
+      {
+        "id": "worker",
+        "state": "note",
+        "title": "Regression reproduction"
+      }
+    ],
+    "open_pull_requests": 0,
+    "pull_request_detail": [],
+    "queued": 0,
+    "scope": "full",
+    "withheld_as_confidential": 0,
+    "worker_states": {
+      "note": 1
+    },
+    "workers_on_deck": 1
+  },
+  "target": {
+    "awaiting_captain": 0,
+    "awaiting_captain_detail": [],
+    "basis": "Last recorded event, which is history and not a live check.",
+    "captain_notes_waiting": 0,
+    "detail": "The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.",
+    "in_flight": 1,
+    "in_flight_detail": [
+      {
+        "id": "worker",
+        "state": "done",
+        "title": "Regression reproduction"
+      }
+    ],
+    "open_pull_requests": 0,
+    "pull_request_detail": [],
+    "queued": 0,
+    "scope": "full",
+    "withheld_as_confidential": 0,
+    "worker_states": {
+      "done": 1
+    },
+    "workers_on_deck": 1
+  }
+}

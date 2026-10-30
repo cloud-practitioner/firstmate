@@ -1,0 +1,4 @@
+working: live validation fixture
+needs-decision [key=shape]: choose a shape
+resolved [key=shape]: shape chosen before next agent start
+note [state=none] [at=1793340314]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/tmp/fm-spawn-dispatch-profile.IFHVsY/excl-registry-pi-scout-reconnect/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__tracker__editIssue

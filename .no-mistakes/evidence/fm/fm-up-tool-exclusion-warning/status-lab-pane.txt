@@ -1,0 +1,21 @@
+01M65MFBQHY7METR56JHMH28BV on  HEAD [?]
+❯ env PI_CODING_AGENT_DIR=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JH
+MH28BV/.test-phase/pi-home pi --provider lab --model exclusion-fixture --offline --no-session
+ --no-context-files --no-extensions --no-skills --no-mcp --no-prompt-templates --no-themes
+─────────────────────────────────────────────────────────────────────────────────────────────
+
+ Trust project folder?
+ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV
+
+ This allows pi to load .pi settings and resources, install missing project packages, and
+ execute project extensions.
+
+ → Trust
+   Trust parent folder (/home/node/.no-mistakes/worktrees/5e28e613310e)
+   Trust (this session only)
+   Do not trust
+   Do not trust (this session only)
+
+ ↑↓ navigate  enter select  escape/ctrl+c cancel
+
+─────────────────────────────────────────────────────────────────────────────────────────────

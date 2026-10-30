@@ -1,0 +1,777 @@
+[
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "name",
+      "exclusion"
+    ],
+    "exit": 0,
+    "stdout": "fm-lab-exclusion-3357943-9305\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-lab-home.sh",
+      "create",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "provision",
+      "fm-lab-exclusion-3357943-9305"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "run",
+      "fm-lab-exclusion-3357943-9305",
+      "workspace",
+      "create",
+      "--label",
+      "tool-exclusion-status",
+      "--cwd",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV"
+    ],
+    "exit": 0,
+    "stdout": "{\"id\":\"cli:workspace:create\",\"result\":{\"root_pane\":{\"agent_status\":\"unknown\",\"cwd\":\"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\"focused\":true,\"foreground_cwd\":\"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\"pane_id\":\"w1:p1\",\"revision\":0,\"scroll\":{\"max_offset_from_bottom\":0,\"offset_from_bottom\":0,\"viewport_rows\":40},\"tab_id\":\"w1:t1\",\"terminal_id\":\"term_65f087fb9a5fa1\",\"workspace_id\":\"w1\"},\"tab\":{\"agent_status\":\"unknown\",\"focused\":true,\"label\":\"1\",\"number\":1,\"pane_count\":1,\"tab_id\":\"w1:t1\",\"workspace_id\":\"w1\"},\"type\":\"workspace_created\",\"workspace\":{\"active_tab_id\":\"w1:t1\",\"agent_status\":\"unknown\",\"focused\":true,\"label\":\"tool-exclusion-status\",\"number\":1,\"pane_count\":1,\"tab_count\":1,\"workspace_id\":\"w1\"}}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "viewer",
+      "start",
+      "fm-lab-exclusion-3357943-9305"
+    ],
+    "exit": 0,
+    "stdout": "viewer attached to fm-lab-exclusion-3357943-9305 (pid 3358276)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "run",
+      "fm-lab-exclusion-3357943-9305",
+      "pane",
+      "run",
+      "w1:p1",
+      "env PI_CODING_AGENT_DIR=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/pi-home pi --provider lab --model exclusion-fixture --offline --no-session --no-context-files --no-extensions --no-skills --no-mcp --no-prompt-templates --no-themes"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "run",
+      "fm-lab-exclusion-3357943-9305",
+      "pane",
+      "read",
+      "w1:p1",
+      "--source",
+      "visible",
+      "--format",
+      "text"
+    ],
+    "exit": 0,
+    "stdout": "01M65MFBQHY7METR56JHMH28BV on \ue0a0 HEAD [?]\n\u276f env PI_CODING_AGENT_DIR=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JH\nMH28BV/.test-phase/pi-home pi --provider lab --model exclusion-fixture --offline --no-session\n --no-context-files --no-extensions --no-skills --no-mcp --no-prompt-templates --no-themes\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n Trust project folder?\n /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\n\n This allows pi to load .pi settings and resources, install missing project packages, and\n execute project extensions.\n\n \u2192 Trust\n   Trust parent folder (/home/node/.no-mistakes/worktrees/5e28e613310e)\n   Trust (this session only)\n   Do not trust\n   Do not trust (this session only)\n\n \u2191\u2193 navigate  enter select  escape/ctrl+c cancel\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "init",
+      "-q",
+      "-b",
+      "main",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+      "add",
+      "fixture.txt"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture",
+      "-c",
+      "user.name=Fixture",
+      "-c",
+      "user.email=fixture@example.invalid",
+      "commit",
+      "-qm",
+      "Fixture"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-busy-event.sh",
+      "arm",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "g1793339970.3360357.15900\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-busy-event.sh",
+      "apply",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state",
+      "worker",
+      "idle",
+      "--gen",
+      "g1793339970.3360357.15900",
+      "--source",
+      "pi-ext",
+      "--event",
+      "agent-settled"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: done \u00b7 source: status-log \u00b7 completed fixture task\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: done \u00b7 source: status-log \u00b7 completed fixture task\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"done\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"done\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T05:59:31Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"records\": [\n      {\n        \"state\": \"in_flight\",\n        \"blocked_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"requires_child_metadata\": true,\n        \"since\": null,\n        \"blocked_by\": null,\n        \"current_role\": \"worker\",\n        \"done\": null,\n        \"pr_url\": null,\n        \"body_lines\": [],\n        \"hold_kind\": null,\n        \"repo\": null,\n        \"hold_reason\": null,\n        \"hold_until\": null,\n        \"unresolved_blocker_ids\": [],\n        \"checked\": false,\n        \"kind\": \"scout\",\n        \"hold_age_days\": null,\n        \"local_note\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"body_excerpt\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"hold_bucket\": null,\n        \"blocked_by_ids\": [],\n        \"merged\": null,\n        \"report_path\": null,\n        \"id\": \"worker\",\n        \"hold_set\": null,\n        \"order\": 1,\n        \"links\": [],\n        \"captain_actionable\": false,\n        \"reported\": null,\n        \"structured\": true,\n        \"priority\": null\n      }\n    ],\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\",\n    \"present\": true\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"done\",\n            \"note\": \"completed fixture task\",\n            \"raw\": \"done [at=1700000000]: completed fixture task\",\n            \"age_seconds\": 93339971\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"done\",\n        \"source\": \"status-log\",\n        \"detail\": \"completed fixture task\",\n        \"raw\": \"state: done \u00b7 source: status-log \u00b7 completed fixture task\",\n        \"observed_at\": \"2026-10-30T05:59:31Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T05:59:31Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": false,\n        \"blocked_event\": false,\n        \"open_decisions\": [],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"done [at=1700000000]: completed fixture task\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"state\": \"in_flight\",\n        \"blocked_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"requires_child_metadata\": true,\n        \"since\": null,\n        \"blocked_by\": null,\n        \"current_role\": \"worker\",\n        \"done\": null,\n        \"pr_url\": null,\n        \"body_lines\": [],\n        \"hold_kind\": null,\n        \"repo\": null,\n        \"hold_reason\": null,\n        \"hold_until\": null,\n        \"unresolved_blocker_ids\": [],\n        \"checked\": false,\n        \"kind\": \"scout\",\n        \"hold_age_days\": null,\n        \"local_note\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"body_excerpt\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"hold_bucket\": null,\n        \"blocked_by_ids\": [],\n        \"merged\": null,\n        \"report_path\": null,\n        \"id\": \"worker\",\n        \"hold_set\": null,\n        \"order\": 1,\n        \"links\": [],\n        \"captain_actionable\": false,\n        \"reported\": null,\n        \"structured\": true,\n        \"priority\": null\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T05:59:31Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:32Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      done [at=1700000000]: completed fixture task\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T05:59:32Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"done\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"completed fixture task\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-wake-drain.sh"
+    ],
+    "exit": 0,
+    "stdout": "UNREAD STATUS (new since last drain, not re-printed after this presentation):\nworker note [state=none] [at=1793339863]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/tmp/fm-spawn-dispatch-profile.IFHVsY/excl-registry-pi-scout-reconnect/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__tracker__editIssue, mcp__tracker__createIssue\nSTATUS OUTCOME BACKSTOP (newest captain-facing task event has no covering branch outcome):\nworker done [at=1700000000]: completed fixture task\n",
+    "stderr": "\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u25cf  WATCHER DOWN - SUPERVISION IS OFF\n\u25cf  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 1s ago).\n\u25cf  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.\n\u25cf  This is a supervision warning only; the guarded operation WILL still run.\n\u25cf  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.\n\u25cf\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n"
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-wake-drain.sh"
+    ],
+    "exit": 0,
+    "stdout": "UNREAD STATUS (new since last drain, not re-printed after this presentation):\nworker note [state=none] [at=1793339863]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/tmp/fm-spawn-dispatch-profile.IFHVsY/excl-registry-pi-scout-reconnect/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__tracker__editIssue, mcp__tracker__createIssue\n",
+    "stderr": "WARNING: watcher still down (same stale episode; last beat: 3s ago, grace 300s) - full banner already printed this episode.\n"
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: failed \u00b7 source: status-log \u00b7 stopped fixture task\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: failed \u00b7 source: status-log \u00b7 stopped fixture task\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"failed\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"failed\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T05:59:37Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"present\": true,\n    \"records\": [\n      {\n        \"current_role\": \"worker\",\n        \"kind\": \"scout\",\n        \"report_path\": null,\n        \"state\": \"in_flight\",\n        \"blocked_by_ids\": [],\n        \"hold_reason\": null,\n        \"merged\": null,\n        \"reported\": null,\n        \"unresolved_blocker_ids\": [],\n        \"blocked_by\": null,\n        \"hold_age_days\": null,\n        \"structured\": true,\n        \"done\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"body_lines\": [],\n        \"body_excerpt\": null,\n        \"title\": \"Live status fixture\",\n        \"hold_until\": null,\n        \"requires_child_metadata\": true,\n        \"links\": [],\n        \"id\": \"worker\",\n        \"blocked_reason\": null,\n        \"order\": 1,\n        \"repo\": null,\n        \"hold_bucket\": null,\n        \"pr_url\": null,\n        \"priority\": null,\n        \"hold_set\": null,\n        \"since\": null,\n        \"local_note\": null,\n        \"checked\": false,\n        \"completion\": {\n          \"verb\": null,\n          \"date\": null\n        },\n        \"captain_actionable\": false,\n        \"hold_kind\": null\n      }\n    ],\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\"\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"failed\",\n            \"note\": \"stopped fixture task\",\n            \"raw\": \"failed: stopped fixture task\",\n            \"age_seconds\": null\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"failed\",\n        \"source\": \"status-log\",\n        \"detail\": \"stopped fixture task\",\n        \"raw\": \"state: failed \u00b7 source: status-log \u00b7 stopped fixture task\",\n        \"observed_at\": \"2026-10-30T05:59:37Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T05:59:37Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": false,\n        \"blocked_event\": false,\n        \"open_decisions\": [],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"failed: stopped fixture task\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"current_role\": \"worker\",\n        \"kind\": \"scout\",\n        \"report_path\": null,\n        \"state\": \"in_flight\",\n        \"blocked_by_ids\": [],\n        \"hold_reason\": null,\n        \"merged\": null,\n        \"reported\": null,\n        \"unresolved_blocker_ids\": [],\n        \"blocked_by\": null,\n        \"hold_age_days\": null,\n        \"structured\": true,\n        \"done\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"body_lines\": [],\n        \"body_excerpt\": null,\n        \"title\": \"Live status fixture\",\n        \"hold_until\": null,\n        \"requires_child_metadata\": true,\n        \"links\": [],\n        \"id\": \"worker\",\n        \"blocked_reason\": null,\n        \"order\": 1,\n        \"repo\": null,\n        \"hold_bucket\": null,\n        \"pr_url\": null,\n        \"priority\": null,\n        \"hold_set\": null,\n        \"since\": null,\n        \"local_note\": null,\n        \"checked\": false,\n        \"completion\": {\n          \"verb\": null,\n          \"date\": null\n        },\n        \"captain_actionable\": false,\n        \"hold_kind\": null\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T05:59:37Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:38Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      failed: stopped fixture task\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T05:59:38Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"failed\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"stopped fixture task\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: working \u00b7 source: status-log \u00b7 continuing fixture task\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: working \u00b7 source: status-log \u00b7 continuing fixture task\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"working\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"working\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T05:59:40Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"present\": true,\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\",\n    \"records\": [\n      {\n        \"merged\": null,\n        \"hold_reason\": null,\n        \"since\": null,\n        \"body_lines\": [],\n        \"hold_until\": null,\n        \"body_excerpt\": null,\n        \"report_path\": null,\n        \"done\": null,\n        \"requires_child_metadata\": true,\n        \"state\": \"in_flight\",\n        \"blocked_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"current_role\": \"worker\",\n        \"hold_bucket\": null,\n        \"blocked_by_ids\": [],\n        \"hold_set\": null,\n        \"checked\": false,\n        \"unresolved_blocker_ids\": [],\n        \"hold_age_days\": null,\n        \"repo\": null,\n        \"kind\": \"scout\",\n        \"order\": 1,\n        \"blocked_by\": null,\n        \"links\": [],\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"pr_url\": null,\n        \"hold_kind\": null,\n        \"completion\": {\n          \"verb\": null,\n          \"date\": null\n        },\n        \"reported\": null,\n        \"priority\": null,\n        \"id\": \"worker\",\n        \"captain_actionable\": false,\n        \"local_note\": null,\n        \"structured\": true\n      }\n    ]\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"working\",\n            \"note\": \"continuing fixture task\",\n            \"raw\": \"working: continuing fixture task\",\n            \"age_seconds\": null\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"working\",\n        \"source\": \"status-log\",\n        \"detail\": \"continuing fixture task\",\n        \"raw\": \"state: working \u00b7 source: status-log \u00b7 continuing fixture task\",\n        \"observed_at\": \"2026-10-30T05:59:40Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T05:59:40Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": false,\n        \"blocked_event\": false,\n        \"open_decisions\": [],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"working: continuing fixture task\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"merged\": null,\n        \"hold_reason\": null,\n        \"since\": null,\n        \"body_lines\": [],\n        \"hold_until\": null,\n        \"body_excerpt\": null,\n        \"report_path\": null,\n        \"done\": null,\n        \"requires_child_metadata\": true,\n        \"state\": \"in_flight\",\n        \"blocked_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"current_role\": \"worker\",\n        \"hold_bucket\": null,\n        \"blocked_by_ids\": [],\n        \"hold_set\": null,\n        \"checked\": false,\n        \"unresolved_blocker_ids\": [],\n        \"hold_age_days\": null,\n        \"repo\": null,\n        \"kind\": \"scout\",\n        \"order\": 1,\n        \"blocked_by\": null,\n        \"links\": [],\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"pr_url\": null,\n        \"hold_kind\": null,\n        \"completion\": {\n          \"verb\": null,\n          \"date\": null\n        },\n        \"reported\": null,\n        \"priority\": null,\n        \"id\": \"worker\",\n        \"captain_actionable\": false,\n        \"local_note\": null,\n        \"structured\": true\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T05:59:40Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:41Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      working: continuing fixture task\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T05:59:41Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"working\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"continuing fixture task\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: paused \u00b7 source: status-log \u00b7 waiting for release\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: paused \u00b7 source: status-log \u00b7 waiting for release\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"paused\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"paused\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T05:59:43Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"present\": true,\n    \"records\": [\n      {\n        \"blocked_by_ids\": [],\n        \"hold_set\": null,\n        \"requires_child_metadata\": true,\n        \"unresolved_blocker_ids\": [],\n        \"merged\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"checked\": false,\n        \"links\": [],\n        \"structured\": true,\n        \"pr_url\": null,\n        \"hold_bucket\": null,\n        \"body_excerpt\": null,\n        \"hold_until\": null,\n        \"hold_age_days\": null,\n        \"kind\": \"scout\",\n        \"order\": 1,\n        \"id\": \"worker\",\n        \"priority\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"blocked_by\": null,\n        \"local_note\": null,\n        \"hold_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"since\": null,\n        \"repo\": null,\n        \"body_lines\": [],\n        \"reported\": null,\n        \"captain_actionable\": false,\n        \"state\": \"in_flight\",\n        \"report_path\": null,\n        \"current_role\": \"worker\",\n        \"blocked_reason\": null,\n        \"done\": null,\n        \"hold_kind\": null\n      }\n    ],\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\"\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"paused\",\n            \"note\": \"waiting for release\",\n            \"raw\": \"paused [key=release]: waiting for release\",\n            \"age_seconds\": null\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"paused\",\n        \"source\": \"status-log\",\n        \"detail\": \"waiting for release\",\n        \"raw\": \"state: paused \u00b7 source: status-log \u00b7 waiting for release\",\n        \"observed_at\": \"2026-10-30T05:59:43Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T05:59:43Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": false,\n        \"blocked_event\": false,\n        \"open_decisions\": [],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"paused [key=release]: waiting for release\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"blocked_by_ids\": [],\n        \"hold_set\": null,\n        \"requires_child_metadata\": true,\n        \"unresolved_blocker_ids\": [],\n        \"merged\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"checked\": false,\n        \"links\": [],\n        \"structured\": true,\n        \"pr_url\": null,\n        \"hold_bucket\": null,\n        \"body_excerpt\": null,\n        \"hold_until\": null,\n        \"hold_age_days\": null,\n        \"kind\": \"scout\",\n        \"order\": 1,\n        \"id\": \"worker\",\n        \"priority\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"blocked_by\": null,\n        \"local_note\": null,\n        \"hold_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"since\": null,\n        \"repo\": null,\n        \"body_lines\": [],\n        \"reported\": null,\n        \"captain_actionable\": false,\n        \"state\": \"in_flight\",\n        \"report_path\": null,\n        \"current_role\": \"worker\",\n        \"blocked_reason\": null,\n        \"done\": null,\n        \"hold_kind\": null\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T05:59:43Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:44Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      paused [key=release]: waiting for release\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T05:59:44Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"paused\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"waiting for release\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: blocked \u00b7 source: status-log \u00b7 waiting for access\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: blocked \u00b7 source: status-log \u00b7 waiting for access\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"blocked\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"blocked\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T05:59:45Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"present\": true,\n    \"records\": [\n      {\n        \"local_note\": null,\n        \"links\": [],\n        \"structured\": true,\n        \"hold_set\": null,\n        \"since\": null,\n        \"hold_kind\": null,\n        \"state\": \"in_flight\",\n        \"report_path\": null,\n        \"body_excerpt\": null,\n        \"current_role\": \"worker\",\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"unresolved_blocker_ids\": [],\n        \"done\": null,\n        \"body_lines\": [],\n        \"hold_until\": null,\n        \"blocked_by_ids\": [],\n        \"kind\": \"scout\",\n        \"order\": 1,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"hold_age_days\": null,\n        \"id\": \"worker\",\n        \"priority\": null,\n        \"repo\": null,\n        \"hold_reason\": null,\n        \"blocked_by\": null,\n        \"pr_url\": null,\n        \"captain_actionable\": false,\n        \"hold_bucket\": null,\n        \"requires_child_metadata\": true,\n        \"blocked_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"checked\": false,\n        \"reported\": null,\n        \"merged\": null\n      }\n    ],\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\"\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"blocked\",\n            \"note\": \"waiting for access\",\n            \"raw\": \"blocked [key=access]: waiting for access\",\n            \"age_seconds\": null\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"blocked\",\n        \"source\": \"status-log\",\n        \"detail\": \"waiting for access\",\n        \"raw\": \"state: blocked \u00b7 source: status-log \u00b7 waiting for access\",\n        \"observed_at\": \"2026-10-30T05:59:45Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T05:59:45Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": false,\n        \"blocked_event\": true,\n        \"open_decisions\": [\n          {\n            \"key\": \"access\",\n            \"verb\": \"blocked\",\n            \"summary\": \"waiting for access\"\n          }\n        ],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"blocked [key=access]: waiting for access\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"local_note\": null,\n        \"links\": [],\n        \"structured\": true,\n        \"hold_set\": null,\n        \"since\": null,\n        \"hold_kind\": null,\n        \"state\": \"in_flight\",\n        \"report_path\": null,\n        \"body_excerpt\": null,\n        \"current_role\": \"worker\",\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"unresolved_blocker_ids\": [],\n        \"done\": null,\n        \"body_lines\": [],\n        \"hold_until\": null,\n        \"blocked_by_ids\": [],\n        \"kind\": \"scout\",\n        \"order\": 1,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"hold_age_days\": null,\n        \"id\": \"worker\",\n        \"priority\": null,\n        \"repo\": null,\n        \"hold_reason\": null,\n        \"blocked_by\": null,\n        \"pr_url\": null,\n        \"captain_actionable\": false,\n        \"hold_bucket\": null,\n        \"requires_child_metadata\": true,\n        \"blocked_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"checked\": false,\n        \"reported\": null,\n        \"merged\": null\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T05:59:45Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:46Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      blocked [key=access]: waiting for access\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T05:59:46Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"blocked\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"waiting for access\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: parked \u00b7 source: status-log \u00b7 choose a shape\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: parked \u00b7 source: status-log \u00b7 choose a shape\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"needs-decision\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"needs-decision\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T05:59:47Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\",\n    \"records\": [\n      {\n        \"hold_reason\": null,\n        \"checked\": false,\n        \"hold_until\": null,\n        \"requires_child_metadata\": true,\n        \"local_note\": null,\n        \"hold_bucket\": null,\n        \"state\": \"in_flight\",\n        \"links\": [],\n        \"current_role\": \"worker\",\n        \"report_path\": null,\n        \"id\": \"worker\",\n        \"blocked_reason\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"priority\": null,\n        \"blocked_by\": null,\n        \"completion\": {\n          \"verb\": null,\n          \"date\": null\n        },\n        \"unresolved_blocker_ids\": [],\n        \"blocked_by_ids\": [],\n        \"merged\": null,\n        \"hold_age_days\": null,\n        \"kind\": \"scout\",\n        \"done\": null,\n        \"title\": \"Live status fixture\",\n        \"since\": null,\n        \"reported\": null,\n        \"order\": 1,\n        \"hold_kind\": null,\n        \"body_excerpt\": null,\n        \"hold_set\": null,\n        \"repo\": null,\n        \"captain_actionable\": false,\n        \"structured\": true,\n        \"pr_url\": null,\n        \"body_lines\": []\n      }\n    ],\n    \"present\": true\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"needs-decision\",\n            \"note\": \"choose a shape\",\n            \"raw\": \"needs-decision [key=shape]: choose a shape\",\n            \"age_seconds\": null\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"parked\",\n        \"source\": \"status-log\",\n        \"detail\": \"choose a shape\",\n        \"raw\": \"state: parked \u00b7 source: status-log \u00b7 choose a shape\",\n        \"observed_at\": \"2026-10-30T05:59:47Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T05:59:47Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": true,\n        \"blocked_event\": false,\n        \"open_decisions\": [\n          {\n            \"key\": \"shape\",\n            \"verb\": \"needs-decision\",\n            \"summary\": \"choose a shape\"\n          }\n        ],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"needs-decision [key=shape]: choose a shape\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"hold_reason\": null,\n        \"checked\": false,\n        \"hold_until\": null,\n        \"requires_child_metadata\": true,\n        \"local_note\": null,\n        \"hold_bucket\": null,\n        \"state\": \"in_flight\",\n        \"links\": [],\n        \"current_role\": \"worker\",\n        \"report_path\": null,\n        \"id\": \"worker\",\n        \"blocked_reason\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"priority\": null,\n        \"blocked_by\": null,\n        \"completion\": {\n          \"verb\": null,\n          \"date\": null\n        },\n        \"unresolved_blocker_ids\": [],\n        \"blocked_by_ids\": [],\n        \"merged\": null,\n        \"hold_age_days\": null,\n        \"kind\": \"scout\",\n        \"done\": null,\n        \"title\": \"Live status fixture\",\n        \"since\": null,\n        \"reported\": null,\n        \"order\": 1,\n        \"hold_kind\": null,\n        \"body_excerpt\": null,\n        \"hold_set\": null,\n        \"repo\": null,\n        \"captain_actionable\": false,\n        \"structured\": true,\n        \"pr_url\": null,\n        \"body_lines\": []\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T05:59:47Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:48Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      needs-decision [key=shape]: choose a shape\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T05:59:48Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"parked\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"choose a shape\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: unknown \u00b7 source: none \u00b7 no current-state source available\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: unknown \u00b7 source: none \u00b7 no current-state source available\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"captain-held\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"captain-held\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T05:59:50Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"records\": [\n      {\n        \"order\": 1,\n        \"body_excerpt\": null,\n        \"repo\": null,\n        \"priority\": null,\n        \"blocked_by_ids\": [],\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"structured\": true,\n        \"pr_url\": null,\n        \"current_role\": \"worker\",\n        \"hold_reason\": null,\n        \"checked\": false,\n        \"blocked_by\": null,\n        \"body_lines\": [],\n        \"requires_child_metadata\": true,\n        \"id\": \"worker\",\n        \"since\": null,\n        \"hold_age_days\": null,\n        \"hold_kind\": null,\n        \"done\": null,\n        \"kind\": \"scout\",\n        \"hold_set\": null,\n        \"reported\": null,\n        \"title\": \"Live status fixture\",\n        \"merged\": null,\n        \"hold_bucket\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"links\": [],\n        \"blocked_reason\": null,\n        \"state\": \"in_flight\",\n        \"unresolved_blocker_ids\": [],\n        \"captain_actionable\": false,\n        \"report_path\": null,\n        \"hold_until\": null,\n        \"local_note\": null\n      }\n    ],\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\",\n    \"present\": true\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"captain-held\",\n            \"note\": \"transferred\",\n            \"raw\": \"captain-held [key=shape]: transferred\",\n            \"age_seconds\": null\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"unknown\",\n        \"source\": \"none\",\n        \"detail\": \"no current-state source available\",\n        \"raw\": \"state: unknown \u00b7 source: none \u00b7 no current-state source available\",\n        \"observed_at\": \"2026-10-30T05:59:50Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T05:59:50Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": false,\n        \"blocked_event\": false,\n        \"open_decisions\": [],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"captain-held [key=shape]: transferred\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"order\": 1,\n        \"body_excerpt\": null,\n        \"repo\": null,\n        \"priority\": null,\n        \"blocked_by_ids\": [],\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"structured\": true,\n        \"pr_url\": null,\n        \"current_role\": \"worker\",\n        \"hold_reason\": null,\n        \"checked\": false,\n        \"blocked_by\": null,\n        \"body_lines\": [],\n        \"requires_child_metadata\": true,\n        \"id\": \"worker\",\n        \"since\": null,\n        \"hold_age_days\": null,\n        \"hold_kind\": null,\n        \"done\": null,\n        \"kind\": \"scout\",\n        \"hold_set\": null,\n        \"reported\": null,\n        \"title\": \"Live status fixture\",\n        \"merged\": null,\n        \"hold_bucket\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"links\": [],\n        \"blocked_reason\": null,\n        \"state\": \"in_flight\",\n        \"unresolved_blocker_ids\": [],\n        \"captain_actionable\": false,\n        \"report_path\": null,\n        \"hold_until\": null,\n        \"local_note\": null\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T05:59:50Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:51Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      captain-held [key=shape]: transferred\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T05:59:51Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"unknown\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"no current-state source available\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: unknown \u00b7 source: none \u00b7 no current-state source available\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: unknown \u00b7 source: none \u00b7 no current-state source available\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"resolved\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"resolved\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T05:59:53Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"present\": true,\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\",\n    \"records\": [\n      {\n        \"state\": \"in_flight\",\n        \"hold_set\": null,\n        \"requires_child_metadata\": true,\n        \"blocked_by\": null,\n        \"title\": \"Live status fixture\",\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"body_excerpt\": null,\n        \"links\": [],\n        \"done\": null,\n        \"unresolved_blocker_ids\": [],\n        \"blocked_by_ids\": [],\n        \"captain_actionable\": false,\n        \"blocked_reason\": null,\n        \"reported\": null,\n        \"id\": \"worker\",\n        \"hold_bucket\": null,\n        \"hold_until\": null,\n        \"current_role\": \"worker\",\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"hold_age_days\": null,\n        \"hold_reason\": null,\n        \"hold_kind\": null,\n        \"merged\": null,\n        \"checked\": false,\n        \"repo\": null,\n        \"priority\": null,\n        \"pr_url\": null,\n        \"order\": 1,\n        \"kind\": \"scout\",\n        \"structured\": true,\n        \"body_lines\": [],\n        \"local_note\": null,\n        \"report_path\": null,\n        \"since\": null\n      }\n    ]\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"resolved\",\n            \"note\": \"answered\",\n            \"raw\": \"resolved [key=shape]: answered\",\n            \"age_seconds\": null\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"unknown\",\n        \"source\": \"none\",\n        \"detail\": \"no current-state source available\",\n        \"raw\": \"state: unknown \u00b7 source: none \u00b7 no current-state source available\",\n        \"observed_at\": \"2026-10-30T05:59:53Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T05:59:53Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": false,\n        \"blocked_event\": false,\n        \"open_decisions\": [],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"resolved [key=shape]: answered\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"state\": \"in_flight\",\n        \"hold_set\": null,\n        \"requires_child_metadata\": true,\n        \"blocked_by\": null,\n        \"title\": \"Live status fixture\",\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"body_excerpt\": null,\n        \"links\": [],\n        \"done\": null,\n        \"unresolved_blocker_ids\": [],\n        \"blocked_by_ids\": [],\n        \"captain_actionable\": false,\n        \"blocked_reason\": null,\n        \"reported\": null,\n        \"id\": \"worker\",\n        \"hold_bucket\": null,\n        \"hold_until\": null,\n        \"current_role\": \"worker\",\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"hold_age_days\": null,\n        \"hold_reason\": null,\n        \"hold_kind\": null,\n        \"merged\": null,\n        \"checked\": false,\n        \"repo\": null,\n        \"priority\": null,\n        \"pr_url\": null,\n        \"order\": 1,\n        \"kind\": \"scout\",\n        \"structured\": true,\n        \"body_lines\": [],\n        \"local_note\": null,\n        \"report_path\": null,\n        \"since\": null\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T05:59:53Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:54Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      resolved [key=shape]: answered\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T05:59:54Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"unknown\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"no current-state source available\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: unknown \u00b7 source: none \u00b7 no current-state source available\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: unknown \u00b7 source: none \u00b7 no current-state source available\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"note\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"note\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T05:59:57Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\",\n    \"records\": [\n      {\n        \"title\": \"Live status fixture\",\n        \"done\": null,\n        \"body_lines\": [],\n        \"checked\": false,\n        \"blocked_reason\": null,\n        \"since\": null,\n        \"local_note\": null,\n        \"state\": \"in_flight\",\n        \"structured\": true,\n        \"report_path\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"hold_kind\": null,\n        \"hold_age_days\": null,\n        \"links\": [],\n        \"hold_reason\": null,\n        \"merged\": null,\n        \"order\": 1,\n        \"pr_url\": null,\n        \"blocked_by\": null,\n        \"blocked_by_ids\": [],\n        \"unresolved_blocker_ids\": [],\n        \"hold_bucket\": null,\n        \"current_role\": \"worker\",\n        \"captain_actionable\": false,\n        \"reported\": null,\n        \"repo\": null,\n        \"priority\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"requires_child_metadata\": true,\n        \"hold_set\": null,\n        \"kind\": \"scout\",\n        \"body_excerpt\": null,\n        \"hold_until\": null,\n        \"id\": \"worker\"\n      }\n    ],\n    \"present\": true\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"note\",\n            \"note\": \"ordinary note\",\n            \"raw\": \"note: ordinary note\",\n            \"age_seconds\": null\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"unknown\",\n        \"source\": \"none\",\n        \"detail\": \"no current-state source available\",\n        \"raw\": \"state: unknown \u00b7 source: none \u00b7 no current-state source available\",\n        \"observed_at\": \"2026-10-30T05:59:57Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T05:59:57Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": false,\n        \"blocked_event\": false,\n        \"open_decisions\": [],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"note: ordinary note\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"title\": \"Live status fixture\",\n        \"done\": null,\n        \"body_lines\": [],\n        \"checked\": false,\n        \"blocked_reason\": null,\n        \"since\": null,\n        \"local_note\": null,\n        \"state\": \"in_flight\",\n        \"structured\": true,\n        \"report_path\": null,\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"hold_kind\": null,\n        \"hold_age_days\": null,\n        \"links\": [],\n        \"hold_reason\": null,\n        \"merged\": null,\n        \"order\": 1,\n        \"pr_url\": null,\n        \"blocked_by\": null,\n        \"blocked_by_ids\": [],\n        \"unresolved_blocker_ids\": [],\n        \"hold_bucket\": null,\n        \"current_role\": \"worker\",\n        \"captain_actionable\": false,\n        \"reported\": null,\n        \"repo\": null,\n        \"priority\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"requires_child_metadata\": true,\n        \"hold_set\": null,\n        \"kind\": \"scout\",\n        \"body_excerpt\": null,\n        \"hold_until\": null,\n        \"id\": \"worker\"\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T05:59:57Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T05:59:58Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      note: ordinary note\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T05:59:58Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"unknown\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"no current-state source available\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: unknown \u00b7 source: none \u00b7 no current-state source available\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-crew-state.sh",
+      "worker"
+    ],
+    "exit": 0,
+    "stdout": "state: unknown \u00b7 source: none \u00b7 no current-state source available\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm_voice_records.py",
+      "status",
+      "--home",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home",
+      "--scope",
+      "full"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"awaiting_captain\": 0,\n  \"awaiting_captain_detail\": [],\n  \"basis\": \"Last recorded event, which is history and not a live check.\",\n  \"captain_notes_waiting\": 0,\n  \"detail\": \"The lists name at most 5 items each; the counts above are the whole picture. Give the captain the counts and a couple of names, not every row.\",\n  \"in_flight\": 1,\n  \"in_flight_detail\": [\n    {\n      \"id\": \"worker\",\n      \"state\": \"no events yet\",\n      \"title\": \"Live status fixture\"\n    }\n  ],\n  \"open_pull_requests\": 0,\n  \"pull_request_detail\": [],\n  \"queued\": 0,\n  \"scope\": \"full\",\n  \"withheld_as_confidential\": 0,\n  \"worker_states\": {\n    \"no events yet\": 1\n  },\n  \"workers_on_deck\": 1\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-fleet-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-fleet-snapshot.v1\",\n  \"generated\": \"2026-10-30T06:00:00Z\",\n  \"fm_home\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\",\n  \"roots\": {\n    \"fm_root\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV\",\n    \"state\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state\",\n    \"data\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data\",\n    \"config\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/config\",\n    \"projects\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects\"\n  },\n  \"backlog\": {\n    \"records\": [\n      {\n        \"requires_child_metadata\": true,\n        \"hold_age_days\": null,\n        \"merged\": null,\n        \"state\": \"in_flight\",\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"priority\": null,\n        \"blocked_by_ids\": [],\n        \"current_role\": \"worker\",\n        \"id\": \"worker\",\n        \"hold_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"captain_actionable\": false,\n        \"hold_until\": null,\n        \"done\": null,\n        \"blocked_by\": null,\n        \"order\": 1,\n        \"local_note\": null,\n        \"body_lines\": [],\n        \"hold_set\": null,\n        \"pr_url\": null,\n        \"blocked_reason\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"repo\": null,\n        \"links\": [],\n        \"kind\": \"scout\",\n        \"report_path\": null,\n        \"hold_bucket\": null,\n        \"checked\": false,\n        \"hold_kind\": null,\n        \"structured\": true,\n        \"reported\": null,\n        \"unresolved_blocker_ids\": [],\n        \"body_excerpt\": null,\n        \"since\": null\n      }\n    ],\n    \"present\": true,\n    \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/backlog.md\"\n  },\n  \"tasks\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"harness\": \"pi\",\n      \"mode\": \"scout\",\n      \"yolo\": \"\",\n      \"branch\": null,\n      \"project\": \"fixture\",\n      \"spawn_gen\": null,\n      \"backend\": \"herdr\",\n      \"remote\": null,\n      \"paths\": {\n        \"meta\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.meta\",\n          \"present\": true\n        },\n        \"status_log\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/state/worker.status\",\n          \"present\": true,\n          \"kind\": \"event_history\",\n          \"last_event\": {\n            \"state\": \"\",\n            \"note\": \"\",\n            \"raw\": \"\",\n            \"age_seconds\": null\n          }\n        },\n        \"worktree\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/projects/fixture\",\n          \"present\": true\n        },\n        \"home\": {\n          \"path\": null,\n          \"present\": false\n        },\n        \"report\": {\n          \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/worker/report.md\",\n          \"present\": false\n        }\n      },\n      \"secondmate_projects\": [],\n      \"current_state\": {\n        \"state\": \"unknown\",\n        \"source\": \"none\",\n        \"detail\": \"no current-state source available\",\n        \"raw\": \"state: unknown \u00b7 source: none \u00b7 no current-state source available\",\n        \"observed_at\": \"2026-10-30T06:00:00Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"endpoint\": {\n        \"target\": \"fm-lab-exclusion-3357943-9305:w1:p1\",\n        \"exists\": true,\n        \"agent_alive\": \"not_checked\",\n        \"status\": \"unknown\",\n        \"observed_at\": \"2026-10-30T06:00:00Z\",\n        \"freshness\": \"fresh\"\n      },\n      \"pr\": {\n        \"url\": null,\n        \"source\": \"absent\",\n        \"head\": null\n      },\n      \"hints\": {\n        \"pending_decision\": false,\n        \"blocked_event\": false,\n        \"open_decisions\": [],\n        \"scout_report_present\": false,\n        \"last_event_text\": \"\"\n      },\n      \"actions\": {\n        \"watch\": \"bin/fm-peek.sh fm-worker\",\n        \"steer\": \"bin/fm-send.sh fm-worker '<instruction>'\",\n        \"return_channel_note\": null\n      },\n      \"backlog\": {\n        \"requires_child_metadata\": true,\n        \"hold_age_days\": null,\n        \"merged\": null,\n        \"state\": \"in_flight\",\n        \"raw\": \"- [ ] worker - Live status fixture (kind: scout)\",\n        \"priority\": null,\n        \"blocked_by_ids\": [],\n        \"current_role\": \"worker\",\n        \"id\": \"worker\",\n        \"hold_reason\": null,\n        \"title\": \"Live status fixture\",\n        \"captain_actionable\": false,\n        \"hold_until\": null,\n        \"done\": null,\n        \"blocked_by\": null,\n        \"order\": 1,\n        \"local_note\": null,\n        \"body_lines\": [],\n        \"hold_set\": null,\n        \"pr_url\": null,\n        \"blocked_reason\": null,\n        \"completion\": {\n          \"date\": null,\n          \"verb\": null\n        },\n        \"repo\": null,\n        \"links\": [],\n        \"kind\": \"scout\",\n        \"report_path\": null,\n        \"hold_bucket\": null,\n        \"checked\": false,\n        \"hold_kind\": null,\n        \"structured\": true,\n        \"reported\": null,\n        \"unresolved_blocker_ids\": [],\n        \"body_excerpt\": null,\n        \"since\": null\n      }\n    }\n  ],\n  \"main_inventory\": {\n    \"valid\": true,\n    \"reason\": null,\n    \"orphan_in_flight\": [],\n    \"unstructured_current_count\": 0\n  },\n  \"contributions\": {\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"unmeasured\": 0,\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"unreadable_records\": 0,\n    \"valid_until\": 900,\n    \"captain\": [],\n    \"captain_omitted\": 0\n  },\n  \"scout_reports\": [],\n  \"secondmate_current\": {\n    \"registry\": {\n      \"present\": false,\n      \"available\": true,\n      \"complete\": true,\n      \"reason\": null,\n      \"provenance\": \"registered-table\",\n      \"path\": \"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home/data/secondmates.md\",\n      \"freshness\": {\n        \"status\": \"fresh\",\n        \"observed_at\": \"2026-10-30T06:00:00Z\"\n      },\n      \"records\": [],\n      \"input_truncated\": false,\n      \"records_truncated\": false,\n      \"reasons\": [],\n      \"lines_in_window\": 0,\n      \"records_in_window\": 0\n    },\n    \"records\": [],\n    \"total_registered\": 0,\n    \"total\": 0,\n    \"shown\": 0,\n    \"truncated\": 0\n  },\n  \"secondmate_landed\": {\n    \"records\": [],\n    \"truncated\": [],\n    \"unreadable\": [],\n    \"partial\": []\n  },\n  \"secondmate_guidance\": {\n    \"note\": \"For kind=secondmate, bearings selects validated structured state from that registered home; parent events and bounded terminal evidence are fallback-only supplements and never current-state authority.\"\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-inbox.sh",
+      "status"
+    ],
+    "exit": 0,
+    "stdout": "=== firstmate status (read-only, no wake sent) ===\nhome     /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/status-lab/home\ntime     2026-10-30T06:00:01Z\ninbox    0 note(s) waiting for firstmate\n\n--- in flight ---\n  worker - Live status fixture (kind: scout)\n\n--- workers ---\n  worker                                     scout  scout      (no events yet)\n\nNote: the last event line is history, not current state.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-bearings-snapshot.sh",
+      "--json"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"schema\": \"fm-bearings.v1\",\n  \"home\": \"status-lab/home\",\n  \"generated\": \"2026-10-30T06:00:02Z\",\n  \"prs\": \"not_requested (run: /bearings include PRs)\",\n  \"contributions\": {\n    \"scope\": \"owned contributions per home\",\n    \"known\": 0,\n    \"checked\": 0,\n    \"counts\": {\n      \"captain\": 0,\n      \"fleet\": 0,\n      \"maintainer\": 0,\n      \"nobody\": 0\n    },\n    \"complete\": true,\n    \"proven_clear\": true,\n    \"unmeasured_homes\": 0,\n    \"unreadable_records\": 0,\n    \"unmeasured\": 0,\n    \"stale_verdicts\": 0,\n    \"missing_verdicts\": 0,\n    \"captain_omitted\": 0,\n    \"captain\": []\n  },\n  \"in_flight\": [\n    {\n      \"id\": \"worker\",\n      \"kind\": \"scout\",\n      \"state\": \"unknown\",\n      \"repo\": \"fixture\",\n      \"name\": \"Live status fixture\",\n      \"doing\": \"no current-state source available\"\n    }\n  ],\n  \"secondmates\": [],\n  \"secondmate_reconcile\": [],\n  \"decisions_open\": [],\n  \"landed\": [],\n  \"gates\": [],\n  \"reports\": [],\n  \"recorded_prs\": [],\n  \"omitted\": [\n    {\n      \"surface\": \"backlog item bodies\",\n      \"reveal\": \"--fields bodies\"\n    },\n    {\n      \"surface\": \"task paths\",\n      \"reveal\": \"--fields paths\"\n    },\n    {\n      \"surface\": \"watch/steer actions\",\n      \"reveal\": \"--fields actions\"\n    },\n    {\n      \"surface\": \"healthy endpoint detail\",\n      \"reveal\": \"--fields endpoints\"\n    },\n    {\n      \"surface\": \"full scout-report inventory\",\n      \"reveal\": \"--all-reports\"\n    },\n    {\n      \"surface\": \"live PR discovery + checks\",\n      \"reveal\": \"--include-prs\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "teardown",
+      "fm-lab-exclusion-3357943-9305"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

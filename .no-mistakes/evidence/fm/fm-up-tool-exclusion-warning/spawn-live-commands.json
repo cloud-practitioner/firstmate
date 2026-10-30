@@ -1,0 +1,248 @@
+[
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "name",
+      "excl-spawn"
+    ],
+    "exit": 0,
+    "stdout": "fm-lab-excl-spawn-3560748-2201\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-lab-home.sh",
+      "create",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "init",
+      "--bare",
+      "-q",
+      "-b",
+      "main",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/origin.git"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "clone",
+      "-q",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/origin.git",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/projects/fixture"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "warning: You appear to have cloned an empty repository.\n"
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/projects/fixture",
+      "add",
+      "fixture.txt"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/projects/fixture",
+      "-c",
+      "user.name=Fixture",
+      "-c",
+      "user.email=fixture@example.invalid",
+      "commit",
+      "-qm",
+      "Fixture"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/projects/fixture",
+      "push",
+      "-q",
+      "origin",
+      "main"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-brief.sh",
+      "excl-live-3560673",
+      "fixture",
+      "--scout",
+      "--herdr-lab"
+    ],
+    "exit": 0,
+    "stdout": "scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/data/excl-live-3560673/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-spawn.sh",
+      "excl-live-3560673",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/projects/fixture",
+      "--scout",
+      "--harness",
+      "pi",
+      "--backend",
+      "herdr"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home\nerror: config/crew-exclude-tools entry 'mcp__iqx-jira__editJiraIssue' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__iqx_jira__<tool>)\n"
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-spawn.sh",
+      "excl-live-3560673",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/projects/fixture",
+      "--scout",
+      "--harness",
+      "pi",
+      "--backend",
+      "herdr"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home\nerror: config/crew-exclude-tools entry 'mcp__my.srv__tool' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__my_srv__<tool>)\n"
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-spawn.sh",
+      "excl-live-3560673",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/projects/fixture",
+      "--scout",
+      "--harness",
+      "pi",
+      "--backend",
+      "herdr"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home\nerror: config/crew-exclude-tools entry 'mcp__a-b' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__a_b__<tool>)\n"
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "provision",
+      "fm-lab-excl-spawn-3560748-2201"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "viewer",
+      "start",
+      "fm-lab-excl-spawn-3560748-2201"
+    ],
+    "exit": 0,
+    "stdout": "viewer attached to fm-lab-excl-spawn-3560748-2201 (pid 3566856)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-spawn.sh",
+      "excl-live-3560673",
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home/projects/fixture",
+      "--scout",
+      "--harness",
+      "pi",
+      "--backend",
+      "herdr",
+      "--model",
+      "lab/exclusion-fixture"
+    ],
+    "exit": 0,
+    "stdout": "spawned excl-live-3560673 harness=pi kind=scout window=fm-lab-excl-spawn-3560748-2201:w2:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/pool/.treehouse/fixture-e90a76/1/fixture\n",
+    "stderr": "fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home\nwarning: herdr presentation parent is absent or ambiguous; using the ordinary flat layout without projection\n"
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "run",
+      "fm-lab-excl-spawn-3560748-2201",
+      "pane",
+      "read",
+      "w2:p2",
+      "--source",
+      "visible",
+      "--format",
+      "text"
+    ],
+    "exit": 0,
+    "stdout": "treehouse get\nfixture on \ue0a0 main\n\u276f treehouse get\n\ud83c\udf33 Setting up worktree...\n\ud83c\udf33 Entered worktree at ~/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test\n-phase/spawn-lab/pool/.treehouse/fixture-e90a76/1/fixture. Type 'exit' to return.\nfixture on \ue0a0 HEAD\n\u276f cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phas\ne/spawn-lab/pool/.treehouse/fixture-e90a76/1/fixture'\nfixture on \ue0a0 HEAD\n\u276f export GOTMPDIR=/tmp/fm-excl-live-3560673/gotmp\nexport COMPACT_ADVISER_DISABLE=1\nfixture on \ue0a0 HEAD\n\u276f export COMPACT_ADVISER_DISABLE=1\nfixture on \ue0a0 HEAD\n\u276f export FM_TASK_ID=excl-live-3560673\nfixture on \ue0a0 HEAD\n\u276f . '/tmp/fm-excl-live-3560673+2dbf8b0b98c7f7ffd9713fe7448349d983398fe77a2dfed3c2bccac7ad2749\n91/launch.s1793340222.3567819.18619.sh'\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n Trust project folder?\n /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn\n -lab/pool/.treehouse/fixture-e90a76/1/fixture\n\n This allows pi to load .pi settings and resources, install missing project packages, and\n execute project extensions.\n\n \u2192 Trust\n   Trust parent folder\n (/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spaw\n n-lab/pool/.treehouse/fixture-e90a76/1)\n   Trust (this session only)\n   Do not trust\n   Do not trust (this session only)\n\n \u2191\u2193 navigate  enter select  escape/ctrl+c cancel\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "run",
+      "fm-lab-excl-spawn-3560748-2201",
+      "pane",
+      "send-keys",
+      "w2:p2",
+      "down",
+      "down",
+      "enter"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "run",
+      "fm-lab-excl-spawn-3560748-2201",
+      "pane",
+      "read",
+      "w2:p2",
+      "--source",
+      "recent",
+      "--lines",
+      "70",
+      "--format",
+      "text"
+    ],
+    "exit": 0,
+    "stdout": "    Pass this rule to every sub-agent you launch.\n\n Firstmate instruction inbox\n\n Firstmate steers you through durable message files in\n '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spaw\n n-lab/home/state/excl-live-3560673.inbox'.\n When a terminal message says an instruction is waiting there - and at any natural\n checkpoint when you are unsure - list them with find\n '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spaw\n n-lab/home/state/excl-live-3560673.inbox' -maxdepth 1 -name '*.msg' 2>/dev/null | sort -V,\n read the complete contents of each record (including its final line even when it is not\n newline-terminated) and act on each message in numeric order, then acknowledge each handled\n message by moving it: mv\n '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spaw\n n-lab/home/state/excl-live-3560673.inbox'/NNN.msg\n '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spaw\n n-lab/home/state/excl-live-3560673.inbox'/handled/.\n Prefer the format-aware fm_task_inbox_body reader from bin/fm-task-inbox-lib.sh when it is\n available. If you read manually, a header line body-terminator=1 means the writer added\n exactly one synthetic final newline to terminate the record file; that marked newline is\n not part of the logical message body, so remove only it and preserve any intentional\n trailing newlines. Legacy records without that marker may end without a newline; read them\n through the file end.\n The move IS the acknowledgement: without it firstmate rings again and eventually treats you\n as stuck. An empty or absent inbox needs no action.\n\n Definition of done\n\n Write your findings to\n /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn\n -lab/home/data/excl-live-3560673/report.md.\n The report must stand alone: what you did, what you found, the evidence (commands run,\n output, file:line references), and what you recommend.\n If your deliverable is a visual artifact the captain will review and iterate on, use the\n lavish-axi rule: arm your board with bin/fm-procevent-lavish.sh arm <artifact.html> --for\n <task-id>; never run lavish-axi poll yourself. Re-arm with the reply after each nonterminal\n round to acknowledge it, route the board feedback through your steering inbox, write\n needs-decision [key=board-review] with the live board URL when the captain owes a decision,\n and stop at session_ended or an empty End without re-arming - acknowledge that final round\n with bin/fm-procevent.sh handled <source-id> <sequence> to conclude and retire your board.\n Before reporting done, read and follow\n /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.agents/skills/ca\n ptain-hold-lifecycle/SKILL.md and pass its shared completion gate for the report and any\n visual review.\n Only when the reviewed inventory is empty, run\n FM_HOME='/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-ph\n ase/spawn-lab/home' bash\n '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-captain-h\n old.sh' complete 'excl-live-3560673' --none.\n This exception permits only that command, not direct metadata edits, another task, or any\n backlog write.\n If any captain call remains, ask firstmate to register the inventory and attest completion\n before you report done.\n If the command refuses, report the refusal to firstmate and stop rather than bypassing the\n completion gate.\n When the report is complete, append done [at=<epoch>]: {one-line conclusion} to the status\n file and stop.\n If your findings reveal work that should ship (e.g. you reproduced a bug and the fix is\n clear), say so in the report; firstmate may promote this task in place, and you would then\n receive mode-specific ship instructions as a follow-up message.\n\n\n Disposable worker completed its isolated launch.\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n~/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/poo...\n18.1%/128k (auto)                                                           exclusion-fixture\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/bin/fm-herdr-lab.sh",
+      "teardown",
+      "fm-lab-excl-spawn-3560748-2201"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

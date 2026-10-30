@@ -1,0 +1,15 @@
+{"registered":"mcp__tracker__readIssue"}
+{"registered":"mcp__tracker__editIssue"}
+{"event":"agent_start","runs":1,"tools":["read","bash","powershell","edit","write","grep","find","ls","mcp__tracker__readIssue","mcp__tracker__editIssue","codemode"],"active":["read","bash","edit","write","codemode","mcp__tracker__readIssue","mcp__tracker__editIssue"]}
+{"registered":"mcp__tracker__createIssue"}
+{"event":"tool_execution_end","type":"tool_execution_end","toolCallId":"call_1","toolName":"mcp__tracker__editIssue","result":{"content":[{"type":"text","text":"mcp__tracker__editIssue is excluded by config/crew-exclude-tools"}],"details":{}},"isError":true}
+{"event":"tool_execution_end","type":"tool_execution_end","toolCallId":"call_2/1","toolName":"mcp__tracker__createIssue","result":{"content":[{"type":"text","text":"mcp__tracker__createIssue is excluded by config/crew-exclude-tools"}],"details":{}},"isError":true,"parentToolCallId":"call_2"}
+{"event":"tool_execution_end","type":"tool_execution_end","toolCallId":"call_2","toolName":"codemode","result":{"content":[{"type":"text","text":"Script failed\nWall time 0.2 seconds\nOutput:\n"},{"type":"text","text":"Script error:\nError: mcp__tracker__createIssue is excluded by config/crew-exclude-tools\n\nTool calls made before the failure (they are not undone): mcp__tracker__createIssue (error)"}],"details":{"calls":[{"id":"call_2/1","name":"mcp__tracker__createIssue","args":"{}","status":"error","durationMs":2.3061629999999695,"error":"mcp__tracker__createIssue is excluded by config/crew-exclude-tools"}]},"isError":true},"isError":true,"durationMs":198}
+{"executed":"mcp__tracker__readIssue"}
+{"event":"tool_execution_end","type":"tool_execution_end","toolCallId":"call_3","toolName":"mcp__tracker__readIssue","result":{"content":[{"type":"text","text":"Executed allowed fixture tool mcp__tracker__readIssue"}],"details":{"name":"mcp__tracker__readIssue"}},"isError":false,"durationMs":0}
+{"event":"agent_end","runs":1}
+{"registered":"mcp__tracker__editIssue"}
+{"registered":"mcp__tracker__createIssue"}
+{"event":"agent_start","runs":2,"tools":["read","bash","powershell","edit","write","grep","find","ls","mcp__tracker__readIssue","mcp__tracker__editIssue","mcp__tracker__createIssue","codemode"],"active":["read","bash","edit","write","codemode","mcp__tracker__readIssue","mcp__tracker__editIssue","mcp__tracker__createIssue"]}
+{"event":"agent_end","runs":2}
+{"event":"agent_settled","runs":2,"turns":5}

@@ -1,0 +1,8 @@
+{"registered":"mcp__tracker__readIssue"}
+{"event":"agent_start","runs":1,"tools":["read","bash","powershell","edit","write","grep","find","ls","mcp__tracker__readIssue","codemode"],"active":["read","bash","edit","write","codemode","mcp__tracker__readIssue"]}
+{"event":"agent_end","runs":1}
+{"registered":"mcp__tracker__editIssue"}
+{"event":"agent_start","runs":2,"tools":["read","bash","powershell","edit","write","grep","find","ls","mcp__tracker__readIssue","mcp__tracker__editIssue","codemode"],"active":["read","bash","edit","write","codemode","mcp__tracker__readIssue","mcp__tracker__editIssue"]}
+{"event":"tool_execution_end","type":"tool_execution_end","toolCallId":"call_2","toolName":"mcp__tracker__editIssue","result":{"content":[{"type":"text","text":"mcp__tracker__editIssue is excluded by config/crew-exclude-tools"}],"details":{}},"isError":true}
+{"event":"agent_end","runs":2}
+{"event":"agent_settled","runs":2,"turns":3}

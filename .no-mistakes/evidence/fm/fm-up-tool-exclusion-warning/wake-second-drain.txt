@@ -1,0 +1,2 @@
+UNREAD STATUS (new since last drain, not re-printed after this presentation):
+worker note [state=none] [at=1793339863]: warning: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/tmp/fm-spawn-dispatch-profile.IFHVsY/excl-registry-pi-scout-reconnect/home/config/crew-exclude-tools exclusion not in effect: these listed tools are still present in the worker's tool registry: mcp__tracker__editIssue, mcp__tracker__createIssue

@@ -1,0 +1,7 @@
+{"event":"agent_start","runs":1,"tools":["read","bash","powershell","edit","write","grep","find","ls","codemode"],"active":["read","bash","edit","write","codemode"]}
+{"event":"tool_execution_end","type":"tool_execution_end","toolCallId":"call_1/1","toolName":"mcp__tracker__readIssue","result":{"content":[{"type":"text","text":"Live MCP readIssue executed"}],"details":{"server":"tracker","tool":"readIssue"},"structuredContent":{"content":[{"type":"text","text":"Live MCP readIssue executed"}]}},"isError":false,"durationMs":11,"parentToolCallId":"call_1"}
+{"event":"tool_execution_end","type":"tool_execution_end","toolCallId":"call_1","toolName":"codemode","result":{"content":[{"type":"text","text":"Script completed\nWall time 0.5 seconds\nOutput:\n"},{"type":"text","text":"{\"content\":[{\"type\":\"text\",\"text\":\"Live MCP readIssue executed\"}]}"}],"details":{"calls":[{"id":"call_1/1","name":"mcp__tracker__readIssue","args":"{}","status":"ok","durationMs":38.6674680000001}]}},"isError":false,"durationMs":495}
+{"event":"agent_end","runs":1}
+{"event":"agent_start","runs":2,"tools":["read","bash","powershell","edit","write","grep","find","ls","codemode","mcp__tracker__readIssue"],"active":["read","bash","edit","write","codemode"]}
+{"event":"agent_end","runs":2}
+{"event":"agent_settled","runs":2,"turns":3}

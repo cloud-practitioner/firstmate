@@ -1,0 +1,6 @@
+1..4
+ok - voice counts and full task states ignore non-state notes, including tail and fallback reads
+ok - shared crew-state and wake readers preserve declarations and unread warning presentation
+ok - fleet, inbox, crew-state and bearings retain worker state after late warnings
+ok - Pi and attended-host wake routing ignore non-state notes while preserving ordinary notes
+FM_TEST_COMPLETE

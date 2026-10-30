@@ -1,0 +1,8 @@
+{"time": 1793340315.500554, "request": {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-11-25", "capabilities": {"roots": {}}, "clientInfo": {"name": "pi", "version": "1.4.0"}}}}
+{"time": 1793340315.5007186, "response": {"jsonrpc": "2.0", "id": 1, "result": {"protocolVersion": "2025-11-25", "capabilities": {"tools": {}}, "serverInfo": {"name": "disposable-tracker", "version": "1.0"}}}}
+{"time": 1793340315.5672483, "request": {"jsonrpc": "2.0", "method": "notifications/initialized"}}
+{"time": 1793340315.572113, "request": {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}}
+{"time": 1793340316.0725186, "response": {"jsonrpc": "2.0", "id": 2, "result": {"tools": [{"name": "readIssue", "description": "Disposable live MCP tool readIssue", "inputSchema": {"type": "object", "properties": {}}}, {"name": "editIssue", "description": "Disposable live MCP tool editIssue", "inputSchema": {"type": "object", "properties": {}}}, {"name": "createIssue", "description": "Disposable live MCP tool createIssue", "inputSchema": {"type": "object", "properties": {}}}]}}}
+{"time": 1793340316.545343, "request": {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "readIssue", "arguments": {}, "_meta": {"progressToken": 3}}}}
+{"time": 1793340316.5454998, "executed": "readIssue"}
+{"time": 1793340316.5455704, "response": {"jsonrpc": "2.0", "id": 3, "result": {"content": [{"type": "text", "text": "Live MCP readIssue executed"}]}}}

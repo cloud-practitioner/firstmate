@@ -1,0 +1,20 @@
+[
+  {
+    "name": "mcp__iqx-jira__editJiraIssue",
+    "stdout": "",
+    "stderr": "fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home\nerror: config/crew-exclude-tools entry 'mcp__iqx-jira__editJiraIssue' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__iqx_jira__<tool>)\n",
+    "exit": 1
+  },
+  {
+    "name": "mcp__my.srv__tool",
+    "stdout": "",
+    "stderr": "fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home\nerror: config/crew-exclude-tools entry 'mcp__my.srv__tool' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__my_srv__<tool>)\n",
+    "exit": 1
+  },
+  {
+    "name": "mcp__a-b",
+    "stdout": "",
+    "stderr": "fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65MFBQHY7METR56JHMH28BV/.test-phase/spawn-lab/home\nerror: config/crew-exclude-tools entry 'mcp__a-b' can never match: Pi names MCP tools mcp__<server>__<tool> with every character outside letters, digits, and _ in the server part replaced by _, so write the server part with _ in place of - and . (for example mcp__a_b__<tool>)\n",
+    "exit": 1
+  }
+]
