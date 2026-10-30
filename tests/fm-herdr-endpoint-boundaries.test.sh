@@ -352,7 +352,7 @@ test_secondmate_retirement_rollbacks() {
       mkdir -p "$FM_HOME/data" "$FM_HOME/config" "$dir/user-home" "$mate/state/procevent" "$mate/data" "$mate/config" "$mate/bin"
       export FM_RETIRE_SCENARIO="$scenario" FM_RETIRE_REAL_MV
       FM_RETIRE_REAL_MV=$(command -v mv)
-      export FM_PROCEVENT_CLAIM_ROOT="$dir/claims" FM_CLOSE_REMOVES=1
+      export FM_PROCEVENT_CLAIM_ROOT="$dir/claims"
       if [[ "$scenario" = recursive-* ]]; then
         parent="$dir/parent"; task=parent; owner_state="$parent/state"
         mkdir -p "$parent/state" "$parent/data" "$parent/config"
@@ -377,7 +377,7 @@ test_secondmate_retirement_rollbacks() {
       printf 'adapter=lavish\nargc=1\nargv:\n/bin/true\n' > "$FM_FAKE_WORLD/expected.source"
       cp "$FM_FAKE_WORLD/expected.source" "$mate/state/procevent/wait.source"
       printf 'fixture runner\n' > "$mate/state/procevent/wait.runner"
-      corr=$(FM_HOME="$FM_HOME" bash -c '
+      corr=$(bash -c '
         . "$1"
         fm_pending_reply_create "$2" "$2/state" "$3" "New routed work is in your backlog."
       ' _ "$ROOT/bin/fm-pending-reply-lib.sh" "$FM_HOME" "$task") || fail 'could not seed receiver wake'
@@ -426,7 +426,7 @@ case "${!#}" in
 esac
 SH
       chmod +x "$FM_FAKE_WORLD/reset" "$mate/bin/fm-procevent.sh" "$dir/fakebin/mv"
-      out=$(HOME="$dir/user-home" FM_ROOT_OVERRIDE="$FM_HOME" "$ROOT/bin/fm-teardown.sh" "$task" --force 2>&1) || rc=$?
+      out=$(FM_CLOSE_REMOVES=1 HOME="$dir/user-home" FM_ROOT_OVERRIDE="$FM_HOME" "$ROOT/bin/fm-teardown.sh" "$task" --force 2>&1) || rc=$?
       if [[ "$scenario" = *-owned ]]; then
         [ "$rc" = 0 ] || fail "$scenario retirement failed: $out"
         [ ! -e "$mate" ] && [ ! -e "$state/$task.meta" ] || fail "$scenario retained the home or task record"
