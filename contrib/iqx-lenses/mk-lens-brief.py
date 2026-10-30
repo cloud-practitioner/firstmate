@@ -26,6 +26,13 @@ Usage:
   mk-lens-brief.py runproof --home H --task T --ticket D --plan P --dispositions F --changes F [options]
   mk-lens-brief.py --help   (all options)
 
+Opt-in: --ground-rules <file> (absolute, or relative to the home; refused when missing
+or unreadable) names a home's ground-rules page as a mandatory first read in every brief
+kind, tells the reviewer to cite the rule ids it relies on and to ask an unconfirmed
+premise as its own plain question, and, for runproof, keeps the production-only premise
+rule section of the lens text. Without it the briefs are unchanged: the generator drops
+that conditional lens section and adds nothing else.
+
 Output paths (under <home>/data/<ticket>/plans/):
   panel     reviews/<lens>.md
   shadow    reviews/shadow/<lens>-<encoded-full-model-id>.md
@@ -219,6 +226,34 @@ def runproof_intent(plan, owner, model, disp, changes):
     )
 
 
+GROUND_RULES_BLOCK = re.compile(r"<!-- BEGIN ground-rules-premise-rule -->\n(.*?)<!-- END ground-rules-premise-rule -->\n", re.S)
+
+
+def lens_text_for(ground_rules):
+    """The run-proof lens text; its conditional premise-rule section stays only when a ground-rules file is named."""
+    text = read(os.path.join(HERE, "run-proof-lens.markdown"))
+    if not GROUND_RULES_BLOCK.search(text):
+        die("run-proof-lens.markdown has no ground-rules-premise-rule block")
+    return GROUND_RULES_BLOCK.sub(r"\1" if ground_rules else "", text).strip()
+
+
+def ground_rules_block(kind, path):
+    """The mandatory-read paragraph for a brief; empty string when no ground-rules file is named."""
+    if not path:
+        return ""
+    text = (
+        "GROUND RULES (mandatory read): before you review anything, read the ground-rules file %s in full. "
+        "Cite the rule ids you rely on in each finding. When a finding would need a premise that no ground rule, spec page, merged code or evidence "
+        "confirms, do not build the finding on it: report it as its own plain question, headed \"unconfirmed premise\"." % path
+    )
+    if kind == "runproof":
+        text += (
+            " Because this brief names a ground-rules file, the production-only premise rule (lens text, section 8) is active: "
+            "it is the one input you read before step 1 of the read order."
+        )
+    return text + "\n\n"
+
+
 def panel_spec(a, home, lock, paths):
     run = a.lens in RUN_LENSES
     agentfile = a.agent_file or lock["ixia"]["agents"].get(a.lens)
@@ -242,7 +277,7 @@ def panel_spec(a, home, lock, paths):
             "Do not keep probes only in a temporary folder." % paths["probe_out"]
         )
     n = 6 if run else 5
-    return (
+    return ground_rules_block(a.kind, a.ground_rules) + (
         "1. %s\n"
         "2. Review ONLY as that reviewer. %s no SAP, Jira, Confluence or Bitbucket writes. Inputs: the plan %s (and its earlier in-session review file beside it, "
         "for context only - form your own view), the repo's AGENTS.md, CLAUDE.md and .claude/ixia-engineering-contract.md, the repo at %s "
@@ -284,7 +319,7 @@ def second_model_touches(a):
 
 
 def runproof_spec(a, home, lock, paths):
-    lens_text = read(os.path.join(HERE, "run-proof-lens.markdown")).strip()
+    lens_text = lens_text_for(a.ground_rules)
     checklist = read(os.path.join(HERE, "orchestration-checklist.markdown")).strip()
     lock_text = json.dumps(lock, indent=2)
     seeds = list(a.seed or [])
@@ -297,6 +332,7 @@ def runproof_spec(a, home, lock, paths):
     return (
         "You are the run-proof adversary on %(model)s for the plan %(plan)s, a separate fresh reviewer that wrote none of it. "
         "Method, rules and report shape are the embedded lens text below; follow it exactly.\n\n"
+        "%(ground)s"
         "ONE READ ORDER (read in this order and no other):\n"
         "1. The embedded lens text, checklist and sources lock below, in this brief. Read them before anything else; the checklist is the lessons of earlier runs.\n"
         "2. The Ixia contract. %(ixia)s\n"
@@ -321,6 +357,7 @@ def runproof_spec(a, home, lock, paths):
         "===== BEGIN SOURCES LOCK (sources.lock.json) =====\n%(lock)s\n===== END SOURCES LOCK =====\n"
         % {
             "model": a.model,
+            "ground": ground_rules_block("runproof", a.ground_rules),
             "plan": a.plan,
             "ixia": ixia_line,
             "base": a.base_ref,
@@ -423,6 +460,8 @@ def build_parser():
     p.add_argument("--ixia-dir", help="override the pinned Ixia marketplace copy (relative to the invocation directory; default: the path in sources.lock.json)")
     p.add_argument("--bitbucket-env", default=DEFAULT_BITBUCKET_ENV,
                    help="credential file the worker reads by path, never printing it (relative to the invocation directory; clone mode; default %(default)s)")
+    p.add_argument("--ground-rules", help="opt in: a home's ground-rules file (absolute, or relative to the home) every brief names as a mandatory read; "
+                   "runproof also keeps the production-only premise rule of the lens text")
     p.add_argument("--stdout", action="store_true", help="print the filled brief instead of writing it")
     return p
 
@@ -437,6 +476,13 @@ def main(argv):
     a.base_ref = resolve_base_ref(brief, a.base_branch)
     plans = os.path.join(home, "data", a.ticket, "plans")
     a.plan = under_home(home, a.plan)
+    if a.ground_rules:
+        a.ground_rules = under_home(home, a.ground_rules)
+        try:
+            with open(a.ground_rules, encoding="utf-8") as f:
+                f.read(1)
+        except (OSError, UnicodeDecodeError) as e:
+            die("--ground-rules file %s is missing or unreadable: %s" % (a.ground_rules, e))
 
     if a.kind in ("panel", "shadow"):
         if not a.lens:
