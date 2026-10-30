@@ -63,7 +63,10 @@ python3 "$FORK/contrib/iqx-lenses/mk-lens-brief.py" runproof --home "$HOME_DIR" 
   --seed "<a seed made for this ticket>" --touches runner
 ```
 
-`--ground-rules <file>` (any kind; absolute, or relative to the home; refused when missing or unreadable) is opt-in: the brief names the home's ground-rules page as a mandatory first read and asks the reviewer to cite the rule ids it relies on. Only `runproof` also keeps the production-only premise rule of [the lens text](run-proof-lens.markdown#8-production-only-premise-rule-only-when-the-brief-names-a-ground-rules-file): attack only confirmed production premises and ask any other premise as one plain unconfirmed-premise question, even when the plan lists it as a test. Without it the briefs are unchanged, so homes that do not pass it are not affected. The ground-rules page itself is not committed here.
+`--ground-rules <file>` opts any brief kind into a mandatory read of the home's ground-rules page; see the [generator's header](mk-lens-brief.py) for path handling, validation and rule-id citation instructions.
+Only `runproof` also activates [the production-only premise rule](run-proof-lens.markdown#8-production-only-premise-rule-only-when-the-brief-names-a-ground-rules-file).
+Without the option, briefs are unchanged and homes that do not pass it are not affected.
+The ground-rules page itself is not committed here.
 
 `--touches` (repeatable: `runner`, `identity`, `resume`) says the plan changes the shared runner, the identity unit or a Resume rule; the generator then reports that a second-model run is needed, and the brief says so. Run the generator again with `--model github-copilot/gpt-6.1-sol` (and a new scaffolded task) for that run.
 

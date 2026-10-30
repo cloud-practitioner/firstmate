@@ -28,10 +28,10 @@ Usage:
 
 Opt-in: --ground-rules <file> (absolute, or relative to the home; refused when missing
 or unreadable) names a home's ground-rules page as a mandatory first read in every brief
-kind and tells the reviewer to cite the rule ids it relies on. Only runproof keeps the
-production-only premise rule section of the lens text: attack only confirmed production
-premises and ask any other premise as one plain unconfirmed-premise question. Without it
-the briefs are unchanged: the generator drops that conditional lens section and adds nothing else.
+kind and tells the reviewer to cite the rule ids it relies on.
+Only runproof keeps the production-only premise rule (run-proof-lens.markdown, section 8).
+Without the option the briefs are unchanged: the generator drops that conditional
+lens section and adds nothing else.
 
 Output paths (under <home>/data/<ticket>/plans/):
   panel     reviews/<lens>.md
