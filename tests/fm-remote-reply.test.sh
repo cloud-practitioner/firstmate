@@ -251,7 +251,24 @@ leak_rc=0
 wait "$leak_pid" 2>/dev/null || leak_rc=$?
 [ "$leak_rc" -eq 143 ] || fail "interrupted ingest returned an unexpected status: $leak_rc"
 assert_no_leak "signal during a document fetch"
-pass "remote reply ingest leaves no temporary path or lifecycle lock behind on any exit"
+# The source leg stages the remote read's output before classifying it; a signal
+# during that read must remove the staged file as well.
+rm -f "$TMP_ROOT/leak-fetch-started"
+TMPDIR="$LEAK_TMPDIR" FM_HOME="$LEAK_HOME" FM_ROOT_OVERRIDE="$ROOT" \
+  FM_SSH_BIN="$FAKEBIN/fake-ssh-hang" FM_LEAK_FETCH_STARTED="$TMP_ROOT/leak-fetch-started" \
+  "$ADAPTER" source ios > "$TMP_ROOT/leak.out" 2>&1 &
+leak_pid=$!
+wait_for_content "$TMP_ROOT/leak-fetch-started" || fail "the leak-check source read never started"
+[ -n "$(find "$LEAK_TMPDIR" -name 'fm-remote-reply-source.*' -print -quit)" ] \
+  || fail "the leak-check source read did not stage its output file"
+kill -TERM "$leak_pid"
+kill -TERM "$(cat "$TMP_ROOT/leak-fetch-started")" 2>/dev/null \
+  || fail "the leak-check source read exited before it could be interrupted"
+leak_rc=0
+wait "$leak_pid" 2>/dev/null || leak_rc=$?
+[ "$leak_rc" -eq 143 ] || fail "interrupted source returned an unexpected status: $leak_rc"
+assert_no_leak "signal during a source read"
+pass "remote reply adapter leaves no temporary path or lifecycle lock behind on any exit"
 
 SID=$(remote_env "$ADAPTER" source-id ios)
 out=$(remote_env "$ADAPTER" arm ios)

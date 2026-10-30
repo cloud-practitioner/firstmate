@@ -107,8 +107,9 @@ usage() { sed -n '2,66p' "$0" | sed 's/^# \{0,1\}//'; exit 2; }
 INGEST_TMP=''
 FETCH_ERR=''
 FETCH_TMP=''
+SOURCE_OUT=''
 cleanup_temp_paths() {
-  rm -rf -- ${INGEST_TMP:+"$INGEST_TMP"} ${FETCH_ERR:+"$FETCH_ERR"} ${FETCH_TMP:+"$FETCH_TMP"}
+  rm -rf -- ${INGEST_TMP:+"$INGEST_TMP"} ${FETCH_ERR:+"$FETCH_ERR"} ${FETCH_TMP:+"$FETCH_TMP"} ${SOURCE_OUT:+"$SOURCE_OUT"}
 }
 trap cleanup_temp_paths EXIT
 
@@ -320,6 +321,7 @@ cmd_source() {
   started=$(fm_pending_reply_now)
   output=$(umask 077; mktemp "${TMPDIR:-/tmp}/fm-remote-reply-source.XXXXXX") \
     || die "cannot stage remote reply source output"
+  SOURCE_OUT=$output
   "$SCRIPT_DIR/fm-on.sh" "$id" fm-remote-delta-read.sh \
     "$REMOTE_LOG" "$CURSOR_OFFSET" "$CURSOR_HASH" "$WAIT_SECONDS" \
     < /dev/null > "$output" || rc=$?
