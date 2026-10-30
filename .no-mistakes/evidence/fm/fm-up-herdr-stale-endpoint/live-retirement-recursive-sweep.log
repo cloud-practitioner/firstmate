@@ -1,0 +1,27 @@
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.KvJ1pA
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.KvJ1pA/main
+registered: wait (lavish)
+reconciled: published=0 started=1 stopped=0 uncertain=0 failed=0
+SOURCE                       ADAPTER      OWNER      PENDING
+wait                         lavish       live       0
+
+RETIREMENT SCENARIO: recursive-sweep
+retired: wait
+swept: attempted=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.KvJ1pA/main
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.KvJ1pA/code/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.KvJ1pA/code/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REFUSED: foreign herdr pane fm-lab-focused-6615-28396:w1:p1 has a process in /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.KvJ1pA/mate; preserving its processes, worktree, and task mine records.
+PRODUCTION sweep-home removed the source registration
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node","focused":true,"foreground_cwd":"/home/node","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65f08b9f9f4f31","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+FAULT INJECTED: recursive-sweep
+SOURCE                       ADAPTER      OWNER      PENDING
+wait                         lavish       live       0
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.KvJ1pA/mate","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.KvJ1pA/mate","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65f08b9f9f4f31","workspace_id":"w1"},"type":"pane_info"}}
+PASS: refused retirement retained the home, rearmed the actual process-event registration, and restored the pending wake/reply contract
+TEARDOWN: named lab deleted; default-session tripwire unchanged; disposable homes removed

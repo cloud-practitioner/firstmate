@@ -1,0 +1,23 @@
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.8Zmxte
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.8Zmxte/main
+registered: wait (lavish)
+reconciled: published=0 started=1 stopped=0 uncertain=0 failed=0
+SOURCE                       ADAPTER      OWNER      PENDING
+wait                         lavish       live       0
+
+RETIREMENT SCENARIO: direct-pending
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.8Zmxte/main
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.8Zmxte/code/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.8Zmxte/code/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REFUSED: pending-replies contains an unsafe recovery entry
+error: local pending-reply recovery paths changed; preserving the secondmate home and route
+FAULT INJECTED: direct-pending
+SOURCE                       ADAPTER      OWNER      PENDING
+wait                         lavish       live       0
+PASS: refused retirement retained the home, rearmed the actual process-event registration, and restored the pending wake/reply contract
+TEARDOWN: named lab deleted; default-session tripwire unchanged; disposable homes removed

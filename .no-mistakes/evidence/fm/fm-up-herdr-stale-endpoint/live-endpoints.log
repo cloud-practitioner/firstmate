@@ -1,30 +1,42 @@
-/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home
-scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home/data/mine/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
-fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home
-spawned mine harness=sleep kind=scout window=fm-lab-stale-live-3197687-7548:w1:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/pool/.treehouse/project-a53402/1/project
-spawn metadata: target=fm-lab-stale-live-3197687-7548:w1:p2 identity=proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/pool/.treehouse/project-a53402/1/project
-unchanged process sample 1: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
-unchanged process sample 2: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
-unchanged process sample 3: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
-unchanged process sample 4: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
-unchanged process sample 5: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 alive
-fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO
+{"client":{"version":"0.9.5","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-endpoints-3881244-2000"},"server":{"status":"running","running":true,"version":"0.9.5","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/node/.config/herdr/sessions/fm-lab-endpoints-3881244-2000/herdr.sock","session":"fm-lab-endpoints-3881244-2000","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node","focused":true,"foreground_cwd":"/home/node","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65f08a1532bd11","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+BOUND: fm-lab-endpoints-3881244-2000:w1:p1 proc:3881629:550642af-9afc-4d76-b27d-5778ab863659:36196282
+cd '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO/wt'; printf 'O
+WNED-ENDPOINT\n'
+~
+❯ cd '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO/wt'; printf
+'OWNED-ENDPOINT\n'
+OWNED-ENDPOINT
+.test-live/endpoint.V0X7MO/wt on  HEAD [?]
+❯PORTABLE DRIFT: recorded=Fri Oct 30 06:08:49 2026; current=Fri Oct 30 06:08:50 2026; capture accepted
+PORTABLE FALLBACK without /proc: ps:3881629:Fri Oct 30 06:08:50 2026
+Unreadable proc binding: unreadable
+PASS: stable and portable identity checks execute against a real pane
+RESET: recycled=fm-lab-endpoints-3881244-2000:w1:p1; old=proc:3881629:550642af-9afc-4d76-b27d-5778ab863659:36196282; new=proc:3883821:550642af-9afc-4d76-b27d-5778ab863659:36196557
+STALE TASK LIVENESS despite matching cwd, label, and competing bound claimant: missing
+STALE capture: refused
+STALE visible: refused
+STALE key: refused
+STALE submit: refused
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO
 ●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ●  WATCHER DOWN - SUPERVISION IS OFF
-●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  2 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
 ●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
 ●  This is a supervision warning only; the guarded operation WILL still run.
-●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
 ●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-error: task mine's endpoint reads 'alive'; a relaunch requires a positively agent-free endpoint (stop the agent first with bin/fm-control.sh mine exit)
-refused: bin/fm-spawn.sh mine --relaunch --harness sleep 600
-portable ps binding delta=-1: alive
-portable ps binding delta=0: alive
-portable ps binding delta=1: alive
-fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home
-WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
-spawned mine harness=sleep kind=scout window=fm-lab-stale-live-3197687-7548:w1:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/pool/.treehouse/project-a53402/1/project
-adopted relaunch refreshed legacy binding: proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112
-real reset recycled fm-lab-stale-live-3197687-7548:w1:p2; old=proc:3205823:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1418112 new=proc:3287656:26ca0ad9-78c2-4bb4-9823-d66c0e65602a:1444127
-home=/home/node/.no-mistakes/worktrees/5e28e613310e/01M4AGCGTYGYPTQBQGMESNKN27/.test-herdr-validation/home stale liveness=missing
-WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+REFUSED: foreign herdr pane fm-lab-endpoints-3881244-2000:w1:p1 has a process in /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO/wt; preserving its processes, worktree, and task mine records.
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO/wt","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO/wt","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65f08a17d22ce1","workspace_id":"w1"},"type":"pane_info"}}
+PASS: foreign pane, its process, worktree and durable task record survived active cleanup
+{"id":"cli:tab:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65f08a1a1e3fb2","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"anchor","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"},"type":"tab_created"}}
+LEGACY HUSK REPLACEMENT: w1:t3 w1:p3
+{"error":{"code":"pane_not_found","message":"pane w1:p1 not found"},"id":"cli:pane:get"}
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO/wt","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/endpoint.V0X7MO/wt","pane_id":"w1:p3","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t3","terminal_id":"term_65f08a1a4186d3","workspace_id":"w1"},"type":"pane_info"}}
+PASS: legacy no-agent husk replaced without closing the new endpoint
+PASSIVE BUSY after mid-probe stop: unknown
+PASSIVE COMPOSER stopped: unknown
+FAULT DETAILS: FAULT: real named server stopped before native status lookup
+PASS: passive busy, composer and viewport left the stopped server stopped
+TEARDOWN: named lab deleted; default-session tripwire unchanged; disposable home removed

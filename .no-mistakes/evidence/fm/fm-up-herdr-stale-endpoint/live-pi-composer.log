@@ -1,0 +1,50 @@
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.7bOn7J
+{"id":"cli:agent:start","result":{"agent":{"agent":"pi","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.7bOn7J","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.7bOn7J","interactive_ready":true,"name":"composer-proof","pane_id":"w1:p2","revision":1,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65f08c18fa18b2","terminal_title":"π - phase.7bOn7J","terminal_title_stripped":"π - phase.7bOn7J","workspace_id":"w1"},"argv":["pi","--no-extensions","--no-mcp","--no-skills","--no-prompt-templates","--no-context-files","--no-session","--offline","--no-approve"],"type":"agent_started"}}
+{"id":"cli:pane:get","result":{"pane":{"agent":"pi","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.7bOn7J","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.7bOn7J","pane_id":"w1:p2","revision":1,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65f08c18fa18b2","terminal_title":"π - phase.7bOn7J","terminal_title_stripped":"π - phase.7bOn7J","workspace_id":"w1"},"type":"pane_info"}}
+
+ ▀▀█  v1.4.0
+ █▀ █ escape interrupt · ctrl+c/ctrl+d clear/exit · / commands · ! bash · ctrl+o more
+ Press ctrl+o to show full startup help and loaded resources.
+
+ Pi can explain its own features and look up its docs. Ask it how to use or extend Pi.
+
+ This project is not trusted. Project .pi resources and packages are ignored. Use /trust to save a trust decision,
+ then restart pi.
+
+ Warning: No models available. Use /login to log into a provider via OAuth or API key. See:
+   /workspaces/wp/.pi/install/releases/1.4.0/node_modules/@earendil-works/pi-coding-agent/docs/providers.md
+   /workspaces/wp/.pi/install/releases/1.4.0/node_modules/@earendil-works/pi-coding-agent/docs/models.md
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.7bOn7J (detached)
+0.0%/0 (auto)                                                                                                   unknown
+{"id":"cli:agent:get","result":{"agent":{"agent":"pi","agent_status":"idle","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.7bOn7J","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.7bOn7J","interactive_ready":true,"name":"composer-proof","pane_id":"w1:p2","revision":1,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65f08c18fa18b2","terminal_title":"π - phase.7bOn7J","terminal_title_stripped":"π - phase.7bOn7J","workspace_id":"w1"},"type":"agent_info"}}
+REAL PI COMPOSER BASELINE: empty
+agent get w1:p2 --session fm-lab-focused-137476-7893 
+REAL PI COMPOSER after server stopped between viewport and lazy identity: unknown
+FAULT: actual named server stopped after viewport read
+PASS: passive inspection of the actual Pi TUI did not restart the server after capture
+TEARDOWN: named lab deleted; default-session tripwire unchanged; disposable homes removed

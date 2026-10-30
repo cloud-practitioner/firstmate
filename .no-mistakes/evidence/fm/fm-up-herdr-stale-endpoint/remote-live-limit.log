@@ -1,0 +1,6 @@
+$ bin/fm-herdr-lab.sh prepare fm-remote
+fm-herdr-lab: session name must start with 'fm-lab-' and contain only letters, digits, underscores, or dashes: fm-remote
+helper exit=1 (refusal expected; no remote session controlled)
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/remote-capability.yJaif7
+Marked-home capability probe with the remote key subprocess state override:
+fm_gate_lab_permitted exit=1 (parent-route override not authorized)

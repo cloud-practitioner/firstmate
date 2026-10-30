@@ -1,0 +1,82 @@
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.d0i754
+spawned launch harness=claude kind=scout window=fm-lab-focused-4029723-17384:w1:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/treehouse/.treehouse/project-797426/1/project
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.d0i754
+window=fm-lab-focused-4029723-17384:w1:p2
+endpoint_task_id=launch
+worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/treehouse/.treehouse/project-797426/1/project
+project=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.d0i754/project
+harness=claude
+approval_mode=bypass
+kind=scout
+tasktmp=/tmp/fm-launch
+model=default
+effort=default
+busy_gen=g1793340718.4034656.5573
+spawn_gen=s1793340718.4030538.3373
+backend=herdr
+herdr_session=fm-lab-focused-4029723-17384
+herdr_workspace_id=w1
+herdr_tab_id=w1:t2
+herdr_pane_id=w1:p2
+herdr_process_identity=proc:4031792:550642af-9afc-4d76-b27d-5778ab863659:36214713
+FRESH PUBLICATION: recorded=proc:4031792:550642af-9afc-4d76-b27d-5778ab863659:36214713 current=proc:4031792:550642af-9afc-4d76-b27d-5778ab863659:36214713
+treehouse get
+project on  master
+❯ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/treehouse/.treehouse
+/project-797426/1/project. Type 'exit' to return.
+project on  HEAD
+❯ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/treehouse/.treehouse/proj
+ect-797426/1/project'
+project on  HEAD
+❯ export GOTMPDIR=/tmp/fm-launch/gotmp
+project on  HEAD
+❯ export COMPACT_ADVISER_DISABLE=1
+project on  HEAD
+❯ export FM_TASK_ID=launch
+project on  HEAD
+❯ . '/tmp/fm-launch+e74deabd4ed92bc9b93df1ce56f2ef602a4f1b296e89b18b352dd9b9e9a88ef6/launch.s1793340718.4030538.3373.sh
+'
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Allow external CLAUDE.md file imports?
+
+  This project's CLAUDE.md or .claude/rules imports files outside the current working directory. Never allow this for
+  third-party repositories.
+
+  External imports:
+    /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/AGENTS.md
+
+  Important: Only use Claude Code with files you trust. Accessing untrusted files may pose security risks
+  https://code.claude.com/docs/en/security
+
+  ❯ No, disable external imports
+    Yes, allow external imports
+
+  Enter to confirm · Esc to cancel
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"blocked","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.d0i754/project","focused":true,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/treehouse/.treehouse/project-797426/1/project","pane_id":"w1:p2","revision":0,"state_change_seq":1,"tab_id":"w1:t2","terminal_id":"term_65f08ac4f57402","workspace_id":"w1"},"type":"agent_info"}}
+REAL BLOCKED RECONNECT RECORD: w1:p2			blocked		
+stale: fm-lab-focused-4029723-17384:w1:p2 (herdr: agent blocked - waiting on human, escalated immediately, not via wedge timer)
+1793340726	1	stale	fm-lab-focused-4029723-17384:w1:p2	stale: fm-lab-focused-4029723-17384:w1:p2 (herdr: agent blocked - waiting on human, escalated immediately, not via wedge timer)
+PASS: stale paused claimant did not absorb the bound real Claude blocked alert; its dedupe and status markers committed
+spawned launch harness=claude kind=scout window=fm-lab-focused-4029723-17384:w1:p3 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/treehouse/.treehouse/project-797426/1/project
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/phase.d0i754
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  After draining queued wakes, repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+RELAUNCH PUBLICATION: pane=w1:p3 recorded=proc:4046601:550642af-9afc-4d76-b27d-5778ab863659:36216415 current=proc:4046601:550642af-9afc-4d76-b27d-5778ab863659:36216415
+printf 'FOREIGN-RELAUNCH-GUARD\n'
+.test-live/phase.d0i754/wt on  HEAD [?]
+❯ printf 'FOREIGN-RELAUNCH-GUARD\n'
+FOREIGN-RELAUNCH-GUARD
+.test-live/phase.d0i754/wt on  HEAD [?]
+❯
+{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/treehouse/.treehouse/project-797426/1/project","focused":false,"foreground_cwd":"/home/node/.no-mistakes/worktrees/5e28e613310e/01M65NDEZRAT81MFEX2NMZGR4B/.test-live/treehouse/.treehouse/project-797426/1/project","pane_id":"w1:p3","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t3","terminal_id":"term_65f08ad52ed803","workspace_id":"w1"},"type":"pane_info"}}
+PASS: fresh and rebound launches published the current process identity and preserved the recycled foreign pane
+TEARDOWN: named lab deleted; default-session tripwire unchanged; disposable homes removed
