@@ -28,10 +28,10 @@ Usage:
 
 Opt-in: --ground-rules <file> (absolute, or relative to the home; refused when missing
 or unreadable) names a home's ground-rules page as a mandatory first read in every brief
-kind, tells the reviewer to cite the rule ids it relies on and to ask an unconfirmed
-premise as its own plain question, and, for runproof, keeps the production-only premise
-rule section of the lens text. Without it the briefs are unchanged: the generator drops
-that conditional lens section and adds nothing else.
+kind and tells the reviewer to cite the rule ids it relies on. Only runproof keeps the
+production-only premise rule section of the lens text: attack only confirmed production
+premises and ask any other premise as one plain unconfirmed-premise question. Without it
+the briefs are unchanged: the generator drops that conditional lens section and adds nothing else.
 
 Output paths (under <home>/data/<ticket>/plans/):
   panel     reviews/<lens>.md
@@ -243,13 +243,13 @@ def ground_rules_block(kind, path):
         return ""
     text = (
         "GROUND RULES (mandatory read): before you review anything, read the ground-rules file %s in full. "
-        "Cite the rule ids you rely on in each finding. When a finding would need a premise that no ground rule, spec page, merged code or evidence "
-        "confirms, do not build the finding on it: report it as its own plain question, headed \"unconfirmed premise\"." % path
+        "Cite the rule ids you rely on in each finding." % path
     )
     if kind == "runproof":
         text += (
             " Because this brief names a ground-rules file, the production-only premise rule (lens text, section 8) is active: "
-            "it is the one input you read before step 1 of the read order."
+            "it governs all attacks, probes and seeds below, overriding conflicting instructions. "
+            "Read the ground-rules file before step 1 of the read order."
         )
     return text + "\n\n"
 

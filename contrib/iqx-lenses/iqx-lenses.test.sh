@@ -493,7 +493,13 @@ for kind in panel shadow runproof; do
   gen_kind "t-gr0-$kind" "$kind" >"$TMP/gr-off-$kind.md"
   gen_kind "t-gr1-$kind" "$kind" --ground-rules "$GR" >"$TMP/gr-on-$kind.md"
   # The task id is the only input that differs between the two generations; mask it.
-  sed -i "s/t-gr[01]-$kind/TASK/g" "$TMP/gr-off-$kind.md" "$TMP/gr-on-$kind.md"
+  python3 - "$kind" "$TMP/gr-off-$kind.md" "$TMP/gr-on-$kind.md" <<'PY'
+import pathlib, sys
+for index, name in enumerate(sys.argv[2:]):
+    path = pathlib.Path(name)
+    task = ("t-gr%d-%s" % (index, sys.argv[1])).encode()
+    path.write_bytes(path.read_bytes().replace(task, b"TASK"))
+PY
   # Without the option nothing of the feature shows, and nothing a run produced before is gone.
   expect_hasnt "$kind: without --ground-rules no ground-rules text" "$TMP/gr-off-$kind.md" "GROUND RULES"
   expect_hasnt "$kind: without --ground-rules no premise rule text" "$TMP/gr-off-$kind.md" "Production-only premise rule"
@@ -501,8 +507,12 @@ for kind in panel shadow runproof; do
   # With it, each kind names the file and the rule ids, and only adds text.
   expect_has "$kind: with --ground-rules the file is a mandatory read" "$TMP/gr-on-$kind.md" "GROUND RULES (mandatory read): before you review anything, read the ground-rules file $GR in full."
   expect_has "$kind: with --ground-rules the rule ids are cited" "$TMP/gr-on-$kind.md" "Cite the rule ids you rely on in each finding."
-  expect_has "$kind: with --ground-rules an unconfirmed premise is its own question" "$TMP/gr-on-$kind.md" "report it as its own plain question, headed \"unconfirmed premise\""
-  if diff "$TMP/gr-off-$kind.md" "$TMP/gr-on-$kind.md" | grep -q '^<'; then
+  diff_status=0
+  diff "$TMP/gr-off-$kind.md" "$TMP/gr-on-$kind.md" >"$TMP/gr-diff-$kind.txt" || diff_status=$?
+  if [ "$diff_status" -gt 1 ]; then
+    exit "$diff_status"
+  fi
+  if grep -q '^<' "$TMP/gr-diff-$kind.txt"; then
     fail "$kind: --ground-rules only adds text (a line of the default output changed or went)"
   else
     pass "$kind: --ground-rules only adds text to the default output"
@@ -510,9 +520,17 @@ for kind in panel shadow runproof; do
 done
 expect_has "runproof: with --ground-rules the premise rule is in the lens text" "$TMP/gr-on-runproof.md" "## 8. Production-only premise rule (only when the brief names a ground-rules file)"
 expect_has "runproof: with --ground-rules the rule is active" "$TMP/gr-on-runproof.md" "the production-only premise rule (lens text, section 8) is active"
+expect_has "runproof: activation governs all probing and seeds" "$TMP/gr-on-runproof.md" "it governs all attacks, probes and seeds below, overriding conflicting instructions."
+expect_has "runproof: premise rule overrides inherited probing and ticket seeds" "$TMP/gr-on-runproof.md" "overriding section 4's attack and seed instructions, section 5's probe rules and checklist section 1.9's ticket seeds wherever they conflict."
+expect_has "runproof: plan tests and all ticket seeds require confirmation before probing" "$TMP/gr-on-runproof.md" "Do not attack or probe an unconfirmed premise, even when the plan lists it as a test or it appears in a supplied or generated seed."
 expect_has "runproof: premise rule asks, never builds a finding" "$TMP/gr-on-runproof.md" "Any other premise is not a finding."
+expect_has "runproof: unconfirmed premise is one plain question" "$TMP/gr-on-runproof.md" "Ask it as one plain question in the report's questions section, headed \"unconfirmed premise\""
 expect_hasnt "runproof: conditional-section markers are not shown" "$TMP/gr-on-runproof.md" "ground-rules-premise-rule"
-expect_hasnt "panel: premise rule is a run-proof lens text only" "$TMP/gr-on-panel.md" "Production-only premise rule"
+for kind in panel shadow; do
+  expect_hasnt "$kind: premise rule is a run-proof lens text only" "$TMP/gr-on-$kind.md" "production-only premise rule"
+  expect_hasnt "$kind: no premise-based finding suppression" "$TMP/gr-on-$kind.md" "do not build the finding on it"
+  expect_hasnt "$kind: no unconfirmed-premise policy" "$TMP/gr-on-$kind.md" "unconfirmed premise"
+done
 # Without the option the embedded lens text is exactly the lens file minus the conditional section.
 check "runproof: without --ground-rules the embedded lens text is the unchanged lens" python3 - "$here/run-proof-lens.markdown" "$TMP/gr-off-runproof.md" <<'PY'
 import sys

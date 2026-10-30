@@ -121,10 +121,9 @@ One Markdown file at the output path. A report stands alone.
 <!-- BEGIN ground-rules-premise-rule -->
 ## 8. Production-only premise rule (only when the brief names a ground-rules file)
 
-This section applies only when your brief names a ground-rules file. When it does not, ignore this section.
+This section applies only when your brief names a ground-rules file. When it does not, ignore this section. When active, it governs all attacks and probes in this lens and the embedded checklist, overriding section 4's attack and seed instructions, section 5's probe rules and checklist section 1.9's ticket seeds wherever they conflict.
 
-- Attack a premise, or raise a failure scenario, only when it is a production possibility. A production possibility is confirmed by one of: a ground rule in the named file (cite its rule id), the owner's spec page, the merged code, or live evidence (cite which).
+- Attack a premise, or raise a failure scenario, only when it is a production possibility. A production possibility is confirmed by one of: a ground rule in the named file (cite its rule id), the owner's spec page, the merged code, or live evidence (cite which). Do not attack or probe an unconfirmed premise, even when the plan lists it as a test or it appears in a supplied or generated seed.
 - Any other premise is not a finding. Do not build a finding, a severity or a fix on it. Ask it as one plain question in the report's questions section, headed "unconfirmed premise", with what you could not confirm and what would confirm it.
 - Cite the rule ids you rely on in each finding's "rule it breaks" line.
-- A premise that the plan itself lists as a test is still probed (section 5), but a failure that only that premise makes possible is reported as the question above, not as a finding.
 <!-- END ground-rules-premise-rule -->
