@@ -1522,6 +1522,12 @@ status_snapshot_latest_event() {  # <status-file> <captured-endpoint> <captured-
     while (defined(my $line = <$file>)) {
       next unless $line =~ /[^\s]/;
       $line =~ s/[\r\n]+\z//;
+      my ($head) = split /:/, $line, 2;
+      my ($prefix) = split /\[/, $head, 2;
+      my @words = split " ", $prefix;
+      my $first = shift(@words) // "";
+      my $verb = join " ", $first, grep { !/^corr=[0-9a-fA-F]{16}$/ } @words;
+      next if $verb eq "note" && $head =~ /\s\[state=none\](\s|$)/;
       ($latest, $end) = ($line, $start + tell($file));
     }
     exit 1 unless defined $end;
