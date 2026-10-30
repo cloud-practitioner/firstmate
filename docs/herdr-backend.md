@@ -797,21 +797,21 @@ No Herdr-specific copy of that protocol exists.
 
 ### Externally managed servers
 
-By default Firstmate starts a session's Herdr server itself, headless, whenever an operation finds it not running.
+By default Firstmate's active readiness path starts a session's Herdr server itself, headless, when it finds it not running.
 That is wrong when a service manager, such as a systemd user unit, owns the server.
 During a unit restart or a `server live-handoff`, `status` can briefly report not running, and a server Firstmate started would race the owner and split panes across two servers.
 
 The owner opts out by writing marker files into the session directory, the directory holding the socket that `herdr --session <name> status --json` reports as `.server.socket`:
 
-| Marker | Written by the owner | Firstmate behavior |
+| Marker | Written by the owner | Active readiness behavior |
 | --- | --- | --- |
 | `firstmate-server-owner` | Once, for as long as it owns the server; the first line names the owner | Uses a running server; never starts a stopped one, and waits a bounded time for it to report running, then fails naming the owner |
 | `firstmate-server-replacing` | Only for the duration of a restart or handoff | Never starts or uses a server, even one that reports running; waits a bounded time for the marker to clear and the server to report running, then fails naming the marker |
 
 The wait is up to 60 checks half a second apart, 30 seconds in all.
 A replacement marker that clears with no owner marker hands the session back to the default, so Firstmate starts the server if it is still down.
-A replacement marker left behind fails every operation naming its path, so the owner must remove it when the replacement ends.
-Every operation checks the session directory for a replacement marker once, even when the server reports running, so a replacement marker holds callers off the old server as well as the new one.
+A replacement marker left behind blocks active readiness and names its path in the refusal, so the owner must remove it when the replacement ends.
+Each active readiness check inspects the session directory for a replacement marker, even when the server reports running, so a replacement marker holds those callers off the old server as well as the new one.
 That check reuses the `status` read Firstmate already makes, which reports the socket even while the server is stopped ([verification](verification/runtime-backends.md#session-directory)); a Herdr whose `status` omits the socket cannot carry the markers and keeps the default behavior.
 
 ### Husks after a server restart
@@ -930,7 +930,7 @@ For these records a pane is foreign only when its foreground cwd is outside the 
 A restart husk keeps its label and a renamed tab keeps its cwd, so neither reads as foreign under that fallback.
 An unrelated task with the same id in another home, or an unrelated shell in the surviving worktree, can pass this legacy check.
 Unreadable legacy panes and records without a worktree are not proof of foreign ownership.
-When the caller has no label, every record in the state directory claiming the exact target is consulted; any matching claimant can allow the operation.
+Without an explicit label, ownership checks scan records claiming the exact target in the selected state directory until one permits the operation or an unreadable process binding blocks it.
 The guarantee is therefore scoped to the task record selected by the caller and its owning state directory, not ambient or other-home records.
 
 `tests/fm-backend-herdr.test.sh` exercises stable `/proc` identities under `ps` drift, portable one-second `lstart` tolerance, portable identity reads without `/proc`, relaunch identity refresh, identity mismatches despite matching labels and worktrees, process-preserving handoffs, fresh process bindings, and successful spawn/relaunch with the legacy-record fallback when the identity read fails.
