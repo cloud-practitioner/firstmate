@@ -2934,7 +2934,10 @@ remove_firstmate_home() {  # <home> <label> <task-id> <backend> [target] [state-
     return 0
   fi
   if [ "$backend" = herdr ]; then
-    FM_STATE_OVERRIDE="$state" teardown_herdr_cleanup_preflight "$target" "${expected_id:-$ID}" "$abs_home_path" || return 1
+    FM_STATE_OVERRIDE="$state" teardown_herdr_cleanup_preflight "$target" "${expected_id:-$ID}" "$abs_home_path" || {
+      restore_firstmate_home_process_events "$abs_home_path" "$label" "$process_event_backup" || return $?
+      return 1
+    }
   fi
   if safe_rm_rf "$abs_home_path" "$label"; then
     [ -z "$process_event_backup" ] || rm -rf -- "$process_event_backup"
@@ -4141,11 +4144,12 @@ if [ "$KIND" = secondmate ]; then
   [ -n "$HOME_PATH" ] || HOME_PATH=$WT
   handoff_wake_retire_stage \
     || { echo "error: receiver wake cleanup could not be staged; preserving the secondmate home and route" >&2; exit 1; }
-  pending_replies_recovery_validate recheck \
-    || { echo "error: local pending-reply recovery paths changed; preserving the secondmate home and route" >&2; exit 1; }
-  if [ "$BACKEND" = herdr ]; then
-    teardown_herdr_cleanup_preflight "$T" "$ID" "$HOME_PATH" || exit 1
-  fi
+  pending_replies_recovery_validate recheck || {
+    echo "error: local pending-reply recovery paths changed; preserving the secondmate home and route" >&2
+    handoff_wake_retire_stage_restore \
+      || echo "error: receiver wake restoration failed; recovery state remains at $HANDOFF_WAKE_RETIRE_STAGE" >&2
+    exit 1
+  }
   if remove_firstmate_home "$HOME_PATH" "secondmate home" "$ID" "$BACKEND"; then
     :
   else

@@ -342,6 +342,121 @@ SH
   pass 'flat, projected, and recursive cleanup preserve foreign pane processes'
 }
 
+test_secondmate_retirement_rollbacks() {
+  local scenario
+  for scenario in direct-sweep recursive-sweep direct-stage direct-pending direct-owned recursive-owned; do
+    (
+      local dir="$TMP_ROOT/retirement-$scenario" mate parent state task=mine owner_state corr out rc=0
+      setup_world "$dir"
+      mate="$dir/mate"; state="$FM_STATE_OVERRIDE"; owner_state="$state"
+      mkdir -p "$FM_HOME/data" "$FM_HOME/config" "$dir/user-home" "$mate/state/procevent" "$mate/data" "$mate/config" "$mate/bin"
+      export FM_RETIRE_SCENARIO="$scenario" FM_RETIRE_REAL_MV
+      FM_RETIRE_REAL_MV=$(command -v mv)
+      export FM_PROCEVENT_CLAIM_ROOT="$dir/claims" FM_CLOSE_REMOVES=1
+      if [[ "$scenario" = recursive-* ]]; then
+        parent="$dir/parent"; task=parent; owner_state="$parent/state"
+        mkdir -p "$parent/state" "$parent/data" "$parent/config"
+        printf 'parent\n' > "$parent/.fm-secondmate-home"
+        fm_write_meta "$state/parent.meta" backend=herdr window=fmtest:w1:p2 endpoint_task_id=parent \
+          "worktree=$parent" "project=$parent" "home=$parent" kind=secondmate harness=pi mode=secondmate yolo=off \
+          herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t2 herdr_pane_id=w1:p2 \
+          'herdr_process_identity=proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000'
+        write_pane w1:p2 42 "$parent"
+        printf '%s\n' "- parent - parent domain (home: $parent; scope: parent domain; projects: alpha; added 2026-06-22)" > "$FM_HOME/data/secondmates.md"
+      fi
+      printf 'mine\n' > "$mate/.fm-secondmate-home"
+      fm_write_meta "$owner_state/mine.meta" backend=herdr window=fmtest:w1:p1 endpoint_task_id=mine \
+        "worktree=$mate" "project=$mate" "home=$mate" kind=secondmate harness=pi mode=secondmate yolo=off \
+        herdr_session=fmtest herdr_workspace_id=w1 herdr_tab_id=w1:t1 herdr_pane_id=w1:p1 \
+        'herdr_process_identity=proc:42:3f2a9c1e-0000-4000-8000-0123456789ab:7000'
+      printf '%s\n' "- mine - child domain (home: $mate; scope: child domain; projects: alpha; added 2026-06-22)" >> "$FM_HOME/data/secondmates.md"
+      write_pane w1:p1 43 "$mate"
+      cp "$FM_FAKE_WORLD/pane-w1_p1.json" "$FM_FAKE_WORLD/replacement-pane.json"
+      cp "$FM_FAKE_WORLD/process-w1_p1.json" "$FM_FAKE_WORLD/replacement-process.json"
+      write_pane w1:p1 42 "$mate"
+      printf 'adapter=lavish\nargc=1\nargv:\n/bin/true\n' > "$FM_FAKE_WORLD/expected.source"
+      cp "$FM_FAKE_WORLD/expected.source" "$mate/state/procevent/wait.source"
+      printf 'fixture runner\n' > "$mate/state/procevent/wait.runner"
+      corr=$(FM_HOME="$FM_HOME" bash -c '
+        . "$1"
+        fm_pending_reply_create "$2" "$2/state" "$3" "New routed work is in your backlog."
+      ' _ "$ROOT/bin/fm-pending-reply-lib.sh" "$FM_HOME" "$task") || fail 'could not seed receiver wake'
+      printf 'confirmed:%s\n' "$corr" > "$state/.backlog-handoff-$task.wake-pending"
+      printf 'confirmed=1\n' > "$state/pending-replies/.delivery-confirmed-$corr"
+      cp "$state/pending-replies/$corr" "$FM_FAKE_WORLD/expected.reply"
+      cat > "$FM_FAKE_WORLD/reset" <<'SH'
+#!/usr/bin/env bash
+set -eu
+w=$FM_FAKE_WORLD
+cp "$w/inputs" "$w/inputs-at-reset"
+if [ "$FM_RETIRE_SCENARIO" = direct-pending ]; then
+  : > "$FM_HOME/state/pending-replies/unsafe"
+else
+  cp "$w/replacement-pane.json" "$w/pane-w1_p1.json"
+  cp "$w/replacement-process.json" "$w/process-w1_p1.json"
+fi
+: > "$w/reset-ran"
+SH
+      cat > "$mate/bin/fm-procevent.sh" <<'SH'
+#!/usr/bin/env bash
+set -eu
+case "${1:-}" in
+  sweep-home)
+    [ "${2:-}" != --preflight ] || exit 0
+    rm -f -- "$FM_HOME/state/procevent/wait.source" "$FM_HOME/state/procevent/wait.runner"
+    : > "$FM_FAKE_WORLD/swept"
+    case "$FM_RETIRE_SCENARIO" in *-sweep) "$FM_FAKE_WORLD/reset" ;; esac
+    ;;
+  reconcile)
+    cmp -s "$FM_HOME/state/procevent/wait.source" "$FM_FAKE_WORLD/expected.source"
+    printf 'fixture rearmed runner\n' > "$FM_HOME/state/procevent/wait.runner"
+    : > "$FM_FAKE_WORLD/rearmed"
+    ;;
+  *) exit 2 ;;
+esac
+SH
+      cat > "$dir/fakebin/mv" <<'SH'
+#!/usr/bin/env bash
+set -eu
+"$FM_RETIRE_REAL_MV" "$@"
+case "${!#}" in
+  */.backlog-handoff-mine.wake-retiring/marker)
+    case "$FM_RETIRE_SCENARIO" in direct-stage|direct-pending) "$FM_FAKE_WORLD/reset" ;; esac
+    ;;
+esac
+SH
+      chmod +x "$FM_FAKE_WORLD/reset" "$mate/bin/fm-procevent.sh" "$dir/fakebin/mv"
+      out=$(HOME="$dir/user-home" FM_ROOT_OVERRIDE="$FM_HOME" "$ROOT/bin/fm-teardown.sh" "$task" --force 2>&1) || rc=$?
+      if [[ "$scenario" = *-owned ]]; then
+        [ "$rc" = 0 ] || fail "$scenario retirement failed: $out"
+        [ ! -e "$mate" ] && [ ! -e "$state/$task.meta" ] || fail "$scenario retained the home or task record"
+        [ ! -e "$state/.backlog-handoff-$task.wake-pending" ] && [ ! -e "$state/pending-replies/$corr" ] \
+          && [ ! -e "$state/pending-replies/.delivery-confirmed-$corr" ] || fail "$scenario retained retired receiver wake state"
+        [ -f "$FM_FAKE_WORLD/swept" ] && [ ! -e "$FM_FAKE_WORLD/rearmed" ] || fail "$scenario did not commit process-event retirement"
+      else
+        [ "$rc" != 0 ] && [ -f "$FM_FAKE_WORLD/reset-ran" ] || fail "$scenario did not reach the late refusal: $out"
+        if [ "$scenario" = direct-pending ]; then
+          assert_contains "$out" 'local pending-reply recovery paths changed' "$scenario refused for the wrong reason"
+        else
+          assert_contains "$out" 'foreign herdr' "$scenario refused for the wrong reason"
+        fi
+        [ -d "$mate" ] && [ -f "$owner_state/mine.meta" ] && [ -f "$state/$task.meta" ] || fail "$scenario removed the retained home or identity"
+        cmp -s "$mate/state/procevent/wait.source" "$FM_FAKE_WORLD/expected.source" || fail "$scenario lost the process-event registration"
+        [ -f "$mate/state/procevent/wait.runner" ] || fail "$scenario left its wait retired"
+        if [[ "$scenario" = *-sweep || "$scenario" = direct-stage ]]; then
+          [ -f "$FM_FAKE_WORLD/rearmed" ] || fail "$scenario did not reconcile restored process events"
+        fi
+        [ "$(cat "$state/.backlog-handoff-$task.wake-pending")" = "confirmed:$corr" ] || fail "$scenario stranded the receiver wake marker"
+        cmp -s "$state/pending-replies/$corr" "$FM_FAKE_WORLD/expected.reply" || fail "$scenario stranded the receiver reply expectation"
+        [ "$(cat "$state/pending-replies/.delivery-confirmed-$corr")" = confirmed=1 ] || fail "$scenario stranded the delivery confirmation"
+        [ ! -e "$state/.backlog-handoff-$task.wake-retiring" ] || fail "$scenario left receiver wake retirement staged"
+        cmp -s "$FM_FAKE_WORLD/inputs" "$FM_FAKE_WORLD/inputs-at-reset" || fail "$scenario modified the replacement pane"
+      fi
+    ) || fail "$scenario retirement rollback regression"
+  done
+  pass 'direct and recursive home refusals restore notifications while successful retirement commits them'
+}
+
 test_projection_recovery_ignores_only_bound_foreign_panes() {
   (
     local dir="$TMP_ROOT/projection" journal token label rc
@@ -982,6 +1097,7 @@ test_passive_probes_do_not_start_the_server
 test_submit_boundaries
 test_identity_requires_boot_and_ticks
 test_teardown_preserves_foreign_processes
+test_secondmate_retirement_rollbacks
 test_projection_recovery_ignores_only_bound_foreign_panes
 test_ordinary_teardown_and_projected_restart
 test_adopted_relaunch_keeps_its_previous_binding
