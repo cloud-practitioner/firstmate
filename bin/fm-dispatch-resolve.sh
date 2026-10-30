@@ -443,8 +443,8 @@ command -v curl >/dev/null 2>&1 || emit_error "curl not installed"
   # kept only when both token counts are numeric.
   if [ "$DISPATCH_PROVIDER" = openai ]; then
     jq -e '
-      ([.answers[] | select(type == "object" and .name == "rule")]) as $rule |
       (.answers | type) == "array" and
+      ([.answers[] | select(type == "object" and .name == "rule")]) as $rule |
       ($rule | length) == 1 and $rule[0].type == "choice" and
       ($rule[0].probabilities | type) == "array" and
       all($rule[0].probabilities[]; type == "object" and (.value | type) == "string") and
