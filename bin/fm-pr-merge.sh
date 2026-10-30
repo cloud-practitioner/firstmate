@@ -2379,12 +2379,14 @@ case "$PROVIDER" in
         exit 1
         ;;
     esac
-    persist_accepted_merge_authority || exit 1
+    bitbucket_authority_rc=0
+    persist_accepted_merge_authority || bitbucket_authority_rc=$?
     # Attended merges release both locks before bounded read-back and may leave
     # an accepted request completing with the poll armed. Away merges retain
     # both locks through same-head confirmation; EXIT cleanup releases them
     # only after recording a verified landing or returning a non-success.
     if [ "$FM_PR_AWAY_POSTURE" != true ]; then
+      [ "$bitbucket_authority_rc" -eq 0 ] || exit "$bitbucket_authority_rc"
       fm_afk_contract_lock_release || true
       fm_lock_release "$MERGE_CONTROL_LOCK" || true
       MERGE_CONTROL_LOCK=
@@ -2410,6 +2412,7 @@ case "$PROVIDER" in
         "$URL" "${FM_PR_BITBUCKET_HEAD_REPORTED:-unknown}" "$FM_PR_MERGE_HEAD" >&2
       exit 1
     fi
+    [ "$bitbucket_authority_rc" -eq 0 ] || exit "$bitbucket_authority_rc"
     printf 'verified: %s is merged at the verified head %s\n' "$URL" "$FM_PR_MERGE_HEAD"
     ;;
   *)

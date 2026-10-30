@@ -513,13 +513,29 @@ test_merge_under_away_authority_is_synchronous_and_gated() {
 # read. The first read remains OPEN; a landing, when requested, appears only
 # on the final bounded attempt, so releasing authority between reads is caught.
 test_away_async_merge_holds_authority_until_read_back_ends() {
-  local case_dir status outcome rc
+  local case_dir status outcome scenario rc
   for status in 202 555; do
-    for outcome in landed unconfirmed; do
-      case_dir=$(make_case "merge-away-async-$status-$outcome")
+    for scenario in landed unconfirmed landed-authority-failed unconfirmed-authority-failed; do
+      outcome=${scenario%-authority-failed}
+      case_dir=$(make_case "merge-away-async-$status-$scenario")
       FM_HOME="$case_dir/home" FM_STATE_OVERRIDE="$case_dir/state" \
         "$ROOT/bin/fm-afk-contract.sh" enter --words 'merge task-x1 when green' >/dev/null \
         || fail "away-async: could not write the away record"
+      if [ "$outcome" != "$scenario" ]; then
+        {
+          printf '#!/usr/bin/env bash\n'
+          printf 'case_dir=%q\nreal_mktemp=%q\n' "$case_dir" "$(command -v mktemp)"
+          cat <<'SH'
+if [ "${1:-}" = "$case_dir/state/.fm-merge-authority.XXXXXX" ]; then
+  : > "$case_dir/bb/authority-failed"
+  printf 'simulated authority persistence failure\n' >&2
+  exit 1
+fi
+exec "$real_mktemp" "$@"
+SH
+        } > "$case_dir/fakebin/mktemp"
+        chmod +x "$case_dir/fakebin/mktemp"
+      fi
       printf '%s\n' "$status" > "$case_dir/bb/merge.code"
       mv "$case_dir/bb/pr-post.json" "$case_dir/bb/pr-ready.json"
       [ "$outcome" != landed ] || printf '2\n' > "$case_dir/bb/pr-land.at"
@@ -557,12 +573,20 @@ SH
       rc=0
       FM_PR_BITBUCKET_CONFIRM_ATTEMPTS=2 run_merge "$case_dir" "$BB_URL" || rc=$?
       assert_equals 2 "$(cat "$case_dir/bb/post-reads")" \
-        "away-async-$status-$outcome: read-back did not reach its bounded final attempt"
+        "away-async-$status-$scenario: read-back did not reach its bounded final attempt"
       assert_equals $'1 1\n1 1' "$(cat "$case_dir/bb/read-locks.log")" \
-        "away-async-$status-$outcome: archive or task control acquired authority during read-back"
+        "away-async-$status-$scenario: archive or task control acquired authority during read-back"
       assert_grep 'locked by live process' "$case_dir/bb/archive-2.log" \
-        "away-async-$status-$outcome: the final archive probe did not encounter a live holder"
-      if [ "$outcome" = landed ]; then
+        "away-async-$status-$scenario: the final archive probe did not encounter a live holder"
+      if [ "$outcome" != "$scenario" ]; then
+        assert_present "$case_dir/bb/authority-failed" \
+          "away-async-$status-$scenario: the persistence fault was not reached"
+        assert_grep 'merge authority could not be persisted' "$case_dir/stderr" \
+          "away-async-$status-$scenario: the persistence failure was not reported"
+        assert_absent "$case_dir/state/task-x1.merge-authority" \
+          "away-async-$status-$scenario: authority was persisted despite the fault"
+      fi
+      if [ "$scenario" = landed ]; then
         expect_code 0 "$rc" "away-async-$status: a verified landing within the bound must succeed"
         assert_grep "is merged at the verified head $BB_HEAD" "$case_dir/stdout" \
           "away-async-$status: success did not confirm the verified head"
@@ -571,25 +595,27 @@ SH
         assert_grep "merge landed: task-x1 $BB_URL away" "$case_dir/state/.wake-queue" \
           "away-async-$status: the outcome did not retain away authority"
       else
-        expect_code 1 "$rc" "away-async-$status: an unconfirmed landing must not succeed"
-        assert_grep 'landing unconfirmed' "$case_dir/stderr" \
-          "away-async-$status: the non-success did not name the unconfirmed landing"
+        expect_code 1 "$rc" "away-async-$status-$scenario: the merge must not succeed"
+        if [ "$outcome" = unconfirmed ]; then
+          assert_grep 'landing unconfirmed' "$case_dir/stderr" \
+            "away-async-$status-$scenario: the non-success did not name the unconfirmed landing"
+        fi
         assert_absent "$case_dir/state/task-x1.pr-poll-merge-notified" \
-          "away-async-$status: an unconfirmed landing was recorded"
+          "away-async-$status-$scenario: a landed outcome was recorded"
         if [ -f "$case_dir/state/.wake-queue" ]; then
           assert_no_grep 'merge landed:' "$case_dir/state/.wake-queue" \
-            "away-async-$status: an unconfirmed landing emitted a landed outcome"
+            "away-async-$status-$scenario: a landed outcome was emitted"
         fi
         assert_present "$case_dir/state/task-x1.check.sh" \
-          "away-async-$status: the merge poll was not left armed"
+          "away-async-$status-$scenario: the merge poll was not left armed"
       fi
       bb_env "$case_dir" "$ROOT/bin/fm-afk-contract.sh" archive >/dev/null \
-        || fail "away-async-$status-$outcome: authority stayed locked after read-back ended"
+        || fail "away-async-$status-$scenario: authority stayed locked after read-back ended"
       # shellcheck disable=SC2016 # The child shell expands its positional arguments.
       bb_env "$case_dir" bash -c \
         '. "$1"; fm_lock_try_acquire "$2" || exit 1; fm_lock_release "$2"' \
         _ "$ROOT/bin/fm-wake-lib.sh" "$case_dir/state/.control-task-x1.lock" \
-        || fail "away-async-$status-$outcome: task control stayed locked after read-back ended"
+        || fail "away-async-$status-$scenario: task control stayed locked after read-back ended"
     done
   done
   pass "away Bitbucket 202/555 merges hold both locks through bounded read-back and succeed only on a verified landing"

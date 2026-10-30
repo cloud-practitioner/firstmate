@@ -3091,7 +3091,7 @@ test_answer_before_cleanup_replay_notes_a_retained_gerrit_change() {
 
 test_answer_before_cleanup_replay_notes_a_retained_bitbucket_pr() {
   answer_before_cleanup_replay_notes_a_retained_pr bitbucket Bitbucket \
-    https://bitbucket.org/ws/repo/pull-requests/7 PR
+    https://bitbucket.org/ws/repo/pull-requests/7 "Bitbucket Cloud pull request"
 }
 
 test_unusable_pending_close_record_names_its_reason() {
