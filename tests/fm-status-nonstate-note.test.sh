@@ -185,7 +185,7 @@ SH
     inbox=$("$ROOT/bin/fm-inbox.sh" status) || fail "inbox status failed"
     assert_not_contains "$inbox" 'exclusion not in effect' "inbox latest event must not be a warning"
     assert_contains "$inbox" "${declaration:-(no events yet)}" "inbox must preserve its prior event or absence"
-    if [ "$expected" = done ]; then
+    if [ "$expected" = "done" ]; then
       assert_contains "$crew" 'state: done' "idle scout must remain done"
       out=$(FM_SUPERVISION_ACTOR=main "$ROOT/bin/fm-wake-drain.sh" 2> "$home/drain.err") \
         || fail "wake drain failed"
