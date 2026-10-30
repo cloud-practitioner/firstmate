@@ -304,6 +304,7 @@ EOF
       "$HERDR_LAB_HELPER" teardown "$HERDR_LAB_SESSION" >/dev/null 2>&1 || true
     LAB_READY=0
   fi
+  find "$TMP_ROOT" -type d -exec chmod u+rwx {} + 2>/dev/null || true
   rm -rf "$TMP_ROOT"
 }
 trap cleanup_all EXIT
@@ -432,30 +433,6 @@ finish_concurrent_spawn() {  # <id> <status> <stdout> <stderr>
     || fail "projected spawn $id retry failed after task-set publication completed: $(cat "$err")"
 }
 
-# A bounded session-lock wait may refuse a contender rather than run unlocked.
-# Check the resulting state for either outcome, not how fast the other home ran.
-assert_concurrent_recovery_result() {  # <id> <status> <stderr> <meta> <old-workspace> <old-pane> <old-worktree>
-  local id=$1 status=$2 err=$3 meta=$4 old_workspace=$5 old_pane=$6 old_worktree=$7 pane worktree
-  pane=$(grep '^herdr_pane_id=' "$meta" | cut -d= -f2-)
-  worktree=$(grep '^worktree=' "$meta" | cut -d= -f2-)
-  [ "$(grep '^herdr_workspace_id=' "$meta" | cut -d= -f2-)" = "$old_workspace" ] \
-    || fail "concurrent recovery $id changed its owning workspace"
-  if [ "$status" -eq 0 ]; then
-    [ -n "$pane" ] && [ "$pane" != "$old_pane" ] \
-      || fail "concurrent recovery $id reused its old husk pane"
-    if lab pane get "$old_pane" >/dev/null 2>&1; then
-      fail "concurrent recovery $id left its old husk pane behind"
-    fi
-  else
-    grep -F "herdr presentation recovery could not acquire its session lock" "$err" >/dev/null 2>&1 \
-      || fail "concurrent recovery $id failed unexpectedly: $(cat "$err")"
-    [ "$pane" = "$old_pane" ] && [ "$worktree" = "$old_worktree" ] \
-      || fail "refused concurrent recovery $id changed its endpoint or worktree"
-    lab pane get "$old_pane" >/dev/null 2>&1 \
-      || fail "refused concurrent recovery $id removed its old husk pane"
-  fi
-}
-
 finish_concurrent_expected_abort() {  # <id> <status> <stdout> <stderr>
   local id=$1 status=$2 out=$3 err=$4
   [ "$status" -ne 0 ] || fail "post-create abort fixture $id unexpectedly succeeded"
@@ -464,6 +441,15 @@ finish_concurrent_expected_abort() {  # <id> <status> <stdout> <stderr>
       fail "post-create abort fixture $id unexpectedly succeeded after task-set publication completed"
     fi
   fi
+}
+
+finish_concurrent_recovery() {  # <id> <home> <status> <stdout> <stderr>
+  local id=$1 home=$2 status=$3 out=$4 err=$5
+  [ "$status" -ne 0 ] || return 0
+  grep -F "presentation recovery could not acquire its session lock" "$err" >/dev/null 2>&1 \
+    || fail "concurrent recovery $id failed unexpectedly: $(cat "$err")"
+  spawn_task "$id" "$home" "$RECOVERY_PROJECT_DIR" > "$out" 2> "$err" \
+    || fail "concurrent recovery $id retry failed after session-lock contention cleared: $(cat "$err")"
 }
 
 spawn_secondmate_task() {
@@ -1352,8 +1338,8 @@ teardown_task "$CROSS_RESTART_ID" "$SECOND_HOME_A" > "$TMP_ROOT/cross-restart-te
 "$REAL_TREEHOUSE" return --force "$CROSS_NEW_WT" >/dev/null 2>&1 || true
 pass "real Herdr lab: secondmate restart binding and reclaim stay isolated to the exact child home and parent"
 
-# Two legacy homes recovering concurrently serialize on the named session
-# lock. A contender whose bounded wait expires must preserve its exact husk.
+# Two legacy homes recovering concurrently serialize on the named session lock
+# and each replace only their own exact husk.
 PRIMARY_WAVE_ID=resume-wave-primary
 BRAVO_WAVE_ID=resume-wave-bravo
 mkdir -p "$HOME_DIR/data/$PRIMARY_WAVE_ID" "$SECOND_HOME_B/data/$BRAVO_WAVE_ID"
@@ -1382,17 +1368,26 @@ spawn_task "$PRIMARY_WAVE_ID" "$HOME_DIR" "$RECOVERY_PROJECT_DIR" > "$TMP_ROOT/p
 PRIMARY_WAVE_PID=$!
 spawn_task "$BRAVO_WAVE_ID" "$SECOND_HOME_B" "$RECOVERY_PROJECT_DIR" > "$TMP_ROOT/bravo-wave-resume.out" 2> "$TMP_ROOT/bravo-wave-resume.err" &
 BRAVO_WAVE_PID=$!
-PRIMARY_WAVE_STATUS=0; BRAVO_WAVE_STATUS=0
-wait "$PRIMARY_WAVE_PID" || PRIMARY_WAVE_STATUS=$?
-wait "$BRAVO_WAVE_PID" || BRAVO_WAVE_STATUS=$?
-[ "$PRIMARY_WAVE_STATUS" -eq 0 ] || [ "$BRAVO_WAVE_STATUS" -eq 0 ] \
-  || fail "both concurrent recoveries failed without a successful lock owner"
-assert_concurrent_recovery_result "$PRIMARY_WAVE_ID" "$PRIMARY_WAVE_STATUS" "$TMP_ROOT/primary-wave-resume.err" \
-  "$PRIMARY_WAVE_META" "$PRIMARY_WAVE_WSID" "$PRIMARY_WAVE_OLD_PANE" "$PRIMARY_WAVE_OLD_WT"
-assert_concurrent_recovery_result "$BRAVO_WAVE_ID" "$BRAVO_WAVE_STATUS" "$TMP_ROOT/bravo-wave-resume.err" \
-  "$BRAVO_WAVE_META" "$BRAVO_WAVE_WSID" "$BRAVO_WAVE_OLD_PANE" "$BRAVO_WAVE_OLD_WT"
+if wait "$PRIMARY_WAVE_PID"; then PRIMARY_WAVE_STATUS=0; else PRIMARY_WAVE_STATUS=$?; fi
+if wait "$BRAVO_WAVE_PID"; then BRAVO_WAVE_STATUS=0; else BRAVO_WAVE_STATUS=$?; fi
+finish_concurrent_recovery "$PRIMARY_WAVE_ID" "$HOME_DIR" "$PRIMARY_WAVE_STATUS" \
+  "$TMP_ROOT/primary-wave-resume.out" "$TMP_ROOT/primary-wave-resume.err"
+finish_concurrent_recovery "$BRAVO_WAVE_ID" "$SECOND_HOME_B" "$BRAVO_WAVE_STATUS" \
+  "$TMP_ROOT/bravo-wave-resume.out" "$TMP_ROOT/bravo-wave-resume.err"
 PRIMARY_WAVE_NEW_WT=$(remember_meta_worktree "$PRIMARY_WAVE_META")
 BRAVO_WAVE_NEW_WT=$(remember_meta_worktree "$BRAVO_WAVE_META")
+PRIMARY_WAVE_NEW_PANE=$(grep '^herdr_pane_id=' "$PRIMARY_WAVE_META" | cut -d= -f2-)
+BRAVO_WAVE_NEW_PANE=$(grep '^herdr_pane_id=' "$BRAVO_WAVE_META" | cut -d= -f2-)
+[ "$(grep '^herdr_workspace_id=' "$PRIMARY_WAVE_META" | cut -d= -f2-)" = "$PRIMARY_WAVE_WSID" ] \
+  && [ "$(grep '^herdr_workspace_id=' "$BRAVO_WAVE_META" | cut -d= -f2-)" = "$BRAVO_WAVE_WSID" ] \
+  || fail "concurrent recovery flattened one task into a different workspace"
+[ "$PRIMARY_WAVE_NEW_PANE" != "$PRIMARY_WAVE_OLD_PANE" ] \
+  && [ "$BRAVO_WAVE_NEW_PANE" != "$BRAVO_WAVE_OLD_PANE" ] \
+  || fail "concurrent recovery reused an old husk pane"
+if lab pane get "$PRIMARY_WAVE_OLD_PANE" >/dev/null 2>&1 \
+   || lab pane get "$BRAVO_WAVE_OLD_PANE" >/dev/null 2>&1; then
+  fail "concurrent recovery left an old husk pane behind"
+fi
 assert_focus_is "$CONCURRENT_RECOVERY_FOCUS" "concurrent cross-home recovery"
 teardown_task "$PRIMARY_WAVE_ID" "$HOME_DIR" > "$TMP_ROOT/primary-wave-teardown.out" 2> "$TMP_ROOT/primary-wave-teardown.err" \
   || fail "concurrent primary recovery teardown failed: $(cat "$TMP_ROOT/primary-wave-teardown.err")"
@@ -1402,7 +1397,7 @@ teardown_task "$BRAVO_WAVE_ID" "$SECOND_HOME_B" > "$TMP_ROOT/bravo-wave-teardown
 "$REAL_TREEHOUSE" return --force "$BRAVO_WAVE_OLD_WT" >/dev/null 2>&1 || true
 "$REAL_TREEHOUSE" return --force "$PRIMARY_WAVE_NEW_WT" >/dev/null 2>&1 || true
 "$REAL_TREEHOUSE" return --force "$BRAVO_WAVE_NEW_WT" >/dev/null 2>&1 || true
-pass "real Herdr lab: concurrent cross-home recoveries replace only locked husks and preserve refused endpoints with no focus drift"
+pass "real Herdr lab: concurrent cross-home recoveries replace exact husks under one session lock with no focus drift"
 
 # Exact-resume presentation-lock contention refuses by default. Hold the
 # shared session lock from an unrelated process past the bounded-retry window
