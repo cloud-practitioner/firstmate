@@ -198,9 +198,11 @@
 # Bitbucket may accept a merge and finish it asynchronously (202, or its 555
 # timeout); either way the landed state is read back a bounded number of times.
 # While away, both the away-record authority lock and task control lock remain
-# held through read-back, and success requires a landing at the verified head;
-# an unconfirmed landing exits non-zero and records no landed outcome. Attended
-# merges release both locks before read-back and report an unconfirmed landing
+# held through read-back even if accepted-merge authority cannot be persisted;
+# success requires both persisted authority and a landing at the verified head.
+# An unconfirmed landing or persistence failure exits non-zero and records no
+# landed outcome. Attended merges persist authority and release both locks
+# before read-back and report an unconfirmed landing
 # without failing the run, leaving the poll armed, as on GitLab. A merge request
 # that got no HTTP response at all may still have landed, so the pull request is
 # read back once and its observed state reported, and the run fails with the poll

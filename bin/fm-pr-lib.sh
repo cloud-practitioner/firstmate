@@ -135,7 +135,7 @@ fm_task_id_creation_valid() {
 # identity rather than a constant. It is accepted only as a lowercase DNS name
 # with no userinfo, port, or trailing dot, which keeps one canonical spelling per
 # change. github.com and bitbucket.org are refused here even though their shape
-# is otherwise valid: each is its own forge's only host and never another
+# is otherwise valid: each is reserved for its own forge and never another
 # forge's instance, so a URL like https://github.com/o/r/-/merge_requests/1 (a
 # typo'd or spoofed GitHub URL) would otherwise be armed as a watch that can
 # never succeed.
