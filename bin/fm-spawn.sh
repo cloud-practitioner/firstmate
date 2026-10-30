@@ -2889,15 +2889,9 @@ launch_template() {
   # outer wrap below, like every other non-cursor harness. rovo has no
   # turn-end hook (its eventHooks fire at tool granularity only, never
   # turn-end), so no launch placeholder for one exists.
-  # __ROVOCONFIGOVERRIDE__ (not __EFFORTFLAG__) carries rovo's single
-  # --config-override flag: it always grants allowedExternalPaths for this
-  # task's home-side brief dir, steering inbox, and status file - the file
-  # tool confinement that otherwise blocks the standard
-  # instructions/steering/status/report loop (rovo's bash tool has no such
-  # grant and stays confined to the worktree; the worker's own file tools do
-  # respect the grant, confirmed live) - merged with agent.efficiencyLevel
-  # when a supported effort is requested, since a second --config-override
-  # would silently discard the first (confirmed live).
+  # __ROVOCONFIGOVERRIDE__ (not __EFFORTFLAG__) carries the merged launch
+  # grant and effort override; rovo_config_override_flag owns the allowed
+  # paths, file-tool-only scope, and single-value flag constraint.
   rovo) printf '%s' 'env -u CLAUDECODE -u PI_CODING_AGENT -u GROK_AGENT -u FM_PI_HARNESS __ROVOBIN__ run --yolo __MODELFLAG____ROVOCONFIGOVERRIDE__' ;;
   *) return 1 ;;
   esac

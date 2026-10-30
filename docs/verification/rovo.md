@@ -177,9 +177,9 @@ $ ls "$LAB/outside/inbox/handled"
 001.msg
 ```
 
-`fm-spawn.sh`'s `rovo_config_override_flag` builds one merged JSON object per rovo launch (see "Effort and model" above for why it must be one), always granting `toolPermissions.allowedExternalPaths` for exactly four real (symlink-resolved) paths scoped to this task: the brief directory (`data/<id>/`, covering `brief.md`/`launch-brief.md`/`report.md`), the steering inbox directory (`state/<id>.inbox/`, covering every steer and its `handled/` acknowledgement), the status file itself (`state/<id>.status`), and the task temp root exported as `FM_TASK_TMP`.
+[`rovo_config_override_flag` in `bin/fm-spawn.sh`](../../bin/fm-spawn.sh) owns the exact production grant; the adapter's [File access operating fact](../../.agents/skills/harness-adapters/references/harness/rovo.md#operating-facts) owns worker guidance.
 `tests/fm-rovo-signals-live-e2e.test.sh` verifies the external brief/status access mechanism end to end: a real rovo process launched with an `allowedExternalPaths` grant reads an external brief and appends to an external status file (preserving its prior content), and the same brief and status file, launched WITHOUT the grant, are left untouched while the transcript shows rovo's own refusal - proving the fix closes the gap rather than merely adding an untested flag.
-`tests/fm-rovo-harness.test.sh` pins the portable half against the fake-binary suite: executing the emitted ship and scout launches verifies `FM_TASK_TMP` and parses the merged override to assert exactly these four grants, including when the requested effort is unsupported and omitted.
+`tests/fm-rovo-harness.test.sh` pins the portable half against the fake-binary suite: executing the emitted ship and scout launches verifies `FM_TASK_TMP` and parses the merged override to assert exactly the four production grants in one `--config-override`, including when the requested effort is unsupported and omitted.
 
 ## Backend liveness: tmux verified live, herdr placement verified live with a herdr-side agent-detection gap
 
