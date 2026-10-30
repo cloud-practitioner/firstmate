@@ -1,62 +1,32 @@
 [
   {
-    "name": "Successful reassociation and new answer verify only for the new origin",
+    "name": "Successful origin move and genuine B answer",
     "result": "pass",
-    "live": true
+    "live": true,
+    "seconds": 24.3
   },
   {
-    "name": "active: interrupt before backend hold retains A and refuses B",
+    "name": "Interrupted active, expired, and released origin moves",
     "result": "pass",
-    "live": true
+    "live": true,
+    "seconds": 125.88
   },
   {
-    "name": "active: refuse before backend hold retains A and refuses B",
+    "name": "Backend and rollback failure, old-answer replay and work completion",
     "result": "pass",
-    "live": true
+    "live": true,
+    "seconds": 110.31
   },
   {
-    "name": "expired: interrupt before backend hold retains A and refuses B",
+    "name": "Secondmate delivery survives origin-write failure and retry",
     "result": "pass",
-    "live": true
+    "live": true,
+    "seconds": 37.25
   },
   {
-    "name": "expired: refuse before backend hold retains A and refuses B",
-    "result": "pass",
-    "live": true
-  },
-  {
-    "name": "released-replay: interrupt before backend hold retains A and refuses B",
-    "result": "pass",
-    "live": true
-  },
-  {
-    "name": "released-replay: refuse before backend hold retains A and refuses B",
-    "result": "pass",
-    "live": true
-  },
-  {
-    "name": "released-done: interrupt before backend hold retains A and refuses B",
-    "result": "pass",
-    "live": true
-  },
-  {
-    "name": "released-done: refuse before backend hold retains A and refuses B",
-    "result": "pass",
-    "live": true
-  },
-  {
-    "name": "Secondmate new hold: origin-write failure still delivers one parent decision and retry deduplicates",
-    "result": "pass",
-    "live": true
-  },
-  {
-    "name": "Secondmate active hold: origin-write failure still delivers one parent decision and retry deduplicates",
-    "result": "pass",
-    "live": true
-  },
-  {
-    "name": "Secondmate released hold: origin-write failure still delivers one parent decision and retry deduplicates",
-    "result": "pass",
-    "live": true
+    "name": "Missing origin lookup cannot alter existing call",
+    "result": "fail",
+    "live": true,
+    "error": "CLI refused the operation"
   }
 ]

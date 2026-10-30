@@ -1,0 +1,119 @@
+
+===== Invalid origin slug cannot alter existing call =====
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-es39hdhp/origin-boundary
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-es39hdhp/origin-boundary
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
+ok: added origin-a (scout, repo sample) -> Queued
+task:
+  id: origin-a
+  title: Review origin-a
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-a` to move it to in flight
+  - Run `tasks-axi block origin-a --by <other>` to record a dependency
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
+ok: added origin-b (scout, repo sample) -> Queued
+task:
+  id: origin-b
+  title: Review origin-b
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-b` to move it to in flight
+  - Run `tasks-axi block origin-b --by <other>` to record a dependency
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-es39hdhp/origin-boundary/answer-a.txt
+released: call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for invalid origin --origin ../outside-home
+
+stderr: fm-captain-hold: origin-id must be a non-empty privacy-safe slug: ../outside-home
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+exit=0
+OBSERVED: invalid origin slug leaves released task completely unchanged
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+SCENARIO PASS: Invalid origin slug cannot alter existing call
+CLEANUP: disposable live homes removed from worktree

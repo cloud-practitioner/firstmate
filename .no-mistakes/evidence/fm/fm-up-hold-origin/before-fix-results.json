@@ -1,0 +1,8 @@
+[
+  {
+    "name": "Before-fix CLI wrongly certifies B using A answer",
+    "result": "pass",
+    "live": true,
+    "seconds": 16.56
+  }
+]

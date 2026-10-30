@@ -1,11 +1,9 @@
 
-=== SCENARIO: Successful reassociation and new answer verify only for the new origin ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab._onnvf9t
+===== Successful origin move and genuine B answer =====
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/success
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/success
 exit=0
-/tmp/fm-lab._onnvf9t
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
-exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
 ok: added origin-a (scout, repo sample) -> Queued
 task:
   id: origin-a
@@ -20,7 +18,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -28,9 +26,8 @@ task:
 help[2]:
   - Run `tasks-axi start origin-a` to move it to in flight
   - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
 ok: added origin-b (scout, repo sample) -> Queued
 task:
   id: origin-b
@@ -45,7 +42,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -53,85 +50,112 @@ task:
 help[2]:
   - Run `tasks-axi start origin-b` to move it to in flight
   - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
 exit=0
-complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=0
-verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab._onnvf9t/answer-a.txt
-exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/success/answer-a.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 exit=0
-call
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
-exit=0
+$ [real CLI paused before hold] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+$ /home/node/.npm-global/bin/tasks-axi show call --full
 task:
   id: call
-  title: Decision call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-30T02:25:22Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+exit=0
+OBSERVED: before backend hold the task still belongs to A
+OBSERVED: before backend hold released A is not held
+call
+stderr: 
+exit=0
+OBSERVED: move completes successfully
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
   state: queued
   blocked: no
   blocked_by: none
   held: yes
-  hold_reason: "Choose for B"
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGZvciBC"
   hold_kind: captain
   hold_until: "-"
   kind: captain
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
-  body: "Captain hold set: 2026-10-07T14:02:31Z\nCaptain hold origin: origin-b\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\n\nOrigin: origin-a"
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
+  body: "Captain hold set: 2026-10-30T02:25:22Z\nCaptain hold origin: origin-b\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\n\nOrigin: origin-a"
 exit=0
+OBSERVED: successful move has a live hold and B association
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 verified: origin-b captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab._onnvf9t/answer-b.txt
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/success/answer-b.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 verified: origin-b captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: active: interrupt before backend hold retains A and refuses B ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.zjead_ho
 exit=0
-/tmp/fm-lab.zjead_ho
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: c9c0e03050b4c50b77e647278af14561eb56a3b5fba8fa0616e6987bc81a1898\nResolution mode: released\n\nCaptain decision:\nShip it for B.\n\nCaptain hold origin: origin-b\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\n\nOrigin: origin-a"
 exit=0
+OBSERVED: B answer is persisted and work released
+SCENARIO PASS: Successful origin move and genuine B answer
+
+===== Interrupted active, expired, and released origin moves =====
+
+CASE: interrupted / active
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-active
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-active
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
 ok: added origin-a (scout, repo sample) -> Queued
 task:
   id: origin-a
@@ -146,7 +170,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -154,9 +178,8 @@ task:
 help[2]:
   - Run `tasks-axi start origin-a` to move it to in flight
   - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
 ok: added origin-b (scout, repo sample) -> Queued
 task:
   id: origin-b
@@ -171,7 +194,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -179,89 +202,83 @@ task:
 help[2]:
   - Run `tasks-axi start origin-b` to move it to in flight
   - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.zjead_ho/answer-a.txt
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-active/answer-a.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose again for A --origin origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose again for A --origin origin-a
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
+exit=0
+$ [real CLI paused before hold] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+FAULT: SIGTERM to actual CLI while stopped before backend hold
 
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+stderr: 
 exit=-15
-FAULT: TERM before real backend hold; stamped body retains previous origin
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
-exit=0
+OBSERVED: failed move returns nonzero
+$ /home/node/.npm-global/bin/tasks-axi show call --full
 task:
   id: call
-  title: Decision call
+  title: Choose work
   state: queued
   blocked: no
   blocked_by: none
   held: yes
-  hold_reason: "Choose again for A"
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGFnYWluIGZvciBB"
   hold_kind: captain
   hold_until: "-"
   kind: captain
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
-  body: "Captain hold set: 2026-10-07T14:02:41Z\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\n\nOrigin: origin-a"
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
+  body: "Captain hold set: 2026-10-30T02:25:41Z\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\n\nOrigin: origin-a"
 exit=0
+OBSERVED: failed move retains only the original A association
+OBSERVED: old answer survives the failed move
+OBSERVED: A active hold survives
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: refused completion wrote no B attestation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 verified: origin-b captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: active: refuse before backend hold retains A and refuses B ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.w5tkriou
 exit=0
-/tmp/fm-lab.w5tkriou
 
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
+CASE: interrupted / expired
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-expired
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-expired
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
 ok: added origin-a (scout, repo sample) -> Queued
 task:
   id: origin-a
@@ -276,7 +293,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -284,9 +301,8 @@ task:
 help[2]:
   - Run `tasks-axi start origin-a` to move it to in flight
   - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
 ok: added origin-b (scout, repo sample) -> Queued
 task:
   id: origin-b
@@ -301,7 +317,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -309,221 +325,84 @@ task:
 help[2]:
   - Run `tasks-axi start origin-b` to move it to in flight
   - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.w5tkriou/answer-a.txt
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-expired/answer-a.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose again for A --origin origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose again for A --origin origin-a --until 2000-01-01
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
-exit=1
-FAULT: remove write permission from disposable backlog and data dir before backend hold
-fm-captain-hold: could not restore the body of call after an incomplete hold
-fm-captain-hold: could not hold task call for the captain
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
 exit=0
-task:
-  id: call
-  title: Decision call
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: yes
-  hold_reason: "Choose again for A"
-  hold_kind: captain
-  hold_until: "-"
-  kind: captain
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: "Captain hold set: 2026-10-07T14:02:57Z\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\n\nOrigin: origin-a"
+$ [real CLI paused before hold] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+FAULT: SIGTERM to actual CLI while stopped before backend hold
 
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=0
-complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=0
-verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
-exit=0
-call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=0
-complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=0
-verified: origin-b captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: expired: interrupt before backend hold retains A and refuses B ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.iqo7kxad
-exit=0
-/tmp/fm-lab.iqo7kxad
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
-exit=0
-ok: added origin-a (scout, repo sample) -> Queued
-task:
-  id: origin-a
-  title: Review origin-a
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-a` to move it to in flight
-  - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
-exit=0
-ok: added origin-b (scout, repo sample) -> Queued
-task:
-  id: origin-b
-  title: Review origin-b
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-b` to move it to in flight
-  - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
-exit=0
-call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.iqo7kxad/answer-a.txt
-exit=0
-released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose again for A --origin origin-a --until 2000-01-01
-exit=0
-call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=0
-complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=0
-verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+stderr: 
 exit=-15
-FAULT: TERM before real backend hold; stamped body retains previous origin
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
-exit=0
+OBSERVED: failed move returns nonzero
+$ /home/node/.npm-global/bin/tasks-axi show call --full
 task:
   id: call
-  title: Decision call
+  title: Choose work
   state: queued
   blocked: no
   blocked_by: none
   held: no
-  hold_reason: "Choose again for A"
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGFnYWluIGZvciBB"
   hold_kind: captain
   hold_until: 2000-01-01
   kind: captain
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
-  body: "Captain hold set: 2026-10-07T14:03:17Z\n\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\n\nOrigin: origin-a"
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
+  body: "Captain hold set: 2026-10-30T02:26:18Z\n\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\n\nOrigin: origin-a"
 exit=0
+OBSERVED: failed move retains only the original A association
+OBSERVED: old answer survives the failed move
+OBSERVED: failed move creates no live hold
+OBSERVED: expired A retains captain annotations
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: refused completion wrote no B attestation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 verified: origin-b captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: expired: refuse before backend hold retains A and refuses B ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.a3ids3p8
 exit=0
-/tmp/fm-lab.a3ids3p8
 
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
+CASE: interrupted / released-replay
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-released-replay
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-released-replay
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
 ok: added origin-a (scout, repo sample) -> Queued
 task:
   id: origin-a
@@ -538,7 +417,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -546,9 +425,8 @@ task:
 help[2]:
   - Run `tasks-axi start origin-a` to move it to in flight
   - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
 ok: added origin-b (scout, repo sample) -> Queued
 task:
   id: origin-b
@@ -563,7 +441,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -571,91 +449,499 @@ task:
 help[2]:
   - Run `tasks-axi start origin-b` to move it to in flight
   - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.a3ids3p8/answer-a.txt
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-released-replay/answer-a.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose again for A --origin origin-a --until 2000-01-01
 exit=0
-call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
-exit=1
-FAULT: remove write permission from disposable backlog and data dir before backend hold
-fm-captain-hold: could not restore the body of call after an incomplete hold
-fm-captain-hold: could not hold task call for the captain
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
 exit=0
+$ [real CLI paused before hold] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+FAULT: SIGTERM to actual CLI while stopped before backend hold
+
+stderr: 
+exit=-15
+OBSERVED: failed move returns nonzero
+$ /home/node/.npm-global/bin/tasks-axi show call --full
 task:
   id: call
-  title: Decision call
+  title: Choose work
   state: queued
   blocked: no
   blocked_by: none
   held: no
-  hold_reason: "Choose again for A"
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-30T02:26:51Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+exit=0
+OBSERVED: failed move retains only the original A association
+OBSERVED: old answer survives the failed move
+OBSERVED: failed move creates no live hold
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: refused completion wrote no B attestation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: durability boundary refuses old answer below incomplete stamp
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-released-replay/answer-a.txt
+released: call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: replaying old answer / completing work still cannot certify B
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+complete: origin-b captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+verified: origin-b captain-call inventory
+exit=0
+
+CASE: interrupted / released-done
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-released-done
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-released-done
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
+ok: added origin-a (scout, repo sample) -> Queued
+task:
+  id: origin-a
+  title: Review origin-a
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-a` to move it to in flight
+  - Run `tasks-axi block origin-a --by <other>` to record a dependency
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
+ok: added origin-b (scout, repo sample) -> Queued
+task:
+  id: origin-b
+  title: Review origin-b
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-b` to move it to in flight
+  - Run `tasks-axi block origin-b --by <other>` to record a dependency
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/interrupted-released-done/answer-a.txt
+released: call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+$ [real CLI paused before hold] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+FAULT: SIGTERM to actual CLI while stopped before backend hold
+
+stderr: 
+exit=-15
+OBSERVED: failed move returns nonzero
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-30T02:27:26Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+exit=0
+OBSERVED: failed move retains only the original A association
+OBSERVED: old answer survives the failed move
+OBSERVED: failed move creates no live hold
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: refused completion wrote no B attestation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: durability boundary refuses old answer below incomplete stamp
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.npm-global/bin/tasks-axi done call --keep 1
+ok: done call -> Done
+help[1]:
+  - Run `tasks-axi ready` to dispatch work unblocked by this
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: replaying old answer / completing work still cannot certify B
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+SCENARIO PASS: Interrupted active, expired, and released origin moves
+
+===== Backend and rollback failure, old-answer replay and work completion =====
+
+CASE: refused / active
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-active
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-active
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
+ok: added origin-a (scout, repo sample) -> Queued
+task:
+  id: origin-a
+  title: Review origin-a
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-a` to move it to in flight
+  - Run `tasks-axi block origin-a --by <other>` to record a dependency
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
+ok: added origin-b (scout, repo sample) -> Queued
+task:
+  id: origin-b
+  title: Review origin-b
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-b` to move it to in flight
+  - Run `tasks-axi block origin-b --by <other>` to record a dependency
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-active/answer-a.txt
+released: call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose again for A --origin origin-a
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+$ [real CLI paused before hold] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+FAULT: remove write permission on isolated backlog and data directory
+
+stderr: fm-captain-hold: could not restore the body of call after an incomplete hold
+fm-captain-hold: could not hold task call for the captain
+exit=1
+FAULT: restore write permission on isolated backlog and data directory
+OBSERVED: failed move returns nonzero
+OBSERVED: real backend hold AND rollback writes failed
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: yes
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGFnYWluIGZvciBB"
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-30T02:27:47Z\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\n\nOrigin: origin-a"
+exit=0
+OBSERVED: failed move retains only the original A association
+OBSERVED: old answer survives the failed move
+OBSERVED: A active hold survives
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: refused completion wrote no B attestation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+complete: origin-b captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+verified: origin-b captain-call inventory
+exit=0
+
+CASE: refused / expired
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-expired
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-expired
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
+ok: added origin-a (scout, repo sample) -> Queued
+task:
+  id: origin-a
+  title: Review origin-a
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-a` to move it to in flight
+  - Run `tasks-axi block origin-a --by <other>` to record a dependency
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
+ok: added origin-b (scout, repo sample) -> Queued
+task:
+  id: origin-b
+  title: Review origin-b
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-b` to move it to in flight
+  - Run `tasks-axi block origin-b --by <other>` to record a dependency
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-expired/answer-a.txt
+released: call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose again for A --origin origin-a --until 2000-01-01
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+$ [real CLI paused before hold] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+FAULT: remove write permission on isolated backlog and data directory
+
+stderr: fm-captain-hold: could not restore the body of call after an incomplete hold
+fm-captain-hold: could not hold task call for the captain
+exit=1
+FAULT: restore write permission on isolated backlog and data directory
+OBSERVED: failed move returns nonzero
+OBSERVED: real backend hold AND rollback writes failed
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGFnYWluIGZvciBB"
   hold_kind: captain
   hold_until: 2000-01-01
   kind: captain
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
-  body: "Captain hold set: 2026-10-07T14:03:34Z\n\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\n\nOrigin: origin-a"
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
+  body: "Captain hold set: 2026-10-30T02:28:21Z\n\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\n\nOrigin: origin-a"
 exit=0
+OBSERVED: failed move retains only the original A association
+OBSERVED: old answer survives the failed move
+OBSERVED: failed move creates no live hold
+OBSERVED: expired A retains captain annotations
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: refused completion wrote no B attestation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 verified: origin-b captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: released-replay: interrupt before backend hold retains A and refuses B ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.tttq_jx9
 exit=0
-/tmp/fm-lab.tttq_jx9
 
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
+CASE: refused / released-replay
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-released-replay
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-released-replay
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
 ok: added origin-a (scout, repo sample) -> Queued
 task:
   id: origin-a
@@ -670,7 +956,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -678,9 +964,8 @@ task:
 help[2]:
   - Run `tasks-axi start origin-a` to move it to in flight
   - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
 ok: added origin-b (scout, repo sample) -> Queued
 task:
   id: origin-b
@@ -695,7 +980,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -703,201 +988,32 @@ task:
 help[2]:
   - Run `tasks-axi start origin-b` to move it to in flight
   - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.tttq_jx9/answer-a.txt
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-released-replay/answer-a.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
-exit=-15
-FAULT: TERM before real backend hold; stamped body retains previous origin
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
 exit=0
-task:
-  id: call
-  title: Decision call
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: captain
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: "Captain hold set: 2026-10-07T14:03:50Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+$ [real CLI paused before hold] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+FAULT: remove write permission on isolated backlog and data directory
 
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.tttq_jx9/answer-a.txt
-exit=0
-released: call
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
-exit=0
-task:
-  id: call
-  title: Decision call
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: captain
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: "Resolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=0
-complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=0
-verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
-exit=0
-call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=0
-complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=0
-verified: origin-b captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: released-replay: refuse before backend hold retains A and refuses B ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.g2_sf0qm
-exit=0
-/tmp/fm-lab.g2_sf0qm
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
-exit=0
-ok: added origin-a (scout, repo sample) -> Queued
-task:
-  id: origin-a
-  title: Review origin-a
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-a` to move it to in flight
-  - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
-exit=0
-ok: added origin-b (scout, repo sample) -> Queued
-task:
-  id: origin-b
-  title: Review origin-b
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-b` to move it to in flight
-  - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
-exit=0
-call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.g2_sf0qm/answer-a.txt
-exit=0
-released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=0
-complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=0
-verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
-exit=1
-FAULT: remove write permission from disposable backlog and data dir before backend hold
-fm-captain-hold: could not restore the body of call after an incomplete hold
+stderr: fm-captain-hold: could not restore the body of call after an incomplete hold
 fm-captain-hold: could not hold task call for the captain
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
-exit=0
+exit=1
+FAULT: restore write permission on isolated backlog and data directory
+OBSERVED: failed move returns nonzero
+OBSERVED: real backend hold AND rollback writes failed
+$ /home/node/.npm-global/bin/tasks-axi show call --full
 task:
   id: call
-  title: Decision call
+  title: Choose work
   state: queued
   blocked: no
   blocked_by: none
@@ -908,90 +1024,72 @@ task:
   kind: captain
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
-  body: "Captain hold set: 2026-10-07T14:04:10Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.g2_sf0qm/answer-a.txt
+  body: "Captain hold set: 2026-10-30T02:28:43Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
 exit=0
+OBSERVED: failed move retains only the original A association
+OBSERVED: old answer survives the failed move
+OBSERVED: failed move creates no live hold
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: refused completion wrote no B attestation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: durability boundary refuses old answer below incomplete stamp
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-released-replay/answer-a.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
 exit=0
-task:
-  id: call
-  title: Decision call
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: captain
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: "Resolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
 exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+OBSERVED: CLI refused the operation
+OBSERVED: replaying old answer / completing work still cannot certify B
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
 exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=0
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 verified: origin-b captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: released-done: interrupt before backend hold retains A and refuses B ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.s0el4uzt
 exit=0
-/tmp/fm-lab.s0el4uzt
 
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
+CASE: refused / released-done
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-released-done
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-released-done
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
 ok: added origin-a (scout, repo sample) -> Queued
 task:
   id: origin-a
@@ -1006,7 +1104,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -1014,9 +1112,8 @@ task:
 help[2]:
   - Run `tasks-axi start origin-a` to move it to in flight
   - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
 ok: added origin-b (scout, repo sample) -> Queued
 task:
   id: origin-b
@@ -1031,7 +1128,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -1039,32 +1136,32 @@ task:
 help[2]:
   - Run `tasks-axi start origin-b` to move it to in flight
   - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.s0el4uzt/answer-a.txt
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/refused-released-done/answer-a.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
-exit=-15
-FAULT: TERM before real backend hold; stamped body retains previous origin
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
 exit=0
+$ [real CLI paused before hold] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+FAULT: remove write permission on isolated backlog and data directory
+
+stderr: fm-captain-hold: could not restore the body of call after an incomplete hold
+fm-captain-hold: could not hold task call for the captain
+exit=1
+FAULT: restore write permission on isolated backlog and data directory
+OBSERVED: failed move returns nonzero
+OBSERVED: real backend hold AND rollback writes failed
+$ /home/node/.npm-global/bin/tasks-axi show call --full
 task:
   id: call
-  title: Decision call
+  title: Choose work
   state: queued
   blocked: no
   blocked_by: none
@@ -1075,80 +1172,68 @@ task:
   kind: captain
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
-  body: "Captain hold set: 2026-10-07T14:04:28Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh done call --keep 1
+  body: "Captain hold set: 2026-10-30T02:29:15Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
 exit=0
+OBSERVED: failed move retains only the original A association
+OBSERVED: old answer survives the failed move
+OBSERVED: failed move creates no live hold
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: refused completion wrote no B attestation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+OBSERVED: durability boundary refuses old answer below incomplete stamp
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+
+stderr: fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
+exit=1
+OBSERVED: CLI refused the operation
+$ /home/node/.npm-global/bin/tasks-axi done call --keep 1
 ok: done call -> Done
 help[1]:
   - Run `tasks-axi ready` to dispatch work unblocked by this
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
 exit=0
-task:
-  id: call
-  title: Decision call
-  state: done
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: captain
-  repo: sample
-  priority: "-"
-  created: "-"
-  closed: 2026-10-07
-  deps: none
-  links: none
-  body: "Captain hold set: 2026-10-07T14:04:28Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
 exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
+OBSERVED: CLI refused the operation
+OBSERVED: replaying old answer / completing work still cannot certify B
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
+stderr: fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
 exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=0
+OBSERVED: CLI refused the operation
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: released-done: refuse before backend hold retains A and refuses B ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.j5y0x6dh
 exit=0
-/tmp/fm-lab.j5y0x6dh
+SCENARIO PASS: Backend and rollback failure, old-answer replay and work completion
 
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
+===== Secondmate delivery survives origin-write failure and retry =====
+
+CASE: origin-write failure / new
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/mate-new
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/mate-new
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
 ok: added origin-a (scout, repo sample) -> Queued
 task:
   id: origin-a
@@ -1163,7 +1248,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -1171,9 +1256,8 @@ task:
 help[2]:
   - Run `tasks-axi start origin-a` to move it to in flight
   - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
 ok: added origin-b (scout, repo sample) -> Queued
 task:
   id: origin-b
@@ -1188,7 +1272,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -1196,432 +1280,247 @@ task:
 help[2]:
   - Run `tasks-axi start origin-b` to move it to in flight
   - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/parent-new
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/parent-new
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add call Choose work --kind captain --repo sample
+ok: added call (captain, repo sample) -> Queued
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start call` to move it to in flight
+  - Run `tasks-axi block call --by <other>` to record a dependency
+exit=0
+$ [real CLI paused before origin] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: yes
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGZvciBC"
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-30T02:29:31Z"
+exit=0
+OBSERVED: backend hold is live before origin publication
+OBSERVED: B not published yet
+OBSERVED: parent event exists BEFORE origin publication attempt
+PARENT CHANNEL BEFORE ORIGIN WRITE:
+needs-decision [key=captain-hold-call-1] [at=1793327373]: captain hold call: Choose for B
+
+OBSERVED: parent receives needs-decision
+FAULT: remove write permission on isolated backlog and data directory
+
+stderr: fm-captain-hold: could not record the hold origin on call
+exit=1
+FAULT: restore write permission on isolated backlog and data directory
+OBSERVED: actual origin write fails and command returns nonzero
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: yes
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGZvciBC"
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-30T02:29:31Z"
+exit=0
+OBSERVED: failed origin write leaves real hold without claiming B
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.j5y0x6dh/answer-a.txt
 exit=0
+OBSERVED: retry does not duplicate parent event
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
+complete: origin-b captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
+verified: origin-b captain-call inventory
+exit=0
+PARENT CHANNEL AFTER RETRY:
+needs-decision [key=captain-hold-call-1] [at=1793327373]: captain hold call: Choose for B
+
+
+CASE: origin-write failure / active
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/mate-active
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/mate-active
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
+ok: added origin-a (scout, repo sample) -> Queued
+task:
+  id: origin-a
+  title: Review origin-a
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-a` to move it to in flight
+  - Run `tasks-axi block origin-a --by <other>` to record a dependency
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
+ok: added origin-b (scout, repo sample) -> Queued
+task:
+  id: origin-b
+  title: Review origin-b
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-b` to move it to in flight
+  - Run `tasks-axi block origin-b --by <other>` to record a dependency
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/mate-active/answer-a.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose again for A --origin origin-a
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
 complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
 verified: origin-a captain-call inventory
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
-exit=1
-FAULT: remove write permission from disposable backlog and data dir before backend hold
-fm-captain-hold: could not restore the body of call after an incomplete hold
-fm-captain-hold: could not hold task call for the captain
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/parent-active
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/parent-active
+exit=0
+$ [real CLI paused before origin] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+$ /home/node/.npm-global/bin/tasks-axi show call --full
 task:
   id: call
-  title: Decision call
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: captain
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: "Captain hold set: 2026-10-07T14:04:43Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=1
-fm-captain-hold: captain-held task call carries a recorded answer from an earlier call, but its newer hold never completed; re-run the hold or answer it again
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh done call --keep 1
-exit=0
-ok: done call -> Done
-help[1]:
-  - Run `tasks-axi ready` to dispatch work unblocked by this
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
-exit=0
-task:
-  id: call
-  title: Decision call
-  state: done
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: captain
-  repo: sample
-  priority: "-"
-  created: "-"
-  closed: 2026-10-07
-  deps: none
-  links: none
-  body: "Captain hold set: 2026-10-07T14:04:43Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=1
-fm-captain-hold: captain-held task call was held for origin origin-a, not origin-b; hold a task for origin-b or list the right one
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-a call
-exit=0
-complete: origin-a captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-a
-exit=0
-verified: origin-a captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: Secondmate new hold: origin-write failure still delivers one parent decision and retry deduplicates ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.ozyiuo8v
-exit=0
-/tmp/fm-lab.ozyiuo8v
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
-exit=0
-ok: added origin-a (scout, repo sample) -> Queued
-task:
-  id: origin-a
-  title: Review origin-a
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-a` to move it to in flight
-  - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
-exit=0
-ok: added origin-b (scout, repo sample) -> Queued
-task:
-  id: origin-b
-  title: Review origin-b
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-b` to move it to in flight
-  - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.4d7ectfc
-exit=0
-/tmp/fm-lab.4d7ectfc
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
-exit=0
-ok: added origin-a (scout, repo sample) -> Queued
-task:
-  id: origin-a
-  title: Review origin-a
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-a` to move it to in flight
-  - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
-exit=0
-ok: added origin-b (scout, repo sample) -> Queued
-task:
-  id: origin-b
-  title: Review origin-b
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-b` to move it to in flight
-  - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for B --origin origin-b
-exit=1
-FAULT: remove write permission only at origin publication, after successful real backend hold
-fm-captain-hold: could not record the hold origin on call
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
-exit=0
-task:
-  id: call
-  title: Decision call
+  title: Choose work
   state: queued
   blocked: no
   blocked_by: none
   held: yes
-  hold_reason: "Choose for B"
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGZvciBC"
   hold_kind: captain
   hold_until: "-"
   kind: captain
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
-  body: "Captain hold set: 2026-10-07T14:04:52Z\n\nOrigin: origin-b"
-
-Persisted parent channel after failed origin write:
-needs-decision [key=captain-hold-call-1] [at=1791381894]: captain hold call: Choose for B
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+  body: "Captain hold set: 2026-10-30T02:29:42Z\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\n\nOrigin: origin-a"
 exit=0
-call
+OBSERVED: backend hold is live before origin publication
+OBSERVED: B not published yet
+OBSERVED: parent event exists BEFORE origin publication attempt
+PARENT CHANNEL BEFORE ORIGIN WRITE:
+needs-decision [key=captain-hold-call-2] [at=1793327387]: captain hold call: Choose for B
 
-Persisted parent channel after retry:
-needs-decision [key=captain-hold-call-1] [at=1791381894]: captain hold call: Choose for B
+OBSERVED: parent receives needs-decision
+FAULT: remove write permission on isolated backlog and data directory
 
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
-exit=0
-complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
-exit=0
-verified: origin-b captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: Secondmate active hold: origin-write failure still delivers one parent decision and retry deduplicates ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.ci18psf0
-exit=0
-/tmp/fm-lab.ci18psf0
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
-exit=0
-ok: added origin-a (scout, repo sample) -> Queued
-task:
-  id: origin-a
-  title: Review origin-a
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-a` to move it to in flight
-  - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
-exit=0
-ok: added origin-b (scout, repo sample) -> Queued
-task:
-  id: origin-b
-  title: Review origin-b
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-b` to move it to in flight
-  - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.pfe7elzq
-exit=0
-/tmp/fm-lab.pfe7elzq
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
-exit=0
-ok: added origin-a (scout, repo sample) -> Queued
-task:
-  id: origin-a
-  title: Review origin-a
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-a` to move it to in flight
-  - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
-exit=0
-ok: added origin-b (scout, repo sample) -> Queued
-task:
-  id: origin-b
-  title: Review origin-b
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-b` to move it to in flight
-  - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
-exit=0
-call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for B --origin origin-b
+stderr: fm-captain-hold: could not record the hold origin on call
 exit=1
-FAULT: remove write permission only at origin publication, after successful real backend hold
-fm-captain-hold: could not record the hold origin on call
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
-exit=0
+FAULT: restore write permission on isolated backlog and data directory
+OBSERVED: actual origin write fails and command returns nonzero
+$ /home/node/.npm-global/bin/tasks-axi show call --full
 task:
   id: call
-  title: Decision call
+  title: Choose work
   state: queued
   blocked: no
   blocked_by: none
   held: yes
-  hold_reason: "Choose for B"
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGZvciBC"
   hold_kind: captain
   hold_until: "-"
   kind: captain
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
-  body: "Captain hold set: 2026-10-07T14:04:59Z\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
-
-Persisted parent channel after failed origin write:
-needs-decision [key=captain-hold-call-1] [at=1791381902]: captain hold call: Choose for B
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+  body: "Captain hold set: 2026-10-30T02:29:42Z\nCaptain hold origin: origin-a\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\n\nOrigin: origin-a"
 exit=0
+OBSERVED: failed origin write leaves real hold without claiming B
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 call
-
-Persisted parent channel after retry:
-needs-decision [key=captain-hold-call-1] [at=1791381902]: captain hold call: Choose for B
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
 exit=0
+OBSERVED: retry does not duplicate parent event
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 verified: origin-b captain-call inventory
-
-SCENARIO RESULT: pass
-
-=== SCENARIO: Secondmate released hold: origin-write failure still delivers one parent decision and retry deduplicates ===
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.950v4xot
 exit=0
-/tmp/fm-lab.950v4xot
+PARENT CHANNEL AFTER RETRY:
+needs-decision [key=captain-hold-call-2] [at=1793327387]: captain hold call: Choose for B
 
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
+
+CASE: origin-write failure / released
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/mate-released
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/mate-released
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
 ok: added origin-a (scout, repo sample) -> Queued
 task:
   id: origin-a
@@ -1636,7 +1535,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -1644,9 +1543,8 @@ task:
 help[2]:
   - Run `tasks-axi start origin-a` to move it to in flight
   - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
 exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
 ok: added origin-b (scout, repo sample) -> Queued
 task:
   id: origin-b
@@ -1661,7 +1559,7 @@ task:
   kind: scout
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
@@ -1669,112 +1567,192 @@ task:
 help[2]:
   - Run `tasks-axi start origin-b` to move it to in flight
   - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-lab-home.sh create /tmp/fm-lab.drt8d9l4
 exit=0
-/tmp/fm-lab.drt8d9l4
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-a Review origin-a --kind scout --repo sample
-exit=0
-ok: added origin-a (scout, repo sample) -> Queued
-task:
-  id: origin-a
-  title: Review origin-a
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-a` to move it to in flight
-  - Run `tasks-axi block origin-a --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh add origin-b Review origin-b --kind scout --repo sample
-exit=0
-ok: added origin-b (scout, repo sample) -> Queued
-task:
-  id: origin-b
-  title: Review origin-b
-  state: queued
-  blocked: no
-  blocked_by: none
-  held: no
-  hold_reason: "-"
-  hold_kind: "-"
-  hold_until: "-"
-  kind: scout
-  repo: sample
-  priority: "-"
-  created: 2026-10-07
-  closed: "-"
-  deps: none
-  links: none
-  body: ""
-help[2]:
-  - Run `tasks-axi start origin-b` to move it to in flight
-  - Run `tasks-axi block origin-b --by <other>` to record a dependency
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for A --origin origin-a
-exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
 call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh answer call --release --decision-file /tmp/fm-lab.950v4xot/answer-a.txt
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/mate-released/answer-a.txt
 released: call
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --title Decision call --reason Choose for B --origin origin-b
-exit=1
-FAULT: remove write permission only at origin publication, after successful real backend hold
-fm-captain-hold: could not record the hold origin on call
-
-$ FM_HOME=<disposable-lab> fm-tasks-axi.sh show call --full
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/parent-released
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/parent-released
+exit=0
+$ [real CLI paused before origin] /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+$ /home/node/.npm-global/bin/tasks-axi show call --full
 task:
   id: call
-  title: Decision call
+  title: Choose work
   state: queued
   blocked: no
   blocked_by: none
   held: yes
-  hold_reason: "Choose for B"
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGZvciBC"
   hold_kind: captain
   hold_until: "-"
   kind: captain
   repo: sample
   priority: "-"
-  created: 2026-10-07
+  created: 2026-10-30
   closed: "-"
   deps: none
   links: none
-  body: "Captain hold set: 2026-10-07T14:05:10Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: b14374c303dde44466b0c5751bbc79f2122d325ad49f10373b2bac4f75c83c73\nResolution mode: released\n\nCaptain decision:\nRelease the work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
-
-Persisted parent channel after failed origin write:
-needs-decision [key=captain-hold-call-2] [at=1791381912]: captain hold call: Choose for B
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
+  body: "Captain hold set: 2026-10-30T02:30:01Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
 exit=0
+OBSERVED: backend hold is live before origin publication
+OBSERVED: B not published yet
+OBSERVED: parent event exists BEFORE origin publication attempt
+PARENT CHANNEL BEFORE ORIGIN WRITE:
+needs-decision [key=captain-hold-call-2] [at=1793327403]: captain hold call: Choose for B
+
+OBSERVED: parent receives needs-decision
+FAULT: remove write permission on isolated backlog and data directory
+
+stderr: fm-captain-hold: could not record the hold origin on call
+exit=1
+FAULT: restore write permission on isolated backlog and data directory
+OBSERVED: actual origin write fails and command returns nonzero
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: yes
+  hold_reason: "fm-hold-v1:Q2hvb3NlIGZvciBC"
+  hold_kind: captain
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Captain hold set: 2026-10-30T02:30:01Z\n\nResolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+exit=0
+OBSERVED: failed origin write leaves real hold without claiming B
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for B --origin origin-b
 call
-
-Persisted parent channel after retry:
-needs-decision [key=captain-hold-call-2] [at=1791381912]: captain hold call: Choose for B
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh complete origin-b call
 exit=0
+OBSERVED: retry does not duplicate parent event
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-b call
 complete: origin-b captain-call inventory reviewed (call)
-
-$ FM_HOME=<disposable-lab> fm-captain-hold.sh verify origin-b
 exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-b
 verified: origin-b captain-call inventory
+exit=0
+PARENT CHANNEL AFTER RETRY:
+needs-decision [key=captain-hold-call-2] [at=1793327403]: captain hold call: Choose for B
 
-SCENARIO RESULT: pass
-All disposable homes removed; no default session, agent login, or fleet data used.
+SCENARIO PASS: Secondmate delivery survives origin-write failure and retry
+
+===== Missing origin lookup cannot alter existing call =====
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/missing-origin
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/missing-origin
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-a Review origin-a --kind scout --repo sample
+ok: added origin-a (scout, repo sample) -> Queued
+task:
+  id: origin-a
+  title: Review origin-a
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-a` to move it to in flight
+  - Run `tasks-axi block origin-a --by <other>` to record a dependency
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi add origin-b Review origin-b --kind scout --repo sample
+ok: added origin-b (scout, repo sample) -> Queued
+task:
+  id: origin-b
+  title: Review origin-b
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: scout
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: ""
+help[2]:
+  - Run `tasks-axi start origin-b` to move it to in flight
+  - Run `tasks-axi block origin-b --by <other>` to record a dependency
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --title Choose work --reason Choose for A --origin origin-a
+call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh answer call --release --decision-file /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/.live-hold-origin-v8v0f1lx/missing-origin/answer-a.txt
+released: call
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh complete origin-a call
+complete: origin-a captain-call inventory reviewed (call)
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh verify origin-a
+verified: origin-a captain-call inventory
+exit=0
+$ /home/node/.npm-global/bin/tasks-axi show call --full
+task:
+  id: call
+  title: Choose work
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: captain
+  repo: sample
+  priority: "-"
+  created: 2026-10-30
+  closed: "-"
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: fb168afa26864cac5398c3edaece9e86cfdcdf8e9a4a2722d97180647fcb41ae\nResolution mode: released\n\nCaptain decision:\nRelease this work for A.\n\nCaptain hold origin: origin-a\n\nOrigin: origin-a"
+exit=0
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M659S8WG6KGGNCGWSPAJN2FC/bin/fm-captain-hold.sh hold call --reason Choose for missing --origin missing-origin
+call
+exit=0
+SCENARIO FAIL: Missing origin lookup cannot alter existing call: CLI refused the operation
+CLEANUP: disposable live homes removed from worktree
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/evidence/01M659S8WG6KGGNCGWSPAJN2FC/live-hold-origin.py", line 280, in <module>
+    'BEFORE FIX: interrupted move associates A answer with B')
+      ^^^^
+  File "/home/node/.no-mistakes/evidence/01M659S8WG6KGGNCGWSPAJN2FC/live-hold-origin.py", line 263, in missing_origin
+    def missing_origin():
+        ^^^^^^^^^^^^^^^^^
+  File "/home/node/.no-mistakes/evidence/01M659S8WG6KGGNCGWSPAJN2FC/live-hold-origin.py", line 63, in captain
+    return run(home, [TASKS, *args], **kw)
+  File "/home/node/.no-mistakes/evidence/01M659S8WG6KGGNCGWSPAJN2FC/live-hold-origin.py", line 53, in run
+    note('stderr: ' + p.stderr.rstrip())
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.no-mistakes/evidence/01M659S8WG6KGGNCGWSPAJN2FC/live-hold-origin.py", line 29, in check
+AssertionError: CLI refused the operation
