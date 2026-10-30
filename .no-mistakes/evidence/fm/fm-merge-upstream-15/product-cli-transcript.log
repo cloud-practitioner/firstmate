@@ -1,0 +1,138 @@
+$ bin/fm-lab-home.sh create <worktree>/.test-live/product/home
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/home
+[exit 0]
+
+$ git init -q -b main <worktree>/.test-live/product/home/projects/demo
+[exit 0]
+
+$ git add .
+[exit 0]
+
+$ git commit -qm baseline
+[exit 0]
+
+$ bin/fm-project-mode.sh demo
+no-mistakes off
+[exit 0]
+
+$ bin/fm-project-mode.sh --pr demo
+manual
+[exit 0]
+
+$ bin/fm-project-mode.sh --branch-prefix demo
+fix/
+[exit 0]
+
+$ bin/fm-brief.sh manual-proof demo --mode no-mistakes --pr manual --project <worktree>/.test-live/product/home/projects/demo --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/home/data/manual-proof/brief.md (ship, mode=no-mistakes pr=manual; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+
+$ bin/fm-brief.sh bad-manual demo --mode local-only --pr manual
+error: fm-brief.sh --pr: pr=manual ships mode=no-mistakes only - direct-PR already leaves the PR text to the worker and local-only opens no PR
+[exit 1]
+
+$ bin/fm-project-mode.sh --pr demo
+refused: demo is registered direct-PR with pr=manual in /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/home/data/projects.md; only a no-mistakes ship takes it, because direct-PR already leaves the PR text to the worker and local-only opens no PR; register no-mistakes, or drop the pr token
+[exit 3]
+
+$ treehouse get --lease --no-fetch --base main --branch fm/hidden
+🌳 Setting up worktree...
+🌳 Leased worktree at /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/pool/.treehouse/demo-6ee354/1/demo. Run 'treehouse return /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/pool/.treehouse/demo-6ee354/1/demo' to release it.
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/pool/.treehouse/demo-6ee354/1/demo
+[exit 0]
+
+$ git config status.showUntrackedFiles no
+[exit 0]
+
+$ git status --porcelain
+[exit 0]
+
+$ bin/fm-lab-home.sh tmux-dir <worktree>/.test-live/product/home
+/tmp/fml.NBvD2O
+[exit 0]
+
+$ tmux -L fm-lab -f /dev/null new-session -d -s firstmate -n fm-hidden -c <worktree>/.test-live/product/pool/.treehouse/demo-6ee354/1/demo
+[exit 0]
+
+$ git rev-parse HEAD
+c0df6a6bf473d97fbf8878cbe0456db37b232b07
+[exit 0]
+
+$ bin/fm-teardown.sh hidden
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/home
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REFUSED: local-only worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/pool/.treehouse/demo-6ee354/1/demo has work not yet merged into main and not on any remote.
+uncommitted changes present (untracked-only leftovers)
+untracked paths (up to 10):
+  "new directory/newfile.txt"
+Merge the branch into local main first (bin/fm-merge-local.sh after the captain approves), or push to a fork/remote, or get the captain's explicit OK to discard, then --force.
+[exit 1]
+
+$ git rev-parse HEAD
+c0df6a6bf473d97fbf8878cbe0456db37b232b07
+[exit 0]
+
+$ bin/fm-teardown.sh hidden
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/home
+WARNING: watcher still down (same stale episode; no watcher has a fresh beacon (last beat: never, grace 300s)) - full banner already printed this episode.
+teardown: reaping leaked worktree process(es) for hidden: 215568
+teardown: force-killing leaked worktree process(es) for hidden: 215568
+🌳 Worktree returned to pool.
+teardown hidden complete (window firstmate:fm-hidden, worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/pool/.treehouse/demo-6ee354/1/demo)
+Backlog: hidden just finished (this home keeps no markdown backlog at /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/home/data/backlog.md). Update /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/home/data/backlog.md - move hidden to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+[exit 0]
+
+$ treehouse status --json
+[{"name":"1","path":"/home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/pool/.treehouse/demo-6ee354/1/demo","status":"available","branch":"","detached":true,"flavor":"git","lease_id":"","lease_holder":"","leased_at":null,"processes":[]}]
+[exit 0]
+
+$ bin/fm-remote-delta-read.sh state/parent-replies.status 0 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 1
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=30
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=14a21bcaa199f9a5ef50e230981c2f8baef0d3e43a6a3aea478c76c46287baea
+payload_sha256=14a21bcaa199f9a5ef50e230981c2f8baef0d3e43a6a3aea478c76c46287baea
+payload_bytes=30
+reason=
+
+done: disposable remote reply
+[exit 0]
+
+$ bin/fm-procevent-remote-reply.sh source offline
+ssh: connect to host 127.0.0.1 port 22: Connection refused
+[exit 255]
+
+Failed SSH source: stdout_bytes=0; exit=255; no remote cursor published
+
+$ bin/fm-dispatch-resolve.sh <worktree>/.test-live/product/pager.md
+dispatch-resolve:
+  status: clear
+  model: local-router   latency_ms: 39   tokens: 1/1
+  rule: rule_1 (A pager fix)   confidence: 1
+  probabilities: rule_1=1.0 default=0.0
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=5%  spendPriority=-0.9654  runway=projected_exhaustion  -> eligible
+  profile: --harness 'claude' --model 'sonnet'
+[exit 0]
+
+$ bin/fm-dispatch-resolve.sh <worktree>/.test-live/product/pager.md
+dispatch-resolve: off (brief text matches /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/product/home/config/dispatch-never-send line 1; nothing sent)
+[exit 0]
+
+Privacy boundary: provider request count remained 1 after denied dispatch.
+
+$ tmux -L fm-lab kill-server
+no server running on /tmp/fml.NBvD2O/tmux-1000/fm-lab
+[exit 1]
+
+$ bin/fm-lab-home.sh teardown <worktree>/.test-live/product/home
+[exit 0]

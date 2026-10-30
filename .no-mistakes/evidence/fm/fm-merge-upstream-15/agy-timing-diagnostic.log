@@ -1,0 +1,3 @@
+configured_timeout=1 elapsed_seconds=15 arm_starts=1
+configured_timeout=2 elapsed_seconds=16 arm_starts=2
+not ok - FM_AGY_PARK_TIMEOUT must bound the total park, not grant each arm attempt a fresh budget

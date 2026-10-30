@@ -1,0 +1,6 @@
+ok - active current run beats a stale failed overview row
+ok - same-head active run beats a stale failed overview row
+ok - same-head run with an unverified ULID timestamp reports unknown
+ok - older live status does not hide a newer completed run
+ok - live run newer than the selection does not hide a newer failed run
+ok - competing live runs report unknown with both run ids

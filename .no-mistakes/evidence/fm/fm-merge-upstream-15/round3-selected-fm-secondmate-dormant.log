@@ -1,0 +1,6 @@
+# all fm-secondmate-dormant tests passed
+1..3
+ok - stand-down: stops the agent, records dormancy in the parent home, keeps the mate's records
+ok - stand-down: refuses while the mate's own home has in-flight work
+ok - sweep: a dormant mate stays stopped, is not reported dead, and shows as dormant
+FM_TEST_COMPLETE

@@ -1,0 +1,5 @@
+Real agy CLI, isolated disposable HOME; no sign-in attempted.
+Authentication required. Please visit the URL to log in:
+Error: authentication interrupted.
+error: authentication failed or timed out
+exit=124

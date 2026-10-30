@@ -1,0 +1,3 @@
+ok - watcher: a busy pane extends the grace instead of counting strikes, across restarts
+ok - watcher: idle past the grace after busy work still rings and escalates exactly once
+ok - watcher: a worker that is busy again is not escalated even with a spent ladder

@@ -1,0 +1,3 @@
+ok - Pi and pi-signed ship and scout launches stop MCP servers when the home sets MCP off
+ok - --mcp overrides the home posture for one task, in either direction
+ok - a Pi without --no-mcp refuses MCP off before any endpoint or record

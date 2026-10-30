@@ -1,0 +1,7 @@
+1..14
+ok - .agents/hooks.json: valid JSON and hook commands resolve from both .agents/ and repo root
+warning: re-init: ignored --initial-branch=main
+ok - fm-sessionstart-agy: runs in primary and seeded secondmate homes, stands down with {} in crewmate worktree
+ok - fm-turnend-guard-agy: actionable arm close returns continue decision and resets turnend-blocks
+ok - fm-turnend-guard-agy: an opted-in home parks on the supervision host with the agy pin
+not ok - FM_AGY_PARK_TIMEOUT must bound the total park, not grant each arm attempt a fresh budget

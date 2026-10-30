@@ -1,0 +1,4 @@
+ok - fm-turnend-guard-agy: returns {} when the fleet is empty or a healthy watcher owns the home
+ok - fm-turnend-guard-agy: non-normal terminationReason values pass through with {}
+ok - fm-turnend-guard-agy: the loop ceiling notifies once while supervision is needed, then passes through
+not ok - first park never wrote state/.agy-park-owner

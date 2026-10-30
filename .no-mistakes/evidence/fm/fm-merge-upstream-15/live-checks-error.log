@@ -1,0 +1,15 @@
+$ bin/fm-dispatch-resolve.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.mmcf4ka3/data/manual-proof/brief.md --project sample
+exit=0
+dispatch-resolve:
+  status: escalate
+  model: local-systemone   latency_ms: 118   tokens: 12/0
+  rule: rule_1 (A small known bug fix.)   confidence: 0.99
+  probabilities: rule_1=0.99 default=0.01
+  reason: no rankable eligible candidate
+  note: rule matched
+  candidate: agy:-  provider=agy  -> eligible, unranked: provider agy unmeasured (unknown): disclosed uncertainty
+
+Observed: typed response accepted; real quota-axi in an empty disposable user home reports unknown quota, so dispatch honestly escalates instead of inventing a ranking.
+$ bin/fm-dispatch-resolve.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.mmcf4ka3/data/manual-proof/brief.md --project sample
+exit=0
+dispatch-resolve: off (brief text matches /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.mmcf4ka3/config/dispatch-never-send line 1; nothing sent)

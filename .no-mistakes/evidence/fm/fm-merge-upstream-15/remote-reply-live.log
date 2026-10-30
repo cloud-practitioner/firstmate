@@ -1,0 +1,43 @@
+$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.gao5rjn1/remote-root
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.gao5rjn1/remote-root add bin AGENTS.md
+exit=0
+
+$ ssh-keygen -q -t rsa -b 2048 -m PEM -N  -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.gao5rjn1/host-key
+exit=0
+
+$ bin/fm-procevent-remote-reply.sh source isolated
+exit=0
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=30
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=b83ad43ef9a1b60c429cd5e8c02a3ee3640e9960124903707b12f07154ea1dcb
+payload_sha256=b83ad43ef9a1b60c429cd5e8c02a3ee3640e9960124903707b12f07154ea1dcb
+payload_bytes=30
+reason=
+
+note: real SSH loopback reply
+
+$ bin/fm-procevent-remote-reply.sh ingest isolated /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.gao5rjn1/capture
+exit=0
+ingested: isolated appended=1 offset=30
+
+$ bin/fm-procevent-remote-reply.sh ingest isolated /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.gao5rjn1/capture
+exit=0
+ingested: isolated appended=0 offset=30
+
+Observed: real OpenSSH -> disposable SSH server -> tracked fm-remote-entrypoint -> real remote-job worker -> real delta reader -> parent ingestion. Replay did not duplicate the status stream.
+$ bin/fm-procevent-remote-reply.sh source isolated
+exit=255
+
+Observed: transport-failure: stdout has zero bytes; cursor and mirrored status unchanged.
+$ bin/fm-procevent-remote-reply.sh source isolated
+exit=1
+
+Observed: invalid-success: stdout has zero bytes; cursor and mirrored status unchanged.
+$ bash -c . "$1/bin/fm-remote-job-lib.sh"; fm_remote_job_stop_worker_tree "$2" _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC 2540415
+exit=0

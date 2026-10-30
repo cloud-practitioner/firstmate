@@ -1,0 +1,11 @@
+1..6
+warning: re-init: ignored --initial-branch=main
+ok - fm-sessionstart-agy: runs in primary and seeded secondmate homes, stands down with {} in crewmate worktree
+ok - fm-turnend-guard-agy: actionable arm close returns continue decision and resets turnend-blocks
+ok - fm-turnend-guard-agy: an opted-in home parks on the supervision host with the agy pin
+ok - fm-arm-pretool-check --agy: denies through the shared policy and allows ordinary commands
+warning: re-init: ignored --initial-branch=main
+ok - fm-cd-pretool-check --agy: denies persistent cd in primary, allows subshell cd, inert in worktree
+warning: re-init: ignored --initial-branch=main
+ok - fm-subagent-pretool-check --agy: denies invoke_subagent, allows observe-only tools, inert in worktree
+FM_TEST_COMPLETE

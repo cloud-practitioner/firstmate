@@ -1,0 +1,4 @@
+1..2
+ok - watcher: a busy pane extends the grace instead of counting strikes, across restarts
+ok - watcher: idle past the grace after busy work still rings and escalates exactly once
+FM_TEST_COMPLETE

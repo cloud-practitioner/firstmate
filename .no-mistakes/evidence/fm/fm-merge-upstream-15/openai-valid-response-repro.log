@@ -1,0 +1,17 @@
+Valid provider response:
+{ "answers": [ { "type": "choice", "name": "rule", "choice": "rule_4", "confidence": 0.9,
+    "probabilities": [ { "value": "rule_1", "probability": 0.01 }, { "value": "rule_2", "probability": 0.01 },
+      { "value": "rule_3", "probability": 0.01 }, { "value": "rule_4", "probability": 0.96 },
+      { "value": "default", "probability": 0.01 } ] } ],
+  "usage": { "input_tokens": 700, "output_tokens": 5 } }
+
+Real dispatch CLI result:
+dispatch-resolve:
+  status: error
+  reason: response is not a rule Choice answer
+dispatch-resolve: error (response is not a rule Choice answer)
+not ok - valid OpenAI response must select a profile (missing: '  status: clear')
+--- output ---
+dispatch-resolve:
+  status: error
+  reason: response is not a rule Choice answer

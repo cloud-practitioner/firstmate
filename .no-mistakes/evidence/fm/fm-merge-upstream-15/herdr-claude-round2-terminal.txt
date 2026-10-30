@@ -1,0 +1,21 @@
+env -u NO_MISTAKES_GATE -u FM_GATE_REFUSE_BYPASS -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u
+FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=/home/node/.no-mistake
+s/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.SIFcFu /home/
+node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-l
+ab.SIFcFu/claude-shim/claude --print --model sonnet --effort low --setting-sources project,lo
+cal --output-format json Reply\ exactly\ FM_MERGE15_ROUND2_READY.\ Do\ not\ call\ tools. > /h
+ome/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/
+fm-lab.SIFcFu/result 2>&1; printf "\nCLAUDE_EXIT=%s\n" "$?" >> /home/node/.no-mistakes/worktr
+ees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.SIFcFu/result
+01M64ZPT5AJ4390HHRPB92ZDZC on  HEAD [?]
+❯ env -u NO_MISTAKES_GATE -u FM_GATE_REFUSE_BYPASS -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -
+u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=/home/node/.no-mista
+kes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.SIFcFu /hom
+e/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm
+-lab.SIFcFu/claude-shim/claude --print --model sonnet --effort low --setting-sources project,
+local --output-format json Reply\ exactly\ FM_MERGE15_ROUND2_READY.\ Do\ not\ call\ tools. >
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tm
+p/fm-lab.SIFcFu/result 2>&1; printf "\nCLAUDE_EXIT=%s\n" "$?" >> /home/node/.no-mistakes/work
+trees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.SIFcFu/result
+01M64ZPT5AJ4390HHRPB92ZDZC on  HEAD [?] 19s
+❯

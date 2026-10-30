@@ -1,0 +1,36 @@
+{
+  "fm-crew-state": [
+    "test_current_active_run_beats_stale_failed_overview_row",
+    "test_current_active_run_beats_same_head_stale_failed_overview_row",
+    "test_same_head_run_with_unverifiable_timestamp_reports_unknown",
+    "test_older_live_status_does_not_hide_newer_completed_run",
+    "test_live_run_newer_than_selection_does_not_hide_newer_failed_run",
+    "test_competing_live_runs_report_unknown_with_both_ids"
+  ],
+  "fm-spawn-dispatch-profile": [
+    "test_pi_mcp_off_reaches_ship_and_scout_launches",
+    "test_mcp_flag_overrides_the_home_posture_per_task",
+    "test_mcp_off_refuses_runtimes_that_cannot_honor_it"
+  ],
+  "fm-task-inbox": [
+    "test_watcher_busy_pane_extends_grace_without_strikes",
+    "test_watcher_idle_past_grace_after_busy_still_rings_and_escalates"
+  ],
+  "fm-secondmate-dormant": [
+    "test_stand_down_stops_records_and_keeps_everything",
+    "test_stand_down_refuses_in_flight_work",
+    "test_sweep_skips_a_dormant_mate_and_lists_it"
+  ],
+  "fm-agy-primary": [
+    "test_sessionstart_agy_primary_secondmate_and_worktree_scope",
+    "test_turnend_guard_agy_actionable_wake_followup",
+    "test_turnend_guard_agy_supervision_host_park",
+    "test_arm_pretool_check_agy",
+    "test_cd_pretool_check_agy",
+    "test_subagent_pretool_check_agy"
+  ],
+  "fm-pr-evidence": [
+    "test_arming_and_merge_go_through_the_gate",
+    "test_bitbucket_arm_is_off_by_default_and_works_when_on"
+  ]
+}

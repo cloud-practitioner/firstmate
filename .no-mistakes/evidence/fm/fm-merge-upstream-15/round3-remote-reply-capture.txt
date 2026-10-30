@@ -1,0 +1,12 @@
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=30
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=b83ad43ef9a1b60c429cd5e8c02a3ee3640e9960124903707b12f07154ea1dcb
+payload_sha256=b83ad43ef9a1b60c429cd5e8c02a3ee3640e9960124903707b12f07154ea1dcb
+payload_bytes=30
+reason=
+
+note: real SSH loopback reply

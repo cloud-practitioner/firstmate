@@ -1,0 +1,19 @@
+
+added 8 packages in 4s
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+E: Can't select candidate version from package tmux as it has no candidate
+E: Can't select candidate version from package libevent-core-2.1-7 as it has no candidate
+dpkg-deb: error: failed to read archive '*.deb': No such file or directory
+/bin/bash: line 1: ./tmux/usr/bin/tmux: No such file or directory
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  443k  100  443k    0     0  2332k      0 --:--:-- --:--:-- --:--:-- 2336k
+./tmux/usr/bin/tmux: error while loading shared libraries: libutempter.so.0: cannot open shared object file: No such file or directory
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  8960  100  8960    0     0  72709      0 --:--:-- --:--:-- --:--:-- 72845
+tmux 3.3a

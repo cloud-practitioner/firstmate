@@ -1,0 +1,29 @@
+Merge identity and parents:
+73970992bdc1c96a378c807db724e1b035920fe3
+61b748936d05158279c53cefb63db770463283aa b936f04076b1822fceaace5dad08c8682329235d
+Merge upstream firstmate main (b936f040) into the fork
+
+Brings kunchenguid/firstmate main from 0adf422e to b936f040 (7 upstream
+PRs: #7874, #7937, #7909, #5954, the full-ci label gate for outside PRs,
+#7664, #7941) into the fork as a true merge. Every fork-only change is
+kept.
+
+Conflicts resolved (3 files): bin/fm-brief.sh, bin/fm-promote.sh,
+bin/fm-spawn.sh. Each is the pr=manual PR-text posture (#7937) meeting the
+fork's PR evidence gate; both sides are kept.
+
+
+Incoming upstream commits:
+b936f040 feat(bin): promote agy to a full primary and secondmate harness (#7941)
+0f2cf788 feat(bin): add opt-in systemone and openai decision providers to dispatch resolution (#7664)
+c9da5523 chore(ci): run the full suite on outside pull requests only after the full-ci label
+7bbf71b4 fix(bin): keep newest run attribution in crew-state (#5954)
+2363b718 fix: refuse teardown when Git hides untracked files (#7909)
+e13d23f7 feat(bin): add per-project pr=manual registry token for worker-written PR text (#7937)
+51a501d7 fix(bin): keep failed or non-schema remote reply reads out of captures (#7874)
+
+Upstream commit count: 7
+
+Fork base retained as first parent: yes
+
+Addon changes relative to fork base (empty means unchanged):

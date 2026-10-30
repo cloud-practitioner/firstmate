@@ -1,0 +1,23 @@
+$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a
+exit=0
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a
+
+$ bin/fm-project-mode.sh --pr sample
+exit=0
+manual
+
+$ bin/fm-project-mode.sh sample
+exit=0
+no-mistakes off
+
+$ bin/fm-project-mode.sh --pr bad
+exit=3
+refused: bad is registered direct-PR with pr=manual in /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/data/projects.md; only a no-mistakes ship takes it, because direct-PR already leaves the PR text to the worker and local-only opens no PR; register no-mistakes, or drop the pr token
+
+$ bin/fm-brief.sh manual-proof sample --mode no-mistakes --pr manual
+exit=0
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/data/manual-proof/brief.md (ship, mode=no-mistakes pr=manual; replace {TASK} and {FIRSTMATE_SPEC})
+
+$ bin/fm-brief.sh invalid-proof sample --mode local-only --pr manual
+exit=1
+error: fm-brief.sh --pr: pr=manual ships mode=no-mistakes only - direct-PR already leaves the PR text to the worker and local-only opens no PR

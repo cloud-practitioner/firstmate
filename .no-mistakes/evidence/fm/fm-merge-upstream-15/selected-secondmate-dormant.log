@@ -1,0 +1,4 @@
+# all fm-secondmate-dormant tests passed
+ok - stand-down: stops the agent, records dormancy in the parent home, keeps the mate's records
+ok - stand-down: refuses while the mate's own home has in-flight work
+not ok - resume failed: error: relaunch of second mate sm1 failed and it stays dormant: error: secondmate home cannot be inside the firstmate repo: /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-live/tmp/fm-secondmate-dormant.No5mhh/resume-ok/sm1

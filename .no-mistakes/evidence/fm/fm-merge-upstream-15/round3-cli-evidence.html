@@ -1,0 +1,215 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Merge 15: scoped live validation</title><style>body{font:16px system-ui;max-width:1200px;margin:2rem auto;padding:0 2rem;color:#172131;background:#f4f6fa}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#101b2c;color:#e8f1ff;padding:1.5rem;border-radius:8px;font:13px/1.5 monospace}h1,h2{color:#102d52}aside{padding:1rem;background:#fff2cf}</style><h1>Upstream merge: live CLI evidence</h1><p>Target: 3215e957a4c3176a7a6adf28b34de9fa355d376c. Commands used disposable worktree-local homes and endpoints.</p><aside>These are rendered actual command transcripts, not screenshots of an interactive agent UI. Agy did not reach an authenticated session. System One used a disposable local HTTP decision endpoint; this is protocol validation, not an external LLM evaluation.</aside><section><h2>Manual PR registry and generated brief safeguards</h2><pre>$ bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a
+exit=0
+/home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a
+
+$ bin/fm-project-mode.sh --pr sample
+exit=0
+manual
+
+$ bin/fm-project-mode.sh sample
+exit=0
+no-mistakes off
+
+$ bin/fm-project-mode.sh --pr bad
+exit=3
+refused: bad is registered direct-PR with pr=manual in /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/data/projects.md; only a no-mistakes ship takes it, because direct-PR already leaves the PR text to the worker and local-only opens no PR; register no-mistakes, or drop the pr token
+
+$ bin/fm-brief.sh manual-proof sample --mode no-mistakes --pr manual
+exit=0
+scaffolded: /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/data/manual-proof/brief.md (ship, mode=no-mistakes pr=manual; replace {TASK} and {FIRSTMATE_SPEC})
+
+$ bin/fm-brief.sh invalid-proof sample --mode local-only --pr manual
+exit=1
+error: fm-brief.sh --pr: pr=manual ships mode=no-mistakes only - direct-PR already leaves the PR text to the worker and local-only opens no PR
+</pre></section><section><h2>Hidden-untracked teardown refusal</h2><pre>$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/projects/sample
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/projects/sample -c user.name=Validation -c user.email=validation@example.invalid commit -q --allow-empty -m fixture
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/projects/sample worktree add -q -b fm/hidden-proof /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/task-copy
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/task-copy config status.showUntrackedFiles no
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/task-copy rev-parse HEAD
+exit=0
+cc5154a2c7b659d5c7696da776cbad8f655dacee
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/task-copy status --porcelain
+exit=0
+
+$ bin/fm-teardown.sh hidden-proof
+exit=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell &amp; for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REFUSED: local-only worktree /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/task-copy has work not yet merged into main and not on any remote.
+uncommitted changes present (untracked-only leftovers)
+untracked paths (up to 10):
+  &quot;new directory/unadded.txt&quot;
+Merge the branch into local main first (bin/fm-merge-local.sh after the captain approves), or push to a fork/remote, or get the captain's explicit OK to discard, then --force.
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/task-copy rev-parse HEAD
+exit=0
+cc5154a2c7b659d5c7696da776cbad8f655dacee
+
+Observed: hidden untracked bytes, task metadata, and HEAD preserved after refusal. No backend or pool stub used.</pre></section><section><h2>Remote reply source, ingest, replay and transport rejection</h2><pre>$ git init -q -b main /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.azny5d3y/remote-root
+exit=0
+
+$ git -C /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.azny5d3y/remote-root add bin AGENTS.md
+exit=0
+
+$ ssh-keygen -q -t rsa -b 2048 -m PEM -N  -f /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.azny5d3y/host-key
+exit=0
+
+$ bin/fm-procevent-remote-reply.sh source isolated
+exit=0
+schema=fm-remote-delta.v1
+status=delta
+path=state/parent-replies.status
+from_offset=0
+to_offset=30
+from_prefix_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+to_prefix_sha256=b83ad43ef9a1b60c429cd5e8c02a3ee3640e9960124903707b12f07154ea1dcb
+payload_sha256=b83ad43ef9a1b60c429cd5e8c02a3ee3640e9960124903707b12f07154ea1dcb
+payload_bytes=30
+reason=
+
+note: real SSH loopback reply
+
+$ bin/fm-procevent-remote-reply.sh ingest isolated /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.azny5d3y/capture
+exit=0
+ingested: isolated appended=1 offset=30
+
+$ bin/fm-procevent-remote-reply.sh ingest isolated /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/remote-live.azny5d3y/capture
+exit=0
+ingested: isolated appended=0 offset=30
+
+Observed: real OpenSSH -&gt; disposable SSH server -&gt; tracked fm-remote-entrypoint -&gt; real remote-job worker -&gt; real delta reader -&gt; parent ingestion. Replay did not duplicate the status stream.
+$ bin/fm-procevent-remote-reply.sh source isolated
+exit=255
+
+Observed: transport-failure: stdout has zero bytes; cursor and mirrored status unchanged.
+$ bin/fm-procevent-remote-reply.sh source isolated
+exit=1
+
+Observed: invalid-success: stdout has zero bytes; cursor and mirrored status unchanged.
+$ bash -c . &quot;$1/bin/fm-remote-job-lib.sh&quot;; fm_remote_job_stop_worker_tree &quot;$2&quot; _ /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC 3880070
+exit=0
+</pre></section><section><h2>System One decision protocol and privacy boundary</h2><pre>$ bin/fm-dispatch-resolve.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/data/manual-proof/brief.md --project sample
+exit=0
+dispatch-resolve:
+  status: escalate
+  model: local-systemone   latency_ms: 78   tokens: 12/0
+  rule: rule_1 (A small known bug fix.)   confidence: 0.99
+  probabilities: rule_1=0.99 default=0.01
+  reason: no rankable eligible candidate
+  note: rule matched
+  candidate: agy:-  provider=agy  -&gt; eligible, unranked: provider agy unmeasured (unknown): disclosed uncertainty
+
+Observed: typed response accepted; real quota-axi in an empty disposable user home reports unknown quota, so dispatch honestly escalates instead of inventing a ranking.
+$ bin/fm-dispatch-resolve.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/data/manual-proof/brief.md --project sample
+exit=0
+dispatch-resolve: off (brief text matches /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/config/dispatch-never-send line 1; nothing sent)
+
+$ bin/fm-dispatch-resolve.sh /home/node/.no-mistakes/worktrees/450411b3e67c/01M64ZPT5AJ4390HHRPB92ZDZC/.test-validation/tmp/fm-lab.xu415r4a/data/manual-proof/brief.md
+exit=0
+dispatch-resolve:
+  status: error
+  reason: response is not a rule Choice answer
+dispatch-resolve: error (response is not a rule Choice answer)
+</pre></section><section><h2>Isolated authenticated Claude launch</h2><pre>{&quot;duration_api_ms&quot;:1299,&quot;stop_reason&quot;:&quot;end_turn&quot;,&quot;session_id&quot;:&quot;6de601ff-adb8-40b4-9d8c-e75f3d82a833&quot;,&quot;total_cost_usd&quot;:0.
+1216528,&quot;usage&quot;:{&quot;input_tokens&quot;:2,&quot;cache_creation_input_tokens&quot;:30029,&quot;cache_read_input_tokens&quot;:13428,&quot;output_tokens&quot;:19
+,&quot;output_tokens_details&quot;:{&quot;thinking_tokens&quot;:0},&quot;server_tool_use&quot;:{&quot;web_search_requests&quot;:0,&quot;web_fetch_requests&quot;:0},&quot;servi
+ce_tier&quot;:&quot;standard&quot;,&quot;cache_creation&quot;:{&quot;ephemeral_1h_input_tokens&quot;:30029,&quot;ephemeral_5m_input_tokens&quot;:0},&quot;inference_geo&quot;:&quot;
+global&quot;,&quot;iterations&quot;:[{&quot;input_tokens&quot;:2,&quot;output_tokens&quot;:19,&quot;cache_read_input_tokens&quot;:13428,&quot;cache_creation_input_tokens&quot;
+:30029,&quot;cache_creation&quot;:{&quot;ephemeral_5m_input_tokens&quot;:0,&quot;ephemeral_1h_input_tokens&quot;:30029},&quot;type&quot;:&quot;message&quot;}],&quot;speed&quot;:&quot;st
+andard&quot;,&quot;fallback_credit&quot;:null},&quot;modelUsage&quot;:{&quot;claude-sonnet-5-5&quot;:{&quot;inputTokens&quot;:2,&quot;outputTokens&quot;:19,&quot;cacheReadInputToke
+ns&quot;:13428,&quot;cacheCreationInputTokens&quot;:30029,&quot;webSearchRequests&quot;:0,&quot;costUSD&quot;:0.1216528,&quot;contextWindow&quot;:1000000,&quot;maxOutputT
+okens&quot;:128000,&quot;thinkingTokens&quot;:0,&quot;cacheCreationEphemeral5mInputTokens&quot;:0,&quot;cacheCreationEphemeral1hInputTokens&quot;:30029,&quot;ca
+nonicalModel&quot;:&quot;claude-sonnet-5-5&quot;,&quot;provider&quot;:&quot;firstParty&quot;,&quot;costBasis&quot;:&quot;list&quot;}},&quot;permission_denials&quot;:[],&quot;terminal_reason&quot;
+:&quot;completed&quot;,&quot;fast_mode_state&quot;:&quot;off&quot;,&quot;fast_mode_disabled_reason&quot;:&quot;sdk_opt_in_required&quot;,&quot;subagent_stats&quot;:{&quot;spawned&quot;:0,&quot;re
+quested&quot;:{&quot;background&quot;:0,&quot;foreground&quot;:0,&quot;unset&quot;:0},&quot;started_in_background&quot;:0,&quot;max_depth&quot;:0,&quot;spawned_by_subagents&quot;:0,&quot;com
+pleted&quot;:0,&quot;failed&quot;:0,&quot;killed&quot;:{&quot;parent&quot;:0,&quot;user&quot;:0,&quot;system&quot;:0},&quot;refused&quot;:{&quot;depth_limit&quot;:0,&quot;concurrency_limit&quot;:0,&quot;budget&quot;
+:0},&quot;by_type&quot;:{}},&quot;safety_stops&quot;:0,&quot;is_error&quot;:false,&quot;num_turns&quot;:1,&quot;subtype&quot;:&quot;success&quot;,&quot;api_error_status&quot;:null,&quot;result&quot;:&quot;
+FM_MERGE15_ROUND3_READY&quot;,&quot;ttft_ms&quot;:2489,&quot;type&quot;:&quot;result&quot;,&quot;duration_ms&quot;:3169,&quot;uuid&quot;:&quot;5ce0faa6-5747-4606-a2b2-0029ec66d835&quot;
+,&quot;ttft_stream_ms&quot;:2385,&quot;time_to_request_ms&quot;:1383,&quot;first_content_frame_ms&quot;:2389,&quot;queued_turn_count&quot;:0,&quot;result_index&quot;:0}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pane is dead (status 0, Fri Oct 30 11:49:05 2026)
+
+window_grid=120x40; dead=1; exit=0
+launcher_before=/home/node/.local/share/claude/versions/2.1.312
+launcher_after=/home/node/.local/share/claude/versions/2.1.312
+</pre></section><section><h2>Agy authentication barrier (hooks not validated)</h2><pre>Authentication required. Please visit the URL to log in:
+  https://accounts.google.com/o/oauth2/auth?access_type=offline&amp;client_id=1071006060591-tmhssin2h21lcre235vtolojh4g403ep
+.apps.googleusercontent.com&amp;code_challenge=EETtqA8Abt6gqWnKqtU-y66TWzh9d4_cCGKZ4NMNQJs&amp;code_challenge_method=S256&amp;prompt
+=consent&amp;redirect_uri=https%3A%2F%2Fantigravity.google%2Foauth-callback&amp;response_type=code&amp;scope=https%3A%2F%2Fwww.googl
+eapis.com%2Fauth%2Fcloud-platform+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.
+com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcclog+https%3A%2F%2Fwww.googleapis.com%2Fauth%2F
+experimentsandconfigs+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Faicode+openid&amp;state=6iiCJAaGCZZWu5a8H6uEpA
+
+Waiting for authentication (timeout 60s)...
+Or, paste the authorization code here and press Enter:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+window_grid=120x40; dead=0; exit=
+</pre></section></html>

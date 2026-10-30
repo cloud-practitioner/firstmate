@@ -1,0 +1,17 @@
+ok - competing live runs report unknown with both run ids
+ok - active current run beats a stale overview row
+ok - active current run beats a stale failed overview row
+ok - same-head active run beats a stale failed overview row
+ok - same-head run with an unverified ULID timestamp reports unknown
+ok - older live status does not hide a newer completed run
+ok - failed selected-run detail read is not attributed
+ok - live run newer than the selection does not hide a newer failed run
+ok - newer failed run remains failed beside an older live run
+ok - missing run selection reports unknown with candidate ids
+ok - wrong-id run selection reports unknown with candidate ids
+ok - wrong-branch run selection reports unknown with candidate ids
+ok - wrong-head run selection reports unknown with candidate ids
+ok - missing-status run selection reports unknown with candidate ids
+ok - malformed-table run selection reports unknown with candidate ids
+ok - inventory-error run selection reports unknown with candidate ids
+ok - selected-error run selection reports unknown with candidate ids
