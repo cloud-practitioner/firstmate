@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Reproduced original collision: equal IDs in two homes share the legacy task root",
+    "result": "pass"
+  },
+  {
+    "name": "Baseline cleanup completed through the real product",
+    "result": "pass"
+  }
+]

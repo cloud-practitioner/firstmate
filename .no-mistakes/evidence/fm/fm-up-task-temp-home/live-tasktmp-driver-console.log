@@ -1,0 +1,239 @@
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh name tasktmp-live
+fm-lab-tasktmp-live-2491378-4012
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh provision fm-lab-tasktmp-live-2491378-4012
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-tasktmp-live-2491378-4012 status --json
+{"client":{"version":"0.9.5","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-tasktmp-live-2491378-4012"},"server":{"status":"running","running":true,"version":"0.9.5","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/node/.config/herdr/sessions/fm-lab-tasktmp-live-2491378-4012/herdr.sock","session":"fm-lab-tasktmp-live-2491378-4012","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-lab-home.sh create '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b'"'"'s quoted path'
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid init -q -b main
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid add README.md
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid commit -qm 'Initial fixture'
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid init -q -b main
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid add README.md
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid commit -qm 'Initial fixture'
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-brief.sh temp-2491341 notes --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/data/temp-2491341/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-brief.sh temp-2491341 notes --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path/data/temp-2491341/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-spawn.sh temp-2491341 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/projects/notes --mode local-only --yolo off --backend herdr --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/probe.py home-a'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a
+notice: temp-2491341 ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+warning: herdr presentation parent is absent or ambiguous; using the ordinary flat layout without projection
+spawned temp-2491341 harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-tasktmp-live-2491378-4012:w1:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e57f23/1/notes
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/state/temp-2491341.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e57f23/1/notes", "label": "home-a", "root_mode": "0o700", "task": "temp-2491341"}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-tasktmp-live-2491378-4012 pane read w1:p2 --source recent --lines 20 --format text
+node ➜ ~/.../live/home-a/projects/notes (main) $ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse
+/.treehouse/notes-e57f23/1/notes. Type 'exit' to return.
+node ➜ ~/.../.treehouse/notes-e57f23/1/notes (88702cf) $ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1
+JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e57f23/1/notes'
+node ➜ ~/.../.treehouse/notes-e57f23/1/notes (88702cf) $ export GOTMPDIR='/home/node/.no-mistakes/worktrees/5e28e613310
+e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/state/temp-2491341.tasktmp/gotmp'
+node ➜ ~/.../.treehouse/notes-e57f23/1/notes (88702cf) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/notes-e57f23/1/notes (88702cf) $ export FM_TASK_ID=temp-2491341
+node ➜ ~/.../.treehouse/notes-e57f23/1/notes (88702cf) $ . '/tmp/fm-temp-2491341+6d54f14f687b5a850c40768103f62a50f215f5
+51b831713b0c2d89fea0dc474d/launch.s1793333290.2492078.15112.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.te
+st-validation/live/home-a/state/temp-2491341.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/
+5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e57f23/1/notes", "label": "hom
+e-a", "root_mode": "0o700", "task": "temp-2491341"}
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-spawn.sh temp-2491341 '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b'"'"'s quoted path/projects/notes' --mode local-only --yolo off --backend herdr --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/probe.py home-b'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path
+notice: temp-2491341 ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned temp-2491341 harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-tasktmp-live-2491378-4012:w2:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path/state/temp-2491341.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes", "label": "home-b", "root_mode": "0o700", "task": "temp-2491341"}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-tasktmp-live-2491378-4012 pane read w2:p2 --source recent --lines 20 --format text
+node ➜ ~/.../live/home b's quoted path/projects/notes (main) $ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse
+/.treehouse/notes-e88152/1/notes. Type 'exit' to return.
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1
+JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export GOTMPDIR='/home/node/.no-mistakes/worktrees/5e28e613310
+e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b'\''s quoted path/state/temp-2491341.tasktmp/gotmp'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export FM_TASK_ID=temp-2491341
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ . '/tmp/fm-temp-2491341+d13fd2c0eb17f4c1546019f5e8540104c6e920
+75ff1d53276f21bfdec19ab37d/launch.s1793333311.2500836.4905.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.te
+st-validation/live/home b's quoted path/state/temp-2491341.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mista
+kes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes",
+ "label": "home-b", "root_mode": "0o700", "task": "temp-2491341"}
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $
+[exit 0]
+FILESYSTEM: two same-ID tasks use distinct home-scoped roots; /tmp/fm-temp-2491341 is absent
+SCENARIO PASS: Same task ID in two homes gets isolated private roots, including a quoted home path
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-teardown.sh temp-2491341 --force
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for temp-2491341: 2493915
+teardown: force-killing leaked worktree process(es) for temp-2491341: 2493915
+🌳 Worktree returned to pool.
+teardown temp-2491341 complete (window fm-lab-tasktmp-live-2491378-4012:w1:p2, worktree /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e57f23/1/notes)
+Backlog: temp-2491341 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/data/backlog.md - move temp-2491341 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+[exit 0]
+FILESYSTEM: recorded task temp root and metadata are absent after teardown: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/state/temp-2491341.tasktmp
+FILESYSTEM: home B output survives teardown of equal-ID home A task
+SCENARIO PASS: Teardown removes only the recorded home root and preserves the other home
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-spawn.sh temp-2491341 --relaunch --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/probe.py rootless-relaunch'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path
+notice: temp-2491341 ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned temp-2491341 harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-tasktmp-live-2491378-4012:w2:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path/state/temp-2491341.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes", "label": "rootless-relaunch", "root_mode": "0o700", "task": "temp-2491341"}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-tasktmp-live-2491378-4012 pane read w2:p2 --source recent --lines 20 --format text
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export FM_TASK_ID=temp-2491341
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ . '/tmp/fm-temp-2491341+d13fd2c0eb17f4c1546019f5e8540104c6e920
+75ff1d53276f21bfdec19ab37d/launch.s1793333311.2500836.4905.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.te
+st-validation/live/home b's quoted path/state/temp-2491341.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mista
+kes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes",
+ "label": "home-b", "root_mode": "0o700", "task": "temp-2491341"}
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1
+JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export GOTMPDIR='/home/node/.no-mistakes/worktrees/5e28e613310
+e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b'\''s quoted path/state/temp-2491341.tasktmp/gotmp'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export FM_TASK_ID=temp-2491341
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ . '/tmp/fm-temp-2491341+d13fd2c0eb17f4c1546019f5e8540104c6e920
+75ff1d53276f21bfdec19ab37d/launch.s1793333335.2529614.337.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.te
+st-validation/live/home b's quoted path/state/temp-2491341.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mista
+kes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes",
+ "label": "rootless-relaunch", "root_mode": "0o700", "task": "temp-2491341"}
+[exit 0]
+SCENARIO PASS: Relaunch of a task with no tasktmp field gets its home-scoped root
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-spawn.sh temp-2491341 --relaunch --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/probe.py legacy-first'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path
+notice: temp-2491341 ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned temp-2491341 harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-tasktmp-live-2491378-4012:w2:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/tmp/fm-temp-2491341/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes", "label": "legacy-first", "root_mode": "0o700", "task": "temp-2491341"}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-tasktmp-live-2491378-4012 pane read w2:p2 --source recent --lines 20 --format text
+e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b'\''s quoted path/state/temp-2491341.tasktmp/gotmp'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export FM_TASK_ID=temp-2491341
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ . '/tmp/fm-temp-2491341+d13fd2c0eb17f4c1546019f5e8540104c6e920
+75ff1d53276f21bfdec19ab37d/launch.s1793333335.2529614.337.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.te
+st-validation/live/home b's quoted path/state/temp-2491341.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mista
+kes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes",
+ "label": "rootless-relaunch", "root_mode": "0o700", "task": "temp-2491341"}
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1
+JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export GOTMPDIR='/tmp/fm-temp-2491341/gotmp'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export FM_TASK_ID=temp-2491341
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ . '/tmp/fm-temp-2491341+d13fd2c0eb17f4c1546019f5e8540104c6e920
+75ff1d53276f21bfdec19ab37d/launch.s1793333348.2545853.19402.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/tmp/fm-temp-2491341/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/
+worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes", "la
+bel": "legacy-first", "root_mode": "0o700", "task": "temp-2491341"}
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-spawn.sh temp-2491341 --relaunch --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/probe.py legacy-second'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path
+notice: temp-2491341 ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned temp-2491341 harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-tasktmp-live-2491378-4012:w2:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/tmp/fm-temp-2491341/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes", "label": "legacy-second", "root_mode": "0o700", "task": "temp-2491341"}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-tasktmp-live-2491378-4012 pane read w2:p2 --source recent --lines 20 --format text
+JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export GOTMPDIR='/tmp/fm-temp-2491341/gotmp'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export FM_TASK_ID=temp-2491341
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ . '/tmp/fm-temp-2491341+d13fd2c0eb17f4c1546019f5e8540104c6e920
+75ff1d53276f21bfdec19ab37d/launch.s1793333348.2545853.19402.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/tmp/fm-temp-2491341/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/
+worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes", "la
+bel": "legacy-first", "root_mode": "0o700", "task": "temp-2491341"}
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1
+JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export GOTMPDIR='/tmp/fm-temp-2491341/gotmp'
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ export FM_TASK_ID=temp-2491341
+node ➜ ~/.../.treehouse/notes-e88152/1/notes (88702cf) $ . '/tmp/fm-temp-2491341+d13fd2c0eb17f4c1546019f5e8540104c6e920
+75ff1d53276f21bfdec19ab37d/launch.s1793333359.2556836.24370.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/tmp/fm-temp-2491341/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/
+worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes", "la
+bel": "legacy-second", "root_mode": "0o700", "task": "temp-2491341"}
+[exit 0]
+SCENARIO PASS: Legacy relaunch keeps recorded /tmp root and earlier scratch output
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-teardown.sh temp-2491341 --force
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for temp-2491341: 2510634
+teardown: force-killing leaked worktree process(es) for temp-2491341: 2510634
+🌳 Worktree returned to pool.
+teardown temp-2491341 complete (window fm-lab-tasktmp-live-2491378-4012:w2:p2, worktree /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/treehouse/.treehouse/notes-e88152/1/notes)
+Backlog: temp-2491341 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home b's quoted path/data/backlog.md - move temp-2491341 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+[exit 0]
+FILESYSTEM: recorded task temp root and metadata are absent after teardown: /tmp/fm-temp-2491341
+SCENARIO PASS: Teardown removes the recorded legacy root
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-brief.sh temp-2491341-world-writable notes --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/data/temp-2491341-world-writable/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-spawn.sh temp-2491341-world-writable /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/projects/notes --mode local-only --yolo off --backend herdr --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/probe.py must-not-run'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a
+notice: temp-2491341-world-writable ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+warning: herdr presentation parent is absent or ambiguous; using the ordinary flat layout without projection
+error: task temp root /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/state/temp-2491341-world-writable.tasktmp already exists and is not a private directory owned by this user; refusing to use it; inspect and remove it, then retry
+[exit 1]
+FILESYSTEM: unsafe world-writable root refused before metadata or task output; target sentinel unchanged
+SCENARIO PASS: Spawn refuses a world-writable task root without writing into it
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-brief.sh temp-2491341-symlink notes --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/data/temp-2491341-symlink/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-spawn.sh temp-2491341-symlink /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/projects/notes --mode local-only --yolo off --backend herdr --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/probe.py must-not-run'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a
+notice: temp-2491341-symlink ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+error: task temp root /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live/home-a/state/temp-2491341-symlink.tasktmp already exists and is not a private directory owned by this user; refusing to use it; inspect and remove it, then retry
+warning: herdr presentation cleanup could not verify the exact pane; refusing focus-unsafe pane close
+[exit 1]
+FILESYSTEM: unsafe symlink root refused before metadata or task output; target sentinel unchanged
+SCENARIO PASS: Spawn refuses a symlink task root without writing into it
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-tasktmp-live-2491378-4012 workspace list
+{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[{"active_tab_id":"w3:t2","agent_status":"unknown","focused":true,"label":"firstmate","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w3"}]}}
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh teardown fm-lab-tasktmp-live-2491378-4012
+
+[exit 0]
+FINAL RESULTS [{"name": "Same task ID in two homes gets isolated private roots, including a quoted home path", "result": "pass"}, {"name": "Teardown removes only the recorded home root and preserves the other home", "result": "pass"}, {"name": "Relaunch of a task with no tasktmp field gets its home-scoped root", "result": "pass"}, {"name": "Legacy relaunch keeps recorded /tmp root and earlier scratch output", "result": "pass"}, {"name": "Teardown removes the recorded legacy root", "result": "pass"}, {"name": "Spawn refuses a world-writable task root without writing into it", "result": "pass"}, {"name": "Spawn refuses a symlink task root without writing into it", "result": "pass"}]

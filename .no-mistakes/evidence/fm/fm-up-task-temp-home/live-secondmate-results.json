@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Fresh secondmate task uses its spawning parent home temp root",
+    "result": "pass"
+  },
+  {
+    "name": "Secondmate recovery keeps the recorded legacy root and earlier scratch output",
+    "result": "pass"
+  },
+  {
+    "name": "Explicit secondmate relaunch also keeps the legacy root",
+    "result": "pass"
+  },
+  {
+    "name": "live secondmate driver",
+    "result": "fail",
+    "reason": "command failed: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/bin/fm-teardown.sh smtemp-2643321 --force"
+  }
+]

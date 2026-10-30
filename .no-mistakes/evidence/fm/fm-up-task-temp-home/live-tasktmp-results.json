@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Same task ID in two homes gets isolated private roots, including a quoted home path",
+    "result": "pass"
+  },
+  {
+    "name": "Teardown removes only the recorded home root and preserves the other home",
+    "result": "pass"
+  },
+  {
+    "name": "Relaunch of a task with no tasktmp field gets its home-scoped root",
+    "result": "pass"
+  },
+  {
+    "name": "Legacy relaunch keeps recorded /tmp root and earlier scratch output",
+    "result": "pass"
+  },
+  {
+    "name": "Teardown removes the recorded legacy root",
+    "result": "pass"
+  },
+  {
+    "name": "Spawn refuses a world-writable task root without writing into it",
+    "result": "pass"
+  },
+  {
+    "name": "Spawn refuses a symlink task root without writing into it",
+    "result": "pass"
+  }
+]

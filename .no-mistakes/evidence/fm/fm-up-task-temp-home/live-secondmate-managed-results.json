@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Fresh secondmate task uses its spawning parent home temp root",
+    "result": "pass"
+  },
+  {
+    "name": "Secondmate recovery keeps the recorded legacy root and earlier scratch output",
+    "result": "pass"
+  },
+  {
+    "name": "Explicit secondmate relaunch also keeps the legacy root",
+    "result": "pass"
+  },
+  {
+    "name": "Secondmate teardown removes its recorded legacy task root",
+    "result": "pass"
+  }
+]

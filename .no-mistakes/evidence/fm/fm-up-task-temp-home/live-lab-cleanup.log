@@ -1,0 +1,10 @@
+ok - down refuses anything up did not build
+stopped: lab tmux server and lab processes
+removed: task temp /tmp/fm-labt2698401-13028-mate
+removed: task launch dir /tmp/fm-labt2698401-13028-worker+3c105afd59b95f31091aee4748fff14e5304869f311f9a34cfbc26bed2207a32
+removed: task temp /tmp/fm-labt2698401-13028-worker
+removed: task launch dir /tmp/fm-labt2698401-13028-other+3c105afd59b95f31091aee4748fff14e5304869f311f9a34cfbc26bed2207a32
+removed: 2 Claude project entries under /tmp/fm-live-lab.3E4Pmf/c
+removed: /tmp/fm-live-lab.3E4Pmf/c
+ok - down stops only recorded lab processes, removes trust entries, task temp roots, and launch dirs
+FILESYSTEM: lab root and private socket removed; unique mate/worker legacy roots and per-home launch roots removed; unrelated shared legacy root retained: /tmp/fm-labt2698401-13028-other

@@ -1,0 +1,143 @@
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh name legacy-sm
+fm-lab-legacy-sm-2643680-3738
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh provision fm-lab-legacy-sm-2643680-3738
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-legacy-sm-2643680-3738 status --json
+{"client":{"version":"0.9.5","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/node/.local/bin/herdr","session":"fm-lab-legacy-sm-2643680-3738"},"server":{"status":"running","running":true,"version":"0.9.5","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/node/.config/herdr/sessions/fm-lab-legacy-sm-2643680-3738/herdr.sock","session":"fm-lab-legacy-sm-2643680-3738","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid init -q -b main
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid add bin AGENTS.md
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid commit -qm 'Disposable unchanged runtime copy'
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/parent
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/parent
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid worktree add -qb secondmate /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/bin/fm-spawn.sh smtemp-2643321 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate --secondmate --backend herdr --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/probe.py new-secondmate'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/parent
+warning: secondmate smtemp-2643321 sync skipped before launch: on secondmate, expected main
+fm-config-inherit: warning: skipped backlog-backend for /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate/config: destination does not allow inherited item (not gitignored or guard failed)
+fm-config-inherit: warning: skipped backend for /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned smtemp-2643321 harness=python3 kind=secondmate mode=secondmate yolo=off window=fm-lab-legacy-sm-2643680-3738:w1:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/parent/state/smtemp-2643321.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate", "label": "new-secondmate", "root_mode": "0o700", "task": null}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-legacy-sm-2643680-3738 pane read w1:p2 --source recent --lines 20 --format text
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export GOTMPDIR='/ho
+me/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/parent/state/sm
+temp-2643321.tasktmp/gotmp'
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export COMPACT_ADVIS
+ER_DISABLE=1
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ . '/tmp/fm-smtemp-26
+43321+d4ccc7b7bff7ce8f57f7528e7929d574f1eb6f8754fe49abb8ddc1d3d1c66b70/launch.s1793333508.2645328.999.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.te
+st-validation/live-secondmate/parent/state/smtemp-2643321.tasktmp/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistak
+es/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate", "label": "new-second
+mate", "root_mode": "0o700", "task": null}
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $
+[exit 0]
+SCENARIO PASS: Fresh secondmate task uses its spawning parent home temp root
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/bin/fm-spawn.sh smtemp-2643321 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate --secondmate --backend herdr --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/probe.py legacy-recovered-first'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/parent
+warning: secondmate smtemp-2643321 sync skipped before launch: on secondmate, expected main
+fm-config-inherit: warning: skipped backlog-backend for /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate/config: destination does not allow inherited item (not gitignored or guard failed)
+fm-config-inherit: warning: skipped backend for /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned smtemp-2643321 harness=python3 kind=secondmate mode=secondmate yolo=off window=fm-lab-legacy-sm-2643680-3738:w1:p3 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/tmp/fm-smtemp-2643321/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate", "label": "legacy-recovered-first", "root_mode": "0o700", "task": null}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-legacy-sm-2643680-3738 pane read w1:p3 --source recent --lines 20 --format text
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export GOTMPDIR='/tm
+p/fm-smtemp-2643321/gotmp'
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export COMPACT_ADVIS
+ER_DISABLE=1
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ . '/tmp/fm-smtemp-26
+43321+d4ccc7b7bff7ce8f57f7528e7929d574f1eb6f8754fe49abb8ddc1d3d1c66b70/launch.s1793333530.2655284.3579.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/tmp/fm-smtemp-2643321/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistake
+s/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate", "label": "legacy-reco
+vered-first", "root_mode": "0o700", "task": null}
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/bin/fm-spawn.sh smtemp-2643321 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate --secondmate --backend herdr --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/probe.py legacy-recovered-second'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/parent
+warning: secondmate smtemp-2643321 sync skipped before launch: on secondmate, expected main
+fm-config-inherit: warning: skipped backlog-backend for /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate/config: destination does not allow inherited item (not gitignored or guard failed)
+fm-config-inherit: warning: skipped backend for /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned smtemp-2643321 harness=python3 kind=secondmate mode=secondmate yolo=off window=fm-lab-legacy-sm-2643680-3738:w1:p4 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/tmp/fm-smtemp-2643321/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate", "label": "legacy-recovered-second", "root_mode": "0o700", "task": null}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-legacy-sm-2643680-3738 pane read w1:p4 --source recent --lines 20 --format text
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export GOTMPDIR='/tm
+p/fm-smtemp-2643321/gotmp'
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export COMPACT_ADVIS
+ER_DISABLE=1
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ . '/tmp/fm-smtemp-26
+43321+d4ccc7b7bff7ce8f57f7528e7929d574f1eb6f8754fe49abb8ddc1d3d1c66b70/launch.s1793333553.2673626.230.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/tmp/fm-smtemp-2643321/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistake
+s/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate", "label": "legacy-reco
+vered-second", "root_mode": "0o700", "task": null}
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $
+[exit 0]
+SCENARIO PASS: Secondmate recovery keeps the recorded legacy root and earlier scratch output
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/bin/fm-spawn.sh smtemp-2643321 --relaunch --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/probe.py legacy-relaunched'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/parent
+warning: secondmate smtemp-2643321 sync skipped before launch: on secondmate, expected main
+fm-config-inherit: warning: skipped backlog-backend for /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate/config: destination does not allow inherited item (not gitignored or guard failed)
+fm-config-inherit: warning: skipped backend for /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned smtemp-2643321 harness=python3 kind=secondmate mode=secondmate yolo=off window=fm-lab-legacy-sm-2643680-3738:w1:p4 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/tmp/fm-smtemp-2643321/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate", "label": "legacy-relaunched", "root_mode": "0o700", "task": null}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-legacy-sm-2643680-3738 pane read w1:p4 --source recent --lines 20 --format text
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export GOTMPDIR='/tm
+p/fm-smtemp-2643321/gotmp'
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export COMPACT_ADVIS
+ER_DISABLE=1
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ . '/tmp/fm-smtemp-26
+43321+d4ccc7b7bff7ce8f57f7528e7929d574f1eb6f8754fe49abb8ddc1d3d1c66b70/launch.s1793333553.2673626.230.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/tmp/fm-smtemp-2643321/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistake
+s/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate", "label": "legacy-reco
+vered-second", "root_mode": "0o700", "task": null}
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export GOTMPDIR='/tm
+p/fm-smtemp-2643321/gotmp'
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ export COMPACT_ADVIS
+ER_DISABLE=1
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $ . '/tmp/fm-smtemp-26
+43321+d4ccc7b7bff7ce8f57f7528e7929d574f1eb6f8754fe49abb8ddc1d3d1c66b70/launch.s1793333568.2685702.7347.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/tmp/fm-smtemp-2643321/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistake
+s/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate", "label": "legacy-rela
+unched", "root_mode": "0o700", "task": null}
+node ➜ ~/.../01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate (secondmate) $
+[exit 0]
+SCENARIO PASS: Explicit secondmate relaunch also keeps the legacy root
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/bin/fm-teardown.sh smtemp-2643321 --force
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/parent
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+worktree /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate is not managed by treehouse
+error: treehouse return failed for secondmate home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/secondmate; lease may still be held
+[exit 1]
+VALIDATION ERROR: command failed: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/bin/fm-teardown.sh smtemp-2643321 --force
+Traceback (most recent call last):
+  File "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate.py", line 164, in <module>
+    run([runtime/'bin/fm-teardown.sh',id,'--force'],env=env(h),timeout=120)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate.py", line 31, in run
+    raise RuntimeError('command failed: '+shlex.join(args))
+RuntimeError: command failed: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/bin/fm-teardown.sh smtemp-2643321 --force
+
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh teardown fm-lab-legacy-sm-2643680-3738
+
+[exit 0]
+FINAL RESULTS [{"name": "Fresh secondmate task uses its spawning parent home temp root", "result": "pass"}, {"name": "Secondmate recovery keeps the recorded legacy root and earlier scratch output", "result": "pass"}, {"name": "Explicit secondmate relaunch also keeps the legacy root", "result": "pass"}, {"name": "live secondmate driver", "result": "fail", "reason": "command failed: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-secondmate/runtime/bin/fm-teardown.sh smtemp-2643321 --force"}]

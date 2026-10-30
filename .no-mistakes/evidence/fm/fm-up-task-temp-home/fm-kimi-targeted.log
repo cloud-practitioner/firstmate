@@ -1,0 +1,3 @@
+ok - fm-spawn: kimi launches, delivers its brief, and registers a guarded turn-end token
+ok - fm-spawn: unsafe task roots are refused, owned roots are tightened, and launch files stay unique and 0600
+ok - fm-spawn: the task temp root is scoped to the spawning home, and teardown removes only that home's root

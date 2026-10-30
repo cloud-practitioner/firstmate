@@ -1,0 +1,123 @@
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh name temp-baseline
+fm-lab-temp-baseline-2833232-8267
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh provision fm-lab-temp-baseline-2833232-8267
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-a
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-a
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-lab-home.sh create /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-b
+/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-b
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid init -q -b main
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid add README.md
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid commit -qm 'Initial fixture'
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid init -q -b main
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid add README.md
+
+[exit 0]
+$ git -c 'user.name=Task Temp Lab' -c user.email=lab@example.invalid commit -qm 'Initial fixture'
+
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-brief.sh temp-baseline-2833149 notes --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-a/data/temp-baseline-2833149/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-brief.sh temp-baseline-2833149 notes --mode local-only --herdr-lab
+scaffolded: /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-b/data/temp-baseline-2833149/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/baseline-runtime/bin/fm-spawn.sh temp-baseline-2833149 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-a/projects/notes --mode local-only --yolo off --backend herdr --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/probe.py baseline-a'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-a
+notice: temp-baseline-2833149 ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+warning: herdr presentation parent is absent or ambiguous; using the ordinary flat layout without projection
+spawned temp-baseline-2833149 harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-temp-baseline-2833232-8267:w1:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-f027b5/1/notes
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/tmp/fm-temp-baseline-2833149/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-f027b5/1/notes", "label": "baseline-a", "root_mode": "0o700", "task": "temp-baseline-2833149"}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-temp-baseline-2833232-8267 pane read w1:p2 --source recent --lines 20 --format text
+node ➜ ~/.../live-baseline/home-a/projects/notes (main) $ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/
+treehouse/.treehouse/notes-f027b5/1/notes. Type 'exit' to return.
+node ➜ ~/.../.treehouse/notes-f027b5/1/notes (802d416) $ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1
+JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-f027b5/1/notes'
+node ➜ ~/.../.treehouse/notes-f027b5/1/notes (802d416) $ export GOTMPDIR=/tmp/fm-temp-baseline-2833149/gotmp
+node ➜ ~/.../.treehouse/notes-f027b5/1/notes (802d416) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/notes-f027b5/1/notes (802d416) $ export FM_TASK_ID=temp-baseline-2833149
+node ➜ ~/.../.treehouse/notes-f027b5/1/notes (802d416) $ . '/tmp/fm-temp-baseline-2833149+d63f6fc5b40ab3cbd5aea2796f049
+94e5651146e61900894e7dd34437934c809/launch.s1793333768.2834373.21723.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/tmp/fm-temp-baseline-2833149/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-
+mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-f0
+27b5/1/notes", "label": "baseline-a", "root_mode": "0o700", "task": "temp-baseline-2833149"}
+node ➜ ~/.../.treehouse/notes-f027b5/1/notes (802d416) $
+[exit 0]
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/baseline-runtime/bin/fm-spawn.sh temp-baseline-2833149 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-b/projects/notes --mode local-only --yolo off --backend herdr --harness '/usr/bin/python3 /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/probe.py baseline-b'
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-b
+notice: temp-baseline-2833149 ships mode=local-only while the standing posture for notes is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned temp-baseline-2833149 harness=python3 kind=ship mode=local-only yolo=off window=fm-lab-temp-baseline-2833232-8267:w2:p2 worktree=/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-53c66b/1/notes
+[exit 0]
+TASK OUTPUT {"GOTMPDIR": "/tmp/fm-temp-baseline-2833149/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-53c66b/1/notes", "label": "baseline-b", "root_mode": "0o700", "task": "temp-baseline-2833149"}
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh run fm-lab-temp-baseline-2833232-8267 pane read w2:p2 --source recent --lines 20 --format text
+node ➜ ~/.../live-baseline/home-b/projects/notes (main) $ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at ~/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/
+treehouse/.treehouse/notes-53c66b/1/notes. Type 'exit' to return.
+node ➜ ~/.../.treehouse/notes-53c66b/1/notes (802d416) $ cd -- '/home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1
+JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-53c66b/1/notes'
+node ➜ ~/.../.treehouse/notes-53c66b/1/notes (802d416) $ export GOTMPDIR=/tmp/fm-temp-baseline-2833149/gotmp
+node ➜ ~/.../.treehouse/notes-53c66b/1/notes (802d416) $ export COMPACT_ADVISER_DISABLE=1
+node ➜ ~/.../.treehouse/notes-53c66b/1/notes (802d416) $ export FM_TASK_ID=temp-baseline-2833149
+node ➜ ~/.../.treehouse/notes-53c66b/1/notes (802d416) $ . '/tmp/fm-temp-baseline-2833149+c14e3a9e64afdb20cea7ae8c1396d
+b5a323a1c42c19df0067f52270563ee0f2c/launch.s1793333776.2841206.1071.sh'
+REAL TASK TEMP ENVIRONMENT: {"GOTMPDIR": "/tmp/fm-temp-baseline-2833149/gotmp", "TMPDIR": null, "cwd": "/home/node/.no-
+mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-53
+c66b/1/notes", "label": "baseline-b", "root_mode": "0o700", "task": "temp-baseline-2833149"}
+node ➜ ~/.../.treehouse/notes-53c66b/1/notes (802d416) $
+[exit 0]
+BASELINE PERSISTED STATE: home A tasktmp=/tmp/fm-temp-baseline-2833149; home B tasktmp=/tmp/fm-temp-baseline-2833149
+SCENARIO PASS: Reproduced original collision: equal IDs in two homes share the legacy task root
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-teardown.sh temp-baseline-2833149 --force
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-a
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for temp-baseline-2833149: 2838089
+teardown: force-killing leaked worktree process(es) for temp-baseline-2833149: 2838089
+🌳 Worktree returned to pool.
+teardown temp-baseline-2833149 complete (window fm-lab-temp-baseline-2833232-8267:w1:p2, worktree /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-f027b5/1/notes)
+Backlog: temp-baseline-2833149 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-a/data/backlog.md - move temp-baseline-2833149 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+[exit 0]
+FILESYSTEM: recorded task temp root and metadata are absent after teardown: /tmp/fm-temp-baseline-2833149
+BASELINE FAILURE REPRODUCED: teardown of A removed home B task scratch directory
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-teardown.sh temp-baseline-2833149 --force
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-b
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair a missing or failed watcher cycle with the Pi tool fm_watch_arm_pi, or restart Pi with -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.pi/extensions/fm-primary-turnend-guard.ts -e /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.pi/extensions/fm-primary-pi-watch.ts if the extensions are not loaded.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+teardown: reaping leaked worktree process(es) for temp-baseline-2833149: 2842981
+teardown: force-killing leaked worktree process(es) for temp-baseline-2833149: 2842981
+🌳 Worktree returned to pool.
+teardown temp-baseline-2833149 complete (window fm-lab-temp-baseline-2833232-8267:w2:p2, worktree /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/treehouse/.treehouse/notes-53c66b/1/notes)
+Backlog: temp-baseline-2833149 just finished (config/backlog-backend selects manual editing). Update /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/.test-validation/live-baseline/home-b/data/backlog.md - move temp-baseline-2833149 to Done, keep Done to the 10 most recent, then re-scan Queued and dispatch only work whose blockers are gone and date is due.
+[exit 0]
+FILESYSTEM: recorded task temp root and metadata are absent after teardown: /tmp/fm-temp-baseline-2833149
+SCENARIO PASS: Baseline cleanup completed through the real product
+$ /home/node/.no-mistakes/worktrees/5e28e613310e/01M65EG1JZD5AKPR05YZTJV7CC/bin/fm-herdr-lab.sh teardown fm-lab-temp-baseline-2833232-8267
+
+[exit 0]
+FINAL RESULTS [{"name": "Reproduced original collision: equal IDs in two homes share the legacy task root", "result": "pass"}, {"name": "Baseline cleanup completed through the real product", "result": "pass"}]
