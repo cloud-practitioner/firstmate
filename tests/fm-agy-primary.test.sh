@@ -123,15 +123,6 @@ printf 'watcher: FAILED - no live watcher with a fresh beacon\n'
 exit 1
 SH
       ;;
-    slow-failed)
-      cat > "$dir/bin/fm-watch-arm.sh" <<'SH'
-#!/usr/bin/env bash
-printf '%s\n' "$$" >> "$FM_HOME/state/arm-ran"
-sleep 1.5
-printf 'watcher: FAILED - cycle ended without an actionable reason\n'
-exit 1
-SH
-      ;;
     attached-close)
       cat > "$dir/bin/fm-watch-arm.sh" <<'SH'
 #!/usr/bin/env bash
@@ -145,6 +136,7 @@ SH
 #!/usr/bin/env bash
 printf '%s\n' "$$" >> "$FM_HOME/state/arm-ran"
 printf 'watcher: started pid=%s (beacon fresh)\n' "$$"
+printf '%s\n' "$$" > "$FM_HOME/state/arm-ready"
 i=0
 while [ ! -e "$FM_HOME/state/arm-release" ] && [ "$i" -lt 600 ]; do
   sleep 0.05
@@ -349,7 +341,8 @@ test_turnend_guard_agy_supervision_host_park() {
 }
 
 test_turnend_guard_agy_park_timeout_rearms() {
-  local dir payload out decision reason
+  local dir payload out decision reason real_sleep
+  real_sleep=$(command -v sleep)
   dir=$(make_primary_dir "$TMP_ROOT/stop-timeout")
   : > "$dir/state/task1.meta"
   write_arm_fixture "$dir" slow
@@ -363,10 +356,36 @@ test_turnend_guard_agy_park_timeout_rearms() {
 
   dir=$(make_primary_dir "$TMP_ROOT/stop-timeout-total")
   : > "$dir/state/task1.meta"
-  write_arm_fixture "$dir" slow-failed
-  out=$(FM_AGY_PARK_TIMEOUT=2 run_agy_stop "$dir" "$payload")
-  [ "$(wc -l < "$dir/state/arm-ran")" -eq 1 ] \
-    || fail "FM_AGY_PARK_TIMEOUT must bound the total park, not grant each arm attempt a fresh budget"
+  write_arm_fixture "$dir" slow
+  # Drive poll ticks explicitly: fail the first arm after one tick, then keep
+  # the retry alive. Startup and lock-check latency must not decide how many
+  # ticks the first attempt consumes.
+  mkdir -p "$dir/poll-bin"
+  cat > "$dir/poll-bin/sleep" <<'SH'
+#!/usr/bin/env bash
+[ "$1" = 1 ] || exec "$FM_TEST_REAL_SLEEP" "$@"
+printf 'tick\n' >> "$FM_HOME/state/park-polls"
+if [ "$(wc -l < "$FM_HOME/state/park-polls")" -eq 1 ]; then
+  while [ ! -s "$FM_HOME/state/arm-ran" ]; do "$FM_TEST_REAL_SLEEP" 0.01; done
+  read -r pid < "$FM_HOME/state/arm-ran"
+  kill "$pid"
+  # The guard cannot reap its failed child until this sleep returns.
+  while kill -0 "$pid" 2>/dev/null && ! ps -p "$pid" -o stat= | grep -q Z; do
+    "$FM_TEST_REAL_SLEEP" 0.01
+  done
+else
+  while [ "$(wc -l < "$FM_HOME/state/arm-ran")" -lt 2 ]; do "$FM_TEST_REAL_SLEEP" 0.01; done
+fi
+SH
+  chmod +x "$dir/poll-bin/sleep"
+  out=$(PATH="$dir/poll-bin:$PATH" FM_TEST_REAL_SLEEP="$real_sleep" \
+    FM_AGY_PARK_TIMEOUT=2 run_agy_stop "$dir" "$payload")
+  assert_equals 2 "$(wc -l < "$dir/state/arm-ran" | tr -d ' ')" "the total-budget case must exercise an arm retry"
+  assert_equals 2 "$(wc -l < "$dir/state/park-polls" | tr -d ' ')" \
+    "FM_AGY_PARK_TIMEOUT must bound the total park, not grant each arm attempt a fresh budget"
+  reason=$(printf '%s' "$out" | jq -r '.reason // empty' 2>/dev/null)
+  assert_contains "$reason" "[supervision-park]" "the retry must exhaust the shared park budget"
+  ! kill -0 "$(tail -n 1 "$dir/state/arm-ran")" 2>/dev/null || fail "total park timeout must stop the retry"
   pass "fm-turnend-guard-agy: park timeout stops the arm and returns continue with [supervision-park]"
 }
 
@@ -434,24 +453,25 @@ test_turnend_guard_agy_loop_ceiling() {
 }
 
 test_turnend_guard_agy_supersession() {
-  local dir payload first_pid waited first_out
+  local dir payload first_pid arm_pid first_out
   dir=$(make_primary_dir "$TMP_ROOT/stop-supersede")
   : > "$dir/state/task1.meta"
   write_arm_fixture "$dir" slow
   payload='{"sessionId":"s-1","conversationId":"c-1","executionNum":1,"terminationReason":"NO_TOOL_CALL"}'
+  # The arm starts only after the owner claim exists. Wait for its readiness
+  # event instead of spending a five-second polling budget on hook startup.
+  mkfifo "$dir/state/arm-ready"
+  exec 3<> "$dir/state/arm-ready"
   ( run_agy_stop "$dir" "$payload" > "$dir/state/first-out" ) &
   first_pid=$!
-  waited=0
-  while [ ! -s "$dir/state/.agy-park-owner" ] || [ ! -e "$dir/state/arm-ran" ]; do
-    sleep 0.05
-    waited=$((waited + 1))
-    [ "$waited" -lt 100 ] || fail "first park never wrote state/.agy-park-owner"
-  done
+  read -r -t 60 arm_pid <&3 || fail "first park never started its arm"
+  exec 3>&-
+  [ -s "$dir/state/.agy-park-owner" ] || fail "first park never wrote state/.agy-park-owner"
   printf 'superseded-owner\n' > "$dir/state/.agy-park-owner"
   wait "$first_pid" 2>/dev/null || true
   first_out=$(cat "$dir/state/first-out" 2>/dev/null || true)
   assert_equals "{}" "$first_out" "superseded park must return {}"
-  ! kill -0 "$(cat "$dir/state/arm-ran")" 2>/dev/null || fail "a superseded park must stop its arm child"
+  ! kill -0 "$arm_pid" 2>/dev/null || fail "a superseded park must stop its arm child"
   pass "fm-turnend-guard-agy: superseded park owner returns {}"
 }
 
