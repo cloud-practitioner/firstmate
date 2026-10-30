@@ -145,9 +145,9 @@ NOTE_VERB = "note"
 # caring whether the verb is one this module recognises.
 _VERB_SHAPE = re.compile(r"^[a-z]+(?:-[a-z]+)*$")
 
-# Enough tail to hold the last line of a status log. These logs are append-only
-# and grow for the life of a task, while every spoken question reads one per
-# worker, so the read is bounded and seeks rather than scanning from the top.
+# Status logs grow for the life of a task, and every spoken question reads one
+# per worker. Seek to a tail window first to keep ordinary reads cheap; widen to
+# the whole log only when that window holds no eligible event.
 STATUS_TAIL_BYTES = 8192
 
 
@@ -308,7 +308,7 @@ def _parse_backlog(path):
 
 
 def _last_event(state_dir, task_id):
-    """Return (verb, line) from the newest status event in the tail, or (None, None).
+    """Return (verb, line) from the newest eligible status event, or (None, None).
 
     bin/fm-classify-lib.sh remains the owner of status-verb normalization.
     A worker may append plain prose after its own status line - a note to

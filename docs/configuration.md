@@ -1436,7 +1436,7 @@ A dash or dot in the tool part is accepted.
 The worker extension never reports absent names: Pi removes correctly excluded tools from the registry it reads, but absence cannot distinguish a successful exclusion from a typo or a server that has not connected.
 It reads its own registry at every agent run start and turn end, because MCP servers connect in the background and may register tools after the first run starts.
 A listed name that is present in the registry is a real exclusion failure: the extension appends a timestamped warning note to `state/<task-id>.status` naming the configuration file and the present entries for the supervisor, at most once per name.
-The warning uses `note [state=none] [at=<epoch>]: ...`: it remains visible on the supervisor's unread-status surface but is excluded from declaration reads, including their no-event fallback.
+The warning uses `note [state=none] [at=<epoch>]: ...`: it remains visible on the supervisor's unread-status surface but is excluded from state-bearing event selection, including declaration reads, voice status, fleet and inbox summaries, and no-event fallbacks.
 It neither replaces terminal, decision, working, or waiting state nor replays an earlier transition, so a concurrent `resolved:` line remains effective.
 Ordinary `note:` lines retain their existing behavior.
 As a backstop, the same extension blocks any call to a listed tool name, including calls a codemode script makes, which Pi routes through the same tool-call handlers.
@@ -1444,7 +1444,7 @@ Registry presence or absence never refuses the launch.
 Each relaunch installs a fresh worker extension with the home's current list, so the replacement performs the same check.
 
 [`bin/fm-exclude-tools-lib.sh`](../bin/fm-exclude-tools-lib.sh) implements parsing and pre-launch validation for this contract; [`bin/fm-spawn.sh`](../bin/fm-spawn.sh)'s header owns the launch-flag mechanics.
-[`tests/fm-spawn-dispatch-profile.test.sh`](../tests/fm-spawn-dispatch-profile.test.sh) covers late registration, warning deduplication, declaration preservation, and concurrent decision resolution.
+[`tests/fm-spawn-dispatch-profile.test.sh`](../tests/fm-spawn-dispatch-profile.test.sh) covers late registration, warning deduplication, declaration preservation, and concurrent decision resolution; [`tests/fm-status-nonstate-note.test.sh`](../tests/fm-status-nonstate-note.test.sh) covers state preservation across voice status, shared state readers, fleet/inbox/bearings summaries, and Pi wake routing.
 
 ## Worker account pin (config/claude-account, config/pi-account)
 
