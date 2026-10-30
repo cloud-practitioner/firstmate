@@ -10,9 +10,9 @@ Verified as a full Firstmate harness (Primary, Secondmate, and Crewmate/Scout).
 |---|---|
 | Binary | Absolute `agy` from `PATH`, refused if absent; a Go-compiled single binary, so the live process name is exactly `agy` with `argv[0]=agy`. |
 | Launch | `agy --prompt-interactive "<brief>" --model <id> --effort <level> --dangerously-skip-permissions`, with the resolved absolute binary; the brief auto-submits with no extra Enter. The spawn pre-registers the worktree in agy's trust store first, then waits for a busy turn (answering the folder-trust dialog if it renders anyway) before reporting success. |
-| Busy state | No worker busy-state hook or plugin writer, so nothing is armed and no record is seeded; on Herdr the native `working` status classifies busy, and everywhere else the `agy-regex` rendered-tail fallback in `../../../../../bin/fm-busy-lib.sh` does. |
+| Busy state | No hook or plugin writer, so nothing is armed and no record is seeded; on Herdr the native `working` status classifies busy, and everywhere else the `agy-regex` rendered-tail fallback in `../../../../../bin/fm-busy-lib.sh` does. |
 | Rendered tail | Busy status row carries `esc to cancel` on the left; the idle row shows `? for shortcuts` instead. The `Generating...` word beside the braille spinner is free-floating output and is not a signal. |
-| Worker turn end | No per-task turn-end hook or notification touch is installed; completion arrives through the worker status protocol and, on Herdr, the native return to `idle`, rather than the primary and secondmate [supervision integration](#primary-and-secondmate-integration). |
+| Turn end | No turn-end hook or notification touch exists; completion arrives through the worker status protocol and, on Herdr, the native return to `idle`. |
 | Exit | `/quit`, one Enter; the process exits. |
 | Interrupt | Single `Escape`, which prints the Interrupted row and leaves an idle composer with no repollution, so no clear key follows. |
 | Skill | No verified slash-skill form; use natural language. |
@@ -26,8 +26,7 @@ Verified as a full Firstmate harness (Primary, Secondmate, and Crewmate/Scout).
 ## Trust, and where the decision persists
 
 Every task worktree is a path agy has never seen, so an unregistered launch stops on `Do you trust the contents of this project?` with the safe choice `Yes, I trust this folder` preselected, and an unanswered dialog sends the turn into agy's scratch directory instead of the worktree.
-There is no launch flag that suppresses the dialog, but agy honours a `trustedWorkspaces` entry written ahead of launch (verified live), so `../../../../../bin/fm-spawn.sh` pre-registers the launch directory through `../../../../../bin/fm-agy-trust.sh`.
-That helper owns trust-store mutation and scope validation for linked task worktrees and explicitly marked, confined secondmate homes; primary-home trust remains an operator decision.
+There is no launch flag that suppresses the dialog, but agy honours a `trustedWorkspaces` entry in the captain's own `~/.gemini/antigravity-cli/settings.json` written ahead of launch (verified live), so `../../../../../bin/fm-spawn.sh` pre-registers the worktree through `../../../../../bin/fm-agy-trust.sh` before launch, the claude shape: the helper refuses anything but a linked worktree of the spawning project, records both the logical pane path and its resolved form because agy compares the logical cwd, and preserves every other key in the store.
 The post-launch readiness gate is the backstop: it answers a dialog that renders anyway with a single Enter, then requires a busy verdict (Herdr's native `working` status or the pinned `esc to cancel` row) before the spawn reports success, and on a path that was not pre-registered it never counts a busy verdict as ready until the dialog has been answered, because Herdr's native verdict can precede the dialog.
 A pane whose brief cannot be confirmed to run in the worktree fails the spawn, records the failure in the task status, and closes the endpoint.
 Never steer into a pane still showing the dialog; a spawn that reported success has already cleared it.
@@ -56,5 +55,6 @@ agy 1.4.9 reads every top-level key as a named hook spec (firstmate ships one, `
 A PreToolUse handler that prints nothing allows the call, while a printed object without a `decision` denies it, so the seatbelts print only on deny.
 SessionStart executes `bin/fm-sessionstart-agy.sh` to inject the session-start digest into model context.
 PreToolUse invokes `bin/fm-arm-pretool-check.sh --agy`, `bin/fm-cd-pretool-check.sh --agy`, and `bin/fm-subagent-pretool-check.sh --agy`.
-Stop delegates to `bin/fm-turnend-guard-agy.sh`; [Antigravity park](../../../../../docs/turnend-guard.md#antigravity-park) owns its parking, timeout, loop-ceiling, and repair-nag contract.
+Stop executes `bin/fm-turnend-guard-agy.sh`, which parks on a home-scoped watcher cycle through `bin/fm-watch-arm.sh` (or `bin/fm-supervision-host.sh park` on a home that runs the host) under the registered 28800s hook timeout and delivers actionable wake output; only an optional `FM_AGY_PARK_TIMEOUT` bound re-arms via `{"decision":"continue","reason":"..."}` with `[supervision-park]`, and `FM_AGY_TURNEND_LOOP_CEILING` (default 180) bounds hook-driven turns.
+A bounded 3-block repair nag is enforced via `bin/fm-turnend-guard.sh --agy` before failing open with `{}`.
 See `../../../../../docs/supervision-protocols/agy.md` for the complete supervision protocol.

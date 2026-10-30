@@ -27,7 +27,7 @@ It tokenizes the bytes and classifies lexical execution positions only.
 - `--command <exact string>` for OpenCode, Pi, pi-signed, and omp.
 - `--background` as a compatibility-only field that never changes the decision.
 - `--claude` to preserve Claude's stderr-only deny requirement.
-- `--agy` for Antigravity CLI's stdout decision transport; [Harness wiring](#harness-wiring) owns its payload fields and deny rendering.
+- `--agy` for Antigravity CLI, reading stdin JSON from `.toolCall.args.CommandLine`, `.toolCall.args.command`, `.toolInput.command`, or `.tool_input.command`, denying redundant manual arming when a watcher is healthy, and emitting `{"decision":"deny","reason":...}` on stdout with exit 0.
 
 The wrapper discovers the code root from its own location.
 The active firstmate home is `${FM_HOME:-<code-root>}`.
@@ -150,7 +150,7 @@ Prose may improve without changing adapter behavior.
 ## Output contract
 
 - Allow returns exit 0 with both streams empty.
-- Default deny returns exit 2 and writes `{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny"},"systemMessage":"[code] reason"}` to stderr.
+- Deny returns exit 2 and writes `{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny"},"systemMessage":"[code] reason"}` to stderr.
 - Default deny mode also writes `{"decision":"deny","reason":"[code] reason"}` to stdout for Grok.
 - `--claude` suppresses stdout completely because Claude ignores a PreToolUse deny when stdout is nonempty.
 - Codex blocks on exit 2 and displays stderr.
@@ -159,7 +159,7 @@ Prose may improve without changing adapter behavior.
 
 ## Harness wiring
 
-| Harness | Exact command field | Deny handling |
+| Harness | Exact command field | Adapter behavior on checker exit 2 |
 | --- | --- | --- |
 | Codex | `.tool_input.command` | The `.codex/hooks.json` command forwards the complete stdin payload and Codex blocks on exit 2. |
 | Claude | `.tool_input.command` | `.claude/settings.json` forwards stdin with `--claude`, leaving stdout empty and returning the stderr deny object. |
@@ -168,7 +168,6 @@ Prose may improve without changing adapter behavior.
 | Pi / pi-signed | `event.input.command` | `.pi/extensions/fm-primary-turnend-guard.ts` passes one `--command` argument and returns `{block: true}` only for exit 2. |
 | omp | `event.input.command` | `.omp/extensions/fm-primary-turnend-guard.ts` passes one `--command` argument and returns `{block: true, reason}` only for exit 2; omp surfaces the reason verbatim to the model (verified 18.1.2). |
 | Cursor | `.tool_input.command` | `.cursor/hooks.json` matches `tool_name` `Shell` and forwards stdin with `--cursor`. Cursor reads the RETURNED object rather than the exit status, so `--cursor` prints `{"permission":"deny","user_message":"[code] reason"}` on stdout and exits 0; only that rendering is verified to block the command and surface the reason. |
-| Antigravity | `.toolCall.args.CommandLine` or `.toolCall.args.command`, with `.toolInput.command` and `.tool_input.command` fallbacks | `.agents/hooks.json` forwards stdin with `--agy`; denies emit `{"decision":"deny","reason":...}` on stdout with exit 0. |
 
 Cursor also loads `<project>/.claude/settings.json`, so the tracked Claude entry receives the same event. Without `--cursor` a Cursor-delivered payload is that duplicate and allows without re-classifying, decided from the payload's own `cursor_version` by `bin/fm-hook-host-lib.sh`; [`turnend-guard.md`](turnend-guard.md#harness-integrations) owns why that predicate reads the payload rather than the environment.
 

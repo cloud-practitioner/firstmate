@@ -382,10 +382,11 @@ Both choices are local to each Firstmate home and are not part of secondmate inh
 Two optional local, gitignored files control the supervision host for this home: `config/supervision-host-off` opts the home out, and `config/supervision-host` opts a home in and selects its engine.
 The host runs the supervision branch's contract on a headless engine session beside a non-Pi primary.
 [docs/supervision-host.md](supervision-host.md) defines its design, current scope, and verified engines.
+A Claude, Cursor, OpenCode, omp, Grok, or Codex primary can run the host.
 
 A present `config/supervision-host-off`, whatever it holds, opts the home out on every primary.
 Otherwise a Claude primary runs the host by default: with no `config/supervision-host` it runs exactly as with an empty one, at the Claude engine's default model.
-Every other primary in the host's [supported scope](supervision-host.md#scope-today) runs it only while `config/supervision-host` exists and the home is not opted out.
+A Cursor, OpenCode, omp, Grok, or Codex primary runs the host only while `config/supervision-host` exists and the home is not opted out.
 A home that does not run the host behaves exactly as it does without it, and a Pi primary keeps its in-process supervision branch whatever either file says.
 `fm_supervision_host_enabled` in `bin/fm-supervision-engine-lib.sh` implements this gate for every reader.
 
@@ -402,7 +403,7 @@ Grok's arm command is rendered at session start, so a change to its host mode ta
 - empty or `default` selects the primary harness's own engine at that engine's default model (`sonnet` for the Claude engine);
 - `<engine> [<model>]` names a verified engine, currently only `claude`, and optionally the engine's own model name or alias; `default <model>` selects the primary harness's engine with that model.
 
-Only Claude has a verified engine of its own, so a home on another supported primary names `claude` in the file.
+Only Claude has a verified engine of its own, so a Cursor, OpenCode, omp, Grok, or Codex home names `claude` in the file.
 
 ### Failures, when changes apply, and inheritance
 
@@ -1320,7 +1321,7 @@ A local standalone-clone home cannot receive a primary-local commit through that
 
 ## Harness support
 
-The [harness adapter references](../.agents/skills/harness-adapters/SKILL.md) own each adapter's supported task kinds, and [README requirements](../README.md#requirements) own the set supported for the primary session.
+claude, codex, opencode, pi, pi-signed, grok, kimi, cursor, and omp are empirically verified for crewmate and secondmate launches; gemini is verified for crewmate and scout launches only, and [README requirements](../README.md#requirements) own the set supported for the primary session.
 
 ### Harness restrictions and credentials
 
@@ -1372,6 +1373,8 @@ Enabled primary-session turn-end guard integrations are tracked as repo-level ho
 
 Kimi remains outside the primary turn-end guard integrations; [`docs/turnend-guard.md`](turnend-guard.md#compatibility-limits) owns its separate captain-approved crew wake hook.
 Primary-session watcher wake protocols are rendered at session start by [`bin/fm-supervision-instructions.sh`](../bin/fm-supervision-instructions.sh) from [`docs/supervision-protocols/`](supervision-protocols/).
+
+Claude's Stop `asyncRewake` hook owns tokenless re-arm cycles, Cursor's stop hook parks on the watcher, Grok uses background-notify cycles, Codex uses bounded foreground checkpoints, Pi and pi-signed use the same two tracked primary extensions, omp uses its own two tracked `.omp/extensions/` files with a blocking `session_stop` turn-end hook, and OpenCode uses its TUI plugin.
 
 ### Choose the worker harness
 
